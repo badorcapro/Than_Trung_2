@@ -1,0 +1,118 @@
+[gd_resource type="Resource" script_class="CaseDefinition" load_steps=13 format=3]
+
+[ext_resource type="Script" path="res://scripts/domain/cases/CaseDefinition.gd" id="1_case"]
+[ext_resource type="Script" path="res://scripts/domain/cases/SuspectDefinition.gd" id="2_suspect"]
+[ext_resource type="Script" path="res://scripts/domain/cases/OnSolveReward.gd" id="3_reward"]
+[ext_resource type="Script" path="res://scripts/domain/cases/CrimeSceneDefinition.gd" id="4_crime_scene"]
+
+[sub_resource type="Resource" id="OnSolve"]
+script = ExtResource("3_reward")
+reward_id = &"hv2_active_disguise_reward"
+reputation_delta = 0
+test_only_not_balance_locked = true
+note = "DEV_ONLY: HV2 borrowed active-function verification has no production reward."
+
+[sub_resource type="Resource" id="CrimeScene"]
+script = ExtResource("4_crime_scene")
+scene_id = &"hv2_active_disguise_scene"
+display_name = "Hiện trường luyện tập"
+board_slot = 4
+description = "DEV-only neutral location for active-disguise verification."
+
+[sub_resource type="Resource" id="Suspect1"]
+script = ExtResource("2_suspect")
+suspect_id = 1
+board_slot = 0
+true_role_id = &"tailor"
+displayed_role_id = &"tailor"
+true_alignment = 0
+role_group = 0
+truth_reveal_note = "Thợ May thật; dùng cặp #4/#6 phải báo khác phe."
+
+[sub_resource type="Resource" id="Suspect2"]
+script = ExtResource("2_suspect")
+suspect_id = 2
+board_slot = 1
+true_role_id = &"vigilante"
+displayed_role_id = &"vigilante"
+true_alignment = 0
+role_group = 0
+truth_reveal_note = "Sư Tử Phán thật làm nhân chứng native cho các vai giả danh."
+
+[sub_resource type="Resource" id="Suspect3"]
+script = ExtResource("2_suspect")
+suspect_id = 3
+board_slot = 2
+true_role_id = &"copycat"
+displayed_role_id = &"vigilante"
+true_alignment = 0
+role_group = 1
+is_impersonating = true
+impersonated_role_id = &"vigilante"
+truth_reveal_note = "Kẻ Bắt Chước mượn chức năng Sư Tử Phán ở chế độ NÓI THẬT."
+
+[sub_resource type="Resource" id="Suspect4"]
+script = ExtResource("2_suspect")
+suspect_id = 4
+board_slot = 3
+true_role_id = &"tutorial_priest"
+displayed_role_id = &"tutorial_priest"
+true_alignment = 0
+role_group = 0
+truth_reveal_note = "Tư Tế thật và là mục tiêu Phe Thiện cho phép so phe."
+
+[sub_resource type="Resource" id="Suspect5"]
+script = ExtResource("2_suspect")
+suspect_id = 5
+board_slot = 5
+true_role_id = &"reporter"
+displayed_role_id = &"reporter"
+true_alignment = 0
+role_group = 0
+truth_reveal_note = "Sử Quan thật; vị trí này thỏa điều kiện xuất hiện của Sát Nhân Hàng Loạt."
+
+[sub_resource type="Resource" id="Suspect6"]
+script = ExtResource("2_suspect")
+suspect_id = 6
+board_slot = 7
+true_role_id = &"tutorial_mobster"
+displayed_role_id = &"tailor"
+true_alignment = 1
+role_group = 2
+is_impersonating = true
+impersonated_role_id = &"tailor"
+truth_reveal_note = "Kẻ Côn Đồ mượn chức năng Thợ May ở chế độ NÓI DỐI."
+
+[sub_resource type="Resource" id="Suspect7"]
+script = ExtResource("2_suspect")
+suspect_id = 7
+board_slot = 8
+true_role_id = &"serial_killer"
+displayed_role_id = &"vigilante"
+true_alignment = 1
+role_group = 2
+is_impersonating = true
+impersonated_role_id = &"vigilante"
+truth_reveal_note = "Sát Nhân Hàng Loạt mượn chức năng Sư Tử Phán ở chế độ NÓI DỐI; bị xử quyết trước 9h trong checklist HV2."
+
+[resource]
+script = ExtResource("1_case")
+case_id = &"hv2_active_disguise"
+data_version = 1
+display_name = "HV2 — Active Disguise"
+short_description = "DEV-only authored Case for manually checking borrowed Tailor/Vigilante functions, truth modes, and independent one-use state."
+difficulty_label = "DEV HV2"
+crime_scene = SubResource("CrimeScene")
+merit_pool = 0
+reputation_penalty_on_wrong = 0
+base_ticket_reward = 0
+on_solve = SubResource("OnSolve")
+suspects = Array[ExtResource("2_suspect")]([SubResource("Suspect1"), SubResource("Suspect2"), SubResource("Suspect3"), SubResource("Suspect4"), SubResource("Suspect5"), SubResource("Suspect6"), SubResource("Suspect7")])
+evil_suspect_ids = PackedInt32Array(6, 7)
+accomplice_suspect_ids = PackedInt32Array(6, 7)
+traitor_suspect_ids = PackedInt32Array()
+suspected_role_ids = Array[StringName]([&"tailor", &"vigilante", &"copycat", &"tutorial_priest", &"reporter", &"tutorial_mobster", &"serial_killer"])
+suspect_list_role_ids = Array[StringName]([&"tailor", &"vigilante", &"copycat", &"tutorial_priest", &"reporter", &"tutorial_mobster", &"serial_killer"])
+requires_tailor = true
+test_only_not_balance_locked = true
+balance_note = "DEV_ONLY: HV2 active-disguise runtime verification fixture, not tutorial or production content."

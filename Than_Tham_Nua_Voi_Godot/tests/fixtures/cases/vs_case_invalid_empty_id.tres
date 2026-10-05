@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="CaseDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/domain/cases/CaseDefinition.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+display_name = "Intentional Invalid Fixture"
+short_description = "Fixture lỗi riêng: case_id rỗng và thiếu dữ liệu; validator phải FAIL không crash."
+difficulty_label = "INVALID_TEST"
+requires_tailor = true
+test_only_not_balance_locked = true
+

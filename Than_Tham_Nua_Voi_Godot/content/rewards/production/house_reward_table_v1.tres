@@ -1,0 +1,60 @@
+[gd_resource type="Resource" script_class="RewardZoneTableDefinition" load_steps=13 format=3]
+
+[ext_resource type="Script" path="res://scripts/domain/loot/RewardZoneTableDefinition.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/domain/loot/WeightedRewardEntry.gd" id="2"]
+
+[sub_resource type="Resource" id="SilverSmall"]
+script = ExtResource("2")
+reward_id = &"prod_silver_small"
+weight = 26
+
+[sub_resource type="Resource" id="ExpSmall"]
+script = ExtResource("2")
+reward_id = &"prod_equipment_exp_small"
+weight = 22
+
+[sub_resource type="Resource" id="Orb"]
+script = ExtResource("2")
+reward_id = &"prod_orb_1"
+weight = 13
+
+[sub_resource type="Resource" id="SilverLarge"]
+script = ExtResource("2")
+reward_id = &"prod_silver_large"
+weight = 9
+
+[sub_resource type="Resource" id="ExpLarge"]
+script = ExtResource("2")
+reward_id = &"prod_equipment_exp_large"
+weight = 7
+
+[sub_resource type="Resource" id="Exchange"]
+script = ExtResource("2")
+reward_id = &"prod_exchange_material_1"
+weight = 6
+
+[sub_resource type="Resource" id="Ticket"]
+script = ExtResource("2")
+reward_id = &"prod_gacha_ticket_1"
+weight = 5
+
+[sub_resource type="Resource" id="HanhLoPhu"]
+script = ExtResource("2")
+reward_id = &"prod_consumable_hanh_lo_phu"
+weight = 6
+
+[sub_resource type="Resource" id="LenhBai"]
+script = ExtResource("2")
+reward_id = &"prod_consumable_lenh_bai_thong_hanh"
+weight = 3
+
+[sub_resource type="Resource" id="NguMaLenh"]
+script = ExtResource("2")
+reward_id = &"prod_consumable_ngu_ma_lenh"
+weight = 3
+
+[resource]
+script = ExtResource("1")
+zone_id = &"HOUSE"
+density_percent = 75
+entries = [SubResource("SilverSmall"), SubResource("ExpSmall"), SubResource("Orb"), SubResource("SilverLarge"), SubResource("ExpLarge"), SubResource("Exchange"), SubResource("Ticket"), SubResource("HanhLoPhu"), SubResource("LenhBai"), SubResource("NguMaLenh")]

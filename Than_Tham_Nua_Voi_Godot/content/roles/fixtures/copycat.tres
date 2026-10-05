@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="RoleDefinition" format=3]
+
+[ext_resource type="Script" uid="uid://b6jr3q1qufc22" path="res://scripts/domain/roles/RoleDefinition.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+role_id = &"copycat"
+display_name = "Kẻ Bắt Chước"
+role_group = 1
+help_text = "💬 Ta giả danh một thân phận Phe Thiện mà ta có thể bắt chước và đang xuất hiện trong Kỳ Án. Ta nói thật và sử dụng thông tin hoặc chức năng của thân phận đang thể hiện."
+is_fixture_placeholder = false

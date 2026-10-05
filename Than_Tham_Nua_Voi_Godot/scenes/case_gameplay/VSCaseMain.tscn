@@ -1,0 +1,811 @@
+[gd_scene format=3 uid="uid://dlyugifi3lu7g"]
+
+[ext_resource type="Script" uid="uid://dh8strpdrbrqj" path="res://scripts/presentation/case_gameplay/VSCaseMainController.gd" id="1"]
+[ext_resource type="Theme" uid="uid://bf14r64eqwnjt" path="res://themes/AppTheme.tres" id="2"]
+[ext_resource type="PackedScene" uid="uid://b7d07ctqbtiei" path="res://scenes/case_gameplay/CaseBoard.tscn" id="3"]
+[ext_resource type="Script" uid="uid://dqqtongtu3j2v" path="res://scripts/presentation/case_gameplay/InvestigationCursorFeedback.gd" id="4"]
+
+[sub_resource type="StyleBoxFlat" id="StatusBadge"]
+content_margin_left = 10.0
+content_margin_top = 5.0
+content_margin_right = 10.0
+content_margin_bottom = 5.0
+bg_color = Color(0.13, 0.17, 0.24, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[node name="VSCaseMain" type="Control" unique_id=1613225088]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2")
+script = ExtResource("1")
+
+[node name="Background" type="ColorRect" parent="." unique_id=575121062]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.035, 0.045, 0.07, 1)
+
+[node name="SafeMargin" type="MarginContainer" parent="." unique_id=867212250]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 8
+
+[node name="MainColumn" type="VBoxContainer" parent="SafeMargin" unique_id=1104463621]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="DevNavRow" type="HBoxContainer" parent="SafeMargin/MainColumn" unique_id=1243041686]
+layout_mode = 2
+
+[node name="DevBackButton" type="Button" parent="SafeMargin/MainColumn/DevNavRow" unique_id=1454160460]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(92, 28)
+layout_mode = 2
+tooltip_text = "Quay lại DebugHome để chọn tutorial khác"
+text = "← Quay lại"
+
+[node name="DebugSolverButton" type="Button" parent="SafeMargin/MainColumn/DevNavRow"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+text = "Kiểm tra Case"
+
+[node name="DevNavSpacer" type="Control" parent="SafeMargin/MainColumn/DevNavRow" unique_id=112528931]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HeaderPanel" type="PanelContainer" parent="SafeMargin/MainColumn" unique_id=1515169981]
+visible = false
+layout_mode = 2
+
+[node name="HeaderRow" type="HBoxContainer" parent="SafeMargin/MainColumn/HeaderPanel" unique_id=218194036]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="BackButton" type="Button" parent="SafeMargin/MainColumn/HeaderPanel/HeaderRow" unique_id=1513345788]
+unique_name_in_owner = true
+layout_mode = 2
+text = "← Back"
+
+[node name="HeaderText" type="VBoxContainer" parent="SafeMargin/MainColumn/HeaderPanel/HeaderRow" unique_id=555600146]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CaseNameLabel" type="Label" parent="SafeMargin/MainColumn/HeaderPanel/HeaderRow/HeaderText" unique_id=840044531]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Đang tải Kỳ Án…"
+
+[node name="CaseIdLabel" type="Label" parent="SafeMargin/MainColumn/HeaderPanel/HeaderRow/HeaderText" unique_id=1418607518]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.58, 0.67, 0.8, 1)
+theme_override_font_sizes/font_size = 13
+text = "fixture"
+
+[node name="DifficultyBadge" type="PanelContainer" parent="SafeMargin/MainColumn/HeaderPanel/HeaderRow" unique_id=1789084736]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StatusBadge")
+
+[node name="DifficultyLabel" type="Label" parent="SafeMargin/MainColumn/HeaderPanel/HeaderRow/DifficultyBadge" unique_id=659520197]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Độ khó"
+
+[node name="MeritBadge" type="PanelContainer" parent="SafeMargin/MainColumn/HeaderPanel/HeaderRow" unique_id=1544073564]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StatusBadge")
+
+[node name="MeritLabel" type="Label" parent="SafeMargin/MainColumn/HeaderPanel/HeaderRow/MeritBadge" unique_id=1408341466]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Công Danh [TEST]"
+
+[node name="ContentRoot" type="HBoxContainer" parent="SafeMargin/MainColumn" unique_id=721579377]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 12
+
+[node name="InfoPanel" type="PanelContainer" parent="SafeMargin/MainColumn/ContentRoot" unique_id=2072476385]
+custom_minimum_size = Vector2(216, 0)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="InfoColumn" type="VBoxContainer" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel" unique_id=847885339]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 6
+
+[node name="ElapsedHoursLabel" type="Label" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/InfoColumn" unique_id=1523567326]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.74, 0.88, 0.96, 1)
+theme_override_font_sizes/font_size = 14
+text = "Thời gian: 0h"
+horizontal_alignment = 1
+
+[node name="TurnLabel" type="Label" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/InfoColumn" unique_id=567111891]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 58)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.77, 0.35, 1)
+theme_override_font_sizes/font_size = 20
+text = "Lượt 1 — Đang khởi tạo"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="InfoGapTop" type="Control" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/InfoColumn" unique_id=1540859316]
+custom_minimum_size = Vector2(0, 14)
+layout_mode = 2
+
+[node name="InfoTitle" type="Label" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/InfoColumn" unique_id=1873117624]
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+text = "Thông tin Kỳ Án"
+
+[node name="DescriptionLabel" type="RichTextLabel" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/InfoColumn" unique_id=805940335]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 78)
+layout_mode = 2
+bbcode_enabled = true
+text = "Đang tải mô tả…"
+fit_content = true
+scroll_active = false
+
+[node name="PlayerStripLabel" type="RichTextLabel" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/InfoColumn" unique_id=1155294317]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 88)
+layout_mode = 2
+bbcode_enabled = true
+text = "Đang tải người chơi…"
+fit_content = true
+scroll_active = false
+
+[node name="RecentLogLabel" type="Label" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/InfoColumn" unique_id=1517326603]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.58, 0.67, 0.8, 1)
+theme_override_font_sizes/font_size = 11
+autowrap_mode = 2
+
+[node name="LeftActionSpacer" type="Control" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/InfoColumn"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="LeftActionArea" type="VBoxContainer" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/InfoColumn"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="ActionReason" type="Label" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/InfoColumn/LeftActionArea" unique_id=1797450003]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.74, 0.79, 0.87, 1)
+theme_override_font_sizes/font_size = 11
+autowrap_mode = 2
+
+[node name="SelectionPrompt" type="Label" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/InfoColumn/LeftActionArea" unique_id=1497807872]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.77, 0.35, 1)
+theme_override_font_sizes/font_size = 12
+text = "Chọn một nghi phạm chưa điều tra"
+autowrap_mode = 2
+
+[node name="FunctionPicker" type="OptionButton" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/InfoColumn/LeftActionArea" unique_id=619262063]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+tooltip_text = "Chọn nghi phạm sở hữu chức năng cần dùng"
+
+[node name="SubmissionClassificationPanel" type="VBoxContainer" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/InfoColumn/LeftActionArea" unique_id=1769889398]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="InvestigateButton" type="Button" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/InfoColumn/LeftActionArea" unique_id=1831713968]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Bắt đầu chọn một nghi phạm chưa điều tra"
+disabled = true
+text = "Điều tra"
+
+[node name="PrivateKnowledgeButton" type="Button" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/InfoColumn/LeftActionArea" unique_id=1597862616]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+text = "Hồ sơ riêng"
+
+[node name="SingleAccuseButton" type="Button" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/InfoColumn/LeftActionArea" unique_id=1687015423]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+tooltip_text = "Chỉ Điểm một nghi phạm là Phe Ác"
+disabled = true
+text = "Chỉ Điểm"
+
+[node name="SubmitButton" type="Button" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/InfoColumn/LeftActionArea" unique_id=443534974]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+tooltip_text = "Trình Án sớm và khóa đáp án sau khi xác nhận"
+disabled = true
+text = "TRÌNH ÁN"
+
+[node name="ConfirmationRow" type="HBoxContainer" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/InfoColumn/LeftActionArea" unique_id=947818174]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="ConfirmButton" type="Button" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/InfoColumn/LeftActionArea/ConfirmationRow" unique_id=1920209669]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+disabled = true
+text = "Xác nhận"
+
+[node name="CancelButton" type="Button" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/InfoColumn/LeftActionArea/ConfirmationRow" unique_id=1369538649]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Hủy"
+
+[node name="FunctionButton" type="Button" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/InfoColumn/LeftActionArea" unique_id=1397129989]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Chọn hai nghi phạm bằng chức năng Thợ May đã khả dụng"
+disabled = true
+text = "Dùng chức năng"
+
+[node name="FinalResultLabel" type="Label" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/InfoColumn/LeftActionArea" unique_id=919339738]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+text = "Phán quyết cuối"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="ScopeNote" type="Label" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/InfoColumn/LeftActionArea" unique_id=1447071590]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.52, 0.58, 0.67, 1)
+theme_override_font_sizes/font_size = 12
+text = "2I: Truth Reveal và quyết toán thưởng
+TEST_ONLY / NOT_BALANCE_LOCKED"
+horizontal_alignment = 1
+
+[node name="CenterColumn" type="VBoxContainer" parent="SafeMargin/MainColumn/ContentRoot" unique_id=1640877259]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 8
+
+[node name="CaseBoard" parent="SafeMargin/MainColumn/ContentRoot/CenterColumn" unique_id=1385826005 instance=ExtResource("3")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="BoardHelpLabel" type="Label" parent="SafeMargin/MainColumn/ContentRoot/CenterColumn" unique_id=1082575205]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.68, 0.75, 0.84, 1)
+theme_override_font_sizes/font_size = 11
+text = "Giữ chuột trái để điều tra. Chuột phải để đánh dấu nghi phạm."
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="RolePanel" type="PanelContainer" parent="SafeMargin/MainColumn/ContentRoot" unique_id=363330037]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(232, 0)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="RoleColumn" type="VBoxContainer" parent="SafeMargin/MainColumn/ContentRoot/RolePanel" unique_id=2135345643]
+layout_mode = 2
+theme_override_constants/separation = 7
+
+[node name="ActionTitle" type="Label" parent="SafeMargin/MainColumn/ContentRoot/RolePanel/RoleColumn" unique_id=1704274778]
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+text = "THÂN PHẬN"
+
+[node name="RoleListScroll" type="ScrollContainer" parent="SafeMargin/MainColumn/ContentRoot/RolePanel/RoleColumn" unique_id=518206533]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 1
+
+[node name="RoleList" type="VBoxContainer" parent="SafeMargin/MainColumn/ContentRoot/RolePanel/RoleColumn/RoleListScroll" unique_id=1040171299]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="TruthRevealPanel" type="PanelContainer" parent="." unique_id=1608989080]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = 18.0
+offset_right = -24.0
+offset_bottom = -18.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TruthColumn" type="VBoxContainer" parent="TruthRevealPanel" unique_id=297733317]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="TruthTitle" type="Label" parent="TruthRevealPanel/TruthColumn" unique_id=1460526808]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "CÔNG BỐ SỰ THẬT & QUYẾT TOÁN"
+horizontal_alignment = 1
+
+[node name="TruthScroll" type="ScrollContainer" parent="TruthRevealPanel/TruthColumn" unique_id=292948850]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="TruthContent" type="VBoxContainer" parent="TruthRevealPanel/TruthColumn/TruthScroll" unique_id=178757489]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="TruthAnswerLabel" type="Label" parent="TruthRevealPanel/TruthColumn/TruthScroll/TruthContent" unique_id=1848716309]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 2
+
+[node name="TruthSuspectsLabel" type="Label" parent="TruthRevealPanel/TruthColumn/TruthScroll/TruthContent" unique_id=541659989]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 2
+
+[node name="TruthPlayersLabel" type="Label" parent="TruthRevealPanel/TruthColumn/TruthScroll/TruthContent" unique_id=766568477]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 2
+
+[node name="TruthRewardsLabel" type="Label" parent="TruthRevealPanel/TruthColumn/TruthScroll/TruthContent" unique_id=991585113]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 2
+
+[node name="TruthFunctionsLabel" type="Label" parent="TruthRevealPanel/TruthColumn/TruthScroll/TruthContent" unique_id=1862188850]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 2
+
+[node name="TruthBackButton" type="Button" parent="TruthRevealPanel/TruthColumn" unique_id=538213732]
+layout_mode = 2
+text = "Về Debug Home"
+
+[node name="ErrorPanel" type="PanelContainer" parent="." unique_id=1993244272]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -310.0
+offset_top = -115.0
+offset_right = 310.0
+offset_bottom = 115.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ErrorColumn" type="VBoxContainer" parent="ErrorPanel" unique_id=782384002]
+layout_mode = 2
+theme_override_constants/separation = 14
+alignment = 1
+
+[node name="ErrorTitle" type="Label" parent="ErrorPanel/ErrorColumn" unique_id=439363853]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.45, 0.45, 1)
+theme_override_font_sizes/font_size = 22
+text = "Không thể tải Kỳ Án thử nghiệm"
+horizontal_alignment = 1
+
+[node name="ErrorSummary" type="Label" parent="ErrorPanel/ErrorColumn" unique_id=637506093]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Mã lỗi"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="CursorFeedback" type="Control" parent="." unique_id=2131916505]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 0
+mouse_filter = 2
+script = ExtResource("4")
+
+[node name="FinalHandoffOverlay" type="ColorRect" parent="." unique_id=1468589955]
+unique_name_in_owner = true
+visible = false
+z_index = 20
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.02, 0.025, 0.035, 0.72)
+
+[node name="FinalHandoffCenter" type="CenterContainer" parent="FinalHandoffOverlay" unique_id=1954049674]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+
+[node name="FinalHandoffPanel" type="PanelContainer" parent="FinalHandoffOverlay/FinalHandoffCenter" unique_id=1285833004]
+custom_minimum_size = Vector2(260, 118)
+layout_mode = 2
+
+[node name="FinalHandoffColumn" type="VBoxContainer" parent="FinalHandoffOverlay/FinalHandoffCenter/FinalHandoffPanel" unique_id=233402090]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="FinalHandoffTitleLabel" type="Label" parent="FinalHandoffOverlay/FinalHandoffCenter/FinalHandoffPanel/FinalHandoffColumn" unique_id=865088767]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.77, 0.35, 1)
+theme_override_font_sizes/font_size = 26
+text = "ĐẾN LƯỢT"
+horizontal_alignment = 1
+
+[node name="FinalHandoffPlayerLabel" type="Label" parent="FinalHandoffOverlay/FinalHandoffCenter/FinalHandoffPanel/FinalHandoffColumn" unique_id=2147264837]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Người chơi"
+horizontal_alignment = 1
+
+[node name="TutorialDialogueOverlay" type="ColorRect" parent="." unique_id=2002017720]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.015, 0.018, 0.026, 0.42)
+
+[node name="TutorialDialogueLeftPortrait" type="ColorRect" parent="TutorialDialogueOverlay" unique_id=203748745]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 56.0
+offset_top = -300.0
+offset_right = 176.0
+offset_bottom = -132.0
+grow_vertical = 0
+mouse_filter = 2
+color = Color(0.34, 0.68, 0.95, 1)
+
+[node name="TutorialDialogueLeftHead" type="ColorRect" parent="TutorialDialogueOverlay/TutorialDialogueLeftPortrait" unique_id=1258212627]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -26.0
+offset_top = 18.0
+offset_right = 26.0
+offset_bottom = 70.0
+grow_horizontal = 2
+mouse_filter = 2
+color = Color(0.04, 0.06, 0.09, 0.92)
+
+[node name="TutorialDialogueLeftBody" type="ColorRect" parent="TutorialDialogueOverlay/TutorialDialogueLeftPortrait" unique_id=731338858]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -82.0
+offset_right = 40.0
+offset_bottom = -18.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+color = Color(0.04, 0.06, 0.09, 0.92)
+
+[node name="TutorialDialogueRightPortrait" type="ColorRect" parent="TutorialDialogueOverlay" unique_id=100055942]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -176.0
+offset_top = -300.0
+offset_right = -56.0
+offset_bottom = -132.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 2
+color = Color(0.96, 0.62, 0.34, 1)
+
+[node name="TutorialDialogueRightHead" type="ColorRect" parent="TutorialDialogueOverlay/TutorialDialogueRightPortrait" unique_id=1260121528]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -26.0
+offset_top = 18.0
+offset_right = 26.0
+offset_bottom = 70.0
+grow_horizontal = 2
+mouse_filter = 2
+color = Color(0.04, 0.06, 0.09, 0.92)
+
+[node name="TutorialDialogueRightBody" type="ColorRect" parent="TutorialDialogueOverlay/TutorialDialogueRightPortrait" unique_id=1033275462]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -82.0
+offset_right = 40.0
+offset_bottom = -18.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+color = Color(0.04, 0.06, 0.09, 0.92)
+
+[node name="TutorialDialogueBottom" type="MarginContainer" parent="TutorialDialogueOverlay" unique_id=79710117]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 214.0
+offset_top = -168.0
+offset_right = -214.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="TutorialDialoguePanel" type="PanelContainer" parent="TutorialDialogueOverlay/TutorialDialogueBottom" unique_id=1102540959]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="TutorialDialogueColumn" type="VBoxContainer" parent="TutorialDialogueOverlay/TutorialDialogueBottom/TutorialDialoguePanel" unique_id=1833931811]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="TutorialDialogueHeader" type="HBoxContainer" parent="TutorialDialogueOverlay/TutorialDialogueBottom/TutorialDialoguePanel/TutorialDialogueColumn" unique_id=281357659]
+layout_mode = 2
+
+[node name="TutorialDialogueSpeakerLabel" type="Label" parent="TutorialDialogueOverlay/TutorialDialogueBottom/TutorialDialoguePanel/TutorialDialogueColumn/TutorialDialogueHeader" unique_id=590673791]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.95, 0.77, 0.35, 1)
+theme_override_font_sizes/font_size = 15
+text = "Người Dẫn Chuyện"
+
+[node name="TutorialDialogueProgressLabel" type="Label" parent="TutorialDialogueOverlay/TutorialDialogueBottom/TutorialDialoguePanel/TutorialDialogueColumn/TutorialDialogueHeader" unique_id=1111928802]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.56, 0.64, 0.76, 1)
+theme_override_font_sizes/font_size = 12
+text = "1 / 8"
+horizontal_alignment = 2
+
+[node name="TutorialDialogueBody" type="Label" parent="TutorialDialogueOverlay/TutorialDialogueBottom/TutorialDialoguePanel/TutorialDialogueColumn" unique_id=1548360712]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 76)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.93, 0.98, 1)
+theme_override_font_sizes/font_size = 18
+text = "Thoại hướng dẫn"
+autowrap_mode = 2
+
+[node name="TutorialDialogueHint" type="Label" parent="TutorialDialogueOverlay/TutorialDialogueBottom/TutorialDialoguePanel/TutorialDialogueColumn" unique_id=2019516229]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.58, 0.67, 0.8, 1)
+theme_override_font_sizes/font_size = 11
+text = "Nhấn chuột trái hoặc Enter để tiếp tục"
+horizontal_alignment = 2
+
+[node name="RoleReferenceOverlay" type="ColorRect" parent="." unique_id=1880553861]
+unique_name_in_owner = true
+visible = false
+z_index = 40
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.02, 0.025, 0.035, 0.68)
+
+[node name="RoleReferenceCenter" type="CenterContainer" parent="RoleReferenceOverlay" unique_id=1898615904]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+
+[node name="RoleReferencePanel" type="PanelContainer" parent="RoleReferenceOverlay/RoleReferenceCenter" unique_id=1075318277]
+custom_minimum_size = Vector2(420, 260)
+layout_mode = 2
+
+[node name="RoleReferenceColumn" type="VBoxContainer" parent="RoleReferenceOverlay/RoleReferenceCenter/RoleReferencePanel" unique_id=1902577831]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="RoleReferenceTitle" type="Label" parent="RoleReferenceOverlay/RoleReferenceCenter/RoleReferencePanel/RoleReferenceColumn" unique_id=1444599729]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Vai"
+horizontal_alignment = 1
+
+[node name="RoleReferenceBody" type="RichTextLabel" parent="RoleReferenceOverlay/RoleReferenceCenter/RoleReferencePanel/RoleReferenceColumn" unique_id=1053155491]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/normal_font_size = 13
+theme_override_font_sizes/bold_font_size = 13
+theme_override_font_sizes/bold_italics_font_size = 13
+theme_override_font_sizes/italics_font_size = 13
+bbcode_enabled = true
+text = "Luật vai"
+fit_content = true
+
+[node name="RoleReferenceCloseButton" type="Button" parent="RoleReferenceOverlay/RoleReferenceCenter/RoleReferencePanel/RoleReferenceColumn" unique_id=173137738]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Đóng"
+
+[node name="PrivateKnowledgeOverlay" type="ColorRect" parent="." unique_id=1422006986]
+unique_name_in_owner = true
+visible = false
+z_index = 40
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.02, 0.025, 0.035, 0.68)
+
+[node name="PrivateKnowledgeCenter" type="CenterContainer" parent="PrivateKnowledgeOverlay" unique_id=1398078957]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+
+[node name="PrivateKnowledgePanel" type="PanelContainer" parent="PrivateKnowledgeOverlay/PrivateKnowledgeCenter" unique_id=1384897641]
+custom_minimum_size = Vector2(360, 210)
+layout_mode = 2
+
+[node name="PrivateKnowledgeColumn" type="VBoxContainer" parent="PrivateKnowledgeOverlay/PrivateKnowledgeCenter/PrivateKnowledgePanel" unique_id=1337232957]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="PrivateKnowledgeTitle" type="Label" parent="PrivateKnowledgeOverlay/PrivateKnowledgeCenter/PrivateKnowledgePanel/PrivateKnowledgeColumn" unique_id=1073433382]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Hồ sơ riêng"
+horizontal_alignment = 1
+
+[node name="PrivateKnowledgeBody" type="Label" parent="PrivateKnowledgeOverlay/PrivateKnowledgeCenter/PrivateKnowledgePanel/PrivateKnowledgeColumn" unique_id=1897512218]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 13
+text = "Chưa có hồ sơ riêng."
+autowrap_mode = 2
+
+[node name="PrivateKnowledgeCloseButton" type="Button" parent="PrivateKnowledgeOverlay/PrivateKnowledgeCenter/PrivateKnowledgePanel/PrivateKnowledgeColumn" unique_id=1272670223]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Đóng"
+
+[node name="SolverInspectionOverlay" type="ColorRect" parent="."]
+unique_name_in_owner = true
+visible = false
+z_index = 60
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.02, 0.025, 0.035, 0.8)
+
+[node name="SolverInspectionCenter" type="CenterContainer" parent="SolverInspectionOverlay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SolverInspectionPanel" type="PanelContainer" parent="SolverInspectionOverlay/SolverInspectionCenter"]
+custom_minimum_size = Vector2(680, 440)
+layout_mode = 2
+
+[node name="SolverInspectionColumn" type="VBoxContainer" parent="SolverInspectionOverlay/SolverInspectionCenter/SolverInspectionPanel"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="SolverInspectionTitle" type="Label" parent="SolverInspectionOverlay/SolverInspectionCenter/SolverInspectionPanel/SolverInspectionColumn"]
+layout_mode = 2
+text = "Kiểm tra Case (DEV)"
+horizontal_alignment = 1
+
+[node name="SolverInspectionBody" type="RichTextLabel" parent="SolverInspectionOverlay/SolverInspectionCenter/SolverInspectionPanel/SolverInspectionColumn"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(620, 360)
+layout_mode = 2
+size_flags_vertical = 3
+selection_enabled = true
+scroll_active = true
+
+[node name="SolverInspectionCloseButton" type="Button" parent="SolverInspectionOverlay/SolverInspectionCenter/SolverInspectionPanel/SolverInspectionColumn"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Đóng"
+
+[connection signal="pressed" from="SafeMargin/MainColumn/DevNavRow/DevBackButton" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="SafeMargin/MainColumn/HeaderPanel/HeaderRow/BackButton" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="SafeMargin/MainColumn/ContentRoot/InfoPanel/InfoColumn/LeftActionArea/SubmitButton" to="." method="_on_submit_pressed"]
+[connection signal="pressed" from="SafeMargin/MainColumn/ContentRoot/InfoPanel/InfoColumn/LeftActionArea/InvestigateButton" to="." method="_on_investigate_pressed"]
+[connection signal="pressed" from="SafeMargin/MainColumn/ContentRoot/InfoPanel/InfoColumn/LeftActionArea/ConfirmationRow/ConfirmButton" to="." method="_on_confirm_pressed"]
+[connection signal="pressed" from="SafeMargin/MainColumn/ContentRoot/InfoPanel/InfoColumn/LeftActionArea/ConfirmationRow/CancelButton" to="." method="_on_cancel_pressed"]
+[connection signal="pressed" from="SafeMargin/MainColumn/ContentRoot/InfoPanel/InfoColumn/LeftActionArea/FunctionButton" to="." method="_on_function_pressed"]
+[connection signal="pressed" from="TruthRevealPanel/TruthColumn/TruthBackButton" to="." method="_on_back_pressed"]

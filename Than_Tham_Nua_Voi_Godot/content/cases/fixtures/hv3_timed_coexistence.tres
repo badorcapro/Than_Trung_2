@@ -1,0 +1,94 @@
+[gd_resource type="Resource" script_class="CaseDefinition" load_steps=11 format=3]
+
+[ext_resource type="Script" path="res://scripts/domain/cases/CaseDefinition.gd" id="1_case"]
+[ext_resource type="Script" path="res://scripts/domain/cases/SuspectDefinition.gd" id="2_suspect"]
+[ext_resource type="Script" path="res://scripts/domain/cases/OnSolveReward.gd" id="3_reward"]
+[ext_resource type="Script" path="res://scripts/domain/cases/CrimeSceneDefinition.gd" id="4_crime_scene"]
+
+[sub_resource type="Resource" id="OnSolve"]
+script = ExtResource("3_reward")
+reward_id = &"hv3_timed_coexistence_reward"
+reputation_delta = 0
+test_only_not_balance_locked = true
+note = "DEV_ONLY: HV3 timed-coexistence verification has no production reward."
+
+[sub_resource type="Resource" id="CrimeScene"]
+script = ExtResource("4_crime_scene")
+scene_id = &"hv3_timed_coexistence_scene"
+display_name = "Hiện trường luyện tập"
+board_slot = 1
+description = "DEV-only neutral location for Serial Killer timed-coexistence verification."
+
+[sub_resource type="Resource" id="Suspect1"]
+script = ExtResource("2_suspect")
+suspect_id = 1
+board_slot = 0
+true_role_id = &"tailor"
+displayed_role_id = &"tailor"
+true_alignment = 0
+role_group = 0
+truth_reveal_note = "Thợ May thật làm nhân chứng native cho vai giả danh của Sát Nhân Hàng Loạt."
+
+[sub_resource type="Resource" id="Suspect2"]
+script = ExtResource("2_suspect")
+suspect_id = 2
+board_slot = 2
+true_role_id = &"reporter"
+displayed_role_id = &"reporter"
+true_alignment = 0
+role_group = 0
+truth_reveal_note = "Sử Quan là mục tiêu Good duy nhất kề Sát Nhân Hàng Loạt lúc 9h."
+
+[sub_resource type="Resource" id="Suspect3"]
+script = ExtResource("2_suspect")
+suspect_id = 3
+board_slot = 3
+true_role_id = &"tutorial_priest"
+displayed_role_id = &"tutorial_priest"
+true_alignment = 0
+role_group = 0
+truth_reveal_note = "Tư Tế thật cung cấp một hành động điều tra rõ ràng trên timeline HV3."
+
+[sub_resource type="Resource" id="Suspect4"]
+script = ExtResource("2_suspect")
+suspect_id = 4
+board_slot = 5
+true_role_id = &"serial_killer"
+displayed_role_id = &"tailor"
+true_alignment = 1
+role_group = 2
+is_impersonating = true
+impersonated_role_id = &"tailor"
+truth_reveal_note = "Sát Nhân Hàng Loạt mượn Thợ May ở chế độ NÓI DỐI; chức năng và timed event có trạng thái độc lập."
+
+[sub_resource type="Resource" id="Suspect5"]
+script = ExtResource("2_suspect")
+suspect_id = 5
+board_slot = 6
+true_role_id = &"tutorial_scoundrel"
+displayed_role_id = &"tutorial_scoundrel"
+true_alignment = 1
+role_group = 2
+truth_reveal_note = "Kẻ Bất Lương cùng Phe Ác với #4 để kiểm tra kết quả Thợ May bị đảo."
+
+[resource]
+script = ExtResource("1_case")
+case_id = &"hv3_timed_coexistence"
+data_version = 1
+display_name = "HV3 — Timed Coexistence"
+short_description = "DEV-only authored Case for checking Serial Killer timed events remain independent from a borrowed Tailor function."
+difficulty_label = "DEV HV3"
+crime_scene = SubResource("CrimeScene")
+merit_pool = 0
+reputation_penalty_on_wrong = 0
+base_ticket_reward = 0
+on_solve = SubResource("OnSolve")
+suspects = Array[ExtResource("2_suspect")]([SubResource("Suspect1"), SubResource("Suspect2"), SubResource("Suspect3"), SubResource("Suspect4"), SubResource("Suspect5")])
+evil_suspect_ids = PackedInt32Array(4, 5)
+accomplice_suspect_ids = PackedInt32Array(4, 5)
+traitor_suspect_ids = PackedInt32Array()
+suspected_role_ids = Array[StringName]([&"tailor", &"reporter", &"tutorial_priest", &"serial_killer", &"tutorial_scoundrel"])
+suspect_list_role_ids = Array[StringName]([&"tailor", &"reporter", &"tutorial_priest", &"serial_killer", &"tutorial_scoundrel"])
+requires_tailor = true
+test_only_not_balance_locked = true
+balance_note = "DEV_ONLY: HV3 Serial Killer active-first timed-coexistence fixture, not tutorial or production content."

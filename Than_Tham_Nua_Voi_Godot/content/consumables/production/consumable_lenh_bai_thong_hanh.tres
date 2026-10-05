@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ConsumableItemDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/domain/loot/ConsumableItemDefinition.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+item_id = &"consumable_lenh_bai_thong_hanh"
+display_name = "Lệnh Bài Thông Hành"
+description = "Nhận thêm 1 lượt di chuyển trong vòng này."
+effect_type = 2
+magnitude = 1
+duration = 2
+target_scope = 0
+test_only_not_canon_locked = false

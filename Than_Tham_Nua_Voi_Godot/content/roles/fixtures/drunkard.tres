@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="RoleDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" uid="uid://b6jr3q1qufc22" path="res://scripts/domain/roles/RoleDefinition.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+role_id = &"drunkard"
+display_name = "Kẻ Say Rượu"
+role_group = 1
+help_text = "💬 Thân phận thật hiện tại của ta là Kẻ Say Rượu thuộc nhóm Kẻ Bao Đồng sau khi bị Chủ Quán Rượu biến đổi từ một Người Vô Tội. Ta nói dối.
+
+❓ Ta thể hiện một thân phận Phe Thiện không xuất hiện trong Kỳ Án và thông báo theo thân phận đó. Đây là biến đổi, không phải giả danh.
+
+❓ Nếu bị tha hóa, ta vẫn nói dối và không đổi cách thông báo."
+always_lies = true
+is_fixture_placeholder = false

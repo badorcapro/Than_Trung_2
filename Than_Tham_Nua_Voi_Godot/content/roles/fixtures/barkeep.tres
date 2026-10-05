@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="RoleDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" uid="uid://b6jr3q1qufc22" path="res://scripts/domain/roles/RoleDefinition.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+role_id = &"barkeep"
+display_name = "Chủ Quán Rượu"
+role_group = 2
+help_text = "💬 Ta nói dối và giả danh một thân phận được liệt kê.
+
+❗ Ta biến đổi đúng một Người Vô Tội thành Kẻ Say Rượu. Thân phận thật hiện tại của mục tiêu trở thành Kẻ Say Rượu thuộc nhóm Kẻ Bao Đồng; thân phận ban đầu vẫn được lưu riêng.
+
+❓ Kẻ Say Rượu thể hiện một thân phận Phe Thiện không xuất hiện trong Kỳ Án và thông báo theo thân phận đó. Đây là biến đổi, không phải giả danh.
+
+❓ Kẻ Say Rượu được đặt dưới ta trong danh sách THÂN PHẬN, nhưng không được tính là một thân phận được liệt kê riêng. Ta không tạo Kẻ Say Rượu thứ hai."
+always_lies = true
+is_fixture_placeholder = false

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ConsumableItemDefinition" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/domain/loot/ConsumableItemDefinition.gd" id="1"]
+[resource]
+script = ExtResource("1")
+item_id = &"test_extra_action"
+display_name = "TEST Extra Action"
+description = "TEST_ONLY extra movement action"
+effect_type = 2
+magnitude = 1
+duration = 2
+target_scope = 0

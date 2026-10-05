@@ -1,0 +1,125 @@
+[gd_resource type="Resource" script_class="CaseDefinition" load_steps=15 format=3]
+
+[ext_resource type="Script" path="res://scripts/domain/cases/CaseDefinition.gd" id="1_case"]
+[ext_resource type="Script" path="res://scripts/domain/cases/SuspectDefinition.gd" id="2_suspect"]
+[ext_resource type="Script" path="res://scripts/domain/cases/OnSolveReward.gd" id="3_reward"]
+[ext_resource type="Script" path="res://scripts/domain/cases/CrimeSceneDefinition.gd" id="4_crime_scene"]
+
+[sub_resource type="Resource" id="OnSolve"]
+script = ExtResource("3_reward")
+reward_id = &"test_reputation_plus_one"
+reputation_delta = 1
+test_only_not_balance_locked = true
+note = "TEST_ONLY / NOT_BALANCE_LOCKED: +1 Danh Tiếng khi giải đúng."
+
+[sub_resource type="Resource" id="CrimeScene"]
+script = ExtResource("4_crime_scene")
+scene_id = &"crime_scene_001"
+display_name = "Hiện trường"
+board_slot = 4
+description = "Ô trung tâm của Case Board; không phải nghi phạm và không nhận input điều tra."
+
+[sub_resource type="Resource" id="Suspect1"]
+script = ExtResource("2_suspect")
+suspect_id = 1
+board_slot = 0
+true_role_id = &"tailor"
+displayed_role_id = &"tailor"
+true_alignment = 0
+role_group = 0
+truth_reveal_note = "Thợ May fixture; interactive metadata tồn tại nhưng runtime chưa triển khai."
+
+[sub_resource type="Resource" id="Suspect2"]
+script = ExtResource("2_suspect")
+suspect_id = 2
+board_slot = 1
+true_role_id = &"role_good_a"
+displayed_role_id = &"role_good_a"
+true_alignment = 0
+role_group = 0
+truth_reveal_note = "Chính Nhân fixture thụ động."
+
+[sub_resource type="Resource" id="Suspect3"]
+script = ExtResource("2_suspect")
+suspect_id = 3
+board_slot = 2
+true_role_id = &"role_meddler_a"
+displayed_role_id = &"role_meddler_a"
+true_alignment = 0
+role_group = 1
+truth_reveal_note = "Hiếu Sự fixture thụ động."
+
+[sub_resource type="Resource" id="Suspect4"]
+script = ExtResource("2_suspect")
+suspect_id = 4
+board_slot = 3
+true_role_id = &"role_accomplice_a"
+displayed_role_id = &"role_good_a"
+true_alignment = 1
+role_group = 2
+is_impersonating = true
+impersonated_role_id = &"role_good_a"
+truth_reveal_note = "Tòng Phạm fixture giả danh Chính Nhân A; chỉ biểu diễn dữ liệu, chưa có runtime."
+
+[sub_resource type="Resource" id="Suspect5"]
+script = ExtResource("2_suspect")
+suspect_id = 5
+board_slot = 5
+true_role_id = &"role_traitor_a"
+displayed_role_id = &"role_meddler_b"
+true_alignment = 1
+role_group = 3
+is_impersonating = true
+impersonated_role_id = &"role_meddler_b"
+truth_reveal_note = "Nghịch Thần fixture có lớp hiển thị khác; chưa có runtime giả mạo."
+
+[sub_resource type="Resource" id="Suspect6"]
+script = ExtResource("2_suspect")
+suspect_id = 6
+board_slot = 6
+true_role_id = &"role_good_b"
+displayed_role_id = &"role_good_b"
+true_alignment = 0
+role_group = 0
+is_corrupted = true
+truth_reveal_note = "Tha Hóa fixture: chỉ lưu cờ trạng thái, không mặc định nói dối và chưa bóp méo thông tin."
+
+[sub_resource type="Resource" id="Suspect7"]
+script = ExtResource("2_suspect")
+suspect_id = 7
+board_slot = 7
+true_role_id = &"role_good_c"
+displayed_role_id = &"role_good_c"
+true_alignment = 0
+role_group = 0
+truth_reveal_note = "Chính Nhân fixture thụ động."
+
+[sub_resource type="Resource" id="Suspect8"]
+script = ExtResource("2_suspect")
+suspect_id = 8
+board_slot = 8
+true_role_id = &"role_meddler_b"
+displayed_role_id = &"role_meddler_b"
+true_alignment = 0
+role_group = 1
+truth_reveal_note = "Hiếu Sự fixture thụ động."
+
+[resource]
+script = ExtResource("1_case")
+case_id = &"vs_case_001"
+data_version = 1
+display_name = "Kỳ Án Kỹ Thuật 001"
+short_description = "Fixture thủ công phục vụ Data Model và validator; không phải nội dung canon."
+difficulty_label = "TEST_ONLY"
+crime_scene = SubResource("CrimeScene")
+merit_pool = 20
+reputation_penalty_on_wrong = 1
+base_ticket_reward = 1
+on_solve = SubResource("OnSolve")
+suspects = Array[ExtResource("2_suspect")]([SubResource("Suspect1"), SubResource("Suspect2"), SubResource("Suspect3"), SubResource("Suspect4"), SubResource("Suspect5"), SubResource("Suspect6"), SubResource("Suspect7"), SubResource("Suspect8")])
+evil_suspect_ids = PackedInt32Array(4, 5)
+accomplice_suspect_ids = PackedInt32Array(4)
+traitor_suspect_ids = PackedInt32Array(5)
+requires_tailor = true
+test_only_not_balance_locked = true
+balance_note = "TEST_ONLY / NOT_BALANCE_LOCKED: merit 20, wrong reputation -1, base ticket 1, On Solve +1 reputation."

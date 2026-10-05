@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="PerfectPoolEntry" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/domain/economy/PerfectPoolEntry.gd" id="1"]
+[resource]
+script=ExtResource("1")
+entry_id=&"core_ss_stigmata_choice"
+kind=2
+weight=1
+initial_hits=3
+eligible_definition_ids=[&"m5_ss_stig_a",&"m5_ss_stig_b",&"m5_ss_stig_c"]

@@ -1,0 +1,104 @@
+[gd_resource type="Resource" script_class="CaseDefinition" load_steps=12 format=3]
+
+[ext_resource type="Script" path="res://scripts/domain/cases/CaseDefinition.gd" id="1_case"]
+[ext_resource type="Script" path="res://scripts/domain/cases/SuspectDefinition.gd" id="2_suspect"]
+[ext_resource type="Script" path="res://scripts/domain/cases/OnSolveReward.gd" id="3_reward"]
+[ext_resource type="Script" path="res://scripts/domain/cases/CrimeSceneDefinition.gd" id="4_crime_scene"]
+
+[sub_resource type="Resource" id="OnSolve"]
+script = ExtResource("3_reward")
+reward_id = &"hv6_resolution_timed_safety_reward"
+reputation_delta = 0
+test_only_not_balance_locked = true
+note = "DEV_ONLY: HV6 resolution and timed-safety verification has no production reward."
+
+[sub_resource type="Resource" id="CrimeScene"]
+script = ExtResource("4_crime_scene")
+scene_id = &"hv6_resolution_timed_safety_scene"
+display_name = "Hiện trường kiểm chứng"
+board_slot = 4
+description = "DEV-only neutral location for resolution and timed-event verification."
+
+[sub_resource type="Resource" id="Suspect1"]
+script = ExtResource("2_suspect")
+suspect_id = 1
+board_slot = 0
+true_role_id = &"surgeon"
+displayed_role_id = &"surgeon"
+true_alignment = 0
+role_group = 1
+truth_reveal_note = "Bác Sĩ Phẫu Thuật thật; sự kiện 12h dùng runtime timed-event bình thường."
+
+[sub_resource type="Resource" id="Suspect2"]
+script = ExtResource("2_suspect")
+suspect_id = 2
+board_slot = 1
+true_role_id = &"vigilante"
+displayed_role_id = &"vigilante"
+true_alignment = 0
+role_group = 0
+truth_reveal_note = "Sư Tử Phán thật và nói thật."
+
+[sub_resource type="Resource" id="Suspect3"]
+script = ExtResource("2_suspect")
+suspect_id = 3
+board_slot = 2
+true_role_id = &"tutorial_priest"
+displayed_role_id = &"tutorial_priest"
+true_alignment = 0
+role_group = 0
+truth_reveal_note = "Tư Tế thật."
+
+[sub_resource type="Resource" id="Suspect4"]
+script = ExtResource("2_suspect")
+suspect_id = 4
+board_slot = 3
+true_role_id = &"conman"
+displayed_role_id = &"tutorial_priest"
+true_alignment = 1
+role_group = 2
+is_impersonating = true
+impersonated_role_id = &"tutorial_priest"
+truth_reveal_note = "Kẻ Lừa Đảo giả danh Tư Tế và nói thật; Chỉ Điểm đúng không lộ thân phận thật."
+
+[sub_resource type="Resource" id="Suspect5"]
+script = ExtResource("2_suspect")
+suspect_id = 5
+board_slot = 5
+true_role_id = &"tutorial_scoundrel"
+displayed_role_id = &"tutorial_scoundrel"
+true_alignment = 1
+role_group = 2
+truth_reveal_note = "Kẻ Bất Lương được miễn nhiễm khi Kẻ Lừa Đảo còn sống và chưa bị bắt."
+
+[sub_resource type="Resource" id="Suspect6"]
+script = ExtResource("2_suspect")
+suspect_id = 6
+board_slot = 6
+true_role_id = &"reporter"
+displayed_role_id = &"reporter"
+true_alignment = 0
+role_group = 0
+truth_reveal_note = "Sử Quan thật; là nạn nhân Surgeon deterministic của HV6."
+
+[resource]
+script = ExtResource("1_case")
+case_id = &"hv6_resolution_timed_safety"
+data_version = 1
+display_name = "HV6 — Resolution & Timed Safety"
+short_description = "DEV-only authored Case for wrong-player removal, Scoundrel immunity, Conman privacy, dead-Evil resolution, and Surgeon 12h verification."
+difficulty_label = "DEV HV6"
+crime_scene = SubResource("CrimeScene")
+merit_pool = 0
+reputation_penalty_on_wrong = 0
+base_ticket_reward = 0
+on_solve = SubResource("OnSolve")
+suspects = Array[ExtResource("2_suspect")]([SubResource("Suspect1"), SubResource("Suspect2"), SubResource("Suspect3"), SubResource("Suspect4"), SubResource("Suspect5"), SubResource("Suspect6")])
+evil_suspect_ids = PackedInt32Array(4, 5)
+accomplice_suspect_ids = PackedInt32Array(4, 5)
+traitor_suspect_ids = PackedInt32Array()
+suspected_role_ids = Array[StringName]([&"surgeon", &"vigilante", &"tutorial_priest", &"conman", &"tutorial_scoundrel", &"reporter"])
+suspect_list_role_ids = Array[StringName]([&"surgeon", &"vigilante", &"tutorial_priest", &"conman", &"tutorial_scoundrel", &"reporter"])
+dev_runtime_event_seed = 1
+test_only_not_balance_locked = true
+balance_note = "DEV_ONLY / NOT_BALANCE_LOCKED: HV6 resolution and timed-safety human verification fixture."

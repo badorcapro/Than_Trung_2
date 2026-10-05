@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="GachaConfig" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/domain/economy/GachaConfig.gd" id="1"]
+[resource]
+script=ExtResource("1")
+basic_rates={"B":65,"A":25,"S":10}
+rate_up_rates={"B":65,"A":25,"S":10}
+featured_s_split={"RELIC":14,"A":22,"B":22,"C":22,"OTHER_S":20}
+rate_up_pity_scope=0
+rate_up_grants_exchange_material=false
+rate_up_exchange_scope=&"TEST_ONLY_DISABLED"
+perfect_persistence=1
+ss_shop_currency_type=&"TEST_ONLY_SS_SHOP_CURRENCY"
+test_only_not_canon_locked=true

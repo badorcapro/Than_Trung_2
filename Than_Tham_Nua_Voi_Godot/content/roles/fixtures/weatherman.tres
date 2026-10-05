@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="RoleDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" uid="uid://b6jr3q1qufc22" path="res://scripts/domain/roles/RoleDefinition.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+role_id = &"weatherman"
+display_name = "Nhà Khí Tượng"
+help_text = "💬 Khi được điều tra, ta thông báo ba Số Hiệu: một thuộc Người Vô Tội, một thuộc Kẻ Bao Đồng, và một thuộc Thuộc Hạ hoặc Nghịch Thần. Thứ tự ba Số Hiệu không cho biết họ thuộc nhóm nào.
+
+❗Nếu Kỳ Án không có Kẻ Bao Đồng, ta thông báo điều đó và chỉ nêu Số Hiệu của một Người Vô Tội cùng một thân phận Phe Ác. Nếu ta thật sự là Nhà Khí Tượng thuộc Người Vô Tội, ta không thể chọn chính mình; một kẻ giả danh Nhà Khí Tượng vẫn có thể chọn chính họ.
+
+❓Khi ta nói dối hoặc bị tha hóa trong Kỳ Án có Kẻ Bao Đồng, cả ba Số Hiệu đều thuộc Người Vô Tội hoặc Kẻ Bao Đồng."
+is_fixture_placeholder = false

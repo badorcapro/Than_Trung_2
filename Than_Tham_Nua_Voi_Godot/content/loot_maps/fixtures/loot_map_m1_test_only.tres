@@ -1,0 +1,37 @@
+[gd_resource type="Resource" script_class="LootMapDefinition" load_steps=7 format=3]
+[ext_resource type="Script" path="res://scripts/domain/loot/LootMapDefinition.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/domain/loot/LootNodeDefinition.gd" id="2"]
+[sub_resource type="Resource" id="A"]
+script = ExtResource("2")
+node_id = &"spawn_test_1"
+node_kind = &"ORIGIN_SPAWN"
+origin_house_id = &"test_house_a"
+outgoing_neighbor_ids = Array[StringName]([&"center_test"])
+[sub_resource type="Resource" id="B"]
+script = ExtResource("2")
+node_id = &"spawn_test_2"
+node_kind = &"ORIGIN_SPAWN"
+origin_house_id = &"test_house_b"
+outgoing_neighbor_ids = Array[StringName]([&"center_test"])
+[sub_resource type="Resource" id="C"]
+script = ExtResource("2")
+node_id = &"spawn_test_3"
+node_kind = &"ORIGIN_SPAWN"
+origin_house_id = &"test_house_c"
+outgoing_neighbor_ids = Array[StringName]([&"center_test"])
+[sub_resource type="Resource" id="Center"]
+script = ExtResource("2")
+node_id = &"center_test"
+node_kind = &"CENTRAL"
+tags = Array[StringName]([&"CENTRAL", &"SHARED"])
+outgoing_neighbor_ids = Array[StringName]([&"lower_test"])
+[sub_resource type="Resource" id="Lower"]
+script = ExtResource("2")
+node_id = &"lower_test"
+node_kind = &"LOWER_PATH"
+[resource]
+script = ExtResource("1")
+map_id = &"test_map_m1"
+nodes = Array[ExtResource("2")]([SubResource("A"), SubResource("B"), SubResource("C"), SubResource("Center"), SubResource("Lower")])
+origin_spawn_by_house = {&"test_house_a": &"spawn_test_1", &"test_house_b": &"spawn_test_2", &"test_house_c": &"spawn_test_3"}
+test_only_not_canon_locked = true

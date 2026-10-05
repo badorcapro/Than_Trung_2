@@ -1,0 +1,125 @@
+[gd_resource type="Resource" script_class="CaseDefinition" load_steps=13 format=3]
+
+[ext_resource type="Script" path="res://scripts/domain/cases/CaseDefinition.gd" id="1_case"]
+[ext_resource type="Script" path="res://scripts/domain/cases/SuspectDefinition.gd" id="2_suspect"]
+[ext_resource type="Script" path="res://scripts/domain/cases/OnSolveReward.gd" id="3_reward"]
+[ext_resource type="Script" path="res://scripts/domain/cases/CrimeSceneDefinition.gd" id="4_crime_scene"]
+
+[sub_resource type="Resource" id="OnSolve"]
+script = ExtResource("3_reward")
+reward_id = &"tutorial_case_006_reward"
+reputation_delta = 1
+test_only_not_balance_locked = true
+note = "TEST_ONLY / NOT_BALANCE_LOCKED: tutorial transform and taint fixture only."
+
+[sub_resource type="Resource" id="CrimeScene"]
+script = ExtResource("4_crime_scene")
+scene_id = &"tutorial_scene_006"
+display_name = "Hiện trường biến đổi"
+board_slot = 4
+description = "Một hiện trường hướng dẫn cho tha hóa, biến đổi vai, và thông tin phụ thuộc vai hiện tại."
+
+[sub_resource type="Resource" id="Suspect1"]
+script = ExtResource("2_suspect")
+suspect_id = 1
+board_slot = 0
+true_role_id = &"poisoner"
+displayed_role_id = &"reporter"
+true_alignment = 1
+role_group = 2
+is_impersonating = true
+impersonated_role_id = &"reporter"
+authored_lie_numeric_value = 3
+truth_reveal_note = "Độc Sư giả danh Sử Quan."
+
+[sub_resource type="Resource" id="Suspect2"]
+script = ExtResource("2_suspect")
+suspect_id = 2
+board_slot = 1
+true_role_id = &"tutorial_priest"
+displayed_role_id = &"tutorial_priest"
+true_alignment = 0
+role_group = 0
+public_investigation_statement = "Ta là Thầy Tu."
+truth_reveal_note = "Tư Tế bị Độc Sư tha hóa từ đầu Kỳ Án."
+
+[sub_resource type="Resource" id="Suspect3"]
+script = ExtResource("2_suspect")
+suspect_id = 3
+board_slot = 2
+true_role_id = &"barkeep"
+displayed_role_id = &"reporter"
+true_alignment = 1
+role_group = 2
+is_impersonating = true
+impersonated_role_id = &"reporter"
+authored_lie_numeric_value = 4
+truth_reveal_note = "Chủ Quán Rượu giả danh Sử Quan."
+
+[sub_resource type="Resource" id="Suspect4"]
+script = ExtResource("2_suspect")
+suspect_id = 4
+board_slot = 5
+true_role_id = &"reporter"
+displayed_role_id = &"reporter"
+true_alignment = 0
+role_group = 0
+truth_reveal_note = "Sử Quan vẫn là Người Vô Tội."
+
+[sub_resource type="Resource" id="Suspect5"]
+script = ExtResource("2_suspect")
+suspect_id = 5
+board_slot = 6
+true_role_id = &"blood_hound"
+displayed_role_id = &"blood_hound"
+true_alignment = 0
+role_group = 0
+truth_reveal_note = "Ngự Khuyển Quan chỉ hướng Bắc đến Phe Ác gần nhất."
+
+[sub_resource type="Resource" id="Suspect6"]
+script = ExtResource("2_suspect")
+suspect_id = 6
+board_slot = 7
+true_role_id = &"mailman"
+displayed_role_id = &"mailman"
+true_alignment = 0
+role_group = 0
+mailman_claimed_in_play_role_id = &"mathematician"
+mailman_claimed_not_in_play_role_id = &"drunkard"
+truth_reveal_note = "Kẻ Say Rượu giả danh Dịch Phu."
+
+[sub_resource type="Resource" id="Suspect7"]
+script = ExtResource("2_suspect")
+suspect_id = 7
+board_slot = 8
+true_role_id = &"therapist"
+displayed_role_id = &"therapist"
+true_alignment = 0
+role_group = 0
+truth_reveal_note = "Ngự Y vẫn là Người Vô Tội."
+
+[resource]
+script = ExtResource("1_case")
+case_id = &"tutorial_case_006"
+data_version = 1
+display_name = "Hướng Dẫn 06: Tha Hóa và Biến Đổi"
+short_description = "Tutorial về Độc Sư, Chủ Quán Rượu, Kẻ Say Rượu, Ngự Khuyển Quan, và Dịch Phu đọc vai hiện tại sau biến đổi."
+difficulty_label = "TUTORIAL"
+crime_scene = SubResource("CrimeScene")
+merit_pool = 9
+reputation_penalty_on_wrong = 1
+base_ticket_reward = 0
+on_solve = SubResource("OnSolve")
+suspects = Array[ExtResource("2_suspect")]([SubResource("Suspect1"), SubResource("Suspect2"), SubResource("Suspect3"), SubResource("Suspect4"), SubResource("Suspect5"), SubResource("Suspect6"), SubResource("Suspect7")])
+evil_suspect_ids = PackedInt32Array(1, 3)
+accomplice_suspect_ids = PackedInt32Array(1, 3)
+traitor_suspect_ids = PackedInt32Array()
+suspected_role_ids = Array[StringName]([&"reporter", &"therapist", &"blood_hound", &"tutorial_priest", &"mailman", &"mathematician", &"barkeep", &"poisoner"])
+suspect_list_role_ids = Array[StringName]([&"reporter", &"therapist", &"blood_hound", &"tutorial_priest", &"mailman", &"mathematician", &"barkeep", &"poisoner"])
+nested_suspect_list_role_ids_by_parent = {&"barkeep": Array[StringName]([&"drunkard"])}
+startup_poisoner_source_suspect_id = 1
+startup_poisoner_target_suspect_id = 2
+startup_barkeep_source_suspect_id = 3
+startup_barkeep_target_suspect_id = 6
+test_only_not_balance_locked = true
+balance_note = "TEST_ONLY / NOT_BALANCE_LOCKED: Tutorial 06 integration fixture for Poisoner taint, Barkeep transformation, Blood Hound, Drunkard, and Mailman current-role truth."

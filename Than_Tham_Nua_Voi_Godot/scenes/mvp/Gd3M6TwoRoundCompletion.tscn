@@ -1,0 +1,179 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/presentation/mvp/Gd3M6TwoRoundCompletionController.gd" id="1"]
+[ext_resource type="Theme" path="res://themes/AppTheme.tres" id="2"]
+
+[node name="Gd3M6TwoRoundCompletion" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2")
+script = ExtResource("1")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.035, 0.045, 0.07, 1)
+
+[node name="Main" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 10.0
+offset_right = -12.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 8
+
+[node name="Header" type="HBoxContainer" parent="Main"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="Main/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 22
+text = "GĐ3-M6 — Bounded Two-Round Completion · TEST_ONLY / PROTOTYPE"
+autowrap_mode = 2
+
+[node name="Back" type="Button" parent="Main/Header"]
+layout_mode = 2
+text = "Back to DebugHome"
+
+[node name="StatusLabel" type="Label" parent="Main"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Building actual M5 Round 2 endpoint…"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Body" type="HSplitContainer" parent="Main"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+split_offset = 770
+
+[node name="StatePanel" type="PanelContainer" parent="Main/Body"]
+custom_minimum_size = Vector2(560, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="StateScroll" type="ScrollContainer" parent="Main/Body/StatePanel"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="StateText" type="RichTextLabel" parent="Main/Body/StatePanel/StateScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+bbcode_enabled = true
+fit_content = true
+autowrap_mode = 2
+
+[node name="ActionPanel" type="PanelContainer" parent="Main/Body"]
+custom_minimum_size = Vector2(360, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ActionScroll" type="ScrollContainer" parent="Main/Body/ActionPanel"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="Actions" type="VBoxContainer" parent="Main/Body/ActionPanel/ActionScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="LootTitle" type="Label" parent="Main/Body/ActionPanel/ActionScroll/Actions"]
+layout_mode = 2
+text = "Round 2 Loot"
+horizontal_alignment = 1
+
+[node name="UseItem" type="Button" parent="Main/Body/ActionPanel/ActionScroll/Actions"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Use Test Item"
+
+[node name="ContinueItem" type="Button" parent="Main/Body/ActionPanel/ActionScroll/Actions"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Continue Without Item"
+
+[node name="Move" type="Button" parent="Main/Body/ActionPanel/ActionScroll/Actions"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Roll + Move"
+
+[node name="SkipOverflow" type="Button" parent="Main/Body/ActionPanel/ActionScroll/Actions"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Skip Overflow Incoming"
+
+[node name="BeginConfirmation" type="Button" parent="Main/Body/ActionPanel/ActionScroll/Actions"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Begin Loot End Confirmation"
+
+[node name="ConfirmLootEnd" type="Button" parent="Main/Body/ActionPanel/ActionScroll/Actions"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Current Player Confirms"
+
+[node name="ManagementTitle" type="Label" parent="Main/Body/ActionPanel/ActionScroll/Actions"]
+layout_mode = 2
+text = "Equipment Management"
+horizontal_alignment = 1
+
+[node name="GrantEquip" type="Button" parent="Main/Body/ActionPanel/ActionScroll/Actions"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Grant + Equip Test Relic"
+
+[node name="BasicGacha" type="Button" parent="Main/Body/ActionPanel/ActionScroll/Actions"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Basic Gacha Roll"
+
+[node name="ManagementDone" type="Button" parent="Main/Body/ActionPanel/ActionScroll/Actions"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Current Player Done"
+
+[node name="CommitRoundEnd" type="Button" parent="Main/Body/ActionPanel/ActionScroll/Actions"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Commit Round 2 End"
+
+[node name="DuplicateRoundEnd" type="Button" parent="Main/Body/ActionPanel/ActionScroll/Actions"]
+layout_mode = 2
+text = "Try Duplicate Round End"
+
+[connection signal="pressed" from="Main/Header/Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="Main/Body/ActionPanel/ActionScroll/Actions/UseItem" to="." method="_on_use_item_pressed"]
+[connection signal="pressed" from="Main/Body/ActionPanel/ActionScroll/Actions/ContinueItem" to="." method="_on_continue_item_pressed"]
+[connection signal="pressed" from="Main/Body/ActionPanel/ActionScroll/Actions/Move" to="." method="_on_move_pressed"]
+[connection signal="pressed" from="Main/Body/ActionPanel/ActionScroll/Actions/SkipOverflow" to="." method="_on_skip_overflow_pressed"]
+[connection signal="pressed" from="Main/Body/ActionPanel/ActionScroll/Actions/BeginConfirmation" to="." method="_on_begin_confirmation_pressed"]
+[connection signal="pressed" from="Main/Body/ActionPanel/ActionScroll/Actions/ConfirmLootEnd" to="." method="_on_confirm_loot_end_pressed"]
+[connection signal="pressed" from="Main/Body/ActionPanel/ActionScroll/Actions/GrantEquip" to="." method="_on_grant_equip_pressed"]
+[connection signal="pressed" from="Main/Body/ActionPanel/ActionScroll/Actions/BasicGacha" to="." method="_on_basic_gacha_pressed"]
+[connection signal="pressed" from="Main/Body/ActionPanel/ActionScroll/Actions/ManagementDone" to="." method="_on_management_done_pressed"]
+[connection signal="pressed" from="Main/Body/ActionPanel/ActionScroll/Actions/CommitRoundEnd" to="." method="_on_commit_round_end_pressed"]
+[connection signal="pressed" from="Main/Body/ActionPanel/ActionScroll/Actions/DuplicateRoundEnd" to="." method="_on_duplicate_round_end_pressed"]

@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="RoleDefinition" format=3 uid="uid://bgxe4ydmrx6rk"]
+
+[ext_resource type="Script" uid="uid://b6jr3q1qufc22" path="res://scripts/domain/roles/RoleDefinition.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+role_id = &"vigilante"
+display_name = "Sư Tử Phán"
+help_text = "💬 Chức năng: Chọn đúng một mục tiêu. Nếu mục tiêu thật sự thuộc Phe Ác, ta giết họ; nếu không, không có chuyện gì xảy ra.
+
+❗ Ta có thể chọn chính mình. Chức năng này chỉ dùng được một lần.
+
+❓ Khi ta nói dối hoặc bị tha hóa, đòn đánh luôn hụt."
+has_interactive_function = true
+function_type = 2
+usage_limit = 1
+unlock_timing = 1
+target_count = 1
+is_fixture_placeholder = false

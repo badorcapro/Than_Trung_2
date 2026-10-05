@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="RoleDefinition" format=3 uid="uid://dnnhuoi8bsk3f"]
+
+[ext_resource type="Script" uid="uid://b6jr3q1qufc22" path="res://scripts/domain/roles/RoleDefinition.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+role_id = &"therapist"
+display_name = "Ngự Y"
+help_text = "💬 Khi được điều tra, ta thông báo có bao nhiêu nghi phạm có thân phận thật thuộc Phe Ác nằm kề ta theo bốn hướng Bắc, Đông, Nam và Tây. Địa điểm và ô trống không được tính.
+
+❓Khi ta nói dối hoặc bị tha hóa, ta thông báo một con số từ 0 đến 4 và số đó khác kết quả thật."
+is_fixture_placeholder = false

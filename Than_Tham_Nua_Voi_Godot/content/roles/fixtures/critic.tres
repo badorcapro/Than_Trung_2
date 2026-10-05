@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="RoleDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" uid="uid://b6jr3q1qufc22" path="res://scripts/domain/roles/RoleDefinition.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+role_id = &"critic"
+display_name = "Nhà Phê Bình"
+role_group = 3
+help_text = "💬 Ta nói dối. Ta giả danh một thân phận được liệt kê nhưng không xuất hiện trong Kỳ Án.
+
+❗ Mỗi lần mất Danh Tiếng, ta mất gấp đôi mức thông thường.
+
+❗ Khi xác định thứ tự lượt, Danh Tiếng hiệu lực của ta không bao giờ cao hơn mức Kém."
+always_lies = true
+reputation_loss_multiplier = 2
+effective_turn_reputation_override = 2
+pretend_role_must_be_not_true_in_play = true
+is_fixture_placeholder = false

@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="RoleDefinition" format=3 uid="uid://nthfhyqfq2wf"]
+
+[ext_resource type="Script" uid="uid://b6jr3q1qufc22" path="res://scripts/domain/roles/RoleDefinition.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+role_id = &"tutorial_scoundrel"
+display_name = "Kẻ Bất Lương"
+role_group = 2
+help_text = "💬 Khi được điều tra, ta chỉ để lộ tên thân phận và không thông báo gì.
+
+❗ Ta không thể bị bắt hoặc bị giết, trừ khi ta là thân phận Phe Ác thật sự duy nhất còn sống và chưa bị bắt. Những thân phận Phe Thiện chỉ trông giống Phe Ác không được tính vào điều kiện này.
+
+❗ Một lần Chỉ Điểm thất bại vào ta vẫn làm thời gian trôi qua. Việc giết một thân phận Phe Ác không thay cho Chỉ Điểm hoặc Phán Quyết Cuối.
+
+❓ Khi bị tha hóa, ta có thể bị bắt hoặc bị giết dù chưa phải là thân phận Phe Ác cuối cùng."
+is_fixture_placeholder = false

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="RoleDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" uid="uid://b6jr3q1qufc22" path="res://scripts/domain/roles/RoleDefinition.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+role_id = &"blood_hound"
+display_name = "Ngự Khuyển Quan"
+role_group = 0
+help_text = "💬 Khi được điều tra, Hao Khuyển của ta chỉ về hướng có nghi phạm mang thân phận thật thuộc Phe Ác gần nhất trên cùng hàng hoặc cùng cột. Nếu nhiều nghi phạm Phe Ác gần nhất ở khoảng cách bằng nhau, Hao Khuyển sẽ sủa. Nếu không có Phe Ác ở bốn hướng chính, Hao Khuyển sẽ nằm im.
+
+❓Khi ta nói dối hoặc bị tha hóa, Hao Khuyển đưa ra một kết quả khác sự thật trong các khả năng: Bắc, Đông, Nam, Tây, sủa hoặc nằm im."
+is_fixture_placeholder = false

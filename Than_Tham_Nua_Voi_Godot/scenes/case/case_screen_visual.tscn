@@ -1,0 +1,82 @@
+[gd_scene format=3 uid="uid://devuh7fabthx0"]
+
+[node name="CaseScreenVisual" type="Control" unique_id=1531715148]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="ColorRect" parent="." unique_id=857541778]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.06666667, 0.07450981, 0.09411765, 1)
+
+[node name="SafeMargin" type="MarginContainer" parent="." unique_id=2144558682]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="MainVBox" type="VBoxContainer" parent="SafeMargin" unique_id=2026862573]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Header" type="PanelContainer" parent="SafeMargin/MainVBox" unique_id=1753227942]
+custom_minimum_size = Vector2(0, 56)
+layout_mode = 2
+
+[node name="MainContent" type="HBoxContainer" parent="SafeMargin/MainVBox" unique_id=699452895]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 28
+
+[node name="BoardPanel" type="PanelContainer" parent="SafeMargin/MainVBox/MainContent" unique_id=1925522554]
+layout_mode = 2
+
+[node name="BoardMargin" type="MarginContainer" parent="SafeMargin/MainVBox/MainContent/BoardPanel" unique_id=915075275]
+layout_mode = 2
+
+[node name="BoardGrid" type="GridContainer" parent="SafeMargin/MainVBox/MainContent/BoardPanel/BoardMargin" unique_id=1527621647]
+layout_mode = 2
+
+[node name="Slot01" type="PanelContainer" parent="SafeMargin/MainVBox/MainContent/BoardPanel/BoardMargin/BoardGrid" unique_id=308787233]
+layout_mode = 2
+
+[node name="Slot02" type="PanelContainer" parent="SafeMargin/MainVBox/MainContent/BoardPanel/BoardMargin/BoardGrid" unique_id=1677294237]
+layout_mode = 2
+
+[node name="Slot03" type="PanelContainer" parent="SafeMargin/MainVBox/MainContent/BoardPanel/BoardMargin/BoardGrid" unique_id=92664763]
+layout_mode = 2
+
+[node name="Slot04" type="PanelContainer" parent="SafeMargin/MainVBox/MainContent/BoardPanel/BoardMargin/BoardGrid" unique_id=1320282185]
+layout_mode = 2
+
+[node name="Slot05" type="PanelContainer" parent="SafeMargin/MainVBox/MainContent/BoardPanel/BoardMargin/BoardGrid" unique_id=1636914390]
+layout_mode = 2
+
+[node name="Slot06" type="PanelContainer" parent="SafeMargin/MainVBox/MainContent/BoardPanel/BoardMargin/BoardGrid" unique_id=1917465407]
+layout_mode = 2
+
+[node name="Slot07" type="PanelContainer" parent="SafeMargin/MainVBox/MainContent/BoardPanel/BoardMargin/BoardGrid" unique_id=1140068855]
+layout_mode = 2
+
+[node name="Slot08" type="PanelContainer" parent="SafeMargin/MainVBox/MainContent/BoardPanel/BoardMargin/BoardGrid" unique_id=20046303]
+layout_mode = 2
+
+[node name="Slot09" type="PanelContainer" parent="SafeMargin/MainVBox/MainContent/BoardPanel/BoardMargin/BoardGrid" unique_id=1547425685]
+layout_mode = 2
+
+[node name="InfoPanel" type="PanelContainer" parent="SafeMargin/MainVBox/MainContent" unique_id=1872721139]
+layout_mode = 2

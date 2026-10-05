@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://b7d07ctqbtiei"]
+
+[ext_resource type="Script" uid="uid://b8m6gon81ih4c" path="res://scripts/presentation/case_gameplay/CaseBoardController.gd" id="1"]
+[ext_resource type="PackedScene" path="res://scenes/case_gameplay/SuspectCard.tscn" id="2"]
+
+[node name="CaseBoard" type="PanelContainer" unique_id=1428616118]
+size_flags_horizontal = 4
+size_flags_vertical = 0
+script = ExtResource("1")
+card_scene = ExtResource("2")
+
+[node name="BoardColumn" type="VBoxContainer" parent="." unique_id=628278125]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="BoardTitle" type="Label" parent="BoardColumn" unique_id=690119794]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.88, 0.92, 1, 1)
+theme_override_font_sizes/font_size = 16
+text = "Bàn Kỳ Án"
+horizontal_alignment = 1
+
+[node name="Grid" type="GridContainer" parent="BoardColumn" unique_id=735047459]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 10
+columns = 3

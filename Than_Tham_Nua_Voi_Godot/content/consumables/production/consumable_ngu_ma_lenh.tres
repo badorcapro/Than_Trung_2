@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ConsumableItemDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/domain/loot/ConsumableItemDefinition.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+item_id = &"consumable_ngu_ma_lenh"
+display_name = "Ngự Mã Lệnh"
+description = "Tăng 1 Tốc độ cho lần di chuyển kế tiếp."
+effect_type = 1
+magnitude = 1
+duration = 0
+target_scope = 0
+test_only_not_canon_locked = false

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="PerfectPoolEntry" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/domain/economy/PerfectPoolEntry.gd" id="1"]
+[resource]
+script=ExtResource("1")
+entry_id=&"regular_exp"
+kind=0
+weight=30
+initial_hits=5
+reward_amount_per_hit=5
+resource_type=&"EXP"

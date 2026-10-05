@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="RoleDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" uid="uid://b6jr3q1qufc22" path="res://scripts/domain/roles/RoleDefinition.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+role_id = &"clock_maker"
+display_name = "Thợ Đồng Hồ"
+role_group = 0
+help_text = "💬 Khi được điều tra, ta thông báo khoảng hai giờ liên tiếp mà Tháp Đồng Hồ sẽ reo.
+
+❗ Khi ta là một thân phận được liệt kê, Tháp Đồng Hồ xuất hiện trên Bàn Kỳ Án. Ta được xem là một thân phận tự xác thực.
+
+❓ Khi ta nói dối hoặc bị tha hóa, ta thông báo một khoảng hai giờ liên tiếp mà Tháp Đồng Hồ sẽ không reo."
+is_fixture_placeholder = false

@@ -1,0 +1,306 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/presentation/mvp/Gd3M4RoundCompletionController.gd" id="1"]
+[ext_resource type="Theme" path="res://themes/AppTheme.tres" id="2"]
+
+[node name="Gd3M4RoundCompletion" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2")
+script = ExtResource("1")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.035, 0.045, 0.07, 1)
+
+[node name="Main" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 10.0
+offset_right = -12.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 8
+
+[node name="Header" type="HBoxContainer" parent="Main"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="Main/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 22
+text = "GĐ3-M4 — Integrated Round Completion · TEST_ONLY / PROTOTYPE"
+autowrap_mode = 2
+
+[node name="Back" type="Button" parent="Main/Header"]
+layout_mode = 2
+text = "Back to DebugHome"
+
+[node name="StatusLabel" type="Label" parent="Main"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Initializing integrated Round…"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Stage" type="Control" parent="Main"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="CaseHost" type="Control" parent="Main/Stage"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SettlementPanel" type="PanelContainer" parent="Main/Stage"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Column" type="VBoxContainer" parent="Main/Stage/SettlementPanel"]
+layout_mode = 2
+
+[node name="Scroll" type="ScrollContainer" parent="Main/Stage/SettlementPanel/Column"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="SettlementText" type="RichTextLabel" parent="Main/Stage/SettlementPanel/Column/Scroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+bbcode_enabled = true
+fit_content = true
+autowrap_mode = 2
+
+[node name="ContinueToLoot" type="Button" parent="Main/Stage/SettlementPanel/Column"]
+layout_mode = 2
+text = "Continue to Actual Loot"
+
+[node name="LootPanel" type="PanelContainer" parent="Main/Stage"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Column" type="VBoxContainer" parent="Main/Stage/LootPanel"]
+layout_mode = 2
+
+[node name="LootScroll" type="ScrollContainer" parent="Main/Stage/LootPanel/Column"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="LootText" type="RichTextLabel" parent="Main/Stage/LootPanel/Column/LootScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+bbcode_enabled = true
+fit_content = true
+autowrap_mode = 2
+
+[node name="Actions" type="GridContainer" parent="Main/Stage/LootPanel/Column"]
+layout_mode = 2
+columns = 3
+
+[node name="UseItem" type="Button" parent="Main/Stage/LootPanel/Column/Actions"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Use Test Item"
+
+[node name="ContinueItem" type="Button" parent="Main/Stage/LootPanel/Column/Actions"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Continue Without Item"
+
+[node name="Move" type="Button" parent="Main/Stage/LootPanel/Column/Actions"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Roll + Move"
+
+[node name="SkipOverflow" type="Button" parent="Main/Stage/LootPanel/Column/Actions"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Skip Overflow Incoming"
+
+[node name="BeginConfirmation" type="Button" parent="Main/Stage/LootPanel/Column/Actions"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Begin Loot End Confirmation"
+
+[node name="ConfirmPanel" type="PanelContainer" parent="Main/Stage"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Column" type="VBoxContainer" parent="Main/Stage/ConfirmPanel"]
+layout_mode = 2
+
+[node name="ConfirmText" type="RichTextLabel" parent="Main/Stage/ConfirmPanel/Column"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+autowrap_mode = 2
+
+[node name="ConfirmLootEnd" type="Button" parent="Main/Stage/ConfirmPanel/Column"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Current Player Confirms Loot End"
+
+[node name="ManagementPanel" type="PanelContainer" parent="Main/Stage"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Column" type="VBoxContainer" parent="Main/Stage/ManagementPanel"]
+layout_mode = 2
+
+[node name="ManagementScroll" type="ScrollContainer" parent="Main/Stage/ManagementPanel/Column"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="ManagementText" type="RichTextLabel" parent="Main/Stage/ManagementPanel/Column/ManagementScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+bbcode_enabled = true
+fit_content = true
+autowrap_mode = 2
+
+[node name="ManagementActions" type="GridContainer" parent="Main/Stage/ManagementPanel/Column"]
+unique_name_in_owner = true
+layout_mode = 2
+columns = 2
+
+[node name="GrantEquip" type="Button" parent="Main/Stage/ManagementPanel/Column/ManagementActions"]
+layout_mode = 2
+text = "Grant + Equip Test Relic"
+
+[node name="GrantSet" type="Button" parent="Main/Stage/ManagementPanel/Column/ManagementActions"]
+layout_mode = 2
+text = "Grant + Equip Test Set"
+
+[node name="Unequip" type="Button" parent="Main/Stage/ManagementPanel/Column/ManagementActions"]
+layout_mode = 2
+text = "Unequip Relic"
+
+[node name="BasicGacha" type="Button" parent="Main/Stage/ManagementPanel/Column/ManagementActions"]
+layout_mode = 2
+text = "Basic Gacha Roll"
+
+[node name="RateUp" type="Button" parent="Main/Stage/ManagementPanel/Column/ManagementActions"]
+layout_mode = 2
+text = "Rate Up Roll"
+
+[node name="Perfect" type="Button" parent="Main/Stage/ManagementPanel/Column/ManagementActions"]
+layout_mode = 2
+text = "Perfect Spin"
+
+[node name="ResolveChoice" type="Button" parent="Main/Stage/ManagementPanel/Column/ManagementActions"]
+layout_mode = 2
+text = "Resolve Pending Choice"
+
+[node name="SSShop" type="Button" parent="Main/Stage/ManagementPanel/Column/ManagementActions"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "SS Shop"
+
+[node name="Gold" type="Button" parent="Main/Stage/ManagementPanel/Column/ManagementActions"]
+layout_mode = 2
+text = "Upgrade Equipped Relic Gold"
+
+[node name="Purple" type="Button" parent="Main/Stage/ManagementPanel/Column/ManagementActions"]
+layout_mode = 2
+text = "Purple Promote (Test Duplicate)"
+
+[node name="ManagementDone" type="Button" parent="Main/Stage/ManagementPanel/Column/ManagementActions"]
+layout_mode = 2
+text = "Current Player Done"
+
+[node name="CommitRoundEnd" type="Button" parent="Main/Stage/ManagementPanel/Column/ManagementActions"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Commit Round End"
+
+[node name="RoundEndPanel" type="PanelContainer" parent="Main/Stage"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RoundEndSummary" type="RichTextLabel" parent="Main/Stage/RoundEndPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+bbcode_enabled = true
+autowrap_mode = 2
+
+[connection signal="pressed" from="Main/Header/Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="Main/Stage/SettlementPanel/Column/ContinueToLoot" to="." method="_on_continue_to_loot_pressed"]
+[connection signal="pressed" from="Main/Stage/LootPanel/Column/Actions/UseItem" to="." method="_on_use_item_pressed"]
+[connection signal="pressed" from="Main/Stage/LootPanel/Column/Actions/ContinueItem" to="." method="_on_continue_item_pressed"]
+[connection signal="pressed" from="Main/Stage/LootPanel/Column/Actions/Move" to="." method="_on_move_pressed"]
+[connection signal="pressed" from="Main/Stage/LootPanel/Column/Actions/SkipOverflow" to="." method="_on_skip_overflow_pressed"]
+[connection signal="pressed" from="Main/Stage/LootPanel/Column/Actions/BeginConfirmation" to="." method="_on_begin_confirmation_pressed"]
+[connection signal="pressed" from="Main/Stage/ConfirmPanel/Column/ConfirmLootEnd" to="." method="_on_confirm_loot_end_pressed"]
+[connection signal="pressed" from="Main/Stage/ManagementPanel/Column/ManagementActions/GrantEquip" to="." method="_on_grant_equip_pressed"]
+[connection signal="pressed" from="Main/Stage/ManagementPanel/Column/ManagementActions/GrantSet" to="." method="_on_grant_set_pressed"]
+[connection signal="pressed" from="Main/Stage/ManagementPanel/Column/ManagementActions/Unequip" to="." method="_on_unequip_pressed"]
+[connection signal="pressed" from="Main/Stage/ManagementPanel/Column/ManagementActions/BasicGacha" to="." method="_on_basic_gacha_pressed"]
+[connection signal="pressed" from="Main/Stage/ManagementPanel/Column/ManagementActions/RateUp" to="." method="_on_rate_up_pressed"]
+[connection signal="pressed" from="Main/Stage/ManagementPanel/Column/ManagementActions/Perfect" to="." method="_on_perfect_pressed"]
+[connection signal="pressed" from="Main/Stage/ManagementPanel/Column/ManagementActions/ResolveChoice" to="." method="_on_choice_pressed"]
+[connection signal="pressed" from="Main/Stage/ManagementPanel/Column/ManagementActions/SSShop" to="." method="_on_ss_shop_pressed"]
+[connection signal="pressed" from="Main/Stage/ManagementPanel/Column/ManagementActions/Gold" to="." method="_on_gold_pressed"]
+[connection signal="pressed" from="Main/Stage/ManagementPanel/Column/ManagementActions/Purple" to="." method="_on_purple_pressed"]
+[connection signal="pressed" from="Main/Stage/ManagementPanel/Column/ManagementActions/ManagementDone" to="." method="_on_management_done_pressed"]
+[connection signal="pressed" from="Main/Stage/ManagementPanel/Column/ManagementActions/CommitRoundEnd" to="." method="_on_commit_round_end_pressed"]

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="RewardDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/domain/loot/RewardDefinition.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+reward_id = &"prod_equipment_exp_large"
+reward_type = 3
+amount = 6
+repeat_policy = 0
+test_only_not_canon_locked = false

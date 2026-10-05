@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="RoleDefinition" format=3 uid="uid://2lhgi4utc7n8"]
+
+[ext_resource type="Script" uid="uid://b6jr3q1qufc22" path="res://scripts/domain/roles/RoleDefinition.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+role_id = &"reporter"
+display_name = "Sử Quan"
+help_text = "💬 Khi được điều tra, ta thông báo số bước ngắn nhất để đến nghi phạm có thân phận thật thuộc Phe Ác gần nhất. Ta chỉ đi theo bốn hướng Bắc, Đông, Nam và Tây; ô ta đang đứng không tính là một bước. Đường đi có thể qua ô nghi phạm, địa điểm hoặc ô trống.
+
+❓Khi ta nói dối hoặc bị tha hóa, ta thông báo một số bước từ 1 đến 4 và số đó khác kết quả thật."
+is_fixture_placeholder = false

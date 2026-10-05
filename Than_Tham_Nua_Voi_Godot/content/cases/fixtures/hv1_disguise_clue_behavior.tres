@@ -1,0 +1,133 @@
+[gd_resource type="Resource" script_class="CaseDefinition" load_steps=17 format=3]
+
+[ext_resource type="Script" path="res://scripts/domain/cases/CaseDefinition.gd" id="1_case"]
+[ext_resource type="Script" path="res://scripts/domain/cases/SuspectDefinition.gd" id="2_suspect"]
+[ext_resource type="Script" path="res://scripts/domain/cases/OnSolveReward.gd" id="3_reward"]
+[ext_resource type="Script" path="res://scripts/domain/cases/CrimeSceneDefinition.gd" id="4_crime_scene"]
+[ext_resource type="Script" path="res://scripts/domain/cases/ClockTowerDefinition.gd" id="5_clock_tower"]
+[ext_resource type="Script" path="res://scripts/domain/cases/BoardLocationDefinition.gd" id="6_board_location"]
+
+[sub_resource type="Resource" id="OnSolve"]
+script = ExtResource("3_reward")
+reward_id = &"hv1_disguise_clue_behavior_reward"
+reputation_delta = 0
+test_only_not_balance_locked = true
+note = "DEV_ONLY: deterministic human verification fixture; no production reward."
+
+[sub_resource type="Resource" id="CrimeScene"]
+script = ExtResource("4_crime_scene")
+scene_id = &"hv1_disguise_clue_scene"
+display_name = "Hiện trường kiểm chứng"
+board_slot = 4
+description = "Fixture DEV để kiểm chứng vai thật, vai hiển thị, hành vi và chế độ nói thật/nói dối."
+
+[sub_resource type="Resource" id="ClockTower"]
+script = ExtResource("5_clock_tower")
+location_id = &"clock_tower"
+display_name = "Tháp Đồng Hồ"
+board_slot = 8
+ring_hour = 8
+
+[sub_resource type="Resource" id="Suspect1"]
+script = ExtResource("2_suspect")
+suspect_id = 1
+board_slot = 0
+true_role_id = &"tutorial_priest"
+displayed_role_id = &"tutorial_priest"
+true_alignment = 0
+role_group = 0
+truth_reveal_note = "Tư Tế thật làm mốc cho Kẻ Côn Đồ giả danh."
+
+[sub_resource type="Resource" id="Suspect2"]
+script = ExtResource("2_suspect")
+suspect_id = 3
+board_slot = 2
+true_role_id = &"therapist"
+displayed_role_id = &"therapist"
+true_alignment = 0
+role_group = 0
+truth_reveal_note = "Ngự Y thật làm mốc cho Kẻ Bắt Chước giả danh."
+
+[sub_resource type="Resource" id="Suspect3"]
+script = ExtResource("2_suspect")
+suspect_id = 7
+board_slot = 7
+true_role_id = &"clock_maker"
+displayed_role_id = &"clock_maker"
+true_alignment = 0
+role_group = 0
+truth_reveal_note = "Thợ Đồng Hồ thật; Tháp Đồng Hồ reo từ 8h đến 9h."
+
+[sub_resource type="Resource" id="Suspect4"]
+script = ExtResource("2_suspect")
+suspect_id = 2
+board_slot = 1
+true_role_id = &"tutorial_mobster"
+displayed_role_id = &"tutorial_priest"
+true_alignment = 1
+role_group = 2
+is_impersonating = true
+impersonated_role_id = &"tutorial_priest"
+public_investigation_statement = "Ta có thật là một Tư Tế tốt không?"
+truth_reveal_note = "Kẻ Côn Đồ giả danh Tư Tế và dùng hành vi Tư Tế ở chế độ NÓI DỐI."
+
+[sub_resource type="Resource" id="Suspect5"]
+script = ExtResource("2_suspect")
+suspect_id = 4
+board_slot = 3
+true_role_id = &"copycat"
+displayed_role_id = &"therapist"
+true_alignment = 0
+role_group = 1
+is_impersonating = true
+impersonated_role_id = &"therapist"
+truth_reveal_note = "Kẻ Bắt Chước giả danh Ngự Y và dùng hành vi Ngự Y ở chế độ NÓI THẬT."
+
+[sub_resource type="Resource" id="Suspect6"]
+script = ExtResource("2_suspect")
+suspect_id = 6
+board_slot = 6
+true_role_id = &"critic"
+displayed_role_id = &"mailman"
+true_alignment = 1
+role_group = 3
+is_impersonating = true
+impersonated_role_id = &"mailman"
+mailman_claimed_in_play_role_id = &"weatherman"
+mailman_claimed_not_in_play_role_id = &"tutorial_priest"
+truth_reveal_note = "Nhà Phê Bình giả danh Dịch Phu; Dịch Phu được liệt kê nhưng không có vai thật hiện tại."
+
+[sub_resource type="Resource" id="Suspect7"]
+script = ExtResource("2_suspect")
+suspect_id = 5
+board_slot = 5
+true_role_id = &"serial_killer"
+displayed_role_id = &"clock_maker"
+true_alignment = 1
+role_group = 2
+is_impersonating = true
+impersonated_role_id = &"clock_maker"
+authored_lie_numeric_value = 1
+truth_reveal_note = "Sát Nhân Hàng Loạt giả danh Thợ Đồng Hồ và dùng hành vi Thợ Đồng Hồ ở chế độ NÓI DỐI."
+
+[resource]
+script = ExtResource("1_case")
+case_id = &"hv1_disguise_clue_behavior"
+data_version = 1
+display_name = "HV1 — Disguise & Clue Behavior"
+short_description = "DEV-only authored Case for manually checking true, displayed, behavior, truth-mode, public clue, and Full Reveal separation."
+difficulty_label = "DEV HV1"
+crime_scene = SubResource("CrimeScene")
+board_locations = Array[ExtResource("6_board_location")]([SubResource("ClockTower")])
+merit_pool = 0
+reputation_penalty_on_wrong = 0
+base_ticket_reward = 0
+on_solve = SubResource("OnSolve")
+suspects = Array[ExtResource("2_suspect")]([SubResource("Suspect1"), SubResource("Suspect2"), SubResource("Suspect3"), SubResource("Suspect4"), SubResource("Suspect5"), SubResource("Suspect6"), SubResource("Suspect7")])
+evil_suspect_ids = PackedInt32Array(2, 5, 6)
+accomplice_suspect_ids = PackedInt32Array(2, 5)
+traitor_suspect_ids = PackedInt32Array(6)
+suspected_role_ids = Array[StringName]([&"tutorial_priest", &"therapist", &"clock_maker", &"tutorial_mobster", &"copycat", &"critic", &"serial_killer", &"mailman", &"weatherman"])
+suspect_list_role_ids = Array[StringName]([&"tutorial_priest", &"therapist", &"clock_maker", &"tutorial_mobster", &"copycat", &"critic", &"serial_killer", &"mailman", &"weatherman"])
+test_only_not_balance_locked = true
+balance_note = "DEV_ONLY / NOT_BALANCE_LOCKED: HV1 disguise and clue behavior verification fixture."

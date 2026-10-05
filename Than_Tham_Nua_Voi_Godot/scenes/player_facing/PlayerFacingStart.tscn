@@ -1,0 +1,1021 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/presentation/player_facing/PlayerFacingStartController.gd" id="1"]
+[ext_resource type="Theme" path="res://themes/AppTheme.tres" id="2"]
+[ext_resource type="Script" path="res://scripts/presentation/player_facing/PlayerFacingLootMapView.gd" id="3"]
+
+[node name="PlayerFacingStart" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2")
+script = ExtResource("1")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.035, 0.045, 0.07, 1)
+
+[node name="SafeMargin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = 18.0
+offset_right = -24.0
+offset_bottom = -18.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Page" type="VBoxContainer" parent="SafeMargin"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="GameTitle" type="Label" parent="SafeMargin/Page"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Thần Thám Nửa Vời"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="SafeMargin/Page"]
+layout_mode = 2
+text = "Truyền Kì Kỳ Án Hoàng Cung"
+horizontal_alignment = 1
+
+[node name="RoundIndicator" type="Label" parent="SafeMargin/Page"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Round 1"
+horizontal_alignment = 1
+
+[node name="Content" type="PanelContainer" parent="SafeMargin/Page"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MainMenu" type="CenterContainer" parent="SafeMargin/Page/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Buttons" type="VBoxContainer" parent="SafeMargin/Page/Content/MainMenu"]
+custom_minimum_size = Vector2(360, 0)
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Welcome" type="Label" parent="SafeMargin/Page/Content/MainMenu/Buttons"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Bước vào hoàng cung"
+horizontal_alignment = 1
+
+[node name="NewGame" type="Button" parent="SafeMargin/Page/Content/MainMenu/Buttons"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 52)
+text = "Bắt đầu trận mới"
+
+[node name="Continue" type="Button" parent="SafeMargin/Page/Content/MainMenu/Buttons"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 52)
+text = "Tiếp tục"
+disabled = true
+tooltip_text = "Chưa có trận đấu đã lưu"
+
+[node name="Settings" type="Button" parent="SafeMargin/Page/Content/MainMenu/Buttons"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 52)
+text = "Cài đặt"
+
+[node name="Exit" type="Button" parent="SafeMargin/Page/Content/MainMenu/Buttons"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 52)
+text = "Thoát"
+
+[node name="MatchMode" type="CenterContainer" parent="SafeMargin/Page/Content"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="Column" type="VBoxContainer" parent="SafeMargin/Page/Content/MatchMode"]
+custom_minimum_size = Vector2(520, 0)
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Title" type="Label" parent="SafeMargin/Page/Content/MatchMode/Column"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "Chọn chế độ trận đấu"
+horizontal_alignment = 1
+
+[node name="Classic" type="Button" parent="SafeMargin/Page/Content/MatchMode/Column"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+text = "CỔ ĐIỂN"
+
+[node name="Custom" type="Button" parent="SafeMargin/Page/Content/MatchMode/Column"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+text = "TÙY CHỈNH"
+
+[node name="ModeBack" type="Button" parent="SafeMargin/Page/Content/MatchMode/Column"]
+layout_mode = 2
+text = "Quay lại"
+
+[node name="MatchRulesPanel" type="CenterContainer" parent="SafeMargin/Page/Content"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="Column" type="VBoxContainer" parent="SafeMargin/Page/Content/MatchRulesPanel"]
+custom_minimum_size = Vector2(560, 0)
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Title" type="Label" parent="SafeMargin/Page/Content/MatchRulesPanel/Column"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "Luật chiến thắng"
+horizontal_alignment = 1
+
+[node name="MatchRulesSummary" type="Label" parent="SafeMargin/Page/Content/MatchRulesPanel/Column"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="CustomRules" type="VBoxContainer" parent="SafeMargin/Page/Content/MatchRulesPanel/Column"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="VictoryTypeLabel" type="Label" parent="SafeMargin/Page/Content/MatchRulesPanel/Column/CustomRules"]
+layout_mode = 2
+text = "Điều kiện chiến thắng"
+
+[node name="VictoryTypeSelector" type="OptionButton" parent="SafeMargin/Page/Content/MatchRulesPanel/Column/CustomRules"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="RankRow" type="HBoxContainer" parent="SafeMargin/Page/Content/MatchRulesPanel/Column/CustomRules"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="SafeMargin/Page/Content/MatchRulesPanel/Column/CustomRules/RankRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Công Danh mục tiêu"
+
+[node name="TargetRankSelector" type="OptionButton" parent="SafeMargin/Page/Content/MatchRulesPanel/Column/CustomRules/RankRow"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RoundRow" type="HBoxContainer" parent="SafeMargin/Page/Content/MatchRulesPanel/Column/CustomRules"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="SafeMargin/Page/Content/MatchRulesPanel/Column/CustomRules/RoundRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Số Round"
+
+[node name="RoundLimitSelector" type="OptionButton" parent="SafeMargin/Page/Content/MatchRulesPanel/Column/CustomRules/RoundRow"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Actions" type="HBoxContainer" parent="SafeMargin/Page/Content/MatchRulesPanel/Column"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 12
+
+[node name="RulesBack" type="Button" parent="SafeMargin/Page/Content/MatchRulesPanel/Column/Actions"]
+layout_mode = 2
+text = "Quay lại"
+
+[node name="RulesContinue" type="Button" parent="SafeMargin/Page/Content/MatchRulesPanel/Column/Actions"]
+layout_mode = 2
+text = "Tiếp tục"
+
+[node name="PlayerCount" type="CenterContainer" parent="SafeMargin/Page/Content"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="Column" type="VBoxContainer" parent="SafeMargin/Page/Content/PlayerCount"]
+custom_minimum_size = Vector2(480, 0)
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="Title" type="Label" parent="SafeMargin/Page/Content/PlayerCount/Column"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "Có bao nhiêu người cùng chơi?"
+horizontal_alignment = 1
+
+[node name="Note" type="Label" parent="SafeMargin/Page/Content/PlayerCount/Column"]
+layout_mode = 2
+text = "Mỗi người sẽ lần lượt chọn một nhân vật trên cùng thiết bị."
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="ThreePlayers" type="Button" parent="SafeMargin/Page/Content/PlayerCount/Column"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 64)
+text = "3 người chơi"
+
+[node name="CountBack" type="Button" parent="SafeMargin/Page/Content/PlayerCount/Column"]
+layout_mode = 2
+text = "Quay lại"
+
+[node name="CharacterSelection" type="VBoxContainer" parent="SafeMargin/Page/Content"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="CurrentPlayerLabel" type="Label" parent="SafeMargin/Page/Content/CharacterSelection"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+horizontal_alignment = 1
+
+[node name="CharacterScroll" type="ScrollContainer" parent="SafeMargin/Page/Content/CharacterSelection"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="CharacterGrid" type="GridContainer" parent="SafeMargin/Page/Content/CharacterSelection/CharacterScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+columns = 2
+theme_override_constants/h_separation = 12
+theme_override_constants/v_separation = 12
+
+[node name="CharacterDetails" type="RichTextLabel" parent="SafeMargin/Page/Content/CharacterSelection"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 115)
+layout_mode = 2
+bbcode_enabled = true
+fit_content = false
+
+[node name="ChooseCharacterButton" type="Button" parent="SafeMargin/Page/Content/CharacterSelection"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(0, 50)
+text = "Chọn nhân vật này"
+disabled = true
+
+[node name="PassDevice" type="CenterContainer" parent="SafeMargin/Page/Content"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="Column" type="VBoxContainer" parent="SafeMargin/Page/Content/PassDevice"]
+custom_minimum_size = Vector2(520, 0)
+layout_mode = 2
+theme_override_constants/separation = 22
+
+[node name="PassDeviceLabel" type="Label" parent="SafeMargin/Page/Content/PassDevice/Column"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+horizontal_alignment = 1
+
+[node name="Privacy" type="Label" parent="SafeMargin/Page/Content/PassDevice/Column"]
+layout_mode = 2
+text = "Khi người chơi tiếp theo đã sẵn sàng, hãy tiếp tục."
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="PassContinue" type="Button" parent="SafeMargin/Page/Content/PassDevice/Column"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 56)
+text = "Tiếp tục"
+
+[node name="LineupConfirmation" type="VBoxContainer" parent="SafeMargin/Page/Content"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="LineupText" type="RichTextLabel" parent="SafeMargin/Page/Content/LineupConfirmation"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+fit_content = false
+
+[node name="LineupActions" type="HBoxContainer" parent="SafeMargin/Page/Content/LineupConfirmation"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 14
+
+[node name="EditLineup" type="Button" parent="SafeMargin/Page/Content/LineupConfirmation/LineupActions"]
+layout_mode = 2
+text = "Quay lại"
+
+[node name="ConfirmLineup" type="Button" parent="SafeMargin/Page/Content/LineupConfirmation/LineupActions"]
+layout_mode = 2
+text = "Xác nhận"
+
+[node name="CaseSelection" type="CenterContainer" parent="SafeMargin/Page/Content"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="CaseCard" type="PanelContainer" parent="SafeMargin/Page/Content/CaseSelection"]
+custom_minimum_size = Vector2(620, 350)
+layout_mode = 2
+
+[node name="Column" type="VBoxContainer" parent="SafeMargin/Page/Content/CaseSelection/CaseCard"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 18
+
+[node name="Heading" type="Label" parent="SafeMargin/Page/Content/CaseSelection/CaseCard/Column"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Chọn Kỳ Án"
+horizontal_alignment = 1
+
+[node name="CaseTitle" type="Label" parent="SafeMargin/Page/Content/CaseSelection/CaseCard/Column"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+horizontal_alignment = 1
+
+[node name="CaseDescription" type="Label" parent="SafeMargin/Page/Content/CaseSelection/CaseCard/Column"]
+unique_name_in_owner = true
+layout_mode = 2
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="CaseReward" type="Label" parent="SafeMargin/Page/Content/CaseSelection/CaseCard/Column"]
+unique_name_in_owner = true
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="StartCase" type="Button" parent="SafeMargin/Page/Content/CaseSelection/CaseCard/Column"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 54)
+text = "Bắt đầu điều tra"
+
+[node name="ResultsPanel" type="VBoxContainer" parent="SafeMargin/Page/Content"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="SafeMargin/Page/Content/ResultsPanel"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "KẾT QUẢ KỲ ÁN"
+horizontal_alignment = 1
+
+[node name="ResultsScroll" type="ScrollContainer" parent="SafeMargin/Page/Content/ResultsPanel"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="ResultsText" type="RichTextLabel" parent="SafeMargin/Page/Content/ResultsPanel/ResultsScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+bbcode_enabled = true
+fit_content = true
+autowrap_mode = 2
+
+[node name="ResultsContinue" type="Button" parent="SafeMargin/Page/Content/ResultsPanel"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 52)
+text = "Tiếp tục"
+
+[node name="LootReadyPanel" type="CenterContainer" parent="SafeMargin/Page/Content"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="Column" type="VBoxContainer" parent="SafeMargin/Page/Content/LootReadyPanel"]
+custom_minimum_size = Vector2(560, 0)
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="Title" type="Label" parent="SafeMargin/Page/Content/LootReadyPanel/Column"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "Kỳ Án đã kết thúc"
+horizontal_alignment = 1
+
+[node name="Description" type="Label" parent="SafeMargin/Page/Content/LootReadyPanel/Column"]
+layout_mode = 2
+text = "Kết quả đã được ghi nhận. Các thần thám đang chuẩn bị bước vào Loot."
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="StartLoot" type="Button" parent="SafeMargin/Page/Content/LootReadyPanel/Column"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 54)
+text = "Bắt đầu Loot"
+tooltip_text = "Bắt đầu hành trình Loot"
+
+[node name="LootPanel" type="VBoxContainer" parent="SafeMargin/Page/Content"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="LootHeading" type="Label" parent="SafeMargin/Page/Content/LootPanel"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "HÀNH TRÌNH LOOT"
+horizontal_alignment = 1
+
+[node name="LootMain" type="HBoxContainer" parent="SafeMargin/Page/Content/LootPanel"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+
+[node name="MapPanel" type="PanelContainer" parent="SafeMargin/Page/Content/LootPanel/LootMain"]
+custom_minimum_size = Vector2(650, 360)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.8
+
+[node name="MapColumn" type="VBoxContainer" parent="SafeMargin/Page/Content/LootPanel/LootMain/MapPanel"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="MapTitle" type="Label" parent="SafeMargin/Page/Content/LootPanel/LootMain/MapPanel/MapColumn"]
+layout_mode = 2
+text = "Bản đồ Hoàng Cung"
+horizontal_alignment = 1
+
+[node name="LootMapView" type="Control" parent="SafeMargin/Page/Content/LootPanel/LootMain/MapPanel/MapColumn"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(620, 330)
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+script = ExtResource("3")
+
+[node name="MapLegend" type="Label" parent="SafeMargin/Page/Content/LootPanel/LootMain/MapPanel/MapColumn"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "P1 / P2 / P3: vị trí người chơi · Viền vàng: người đang đi · Đường vàng: bước vừa đi"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="TurnPanel" type="PanelContainer" parent="SafeMargin/Page/Content/LootPanel/LootMain"]
+custom_minimum_size = Vector2(330, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TurnColumn" type="VBoxContainer" parent="SafeMargin/Page/Content/LootPanel/LootMain/TurnPanel"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="ActiveTurnLabel" type="Label" parent="SafeMargin/Page/Content/LootPanel/LootMain/TurnPanel/TurnColumn"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Lượt của Người chơi"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="LootText" type="RichTextLabel" parent="SafeMargin/Page/Content/LootPanel/LootMain/TurnPanel/TurnColumn"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 145)
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+autowrap_mode = 2
+
+[node name="ActionGuide" type="Label" parent="SafeMargin/Page/Content/LootPanel/LootMain/TurnPanel/TurnColumn"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Hành động tiếp theo"
+autowrap_mode = 2
+
+[node name="OverflowPanel" type="PanelContainer" parent="SafeMargin/Page/Content/LootPanel/LootMain/TurnPanel/TurnColumn"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="Column" type="VBoxContainer" parent="SafeMargin/Page/Content/LootPanel/LootMain/TurnPanel/TurnColumn/OverflowPanel"]
+layout_mode = 2
+
+[node name="OverflowText" type="Label" parent="SafeMargin/Page/Content/LootPanel/LootMain/TurnPanel/TurnColumn/OverflowPanel/Column"]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 2
+
+[node name="OverflowTargetSelector" type="OptionButton" parent="SafeMargin/Page/Content/LootPanel/LootMain/TurnPanel/TurnColumn/OverflowPanel/Column"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Chọn đúng một vật phẩm đang mang để thay thế."
+
+[node name="Actions" type="HBoxContainer" parent="SafeMargin/Page/Content/LootPanel/LootMain/TurnPanel/TurnColumn/OverflowPanel/Column"]
+layout_mode = 2
+alignment = 1
+
+[node name="OverflowReplace" type="Button" parent="SafeMargin/Page/Content/LootPanel/LootMain/TurnPanel/TurnColumn/OverflowPanel/Column/Actions"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Thay thế"
+
+[node name="OverflowSkip" type="Button" parent="SafeMargin/Page/Content/LootPanel/LootMain/TurnPanel/TurnColumn/OverflowPanel/Column/Actions"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Bỏ vật phẩm mới"
+
+[node name="LootActions" type="GridContainer" parent="SafeMargin/Page/Content/LootPanel/LootMain/TurnPanel/TurnColumn"]
+layout_mode = 2
+columns = 1
+
+[node name="ItemSourceSelector" type="OptionButton" parent="SafeMargin/Page/Content/LootPanel/LootMain/TurnPanel/TurnColumn/LootActions"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Chọn vật phẩm đang sở hữu hoặc vật phẩm nhặt trong vòng này."
+
+[node name="UseItem" type="Button" parent="SafeMargin/Page/Content/LootPanel/LootMain/TurnPanel/TurnColumn/LootActions"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Dùng vật phẩm"
+
+[node name="ContinueWithoutItem" type="Button" parent="SafeMargin/Page/Content/LootPanel/LootMain/TurnPanel/TurnColumn/LootActions"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Tiếp tục không dùng vật phẩm"
+
+[node name="Move" type="Button" parent="SafeMargin/Page/Content/LootPanel/LootMain/TurnPanel/TurnColumn/LootActions"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Roll & Di chuyển"
+
+[node name="LootInfo" type="HBoxContainer" parent="SafeMargin/Page/Content/LootPanel"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="ResourceSummary" type="Label" parent="SafeMargin/Page/Content/LootPanel/LootInfo"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+autowrap_mode = 2
+
+[node name="BagSummary" type="Label" parent="SafeMargin/Page/Content/LootPanel/LootInfo"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+autowrap_mode = 2
+
+[node name="ActivityLog" type="RichTextLabel" parent="SafeMargin/Page/Content/LootPanel/LootInfo"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+autowrap_mode = 2
+
+[node name="LootConfirmationPanel" type="CenterContainer" parent="SafeMargin/Page/Content"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="Column" type="VBoxContainer" parent="SafeMargin/Page/Content/LootConfirmationPanel"]
+custom_minimum_size = Vector2(560, 0)
+layout_mode = 2
+
+[node name="ConfirmationText" type="RichTextLabel" parent="SafeMargin/Page/Content/LootConfirmationPanel/Column"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 300)
+layout_mode = 2
+bbcode_enabled = true
+
+[node name="ConfirmLootEnd" type="Button" parent="SafeMargin/Page/Content/LootConfirmationPanel/Column"]
+layout_mode = 2
+text = "Xác nhận kết thúc Loot"
+
+[node name="EquipmentPanel" type="VBoxContainer" parent="SafeMargin/Page/Content"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="EquipmentScroll" type="ScrollContainer" parent="SafeMargin/Page/Content/EquipmentPanel"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="EquipmentText" type="RichTextLabel" parent="SafeMargin/Page/Content/EquipmentPanel/EquipmentScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+bbcode_enabled = true
+fit_content = true
+autowrap_mode = 2
+
+[node name="LoadoutControls" type="VBoxContainer" parent="SafeMargin/Page/Content/EquipmentPanel"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Selectors" type="HBoxContainer" parent="SafeMargin/Page/Content/EquipmentPanel/LoadoutControls"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="SlotLabel" type="Label" parent="SafeMargin/Page/Content/EquipmentPanel/LoadoutControls/Selectors"]
+layout_mode = 2
+text = "Vị trí"
+
+[node name="EquipmentSlotSelector" type="OptionButton" parent="SafeMargin/Page/Content/EquipmentPanel/LoadoutControls/Selectors"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+
+[node name="ItemLabel" type="Label" parent="SafeMargin/Page/Content/EquipmentPanel/LoadoutControls/Selectors"]
+layout_mode = 2
+text = "Trang bị sở hữu"
+
+[node name="OwnedEquipmentSelector" type="OptionButton" parent="SafeMargin/Page/Content/EquipmentPanel/LoadoutControls/Selectors"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="EquipmentSelectionLabel" type="Label" parent="SafeMargin/Page/Content/EquipmentPanel/LoadoutControls"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Chọn một vị trí để xem trang bị phù hợp."
+autowrap_mode = 2
+
+[node name="ProgressionControls" type="VBoxContainer" parent="SafeMargin/Page/Content/EquipmentPanel/LoadoutControls"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="EquipmentProgressionLabel" type="Label" parent="SafeMargin/Page/Content/EquipmentPanel/LoadoutControls/ProgressionControls"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Chọn trang bị để xem tiến triển."
+autowrap_mode = 2
+
+[node name="ProgressionActions" type="HBoxContainer" parent="SafeMargin/Page/Content/EquipmentPanel/LoadoutControls/ProgressionControls"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="UpgradeEquipmentGold" type="Button" parent="SafeMargin/Page/Content/EquipmentPanel/LoadoutControls/ProgressionControls/ProgressionActions"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Nâng cấp Vàng"
+
+[node name="PurpleDuplicateSelector" type="OptionButton" parent="SafeMargin/Page/Content/EquipmentPanel/LoadoutControls/ProgressionControls/ProgressionActions"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="UpgradeEquipmentPurple" type="Button" parent="SafeMargin/Page/Content/EquipmentPanel/LoadoutControls/ProgressionControls/ProgressionActions"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Thăng cấp Tím"
+
+[node name="LoadoutActions" type="HBoxContainer" parent="SafeMargin/Page/Content/EquipmentPanel/LoadoutControls"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="EquipSelectedEquipment" type="Button" parent="SafeMargin/Page/Content/EquipmentPanel/LoadoutControls/LoadoutActions"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Trang bị / Thay thế"
+
+[node name="UnequipSelectedSlot" type="Button" parent="SafeMargin/Page/Content/EquipmentPanel/LoadoutControls/LoadoutActions"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Tháo khỏi vị trí"
+
+[node name="EquipmentActions" type="GridContainer" parent="SafeMargin/Page/Content/EquipmentPanel"]
+layout_mode = 2
+columns = 2
+
+[node name="BasicGacha" type="Button" parent="SafeMargin/Page/Content/EquipmentPanel/EquipmentActions"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Cầu nguyện Cơ Bản"
+
+[node name="RateUpGacha" type="Button" parent="SafeMargin/Page/Content/EquipmentPanel/EquipmentActions"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Cầu nguyện Tăng Tỷ Lệ"
+
+[node name="PerfectGacha" type="Button" parent="SafeMargin/Page/Content/EquipmentPanel/EquipmentActions"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Cầu nguyện Tuyệt Phẩm"
+
+[node name="PerfectChoicePanel" type="VBoxContainer" parent="SafeMargin/Page/Content/EquipmentPanel"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="PerfectChoiceTitle" type="Label" parent="SafeMargin/Page/Content/EquipmentPanel/PerfectChoicePanel"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Chọn phần thưởng"
+horizontal_alignment = 1
+
+[node name="PerfectChoiceSelector" type="OptionButton" parent="SafeMargin/Page/Content/EquipmentPanel/PerfectChoicePanel"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="ResolveChoice" type="Button" parent="SafeMargin/Page/Content/EquipmentPanel/PerfectChoicePanel"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Xác nhận phần thưởng"
+
+[node name="ManagementDone" type="Button" parent="SafeMargin/Page/Content/EquipmentPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(0, 48)
+text = "Hoàn tất chuẩn bị"
+
+[node name="RoundSummaryReadyPanel" type="CenterContainer" parent="SafeMargin/Page/Content"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="Column" type="VBoxContainer" parent="SafeMargin/Page/Content/RoundSummaryReadyPanel"]
+custom_minimum_size = Vector2(560, 0)
+layout_mode = 2
+
+[node name="Title" type="Label" parent="SafeMargin/Page/Content/RoundSummaryReadyPanel/Column"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "Chuẩn bị hoàn tất Round"
+horizontal_alignment = 1
+
+[node name="Description" type="Label" parent="SafeMargin/Page/Content/RoundSummaryReadyPanel/Column"]
+layout_mode = 2
+text = "Loot và chuẩn bị trang bị đã hoàn tất. Tổng kết Round sẽ được mở ở bước tiếp theo."
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="RoundSummary" type="Button" parent="SafeMargin/Page/Content/RoundSummaryReadyPanel/Column"]
+layout_mode = 2
+text = "Xem tổng kết Round"
+
+[node name="RoundSummaryPanel" type="VBoxContainer" parent="SafeMargin/Page/Content"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="SummaryScroll" type="ScrollContainer" parent="SafeMargin/Page/Content/RoundSummaryPanel"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="RoundSummaryText" type="RichTextLabel" parent="SafeMargin/Page/Content/RoundSummaryPanel/SummaryScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+bbcode_enabled = true
+fit_content = true
+autowrap_mode = 2
+
+[node name="RoundSummaryContinue" type="Button" parent="SafeMargin/Page/Content/RoundSummaryPanel"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 50)
+text = "Tiếp tục"
+
+[node name="NextCasePanel" type="CenterContainer" parent="SafeMargin/Page/Content"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="Card" type="PanelContainer" parent="SafeMargin/Page/Content/NextCasePanel"]
+custom_minimum_size = Vector2(620, 360)
+layout_mode = 2
+
+[node name="Column" type="VBoxContainer" parent="SafeMargin/Page/Content/NextCasePanel/Card"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 18
+
+[node name="Heading" type="Label" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Chọn Kỳ Án tiếp theo"
+horizontal_alignment = 1
+
+[node name="NextCaseTitle" type="Label" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+horizontal_alignment = 1
+
+[node name="NextCaseDescription" type="Label" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column"]
+unique_name_in_owner = true
+layout_mode = 2
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="NextCaseStatus" type="Label" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Kỳ Án tiếp theo đã sẵn sàng để lựa chọn."
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="NextCaseOptions" type="GridContainer" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+columns = 3
+theme_override_constants/h_separation = 12
+theme_override_constants/v_separation = 12
+
+[node name="NextCaseOption1" type="Button" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(190, 120)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Kỳ Án 1"
+autowrap_mode = 2
+
+[node name="NextCaseOption2" type="Button" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(190, 120)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Kỳ Án 2"
+autowrap_mode = 2
+
+[node name="NextCaseOption3" type="Button" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(190, 120)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Kỳ Án 3"
+autowrap_mode = 2
+
+[node name="StartNextCase" type="Button" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(0, 54)
+text = "Bắt đầu điều tra"
+tooltip_text = "Bắt đầu Kỳ Án của Round tiếp theo"
+
+[node name="MatchResultsPanel" type="VBoxContainer" parent="SafeMargin/Page/Content"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Title" type="Label" parent="SafeMargin/Page/Content/MatchResultsPanel"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "KẾT QUẢ TRẬN ĐẤU"
+horizontal_alignment = 1
+
+[node name="ResultsScroll" type="ScrollContainer" parent="SafeMargin/Page/Content/MatchResultsPanel"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="MatchResultsText" type="RichTextLabel" parent="SafeMargin/Page/Content/MatchResultsPanel/ResultsScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+bbcode_enabled = true
+fit_content = true
+autowrap_mode = 2
+
+[node name="Actions" type="HBoxContainer" parent="SafeMargin/Page/Content/MatchResultsPanel"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 12
+
+[node name="Replay" type="Button" parent="SafeMargin/Page/Content/MatchResultsPanel/Actions"]
+custom_minimum_size = Vector2(220, 52)
+layout_mode = 2
+text = "Chơi Lại"
+
+[node name="MatchResultsMainMenu" type="Button" parent="SafeMargin/Page/Content/MatchResultsPanel/Actions"]
+custom_minimum_size = Vector2(220, 52)
+layout_mode = 2
+text = "Về Menu Chính"
+
+[node name="SettingsPanel" type="CenterContainer" parent="SafeMargin/Page/Content"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="Column" type="VBoxContainer" parent="SafeMargin/Page/Content/SettingsPanel"]
+custom_minimum_size = Vector2(480, 0)
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Title" type="Label" parent="SafeMargin/Page/Content/SettingsPanel/Column"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "Cài đặt"
+horizontal_alignment = 1
+
+[node name="Note" type="Label" parent="SafeMargin/Page/Content/SettingsPanel/Column"]
+layout_mode = 2
+text = "Các tùy chọn âm thanh và hiển thị sẽ được bổ sung sau."
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="SettingsBack" type="Button" parent="SafeMargin/Page/Content/SettingsPanel/Column"]
+layout_mode = 2
+text = "Quay lại menu chính"
+
+[node name="MessageLabel" type="Label" parent="SafeMargin/Page"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="CaseHost" type="Control" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[connection signal="pressed" from="SafeMargin/Page/Content/MainMenu/Buttons/NewGame" to="." method="_on_new_game_pressed"]
+[connection signal="pressed" from="SafeMargin/Page/Content/MainMenu/Buttons/Continue" to="." method="_on_continue_pressed"]
+[connection signal="pressed" from="SafeMargin/Page/Content/MainMenu/Buttons/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="SafeMargin/Page/Content/MainMenu/Buttons/Exit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="SafeMargin/Page/Content/MatchMode/Column/Classic" to="." method="_on_classic_mode_pressed"]
+[connection signal="pressed" from="SafeMargin/Page/Content/MatchMode/Column/Custom" to="." method="_on_custom_mode_pressed"]
+[connection signal="pressed" from="SafeMargin/Page/Content/MatchMode/Column/ModeBack" to="." method="_on_match_mode_back_pressed"]
+[connection signal="item_selected" from="SafeMargin/Page/Content/MatchRulesPanel/Column/CustomRules/VictoryTypeSelector" to="." method="_on_victory_type_selected"]
+[connection signal="item_selected" from="SafeMargin/Page/Content/MatchRulesPanel/Column/CustomRules/RankRow/TargetRankSelector" to="." method="_on_target_rank_selected"]
+[connection signal="item_selected" from="SafeMargin/Page/Content/MatchRulesPanel/Column/CustomRules/RoundRow/RoundLimitSelector" to="." method="_on_round_limit_selected"]
+[connection signal="pressed" from="SafeMargin/Page/Content/MatchRulesPanel/Column/Actions/RulesBack" to="." method="_on_match_rules_back_pressed"]
+[connection signal="pressed" from="SafeMargin/Page/Content/MatchRulesPanel/Column/Actions/RulesContinue" to="." method="_on_match_rules_continue_pressed"]
+[connection signal="pressed" from="SafeMargin/Page/Content/PlayerCount/Column/ThreePlayers" to="." method="_on_three_players_pressed"]
+[connection signal="pressed" from="SafeMargin/Page/Content/PlayerCount/Column/CountBack" to="." method="_on_player_count_back_pressed"]
+[connection signal="pressed" from="SafeMargin/Page/Content/CharacterSelection/ChooseCharacterButton" to="." method="_on_choose_character_pressed"]
+[connection signal="pressed" from="SafeMargin/Page/Content/PassDevice/Column/PassContinue" to="." method="_on_pass_continue_pressed"]
+[connection signal="pressed" from="SafeMargin/Page/Content/LineupConfirmation/LineupActions/EditLineup" to="." method="_on_edit_lineup_pressed"]
+[connection signal="pressed" from="SafeMargin/Page/Content/LineupConfirmation/LineupActions/ConfirmLineup" to="." method="_on_confirm_lineup_pressed"]
+[connection signal="pressed" from="SafeMargin/Page/Content/CaseSelection/CaseCard/Column/StartCase" to="." method="_on_start_case_pressed"]
+[connection signal="pressed" from="SafeMargin/Page/Content/ResultsPanel/ResultsContinue" to="." method="_on_results_continue_pressed"]
+[connection signal="pressed" from="SafeMargin/Page/Content/LootReadyPanel/Column/StartLoot" to="." method="_on_start_loot_pressed"]
+[connection signal="pressed" from="SafeMargin/Page/Content/LootPanel/LootMain/TurnPanel/TurnColumn/LootActions/UseItem" to="." method="_on_use_item_pressed"]
+[connection signal="pressed" from="SafeMargin/Page/Content/LootPanel/LootMain/TurnPanel/TurnColumn/LootActions/ContinueWithoutItem" to="." method="_on_continue_without_item_pressed"]
+[connection signal="pressed" from="SafeMargin/Page/Content/LootPanel/LootMain/TurnPanel/TurnColumn/LootActions/Move" to="." method="_on_move_pressed"]
+[connection signal="item_selected" from="SafeMargin/Page/Content/LootPanel/LootMain/TurnPanel/TurnColumn/OverflowPanel/Column/OverflowTargetSelector" to="." method="_on_overflow_target_selected"]
+[connection signal="pressed" from="SafeMargin/Page/Content/LootPanel/LootMain/TurnPanel/TurnColumn/OverflowPanel/Column/Actions/OverflowReplace" to="." method="_on_overflow_discard_pressed"]
+[connection signal="pressed" from="SafeMargin/Page/Content/LootPanel/LootMain/TurnPanel/TurnColumn/OverflowPanel/Column/Actions/OverflowSkip" to="." method="_on_overflow_skip_pressed"]
+[connection signal="pressed" from="SafeMargin/Page/Content/LootConfirmationPanel/Column/ConfirmLootEnd" to="." method="_on_confirm_loot_end_pressed"]
+[connection signal="item_selected" from="SafeMargin/Page/Content/EquipmentPanel/LoadoutControls/Selectors/EquipmentSlotSelector" to="." method="_on_equipment_slot_selected"]
+[connection signal="item_selected" from="SafeMargin/Page/Content/EquipmentPanel/LoadoutControls/Selectors/OwnedEquipmentSelector" to="." method="_on_owned_equipment_selected"]
+[connection signal="pressed" from="SafeMargin/Page/Content/EquipmentPanel/LoadoutControls/LoadoutActions/EquipSelectedEquipment" to="." method="_on_equip_selected_equipment_pressed"]
+[connection signal="pressed" from="SafeMargin/Page/Content/EquipmentPanel/LoadoutControls/LoadoutActions/UnequipSelectedSlot" to="." method="_on_unequip_selected_slot_pressed"]
+[connection signal="pressed" from="SafeMargin/Page/Content/EquipmentPanel/LoadoutControls/ProgressionControls/ProgressionActions/UpgradeEquipmentGold" to="." method="_on_upgrade_equipment_gold_pressed"]
+[connection signal="pressed" from="SafeMargin/Page/Content/EquipmentPanel/LoadoutControls/ProgressionControls/ProgressionActions/UpgradeEquipmentPurple" to="." method="_on_upgrade_equipment_purple_pressed"]
+[connection signal="pressed" from="SafeMargin/Page/Content/EquipmentPanel/EquipmentActions/BasicGacha" to="." method="_on_basic_gacha_pressed"]
+[connection signal="pressed" from="SafeMargin/Page/Content/EquipmentPanel/EquipmentActions/RateUpGacha" to="." method="_on_rate_up_gacha_pressed"]
+[connection signal="pressed" from="SafeMargin/Page/Content/EquipmentPanel/EquipmentActions/PerfectGacha" to="." method="_on_perfect_gacha_pressed"]
+[connection signal="item_selected" from="SafeMargin/Page/Content/EquipmentPanel/PerfectChoicePanel/PerfectChoiceSelector" to="." method="_on_perfect_choice_selected"]
+[connection signal="pressed" from="SafeMargin/Page/Content/EquipmentPanel/PerfectChoicePanel/ResolveChoice" to="." method="_on_resolve_choice_pressed"]
+[connection signal="pressed" from="SafeMargin/Page/Content/EquipmentPanel/ManagementDone" to="." method="_on_management_done_pressed"]
+[connection signal="pressed" from="SafeMargin/Page/Content/RoundSummaryReadyPanel/Column/RoundSummary" to="." method="_on_round_summary_pressed"]
+[connection signal="pressed" from="SafeMargin/Page/Content/RoundSummaryPanel/RoundSummaryContinue" to="." method="_on_round_summary_continue_pressed"]
+[connection signal="pressed" from="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption1" to="." method="_on_next_case_option_1_pressed"]
+[connection signal="pressed" from="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption2" to="." method="_on_next_case_option_2_pressed"]
+[connection signal="pressed" from="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption3" to="." method="_on_next_case_option_3_pressed"]
+[connection signal="pressed" from="SafeMargin/Page/Content/NextCasePanel/Card/Column/StartNextCase" to="." method="_on_start_next_case_pressed"]
+[connection signal="pressed" from="SafeMargin/Page/Content/MatchResultsPanel/Actions/Replay" to="." method="_on_match_replay_pressed"]
+[connection signal="pressed" from="SafeMargin/Page/Content/MatchResultsPanel/Actions/MatchResultsMainMenu" to="." method="_on_match_results_main_menu_pressed"]
+[connection signal="pressed" from="SafeMargin/Page/Content/SettingsPanel/Column/SettingsBack" to="." method="_on_return_main_menu_pressed"]

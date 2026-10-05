@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="RoleDefinition" format=3 uid="uid://dwuhsrvcl4q5o"]
+
+[ext_resource type="Script" uid="uid://b6jr3q1qufc22" path="res://scripts/domain/roles/RoleDefinition.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+role_id = &"spectre"
+display_name = "Vong Linh"
+role_group = 2
+help_text = "💬 Ta nói dối và giả danh một thân phận được liệt kê. Ta thông báo theo thân phận đang thể hiện.
+
+❗ Khi có mục tiêu hợp lệ, ta che giấu đúng một nghi phạm đang hiện diện; ta có thể chọn chính mình. Mục tiêu không thuộc nhóm Kẻ Bao Đồng và không phải mục tiêu biến đổi của Chủ Quán Rượu. Tên thân phận, diện mạo và mọi chữ cái trong thông báo của mục tiêu bị ẩn; chữ số, khoảng trắng, dấu câu và ký hiệu vẫn được giữ.
+
+❓ Che giấu không đổi thân phận thật hiện tại, phe, cách thông báo, trạng thái nói thật hoặc nói dối, tha hóa hay biến đổi của mục tiêu. Khi Công Bố Sự Thật, thân phận và phe của họ hiện lại cùng quan hệ che giấu.
+
+❓ Nếu bị tha hóa, ta không che giấu mục tiêu."
+is_fixture_placeholder = false

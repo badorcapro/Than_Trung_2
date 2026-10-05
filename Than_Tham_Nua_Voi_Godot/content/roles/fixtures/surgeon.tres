@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="RoleDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" uid="uid://b6jr3q1qufc22" path="res://scripts/domain/roles/RoleDefinition.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+role_id = &"surgeon"
+display_name = "Bác Sĩ Phẫu Thuật"
+role_group = 1
+help_text = "💬 Khi được điều tra, ta không thông báo manh mối trực tiếp.
+
+❗ Khi thời gian đạt 12 giờ, ta có 50% cơ hội giết ngẫu nhiên một Người Vô Tội còn sống. Cơ hội này chỉ được xác định một lần."
+is_fixture_placeholder = false

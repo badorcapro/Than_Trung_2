@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="RewardDefinition" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/domain/loot/RewardDefinition.gd" id="1"]
+[resource]
+script = ExtResource("1")
+reward_id = &"test_reward_ticket"
+reward_type = 2
+amount = 1

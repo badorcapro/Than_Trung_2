@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ConsumableItemDefinition" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/domain/loot/ConsumableItemDefinition.gd" id="1"]
+[resource]
+script = ExtResource("1")
+item_id = &"test_all_others_minus_1_move"
+display_name = "TEST All Others -1 Move"
+description = "TEST_ONLY all-other-player movement penalty"
+effect_type = 3
+magnitude = 1
+duration = 2
+target_scope = 1

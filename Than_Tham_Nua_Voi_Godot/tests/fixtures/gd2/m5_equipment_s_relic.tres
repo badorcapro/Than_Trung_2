@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="EquipmentDefinition" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/domain/equipment/EquipmentDefinition.gd" id="1"]
+[resource]
+script=ExtResource("1")
+equipment_definition_id=&"m5_s_relic_featured"
+display_name="Prototype S Featured Relic"
+equipment_type=0
+stigmata_slot=0
+tier=1
+gold_stat_rows=[{"power":20},{"power":24},{"power":28},{"power":32},{"power":36},{"power":40}]
+gold_upgrade_costs=[11,21,31,41,51]
+skill_marker=&"ACTIVE_DEBUG"

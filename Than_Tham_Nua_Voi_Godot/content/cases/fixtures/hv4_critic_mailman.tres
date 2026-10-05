@@ -1,0 +1,95 @@
+[gd_resource type="Resource" script_class="CaseDefinition" load_steps=11 format=3]
+
+[ext_resource type="Script" path="res://scripts/domain/cases/CaseDefinition.gd" id="1_case"]
+[ext_resource type="Script" path="res://scripts/domain/cases/SuspectDefinition.gd" id="2_suspect"]
+[ext_resource type="Script" path="res://scripts/domain/cases/OnSolveReward.gd" id="3_reward"]
+[ext_resource type="Script" path="res://scripts/domain/cases/CrimeSceneDefinition.gd" id="4_crime_scene"]
+
+[sub_resource type="Resource" id="OnSolve"]
+script = ExtResource("3_reward")
+reward_id = &"hv4_critic_mailman_reward"
+reputation_delta = 0
+test_only_not_balance_locked = true
+note = "DEV_ONLY: HV4 listed-but-current-absent verification has no production reward."
+
+[sub_resource type="Resource" id="CrimeScene"]
+script = ExtResource("4_crime_scene")
+scene_id = &"hv4_critic_mailman_scene"
+display_name = "Hiện trường kiểm chứng"
+board_slot = 4
+description = "DEV-only neutral location for Critic and Mailman verification."
+
+[sub_resource type="Resource" id="Suspect1"]
+script = ExtResource("2_suspect")
+suspect_id = 1
+board_slot = 0
+true_role_id = &"tutorial_priest"
+displayed_role_id = &"tutorial_priest"
+true_alignment = 0
+role_group = 0
+truth_reveal_note = "Tư Tế thật là thân phận hiện diện được Dịch Phu xác nhận."
+
+[sub_resource type="Resource" id="Suspect2"]
+script = ExtResource("2_suspect")
+suspect_id = 2
+board_slot = 1
+true_role_id = &"mailman"
+displayed_role_id = &"mailman"
+true_alignment = 0
+role_group = 0
+mailman_claimed_in_play_role_id = &"tutorial_priest"
+mailman_claimed_not_in_play_role_id = &"blood_hound"
+truth_reveal_note = "Dịch Phu thật xét vai thật hiện tại: Tư Tế có mặt, Ngự Khuyển Quan vắng mặt."
+
+[sub_resource type="Resource" id="Suspect3"]
+script = ExtResource("2_suspect")
+suspect_id = 3
+board_slot = 2
+true_role_id = &"critic"
+displayed_role_id = &"blood_hound"
+true_alignment = 1
+role_group = 3
+is_impersonating = true
+impersonated_role_id = &"blood_hound"
+truth_reveal_note = "Nhà Phê Bình giả danh Ngự Khuyển Quan; vai giả được liệt kê nhưng không có vai thật hiện tại."
+
+[sub_resource type="Resource" id="Suspect4"]
+script = ExtResource("2_suspect")
+suspect_id = 4
+board_slot = 3
+true_role_id = &"reporter"
+displayed_role_id = &"reporter"
+true_alignment = 0
+role_group = 0
+truth_reveal_note = "Sử Quan thật là một vai hiện diện đơn giản trong fixture HV4."
+
+[sub_resource type="Resource" id="Suspect5"]
+script = ExtResource("2_suspect")
+suspect_id = 5
+board_slot = 5
+true_role_id = &"tutorial_scoundrel"
+displayed_role_id = &"tutorial_scoundrel"
+true_alignment = 1
+role_group = 2
+truth_reveal_note = "Kẻ Bất Lương là Thuộc Hạ thật; không tham gia quan hệ Mailman/Critic."
+
+[resource]
+script = ExtResource("1_case")
+case_id = &"hv4_critic_mailman"
+data_version = 1
+display_name = "HV4 — Critic & Mailman"
+short_description = "DEV-only authored Case for checking listed-but-current-absent Critic disguise and Mailman current-role presence."
+difficulty_label = "DEV HV4"
+crime_scene = SubResource("CrimeScene")
+merit_pool = 0
+reputation_penalty_on_wrong = 0
+base_ticket_reward = 0
+on_solve = SubResource("OnSolve")
+suspects = Array[ExtResource("2_suspect")]([SubResource("Suspect1"), SubResource("Suspect2"), SubResource("Suspect3"), SubResource("Suspect4"), SubResource("Suspect5")])
+evil_suspect_ids = PackedInt32Array(3, 5)
+accomplice_suspect_ids = PackedInt32Array(5)
+traitor_suspect_ids = PackedInt32Array(3)
+suspected_role_ids = Array[StringName]([&"tutorial_priest", &"mailman", &"critic", &"reporter", &"tutorial_scoundrel", &"blood_hound"])
+suspect_list_role_ids = Array[StringName]([&"tutorial_priest", &"mailman", &"critic", &"reporter", &"tutorial_scoundrel", &"blood_hound"])
+test_only_not_balance_locked = true
+balance_note = "DEV_ONLY / NOT_BALANCE_LOCKED: HV4 Critic and Mailman human verification fixture."

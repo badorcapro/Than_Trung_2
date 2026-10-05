@@ -1,0 +1,16 @@
+# Godot 4 engine cache and imports
+.godot/
+Than_Tham_Nua_Voi_Godot/.godot/
+
+# Local export builds
+Than_Tham_Nua_Voi_Godot/builds/local/*
+!Than_Tham_Nua_Voi_Godot/builds/local/.keep
+
+# Temporary and log files
+*.tmp
+*.log
+*.bak
+
+# Windows thumbnail caches
+Thumbs.db
+Desktop.ini

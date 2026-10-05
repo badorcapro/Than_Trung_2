@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="RoleDefinition" format=3 uid="uid://cyuwy78f4y7ru"]
+
+[ext_resource type="Script" uid="uid://b6jr3q1qufc22" path="res://scripts/domain/roles/RoleDefinition.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+role_id = &"tutorial_mobster"
+display_name = "Kẻ Côn Đồ"
+role_group = 2
+help_text = "💬 Ta nói dối và giả danh một thân phận mà ta có thể bắt chước và đang xuất hiện trong Kỳ Án. Ta thông báo theo thân phận đang thể hiện nhưng không trở thành thân phận đó.
+
+❓ Nếu giả danh Tư Tế, ta dùng cách thông báo nói dối của Tư Tế."
+is_fixture_placeholder = false

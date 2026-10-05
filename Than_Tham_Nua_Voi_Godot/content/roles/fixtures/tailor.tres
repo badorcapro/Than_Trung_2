@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="RoleDefinition" format=3 uid="uid://bqp8tjroo5nbt"]
+
+[ext_resource type="Script" uid="uid://b6jr3q1qufc22" path="res://scripts/domain/roles/RoleDefinition.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+role_id = &"tailor"
+display_name = "Thợ May"
+help_text = "💬 Chức năng: Chọn đúng hai nghi phạm khác nhau. Ta thông báo họ cùng phe hay khác phe dựa trên phe thật của họ.
+
+❗ Ta có thể chọn chính mình cùng một mục tiêu khác. Ta cũng có thể chọn nghi phạm đã chết, chưa được điều tra hoặc đã bị bắt. Chức năng này chỉ dùng được một lần.
+
+❓ Khi ta nói dối hoặc bị tha hóa, ta thông báo kết quả ngược lại với sự thật.
+
+Thông báo:
+#X và #Y cùng phe.
+#X và #Y không cùng phe."
+has_interactive_function = true
+function_type = 1
+usage_limit = 1
+unlock_timing = 1
+target_count = 2
+information_result_type = 1
+is_fixture_placeholder = false

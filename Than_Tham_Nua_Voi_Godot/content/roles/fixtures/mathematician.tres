@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="RoleDefinition" format=3 uid="uid://dymwkrel7fabx"]
+
+[ext_resource type="Script" uid="uid://b6jr3q1qufc22" path="res://scripts/domain/roles/RoleDefinition.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+role_id = &"mathematician"
+display_name = "Nhà Toán Học"
+help_text = "💬 Khi được điều tra, ta thông báo tổng Số Hiệu của mọi nghi phạm có thân phận thật thuộc Phe Ác.
+
+❓Khi ta nói dối hoặc bị tha hóa, ta thông báo một tổng khác, lớn hơn hoặc nhỏ hơn tổng thật."
+is_fixture_placeholder = false

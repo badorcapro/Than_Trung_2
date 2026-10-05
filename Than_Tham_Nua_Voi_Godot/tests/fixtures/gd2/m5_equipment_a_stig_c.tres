@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="EquipmentDefinition" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/domain/equipment/EquipmentDefinition.gd" id="1"]
+[resource]
+script=ExtResource("1")
+equipment_definition_id=&"m5_a_stig_c"
+display_name="Prototype A Stigmata C"
+equipment_type=1
+stigmata_slot=3
+tier=0
+set_id=&"m5_set_a"
+gold_stat_rows=[{"power":10},{"power":12},{"power":14},{"power":16},{"power":18},{"power":20}]
+gold_upgrade_costs=[11,21,31,41,51]
+skill_marker=&"PASSIVE_DEBUG"

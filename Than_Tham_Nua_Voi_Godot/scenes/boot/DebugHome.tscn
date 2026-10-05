@@ -1,0 +1,367 @@
+[gd_scene format=3 uid="uid://croy1f54tfbd4"]
+
+[ext_resource type="Script" uid="uid://c0u83yde3jk4e" path="res://scripts/presentation/DebugHomeController.gd" id="1"]
+[ext_resource type="Theme" uid="uid://bf14r64eqwnjt" path="res://themes/AppTheme.tres" id="2"]
+
+[node name="DebugHome" type="Control" unique_id=320164993]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2")
+script = ExtResource("1")
+
+[node name="Background" type="ColorRect" parent="." unique_id=342729789]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.035, 0.045, 0.07, 1)
+
+[node name="SafeMargin" type="MarginContainer" parent="." unique_id=1178351405]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 48
+theme_override_constants/margin_top = 36
+theme_override_constants/margin_right = 48
+theme_override_constants/margin_bottom = 36
+
+[node name="MainColumn" type="VBoxContainer" parent="SafeMargin" unique_id=264885682]
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="HeaderPanel" type="PanelContainer" parent="SafeMargin/MainColumn" unique_id=1973129913]
+layout_mode = 2
+
+[node name="Header" type="VBoxContainer" parent="SafeMargin/MainColumn/HeaderPanel" unique_id=1514482516]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Title" type="Label" parent="SafeMargin/MainColumn/HeaderPanel/Header" unique_id=1633126438]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Thần Thám Nửa Vời"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="SafeMargin/MainColumn/HeaderPanel/Header" unique_id=783171215]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.64, 0.72, 0.84, 1)
+text = "Truyền Kì Kỳ Án Hoàng Cung"
+horizontal_alignment = 1
+
+[node name="BuildLabel" type="Label" parent="SafeMargin/MainColumn/HeaderPanel/Header" unique_id=1337716650]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Build: loading…"
+horizontal_alignment = 1
+
+[node name="StatusLabel" type="Label" parent="SafeMargin/MainColumn/HeaderPanel/Header" unique_id=1944406383]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.46, 0.86, 0.62, 1)
+text = "Initializing…"
+horizontal_alignment = 1
+
+[node name="ContentRow" type="HBoxContainer" parent="SafeMargin/MainColumn" unique_id=357194952]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 18
+
+[node name="MenuPanel" type="PanelContainer" parent="SafeMargin/MainColumn/ContentRow" unique_id=1367307569]
+custom_minimum_size = Vector2(420, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="MenuScroll" type="ScrollContainer" parent="SafeMargin/MainColumn/ContentRow/MenuPanel" unique_id=1517095054]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="Menu" type="VBoxContainer" parent="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll" unique_id=1958969909]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 12
+
+[node name="MenuTitle" type="Label" parent="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu" unique_id=1954984711]
+layout_mode = 2
+theme_override_font_sizes/font_size = 21
+text = "Debug Home"
+horizontal_alignment = 1
+
+[node name="PlayerMenuButton" type="Button" parent="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu" unique_id=868534297]
+layout_mode = 2
+text = "Return to Player Main Menu"
+
+[node name="CaseButton" type="Button" parent="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu" unique_id=1944618542]
+layout_mode = 2
+text = "Vertical Slice Kỳ Án"
+
+[node name="SampleCase4x4Button" type="Button" parent="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "DEV — Sample 4×4 Case Board"
+
+[node name="RoleCodexButton" type="Button" parent="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu" unique_id=838732419]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Sổ Vai Trò"
+
+[node name="TutorialCase01Button" type="Button" parent="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu" unique_id=576516312]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Tutorial Case 01 — Deduction M0"
+
+[node name="TutorialCase02Button" type="Button" parent="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu" unique_id=227406007]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Tutorial Case 02 — Deduction"
+
+[node name="TutorialCase03Button" type="Button" parent="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu" unique_id=274937927]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Tutorial Case 03 — Deduction"
+
+[node name="TutorialCase04Button" type="Button" parent="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu" unique_id=149145412]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Tutorial Case 04 — Active Ability"
+
+[node name="TutorialCase05Button" type="Button" parent="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu" unique_id=1205050005]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Tutorial Case 05 — Timed Roles"
+
+[node name="TutorialCase06Button" type="Button" parent="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Tutorial Case 06 — Transform"
+
+[node name="TutorialCase07Button" type="Button" parent="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Tutorial Case 07 — Dangerous Time"
+
+[node name="TutorialCase08Button" type="Button" parent="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Tutorial Case 08 — Truthful Evil"
+
+[node name="Hv1DisguiseClueButton" type="Button" parent="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "HV1 — Disguise & Clue Behavior"
+
+[node name="Hv2ActiveDisguiseButton" type="Button" parent="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "HV2 — Active Disguise"
+
+[node name="Hv3TimedCoexistenceButton" type="Button" parent="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "HV3 — Timed Coexistence"
+
+[node name="Hv4CriticMailmanButton" type="Button" parent="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "HV4 — Critic & Mailman"
+
+[node name="Hv5MutationVisibilityButton" type="Button" parent="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "HV5 — Mutation & Visibility"
+
+[node name="Hv6ResolutionTimedSafetyButton" type="Button" parent="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "HV6 — Resolution & Timed Safety"
+
+[node name="LootButton" type="Button" parent="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu" unique_id=238945628]
+layout_mode = 2
+text = "DEV M1 — Loot Foundation"
+
+[node name="CharacterSelectionButton" type="Button" parent="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu" unique_id=960565898]
+layout_mode = 2
+text = "DEV M2 — Character Selection"
+
+[node name="MovementButton" type="Button" parent="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu" unique_id=1653938407]
+layout_mode = 2
+text = "DEV M3 — Spawn + Movement"
+
+[node name="ProductionLootMapButton" type="Button" parent="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "GĐ2-M0A — Production Imperial Court Board"
+
+[node name="RewardItemButton" type="Button" parent="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu" unique_id=869451891]
+layout_mode = 2
+text = "DEV M4 — Reward + Item + Temp Effect"
+
+[node name="M5Button" type="Button" parent="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu" unique_id=2034142994]
+layout_mode = 2
+text = "DEV M5 — Equipment + Gacha"
+
+[node name="M6Button" type="Button" parent="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu" unique_id=1176187200]
+layout_mode = 2
+text = "Prototype B Full Flow — MAIN"
+
+[node name="Gd3M2Button" type="Button" parent="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu" unique_id=1181932901]
+layout_mode = 2
+text = "GĐ3-M2 — Case → Loot Bridge"
+
+[node name="Gd3M3Button" type="Button" parent="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu" unique_id=1256910255]
+layout_mode = 2
+text = "GĐ3-M3 — Integrated Case → Loot"
+
+[node name="Gd3M4Button" type="Button" parent="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu" unique_id=457860135]
+layout_mode = 2
+text = "GĐ3-M4 — Integrated Round Completion"
+
+[node name="Gd3M5Button" type="Button" parent="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu" unique_id=372014727]
+layout_mode = 2
+text = "GĐ3-M5 — Multi-Round Next Case Integration"
+
+[node name="Gd3M6Button" type="Button" parent="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu" unique_id=950378134]
+layout_mode = 2
+text = "GĐ3-M6 — Bounded Two-Round Completion"
+
+[node name="SmokeButton" type="Button" parent="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu" unique_id=1076021511]
+layout_mode = 2
+text = "Smoke Tests"
+
+[node name="ValidateFixtureButton" type="Button" parent="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu" unique_id=1952668942]
+layout_mode = 2
+text = "Validate Case Fixture"
+
+[node name="ExitButton" type="Button" parent="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu" unique_id=541466070]
+layout_mode = 2
+text = "Exit"
+
+[node name="NoticeLabel" type="Label" parent="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu" unique_id=70680140]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.95, 0.77, 0.35, 1)
+text = "Gameplay modules are intentionally not implemented."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="LogPanel" type="PanelContainer" parent="SafeMargin/MainColumn/ContentRow" unique_id=1760948434]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="LogColumn" type="VBoxContainer" parent="SafeMargin/MainColumn/ContentRow/LogPanel" unique_id=945285957]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="LogTitle" type="Label" parent="SafeMargin/MainColumn/ContentRow/LogPanel/LogColumn" unique_id=1953414929]
+layout_mode = 2
+theme_override_font_sizes/font_size = 21
+text = "Log preview"
+
+[node name="LogPreview" type="RichTextLabel" parent="SafeMargin/MainColumn/ContentRow/LogPanel/LogColumn" unique_id=52370930]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+
+[node name="SmokePanel" type="PanelContainer" parent="." unique_id=1427846023]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -390.0
+offset_top = -250.0
+offset_right = 390.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SmokeColumn" type="VBoxContainer" parent="SmokePanel" unique_id=857169589]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="SmokeTitle" type="Label" parent="SmokePanel/SmokeColumn" unique_id=1138597950]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Smoke Tests — verified baseline + PF-M1 + PF-M2"
+horizontal_alignment = 1
+
+[node name="SmokeResults" type="RichTextLabel" parent="SmokePanel/SmokeColumn" unique_id=925588085]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+
+[node name="SmokeActions" type="HBoxContainer" parent="SmokePanel/SmokeColumn" unique_id=1732376801]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="RerunButton" type="Button" parent="SmokePanel/SmokeColumn/SmokeActions" unique_id=1684944359]
+layout_mode = 2
+text = "Run Again"
+
+[node name="CopyFailuresButton" type="Button" parent="SmokePanel/SmokeColumn/SmokeActions" unique_id=17039496]
+unique_name_in_owner = true
+layout_mode = 2
+disabled = true
+text = "Copy Failures"
+
+[node name="CloseButton" type="Button" parent="SmokePanel/SmokeColumn/SmokeActions" unique_id=1087947543]
+layout_mode = 2
+text = "Close"
+
+[connection signal="pressed" from="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu/PlayerMenuButton" to="." method="_on_player_menu_pressed"]
+[connection signal="pressed" from="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu/CaseButton" to="." method="_on_case_pressed"]
+[connection signal="pressed" from="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu/SampleCase4x4Button" to="." method="_on_sample_case_4x4_pressed"]
+[connection signal="pressed" from="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu/RoleCodexButton" to="." method="_on_role_codex_pressed"]
+[connection signal="pressed" from="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu/TutorialCase01Button" to="." method="_on_tutorial_case_01_pressed"]
+[connection signal="pressed" from="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu/TutorialCase02Button" to="." method="_on_tutorial_case_02_pressed"]
+[connection signal="pressed" from="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu/TutorialCase03Button" to="." method="_on_tutorial_case_03_pressed"]
+[connection signal="pressed" from="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu/TutorialCase04Button" to="." method="_on_tutorial_case_04_pressed"]
+[connection signal="pressed" from="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu/TutorialCase05Button" to="." method="_on_tutorial_case_05_pressed"]
+[connection signal="pressed" from="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu/TutorialCase06Button" to="." method="_on_tutorial_case_06_pressed"]
+[connection signal="pressed" from="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu/TutorialCase07Button" to="." method="_on_tutorial_case_07_pressed"]
+[connection signal="pressed" from="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu/TutorialCase08Button" to="." method="_on_tutorial_case_08_pressed"]
+[connection signal="pressed" from="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu/Hv1DisguiseClueButton" to="." method="_on_hv1_disguise_clue_behavior_pressed"]
+[connection signal="pressed" from="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu/Hv2ActiveDisguiseButton" to="." method="_on_hv2_active_disguise_pressed"]
+[connection signal="pressed" from="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu/Hv3TimedCoexistenceButton" to="." method="_on_hv3_timed_coexistence_pressed"]
+[connection signal="pressed" from="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu/Hv4CriticMailmanButton" to="." method="_on_hv4_critic_mailman_pressed"]
+[connection signal="pressed" from="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu/Hv5MutationVisibilityButton" to="." method="_on_hv5_mutation_visibility_pressed"]
+[connection signal="pressed" from="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu/Hv6ResolutionTimedSafetyButton" to="." method="_on_hv6_resolution_timed_safety_pressed"]
+[connection signal="pressed" from="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu/LootButton" to="." method="_on_loot_pressed"]
+[connection signal="pressed" from="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu/CharacterSelectionButton" to="." method="_on_character_selection_pressed"]
+[connection signal="pressed" from="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu/MovementButton" to="." method="_on_movement_pressed"]
+[connection signal="pressed" from="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu/ProductionLootMapButton" to="." method="_on_production_loot_map_pressed"]
+[connection signal="pressed" from="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu/RewardItemButton" to="." method="_on_reward_item_pressed"]
+[connection signal="pressed" from="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu/M5Button" to="." method="_on_m5_pressed"]
+[connection signal="pressed" from="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu/M6Button" to="." method="_on_m6_pressed"]
+[connection signal="pressed" from="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu/Gd3M2Button" to="." method="_on_gd3_m2_pressed"]
+[connection signal="pressed" from="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu/Gd3M3Button" to="." method="_on_gd3_m3_pressed"]
+[connection signal="pressed" from="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu/Gd3M4Button" to="." method="_on_gd3_m4_pressed"]
+[connection signal="pressed" from="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu/Gd3M5Button" to="." method="_on_gd3_m5_pressed"]
+[connection signal="pressed" from="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu/Gd3M6Button" to="." method="_on_gd3_m6_pressed"]
+[connection signal="pressed" from="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu/SmokeButton" to="." method="_on_smoke_pressed"]
+[connection signal="pressed" from="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu/ValidateFixtureButton" to="." method="_on_validate_fixture_pressed"]
+[connection signal="pressed" from="SafeMargin/MainColumn/ContentRow/MenuPanel/MenuScroll/Menu/ExitButton" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="SmokePanel/SmokeColumn/SmokeActions/RerunButton" to="." method="_on_rerun_pressed"]
+[connection signal="pressed" from="SmokePanel/SmokeColumn/SmokeActions/CopyFailuresButton" to="." method="_on_copy_failures_pressed"]
+[connection signal="pressed" from="SmokePanel/SmokeColumn/SmokeActions/CloseButton" to="." method="_on_close_smoke_pressed"]

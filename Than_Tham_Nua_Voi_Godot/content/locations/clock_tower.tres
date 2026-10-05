@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ClockTowerDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/domain/cases/ClockTowerDefinition.gd" id="1_location"]
+
+[resource]
+script = ExtResource("1_location")
+location_id = &"clock_tower"
+display_name = "Tháp Đồng Hồ"
+board_slot = 5
+ring_hour = 8

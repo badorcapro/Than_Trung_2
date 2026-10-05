@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="RoleDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" uid="uid://b6jr3q1qufc22" path="res://scripts/domain/roles/RoleDefinition.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+role_id = &"poisoner"
+display_name = "Độc Sư"
+role_group = 2
+help_text = "💬 Ta nói dối và giả danh một thân phận được liệt kê.
+
+❗ Khi có mục tiêu hợp lệ, ta tha hóa ngẫu nhiên đúng một Người Vô Tội chưa bị tha hóa ở một trong tám ô xung quanh. Mục tiêu giữ nguyên thân phận và phe, nhưng sẽ nói dối do bị tha hóa.
+
+❓ Nếu bị tha hóa, ta không tha hóa mục tiêu."
+always_lies = true
+is_fixture_placeholder = false

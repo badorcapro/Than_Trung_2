@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="PerfectPoolEntry" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/domain/economy/PerfectPoolEntry.gd" id="1"]
+[resource]
+script=ExtResource("1")
+entry_id=&"core_ss_relic"
+kind=1
+weight=1
+initial_hits=1
+equipment_definition_id=&"m5_ss_relic"

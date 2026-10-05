@@ -1,0 +1,109 @@
+[gd_resource type="Resource" script_class="CaseDefinition" load_steps=12 format=3]
+
+[ext_resource type="Script" path="res://scripts/domain/cases/CaseDefinition.gd" id="1_case"]
+[ext_resource type="Script" path="res://scripts/domain/cases/SuspectDefinition.gd" id="2_suspect"]
+[ext_resource type="Script" path="res://scripts/domain/cases/OnSolveReward.gd" id="3_reward"]
+[ext_resource type="Script" path="res://scripts/domain/cases/CrimeSceneDefinition.gd" id="4_crime_scene"]
+
+[sub_resource type="Resource" id="OnSolve"]
+script = ExtResource("3_reward")
+reward_id = &"tutorial_case_008_reward"
+reputation_delta = 1
+test_only_not_balance_locked = true
+note = "TEST_ONLY / NOT_BALANCE_LOCKED: final tutorial fixture for truthful Evil and borrowed active function."
+
+[sub_resource type="Resource" id="CrimeScene"]
+script = ExtResource("4_crime_scene")
+scene_id = &"tutorial_scene_008"
+display_name = "Hiện trường lời thật"
+board_slot = 4
+description = "Một hiện trường hướng dẫn rằng Phe Ác không phải lúc nào cũng nói dối."
+
+[sub_resource type="Resource" id="Suspect1"]
+script = ExtResource("2_suspect")
+suspect_id = 1
+board_slot = 0
+true_role_id = &"therapist"
+displayed_role_id = &"therapist"
+true_alignment = 0
+role_group = 0
+truth_reveal_note = "Ngự Y thật."
+
+[sub_resource type="Resource" id="Suspect2"]
+script = ExtResource("2_suspect")
+suspect_id = 2
+board_slot = 1
+true_role_id = &"conman"
+displayed_role_id = &"mathematician"
+true_alignment = 1
+role_group = 2
+is_impersonating = true
+impersonated_role_id = &"mathematician"
+truth_reveal_note = "Kẻ Lừa Đảo giả danh Nhà Toán Học và không nói dối."
+
+[sub_resource type="Resource" id="Suspect3"]
+script = ExtResource("2_suspect")
+suspect_id = 3
+board_slot = 3
+true_role_id = &"copycat"
+displayed_role_id = &"vigilante"
+true_alignment = 0
+role_group = 1
+is_impersonating = true
+impersonated_role_id = &"vigilante"
+truth_reveal_note = "Kẻ Bắt Chước giả danh Sư Tử Phán."
+
+[sub_resource type="Resource" id="Suspect4"]
+script = ExtResource("2_suspect")
+suspect_id = 4
+board_slot = 5
+true_role_id = &"mathematician"
+displayed_role_id = &"mathematician"
+true_alignment = 0
+role_group = 0
+truth_reveal_note = "Nhà Toán Học thật."
+
+[sub_resource type="Resource" id="Suspect5"]
+script = ExtResource("2_suspect")
+suspect_id = 5
+board_slot = 7
+true_role_id = &"vigilante"
+displayed_role_id = &"vigilante"
+true_alignment = 0
+role_group = 0
+truth_reveal_note = "Sư Tử Phán thật chưa tự động dùng chức năng."
+
+[sub_resource type="Resource" id="Suspect6"]
+script = ExtResource("2_suspect")
+suspect_id = 6
+board_slot = 8
+true_role_id = &"tutorial_mobster"
+displayed_role_id = &"therapist"
+true_alignment = 1
+role_group = 2
+is_impersonating = true
+impersonated_role_id = &"therapist"
+authored_lie_numeric_value = 3
+truth_reveal_note = "Kẻ Côn Đồ giả danh Ngự Y."
+
+[resource]
+script = ExtResource("1_case")
+case_id = &"tutorial_case_008"
+data_version = 1
+display_name = "Hướng Dẫn 08: Phe Ác Nói Thật"
+short_description = "Tutorial cuối về Kẻ Lừa Đảo, Kẻ Bắt Chước, vai trùng hiển thị, và việc chết không thay thế Phán Quyết."
+tutorial_dialogue_lines = PackedStringArray("À! Ta nhớ vụ án này rồi!", "Có một Kẻ Lừa Đảo!", "Dù thuộc Phe Ác, Kẻ Lừa Đảo vẫn giả danh nhưng không nói dối.", "Điều đó có thể khiến chúng rất khó bị phát hiện và Chỉ Điểm.", "Chỉ cần nhớ rằng...", "Một vai trò thuộc Phe Ác không phải lúc nào cũng nói dối.")
+difficulty_label = "TUTORIAL"
+crime_scene = SubResource("CrimeScene")
+merit_pool = 9
+reputation_penalty_on_wrong = 1
+base_ticket_reward = 0
+on_solve = SubResource("OnSolve")
+suspects = Array[ExtResource("2_suspect")]([SubResource("Suspect1"), SubResource("Suspect2"), SubResource("Suspect3"), SubResource("Suspect4"), SubResource("Suspect5"), SubResource("Suspect6")])
+evil_suspect_ids = PackedInt32Array(2, 6)
+accomplice_suspect_ids = PackedInt32Array(2, 6)
+traitor_suspect_ids = PackedInt32Array()
+suspected_role_ids = Array[StringName]([&"therapist", &"mathematician", &"vigilante", &"conman", &"copycat", &"tutorial_mobster"])
+suspect_list_role_ids = Array[StringName]([&"therapist", &"mathematician", &"vigilante", &"conman", &"copycat", &"tutorial_mobster"])
+test_only_not_balance_locked = true
+balance_note = "TEST_ONLY / NOT_BALANCE_LOCKED: Tutorial 08 final tutorial for truthful Evil, Copycat borrowed Vigilante function, duplicate displayed roles, and dead Evil remaining in verdict answer."

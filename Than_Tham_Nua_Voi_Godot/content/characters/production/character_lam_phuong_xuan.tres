@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="CharacterDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/domain/characters/CharacterDefinition.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+character_id = &"character_lam_phuong_xuan"
+display_name = "Lam Phương Xuân"
+origin_house_id = &"house_lam"
+base_speed = 2
+base_stamina = 2
+base_bag_level = 2
+active_orb_requirement = 0
+test_only_not_canon_locked = false

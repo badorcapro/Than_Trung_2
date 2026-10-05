@@ -1,0 +1,64 @@
+[gd_resource type="Resource" script_class="CaseDefinition" load_steps=9 format=3]
+
+[ext_resource type="Script" path="res://scripts/domain/cases/CaseDefinition.gd" id="1_case"]
+[ext_resource type="Script" path="res://scripts/domain/cases/SuspectDefinition.gd" id="2_suspect"]
+[ext_resource type="Script" path="res://scripts/domain/cases/OnSolveReward.gd" id="3_reward"]
+[ext_resource type="Script" path="res://scripts/domain/cases/CrimeSceneDefinition.gd" id="4_crime_scene"]
+
+[sub_resource type="Resource" id="OnSolve"]
+script = ExtResource("3_reward")
+reward_id = &"tutorial_case_002_reward"
+reputation_delta = 1
+test_only_not_balance_locked = true
+note = "TEST_ONLY / NOT_BALANCE_LOCKED: tutorial reward placeholder."
+
+[sub_resource type="Resource" id="CrimeScene"]
+script = ExtResource("4_crime_scene")
+scene_id = &"tutorial_scene_002"
+display_name = "Hiện trường nhỏ"
+board_slot = 4
+description = "Một hiện trường hướng dẫn nhỏ. Không phải nghi phạm và không nhận tương tác điều tra."
+
+[sub_resource type="Resource" id="Suspect1"]
+script = ExtResource("2_suspect")
+suspect_id = 1
+board_slot = 3
+true_role_id = &"tutorial_priest"
+displayed_role_id = &"tutorial_priest"
+true_alignment = 0
+role_group = 0
+public_investigation_statement = "Tôi là Tư Tế."
+truth_reveal_note = "Lời khai đúng: Tôi là Tư Tế."
+
+[sub_resource type="Resource" id="Suspect2"]
+script = ExtResource("2_suspect")
+suspect_id = 2
+board_slot = 5
+true_role_id = &"tutorial_mobster"
+displayed_role_id = &"tutorial_priest"
+true_alignment = 1
+role_group = 2
+is_impersonating = true
+impersonated_role_id = &"tutorial_priest"
+public_investigation_statement = "Ta có thật là một Tư Tế tốt không?"
+truth_reveal_note = "Kẻ Côn Đồ nói dối khi giả làm Tư Tế."
+
+[resource]
+script = ExtResource("1_case")
+case_id = &"tutorial_case_002"
+data_version = 1
+display_name = "Hướng Dẫn 02: Nói Dối và Giả Vai"
+short_description = "Tutorial tối giản về một Tòng Phạm nói dối khi giả làm Tư Tế."
+difficulty_label = "TUTORIAL"
+crime_scene = SubResource("CrimeScene")
+merit_pool = 4
+reputation_penalty_on_wrong = 1
+base_ticket_reward = 0
+on_solve = SubResource("OnSolve")
+suspects = Array[ExtResource("2_suspect")]([SubResource("Suspect1"), SubResource("Suspect2")])
+evil_suspect_ids = PackedInt32Array(2)
+accomplice_suspect_ids = PackedInt32Array(2)
+traitor_suspect_ids = PackedInt32Array()
+requires_tailor = false
+test_only_not_balance_locked = true
+balance_note = "TEST_ONLY / NOT_BALANCE_LOCKED: tutorial structure fixture only."

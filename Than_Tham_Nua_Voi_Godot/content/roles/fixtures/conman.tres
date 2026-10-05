@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="RoleDefinition" format=3]
+
+[ext_resource type="Script" uid="uid://b6jr3q1qufc22" path="res://scripts/domain/roles/RoleDefinition.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+role_id = &"conman"
+display_name = "Kẻ Lừa Đảo"
+role_group = 2
+help_text = "💬 Ta giả danh một thân phận xuất hiện trong Kỳ Án. Ta nói thật và thông báo theo thân phận đang thể hiện.
+
+❗ Khi ta bị Chỉ Điểm chính xác, lượt Chỉ Điểm vẫn thành công nhưng thân phận thật của ta không bị lộ bởi kết quả đó."
+is_fixture_placeholder = false

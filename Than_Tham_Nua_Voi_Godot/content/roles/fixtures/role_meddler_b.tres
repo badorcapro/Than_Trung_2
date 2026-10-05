@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="RoleDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/domain/roles/RoleDefinition.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+role_id = &"role_meddler_b"
+display_name = "Hiếu Sự B (Fixture)"
+role_group = 1
+help_text = ""

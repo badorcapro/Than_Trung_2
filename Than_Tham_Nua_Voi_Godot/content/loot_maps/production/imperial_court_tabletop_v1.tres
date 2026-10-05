@@ -1,0 +1,774 @@
+[gd_resource type="Resource" script_class="LootMapDefinition" load_steps=79 format=3]
+
+[ext_resource type="Script" path="res://scripts/domain/loot/LootMapDefinition.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/domain/loot/LootNodeDefinition.gd" id="2"]
+
+[sub_resource type="Resource" id="Node001"]
+script = ExtResource("2")
+node_id = &"huyen_spawn"
+node_kind = &"ORIGIN_SPAWN"
+tags = [&"HOUSE"]
+origin_house_id = &"house_huyen"
+outgoing_neighbor_ids = [&"huyen_lane_a_1", &"huyen_lane_b_1"]
+display_name = "Nhà họ Huyền"
+world_position = Vector2(1600, 120)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node002"]
+script = ExtResource("2")
+node_id = &"huyen_lane_a_1"
+node_kind = &"HOUSE_PATH"
+tags = [&"HOUSE"]
+origin_house_id = &"house_huyen"
+outgoing_neighbor_ids = [&"huyen_lane_a_2"]
+display_name = "Nhà họ Huyền · Lối A"
+world_position = Vector2(1440, 300)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node003"]
+script = ExtResource("2")
+node_id = &"huyen_lane_a_2"
+node_kind = &"HOUSE_PATH"
+tags = [&"HOUSE"]
+origin_house_id = &"house_huyen"
+outgoing_neighbor_ids = [&"huyen_lane_a_3"]
+world_position = Vector2(1360, 520)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node004"]
+script = ExtResource("2")
+node_id = &"huyen_lane_a_3"
+node_kind = &"HOUSE_PATH"
+tags = [&"HOUSE"]
+origin_house_id = &"house_huyen"
+outgoing_neighbor_ids = [&"huyen_lane_a_4"]
+world_position = Vector2(1390, 780)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node005"]
+script = ExtResource("2")
+node_id = &"huyen_lane_a_4"
+node_kind = &"HOUSE_PATH"
+tags = [&"HOUSE"]
+origin_house_id = &"house_huyen"
+outgoing_neighbor_ids = [&"central_hub"]
+world_position = Vector2(1470, 1100)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node006"]
+script = ExtResource("2")
+node_id = &"huyen_lane_b_1"
+node_kind = &"HOUSE_PATH"
+tags = [&"HOUSE"]
+origin_house_id = &"house_huyen"
+outgoing_neighbor_ids = [&"huyen_lane_b_2"]
+display_name = "Nhà họ Huyền · Lối B"
+world_position = Vector2(1760, 300)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node007"]
+script = ExtResource("2")
+node_id = &"huyen_lane_b_2"
+node_kind = &"HOUSE_PATH"
+tags = [&"HOUSE"]
+origin_house_id = &"house_huyen"
+outgoing_neighbor_ids = [&"huyen_lane_b_3"]
+world_position = Vector2(1840, 520)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node008"]
+script = ExtResource("2")
+node_id = &"huyen_lane_b_3"
+node_kind = &"HOUSE_PATH"
+tags = [&"HOUSE"]
+origin_house_id = &"house_huyen"
+outgoing_neighbor_ids = [&"huyen_lane_b_4"]
+world_position = Vector2(1810, 780)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node009"]
+script = ExtResource("2")
+node_id = &"huyen_lane_b_4"
+node_kind = &"HOUSE_PATH"
+tags = [&"HOUSE"]
+origin_house_id = &"house_huyen"
+outgoing_neighbor_ids = [&"central_hub"]
+world_position = Vector2(1730, 1100)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node010"]
+script = ExtResource("2")
+node_id = &"kim_spawn"
+node_kind = &"ORIGIN_SPAWN"
+tags = [&"HOUSE"]
+origin_house_id = &"house_kim"
+outgoing_neighbor_ids = [&"kim_lane_a_1", &"kim_lane_b_1"]
+display_name = "Nhà họ Kim"
+world_position = Vector2(300, 420)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node011"]
+script = ExtResource("2")
+node_id = &"kim_lane_a_1"
+node_kind = &"HOUSE_PATH"
+tags = [&"HOUSE"]
+origin_house_id = &"house_kim"
+outgoing_neighbor_ids = [&"kim_lane_a_2"]
+display_name = "Nhà họ Kim · Lối A"
+world_position = Vector2(520, 300)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node012"]
+script = ExtResource("2")
+node_id = &"kim_lane_a_2"
+node_kind = &"HOUSE_PATH"
+tags = [&"HOUSE"]
+origin_house_id = &"house_kim"
+outgoing_neighbor_ids = [&"kim_lane_a_3"]
+world_position = Vector2(780, 340)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node013"]
+script = ExtResource("2")
+node_id = &"kim_lane_a_3"
+node_kind = &"HOUSE_PATH"
+tags = [&"HOUSE"]
+origin_house_id = &"house_kim"
+outgoing_neighbor_ids = [&"kim_lane_a_4"]
+world_position = Vector2(1040, 520)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node014"]
+script = ExtResource("2")
+node_id = &"kim_lane_a_4"
+node_kind = &"HOUSE_PATH"
+tags = [&"HOUSE"]
+origin_house_id = &"house_kim"
+outgoing_neighbor_ids = [&"central_hub"]
+world_position = Vector2(1320, 900)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node015"]
+script = ExtResource("2")
+node_id = &"kim_lane_b_1"
+node_kind = &"HOUSE_PATH"
+tags = [&"HOUSE"]
+origin_house_id = &"house_kim"
+outgoing_neighbor_ids = [&"kim_lane_b_2"]
+display_name = "Nhà họ Kim · Lối B"
+world_position = Vector2(480, 560)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node016"]
+script = ExtResource("2")
+node_id = &"kim_lane_b_2"
+node_kind = &"HOUSE_PATH"
+tags = [&"HOUSE"]
+origin_house_id = &"house_kim"
+outgoing_neighbor_ids = [&"kim_lane_b_3"]
+world_position = Vector2(720, 720)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node017"]
+script = ExtResource("2")
+node_id = &"kim_lane_b_3"
+node_kind = &"HOUSE_PATH"
+tags = [&"HOUSE"]
+origin_house_id = &"house_kim"
+outgoing_neighbor_ids = [&"kim_lane_b_4"]
+world_position = Vector2(980, 900)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node018"]
+script = ExtResource("2")
+node_id = &"kim_lane_b_4"
+node_kind = &"HOUSE_PATH"
+tags = [&"HOUSE"]
+origin_house_id = &"house_kim"
+outgoing_neighbor_ids = [&"central_hub"]
+world_position = Vector2(1300, 1200)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node019"]
+script = ExtResource("2")
+node_id = &"hoang_spawn"
+node_kind = &"ORIGIN_SPAWN"
+tags = [&"HOUSE"]
+origin_house_id = &"house_hoang"
+outgoing_neighbor_ids = [&"hoang_lane_a_1", &"hoang_lane_b_1"]
+display_name = "Nhà họ Hoàng"
+world_position = Vector2(340, 980)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node020"]
+script = ExtResource("2")
+node_id = &"hoang_lane_a_1"
+node_kind = &"HOUSE_PATH"
+tags = [&"HOUSE"]
+origin_house_id = &"house_hoang"
+outgoing_neighbor_ids = [&"hoang_lane_a_2"]
+display_name = "Nhà họ Hoàng · Lối A"
+world_position = Vector2(560, 860)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node021"]
+script = ExtResource("2")
+node_id = &"hoang_lane_a_2"
+node_kind = &"HOUSE_PATH"
+tags = [&"HOUSE"]
+origin_house_id = &"house_hoang"
+outgoing_neighbor_ids = [&"hoang_lane_a_3"]
+world_position = Vector2(820, 900)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node022"]
+script = ExtResource("2")
+node_id = &"hoang_lane_a_3"
+node_kind = &"HOUSE_PATH"
+tags = [&"HOUSE"]
+origin_house_id = &"house_hoang"
+outgoing_neighbor_ids = [&"hoang_lane_a_4"]
+world_position = Vector2(1080, 1080)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node023"]
+script = ExtResource("2")
+node_id = &"hoang_lane_a_4"
+node_kind = &"HOUSE_PATH"
+tags = [&"HOUSE"]
+origin_house_id = &"house_hoang"
+outgoing_neighbor_ids = [&"central_hub"]
+world_position = Vector2(1360, 1320)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node024"]
+script = ExtResource("2")
+node_id = &"hoang_lane_b_1"
+node_kind = &"HOUSE_PATH"
+tags = [&"HOUSE"]
+origin_house_id = &"house_hoang"
+outgoing_neighbor_ids = [&"hoang_lane_b_2"]
+display_name = "Nhà họ Hoàng · Lối B"
+world_position = Vector2(520, 1120)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node025"]
+script = ExtResource("2")
+node_id = &"hoang_lane_b_2"
+node_kind = &"HOUSE_PATH"
+tags = [&"HOUSE"]
+origin_house_id = &"house_hoang"
+outgoing_neighbor_ids = [&"hoang_lane_b_3"]
+world_position = Vector2(760, 1280)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node026"]
+script = ExtResource("2")
+node_id = &"hoang_lane_b_3"
+node_kind = &"HOUSE_PATH"
+tags = [&"HOUSE"]
+origin_house_id = &"house_hoang"
+outgoing_neighbor_ids = [&"hoang_lane_b_4"]
+world_position = Vector2(1040, 1400)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node027"]
+script = ExtResource("2")
+node_id = &"hoang_lane_b_4"
+node_kind = &"HOUSE_PATH"
+tags = [&"HOUSE"]
+origin_house_id = &"house_hoang"
+outgoing_neighbor_ids = [&"central_hub"]
+world_position = Vector2(1340, 1460)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node028"]
+script = ExtResource("2")
+node_id = &"lam_spawn"
+node_kind = &"ORIGIN_SPAWN"
+tags = [&"HOUSE"]
+origin_house_id = &"house_lam"
+outgoing_neighbor_ids = [&"lam_lane_a_1", &"lam_lane_b_1"]
+display_name = "Nhà họ Lam"
+world_position = Vector2(2900, 420)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node029"]
+script = ExtResource("2")
+node_id = &"lam_lane_a_1"
+node_kind = &"HOUSE_PATH"
+tags = [&"HOUSE"]
+origin_house_id = &"house_lam"
+outgoing_neighbor_ids = [&"lam_lane_a_2"]
+display_name = "Nhà họ Lam · Lối A"
+world_position = Vector2(2680, 300)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node030"]
+script = ExtResource("2")
+node_id = &"lam_lane_a_2"
+node_kind = &"HOUSE_PATH"
+tags = [&"HOUSE"]
+origin_house_id = &"house_lam"
+outgoing_neighbor_ids = [&"lam_lane_a_3"]
+world_position = Vector2(2420, 340)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node031"]
+script = ExtResource("2")
+node_id = &"lam_lane_a_3"
+node_kind = &"HOUSE_PATH"
+tags = [&"HOUSE"]
+origin_house_id = &"house_lam"
+outgoing_neighbor_ids = [&"lam_lane_a_4"]
+world_position = Vector2(2160, 520)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node032"]
+script = ExtResource("2")
+node_id = &"lam_lane_a_4"
+node_kind = &"HOUSE_PATH"
+tags = [&"HOUSE"]
+origin_house_id = &"house_lam"
+outgoing_neighbor_ids = [&"central_hub"]
+world_position = Vector2(1880, 900)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node033"]
+script = ExtResource("2")
+node_id = &"lam_lane_b_1"
+node_kind = &"HOUSE_PATH"
+tags = [&"HOUSE"]
+origin_house_id = &"house_lam"
+outgoing_neighbor_ids = [&"lam_lane_b_2"]
+display_name = "Nhà họ Lam · Lối B"
+world_position = Vector2(2720, 560)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node034"]
+script = ExtResource("2")
+node_id = &"lam_lane_b_2"
+node_kind = &"HOUSE_PATH"
+tags = [&"HOUSE"]
+origin_house_id = &"house_lam"
+outgoing_neighbor_ids = [&"lam_lane_b_3"]
+world_position = Vector2(2480, 720)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node035"]
+script = ExtResource("2")
+node_id = &"lam_lane_b_3"
+node_kind = &"HOUSE_PATH"
+tags = [&"HOUSE"]
+origin_house_id = &"house_lam"
+outgoing_neighbor_ids = [&"lam_lane_b_4"]
+world_position = Vector2(2220, 900)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node036"]
+script = ExtResource("2")
+node_id = &"lam_lane_b_4"
+node_kind = &"HOUSE_PATH"
+tags = [&"HOUSE"]
+origin_house_id = &"house_lam"
+outgoing_neighbor_ids = [&"central_hub"]
+world_position = Vector2(1900, 1200)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node037"]
+script = ExtResource("2")
+node_id = &"chu_spawn"
+node_kind = &"ORIGIN_SPAWN"
+tags = [&"HOUSE"]
+origin_house_id = &"house_chu"
+outgoing_neighbor_ids = [&"chu_lane_a_1", &"chu_lane_b_1"]
+display_name = "Nhà họ Chu"
+world_position = Vector2(2860, 980)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node038"]
+script = ExtResource("2")
+node_id = &"chu_lane_a_1"
+node_kind = &"HOUSE_PATH"
+tags = [&"HOUSE"]
+origin_house_id = &"house_chu"
+outgoing_neighbor_ids = [&"chu_lane_a_2"]
+display_name = "Nhà họ Chu · Lối A"
+world_position = Vector2(2640, 860)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node039"]
+script = ExtResource("2")
+node_id = &"chu_lane_a_2"
+node_kind = &"HOUSE_PATH"
+tags = [&"HOUSE"]
+origin_house_id = &"house_chu"
+outgoing_neighbor_ids = [&"chu_lane_a_3"]
+world_position = Vector2(2380, 900)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node040"]
+script = ExtResource("2")
+node_id = &"chu_lane_a_3"
+node_kind = &"HOUSE_PATH"
+tags = [&"HOUSE"]
+origin_house_id = &"house_chu"
+outgoing_neighbor_ids = [&"chu_lane_a_4"]
+world_position = Vector2(2120, 1080)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node041"]
+script = ExtResource("2")
+node_id = &"chu_lane_a_4"
+node_kind = &"HOUSE_PATH"
+tags = [&"HOUSE"]
+origin_house_id = &"house_chu"
+outgoing_neighbor_ids = [&"central_hub"]
+world_position = Vector2(1840, 1320)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node042"]
+script = ExtResource("2")
+node_id = &"chu_lane_b_1"
+node_kind = &"HOUSE_PATH"
+tags = [&"HOUSE"]
+origin_house_id = &"house_chu"
+outgoing_neighbor_ids = [&"chu_lane_b_2"]
+display_name = "Nhà họ Chu · Lối B"
+world_position = Vector2(2680, 1120)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node043"]
+script = ExtResource("2")
+node_id = &"chu_lane_b_2"
+node_kind = &"HOUSE_PATH"
+tags = [&"HOUSE"]
+origin_house_id = &"house_chu"
+outgoing_neighbor_ids = [&"chu_lane_b_3"]
+world_position = Vector2(2440, 1280)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node044"]
+script = ExtResource("2")
+node_id = &"chu_lane_b_3"
+node_kind = &"HOUSE_PATH"
+tags = [&"HOUSE"]
+origin_house_id = &"house_chu"
+outgoing_neighbor_ids = [&"chu_lane_b_4"]
+world_position = Vector2(2160, 1400)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node045"]
+script = ExtResource("2")
+node_id = &"chu_lane_b_4"
+node_kind = &"HOUSE_PATH"
+tags = [&"HOUSE"]
+origin_house_id = &"house_chu"
+outgoing_neighbor_ids = [&"central_hub"]
+world_position = Vector2(1860, 1460)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node046"]
+script = ExtResource("2")
+node_id = &"central_hub"
+node_kind = &"CENTRAL_HUB"
+tags = [&"SHARED", &"CENTRAL_HUB"]
+outgoing_neighbor_ids = [&"middle_lane_1_1", &"middle_lane_2_1", &"middle_lane_3_1"]
+display_name = "Đại sân Trung tâm"
+world_position = Vector2(1600, 1500)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node047"]
+script = ExtResource("2")
+node_id = &"middle_lane_1_1"
+node_kind = &"MIDDLE_PATH"
+tags = [&"SHARED", &"MIDDLE"]
+outgoing_neighbor_ids = [&"middle_lane_1_2"]
+display_name = "Trung lộ 1"
+world_position = Vector2(1400, 1700)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node048"]
+script = ExtResource("2")
+node_id = &"middle_lane_1_2"
+node_kind = &"MIDDLE_PATH"
+tags = [&"SHARED", &"MIDDLE"]
+outgoing_neighbor_ids = [&"middle_lane_1_3"]
+world_position = Vector2(1260, 1890)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node049"]
+script = ExtResource("2")
+node_id = &"middle_lane_1_3"
+node_kind = &"MIDDLE_PATH"
+tags = [&"SHARED", &"MIDDLE"]
+outgoing_neighbor_ids = [&"middle_lane_1_4"]
+world_position = Vector2(1280, 2090)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node050"]
+script = ExtResource("2")
+node_id = &"middle_lane_1_4"
+node_kind = &"MIDDLE_PATH"
+tags = [&"SHARED", &"MIDDLE"]
+outgoing_neighbor_ids = [&"middle_lane_1_5"]
+world_position = Vector2(1380, 2270)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node051"]
+script = ExtResource("2")
+node_id = &"middle_lane_1_5"
+node_kind = &"MIDDLE_PATH"
+tags = [&"SHARED", &"MIDDLE"]
+outgoing_neighbor_ids = [&"mausoleum_hub"]
+world_position = Vector2(1480, 2440)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node052"]
+script = ExtResource("2")
+node_id = &"middle_lane_2_1"
+node_kind = &"MIDDLE_PATH"
+tags = [&"SHARED", &"MIDDLE"]
+outgoing_neighbor_ids = [&"middle_lane_2_2"]
+display_name = "Trung lộ 2"
+world_position = Vector2(1600, 1710)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node053"]
+script = ExtResource("2")
+node_id = &"middle_lane_2_2"
+node_kind = &"MIDDLE_PATH"
+tags = [&"SHARED", &"MIDDLE"]
+outgoing_neighbor_ids = [&"middle_lane_2_3"]
+world_position = Vector2(1600, 1900)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node054"]
+script = ExtResource("2")
+node_id = &"middle_lane_2_3"
+node_kind = &"MIDDLE_PATH"
+tags = [&"SHARED", &"MIDDLE"]
+outgoing_neighbor_ids = [&"middle_lane_2_4"]
+world_position = Vector2(1600, 2090)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node055"]
+script = ExtResource("2")
+node_id = &"middle_lane_2_4"
+node_kind = &"MIDDLE_PATH"
+tags = [&"SHARED", &"MIDDLE"]
+outgoing_neighbor_ids = [&"middle_lane_2_5"]
+world_position = Vector2(1600, 2280)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node056"]
+script = ExtResource("2")
+node_id = &"middle_lane_2_5"
+node_kind = &"MIDDLE_PATH"
+tags = [&"SHARED", &"MIDDLE"]
+outgoing_neighbor_ids = [&"mausoleum_hub"]
+world_position = Vector2(1600, 2440)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node057"]
+script = ExtResource("2")
+node_id = &"middle_lane_3_1"
+node_kind = &"MIDDLE_PATH"
+tags = [&"SHARED", &"MIDDLE"]
+outgoing_neighbor_ids = [&"middle_lane_3_2"]
+display_name = "Trung lộ 3"
+world_position = Vector2(1800, 1700)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node058"]
+script = ExtResource("2")
+node_id = &"middle_lane_3_2"
+node_kind = &"MIDDLE_PATH"
+tags = [&"SHARED", &"MIDDLE"]
+outgoing_neighbor_ids = [&"middle_lane_3_3"]
+world_position = Vector2(1940, 1890)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node059"]
+script = ExtResource("2")
+node_id = &"middle_lane_3_3"
+node_kind = &"MIDDLE_PATH"
+tags = [&"SHARED", &"MIDDLE"]
+outgoing_neighbor_ids = [&"middle_lane_3_4"]
+world_position = Vector2(1920, 2090)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node060"]
+script = ExtResource("2")
+node_id = &"middle_lane_3_4"
+node_kind = &"MIDDLE_PATH"
+tags = [&"SHARED", &"MIDDLE"]
+outgoing_neighbor_ids = [&"middle_lane_3_5"]
+world_position = Vector2(1820, 2270)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node061"]
+script = ExtResource("2")
+node_id = &"middle_lane_3_5"
+node_kind = &"MIDDLE_PATH"
+tags = [&"SHARED", &"MIDDLE"]
+outgoing_neighbor_ids = [&"mausoleum_hub"]
+world_position = Vector2(1720, 2440)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node062"]
+script = ExtResource("2")
+node_id = &"mausoleum_hub"
+node_kind = &"MAUSOLEUM_HUB"
+tags = [&"SHARED", &"MAUSOLEUM_HUB"]
+outgoing_neighbor_ids = [&"final_lane_1_1", &"final_lane_2_1", &"final_lane_3_1"]
+display_name = "Đại lộ Lăng Miếu"
+world_position = Vector2(1600, 2600)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node063"]
+script = ExtResource("2")
+node_id = &"final_lane_1_1"
+node_kind = &"FINAL_PATH"
+tags = [&"SHARED", &"POST_MAUSOLEUM"]
+outgoing_neighbor_ids = [&"final_lane_1_2"]
+display_name = "Hoàng lộ 1"
+world_position = Vector2(1400, 2780)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node064"]
+script = ExtResource("2")
+node_id = &"final_lane_1_2"
+node_kind = &"FINAL_PATH"
+tags = [&"SHARED", &"POST_MAUSOLEUM"]
+outgoing_neighbor_ids = [&"final_lane_1_3"]
+world_position = Vector2(1400, 2950)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node065"]
+script = ExtResource("2")
+node_id = &"final_lane_1_3"
+node_kind = &"FINAL_PATH"
+tags = [&"SHARED", &"POST_MAUSOLEUM"]
+outgoing_neighbor_ids = [&"final_lane_1_4"]
+world_position = Vector2(1420, 3120)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node066"]
+script = ExtResource("2")
+node_id = &"final_lane_1_4"
+node_kind = &"FINAL_PATH"
+tags = [&"SHARED", &"POST_MAUSOLEUM"]
+outgoing_neighbor_ids = [&"final_lane_1_5"]
+world_position = Vector2(1440, 3290)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node067"]
+script = ExtResource("2")
+node_id = &"final_lane_1_5"
+node_kind = &"END"
+tags = [&"SHARED", &"POST_MAUSOLEUM", &"END"]
+display_name = "Điểm cuối Hoàng lộ 1"
+world_position = Vector2(1460, 3460)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node068"]
+script = ExtResource("2")
+node_id = &"final_lane_2_1"
+node_kind = &"FINAL_PATH"
+tags = [&"SHARED", &"POST_MAUSOLEUM"]
+outgoing_neighbor_ids = [&"final_lane_2_2"]
+display_name = "Hoàng lộ 2"
+world_position = Vector2(1600, 2780)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node069"]
+script = ExtResource("2")
+node_id = &"final_lane_2_2"
+node_kind = &"FINAL_PATH"
+tags = [&"SHARED", &"POST_MAUSOLEUM"]
+outgoing_neighbor_ids = [&"final_lane_2_3"]
+world_position = Vector2(1600, 2950)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node070"]
+script = ExtResource("2")
+node_id = &"final_lane_2_3"
+node_kind = &"FINAL_PATH"
+tags = [&"SHARED", &"POST_MAUSOLEUM"]
+outgoing_neighbor_ids = [&"final_lane_2_4"]
+world_position = Vector2(1600, 3120)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node071"]
+script = ExtResource("2")
+node_id = &"final_lane_2_4"
+node_kind = &"FINAL_PATH"
+tags = [&"SHARED", &"POST_MAUSOLEUM"]
+outgoing_neighbor_ids = [&"final_lane_2_5"]
+world_position = Vector2(1600, 3290)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node072"]
+script = ExtResource("2")
+node_id = &"final_lane_2_5"
+node_kind = &"END"
+tags = [&"SHARED", &"POST_MAUSOLEUM", &"END"]
+display_name = "Điểm cuối Hoàng lộ 2"
+world_position = Vector2(1600, 3460)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node073"]
+script = ExtResource("2")
+node_id = &"final_lane_3_1"
+node_kind = &"FINAL_PATH"
+tags = [&"SHARED", &"POST_MAUSOLEUM"]
+outgoing_neighbor_ids = [&"final_lane_3_2"]
+display_name = "Hoàng lộ 3"
+world_position = Vector2(1800, 2780)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node074"]
+script = ExtResource("2")
+node_id = &"final_lane_3_2"
+node_kind = &"FINAL_PATH"
+tags = [&"SHARED", &"POST_MAUSOLEUM"]
+outgoing_neighbor_ids = [&"final_lane_3_3"]
+world_position = Vector2(1800, 2950)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node075"]
+script = ExtResource("2")
+node_id = &"final_lane_3_3"
+node_kind = &"FINAL_PATH"
+tags = [&"SHARED", &"POST_MAUSOLEUM"]
+outgoing_neighbor_ids = [&"final_lane_3_4"]
+world_position = Vector2(1780, 3120)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node076"]
+script = ExtResource("2")
+node_id = &"final_lane_3_4"
+node_kind = &"FINAL_PATH"
+tags = [&"SHARED", &"POST_MAUSOLEUM"]
+outgoing_neighbor_ids = [&"final_lane_3_5"]
+world_position = Vector2(1760, 3290)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node077"]
+script = ExtResource("2")
+node_id = &"final_lane_3_5"
+node_kind = &"END"
+tags = [&"SHARED", &"POST_MAUSOLEUM", &"END"]
+display_name = "Điểm cuối Hoàng lộ 3"
+world_position = Vector2(1740, 3460)
+test_only_not_canon_locked = false
+
+[resource]
+script = ExtResource("1")
+map_id = &"imperial_court_tabletop_v1"
+data_version = 2
+nodes = [SubResource("Node001"), SubResource("Node002"), SubResource("Node003"), SubResource("Node004"), SubResource("Node005"), SubResource("Node006"), SubResource("Node007"), SubResource("Node008"), SubResource("Node009"), SubResource("Node010"), SubResource("Node011"), SubResource("Node012"), SubResource("Node013"), SubResource("Node014"), SubResource("Node015"), SubResource("Node016"), SubResource("Node017"), SubResource("Node018"), SubResource("Node019"), SubResource("Node020"), SubResource("Node021"), SubResource("Node022"), SubResource("Node023"), SubResource("Node024"), SubResource("Node025"), SubResource("Node026"), SubResource("Node027"), SubResource("Node028"), SubResource("Node029"), SubResource("Node030"), SubResource("Node031"), SubResource("Node032"), SubResource("Node033"), SubResource("Node034"), SubResource("Node035"), SubResource("Node036"), SubResource("Node037"), SubResource("Node038"), SubResource("Node039"), SubResource("Node040"), SubResource("Node041"), SubResource("Node042"), SubResource("Node043"), SubResource("Node044"), SubResource("Node045"), SubResource("Node046"), SubResource("Node047"), SubResource("Node048"), SubResource("Node049"), SubResource("Node050"), SubResource("Node051"), SubResource("Node052"), SubResource("Node053"), SubResource("Node054"), SubResource("Node055"), SubResource("Node056"), SubResource("Node057"), SubResource("Node058"), SubResource("Node059"), SubResource("Node060"), SubResource("Node061"), SubResource("Node062"), SubResource("Node063"), SubResource("Node064"), SubResource("Node065"), SubResource("Node066"), SubResource("Node067"), SubResource("Node068"), SubResource("Node069"), SubResource("Node070"), SubResource("Node071"), SubResource("Node072"), SubResource("Node073"), SubResource("Node074"), SubResource("Node075"), SubResource("Node076"), SubResource("Node077")]
+origin_spawn_by_house = {&"house_hoang": &"hoang_spawn", &"house_chu": &"chu_spawn", &"house_kim": &"kim_spawn", &"house_huyen": &"huyen_spawn", &"house_lam": &"lam_spawn"}
+test_only_not_canon_locked = false
+

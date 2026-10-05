@@ -1,0 +1,80 @@
+[gd_resource type="Resource" script_class="LootMapDefinition" load_steps=14 format=3]
+[ext_resource type="Script" path="res://scripts/domain/loot/LootMapDefinition.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/domain/loot/LootNodeDefinition.gd" id="2"]
+[sub_resource type="Resource" id="A0"]
+script = ExtResource("2")
+node_id = &"house_a_0"
+node_kind = &"ORIGIN_SPAWN"
+origin_house_id = &"test_house_a"
+outgoing_neighbor_ids = Array[StringName]([&"house_a_1"])
+[sub_resource type="Resource" id="A1"]
+script = ExtResource("2")
+node_id = &"house_a_1"
+node_kind = &"PALACE_PATH"
+origin_house_id = &"test_house_a"
+outgoing_neighbor_ids = Array[StringName]([&"center_0"])
+[sub_resource type="Resource" id="B0"]
+script = ExtResource("2")
+node_id = &"house_b_0"
+node_kind = &"ORIGIN_SPAWN"
+origin_house_id = &"test_house_b"
+outgoing_neighbor_ids = Array[StringName]([&"house_b_1"])
+[sub_resource type="Resource" id="B1"]
+script = ExtResource("2")
+node_id = &"house_b_1"
+node_kind = &"PALACE_PATH"
+origin_house_id = &"test_house_b"
+outgoing_neighbor_ids = Array[StringName]([&"center_0"])
+[sub_resource type="Resource" id="C0"]
+script = ExtResource("2")
+node_id = &"house_c_0"
+node_kind = &"ORIGIN_SPAWN"
+origin_house_id = &"test_house_c"
+outgoing_neighbor_ids = Array[StringName]([&"house_c_1"])
+[sub_resource type="Resource" id="C1"]
+script = ExtResource("2")
+node_id = &"house_c_1"
+node_kind = &"PALACE_PATH"
+origin_house_id = &"test_house_c"
+outgoing_neighbor_ids = Array[StringName]([&"center_0"])
+[sub_resource type="Resource" id="D0"]
+script = ExtResource("2")
+node_id = &"house_d_0"
+node_kind = &"ORIGIN_SPAWN"
+origin_house_id = &"test_house_d"
+outgoing_neighbor_ids = Array[StringName]([&"house_d_1"])
+[sub_resource type="Resource" id="D1"]
+script = ExtResource("2")
+node_id = &"house_d_1"
+node_kind = &"PALACE_PATH"
+origin_house_id = &"test_house_d"
+outgoing_neighbor_ids = Array[StringName]([&"center_0"])
+[sub_resource type="Resource" id="Center0"]
+script = ExtResource("2")
+node_id = &"center_0"
+node_kind = &"CENTER_ENTRY"
+tags = Array[StringName]([&"CENTER_ENTRY", &"SHARED"])
+outgoing_neighbor_ids = Array[StringName]([&"center_1"])
+[sub_resource type="Resource" id="Center1"]
+script = ExtResource("2")
+node_id = &"center_1"
+node_kind = &"CENTRAL"
+tags = Array[StringName]([&"CENTRAL", &"SHARED"])
+outgoing_neighbor_ids = Array[StringName]([&"lower_0"])
+[sub_resource type="Resource" id="Lower0"]
+script = ExtResource("2")
+node_id = &"lower_0"
+node_kind = &"LOWER_PATH"
+tags = Array[StringName]([&"LOWER_PATH", &"SHARED"])
+outgoing_neighbor_ids = Array[StringName]([&"end_0"])
+[sub_resource type="Resource" id="End0"]
+script = ExtResource("2")
+node_id = &"end_0"
+node_kind = &"END"
+tags = Array[StringName]([&"END", &"SHARED"])
+[resource]
+script = ExtResource("1")
+map_id = &"test_map_m3"
+nodes = Array[ExtResource("2")]([SubResource("A0"), SubResource("A1"), SubResource("B0"), SubResource("B1"), SubResource("C0"), SubResource("C1"), SubResource("D0"), SubResource("D1"), SubResource("Center0"), SubResource("Center1"), SubResource("Lower0"), SubResource("End0")])
+origin_spawn_by_house = {&"test_house_a": &"house_a_0", &"test_house_b": &"house_b_0", &"test_house_c": &"house_c_0", &"test_house_d": &"house_d_0"}
+test_only_not_canon_locked = true

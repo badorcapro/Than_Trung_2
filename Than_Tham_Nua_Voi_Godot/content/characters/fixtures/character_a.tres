@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="CharacterDefinition" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/domain/characters/CharacterDefinition.gd" id="1"]
+[resource]
+script = ExtResource("1")
+character_id = &"test_character_a"
+display_name = "TEST Character A"
+origin_house_id = &"test_house_a"
+base_speed = 2
+base_stamina = 2
+base_bag_level = 1
+passive_skill_id = &"test_passive_placeholder"
+active_skill_id = &"test_active_placeholder"
+active_orb_requirement = 1
+test_only_not_canon_locked = true

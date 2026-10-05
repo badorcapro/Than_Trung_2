@@ -1,0 +1,234 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/presentation/loot/Gd2M2Controller.gd" id="1"]
+[ext_resource type="Theme" path="res://themes/AppTheme.tres" id="2"]
+
+[node name="Gd2M2CharacterSelection" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2")
+script = ExtResource("1")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.035, 0.045, 0.07, 1)
+
+[node name="Margin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 42
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 42
+theme_override_constants/margin_bottom = 24
+
+[node name="Column" type="VBoxContainer" parent="Margin"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Margin/Column"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "GĐ2-M2 — Character Selection"
+horizontal_alignment = 1
+
+[node name="Boundary" type="Label" parent="Margin/Column"]
+layout_mode = 2
+text = "Functional prototype — dừng tại READY_FOR_LOOT_M3; không movement/reward/Equipment/Gacha runtime"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="CountPanel" type="PanelContainer" parent="Margin/Column"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="CountColumn" type="VBoxContainer" parent="Margin/Column/CountPanel"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 18
+
+[node name="CountTitle" type="Label" parent="Margin/Column/CountPanel/CountColumn"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Chọn số người chơi local (1–4)"
+horizontal_alignment = 1
+
+[node name="PlayerCountOption" type="OptionButton" parent="Margin/Column/CountPanel/CountColumn"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(240, 48)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="CountContinueButton" type="Button" parent="Margin/Column/CountPanel/CountColumn"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Continue"
+
+[node name="SelectionPanel" type="PanelContainer" parent="Margin/Column"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="SelectionColumn" type="VBoxContainer" parent="Margin/Column/SelectionPanel"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="CurrentPlayerLabel" type="Label" parent="Margin/Column/SelectionPanel/SelectionColumn"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 21
+horizontal_alignment = 1
+
+[node name="SelectionScroll" type="ScrollContainer" parent="Margin/Column/SelectionPanel/SelectionColumn"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="CharacterGrid" type="GridContainer" parent="Margin/Column/SelectionPanel/SelectionColumn/SelectionScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+columns = 2
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 10
+
+[node name="CharacterDetails" type="RichTextLabel" parent="Margin/Column/SelectionPanel/SelectionColumn"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 112)
+layout_mode = 2
+bbcode_enabled = true
+fit_content = false
+
+[node name="LockButton" type="Button" parent="Margin/Column/SelectionPanel/SelectionColumn"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Lock Character"
+disabled = true
+
+[node name="PassDevicePanel" type="PanelContainer" parent="Margin/Column"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="PassColumn" type="VBoxContainer" parent="Margin/Column/PassDevicePanel"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 20
+
+[node name="PassDeviceLabel" type="Label" parent="Margin/Column/PassDevicePanel/PassColumn"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+horizontal_alignment = 1
+
+[node name="PassNote" type="Label" parent="Margin/Column/PassDevicePanel/PassColumn"]
+layout_mode = 2
+text = "Selection không được coi là hidden info; overlay chỉ xác nhận chuyển người."
+horizontal_alignment = 1
+
+[node name="PassContinueButton" type="Button" parent="Margin/Column/PassDevicePanel/PassColumn"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Continue"
+
+[node name="SummaryPanel" type="PanelContainer" parent="Margin/Column"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="SummaryColumn" type="VBoxContainer" parent="Margin/Column/SummaryPanel"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="SummaryTitle" type="Label" parent="Margin/Column/SummaryPanel/SummaryColumn"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Selection Summary"
+horizontal_alignment = 1
+
+[node name="SummaryText" type="RichTextLabel" parent="Margin/Column/SummaryPanel/SummaryColumn"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="SummaryActions" type="HBoxContainer" parent="Margin/Column/SummaryPanel/SummaryColumn"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 12
+
+[node name="EditButton" type="Button" parent="Margin/Column/SummaryPanel/SummaryColumn/SummaryActions"]
+layout_mode = 2
+text = "Edit Last Selection"
+
+[node name="ConfirmButton" type="Button" parent="Margin/Column/SummaryPanel/SummaryColumn/SummaryActions"]
+layout_mode = 2
+text = "Confirm Selection"
+
+[node name="ReadyPanel" type="PanelContainer" parent="Margin/Column"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ReadyColumn" type="VBoxContainer" parent="Margin/Column/ReadyPanel"]
+layout_mode = 2
+
+[node name="ReadyTitle" type="Label" parent="Margin/Column/ReadyPanel/ReadyColumn"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "READY_FOR_LOOT_M3"
+horizontal_alignment = 1
+
+[node name="ReadySummary" type="RichTextLabel" parent="Margin/Column/ReadyPanel/ReadyColumn"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ContinueM3Button" type="Button" parent="Margin/Column/ReadyPanel/ReadyColumn"]
+layout_mode = 2
+text = "Continue to GĐ2-M3 Movement"
+
+[node name="StatusPanel" type="PanelContainer" parent="Margin/Column"]
+layout_mode = 2
+
+[node name="StatusColumn" type="VBoxContainer" parent="Margin/Column/StatusPanel"]
+layout_mode = 2
+
+[node name="PhaseLabel" type="Label" parent="Margin/Column/StatusPanel/StatusColumn"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Phase: PLAYER_COUNT"
+
+[node name="ValidationLabel" type="Label" parent="Margin/Column/StatusPanel/StatusColumn"]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 2
+
+[node name="BackButton" type="Button" parent="Margin/Column"]
+layout_mode = 2
+text = "Back to DebugHome"
+
+[connection signal="pressed" from="Margin/Column/CountPanel/CountColumn/CountContinueButton" to="." method="_on_count_continue_pressed"]
+[connection signal="pressed" from="Margin/Column/SelectionPanel/SelectionColumn/LockButton" to="." method="_on_lock_pressed"]
+[connection signal="pressed" from="Margin/Column/PassDevicePanel/PassColumn/PassContinueButton" to="." method="_on_pass_continue_pressed"]
+[connection signal="pressed" from="Margin/Column/SummaryPanel/SummaryColumn/SummaryActions/EditButton" to="." method="_on_edit_pressed"]
+[connection signal="pressed" from="Margin/Column/SummaryPanel/SummaryColumn/SummaryActions/ConfirmButton" to="." method="_on_confirm_pressed"]
+[connection signal="pressed" from="Margin/Column/ReadyPanel/ReadyColumn/ContinueM3Button" to="." method="_on_continue_m3_pressed"]
+[connection signal="pressed" from="Margin/Column/BackButton" to="." method="_on_back_pressed"]

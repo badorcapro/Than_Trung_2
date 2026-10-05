@@ -1,0 +1,6 @@
+.godot/
+builds/local/*
+!builds/local/.keep
+*.tmp
+*.log
+
