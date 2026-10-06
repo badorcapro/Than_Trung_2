@@ -33,10 +33,10 @@ Tài liệu này lưu trữ toàn bộ kiến thức tổng quan, kiến trúc, 
      - Các Smoke/static assertions đã thêm hoặc cập nhật.
      - Checklist kiểm tra thủ công cần người dùng bấm trên GUI.
    * Không tự ý nhảy sang milestone tiếp theo khi chưa có yêu cầu từ người dùng.
-4. 💾 **Chính sách Tự Động Commit Cục Bộ (Local Auto-Commit Policy):**
-   * Sau khi hoàn thành bất kỳ tác vụ nào do người dùng giao, Antigravity **bắt buộc tự động chạy commit Git tại local** để lưu trữ lịch sử version.
-   * Không thực hiện push lên remote.
+4. 🚀 **Chính sách Tự Động Commit & Push Remote (Auto-Commit & Push Policy):**
+   * Sau khi hoàn thành bất kỳ tác vụ nào do người dùng giao, Antigravity **bắt buộc tự động chạy commit Git và đẩy thẳng lên remote (`git push origin main`)** để đồng bộ mã nguồn.
    * Định dạng commit tuân thủ chuẩn **Conventional Commits**: `<type>(<scope>): <mô tả ngắn>`.
+   * Chủ động hoàn thiện code và tự động hóa kiểm tra nội bộ; không bắt người dùng phải kiểm tra thủ công trên GUI nếu không có yêu cầu đặc biệt.
 
 ---
 
@@ -96,9 +96,10 @@ Mỗi khi người dùng giao một tác vụ:
 2. Kiểm tra mã nguồn, đối chiếu `CODEX_PROJECT_MAP.md` và `gemini.md`.
 3. Thực hiện sửa đổi bằng các công cụ targeted edit (`replace_file_content`, `write_to_file`).
 4. Kiểm tra tĩnh (static checks) và đảm bảo không phá vỡ hợp đồng presentation.
-5. **Tự động chạy lệnh commit cục bộ**:
+5. **Tự động chạy lệnh commit và đẩy lên remote**:
    ```powershell
    git add .
    git commit -m "<type>(<scope>): <mô tả tác vụ>"
+   git push origin main
    ```
-6. Báo cáo kết quả và mã commit hash cho người dùng kèm checklist GUI nếu có.
+6. Báo cáo kết quả và mã commit hash cho người dùng; sẵn sàng nhận nhiệm vụ tiếp theo.
