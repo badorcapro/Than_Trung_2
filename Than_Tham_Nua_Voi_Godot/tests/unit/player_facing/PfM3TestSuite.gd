@@ -85,7 +85,7 @@ func _test_first_loot_with_full_selection_roster(rows: Array[Dictionary]) -> voi
 func _test_loot_completion(rows: Array[Dictionary]) -> void:
 	var context: Dictionary = _ready_context()
 	var flow: ROUND_FLOW = context.flow
-	flow.match_state.players[0].consumable_inventory = [{"item_id": "test_move_plus_1"}]
+	flow.match_state.players[0].consumable_inventory = [{"item_id": "consumable_hanh_lo_phu"}]
 	flow.begin_loot()
 	var initial_history: int = flow.loot_session.reward_history.size()
 	var guard: int = 0
