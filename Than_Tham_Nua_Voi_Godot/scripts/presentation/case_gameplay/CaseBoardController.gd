@@ -35,12 +35,12 @@ var _tile_size: Vector2 = BOARD_TILE_SIZE
 
 func _ready() -> void:
 	var style := StyleBoxFlat.new()
-	style.bg_color = Color(0.02, 0.025, 0.035, 0.18)
+	style.bg_color = Color(0.0, 0.0, 0.0, 0.0)
 	style.border_color = Color(0.0, 0.0, 0.0, 0.0)
-	style.content_margin_left = 2.0
-	style.content_margin_right = 2.0
-	style.content_margin_top = 2.0
-	style.content_margin_bottom = 2.0
+	style.content_margin_left = 18.0
+	style.content_margin_right = 18.0
+	style.content_margin_top = 14.0
+	style.content_margin_bottom = 18.0
 	add_theme_stylebox_override("panel", style)
 
 

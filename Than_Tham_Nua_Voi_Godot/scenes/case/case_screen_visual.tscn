@@ -1,5 +1,8 @@
 [gd_scene format=3 uid="uid://devuh7fabthx0"]
 
+[ext_resource type="Theme" uid="uid://c8asethemecase01" path="res://themes/CaseTheme.tres" id="1_case_theme"]
+[ext_resource type="Texture2D" path="res://assets/ui/case/case_investigation_bg.png" id="2_case_bg"]
+
 [node name="CaseScreenVisual" type="Control" unique_id=1531715148]
 layout_mode = 3
 anchors_preset = 15
@@ -7,15 +10,29 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_case_theme")
 
-[node name="Background" type="ColorRect" parent="." unique_id=857541778]
+[node name="Background" type="TextureRect" parent="." unique_id=857541778]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.06666667, 0.07450981, 0.09411765, 1)
+mouse_filter = 2
+texture = ExtResource("2_case_bg")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="BackgroundTint" type="ColorRect" parent="." unique_id=857541779]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.03, 0.025, 0.02, 0.42)
 
 [node name="SafeMargin" type="MarginContainer" parent="." unique_id=2144558682]
 layout_mode = 1

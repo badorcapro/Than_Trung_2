@@ -1,16 +1,22 @@
 [gd_scene format=3 uid="uid://dlyugifi3lu7g"]
 
 [ext_resource type="Script" uid="uid://dh8strpdrbrqj" path="res://scripts/presentation/case_gameplay/VSCaseMainController.gd" id="1"]
-[ext_resource type="Theme" uid="uid://bf14r64eqwnjt" path="res://themes/AppTheme.tres" id="2"]
+[ext_resource type="Theme" uid="uid://c8asethemecase01" path="res://themes/CaseTheme.tres" id="2"]
 [ext_resource type="PackedScene" uid="uid://b7d07ctqbtiei" path="res://scenes/case_gameplay/CaseBoard.tscn" id="3"]
 [ext_resource type="Script" uid="uid://dqqtongtu3j2v" path="res://scripts/presentation/case_gameplay/InvestigationCursorFeedback.gd" id="4"]
+[ext_resource type="Texture2D" path="res://assets/ui/case/case_investigation_bg.png" id="5_case_bg"]
 
 [sub_resource type="StyleBoxFlat" id="StatusBadge"]
 content_margin_left = 10.0
 content_margin_top = 5.0
 content_margin_right = 10.0
 content_margin_bottom = 5.0
-bg_color = Color(0.13, 0.17, 0.24, 1)
+bg_color = Color(0.12, 0.11, 0.10, 0.92)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.72, 0.60, 0.35, 0.65)
 corner_radius_top_left = 6
 corner_radius_top_right = 6
 corner_radius_bottom_right = 6
@@ -26,7 +32,7 @@ grow_vertical = 2
 theme = ExtResource("2")
 script = ExtResource("1")
 
-[node name="Background" type="ColorRect" parent="." unique_id=575121062]
+[node name="Background" type="TextureRect" parent="." unique_id=575121062]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -34,7 +40,19 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-color = Color(0.035, 0.045, 0.07, 1)
+texture = ExtResource("5_case_bg")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="BackgroundTint" type="ColorRect" parent="." unique_id=575121063]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.03, 0.025, 0.02, 0.42)
 
 [node name="SafeMargin" type="MarginContainer" parent="." unique_id=867212250]
 layout_mode = 1
@@ -98,7 +116,7 @@ text = "Đang tải Kỳ Án…"
 [node name="CaseIdLabel" type="Label" parent="SafeMargin/MainColumn/HeaderPanel/HeaderRow/HeaderText" unique_id=1418607518]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0.58, 0.67, 0.8, 1)
+theme_override_colors/font_color = Color(0.78, 0.72, 0.60, 1)
 theme_override_font_sizes/font_size = 13
 text = "fixture"
 
@@ -139,7 +157,7 @@ theme_override_constants/separation = 6
 [node name="ElapsedHoursLabel" type="Label" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/InfoColumn" unique_id=1523567326]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0.74, 0.88, 0.96, 1)
+theme_override_colors/font_color = Color(0.92, 0.85, 0.70, 1)
 theme_override_font_sizes/font_size = 14
 text = "Thời gian: 0h"
 horizontal_alignment = 1
@@ -148,7 +166,7 @@ horizontal_alignment = 1
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 58)
 layout_mode = 2
-theme_override_colors/font_color = Color(0.95, 0.77, 0.35, 1)
+theme_override_colors/font_color = Color(1.0, 0.88, 0.52, 1)
 theme_override_font_sizes/font_size = 20
 text = "Lượt 1 — Đang khởi tạo"
 horizontal_alignment = 1
@@ -160,6 +178,7 @@ layout_mode = 2
 
 [node name="InfoTitle" type="Label" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/InfoColumn" unique_id=1873117624]
 layout_mode = 2
+theme_override_colors/font_color = Color(1.0, 0.88, 0.52, 1)
 theme_override_font_sizes/font_size = 17
 text = "Thông tin Kỳ Án"
 
@@ -185,7 +204,7 @@ scroll_active = false
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
-theme_override_colors/font_color = Color(0.58, 0.67, 0.8, 1)
+theme_override_colors/font_color = Color(0.78, 0.72, 0.60, 1)
 theme_override_font_sizes/font_size = 11
 autowrap_mode = 2
 
@@ -202,7 +221,7 @@ theme_override_constants/separation = 6
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
-theme_override_colors/font_color = Color(0.74, 0.79, 0.87, 1)
+theme_override_colors/font_color = Color(0.88, 0.84, 0.74, 1)
 theme_override_font_sizes/font_size = 11
 autowrap_mode = 2
 
@@ -293,7 +312,7 @@ autowrap_mode = 2
 
 [node name="ScopeNote" type="Label" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/InfoColumn/LeftActionArea" unique_id=1447071590]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.52, 0.58, 0.67, 1)
+theme_override_colors/font_color = Color(0.70, 0.66, 0.58, 1)
 theme_override_font_sizes/font_size = 12
 text = "2I: Truth Reveal và quyết toán thưởng
 TEST_ONLY / NOT_BALANCE_LOCKED"
@@ -312,7 +331,7 @@ layout_mode = 2
 [node name="BoardHelpLabel" type="Label" parent="SafeMargin/MainColumn/ContentRoot/CenterColumn" unique_id=1082575205]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0.68, 0.75, 0.84, 1)
+theme_override_colors/font_color = Color(0.88, 0.82, 0.70, 1)
 theme_override_font_sizes/font_size = 11
 text = "Giữ chuột trái để điều tra. Chuột phải để đánh dấu nghi phạm."
 horizontal_alignment = 1
@@ -330,6 +349,7 @@ theme_override_constants/separation = 7
 
 [node name="ActionTitle" type="Label" parent="SafeMargin/MainColumn/ContentRoot/RolePanel/RoleColumn" unique_id=1704274778]
 layout_mode = 2
+theme_override_colors/font_color = Color(1.0, 0.88, 0.52, 1)
 theme_override_font_sizes/font_size = 17
 text = "THÂN PHẬN"
 
@@ -520,7 +540,7 @@ offset_right = 176.0
 offset_bottom = -132.0
 grow_vertical = 0
 mouse_filter = 2
-color = Color(0.34, 0.68, 0.95, 1)
+color = Color(0.24, 0.48, 0.38, 1)
 
 [node name="TutorialDialogueLeftHead" type="ColorRect" parent="TutorialDialogueOverlay/TutorialDialogueLeftPortrait" unique_id=1258212627]
 layout_mode = 1
@@ -533,7 +553,7 @@ offset_right = 26.0
 offset_bottom = 70.0
 grow_horizontal = 2
 mouse_filter = 2
-color = Color(0.04, 0.06, 0.09, 0.92)
+color = Color(0.08, 0.08, 0.10, 0.92)
 
 [node name="TutorialDialogueLeftBody" type="ColorRect" parent="TutorialDialogueOverlay/TutorialDialogueLeftPortrait" unique_id=731338858]
 layout_mode = 1
@@ -549,7 +569,7 @@ offset_bottom = -18.0
 grow_horizontal = 2
 grow_vertical = 0
 mouse_filter = 2
-color = Color(0.04, 0.06, 0.09, 0.92)
+color = Color(0.08, 0.08, 0.10, 0.92)
 
 [node name="TutorialDialogueRightPortrait" type="ColorRect" parent="TutorialDialogueOverlay" unique_id=100055942]
 unique_name_in_owner = true
@@ -579,7 +599,7 @@ offset_right = 26.0
 offset_bottom = 70.0
 grow_horizontal = 2
 mouse_filter = 2
-color = Color(0.04, 0.06, 0.09, 0.92)
+color = Color(0.08, 0.08, 0.10, 0.92)
 
 [node name="TutorialDialogueRightBody" type="ColorRect" parent="TutorialDialogueOverlay/TutorialDialogueRightPortrait" unique_id=1033275462]
 layout_mode = 1
@@ -633,7 +653,7 @@ text = "Người Dẫn Chuyện"
 [node name="TutorialDialogueProgressLabel" type="Label" parent="TutorialDialogueOverlay/TutorialDialogueBottom/TutorialDialoguePanel/TutorialDialogueColumn/TutorialDialogueHeader" unique_id=1111928802]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0.56, 0.64, 0.76, 1)
+theme_override_colors/font_color = Color(0.78, 0.72, 0.60, 1)
 theme_override_font_sizes/font_size = 12
 text = "1 / 8"
 horizontal_alignment = 2
@@ -642,14 +662,14 @@ horizontal_alignment = 2
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 76)
 layout_mode = 2
-theme_override_colors/font_color = Color(0.9, 0.93, 0.98, 1)
+theme_override_colors/font_color = Color(0.96, 0.94, 0.88, 1)
 theme_override_font_sizes/font_size = 18
 text = "Thoại hướng dẫn"
 autowrap_mode = 2
 
 [node name="TutorialDialogueHint" type="Label" parent="TutorialDialogueOverlay/TutorialDialogueBottom/TutorialDialoguePanel/TutorialDialogueColumn" unique_id=2019516229]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.58, 0.67, 0.8, 1)
+theme_override_colors/font_color = Color(0.78, 0.72, 0.60, 1)
 theme_override_font_sizes/font_size = 11
 text = "Nhấn chuột trái hoặc Enter để tiếp tục"
 horizontal_alignment = 2
