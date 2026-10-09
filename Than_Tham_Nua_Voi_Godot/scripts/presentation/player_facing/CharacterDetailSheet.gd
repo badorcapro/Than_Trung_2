@@ -8,12 +8,19 @@ extends Control
 ## Khu vực đài tế hoàng cung ở trung tâm, và Bảng chi tiết thuộc tính/kỹ năng ở bên phải.
 
 signal closed
+signal finish_equipment_phase_requested
 
 const PRODUCTION_CHARACTER_REPOSITORY := preload(
 	"res://scripts/application/characters/ProductionCharacterRepository.gd"
 )
 const COURT_RANK_SERVICE := preload(
 	"res://scripts/domain/progression/CourtRankService.gd"
+)
+const EQUIPMENT_ENUMS := preload("res://scripts/domain/equipment/EquipmentEnums.gd")
+const EQUIPMENT_INSTANCE := preload("res://scripts/domain/equipment/EquipmentInstance.gd")
+const EQUIPMENT_DEFINITION := preload("res://scripts/domain/equipment/EquipmentDefinition.gd")
+const EQUIPMENT_SERVICE := preload(
+	"res://scripts/application/equipment/EquipmentManagementService.gd"
 )
 
 enum SidebarTab {
@@ -193,6 +200,10 @@ var _stat_modal_overlay: Control
 var _stat_detail_modal: PanelContainer
 var _rank_popup_overlay: Control
 var _rank_detail_popup: PanelContainer
+var _finish_phase_modal_overlay: Control
+var _finish_phase_modal: PanelContainer
+
+var is_post_loot_equipment_phase: bool = false
 
 
 func _init() -> void:
@@ -242,6 +253,9 @@ func _apply_fullscreen_layout() -> void:
 	if _rank_popup_overlay != null:
 		_rank_popup_overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 		_rank_popup_overlay.size = vp_size
+	if _finish_phase_modal_overlay != null:
+		_finish_phase_modal_overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		_finish_phase_modal_overlay.size = vp_size
 
 
 func _build_ui() -> void:
@@ -405,6 +419,7 @@ func _build_ui() -> void:
 	# 4. Modals
 	_build_stat_detail_modal()
 	_build_rank_detail_popup()
+	_build_finish_phase_modal()
 
 
 func _on_celestial_draw() -> void:
@@ -621,43 +636,246 @@ func _build_rank_detail_popup() -> void:
 	pop_vbox.add_child(pop_content)
 
 
+func _build_finish_phase_modal() -> void:
+	_finish_phase_modal_overlay = Control.new()
+	_finish_phase_modal_overlay.visible = false
+	_finish_phase_modal_overlay.mouse_filter = Control.MOUSE_FILTER_STOP
+	_finish_phase_modal_overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	add_child(_finish_phase_modal_overlay)
+
+	var dim_rect := ColorRect.new()
+	dim_rect.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	dim_rect.color = Color(0, 0, 0, 0.65)
+	dim_rect.mouse_filter = Control.MOUSE_FILTER_STOP
+	_finish_phase_modal_overlay.add_child(dim_rect)
+
+	var center := CenterContainer.new()
+	center.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	center.mouse_filter = Control.MOUSE_FILTER_PASS
+	_finish_phase_modal_overlay.add_child(center)
+
+	_finish_phase_modal = PanelContainer.new()
+	_finish_phase_modal.custom_minimum_size = Vector2(480, 240)
+	var modal_style := StyleBoxFlat.new()
+	modal_style.bg_color = Color(0.1, 0.12, 0.18, 0.98)
+	modal_style.corner_radius_top_left = 14
+	modal_style.corner_radius_top_right = 14
+	modal_style.corner_radius_bottom_right = 14
+	modal_style.corner_radius_bottom_left = 14
+	modal_style.border_width_left = 1
+	modal_style.border_width_top = 1
+	modal_style.border_width_right = 1
+	modal_style.border_width_bottom = 1
+	modal_style.border_color = Color(1.0, 0.82, 0.28, 0.9)
+	modal_style.shadow_color = Color(0, 0, 0, 0.65)
+	modal_style.shadow_size = 28
+	modal_style.content_margin_left = 28.0
+	modal_style.content_margin_top = 22.0
+	modal_style.content_margin_right = 28.0
+	modal_style.content_margin_bottom = 22.0
+	_finish_phase_modal.add_theme_stylebox_override("panel", modal_style)
+	center.add_child(_finish_phase_modal)
+
+	var vbox := VBoxContainer.new()
+	vbox.add_theme_constant_override("separation", 16)
+	_finish_phase_modal.add_child(vbox)
+
+	var title_lbl := Label.new()
+	title_lbl.text = "⚖️ XÁC NHẬN KẾT THÚC CHUẨN BỊ"
+	title_lbl.add_theme_font_size_override("font_size", 16)
+	title_lbl.add_theme_color_override("font_color", Color(1.0, 0.84, 0.25))
+	title_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	vbox.add_child(title_lbl)
+
+	var prompt_lbl := Label.new()
+	prompt_lbl.text = "Đi đến phần tổng kết round?"
+	prompt_lbl.add_theme_font_size_override("font_size", 20)
+	prompt_lbl.add_theme_color_override("font_color", Color(0.96, 0.96, 0.98))
+	prompt_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	vbox.add_child(prompt_lbl)
+
+	var desc_lbl := Label.new()
+	desc_lbl.text = "Hãy chắc chắn rằng tất cả người chơi đã hoàn tất trang bị Kỷ Vật và Vết Thánh trước khi tiếp tục."
+	desc_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	desc_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	desc_lbl.add_theme_font_size_override("font_size", 13)
+	desc_lbl.add_theme_color_override("font_color", Color(0.72, 0.78, 0.85))
+	vbox.add_child(desc_lbl)
+
+	var btn_row := HBoxContainer.new()
+	btn_row.add_theme_constant_override("separation", 16)
+	vbox.add_child(btn_row)
+
+	var cancel_btn := Button.new()
+	cancel_btn.text = "Ở lại chuẩn bị"
+	cancel_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	cancel_btn.custom_minimum_size = Vector2(0, 42)
+	cancel_btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	var cancel_style := StyleBoxFlat.new()
+	cancel_style.bg_color = Color(0.18, 0.2, 0.26, 0.9)
+	cancel_style.corner_radius_top_left = 8
+	cancel_style.corner_radius_top_right = 8
+	cancel_style.corner_radius_bottom_right = 8
+	cancel_style.corner_radius_bottom_left = 8
+	cancel_btn.add_theme_stylebox_override("normal", cancel_style)
+	cancel_btn.add_theme_stylebox_override("hover", cancel_style)
+	cancel_btn.add_theme_stylebox_override("pressed", cancel_style)
+	cancel_btn.pressed.connect(func() -> void:
+		_finish_phase_modal_overlay.visible = false
+	)
+	btn_row.add_child(cancel_btn)
+
+	var confirm_btn := Button.new()
+	confirm_btn.text = "Xác nhận & Đi tiếp"
+	confirm_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	confirm_btn.custom_minimum_size = Vector2(0, 42)
+	confirm_btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	var conf_style := StyleBoxFlat.new()
+	conf_style.bg_color = Color(0.85, 0.65, 0.15, 0.95)
+	conf_style.corner_radius_top_left = 8
+	conf_style.corner_radius_top_right = 8
+	conf_style.corner_radius_bottom_right = 8
+	conf_style.corner_radius_bottom_left = 8
+	confirm_btn.add_theme_stylebox_override("normal", conf_style)
+	confirm_btn.add_theme_stylebox_override("hover", conf_style)
+	confirm_btn.add_theme_stylebox_override("pressed", conf_style)
+	confirm_btn.add_theme_color_override("font_color", Color(0.1, 0.1, 0.12))
+	confirm_btn.pressed.connect(func() -> void:
+		_finish_phase_modal_overlay.visible = false
+		visible = false
+		finish_equipment_phase_requested.emit()
+	)
+	btn_row.add_child(confirm_btn)
+
+
 func open_sheet(
 	player_id: StringName,
 	case_flow_session: Variant,
-	setup_session: Variant
+	setup_session: Variant,
+	is_post_loot: bool = false
 ) -> void:
 	_apply_fullscreen_layout()
 	_case_flow_session = case_flow_session
 	_setup_session = setup_session
 	_active_player_id = player_id
-	_current_sidebar_tab = SidebarTab.DETAILS
+	is_post_loot_equipment_phase = is_post_loot
+	if is_post_loot_equipment_phase:
+		_current_sidebar_tab = SidebarTab.RELICS
+	else:
+		_current_sidebar_tab = SidebarTab.DETAILS
 	_current_detail_subtab = DetailSubTab.ATTRIBUTES
 	visible = true
 	if _stat_modal_overlay != null:
 		_stat_modal_overlay.visible = false
 	if _rank_popup_overlay != null:
 		_rank_popup_overlay.visible = false
+	if _finish_phase_modal_overlay != null:
+		_finish_phase_modal_overlay.visible = false
 	refresh()
 	if _celestial_backdrop != null:
 		_celestial_backdrop.queue_redraw()
 
 
 func refresh() -> void:
-	if _setup_session == null or _case_flow_session == null or _case_flow_session.loot_session == null:
+	if _setup_session == null or _case_flow_session == null:
 		return
-	var session: LootRewardSession = _case_flow_session.loot_session
-	var player_order: Array[StringName] = session.movement_session.ordered_player_ids
+	var player_order: Array[StringName] = []
+	if _case_flow_session.equipment_session != null:
+		player_order = _case_flow_session.equipment_session.player_order
+	elif _case_flow_session.loot_session != null and _case_flow_session.loot_session.movement_session != null:
+		player_order = _case_flow_session.loot_session.movement_session.ordered_player_ids
+
 	if not player_order.has(_active_player_id):
 		if not player_order.is_empty():
 			_active_player_id = player_order[0]
 		else:
 			return
 
+	if _case_flow_session.equipment_session != null:
+		var idx: int = _case_flow_session.equipment_session.player_order.find(_active_player_id)
+		if idx >= 0:
+			_case_flow_session.equipment_session.current_player_index = idx
+
 	_refresh_player_switcher(player_order)
 	_refresh_sidebar_buttons()
 	_refresh_center_display()
 	_refresh_right_panel()
 	if _celestial_backdrop != null:
+		_celestial_backdrop.queue_redraw()
+
+
+func _get_active_player_state() -> PlayerPhaseState:
+	if _case_flow_session == null:
+		return null
+	if _case_flow_session.equipment_session != null:
+		var p: PlayerPhaseState = _case_flow_session.equipment_session.find_player(_active_player_id)
+		if p != null:
+			return p
+	if _case_flow_session.loot_session != null:
+		var p: PlayerPhaseState = _case_flow_session.loot_session.find_player(_active_player_id)
+		if p != null:
+			return p
+	return null
+
+
+func _find_equipment_def(def_id: StringName) -> EquipmentDefinition:
+	if _case_flow_session != null and _case_flow_session.has_method("find_management_equipment_definition"):
+		var d: EquipmentDefinition = _case_flow_session.find_management_equipment_definition(def_id)
+		if d != null:
+			return d
+	return null
+
+
+func _tier_badge_info(tier_val: int) -> Dictionary:
+	match tier_val:
+		EQUIPMENT_ENUMS.Tier.A:
+			return {"name": "Phẩm A", "color": Color(0.4, 0.75, 1.0)}
+		EQUIPMENT_ENUMS.Tier.S:
+			return {"name": "Phẩm S", "color": Color(0.85, 0.45, 1.0)}
+		EQUIPMENT_ENUMS.Tier.SS:
+			return {"name": "Phẩm SS", "color": Color(1.0, 0.85, 0.25)}
+		_:
+			return {"name": "Phẩm A", "color": Color(0.5, 0.8, 1.0)}
+
+
+func _equipment_display_name(inst: EquipmentInstance) -> String:
+	if inst == null:
+		return "Trang bị"
+	var def: EquipmentDefinition = _find_equipment_def(inst.equipment_definition_id)
+	if def != null and not def.display_name.is_empty():
+		return def.display_name
+	var raw: String = String(inst.equipment_definition_id)
+	return raw.replace("_", " ").capitalize()
+
+
+func _equip_item(instance_id: StringName, slot_id: StringName) -> void:
+	var p_state: PlayerPhaseState = _get_active_player_state()
+	if p_state == null:
+		return
+	if _case_flow_session != null and _case_flow_session.equipment_session != null:
+		var idx: int = _case_flow_session.equipment_session.player_order.find(_active_player_id)
+		if idx >= 0:
+			_case_flow_session.equipment_session.current_player_index = idx
+		var _res: Dictionary = _case_flow_session.equip_owned_equipment(instance_id, slot_id)
+	else:
+		var svc := EQUIPMENT_SERVICE.new()
+		var _res: EquipmentActionResult = svc.equip_to_slot(p_state, instance_id, slot_id)
+	refresh()
+
+
+func _unequip_slot(slot_id: StringName) -> void:
+	var p_state: PlayerPhaseState = _get_active_player_state()
+	if p_state == null:
+		return
+	if _case_flow_session != null and _case_flow_session.equipment_session != null:
+		var idx: int = _case_flow_session.equipment_session.player_order.find(_active_player_id)
+		if idx >= 0:
+			_case_flow_session.equipment_session.current_player_index = idx
+		var _res: Dictionary = _case_flow_session.unequip_equipment_slot(slot_id)
+	else:
+		var svc := EQUIPMENT_SERVICE.new()
+		var _res: EquipmentActionResult = svc.unequip_slot(p_state, slot_id)
+	refresh()
 		_celestial_backdrop.queue_redraw()
 
 
@@ -1195,7 +1413,7 @@ func _render_tab_relics() -> void:
 	var vbox := VBoxContainer.new()
 	vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	vbox.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	vbox.add_theme_constant_override("separation", 16)
+	vbox.add_theme_constant_override("separation", 14)
 	_right_panel_container.add_child(vbox)
 
 	var title_lbl := Label.new()
@@ -1204,55 +1422,193 @@ func _render_tab_relics() -> void:
 	title_lbl.add_theme_color_override("font_color", Color(1.0, 0.85, 0.3))
 	vbox.add_child(title_lbl)
 
-	var p_state: PlayerPhaseState = _case_flow_session.loot_session.find_player(_active_player_id)
+	if is_post_loot_equipment_phase:
+		var phase_hint := Label.new()
+		phase_hint.text = "⚖️ Giai đoạn chuẩn bị: Thiết lập Kỷ Vật & Vết Thánh cho các người chơi. Bấm ✕ khi hoàn tất để đi đến Tổng Kết Round."
+		phase_hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		phase_hint.add_theme_font_size_override("font_size", 12)
+		phase_hint.add_theme_color_override("font_color", Color(0.95, 0.8, 0.4))
+		vbox.add_child(phase_hint)
+
+	var scroll := ScrollContainer.new()
+	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	vbox.add_child(scroll)
+
+	var content_vbox := VBoxContainer.new()
+	content_vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	content_vbox.add_theme_constant_override("separation", 16)
+	scroll.add_child(content_vbox)
+
+	var p_state: PlayerPhaseState = _get_active_player_state()
 	var relic_inst: EquipmentInstance = null
 	if p_state != null and not p_state.relic_instance_id.is_empty():
-		for inst in p_state.equipment_collection:
+		for inst: EquipmentInstance in p_state.equipment_collection:
 			if inst.instance_id == p_state.relic_instance_id:
 				relic_inst = inst
 				break
 
-	var card := PanelContainer.new()
-	var c_style := StyleBoxFlat.new()
-	c_style.bg_color = Color(0.08, 0.1, 0.16, 0.9)
-	c_style.corner_radius_top_left = 12
-	c_style.corner_radius_top_right = 12
-	c_style.corner_radius_bottom_right = 12
-	c_style.corner_radius_bottom_left = 12
-	c_style.content_margin_left = 20.0
-	c_style.content_margin_top = 18.0
-	c_style.content_margin_right = 20.0
-	c_style.content_margin_bottom = 18.0
-	card.add_theme_stylebox_override("panel", c_style)
-	vbox.add_child(card)
+	# 1. Equipped Relic Section
+	var eq_title := Label.new()
+	eq_title.text = "👑 KỶ VẬT ĐANG TRANG BỊ"
+	eq_title.add_theme_font_size_override("font_size", 14)
+	eq_title.add_theme_color_override("font_color", Color(0.9, 0.92, 0.98))
+	content_vbox.add_child(eq_title)
 
-	var cvbox := VBoxContainer.new()
-	cvbox.add_theme_constant_override("separation", 10)
-	card.add_child(cvbox)
+	var eq_card := PanelContainer.new()
+	var eq_style := StyleBoxFlat.new()
+	eq_style.bg_color = Color(0.1, 0.13, 0.2, 0.92)
+	eq_style.corner_radius_top_left = 12
+	eq_style.corner_radius_top_right = 12
+	eq_style.corner_radius_bottom_right = 12
+	eq_style.corner_radius_bottom_left = 12
+	eq_style.border_width_left = 2
+	eq_style.border_width_top = 2
+	eq_style.border_width_right = 2
+	eq_style.border_width_bottom = 2
+	eq_style.border_color = Color(1.0, 0.82, 0.25, 0.85) if relic_inst != null else Color(0.3, 0.35, 0.45, 0.5)
+	eq_style.content_margin_left = 18.0
+	eq_style.content_margin_top = 14.0
+	eq_style.content_margin_right = 18.0
+	eq_style.content_margin_bottom = 14.0
+	eq_card.add_theme_stylebox_override("panel", eq_style)
+	content_vbox.add_child(eq_card)
+
+	var eq_hbox := HBoxContainer.new()
+	eq_hbox.add_theme_constant_override("separation", 12)
+	eq_card.add_child(eq_hbox)
+
+	var eq_vbox := VBoxContainer.new()
+	eq_vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	eq_vbox.add_theme_constant_override("separation", 4)
+	eq_hbox.add_child(eq_vbox)
 
 	if relic_inst != null:
 		var name_lbl := Label.new()
-		name_lbl.text = "Đang trang bị: %s" % relic_inst.display_name
+		name_lbl.text = "👑 %s" % _equipment_display_name(relic_inst)
 		name_lbl.add_theme_font_size_override("font_size", 16)
-		name_lbl.add_theme_color_override("font_color", Color(0.95, 0.9, 0.7))
-		cvbox.add_child(name_lbl)
+		name_lbl.add_theme_color_override("font_color", Color(1.0, 0.92, 0.7))
+		eq_vbox.add_child(name_lbl)
 
-		var tier_lbl := Label.new()
-		tier_lbl.text = "Phẩm cấp: %s | Cấp Vàng: %d | Cấp Tím: %d" % [
-			EquipmentEnums.Tier.keys()[relic_inst.tier],
-			relic_inst.gold_level,
-			relic_inst.purple_level
+		var tier_badge := _tier_badge_info(relic_inst.tier)
+		var stats_lbl := Label.new()
+		stats_lbl.text = "[%s]  ⭐ Cấp Vàng: %d  |  🔮 Cấp Tím: %d" % [
+			tier_badge.get("name", "Phẩm A"),
+			relic_inst.gold_star_level,
+			relic_inst.purple_star_level
 		]
-		tier_lbl.add_theme_font_size_override("font_size", 13)
-		tier_lbl.add_theme_color_override("font_color", Color(0.72, 0.82, 0.92))
-		cvbox.add_child(tier_lbl)
+		stats_lbl.add_theme_font_size_override("font_size", 12)
+		stats_lbl.add_theme_color_override("font_color", tier_badge.get("color", Color(0.7, 0.8, 0.9)))
+		eq_vbox.add_child(stats_lbl)
+
+		var unequip_btn := Button.new()
+		unequip_btn.text = "✕ Tháo Kỷ Vật"
+		unequip_btn.custom_minimum_size = Vector2(120, 36)
+		unequip_btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+		var unequip_style := StyleBoxFlat.new()
+		unequip_style.bg_color = Color(0.35, 0.15, 0.18, 0.85)
+		unequip_style.corner_radius_top_left = 8
+		unequip_style.corner_radius_top_right = 8
+		unequip_style.corner_radius_bottom_right = 8
+		unequip_style.corner_radius_bottom_left = 8
+		unequip_btn.add_theme_stylebox_override("normal", unequip_style)
+		unequip_btn.add_theme_stylebox_override("hover", unequip_style)
+		unequip_btn.add_theme_stylebox_override("pressed", unequip_style)
+		unequip_btn.pressed.connect(func() -> void:
+			_unequip_slot(EQUIPMENT_SERVICE.SLOT_RELIC)
+		)
+		eq_hbox.add_child(unequip_btn)
 	else:
 		var empty_lbl := Label.new()
-		empty_lbl.text = "Chưa trang bị Kỷ Vật.\nHãy tham gia Gacha hoặc quản lý trang bị giữa các Kỳ Án để nhận Kỷ Vật."
-		empty_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		empty_lbl.text = "(Chưa trang bị Kỷ Vật)"
 		empty_lbl.add_theme_font_size_override("font_size", 13)
-		empty_lbl.add_theme_color_override("font_color", Color(0.65, 0.72, 0.78))
-		cvbox.add_child(empty_lbl)
+		empty_lbl.add_theme_color_override("font_color", Color(0.55, 0.6, 0.68))
+		eq_vbox.add_child(empty_lbl)
+
+	# 2. Owned Relics Section
+	var inv_title := Label.new()
+	inv_title.text = "📦 KHO KỶ VẬT SỞ HỮU"
+	inv_title.add_theme_font_size_override("font_size", 14)
+	inv_title.add_theme_color_override("font_color", Color(0.85, 0.88, 0.95))
+	content_vbox.add_child(inv_title)
+
+	var owned_relics: Array[EquipmentInstance] = []
+	if p_state != null:
+		for inst: EquipmentInstance in p_state.equipment_collection:
+			if inst.equipment_type == EQUIPMENT_ENUMS.EquipmentType.RELIC:
+				owned_relics.append(inst)
+
+	if owned_relics.is_empty():
+		var no_item := Label.new()
+		no_item.text = "(Hiện chưa có Kỷ Vật nào trong kho. Hãy quay Gacha hoặc thu thập thêm)"
+		no_item.add_theme_font_size_override("font_size", 12)
+		no_item.add_theme_color_override("font_color", Color(0.5, 0.55, 0.65))
+		content_vbox.add_child(no_item)
+	else:
+		for inst: EquipmentInstance in owned_relics:
+			var item_card := PanelContainer.new()
+			var ic_style := StyleBoxFlat.new()
+			ic_style.bg_color = Color(0.08, 0.1, 0.15, 0.85)
+			ic_style.corner_radius_top_left = 8
+			ic_style.corner_radius_top_right = 8
+			ic_style.corner_radius_bottom_right = 8
+			ic_style.corner_radius_bottom_left = 8
+			ic_style.content_margin_left = 14.0
+			ic_style.content_margin_top = 10.0
+			ic_style.content_margin_right = 14.0
+			ic_style.content_margin_bottom = 10.0
+			item_card.add_theme_stylebox_override("panel", ic_style)
+			content_vbox.add_child(item_card)
+
+			var row := HBoxContainer.new()
+			row.add_theme_constant_override("separation", 10)
+			item_card.add_child(row)
+
+			var info_vbox := VBoxContainer.new()
+			info_vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			row.add_child(info_vbox)
+
+			var r_name := Label.new()
+			r_name.text = _equipment_display_name(inst)
+			r_name.add_theme_font_size_override("font_size", 14)
+			r_name.add_theme_color_override("font_color", Color(0.9, 0.94, 0.98))
+			info_vbox.add_child(r_name)
+
+			var tb := _tier_badge_info(inst.tier)
+			var r_sub := Label.new()
+			r_sub.text = "[%s]  ⭐ Cấp %d  |  🔮 Cấp %d" % [
+				tb.get("name", "Phẩm A"), inst.gold_star_level, inst.purple_star_level
+			]
+			r_sub.add_theme_font_size_override("font_size", 11)
+			r_sub.add_theme_color_override("font_color", tb.get("color", Color(0.65, 0.72, 0.82)))
+			info_vbox.add_child(r_sub)
+
+			var is_equipped: bool = (p_state != null and inst.instance_id == p_state.relic_instance_id)
+			if is_equipped:
+				var eq_tag := Label.new()
+				eq_tag.text = "✔ Đang trang bị"
+				eq_tag.add_theme_font_size_override("font_size", 12)
+				eq_tag.add_theme_color_override("font_color", Color(0.4, 0.88, 0.5))
+				row.add_child(eq_tag)
+			else:
+				var equip_btn := Button.new()
+				equip_btn.text = "⚔️ Trang Bị"
+				equip_btn.custom_minimum_size = Vector2(96, 32)
+				equip_btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+				var eb_style := StyleBoxFlat.new()
+				eb_style.bg_color = Color(0.2, 0.35, 0.55, 0.9)
+				eb_style.corner_radius_top_left = 6
+				eb_style.corner_radius_top_right = 6
+				eb_style.corner_radius_bottom_right = 6
+				eb_style.corner_radius_bottom_left = 6
+				equip_btn.add_theme_stylebox_override("normal", eb_style)
+				equip_btn.add_theme_stylebox_override("hover", eb_style)
+				equip_btn.add_theme_stylebox_override("pressed", eb_style)
+				var target_inst_id: StringName = inst.instance_id
+				equip_btn.pressed.connect(func() -> void:
+					_equip_item(target_inst_id, EQUIPMENT_SERVICE.SLOT_RELIC)
+				)
+				row.add_child(equip_btn)
 
 
 # -----------------------------------------------------------------------------
@@ -1262,7 +1618,7 @@ func _render_tab_stigmata() -> void:
 	var vbox := VBoxContainer.new()
 	vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	vbox.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	vbox.add_theme_constant_override("separation", 16)
+	vbox.add_theme_constant_override("separation", 14)
 	_right_panel_container.add_child(vbox)
 
 	var title_lbl := Label.new()
@@ -1271,47 +1627,193 @@ func _render_tab_stigmata() -> void:
 	title_lbl.add_theme_color_override("font_color", Color(1.0, 0.85, 0.3))
 	vbox.add_child(title_lbl)
 
-	var p_state: PlayerPhaseState = _case_flow_session.loot_session.find_player(_active_player_id)
-	var slots: Array[Dictionary] = [
-		{"name": "Vết Thánh (Thượng) - Vị trí A", "id": p_state.stigmata_a_instance_id if p_state != null else &""},
-		{"name": "Vết Thánh (Trung) - Vị trí B", "id": p_state.stigmata_b_instance_id if p_state != null else &""},
-		{"name": "Vết Thánh (Hạ) - Vị trí C", "id": p_state.stigmata_c_instance_id if p_state != null else &""},
+	if is_post_loot_equipment_phase:
+		var phase_hint := Label.new()
+		phase_hint.text = "⚖️ Giai đoạn chuẩn bị: Thiết lập Kỷ Vật & Vết Thánh cho các người chơi. Bấm ✕ khi hoàn tất để đi đến Tổng Kết Round."
+		phase_hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		phase_hint.add_theme_font_size_override("font_size", 12)
+		phase_hint.add_theme_color_override("font_color", Color(0.95, 0.8, 0.4))
+		vbox.add_child(phase_hint)
+
+	var scroll := ScrollContainer.new()
+	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	vbox.add_child(scroll)
+
+	var content_vbox := VBoxContainer.new()
+	content_vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	content_vbox.add_theme_constant_override("separation", 16)
+	scroll.add_child(content_vbox)
+
+	var p_state: PlayerPhaseState = _get_active_player_state()
+
+	var slot_configs: Array[Dictionary] = [
+		{
+			"title": "✨ VỊ TRÍ A (THƯỢNG)",
+			"slot_const": EQUIPMENT_SERVICE.SLOT_STIGMATA_A,
+			"slot_enum": EQUIPMENT_ENUMS.StigmataSlot.A,
+			"equipped_id": p_state.stigmata_a_instance_id if p_state != null else &""
+		},
+		{
+			"title": "✨ VỊ TRÍ B (TRUNG)",
+			"slot_const": EQUIPMENT_SERVICE.SLOT_STIGMATA_B,
+			"slot_enum": EQUIPMENT_ENUMS.StigmataSlot.B,
+			"equipped_id": p_state.stigmata_b_instance_id if p_state != null else &""
+		},
+		{
+			"title": "✨ VỊ TRÍ C (HẠ)",
+			"slot_const": EQUIPMENT_SERVICE.SLOT_STIGMATA_C,
+			"slot_enum": EQUIPMENT_ENUMS.StigmataSlot.C,
+			"equipped_id": p_state.stigmata_c_instance_id if p_state != null else &""
+		},
 	]
 
-	for s: Dictionary in slots:
+	for cfg: Dictionary in slot_configs:
 		var slot_card := PanelContainer.new()
 		var sc_style := StyleBoxFlat.new()
-		sc_style.bg_color = Color(0.08, 0.1, 0.15, 0.85)
+		sc_style.bg_color = Color(0.08, 0.1, 0.16, 0.9)
 		sc_style.corner_radius_top_left = 10
 		sc_style.corner_radius_top_right = 10
 		sc_style.corner_radius_bottom_right = 10
 		sc_style.corner_radius_bottom_left = 10
+		sc_style.border_width_left = 1
+		sc_style.border_width_top = 1
+		sc_style.border_width_right = 1
+		sc_style.border_width_bottom = 1
+		sc_style.border_color = Color(0.3, 0.38, 0.52, 0.5)
 		sc_style.content_margin_left = 16.0
 		sc_style.content_margin_top = 12.0
 		sc_style.content_margin_right = 16.0
 		sc_style.content_margin_bottom = 12.0
 		slot_card.add_theme_stylebox_override("panel", sc_style)
-		vbox.add_child(slot_card)
+		content_vbox.add_child(slot_card)
 
 		var sc_vbox := VBoxContainer.new()
+		sc_vbox.add_theme_constant_override("separation", 8)
 		slot_card.add_child(sc_vbox)
 
-		var s_name := Label.new()
-		s_name.text = s["name"]
-		s_name.add_theme_font_size_override("font_size", 14)
-		s_name.add_theme_color_override("font_color", Color(1.0, 0.88, 0.45))
-		sc_vbox.add_child(s_name)
+		# Slot header
+		var s_head := Label.new()
+		s_head.text = String(cfg["title"])
+		s_head.add_theme_font_size_override("font_size", 14)
+		s_head.add_theme_color_override("font_color", Color(1.0, 0.88, 0.45))
+		sc_vbox.add_child(s_head)
 
-		var inst_id: StringName = s["id"] as StringName
-		var s_detail := Label.new()
-		if inst_id.is_empty():
-			s_detail.text = "Trống"
-			s_detail.add_theme_color_override("font_color", Color(0.5, 0.55, 0.62))
+		var eq_id: StringName = cfg["equipped_id"] as StringName
+		var eq_inst: EquipmentInstance = null
+		if p_state != null and not eq_id.is_empty():
+			for inst: EquipmentInstance in p_state.equipment_collection:
+				if inst.instance_id == eq_id:
+					eq_inst = inst
+					break
+
+		# Current equipped row
+		var eq_row := HBoxContainer.new()
+		eq_row.add_theme_constant_override("separation", 10)
+		sc_vbox.add_child(eq_row)
+
+		var eq_info := VBoxContainer.new()
+		eq_info.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		eq_row.add_child(eq_info)
+
+		if eq_inst != null:
+			var name_l := Label.new()
+			name_l.text = "Đang trang bị: %s" % _equipment_display_name(eq_inst)
+			name_l.add_theme_font_size_override("font_size", 13)
+			name_l.add_theme_color_override("font_color", Color(0.9, 0.95, 1.0))
+			eq_info.add_child(name_l)
+
+			var tb := _tier_badge_info(eq_inst.tier)
+			var sub_l := Label.new()
+			sub_l.text = "[%s]  ⭐ Cấp %d  |  🔮 Cấp %d" % [
+				tb.get("name", "Phẩm A"), eq_inst.gold_star_level, eq_inst.purple_star_level
+			]
+			sub_l.add_theme_font_size_override("font_size", 11)
+			sub_l.add_theme_color_override("font_color", tb.get("color", Color(0.65, 0.75, 0.85)))
+			eq_info.add_child(sub_l)
+
+			var un_btn := Button.new()
+			un_btn.text = "✕ Tháo Ra"
+			un_btn.custom_minimum_size = Vector2(88, 30)
+			un_btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+			var un_style := StyleBoxFlat.new()
+			un_style.bg_color = Color(0.35, 0.15, 0.18, 0.85)
+			un_style.corner_radius_top_left = 6
+			un_style.corner_radius_top_right = 6
+			un_style.corner_radius_bottom_right = 6
+			un_style.corner_radius_bottom_left = 6
+			un_btn.add_theme_stylebox_override("normal", un_style)
+			un_btn.add_theme_stylebox_override("hover", un_style)
+			un_btn.add_theme_stylebox_override("pressed", un_style)
+			var target_slot_const: StringName = cfg["slot_const"] as StringName
+			un_btn.pressed.connect(func() -> void:
+				_unequip_slot(target_slot_const)
+			)
+			eq_row.add_child(un_btn)
 		else:
-			s_detail.text = "Đã trang bị: %s" % inst_id
-			s_detail.add_theme_color_override("font_color", Color(0.85, 0.92, 0.98))
-		s_detail.add_theme_font_size_override("font_size", 12)
-		sc_vbox.add_child(s_detail)
+			var empty_l := Label.new()
+			empty_l.text = "Trạng thái: (Vị trí trống)"
+			empty_l.add_theme_font_size_override("font_size", 12)
+			empty_l.add_theme_color_override("font_color", Color(0.5, 0.55, 0.65))
+			eq_info.add_child(empty_l)
+
+		# Available owned stigmata for this slot
+		var slot_owned: Array[EquipmentInstance] = []
+		var slot_target_enum: int = int(cfg["slot_enum"])
+		if p_state != null:
+			for inst: EquipmentInstance in p_state.equipment_collection:
+				if (
+					inst.equipment_type == EQUIPMENT_ENUMS.EquipmentType.STIGMATA
+					and inst.stigmata_slot == slot_target_enum
+				):
+					slot_owned.append(inst)
+
+		if not slot_owned.is_empty():
+			var owned_sep := HSeparator.new()
+			sc_vbox.add_child(owned_sep)
+
+			for inst: EquipmentInstance in slot_owned:
+				var item_row := HBoxContainer.new()
+				item_row.add_theme_constant_override("separation", 8)
+				sc_vbox.add_child(item_row)
+
+				var item_info := VBoxContainer.new()
+				item_info.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+				item_row.add_child(item_info)
+
+				var i_name := Label.new()
+				i_name.text = "• %s" % _equipment_display_name(inst)
+				i_name.add_theme_font_size_override("font_size", 12)
+				i_name.add_theme_color_override("font_color", Color(0.85, 0.9, 0.95))
+				item_info.add_child(i_name)
+
+				var is_this_equipped: bool = (eq_inst != null and inst.instance_id == eq_inst.instance_id)
+				if is_this_equipped:
+					var eq_tag := Label.new()
+					eq_tag.text = "✔ Đang trang bị"
+					eq_tag.add_theme_font_size_override("font_size", 11)
+					eq_tag.add_theme_color_override("font_color", Color(0.4, 0.88, 0.5))
+					item_row.add_child(eq_tag)
+				else:
+					var eq_btn := Button.new()
+					eq_btn.text = "Trang Bị"
+					eq_btn.custom_minimum_size = Vector2(80, 26)
+					eq_btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+					var eb_style := StyleBoxFlat.new()
+					eb_style.bg_color = Color(0.2, 0.35, 0.55, 0.9)
+					eb_style.corner_radius_top_left = 6
+					eb_style.corner_radius_top_right = 6
+					eb_style.corner_radius_bottom_right = 6
+					eb_style.corner_radius_bottom_left = 6
+					eq_btn.add_theme_stylebox_override("normal", eb_style)
+					eq_btn.add_theme_stylebox_override("hover", eb_style)
+					eq_btn.add_theme_stylebox_override("pressed", eb_style)
+					var target_inst_id: StringName = inst.instance_id
+					var target_slot_const: StringName = cfg["slot_const"] as StringName
+					eq_btn.pressed.connect(func() -> void:
+						_equip_item(target_inst_id, target_slot_const)
+					)
+					item_row.add_child(eq_btn)
 
 
 # -----------------------------------------------------------------------------
@@ -1635,8 +2137,12 @@ func _switch_sidebar_tab(tab_id: SidebarTab) -> void:
 
 
 func _on_close_pressed() -> void:
-	visible = false
-	closed.emit()
+	if is_post_loot_equipment_phase:
+		if _finish_phase_modal_overlay != null:
+			_finish_phase_modal_overlay.visible = true
+	else:
+		visible = false
+		closed.emit()
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -1645,5 +2151,17 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo:
 		var key := event as InputEventKey
 		if key.keycode == KEY_ESCAPE or key.keycode == KEY_C:
+			if _finish_phase_modal_overlay != null and _finish_phase_modal_overlay.visible:
+				_finish_phase_modal_overlay.visible = false
+				get_viewport().set_input_as_handled()
+				return
+			if _stat_modal_overlay != null and _stat_modal_overlay.visible:
+				_stat_modal_overlay.visible = false
+				get_viewport().set_input_as_handled()
+				return
+			if _rank_popup_overlay != null and _rank_popup_overlay.visible:
+				_rank_popup_overlay.visible = false
+				get_viewport().set_input_as_handled()
+				return
 			_on_close_pressed()
 			get_viewport().set_input_as_handled()

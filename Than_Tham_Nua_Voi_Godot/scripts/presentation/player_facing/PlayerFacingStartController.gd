@@ -196,6 +196,7 @@ func _ready() -> void:
 	add_child(sheet_layer)
 	_character_sheet = CHARACTER_DETAIL_SHEET.new()
 	_character_sheet.visible = false
+	_character_sheet.finish_equipment_phase_requested.connect(_on_finish_equipment_phase_confirmed)
 	sheet_layer.add_child(_character_sheet)
 	_show_phase(SETUP_SESSION.Phase.MAIN_MENU)
 
@@ -909,9 +910,12 @@ func _handle_loot_result(result: Dictionary) -> void:
 	if case_flow.loot_session.phase == 4:
 		var started: Dictionary = case_flow.begin_loot_end_confirmation()
 		if bool(started.get("success", false)):
-			setup.mark_loot_confirmation()
+			if case_flow.equipment_session != null:
+				for pid: StringName in case_flow.equipment_session.remaining_confirmation_player_ids.duplicate():
+					case_flow.confirm_loot_end(pid)
+			setup.mark_equipment_management()
 			_show_phase(setup.phase)
-			_refresh_confirmation()
+			_open_character_detail_sheet(&"", true)
 			return
 	_refresh_loot()
 
@@ -998,6 +1002,21 @@ func _on_management_done_pressed() -> void:
 		_show_message("Mọi người đã hoàn tất chuẩn bị.")
 	else:
 		_refresh_equipment()
+
+
+func _on_finish_equipment_phase_confirmed() -> void:
+	if case_flow != null and case_flow.equipment_session != null:
+		while case_flow.equipment_session.phase == EQUIPMENT_SESSION.Phase.EQUIPMENT_MANAGEMENT:
+			var curr_id: StringName = case_flow.equipment_session.current_player_id()
+			if curr_id.is_empty():
+				break
+			var res: Dictionary = case_flow.mark_management_done(curr_id)
+			if not bool(res.get("success", false)):
+				break
+	if _character_sheet != null:
+		_character_sheet.visible = false
+	setup.mark_round_summary_ready()
+	_on_round_summary_pressed()
 
 
 func _on_round_summary_pressed() -> void:
@@ -1558,21 +1577,27 @@ func _on_pummel_player_card_gui_input(event: InputEvent, card: Control) -> void:
 			return
 
 
-func _open_character_detail_sheet(player_id: StringName = &"") -> void:
+func _open_character_detail_sheet(player_id: StringName = &"", is_post_loot: bool = false) -> void:
 	if _character_sheet == null:
 		return
 	var target_id: StringName = player_id
 	if target_id.is_empty():
-		if case_flow != null and case_flow.loot_session != null and case_flow.loot_session.movement_session != null:
-			var curr: LootMovementPlayerState = case_flow.loot_session.movement_session.current_player()
-			if curr != null:
-				target_id = curr.player_id
-	_character_sheet.open_sheet(target_id, case_flow, setup)
+		if case_flow != null:
+			if case_flow.equipment_session != null:
+				target_id = case_flow.equipment_session.current_player_id()
+			elif case_flow.loot_session != null and case_flow.loot_session.movement_session != null:
+				var curr: LootMovementPlayerState = case_flow.loot_session.movement_session.current_player()
+				if curr != null:
+					target_id = curr.player_id
+	_character_sheet.open_sheet(target_id, case_flow, setup, is_post_loot)
 
 
 func _toggle_character_detail_sheet() -> void:
 	if _character_sheet != null and _character_sheet.visible:
-		_character_sheet.visible = false
+		if _character_sheet.is_post_loot_equipment_phase:
+			_character_sheet._on_close_pressed()
+		else:
+			_character_sheet.visible = false
 	else:
 		_open_character_detail_sheet(&"")
 
@@ -2550,6 +2575,7 @@ func _show_phase(next_phase: int) -> void:
 		safe_margin.visible = (
 			next_phase != SETUP_SESSION.Phase.CASE_ACTIVE
 			and next_phase != SETUP_SESSION.Phase.LOOT_ACTIVE
+			and next_phase != SETUP_SESSION.Phase.EQUIPMENT_MANAGEMENT
 		)
 	main_menu.visible = next_phase == SETUP_SESSION.Phase.MAIN_MENU
 	match_mode.visible = next_phase == SETUP_SESSION.Phase.MATCH_MODE
@@ -2568,13 +2594,13 @@ func _show_phase(next_phase: int) -> void:
 		if current_focus != null:
 			current_focus.release_focus()
 	confirmation_panel.visible = next_phase == SETUP_SESSION.Phase.LOOT_END_CONFIRMATION
-	equipment_panel.visible = next_phase == SETUP_SESSION.Phase.EQUIPMENT_MANAGEMENT
+	equipment_panel.visible = false
 	round_summary_ready_panel.visible = next_phase == SETUP_SESSION.Phase.ROUND_SUMMARY_READY
 	round_summary_panel.visible = next_phase == SETUP_SESSION.Phase.ROUND_SUMMARY
 	next_case_panel.visible = next_phase == SETUP_SESSION.Phase.NEXT_CASE_SELECTION
 	settings_panel.visible = next_phase == SETUP_SESSION.Phase.SETTINGS
 	match_results_panel.visible = next_phase == SETUP_SESSION.Phase.MATCH_RESULTS
-	if _character_sheet != null and next_phase != SETUP_SESSION.Phase.LOOT_ACTIVE:
+	if _character_sheet != null and next_phase != SETUP_SESSION.Phase.LOOT_ACTIVE and next_phase != SETUP_SESSION.Phase.EQUIPMENT_MANAGEMENT:
 		_character_sheet.visible = false
 
 

@@ -16,6 +16,9 @@ const SEQUENCE_GACHA_ROLL_SOURCE := preload(
 	"res://scripts/infrastructure/SequenceGachaRollSource.gd"
 )
 const PLAYER_SCENE := preload("res://scenes/player_facing/PlayerFacingStart.tscn")
+const CHARACTER_DETAIL_SHEET := preload(
+	"res://scripts/presentation/player_facing/CharacterDetailSheet.gd"
+)
 
 var _service: EQUIPMENT_SERVICE = EQUIPMENT_SERVICE.new()
 var _definitions: Array[EquipmentDefinition] = []
@@ -34,6 +37,11 @@ func run() -> Array[Dictionary]:
 	_add(rows, "PF-M9B Gacha grant enters same player collection", _gacha_grant_is_visible())
 	_add(rows, "PF-M9B invalid item and slot operations reject", _invalid_operations_reject())
 	_add(rows, "PF-M9B normal UI uses collection workflow without test grant", _collection_ui_exists())
+	_add(
+		rows,
+		"PF-M9B character detail sheet handles post-loot equipment phase and confirmation",
+		_character_sheet_equipment_integration()
+	)
 	return rows
 
 
@@ -206,6 +214,46 @@ func _collection_ui_exists() -> bool:
 	)
 	root.free()
 	return passed
+
+
+func _character_sheet_equipment_integration() -> bool:
+	var sheet: Control = CHARACTER_DETAIL_SHEET.new()
+	if not sheet.has_signal("finish_equipment_phase_requested"):
+		sheet.free()
+		return false
+	# 1. Normal loot-round open (in-game inspection)
+	sheet.open_sheet(&"p1", null, null, false)
+	if sheet.is_post_loot_equipment_phase != false:
+		sheet.free()
+		return false
+	if sheet._current_sidebar_tab != sheet.SidebarTab.DETAILS:
+		sheet.free()
+		return false
+	sheet._on_close_pressed()
+	if sheet.visible:
+		sheet.free()
+		return false
+
+	# 2. Post-loot equipment phase open
+	sheet.visible = true
+	sheet.open_sheet(&"p1", null, null, true)
+	if sheet.is_post_loot_equipment_phase != true:
+		sheet.free()
+		return false
+	if sheet._current_sidebar_tab != sheet.SidebarTab.RELICS:
+		sheet.free()
+		return false
+	sheet._on_close_pressed()
+	# In post-loot phase, sheet remains visible and finish modal overlay opens
+	if not sheet.visible:
+		sheet.free()
+		return false
+	if sheet._finish_phase_modal_overlay == null or not sheet._finish_phase_modal_overlay.visible:
+		sheet.free()
+		return false
+
+	sheet.free()
+	return true
 
 
 func _player(player_id: StringName = &"p1") -> PLAYER_STATE:
