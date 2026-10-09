@@ -73,19 +73,20 @@ Dự án áp dụng mô hình Clean Architecture & Domain-Driven Design (DDD) tr
 
 ## 5. Bảng Chỉ Mục Tham Chiếu Nhanh Tới `CODEX_PROJECT_MAP.md`
 
-Tất cả chi tiết kỹ thuật sâu được duy trì tại [`Than_Tham_Nua_Voi_Godot/CODEX_PROJECT_MAP.md`](file:///d:/Game%20Maker/%C4%90%E1%BB%95i%20acc/Than_Tham_Nua_Voi_Godot_Runtime_Clean/Than_Tham_Nua_Voi_Godot/CODEX_PROJECT_MAP.md). Dưới đây là mục lục tham chiếu nhanh:
+Tất cả chi tiết kỹ thuật sâu được duy trì tại [`Than_Tham_Nua_Voi_Godot/CODEX_PROJECT_MAP.md`](file:///d:/Game%20Maker/%C4%90%E1%BB%95i%20acc/Than_Tham_Nua_Voi_Godot_Runtime_Clean/Than_Tham_Nua_Voi_Godot/CODEX_PROJECT_MAP.md) và tài liệu tiến độ hiện tại [`PROJECT_MEMORY_CURRENT.md`](file:///d:/Game%20Maker/%C4%90%E1%BB%95i%20acc/Than_Tham_Nua_Voi_Godot_Runtime_Clean/PROJECT_MEMORY_CURRENT.md). Dưới đây là mục lục tham chiếu nhanh:
 
-| Chủ Đề / Khía Cạnh | Vị Trí Trong CODEX_PROJECT_MAP.md | Mô Tả Tóm Tắt |
+| Chủ Đề / Khía Cạnh | Vị Trí Tham Chiếu | Mô Tả Tóm Tắt |
 |---|---|---|
-| **Project Guardrails & Stop Rules** | [Dòng 7 - 35](file:///d:/Game%20Maker/%C4%90%E1%BB%95i%20acc/Than_Tham_Nua_Voi_Godot_Runtime_Clean/Than_Tham_Nua_Voi_Godot/CODEX_PROJECT_MAP.md#L7-L35) | Quy định cấm headless test, quy tắc dừng báo cáo, ranh giới sửa code. |
-| **Scene / Entry Points** | [Dòng 36 - 52](file:///d:/Game%20Maker/%C4%90%E1%BB%95i%20acc/Than_Tham_Nua_Voi_Godot_Runtime_Clean/Than_Tham_Nua_Voi_Godot/CODEX_PROJECT_MAP.md#L36-L52) | Điểm vào chính: `Boot.tscn`, `DebugHome.tscn`, `RoleCodexController.gd`, `VSCaseMainController.gd`. |
-| **Autoload Authorities** | [Dòng 53 - 65](file:///d:/Game%20Maker/%C4%90%E1%BB%95i%20acc/Than_Tham_Nua_Voi_Godot_Runtime_Clean/Than_Tham_Nua_Voi_Godot/CODEX_PROJECT_MAP.md#L53-L65) | Danh sách Autoload: `AppFlow`, `AppLogger`, `AppVersion`, `FixtureRepository`. |
-| **Content & Fixture Rules** | [Dòng 66 - 82](file:///d:/Game%20Maker/%C4%90%E1%BB%95i%20acc/Than_Tham_Nua_Voi_Godot_Runtime_Clean/Than_Tham_Nua_Voi_Godot/CODEX_PROJECT_MAP.md#L66-L82) | Quy định tải `.tres`, plain Vietnamese text cho `help_text`, không nhúng BBCode vào data role. |
-| **Tutorial Status Snapshot (T01 - T08)** | [Dòng 83 - 110](file:///d:/Game%20Maker/%C4%90%E1%BB%95i%20acc/Than_Tham_Nua_Voi_Godot_Runtime_Clean/Than_Tham_Nua_Voi_Godot/CODEX_PROJECT_MAP.md#L83-L110) | Trạng thái từng bài học hướng dẫn: T01–T05 đã đóng, T06/T08 chờ GUI Smoke, T07 đã xong. |
-| **Human Verification Fixtures (HV1 - HV6)** | [Dòng 111 - 300](file:///d:/Game%20Maker/%C4%90%E1%BB%95i%20acc/Than_Tham_Nua_Voi_Godot_Runtime_Clean/Than_Tham_Nua_Voi_Godot/CODEX_PROJECT_MAP.md#L111-L300) | Checklist thao tác thủ công trên GUI để kiểm tra Disguise, Timed Coexistence, Mutation, Resolution Safety. |
-| **Presentation Contract & UI Boundaries** | [Dòng 806 - 845](file:///d:/Game%20Maker/%C4%90%E1%BB%95i%20acc/Than_Tham_Nua_Voi_Godot_Runtime_Clean/Than_Tham_Nua_Voi_Godot/CODEX_PROJECT_MAP.md#L806-L845) | Hợp đồng phân tách UI/Domain, Dead Marker Seal, Reveal History Toggle, typography và footprint cố định. |
-| **Want To Change X? Start Here** | [Dòng 846 - 867](file:///d:/Game%20Maker/%C4%90%E1%BB%95i%20acc/Than_Tham_Nua_Voi_Godot_Runtime_Clean/Than_Tham_Nua_Voi_Godot/CODEX_PROJECT_MAP.md#L846-L867) | Bảng hướng dẫn tra cứu nhanh: Sửa copy text, tooltip, suspect numbering, loot, match state ở đâu. |
-| **Tutorial 06 Canonical Spec** | [Dòng 868 - 911](file:///d:/Game%20Maker/%C4%90%E1%BB%95i%20acc/Than_Tham_Nua_Voi_Godot_Runtime_Clean/Than_Tham_Nua_Voi_Godot/CODEX_PROJECT_MAP.md#L868-L911) | Thiết kế layout, slot nghi phạm, tỷ lệ ban đầu và chân tướng của Tutorial 06. |
+| **Project Guardrails & Stop Rules** | `CODEX_PROJECT_MAP.md` (L7 - 35) | Quy định cấm headless test, quy tắc dừng báo cáo, ranh giới sửa code. |
+| **Current Continuity & Roadmap** | [`PROJECT_MEMORY_CURRENT.md`](file:///d:/Game%20Maker/%C4%90%E1%BB%95i%20acc/Than_Tham_Nua_Voi_Godot_Runtime_Clean/PROJECT_MEMORY_CURRENT.md) | Nguồn sự thật duy nhất về checkpoint hiện tại, tiến độ GĐ2, PF-M8, PF-M9, và bug đã xử lý. |
+| **Scene / Entry Points** | `CODEX_PROJECT_MAP.md` (L36 - 52) | Điểm vào chính: `Boot.tscn`, `DebugHome.tscn`, `PlayerFacingStart.tscn`. |
+| **Autoload Authorities** | `CODEX_PROJECT_MAP.md` (L53 - 65) | Danh sách Autoload: `AppFlow`, `AppLogger`, `AppVersion`, `FixtureRepository`. |
+| **Giai Đoạn 2: Production Tabletop Loot Map** | `PROJECT_MEMORY_CURRENT.md` (Mục 7) | Bản đồ 77 ô Imperial Court (`imperial_court_tabletop_v1`), 5 gia tộc, spawn, hubs, camera UX. |
+| **Giai Đoạn 2: Production Character Roster** | `PROJECT_MEMORY_CURRENT.md` (Mục 6) | 5 nhân vật chính (Hoàng Linh Lâm, Chu Tuệ Nguyệt, Kim Thanh Giai, Huyền Ca Xuý, Lam Phương Xuân), chỉ số 2/2/2. |
+| **Giai Đoạn 2: Production Consumables V1** | `PROJECT_MEMORY_CURRENT.md` (Mục 10) | 3 vật phẩm (Hành Lộ Phù, Lệnh Bài Thông Hành, Ngự Mã Lệnh), đã PASS 3188/3188. |
+| **Player-Facing Meta (PF-M8, PF-M9)** | `PROJECT_MEMORY_CURRENT.md` (Mục 3, 4) | Match Rules, Results, Equipment Collection, Progression, Gacha, Autosave, Bag Overflow. |
+| **Presentation Contract & UI Boundaries** | `CODEX_PROJECT_MAP.md` (L806 - 845) | Hợp đồng phân tách UI/Domain, Dead Marker Seal, Reveal History Toggle, typography và footprint cố định. |
+| **Want To Change X? Start Here** | `CODEX_PROJECT_MAP.md` (L846 - 867) | Bảng hướng dẫn tra cứu nhanh: Sửa copy text, tooltip, suspect numbering, loot, match state ở đâu. |
 
 ---
 
