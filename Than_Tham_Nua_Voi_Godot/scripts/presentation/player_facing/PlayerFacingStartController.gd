@@ -51,6 +51,10 @@ var _loot_activity_lines: Array[String] = []
 var _logged_reward_count := 0
 var _selected_branch_id: StringName = &""
 var _is_rolling_dice: bool = false
+var _pummel_style_normal: StyleBoxFlat
+var _pummel_style_active: StyleBoxFlat
+var _pummel_slot_style: StyleBoxFlat
+var _hotbar_items: Array[Dictionary] = []
 var _autosave_service: PLAYER_FACING_AUTOSAVE_SERVICE = (
 	PLAYER_FACING_AUTOSAVE_SERVICE.new()
 )
@@ -117,6 +121,9 @@ var _autosave_service: PLAYER_FACING_AUTOSAVE_SERVICE = (
 @onready var dice_card: Control = %DiceCard
 @onready var dice_icon_label: Label = %DiceIconLabel
 @onready var dice_result_label: RichTextLabel = %DiceResultLabel
+@onready var player_cards_container: HBoxContainer = get_node_or_null("%PlayerCardsContainer") as HBoxContainer
+@onready var item_hotbar_container: HBoxContainer = get_node_or_null("%ItemHotbarContainer") as HBoxContainer
+@onready var roll_dice_button: Button = get_node_or_null("%RollDiceButton") as Button
 @onready var confirmation_panel: Control = %LootConfirmationPanel
 @onready var confirmation_text: RichTextLabel = %ConfirmationText
 @onready var equipment_panel: Control = %EquipmentPanel
@@ -157,11 +164,62 @@ var _autosave_service: PLAYER_FACING_AUTOSAVE_SERVICE = (
 func _ready() -> void:
 	if loot_map_view != null:
 		loot_map_view.node_clicked.connect(_on_map_node_clicked)
+	_init_pummel_styles()
+	if roll_dice_button != null and not roll_dice_button.pressed.is_connected(_on_move_pressed):
+		roll_dice_button.pressed.connect(_on_move_pressed)
 	_build_match_rule_options()
 	_build_character_buttons()
 	_build_equipment_slot_options()
 	_refresh_continue_button()
 	_show_phase(SETUP_SESSION.Phase.MAIN_MENU)
+
+
+func _init_pummel_styles() -> void:
+	_pummel_style_normal = StyleBoxFlat.new()
+	_pummel_style_normal.bg_color = Color(0.07, 0.08, 0.11, 0.88)
+	_pummel_style_normal.border_width_left = 1
+	_pummel_style_normal.border_width_top = 1
+	_pummel_style_normal.border_width_right = 1
+	_pummel_style_normal.border_width_bottom = 1
+	_pummel_style_normal.border_color = Color(0.35, 0.4, 0.45, 0.4)
+	_pummel_style_normal.corner_radius_top_left = 8
+	_pummel_style_normal.corner_radius_top_right = 8
+	_pummel_style_normal.corner_radius_bottom_right = 8
+	_pummel_style_normal.corner_radius_bottom_left = 8
+	_pummel_style_normal.content_margin_left = 12.0
+	_pummel_style_normal.content_margin_top = 6.0
+	_pummel_style_normal.content_margin_right = 12.0
+	_pummel_style_normal.content_margin_bottom = 6.0
+
+	_pummel_style_active = StyleBoxFlat.new()
+	_pummel_style_active.bg_color = Color(0.12, 0.13, 0.18, 0.96)
+	_pummel_style_active.border_width_left = 2
+	_pummel_style_active.border_width_top = 2
+	_pummel_style_active.border_width_right = 2
+	_pummel_style_active.border_width_bottom = 2
+	_pummel_style_active.border_color = Color(1.0, 0.84, 0.2, 0.95)
+	_pummel_style_active.corner_radius_top_left = 8
+	_pummel_style_active.corner_radius_top_right = 8
+	_pummel_style_active.corner_radius_bottom_right = 8
+	_pummel_style_active.corner_radius_bottom_left = 8
+	_pummel_style_active.shadow_color = Color(1.0, 0.8, 0.1, 0.35)
+	_pummel_style_active.shadow_size = 8
+	_pummel_style_active.content_margin_left = 12.0
+	_pummel_style_active.content_margin_top = 6.0
+	_pummel_style_active.content_margin_right = 12.0
+	_pummel_style_active.content_margin_bottom = 6.0
+
+	_pummel_slot_style = StyleBoxFlat.new()
+	_pummel_slot_style.bg_color = Color(0.09, 0.1, 0.14, 0.9)
+	_pummel_slot_style.border_width_left = 1
+	_pummel_slot_style.border_width_top = 1
+	_pummel_slot_style.border_width_right = 1
+	_pummel_slot_style.border_width_bottom = 1
+	_pummel_slot_style.border_color = Color(0.78, 0.65, 0.35, 0.55)
+	_pummel_slot_style.corner_radius_top_left = 8
+	_pummel_slot_style.corner_radius_top_right = 8
+	_pummel_slot_style.corner_radius_bottom_right = 8
+	_pummel_slot_style.corner_radius_bottom_left = 8
 
 
 func _input(event: InputEvent) -> void:
@@ -182,6 +240,18 @@ func _input(event: InputEvent) -> void:
 			return
 		if key_event.keycode == KEY_Z:
 			_handle_loot_z_press()
+			get_viewport().set_input_as_handled()
+			return
+		if key_event.keycode == KEY_1:
+			_try_use_hotbar_item(0)
+			get_viewport().set_input_as_handled()
+			return
+		if key_event.keycode == KEY_2:
+			_try_use_hotbar_item(1)
+			get_viewport().set_input_as_handled()
+			return
+		if key_event.keycode == KEY_3:
+			_try_use_hotbar_item(2)
 			get_viewport().set_input_as_handled()
 			return
 		if key_event.keycode == KEY_SPACE:
@@ -1263,7 +1333,11 @@ func _refresh_loot() -> void:
 	var item_window: bool = session.phase == LOOT_REWARD_SESSION.Phase.ITEM_WINDOW
 	var movement_ready: bool = session.phase == LOOT_REWARD_SESSION.Phase.MOVEMENT
 	if item_window_panel != null:
-		item_window_panel.visible = item_window
+		item_window_panel.visible = (
+			item_window
+			or movement_ready
+			or session.phase == LOOT_REWARD_SESSION.Phase.BRANCH_SELECTION
+		)
 	_refresh_item_source_selector(player, round_loot)
 	item_source_selector.disabled = (
 		not item_window or session.item_used_this_turn or item_source_selector.item_count == 0
@@ -1308,6 +1382,186 @@ func _refresh_loot() -> void:
 			+ "Chọn một vật phẩm đang mang để thay thế, hoặc bỏ vật phẩm mới."
 		) % _item_display_name(session.overflow.incoming_item_id)
 	_refresh_overflow_choice(session, movement_player.player_id)
+	_refresh_pummel_player_cards(session)
+	_refresh_pummel_item_hotbar(session)
+
+
+func _refresh_pummel_player_cards(session: LOOT_REWARD_SESSION) -> void:
+	if player_cards_container == null or session == null or session.movement_session == null:
+		return
+	var player_order: Array[StringName] = session.movement_session.ordered_player_ids
+	var active_id: StringName = (
+		session.movement_session.current_player().player_id
+		if session.movement_session.current_player() != null
+		else &""
+	)
+	var badges: Array[String] = ["🔵 P1", "🔴 P2", "🟢 P3", "🟣 P4"]
+	var badge_colors: Array[Color] = [
+		Color(0.2, 0.75, 1.0), Color(1.0, 0.35, 0.45),
+		Color(0.35, 0.9, 0.45), Color(0.8, 0.45, 1.0)
+	]
+
+	for i: int in range(player_cards_container.get_child_count()):
+		var card: Control = player_cards_container.get_child(i) as Control
+		if card == null:
+			continue
+		if i >= player_order.size():
+			card.visible = false
+			continue
+
+		card.visible = true
+		var player_id: StringName = player_order[i]
+		var is_active: bool = (player_id == active_id)
+		var player_state: PLAYER_PHASE_STATE = session.find_player(player_id)
+		var movement_player: LOOT_MOVEMENT_PLAYER_STATE = null
+		for mp: LOOT_MOVEMENT_PLAYER_STATE in session.movement_session.player_states:
+			if mp.player_id == player_id:
+				movement_player = mp
+				break
+		var round_loot: RoundLootInventoryState = session.find_round_loot_state(player_id)
+		var character: CHARACTER_DEFINITION = (
+			setup.find_character(player_state.character_id) if player_state != null else null
+		)
+		var char_name: String = character.display_name if character != null else _player_name(player_id)
+
+		card.add_theme_stylebox_override("panel", _pummel_style_active if is_active else _pummel_style_normal)
+
+		var badge_label: Label = card.find_child("Badge", true, false) as Label
+		if badge_label != null:
+			badge_label.text = badges[i % badges.size()]
+			badge_label.add_theme_color_override("font_color", badge_colors[i % badge_colors.size()])
+
+		var name_label: Label = card.find_child("Name", true, false) as Label
+		if name_label != null:
+			name_label.text = char_name
+
+		var crown_label: Label = card.find_child("Crown", true, false) as Label
+		if crown_label != null:
+			crown_label.visible = is_active
+
+		var hp_label: Label = card.find_child("Hp", true, false) as Label
+		if hp_label != null:
+			var remaining: int = movement_player.remaining_moves if movement_player != null else 0
+			hp_label.text = "❤️ %d" % remaining
+
+		var merit_label: Label = card.find_child("Merit", true, false) as Label
+		if merit_label != null:
+			var merit: float = player_state.merit_progress if player_state != null else 0.0
+			merit_label.text = "🏆 %.1f" % merit
+
+		var coins_label: Label = card.find_child("Coins", true, false) as Label
+		if coins_label != null:
+			var coins: int = player_state.silver_coin_count if player_state != null else 0
+			coins_label.text = "🪙 %d" % coins
+
+		var bag_label: Label = card.find_child("Bag", true, false) as Label
+		if bag_label != null:
+			var carried: int = round_loot.carried_items.size() if round_loot != null else 0
+			var cap: int = round_loot.capacity if round_loot != null else 2
+			bag_label.text = "🎒 %d/%d" % [carried, cap]
+
+
+func _refresh_pummel_item_hotbar(session: LOOT_REWARD_SESSION) -> void:
+	if item_hotbar_container == null or session == null:
+		return
+	for child: Node in item_hotbar_container.get_children():
+		child.queue_free()
+
+	_hotbar_items.clear()
+	var movement_player: LOOT_MOVEMENT_PLAYER_STATE = session.movement_session.current_player()
+	if movement_player == null:
+		return
+	var player_state: PLAYER_PHASE_STATE = session.find_player(movement_player.player_id)
+	var round_loot: RoundLootInventoryState = session.find_round_loot_state(movement_player.player_id)
+	var is_item_window: bool = (session.phase == LOOT_REWARD_SESSION.Phase.ITEM_WINDOW)
+	var can_use: bool = is_item_window and not session.item_used_this_turn
+
+	if player_state != null:
+		for row: Dictionary in player_state.consumable_inventory:
+			_hotbar_items.append({
+				"item_id": StringName(row.get("item_id", "")),
+				"source": "persistent"
+			})
+	if round_loot != null and not round_loot.disposition_finalized:
+		for row: Dictionary in round_loot.carried_items:
+			_hotbar_items.append({
+				"item_id": StringName(row.get("item_id", "")),
+				"source": "round_loot"
+			})
+
+	var max_slots: int = maxi(3, _hotbar_items.size())
+	for slot_idx: int in range(max_slots):
+		var btn: Button = Button.new()
+		btn.custom_minimum_size = Vector2(80, 50)
+		btn.focus_mode = Control.FOCUS_NONE
+		btn.add_theme_stylebox_override("normal", _pummel_slot_style)
+
+		if slot_idx < _hotbar_items.size():
+			var entry: Dictionary = _hotbar_items[slot_idx]
+			var item_id: StringName = entry.get("item_id", &"")
+			var source: String = String(entry.get("source", ""))
+			var icon_str: String = _item_icon(item_id)
+			var display_name: String = _item_display_name(item_id)
+			btn.text = "[%d] %s\n%s" % [slot_idx + 1, icon_str, display_name]
+			btn.tooltip_text = "[Phím %d] Sử dụng %s (%s)" % [
+				slot_idx + 1, display_name, "Đồ sở hữu" if source == "persistent" else "Đồ trong lượt"
+			]
+			btn.disabled = not can_use
+			btn.pressed.connect(_on_hotbar_slot_pressed.bind(slot_idx))
+		else:
+			btn.text = "[%d]\n(Trống)" % (slot_idx + 1)
+			btn.disabled = true
+			btn.modulate.a = 0.55
+
+		item_hotbar_container.add_child(btn)
+
+	if roll_dice_button != null:
+		var movement_ready: bool = (session.phase == LOOT_REWARD_SESSION.Phase.MOVEMENT)
+		roll_dice_button.disabled = (not movement_ready and not is_item_window) or session.overflow.active
+		if session.phase == LOOT_REWARD_SESSION.Phase.BRANCH_SELECTION:
+			roll_dice_button.text = "⚠️ CHỌN Ô VÀNG"
+			roll_dice_button.tooltip_text = "Bấm trực tiếp lên ô cờ vàng trên bản đồ để chọn hướng."
+		elif is_item_window:
+			roll_dice_button.text = "🎲 [Z] BỎ ITEM & ĐỔ"
+			roll_dice_button.tooltip_text = "Bỏ qua dùng item và đổ xúc xắc ngay lập tức."
+		else:
+			roll_dice_button.text = "🎲 [Z] ĐỔ XÚC XẮC"
+			roll_dice_button.tooltip_text = "Gieo xí ngầu để di chuyển."
+
+
+func _on_hotbar_slot_pressed(slot_idx: int) -> void:
+	_try_use_hotbar_item(slot_idx)
+
+
+func _try_use_hotbar_item(slot_idx: int) -> void:
+	if case_flow == null or case_flow.loot_session == null:
+		return
+	var session: LOOT_REWARD_SESSION = case_flow.loot_session
+	if session.phase != LOOT_REWARD_SESSION.Phase.ITEM_WINDOW:
+		_show_message("Chỉ có thể dùng vật phẩm trong Cửa sổ Vật phẩm (đầu lượt)!", true)
+		return
+	if session.item_used_this_turn:
+		_show_message("Lượt này bạn đã kích hoạt một vật phẩm rồi!", true)
+		return
+	if slot_idx < 0 or slot_idx >= _hotbar_items.size():
+		_show_message("Ô vật phẩm này đang trống!", false)
+		return
+	var entry: Dictionary = _hotbar_items[slot_idx]
+	var item_id: StringName = entry.get("item_id", &"")
+	var source: StringName = StringName(entry.get("source", ""))
+	_handle_loot_result(case_flow.use_item(item_id, source))
+
+
+func _item_icon(item_id: StringName) -> String:
+	match item_id:
+		&"consumable_speed_charm_v1":
+			return "📜"
+		&"consumable_pass_token_v1":
+			return "🪪"
+		&"consumable_royal_steed_decree_v1":
+			return "🐎"
+		_:
+			return "🎒"
 
 
 func _refresh_branch_ui(
@@ -1327,14 +1581,10 @@ func _refresh_branch_ui(
 			loot_map_view.set_selectable_branches(pending.available_branch_ids)
 		if move_button != null:
 			move_button.visible = false
-		if item_window_panel != null:
-			item_window_panel.visible = false
 		return
 
 	if move_button != null:
 		move_button.visible = true
-	if item_window_panel != null:
-		item_window_panel.visible = session.phase == LOOT_REWARD_SESSION.Phase.ITEM_WINDOW
 
 	_selected_branch_id = &""
 	loot_map_view.set_selectable_branches([])
