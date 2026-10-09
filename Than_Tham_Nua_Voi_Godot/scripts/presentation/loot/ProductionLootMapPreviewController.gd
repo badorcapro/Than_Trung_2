@@ -6,6 +6,12 @@ const HOUSE_REPOSITORY := preload(
 const MAP_VIEW := preload(
 	"res://scripts/presentation/player_facing/PlayerFacingLootMapView.gd"
 )
+const REWARD_SNAPSHOT_SERVICE := preload(
+	"res://scripts/application/loot/RewardSnapshotService.gd"
+)
+const PRODUCTION_REWARD_REPO := preload(
+	"res://scripts/application/loot/ProductionRewardRepository.gd"
+)
 
 @onready var map_view: MAP_VIEW = %ProductionMapView
 @onready var active_player_label: Label = %ActivePlayerLabel
@@ -19,6 +25,7 @@ var map_definition: LootMapDefinition
 var session := LootMovementSession.new()
 var movement_service := LootMovementService.new()
 var roll_source: MovementRollSource = SequenceMovementRollSource.new([1, 2, 1, 2, 1])
+var _preview_snapshots: Array = []
 var _debug_visible := false
 var _selected_preview_branch: StringName = &""
 var _windowed_size := Vector2i.ZERO
@@ -28,6 +35,14 @@ var _windowed_geometry_captured := false
 
 func _ready() -> void:
 	map_definition = Gd2FixtureRepository.load_production_map()
+	var snapshot_service := REWARD_SNAPSHOT_SERVICE.new()
+	_preview_snapshots = snapshot_service.build_weighted_reward_snapshot(
+		&"preview_round",
+		map_definition,
+		PRODUCTION_REWARD_REPO.load_rewards(),
+		PRODUCTION_REWARD_REPO.load_tables(),
+		SequenceRewardRollSource.new([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+	)
 	if map_view != null:
 		map_view.node_clicked.connect(_on_map_node_clicked)
 	_build_preview_session()
@@ -219,7 +234,7 @@ func _on_map_node_clicked(node_id: StringName) -> void:
 
 
 func _refresh() -> void:
-	map_view.configure(map_definition, session)
+	map_view.configure(map_definition, session, _preview_snapshots)
 	if branch_buttons != null:
 		for child: Node in branch_buttons.get_children():
 			child.queue_free()

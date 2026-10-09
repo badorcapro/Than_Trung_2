@@ -1409,7 +1409,12 @@ func _refresh_loot() -> void:
 		if not _loot_activity_lines.is_empty()
 		else "Chưa có hành động."
 	)
-	loot_map_view.configure(case_flow.loot_map_definition(), session.movement_session)
+	loot_map_view.configure(
+		case_flow.loot_map_definition(),
+		session.movement_session,
+		session.reward_snapshots,
+		session.consumed_special_node_ids
+	)
 	var item_window: bool = session.phase == LOOT_REWARD_SESSION.Phase.ITEM_WINDOW
 	var movement_ready: bool = session.phase == LOOT_REWARD_SESSION.Phase.MOVEMENT
 	if item_window_panel != null:

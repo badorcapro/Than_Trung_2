@@ -1,7 +1,7 @@
 class_name PlayerFacingLootMapView
 extends Control
 
-const NODE_RADIUS := 18.0
+const NODE_RADIUS := 23.0
 const MAP_PADDING := Vector2(42.0, 38.0)
 const CAMERA_EDGE_THRESHOLD := 42.0
 const CAMERA_PAN_SPEED := 680.0
@@ -16,6 +16,11 @@ const BOARD_ROUTE_SHADOW_WIDTH := 28.0
 const MAP_TEXTURE_PATH := "res://assets/maps/imperial_court_board_v1.png"
 const MAP_TEXTURE_FALLBACK_PATH := "res://assets/maps/imperial_court_map.png"
 
+const REWARD_SNAPSHOT_SERVICE := preload("res://scripts/application/loot/RewardSnapshotService.gd")
+const PRODUCTION_REWARD_REPO := preload("res://scripts/application/loot/ProductionRewardRepository.gd")
+const PRODUCTION_CONSUMABLE_REPO := preload("res://scripts/application/loot/ProductionConsumableRepository.gd")
+const SEQUENCE_REWARD_ROLL_SOURCE := preload("res://scripts/infrastructure/SequenceRewardRollSource.gd")
+
 signal node_clicked(node_id: StringName)
 
 var map_definition: LootMapDefinition
@@ -27,6 +32,10 @@ var token_node_by_player: Dictionary = {}
 var active_player_id: StringName
 var highlighted_path: Array[StringName] = []
 var selectable_branch_nodes: Array[StringName] = []
+var reward_snapshots_by_node: Dictionary = {}
+var consumed_special_node_ids: Array[StringName] = []
+var _cached_rewards: Array[RewardDefinition] = []
+var _cached_items: Array[ConsumableItemDefinition] = []
 var _node_positions: Dictionary = {}
 var _camera_center := Vector2.ZERO
 var _camera_initialized := false
@@ -39,10 +48,17 @@ var _drag_last_screen_position := Vector2.ZERO
 var _map_texture: Texture2D = null
 
 
-func configure(source_map: LootMapDefinition, source_movement: LootMovementSession) -> void:
+func configure(
+	source_map: LootMapDefinition,
+	source_movement: LootMovementSession,
+	source_snapshots: Array = [],
+	source_consumed: Array = []
+) -> void:
 	var previous_active: StringName = active_player_id
 	map_definition = source_map
 	movement_session = source_movement
+	_ensure_reward_catalogs()
+	_apply_reward_snapshots(source_snapshots, source_consumed)
 	_rebuild_binding()
 	if _uses_authored_world_coordinates():
 		_clamp_zoom()
@@ -71,6 +87,7 @@ func presentation_snapshot() -> Dictionary:
 		"debug_labels_visible": _debug_labels_visible,
 		"house_region_count": house_region_count(),
 		"has_custom_map_texture": has_custom_map_texture(),
+		"reward_node_count": reward_snapshots_by_node.size(),
 	}
 
 
@@ -377,21 +394,86 @@ func _draw() -> void:
 		var node: LootNodeDefinition = map_definition.find_node(node_id)
 		var radius: float = _node_radius(node) * visual_scale
 		var fill: Color = _node_color(node)
+		var is_spawn: bool = (node != null and node.node_kind == &"ORIGIN_SPAWN")
+		var is_hub: bool = (node != null and (node.node_kind == &"CENTRAL_HUB" or node.node_kind == &"MAUSOLEUM_HUB"))
+
 		# Tile drop shadow
-		draw_circle(center + Vector2(2.5, 4.5) * visual_scale, radius + 4.0, Color(0.06, 0.05, 0.04, 0.45))
+		draw_circle(center + Vector2(2.5, 4.5) * visual_scale, radius + 3.5 * visual_scale, Color(0.06, 0.05, 0.04, 0.48))
 		# Raised golden-brass / stone rim
 		draw_circle(center, radius + 2.5 * visual_scale, Color(0.86, 0.74, 0.42, 0.98))
-		# Main tile stone face
-		draw_circle(center, radius, fill)
-		# 3D specular highlight arc on upper edge
-		draw_arc(center, radius - 3.0 * visual_scale, -PI * 0.85, -PI * 0.15, 24, fill.lightened(0.4), 2.2 * visual_scale, true)
-		# Inner glossy sheen
-		draw_circle(center + Vector2(-radius * 0.25, -radius * 0.25), radius * 0.28, Color(1.0, 1.0, 1.0, 0.22))
 
-		if node != null and node.node_kind == &"ORIGIN_SPAWN":
+		if is_spawn:
+			draw_circle(center, radius, fill)
+			draw_arc(center, radius - 3.0 * visual_scale, -PI * 0.85, -PI * 0.15, 24, fill.lightened(0.4), 2.2 * visual_scale, true)
+			draw_circle(center + Vector2(-radius * 0.25, -radius * 0.25), radius * 0.28, Color(1.0, 1.0, 1.0, 0.22))
 			_draw_origin_seal(center, node.origin_house_id)
-		elif node != null and (node.node_kind == &"CENTRAL_HUB" or node.node_kind == &"MAUSOLEUM_HUB"):
+		elif is_hub:
+			draw_circle(center, radius, fill)
+			draw_arc(center, radius - 3.0 * visual_scale, -PI * 0.85, -PI * 0.15, 24, fill.lightened(0.4), 2.2 * visual_scale, true)
+			draw_circle(center + Vector2(-radius * 0.25, -radius * 0.25), radius * 0.28, Color(1.0, 1.0, 1.0, 0.22))
 			_draw_hub_insignia(center, node.node_kind)
+		else:
+			# Route node - check for loot reward presentation
+			var rew: Dictionary = _get_node_reward_presentation(node_id)
+			if rew.get("has_reward", false):
+				var tile_bg: Color = rew.get("tile_bg", fill)
+				var theme_color: Color = rew.get("theme_color", Color(1.0, 0.85, 0.3))
+				var icon_str: String = rew.get("icon", "🎁")
+				var amount: int = int(rew.get("amount", 1))
+				var show_count: bool = bool(rew.get("show_count", true))
+				var is_consumed: bool = bool(rew.get("consumed", false))
+
+				# Inner rim groove
+				draw_circle(center, radius + 0.5 * visual_scale, Color(0.18, 0.14, 0.08, 0.95))
+				# Main tile colored face
+				draw_circle(center, radius, tile_bg)
+				# 3D specular highlight arc on upper edge
+				draw_arc(center, radius - 2.5 * visual_scale, -PI * 0.85, -PI * 0.15, 22, theme_color.lightened(0.3), 2.0 * visual_scale, true)
+				# Soft radial inner ring matching reward theme
+				draw_arc(center, radius * 0.72, 0.0, TAU, 24, Color(theme_color.r, theme_color.g, theme_color.b, 0.35), 1.6 * visual_scale, true)
+
+				# Center Icon
+				var icon_font_size: int = maxi(int(17.0 * visual_scale), 12)
+				var icon_w: float = float(icon_font_size) * 1.5
+				var icon_pos: Vector2 = center + Vector2(-icon_w * 0.5, float(icon_font_size) * 0.35)
+				draw_string(
+					ThemeDB.fallback_font, icon_pos, icon_str,
+					HORIZONTAL_ALIGNMENT_CENTER, icon_w, icon_font_size,
+					Color.WHITE if not is_consumed else Color(0.6, 0.6, 0.6, 0.7)
+				)
+
+				# Bottom-right quantity badge (ở góc phải item có số)
+				if show_count and not is_consumed:
+					var badge_center: Vector2 = center + Vector2(radius * 0.62, radius * 0.62)
+					var badge_r: float = 8.5 * visual_scale
+					# Badge drop shadow
+					draw_circle(badge_center + Vector2(1.0, 1.5) * visual_scale, badge_r + 1.2 * visual_scale, Color(0.02, 0.02, 0.03, 0.75))
+					# Badge golden-amber border
+					draw_circle(badge_center, badge_r + 1.2 * visual_scale, Color(1.0, 0.84, 0.25, 0.98))
+					# Badge dark background
+					draw_circle(badge_center, badge_r, Color(0.08, 0.1, 0.14, 0.98))
+					# Badge quantity number
+					var num_str: String = "%d" % amount
+					var badge_font_size: int = maxi(int(10.0 * visual_scale), 8)
+					var badge_pos: Vector2 = badge_center + Vector2(-badge_r, float(badge_font_size) * 0.38)
+					draw_string(
+						ThemeDB.fallback_font, badge_pos, num_str,
+						HORIZONTAL_ALIGNMENT_CENTER, badge_r * 2.0, badge_font_size,
+						Color(1.0, 0.94, 0.6)
+					)
+
+				if is_consumed:
+					draw_circle(center, radius, Color(0.0, 0.0, 0.0, 0.55))
+					draw_string(ThemeDB.fallback_font, center + Vector2(-9.0, 5.0), "✔", HORIZONTAL_ALIGNMENT_CENTER, 18.0, 13, Color(0.4, 0.9, 0.45))
+			else:
+				# Route stone without specific reward (transition stone)
+				draw_circle(center, radius, fill)
+				draw_arc(center, radius - 3.0 * visual_scale, -PI * 0.85, -PI * 0.15, 20, fill.lightened(0.4), 2.0 * visual_scale, true)
+				draw_circle(center + Vector2(-radius * 0.25, -radius * 0.25), radius * 0.25, Color(1.0, 1.0, 1.0, 0.2))
+				draw_string(
+					ThemeDB.fallback_font, center + Vector2(-10.0, 5.0), "◈",
+					HORIZONTAL_ALIGNMENT_CENTER, 20.0, 11, Color(0.9, 0.85, 0.7, 0.5)
+				)
 
 		if selectable_branch_nodes.has(node_id):
 			_draw_selectable_branch_highlight(center, radius, visual_scale)
@@ -662,25 +744,171 @@ func _path_contains_edge(from_id: StringName, to_id: StringName) -> bool:
 
 
 func _build_node_label(node: LootNodeDefinition) -> String:
+	var base_name: String = ""
 	if not node.display_name.is_empty():
-		return node.display_name
-	match node.node_kind:
-		&"ORIGIN_SPAWN":
-			return "Nhà %s" % _house_letter(node.origin_house_id)
-		&"HOUSE_PATH":
-			return "Lối Nhà %s" % _house_letter(node.origin_house_id)
-		&"CENTRAL_HUB":
-			return "Đại sân Trung tâm"
-		&"MIDDLE_PATH":
-			return "Trung lộ"
-		&"MAUSOLEUM_HUB":
-			return "Lăng Miếu"
-		&"FINAL_PATH":
-			return "Hoàng lộ"
-		&"END":
-			return "Điểm kết thúc"
-		_:
-			return "Đường trong Hoàng Cung"
+		base_name = node.display_name
+	else:
+		match node.node_kind:
+			&"ORIGIN_SPAWN":
+				base_name = "Nhà %s" % _house_letter(node.origin_house_id)
+			&"HOUSE_PATH":
+				base_name = "Lối Nhà %s" % _house_letter(node.origin_house_id)
+			&"CENTRAL_HUB":
+				base_name = "Đại sân Trung tâm"
+			&"MIDDLE_PATH":
+				base_name = "Trung lộ"
+			&"MAUSOLEUM_HUB":
+				base_name = "Lăng Miếu"
+			&"FINAL_PATH":
+				base_name = "Hoàng lộ"
+			&"END":
+				base_name = "Điểm kết thúc"
+			_:
+				base_name = "Đường trong Hoàng Cung"
+
+	var rew: Dictionary = _get_node_reward_presentation(node.node_id)
+	if rew.get("has_reward", false):
+		var rew_name: String = String(rew.get("reward_name", ""))
+		var amount: int = int(rew.get("amount", 1))
+		var icon_str: String = String(rew.get("icon", ""))
+		return "%s · [%s %s +%d]" % [base_name, icon_str, rew_name, amount]
+	return base_name
+
+
+func _ensure_reward_catalogs() -> void:
+	if _cached_rewards.is_empty():
+		_cached_rewards = PRODUCTION_REWARD_REPO.load_rewards()
+	if _cached_items.is_empty():
+		_cached_items = PRODUCTION_CONSUMABLE_REPO.load_all()
+
+
+func _apply_reward_snapshots(source_snapshots: Array, source_consumed: Array) -> void:
+	reward_snapshots_by_node.clear()
+	if source_snapshots != null and not source_snapshots.is_empty():
+		for snap: Variant in source_snapshots:
+			var s: RewardNodeSnapshot = snap as RewardNodeSnapshot
+			if s != null:
+				reward_snapshots_by_node[s.node_id] = s
+	elif map_definition != null and not _cached_rewards.is_empty():
+		var snapshot_service := REWARD_SNAPSHOT_SERVICE.new()
+		var tables: Array[RewardZoneTableDefinition] = PRODUCTION_REWARD_REPO.load_tables()
+		if not tables.is_empty():
+			var roll_source := SEQUENCE_REWARD_ROLL_SOURCE.new([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+			var auto_snaps: Array[RewardNodeSnapshot] = snapshot_service.build_weighted_reward_snapshot(
+				&"map_view_preview",
+				map_definition,
+				_cached_rewards,
+				tables,
+				roll_source
+			)
+			for snap: RewardNodeSnapshot in auto_snaps:
+				if snap != null:
+					reward_snapshots_by_node[snap.node_id] = snap
+
+	consumed_special_node_ids.clear()
+	if source_consumed != null:
+		for node_id: Variant in source_consumed:
+			consumed_special_node_ids.append(StringName(node_id))
+
+
+func _get_node_reward_presentation(node_id: StringName) -> Dictionary:
+	var snap: RewardNodeSnapshot = reward_snapshots_by_node.get(node_id, null) as RewardNodeSnapshot
+	if snap == null:
+		return {"has_reward": false}
+
+	var def: RewardDefinition = null
+	for r: RewardDefinition in _cached_rewards:
+		if r != null and r.reward_id == snap.reward_definition_id:
+			def = r
+			break
+	if def == null:
+		return {"has_reward": false}
+
+	var is_consumed: bool = consumed_special_node_ids.has(node_id)
+	var icon: String = "🎁"
+	var reward_name: String = "Phần Thưởng"
+	var show_count: bool = (def.amount > 0)
+	var theme_color := Color(1.0, 0.85, 0.3)
+	var tile_bg := Color(0.18, 0.22, 0.26)
+
+	match def.reward_type:
+		RewardDefinition.Type.SILVER_COIN:
+			if def.amount >= 4:
+				icon = "💰"
+				reward_name = "Túi Bạc"
+			else:
+				icon = "🪙"
+				reward_name = "Xu Bạc"
+			show_count = true
+			theme_color = Color(1.0, 0.86, 0.35)
+			tile_bg = Color(0.24, 0.22, 0.16)
+		RewardDefinition.Type.ORB:
+			icon = "🔮"
+			reward_name = "Linh Ngọc"
+			show_count = true
+			theme_color = Color(0.85, 0.5, 1.0)
+			tile_bg = Color(0.25, 0.16, 0.32)
+		RewardDefinition.Type.GACHA_TICKET:
+			icon = "🎫"
+			reward_name = "Vé Gacha"
+			show_count = true
+			theme_color = Color(1.0, 0.78, 0.25)
+			tile_bg = Color(0.28, 0.22, 0.12)
+		RewardDefinition.Type.EQUIPMENT_EXP_MATERIAL:
+			if String(def.reward_id).contains("large") or def.amount >= 5:
+				icon = "🔱"
+				reward_name = "EXP Vết Thánh"
+				show_count = true
+				theme_color = Color(0.95, 0.55, 0.9)
+				tile_bg = Color(0.3, 0.16, 0.28)
+			else:
+				icon = "📿"
+				reward_name = "EXP Kỷ Vật"
+				show_count = true
+				theme_color = Color(0.4, 0.85, 1.0)
+				tile_bg = Color(0.14, 0.24, 0.32)
+		RewardDefinition.Type.EQUIPMENT_EXCHANGE_MATERIAL:
+			icon = "💠"
+			reward_name = "Phôi Đổi"
+			show_count = true
+			theme_color = Color(0.35, 0.95, 0.85)
+			tile_bg = Color(0.12, 0.26, 0.28)
+		RewardDefinition.Type.CONSUMABLE_ITEM:
+			show_count = true
+			match def.item_id:
+				&"consumable_hanh_lo_phu":
+					icon = "📜"
+					reward_name = "Hành Lộ Phù"
+					theme_color = Color(0.95, 0.75, 0.35)
+					tile_bg = Color(0.28, 0.22, 0.15)
+				&"consumable_lenh_bai_thong_hanh":
+					icon = "🪪"
+					reward_name = "Lệnh Bài"
+					theme_color = Color(0.95, 0.6, 0.3)
+					tile_bg = Color(0.28, 0.18, 0.14)
+				&"consumable_ngu_ma_lenh":
+					icon = "🐎"
+					reward_name = "Ngự Mã Lệnh"
+					theme_color = Color(0.9, 0.5, 0.4)
+					tile_bg = Color(0.26, 0.16, 0.2)
+				_:
+					icon = "🎒"
+					reward_name = "Vật Phẩm"
+					theme_color = Color(0.85, 0.7, 0.4)
+					tile_bg = Color(0.22, 0.2, 0.18)
+
+	return {
+		"has_reward": true,
+		"reward_id": def.reward_id,
+		"reward_type": def.reward_type,
+		"amount": def.amount,
+		"icon": icon,
+		"reward_name": reward_name,
+		"show_count": show_count,
+		"theme_color": theme_color,
+		"tile_bg": tile_bg,
+		"consumed": is_consumed,
+	}
 
 
 func _house_letter(house_id: StringName) -> String:
