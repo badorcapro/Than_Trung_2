@@ -11,9 +11,10 @@ const CAMERA_MAX_ZOOM := 1.4
 const CAMERA_ZOOM_STEP := 0.1
 const CAMERA_FIT_SCREEN_MARGIN := 32.0
 const CAMERA_DRAG_THRESHOLD := 16.0
-const BOARD_ROUTE_WIDTH := 11.0
-const BOARD_ROUTE_SHADOW_WIDTH := 19.0
-const MAP_TEXTURE_PATH := "res://assets/maps/imperial_court_map.png"
+const BOARD_ROUTE_WIDTH := 16.0
+const BOARD_ROUTE_SHADOW_WIDTH := 28.0
+const MAP_TEXTURE_PATH := "res://assets/maps/imperial_court_board_v1.png"
+const MAP_TEXTURE_FALLBACK_PATH := "res://assets/maps/imperial_court_map.png"
 
 signal node_clicked(node_id: StringName)
 
@@ -320,6 +321,7 @@ func _build_positions() -> void:
 func _draw() -> void:
 	_draw_board_background()
 	var visual_scale: float = _visual_scale()
+	# 1. Wide board game ribbon road paths (matching Image 1 & 2)
 	for edge: Dictionary in represented_connections:
 		var from_id: StringName = StringName(edge.get("from", ""))
 		var to_id: StringName = StringName(edge.get("to", ""))
@@ -328,18 +330,46 @@ func _draw() -> void:
 		var is_recent: bool = _path_contains_edge(from_id, to_id)
 		var from_node: LootNodeDefinition = map_definition.find_node(from_id)
 		var route_color: Color = _route_color(from_node)
+		var p1: Vector2 = _node_positions[from_id]
+		var p2: Vector2 = _node_positions[to_id]
+		# Outer road drop shadow
 		draw_line(
-			_node_positions[from_id], _node_positions[to_id],
-			Color(0.055, 0.065, 0.065, 0.86),
+			p1 + Vector2(2.0, 4.0) * visual_scale, p2 + Vector2(2.0, 4.0) * visual_scale,
+			Color(0.18, 0.14, 0.1, 0.38),
 			(BOARD_ROUTE_SHADOW_WIDTH + (4.0 if is_recent else 0.0)) * visual_scale,
 			true
 		)
+		# Road curbstone border (dark bronze / stone edge)
 		draw_line(
-			_node_positions[from_id], _node_positions[to_id],
-			Color(1.0, 0.72, 0.25, 1.0) if is_recent else route_color,
-			(BOARD_ROUTE_WIDTH + (3.0 if is_recent else 0.0)) * visual_scale,
+			p1, p2,
+			Color(0.32, 0.25, 0.16, 0.96),
+			(BOARD_ROUTE_WIDTH + 8.0 + (3.0 if is_recent else 0.0)) * visual_scale,
 			true
 		)
+		# Inner road paving surface (warm stone flagstones / route color)
+		draw_line(
+			p1, p2,
+			Color(1.0, 0.78, 0.28, 1.0) if is_recent else route_color.lightened(0.2),
+			(BOARD_ROUTE_WIDTH + (2.0 if is_recent else 0.0)) * visual_scale,
+			true
+		)
+		# Centerline groove
+		draw_line(
+			p1, p2,
+			Color(1.0, 0.92, 0.65, 0.85) if is_recent else route_color.darkened(0.2),
+			4.0 * visual_scale,
+			true
+		)
+
+	# 2. Directional guide arrows for branch choices (matching Image 1 & 2)
+	var active_node_id: StringName = active_player_node_id()
+	if not active_node_id.is_empty() and _node_positions.has(active_node_id):
+		var p_act: Vector2 = _node_positions[active_node_id]
+		for branch_id: StringName in selectable_branch_nodes:
+			if _node_positions.has(branch_id):
+				_draw_branch_arrow(p_act, _node_positions[branch_id], visual_scale)
+
+	# 3. Stepping stone tiles (matching Image 1 & 2)
 	for node_id: StringName in represented_node_ids:
 		if not _node_positions.has(node_id):
 			continue
@@ -347,17 +377,60 @@ func _draw() -> void:
 		var node: LootNodeDefinition = map_definition.find_node(node_id)
 		var radius: float = _node_radius(node) * visual_scale
 		var fill: Color = _node_color(node)
-		draw_circle(center + Vector2(2.0, 4.0), radius + 5.0, Color(0.03, 0.04, 0.04, 0.58))
-		draw_circle(center, radius + 3.0, Color(0.8, 0.68, 0.42, 0.95))
+		# Tile drop shadow
+		draw_circle(center + Vector2(2.5, 4.5) * visual_scale, radius + 4.0, Color(0.06, 0.05, 0.04, 0.45))
+		# Raised golden-brass / stone rim
+		draw_circle(center, radius + 2.5 * visual_scale, Color(0.86, 0.74, 0.42, 0.98))
+		# Main tile stone face
 		draw_circle(center, radius, fill)
-		draw_arc(center, radius - 4.0, 0.0, TAU, 32, fill.lightened(0.27), 2.0, true)
+		# 3D specular highlight arc on upper edge
+		draw_arc(center, radius - 3.0 * visual_scale, -PI * 0.85, -PI * 0.15, 24, fill.lightened(0.4), 2.2 * visual_scale, true)
+		# Inner glossy sheen
+		draw_circle(center + Vector2(-radius * 0.25, -radius * 0.25), radius * 0.28, Color(1.0, 1.0, 1.0, 0.22))
+
 		if node != null and node.node_kind == &"ORIGIN_SPAWN":
 			_draw_origin_seal(center, node.origin_house_id)
+		elif node != null and (node.node_kind == &"CENTRAL_HUB" or node.node_kind == &"MAUSOLEUM_HUB"):
+			_draw_hub_insignia(center, node.node_kind)
+
 		if selectable_branch_nodes.has(node_id):
 			_draw_selectable_branch_highlight(center, radius, visual_scale)
 		if _debug_labels_visible:
 			_draw_debug_node_label(center, node_id)
 	_draw_tokens()
+
+
+func _draw_branch_arrow(from_pos: Vector2, to_pos: Vector2, visual_scale: float) -> void:
+	var dir: Vector2 = (to_pos - from_pos).normalized()
+	var mid: Vector2 = from_pos.lerp(to_pos, 0.58)
+	var perp: Vector2 = Vector2(-dir.y, dir.x)
+	var arrow_len: float = 20.0 * visual_scale
+	var arrow_width: float = 12.0 * visual_scale
+	var p_tip: Vector2 = mid + dir * (arrow_len * 0.6)
+	var p_left: Vector2 = mid - dir * (arrow_len * 0.4) + perp * arrow_width
+	var p_right: Vector2 = mid - dir * (arrow_len * 0.4) - perp * arrow_width
+	var shadow_offset := Vector2(2.0, 3.5) * visual_scale
+	var shadow_points := PackedVector2Array([p_tip + shadow_offset, p_left + shadow_offset, p_right + shadow_offset])
+	draw_colored_polygon(shadow_points, Color(0.1, 0.08, 0.06, 0.4))
+	var points := PackedVector2Array([p_tip, p_left, p_right])
+	draw_colored_polygon(points, Color(1.0, 0.84, 0.22, 0.98))
+	var outline := PackedVector2Array([p_tip, p_left, p_right, p_tip])
+	draw_polyline(outline, Color(0.28, 0.16, 0.04, 0.95), 2.5 * visual_scale, true)
+
+
+func _draw_hub_insignia(center: Vector2, node_kind: StringName) -> void:
+	var icon: String = "◆" if node_kind == &"CENTRAL_HUB" else "◇"
+	draw_string(
+		ThemeDB.fallback_font, center + Vector2(-10.0, 7.0), icon,
+		HORIZONTAL_ALIGNMENT_CENTER, 20.0, 16, Color(1.0, 0.94, 0.8)
+	)
+
+
+func active_player_node_id() -> StringName:
+	if movement_session == null:
+		return &""
+	var current: LootMovementPlayerState = movement_session.current_player()
+	return current.current_node_id if current != null else &""
 
 
 func _draw_selectable_branch_highlight(center: Vector2, radius: float, visual_scale: float) -> void:
@@ -370,17 +443,18 @@ func _draw_selectable_branch_highlight(center: Vector2, radius: float, visual_sc
 func _get_map_texture() -> Texture2D:
 	if _map_texture != null:
 		return _map_texture
-	if ResourceLoader.exists(MAP_TEXTURE_PATH):
-		var res: Resource = ResourceLoader.load(MAP_TEXTURE_PATH)
-		if res is Texture2D:
-			_map_texture = res as Texture2D
-			return _map_texture
-	var global_path: String = ProjectSettings.globalize_path(MAP_TEXTURE_PATH)
-	if FileAccess.file_exists(global_path):
-		var img: Image = Image.load_from_file(global_path)
-		if img != null and not img.is_empty():
-			_map_texture = ImageTexture.create_from_image(img)
-			return _map_texture
+	for path: String in [MAP_TEXTURE_PATH, MAP_TEXTURE_FALLBACK_PATH]:
+		if ResourceLoader.exists(path):
+			var res: Resource = ResourceLoader.load(path)
+			if res is Texture2D:
+				_map_texture = res as Texture2D
+				return _map_texture
+		var global_path: String = ProjectSettings.globalize_path(path)
+		if FileAccess.file_exists(global_path):
+			var img: Image = Image.load_from_file(global_path)
+			if img != null and not img.is_empty():
+				_map_texture = ImageTexture.create_from_image(img)
+				return _map_texture
 	return null
 
 
