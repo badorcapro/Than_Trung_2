@@ -55,6 +55,8 @@ var _pummel_style_normal: StyleBoxFlat
 var _pummel_style_active: StyleBoxFlat
 var _pummel_slot_style: StyleBoxFlat
 var _hotbar_items: Array[Dictionary] = []
+var _item_tray_open: bool = false
+var _pending_replace_index: int = -1
 var _autosave_service: PLAYER_FACING_AUTOSAVE_SERVICE = (
 	PLAYER_FACING_AUTOSAVE_SERVICE.new()
 )
@@ -124,6 +126,13 @@ var _autosave_service: PLAYER_FACING_AUTOSAVE_SERVICE = (
 @onready var player_cards_container: HBoxContainer = get_node_or_null("%PlayerCardsContainer") as HBoxContainer
 @onready var item_hotbar_container: HBoxContainer = get_node_or_null("%ItemHotbarContainer") as HBoxContainer
 @onready var roll_dice_button: Button = get_node_or_null("%RollDiceButton") as Button
+@onready var incoming_item_label: Label = get_node_or_null("%IncomingItemLabel") as Label
+@onready var current_items_container: HBoxContainer = get_node_or_null("%CurrentItemsContainer") as HBoxContainer
+@onready var replace_confirm_modal: Control = get_node_or_null("%ReplaceConfirmModal") as Control
+@onready var replace_confirm_prompt: Label = get_node_or_null("%ReplaceConfirmPrompt") as Label
+@onready var replace_confirm_sub: Label = get_node_or_null("%ReplaceConfirmSub") as Label
+@onready var confirm_replace_button: Button = get_node_or_null("%ConfirmReplaceButton") as Button
+@onready var cancel_replace_button: Button = get_node_or_null("%CancelReplaceButton") as Button
 @onready var confirmation_panel: Control = %LootConfirmationPanel
 @onready var confirmation_text: RichTextLabel = %ConfirmationText
 @onready var equipment_panel: Control = %EquipmentPanel
@@ -167,6 +176,10 @@ func _ready() -> void:
 	_init_pummel_styles()
 	if roll_dice_button != null and not roll_dice_button.pressed.is_connected(_on_move_pressed):
 		roll_dice_button.pressed.connect(_on_move_pressed)
+	if confirm_replace_button != null and not confirm_replace_button.pressed.is_connected(_on_confirm_replace_accepted):
+		confirm_replace_button.pressed.connect(_on_confirm_replace_accepted)
+	if cancel_replace_button != null and not cancel_replace_button.pressed.is_connected(_on_cancel_replace_dismissed):
+		cancel_replace_button.pressed.connect(_on_cancel_replace_dismissed)
 	_build_match_rule_options()
 	_build_character_buttons()
 	_build_equipment_slot_options()
@@ -648,11 +661,15 @@ func _on_toggle_detail_button_pressed() -> void:
 
 
 func _toggle_loot_detail_panel() -> void:
-	if loot_detail_panel == null:
-		return
-	loot_detail_panel.visible = not loot_detail_panel.visible
+	_item_tray_open = not _item_tray_open
+	if item_window_panel != null:
+		item_window_panel.visible = _item_tray_open
+	if loot_detail_panel != null:
+		loot_detail_panel.visible = false
+	if _item_tray_open and case_flow != null and case_flow.loot_session != null:
+		_refresh_pummel_item_hotbar(case_flow.loot_session)
 	if toggle_detail_button != null:
-		toggle_detail_button.text = "[TAB] Đóng túi" if loot_detail_panel.visible else "[TAB] Túi đồ"
+		toggle_detail_button.text = "[TAB] Đóng túi" if _item_tray_open else "[TAB] Túi đồ"
 
 
 func _handle_loot_z_press() -> void:
@@ -833,6 +850,9 @@ func _on_overflow_discard_pressed() -> void:
 
 
 func _on_overflow_skip_pressed() -> void:
+	if replace_confirm_modal != null:
+		replace_confirm_modal.visible = false
+	_pending_replace_index = -1
 	_handle_loot_result(case_flow.resolve_overflow_skip())
 
 
@@ -1333,11 +1353,7 @@ func _refresh_loot() -> void:
 	var item_window: bool = session.phase == LOOT_REWARD_SESSION.Phase.ITEM_WINDOW
 	var movement_ready: bool = session.phase == LOOT_REWARD_SESSION.Phase.MOVEMENT
 	if item_window_panel != null:
-		item_window_panel.visible = (
-			item_window
-			or movement_ready
-			or session.phase == LOOT_REWARD_SESSION.Phase.BRANCH_SELECTION
-		)
+		item_window_panel.visible = _item_tray_open
 	_refresh_item_source_selector(player, round_loot)
 	item_source_selector.disabled = (
 		not item_window or session.item_used_this_turn or item_source_selector.item_count == 0
@@ -1376,6 +1392,8 @@ func _refresh_loot() -> void:
 	action_guide.text = _loot_action_guidance(session, movement_player)
 	_refresh_branch_ui(session, movement_player, movement_ready)
 	overflow_panel.visible = session.overflow.active
+	if not session.overflow.active and replace_confirm_modal != null:
+		replace_confirm_modal.visible = false
 	if session.overflow.active:
 		overflow_text.text = (
 			"⚠️ TÚI ĐÃ ĐẦY!\nVật phẩm mới: %s\n"
@@ -1383,7 +1401,8 @@ func _refresh_loot() -> void:
 		) % _item_display_name(session.overflow.incoming_item_id)
 	_refresh_overflow_choice(session, movement_player.player_id)
 	_refresh_pummel_player_cards(session)
-	_refresh_pummel_item_hotbar(session)
+	if _item_tray_open:
+		_refresh_pummel_item_hotbar(session)
 
 
 func _refresh_pummel_player_cards(session: LOOT_REWARD_SESSION) -> void:
@@ -1439,26 +1458,37 @@ func _refresh_pummel_player_cards(session: LOOT_REWARD_SESSION) -> void:
 		if crown_label != null:
 			crown_label.visible = is_active
 
-		var hp_label: Label = card.find_child("Hp", true, false) as Label
+		var hp_label: Label = card.find_child("Stamina", true, false) as Label
+		if hp_label == null:
+			hp_label = card.find_child("Hp", true, false) as Label
 		if hp_label != null:
 			var remaining: int = movement_player.remaining_moves if movement_player != null else 0
-			hp_label.text = "❤️ %d" % remaining
+			hp_label.text = "⚡ %d" % remaining
+			hp_label.tooltip_text = "Thể lực: Còn %d lượt đi" % remaining
 
-		var merit_label: Label = card.find_child("Merit", true, false) as Label
-		if merit_label != null:
-			var merit: float = player_state.merit_progress if player_state != null else 0.0
-			merit_label.text = "🏆 %.1f" % merit
+		var speed_label: Label = card.find_child("Speed", true, false) as Label
+		if speed_label == null:
+			speed_label = card.find_child("Merit", true, false) as Label
+		if speed_label != null:
+			var max_speed: int = (
+				movement_player.speed_snapshot if movement_player != null
+				else (character.base_speed if character != null else 2)
+			)
+			speed_label.text = "👟 %d" % max_speed
+			speed_label.tooltip_text = "Tốc độ: 1-%d bước mỗi lần đổ xúc xắc" % max_speed
 
 		var coins_label: Label = card.find_child("Coins", true, false) as Label
 		if coins_label != null:
 			var coins: int = player_state.silver_coin_count if player_state != null else 0
 			coins_label.text = "🪙 %d" % coins
+			coins_label.tooltip_text = "Xu Bạc: %d" % coins
 
 		var bag_label: Label = card.find_child("Bag", true, false) as Label
 		if bag_label != null:
 			var carried: int = round_loot.carried_items.size() if round_loot != null else 0
 			var cap: int = round_loot.capacity if round_loot != null else 2
 			bag_label.text = "🎒 %d/%d" % [carried, cap]
+			bag_label.tooltip_text = "Túi đồ: %d/%d món" % [carried, cap]
 
 
 func _refresh_pummel_item_hotbar(session: LOOT_REWARD_SESSION) -> void:
@@ -1489,30 +1519,31 @@ func _refresh_pummel_item_hotbar(session: LOOT_REWARD_SESSION) -> void:
 				"source": "round_loot"
 			})
 
-	var max_slots: int = maxi(3, _hotbar_items.size())
-	for slot_idx: int in range(max_slots):
+	if _hotbar_items.is_empty():
+		var empty_label: Label = Label.new()
+		empty_label.text = "🎒 Túi đồ đang trống"
+		empty_label.add_theme_font_size_override("font_size", 13)
+		empty_label.add_theme_color_override("font_color", Color(0.85, 0.85, 0.85, 0.85))
+		item_hotbar_container.add_child(empty_label)
+		return
+
+	for slot_idx: int in range(_hotbar_items.size()):
+		var entry: Dictionary = _hotbar_items[slot_idx]
+		var item_id: StringName = entry.get("item_id", &"")
+		var source: String = String(entry.get("source", ""))
+		var icon_str: String = _item_icon(item_id)
+		var display_name: String = _item_display_name(item_id)
+
 		var btn: Button = Button.new()
-		btn.custom_minimum_size = Vector2(80, 50)
+		btn.custom_minimum_size = Vector2(110, 52)
 		btn.focus_mode = Control.FOCUS_NONE
 		btn.add_theme_stylebox_override("normal", _pummel_slot_style)
-
-		if slot_idx < _hotbar_items.size():
-			var entry: Dictionary = _hotbar_items[slot_idx]
-			var item_id: StringName = entry.get("item_id", &"")
-			var source: String = String(entry.get("source", ""))
-			var icon_str: String = _item_icon(item_id)
-			var display_name: String = _item_display_name(item_id)
-			btn.text = "[%d] %s\n%s" % [slot_idx + 1, icon_str, display_name]
-			btn.tooltip_text = "[Phím %d] Sử dụng %s (%s)" % [
-				slot_idx + 1, display_name, "Đồ sở hữu" if source == "persistent" else "Đồ trong lượt"
-			]
-			btn.disabled = not can_use
-			btn.pressed.connect(_on_hotbar_slot_pressed.bind(slot_idx))
-		else:
-			btn.text = "[%d]\n(Trống)" % (slot_idx + 1)
-			btn.disabled = true
-			btn.modulate.a = 0.55
-
+		btn.text = "[%d] %s\n%s" % [slot_idx + 1, icon_str, display_name]
+		btn.tooltip_text = "[Phím %d] Sử dụng %s (%s)" % [
+			slot_idx + 1, display_name, "Đồ sở hữu" if source == "persistent" else "Đồ trong lượt"
+		]
+		btn.disabled = not can_use
+		btn.pressed.connect(_on_hotbar_slot_pressed.bind(slot_idx))
 		item_hotbar_container.add_child(btn)
 
 	if roll_dice_button != null:
@@ -2236,9 +2267,9 @@ func _refresh_overflow_choice(
 	var has_targets: bool = not options.is_empty()
 	if has_targets:
 		overflow_target_selector.select(-1)
-	overflow_target_selector.visible = has_targets
+	overflow_target_selector.visible = false
 	overflow_target_selector.disabled = not has_targets
-	overflow_replace_button.visible = has_targets
+	overflow_replace_button.visible = false
 	overflow_replace_button.disabled = true
 	var owns_choice: bool = (
 		session != null
@@ -2251,6 +2282,56 @@ func _refresh_overflow_choice(
 			"⚠️ TÚI ĐÃ ĐẦY!\nVật phẩm mới: %s\n"
 			+ "Túi không có vật phẩm có thể thay thế. Hãy bỏ vật phẩm mới."
 		) % _item_display_name(session.overflow.incoming_item_id)
+
+	if incoming_item_label != null and session != null and session.overflow.active:
+		var incoming_id: StringName = session.overflow.incoming_item_id
+		incoming_item_label.text = "%s %s" % [_item_icon(incoming_id), _item_display_name(incoming_id)]
+
+	if current_items_container != null:
+		for child: Node in current_items_container.get_children():
+			child.queue_free()
+
+		if session != null and session.overflow.active:
+			for option: Dictionary in options:
+				var item_id: StringName = StringName(option.get("item_id", ""))
+				var inventory_index: int = int(option.get("inventory_index", -1))
+				var btn: Button = Button.new()
+				btn.custom_minimum_size = Vector2(130, 56)
+				btn.focus_mode = Control.FOCUS_NONE
+				btn.add_theme_stylebox_override("normal", _pummel_slot_style)
+				btn.text = "%s\n%s" % [_item_icon(item_id), _item_display_name(item_id)]
+				btn.tooltip_text = "Thay thế %s bằng vật phẩm mới" % _item_display_name(item_id)
+				btn.disabled = not owns_choice
+				btn.pressed.connect(_on_overflow_current_item_clicked.bind(inventory_index, item_id))
+				current_items_container.add_child(btn)
+
+
+func _on_overflow_current_item_clicked(inventory_index: int, item_id: StringName) -> void:
+	if case_flow == null or case_flow.loot_session == null:
+		return
+	var session: LOOT_REWARD_SESSION = case_flow.loot_session
+	_pending_replace_index = inventory_index
+	if replace_confirm_modal != null:
+		if replace_confirm_prompt != null:
+			replace_confirm_prompt.text = "Bạn có muốn thay thế item \"%s\"?" % _item_display_name(item_id)
+		if replace_confirm_sub != null:
+			replace_confirm_sub.text = "(Vật phẩm mới \"%s\" sẽ được thêm vào túi)" % _item_display_name(session.overflow.incoming_item_id)
+		replace_confirm_modal.visible = true
+
+
+func _on_confirm_replace_accepted() -> void:
+	if replace_confirm_modal != null:
+		replace_confirm_modal.visible = false
+	if _pending_replace_index >= 0:
+		var idx: int = _pending_replace_index
+		_pending_replace_index = -1
+		_handle_loot_result(case_flow.resolve_overflow_discard(idx))
+
+
+func _on_cancel_replace_dismissed() -> void:
+	if replace_confirm_modal != null:
+		replace_confirm_modal.visible = false
+	_pending_replace_index = -1
 
 
 func _overflow_replacement_options(

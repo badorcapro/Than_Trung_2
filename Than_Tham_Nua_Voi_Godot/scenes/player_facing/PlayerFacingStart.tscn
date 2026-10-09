@@ -1016,19 +1016,19 @@ theme_override_constants/separation = 6
 
 [node name="Hp" type="Label" parent="LootPanel/LootTopHud/HeaderRow/PummelTopContainer/PlayerCardsContainer/Card_0/VBox/Stats"]
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.45, 0.45, 1)
+theme_override_colors/font_color = Color(0.4, 0.85, 1, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
 theme_override_constants/outline_size = 3
 theme_override_font_sizes/font_size = 11
-text = "❤️ 2/2"
+text = "⚡ 2"
 
 [node name="Merit" type="Label" parent="LootPanel/LootTopHud/HeaderRow/PummelTopContainer/PlayerCardsContainer/Card_0/VBox/Stats"]
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.85, 0.3, 1)
+theme_override_colors/font_color = Color(0.45, 0.9, 0.6, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
 theme_override_constants/outline_size = 3
 theme_override_font_sizes/font_size = 11
-text = "🏆 0"
+text = "👟 2"
 
 [node name="Coins" type="Label" parent="LootPanel/LootTopHud/HeaderRow/PummelTopContainer/PlayerCardsContainer/Card_0/VBox/Stats"]
 layout_mode = 2
@@ -1095,19 +1095,19 @@ theme_override_constants/separation = 6
 
 [node name="Hp" type="Label" parent="LootPanel/LootTopHud/HeaderRow/PummelTopContainer/PlayerCardsContainer/Card_1/VBox/Stats"]
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.45, 0.45, 1)
+theme_override_colors/font_color = Color(0.4, 0.85, 1, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
 theme_override_constants/outline_size = 3
 theme_override_font_sizes/font_size = 11
-text = "❤️ 2/2"
+text = "⚡ 2"
 
 [node name="Merit" type="Label" parent="LootPanel/LootTopHud/HeaderRow/PummelTopContainer/PlayerCardsContainer/Card_1/VBox/Stats"]
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.85, 0.3, 1)
+theme_override_colors/font_color = Color(0.45, 0.9, 0.6, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
 theme_override_constants/outline_size = 3
 theme_override_font_sizes/font_size = 11
-text = "🏆 0"
+text = "👟 2"
 
 [node name="Coins" type="Label" parent="LootPanel/LootTopHud/HeaderRow/PummelTopContainer/PlayerCardsContainer/Card_1/VBox/Stats"]
 layout_mode = 2
@@ -1174,19 +1174,19 @@ theme_override_constants/separation = 6
 
 [node name="Hp" type="Label" parent="LootPanel/LootTopHud/HeaderRow/PummelTopContainer/PlayerCardsContainer/Card_2/VBox/Stats"]
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.45, 0.45, 1)
+theme_override_colors/font_color = Color(0.4, 0.85, 1, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
 theme_override_constants/outline_size = 3
 theme_override_font_sizes/font_size = 11
-text = "❤️ 2/2"
+text = "⚡ 2"
 
 [node name="Merit" type="Label" parent="LootPanel/LootTopHud/HeaderRow/PummelTopContainer/PlayerCardsContainer/Card_2/VBox/Stats"]
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.85, 0.3, 1)
+theme_override_colors/font_color = Color(0.45, 0.9, 0.6, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
 theme_override_constants/outline_size = 3
 theme_override_font_sizes/font_size = 11
-text = "🏆 0"
+text = "👟 2"
 
 [node name="Coins" type="Label" parent="LootPanel/LootTopHud/HeaderRow/PummelTopContainer/PlayerCardsContainer/Card_2/VBox/Stats"]
 layout_mode = 2
@@ -1253,19 +1253,19 @@ theme_override_constants/separation = 6
 
 [node name="Hp" type="Label" parent="LootPanel/LootTopHud/HeaderRow/PummelTopContainer/PlayerCardsContainer/Card_3/VBox/Stats"]
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.45, 0.45, 1)
+theme_override_colors/font_color = Color(0.4, 0.85, 1, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
 theme_override_constants/outline_size = 3
 theme_override_font_sizes/font_size = 11
-text = "❤️ 2/2"
+text = "⚡ 2"
 
 [node name="Merit" type="Label" parent="LootPanel/LootTopHud/HeaderRow/PummelTopContainer/PlayerCardsContainer/Card_3/VBox/Stats"]
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.85, 0.3, 1)
+theme_override_colors/font_color = Color(0.45, 0.9, 0.6, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
 theme_override_constants/outline_size = 3
 theme_override_font_sizes/font_size = 11
-text = "🏆 0"
+text = "👟 2"
 
 [node name="Coins" type="Label" parent="LootPanel/LootTopHud/HeaderRow/PummelTopContainer/PlayerCardsContainer/Card_3/VBox/Stats"]
 layout_mode = 2
@@ -1294,7 +1294,7 @@ theme_override_constants/shadow_offset_x = 1
 theme_override_constants/shadow_offset_y = 2
 theme_override_constants/outline_size = 5
 theme_override_font_sizes/font_size = 13
-text = "🎲 Bấm [Z] để đổ xúc xắc · Bấm [1]-[3] dùng vật phẩm · Hoặc click ô cờ vàng để rẽ nhánh."
+text = "🎲 [Z] Đổ xúc xắc · [TAB] Túi đồ (Dùng đồ) · Click ô vàng để rẽ nhánh."
 
 [node name="ActiveTurnLabel" type="Label" parent="LootPanel/LootTopHud/HeaderRow/PummelTopContainer"]
 unique_name_in_owner = true
@@ -1345,7 +1345,7 @@ bbcode_enabled = true
 fit_content = true
 autowrap_mode = 0
 text = "[right][color=#f6c95c][b][Z][/b][/color] Đổ xúc xắc / Đi tiếp
-[color=#f6c95c][b][TAB][/b][/color] Xem Túi đồ & Chỉ số
+[color=#f6c95c][b][TAB][/b][/color] Túi đồ (Dùng đồ)
 [color=#f6c95c][b][SPACE][/b][/color] Định vị nhân vật
 [color=#8be9fd][b]Cuộn chuột[/b][/color] Thu phóng bản đồ[/right]"
 
@@ -1386,15 +1386,16 @@ theme_override_constants/separation = 8
 
 [node name="ItemWindowPanel" type="MarginContainer" parent="LootPanel"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -340.0
-offset_top = -88.0
-offset_right = 340.0
+offset_left = -260.0
+offset_top = -80.0
+offset_right = 260.0
 offset_bottom = -16.0
 grow_horizontal = 2
 grow_vertical = 0
@@ -1409,32 +1410,20 @@ layout_mode = 2
 alignment = 1
 theme_override_constants/separation = 12
 
-[node name="HotbarLabel" type="Label" parent="LootPanel/ItemWindowPanel/Panel/Row"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.96, 0.82, 0.45, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
-theme_override_constants/outline_size = 4
-theme_override_font_sizes/font_size = 13
-text = "🎒 VẬT PHẨM:"
-
 [node name="ItemHotbarContainer" type="HBoxContainer" parent="LootPanel/ItemWindowPanel/Panel/Row"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_constants/separation = 8
+alignment = 1
+theme_override_constants/separation = 10
+
+[node name="HotbarLabel" type="Label" parent="LootPanel/ItemWindowPanel/Panel/Row"]
+visible = false
+layout_mode = 2
 
 [node name="RollDiceButton" type="Button" parent="LootPanel/ItemWindowPanel/Panel/Row"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(175, 50)
+visible = false
 layout_mode = 2
-focus_mode = 0
-theme_override_colors/font_color = Color(0.08, 0.08, 0.08, 1)
-theme_override_colors/font_focus_color = Color(0.08, 0.08, 0.08, 1)
-theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 15
-theme_override_styles/normal = SubResource("StyleBoxFlat_pummel_roll_btn")
-theme_override_styles/hover = SubResource("StyleBoxFlat_pummel_roll_btn")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_pummel_roll_btn")
-text = "🎲 [Z] ĐỔ XÚC XẮC"
 
 [node name="ItemSourceSelector" type="OptionButton" parent="LootPanel/ItemWindowPanel/Panel/Row"]
 unique_name_in_owner = true
@@ -1445,13 +1434,11 @@ layout_mode = 2
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
-text = "Dùng vật phẩm"
 
 [node name="ContinueWithoutItem" type="Button" parent="LootPanel/ItemWindowPanel/Panel/Row"]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
-text = "[Z] Không dùng"
 
 [node name="OverflowPanel" type="CenterContainer" parent="LootPanel"]
 unique_name_in_owner = true
@@ -1465,41 +1452,177 @@ grow_vertical = 2
 mouse_filter = 1
 
 [node name="Modal" type="PanelContainer" parent="LootPanel/OverflowPanel"]
-custom_minimum_size = Vector2(480, 0)
+custom_minimum_size = Vector2(440, 220)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_dark_card")
 
 [node name="Column" type="VBoxContainer" parent="LootPanel/OverflowPanel/Modal"]
 layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 12
+
+[node name="OverflowTitle" type="Label" parent="LootPanel/OverflowPanel/Modal/Column"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.2, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 17
+text = "⚠️ TÚI ĐÃ ĐẦY"
+horizontal_alignment = 1
+
+[node name="IncomingCard" type="PanelContainer" parent="LootPanel/OverflowPanel/Modal/Column"]
+custom_minimum_size = Vector2(280, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_pummel_card_active")
+
+[node name="IncomingMargin" type="MarginContainer" parent="LootPanel/OverflowPanel/Modal/Column/IncomingCard"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 8
+
+[node name="IncomingHBox" type="HBoxContainer" parent="LootPanel/OverflowPanel/Modal/Column/IncomingCard/IncomingMargin"]
+layout_mode = 2
 theme_override_constants/separation = 10
+
+[node name="InfoVBox" type="VBoxContainer" parent="LootPanel/OverflowPanel/Modal/Column/IncomingCard/IncomingMargin/IncomingHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 2
+
+[node name="IncomingTag" type="Label" parent="LootPanel/OverflowPanel/Modal/Column/IncomingCard/IncomingMargin/IncomingHBox/InfoVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.84, 0.3, 1)
+theme_override_font_sizes/font_size = 11
+text = "🎒 ĐỒ MỚI NHẶT"
+
+[node name="IncomingItemLabel" type="Label" parent="LootPanel/OverflowPanel/Modal/Column/IncomingCard/IncomingMargin/IncomingHBox/InfoVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.95, 0.95, 1)
+theme_override_font_sizes/font_size = 14
+text = "Vật phẩm mới"
+
+[node name="OverflowSkip" type="Button" parent="LootPanel/OverflowPanel/Modal/Column/IncomingCard/IncomingMargin/IncomingHBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(56, 32)
+layout_mode = 2
+size_flags_vertical = 4
+focus_mode = 0
+tooltip_text = "Bỏ vật phẩm mới nhặt này"
+text = "✖ Bỏ"
+
+[node name="InstructionLabel" type="Label" parent="LootPanel/OverflowPanel/Modal/Column"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.85, 0.85, 1)
+theme_override_font_sizes/font_size = 12
+text = "Bấm vào một vật phẩm bên dưới để thay thế:"
+horizontal_alignment = 1
+
+[node name="CurrentItemsContainer" type="HBoxContainer" parent="LootPanel/OverflowPanel/Modal/Column"]
+unique_name_in_owner = true
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 12
 
 [node name="OverflowText" type="Label" parent="LootPanel/OverflowPanel/Modal/Column"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
-autowrap_mode = 2
 
 [node name="OverflowTargetSelector" type="OptionButton" parent="LootPanel/OverflowPanel/Modal/Column"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
-focus_mode = 0
-tooltip_text = "Chọn đúng một vật phẩm đang mang để thay thế."
 
 [node name="Actions" type="HBoxContainer" parent="LootPanel/OverflowPanel/Modal/Column"]
+visible = false
 layout_mode = 2
-alignment = 1
-theme_override_constants/separation = 10
 
 [node name="OverflowReplace" type="Button" parent="LootPanel/OverflowPanel/Modal/Column/Actions"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
-focus_mode = 0
-text = "Thay thế"
 
-[node name="OverflowSkip" type="Button" parent="LootPanel/OverflowPanel/Modal/Column/Actions"]
+[node name="ReplaceConfirmModal" type="CenterContainer" parent="LootPanel"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="Card" type="PanelContainer" parent="LootPanel/ReplaceConfirmModal"]
+custom_minimum_size = Vector2(380, 170)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_pummel_card_active")
+
+[node name="Margin" type="MarginContainer" parent="LootPanel/ReplaceConfirmModal/Card"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 18
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 18
+
+[node name="VBox" type="VBoxContainer" parent="LootPanel/ReplaceConfirmModal/Card/Margin"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 14
+
+[node name="Title" type="Label" parent="LootPanel/ReplaceConfirmModal/Card/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.84, 0.2, 1)
+theme_override_font_sizes/font_size = 16
+text = "❓ XÁC NHẬN THAY THẾ"
+horizontal_alignment = 1
+
+[node name="ReplaceConfirmPrompt" type="Label" parent="LootPanel/ReplaceConfirmModal/Card/Margin/VBox"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.95, 0.95, 1)
+theme_override_font_sizes/font_size = 14
+text = "Bạn có muốn thay thế item này?"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="ReplaceConfirmSub" type="Label" parent="LootPanel/ReplaceConfirmModal/Card/Margin/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.75, 0.75, 0.75, 1)
+theme_override_font_sizes/font_size = 12
+text = "(Vật phẩm mới sẽ được thêm vào túi)"
+horizontal_alignment = 1
+
+[node name="Actions" type="HBoxContainer" parent="LootPanel/ReplaceConfirmModal/Card/Margin/VBox"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 16
+
+[node name="ConfirmReplaceButton" type="Button" parent="LootPanel/ReplaceConfirmModal/Card/Margin/VBox/Actions"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(140, 40)
+layout_mode = 2
 focus_mode = 0
-text = "Bỏ vật phẩm mới"
+theme_override_colors/font_color = Color(0.08, 0.08, 0.08, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxFlat_pummel_roll_btn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_pummel_roll_btn")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_pummel_roll_btn")
+text = "✓ Có, thay thế"
+
+[node name="CancelReplaceButton" type="Button" parent="LootPanel/ReplaceConfirmModal/Card/Margin/VBox/Actions"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 40)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 14
+text = "✖ Hủy"
 
 [node name="LootDetailPanel" type="MarginContainer" parent="LootPanel"]
 unique_name_in_owner = true
@@ -1616,7 +1739,7 @@ autowrap_mode = 2
 [connection signal="pressed" from="LootPanel/ItemWindowPanel/Panel/Row/RollDiceButton" to="." method="_on_move_pressed"]
 [connection signal="item_selected" from="LootPanel/OverflowPanel/Modal/Column/OverflowTargetSelector" to="." method="_on_overflow_target_selected"]
 [connection signal="pressed" from="LootPanel/OverflowPanel/Modal/Column/Actions/OverflowReplace" to="." method="_on_overflow_discard_pressed"]
-[connection signal="pressed" from="LootPanel/OverflowPanel/Modal/Column/Actions/OverflowSkip" to="." method="_on_overflow_skip_pressed"]
+[connection signal="pressed" from="LootPanel/OverflowPanel/Modal/Column/IncomingCard/IncomingMargin/IncomingHBox/OverflowSkip" to="." method="_on_overflow_skip_pressed"]
 [connection signal="pressed" from="SafeMargin/Page/Content/LootConfirmationPanel/Column/ConfirmLootEnd" to="." method="_on_confirm_loot_end_pressed"]
 [connection signal="item_selected" from="SafeMargin/Page/Content/EquipmentPanel/LoadoutControls/Selectors/EquipmentSlotSelector" to="." method="_on_equipment_slot_selected"]
 [connection signal="item_selected" from="SafeMargin/Page/Content/EquipmentPanel/LoadoutControls/Selectors/OwnedEquipmentSelector" to="." method="_on_owned_equipment_selected"]
