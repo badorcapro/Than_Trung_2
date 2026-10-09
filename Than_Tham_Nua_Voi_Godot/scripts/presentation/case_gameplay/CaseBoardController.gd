@@ -34,14 +34,20 @@ var _tile_size: Vector2 = BOARD_TILE_SIZE
 
 
 func _ready() -> void:
-	var style := StyleBoxFlat.new()
-	style.bg_color = Color(0.0, 0.0, 0.0, 0.0)
-	style.border_color = Color(0.0, 0.0, 0.0, 0.0)
-	style.content_margin_left = 18.0
-	style.content_margin_right = 18.0
-	style.content_margin_top = 14.0
-	style.content_margin_bottom = 18.0
+	var style := StyleBoxTexture.new()
+	style.texture = preload("res://assets/ui/case/case_board_mat.png")
+	style.texture_margin_left = 110.0
+	style.texture_margin_top = 110.0
+	style.texture_margin_right = 110.0
+	style.texture_margin_bottom = 110.0
+	style.content_margin_left = 40.0
+	style.content_margin_right = 40.0
+	style.content_margin_top = 34.0
+	style.content_margin_bottom = 36.0
 	add_theme_stylebox_override("panel", style)
+	var board_title: Label = get_node_or_null("BoardColumn/BoardTitle") as Label
+	if board_title != null:
+		board_title.visible = false
 
 
 func populate(
@@ -121,7 +127,7 @@ func _apply_board_presentation_size(board_columns: int, board_slot_count: int) -
 	var compact: bool = _board_columns >= 4
 	var board_title: Label = get_node_or_null("BoardColumn/BoardTitle") as Label
 	if board_title != null:
-		board_title.visible = not compact
+		board_title.visible = false
 	var board_column: VBoxContainer = get_node_or_null("BoardColumn") as VBoxContainer
 	if board_column != null:
 		board_column.add_theme_constant_override("separation", 0 if compact else 6)
@@ -179,8 +185,8 @@ func _build_crime_scene_tile(_location: BoardLocationDefinition) -> Control:
 	panel.size_flags_horizontal = Control.SIZE_FILL
 	panel.size_flags_vertical = Control.SIZE_FILL
 	var style := StyleBoxFlat.new()
-	style.bg_color = Color(0.82, 0.82, 0.78, 0.92)
-	style.border_color = Color(0.16, 0.15, 0.13, 1.0)
+	style.bg_color = Color(0.16, 0.14, 0.12, 0.94)
+	style.border_color = Color(0.72, 0.60, 0.35, 1.0)
 	style.border_width_left = 2
 	style.border_width_top = 2
 	style.border_width_right = 2
@@ -199,7 +205,7 @@ func _build_crime_scene_tile(_location: BoardLocationDefinition) -> Control:
 	var title: Label = Label.new()
 	title.name = "CrimeSceneTitle"
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	title.add_theme_color_override("font_color", Color(0.09, 0.08, 0.07, 1.0))
+	title.add_theme_color_override("font_color", Color(1.0, 0.88, 0.52, 1.0))
 	title.add_theme_font_size_override("font_size", 16)
 	title.text = "HIỆN TRƯỜNG"
 	column.add_child(title)
@@ -208,7 +214,7 @@ func _build_crime_scene_tile(_location: BoardLocationDefinition) -> Control:
 	icon_frame.name = "CrimeSceneIconFrame"
 	icon_frame.custom_minimum_size = Vector2(78, 78)
 	icon_frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	icon_frame.color = Color(0.22, 0.22, 0.22, 1.0)
+	icon_frame.color = Color(0.26, 0.10, 0.10, 1.0)
 	column.add_child(icon_frame)
 
 	var icon_label: Label = Label.new()
@@ -220,7 +226,7 @@ func _build_crime_scene_tile(_location: BoardLocationDefinition) -> Control:
 	icon_label.grow_vertical = Control.GROW_DIRECTION_BOTH
 	icon_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	icon_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	icon_label.add_theme_color_override("font_color", Color(0.78, 0.78, 0.76, 1.0))
+	icon_label.add_theme_color_override("font_color", Color(0.96, 0.78, 0.42, 1.0))
 	icon_label.add_theme_font_size_override("font_size", 24)
 	icon_label.text = "!"
 	icon_frame.add_child(icon_label)
@@ -232,12 +238,12 @@ func _build_clock_tower_tile(location: BoardLocationDefinition, elapsed_hours: i
 	var is_ringing: bool = tower != null and elapsed_hours >= 0 and ClockTowerService.hour_is_ringing(tower, elapsed_hours)
 	var panel: PanelContainer = _build_location_panel(
 		"ClockTowerTile",
-		Color(0.12, 0.15, 0.08, 1.0) if is_ringing else Color(0.08, 0.11, 0.16, 1.0),
-		Color(0.95, 0.86, 0.36, 1.0) if is_ringing else Color(0.45, 0.72, 0.96, 1.0)
+		Color(0.18, 0.22, 0.12, 1.0) if is_ringing else Color(0.10, 0.09, 0.09, 1.0),
+		Color(0.96, 0.86, 0.40, 1.0) if is_ringing else Color(0.72, 0.60, 0.35, 1.0)
 	)
 	var column: VBoxContainer = panel.get_child(0) as VBoxContainer
-	_add_location_title(column, location.display_name if location != null and not location.display_name.is_empty() else "Tháp Đồng Hồ", Color(0.68, 0.88, 1.0, 1.0))
-	_add_location_icon(column, "REO" if is_ringing else "12", Color(1.0, 0.92, 0.46, 1.0) if is_ringing else Color(0.78, 0.92, 1.0, 1.0))
+	_add_location_title(column, location.display_name if location != null and not location.display_name.is_empty() else "Tháp Đồng Hồ", Color(1.0, 0.88, 0.52, 1.0) if is_ringing else Color(0.92, 0.85, 0.70, 1.0))
+	_add_location_icon(column, "REO" if is_ringing else "12", Color(1.0, 0.92, 0.46, 1.0) if is_ringing else Color(0.85, 0.78, 0.65, 1.0))
 	return panel
 
 

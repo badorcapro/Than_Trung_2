@@ -1366,13 +1366,10 @@ func _add_role_reference_button(role: RoleDefinition, nested: bool) -> void:
 		return
 	var button := Button.new()
 	button.flat = true
-	button.custom_minimum_size = Vector2(0, 24)
-	var indent: String = "      " if nested else ""
-	var bullet: String = "•" if nested else "●"
-	button.text = "%s%s  %s  %s" % [
+	button.custom_minimum_size = Vector2(0, 26)
+	var indent: String = "    " if nested else ""
+	button.text = "%s%s" % [
 		indent,
-		bullet,
-		_role_icon_placeholder(role),
 		_player_facing_text(role.display_name),
 	]
 	button.alignment = HORIZONTAL_ALIGNMENT_LEFT
@@ -1383,30 +1380,20 @@ func _add_role_reference_button(role: RoleDefinition, nested: bool) -> void:
 	var normal_style := StyleBoxFlat.new()
 	normal_style.bg_color = Color(0, 0, 0, 0)
 	normal_style.border_width_bottom = 1
-	normal_style.border_color = Color(0.24, 0.28, 0.34, 0.55)
+	normal_style.border_color = Color(0.72, 0.60, 0.35, 0.20)
 	button.add_theme_stylebox_override("normal", normal_style)
 	var hover_style := StyleBoxFlat.new()
-	hover_style.bg_color = Color(0.18, 0.22, 0.30, 0.38)
+	hover_style.bg_color = Color(0.72, 0.60, 0.35, 0.15)
 	hover_style.border_width_bottom = 1
-	hover_style.border_color = Color(0.34, 0.42, 0.52, 0.65)
+	hover_style.border_color = Color(0.85, 0.72, 0.40, 0.50)
 	button.add_theme_stylebox_override("hover", hover_style)
 	button.add_theme_stylebox_override("pressed", hover_style)
 	button.pressed.connect(_on_role_reference_pressed.bind(role.role_id))
 	role_list.add_child(button)
 
 
-func _role_icon_placeholder(role: RoleDefinition) -> String:
-	match role.role_group:
-		CaseEnums.RoleGroup.CHINH_NHAN:
-			return "▣"
-		CaseEnums.RoleGroup.HIEU_SU:
-			return "◇"
-		CaseEnums.RoleGroup.TONG_PHAM:
-			return "▥"
-		CaseEnums.RoleGroup.NGHICH_THAN:
-			return "◈"
-		_:
-			return "□"
+func _role_icon_placeholder(_role: RoleDefinition) -> String:
+	return ""
 
 
 func _top_level_suspect_list_role_ids() -> Array[StringName]:
