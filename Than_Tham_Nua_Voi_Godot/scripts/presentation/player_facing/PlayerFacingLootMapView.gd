@@ -13,6 +13,7 @@ const CAMERA_FIT_SCREEN_MARGIN := 32.0
 const CAMERA_DRAG_THRESHOLD := 16.0
 const BOARD_ROUTE_WIDTH := 11.0
 const BOARD_ROUTE_SHADOW_WIDTH := 19.0
+const MAP_TEXTURE_PATH := "res://assets/maps/imperial_court_map.png"
 
 signal node_clicked(node_id: StringName)
 
@@ -34,6 +35,7 @@ var _drag_press_held := false
 var _drag_active := false
 var _drag_start_screen_position := Vector2.ZERO
 var _drag_last_screen_position := Vector2.ZERO
+var _map_texture: Texture2D = null
 
 
 func configure(source_map: LootMapDefinition, source_movement: LootMovementSession) -> void:
@@ -67,6 +69,7 @@ func presentation_snapshot() -> Dictionary:
 		"world_bounds": world_bounds(),
 		"debug_labels_visible": _debug_labels_visible,
 		"house_region_count": house_region_count(),
+		"has_custom_map_texture": has_custom_map_texture(),
 	}
 
 
@@ -364,10 +367,55 @@ func _draw_selectable_branch_highlight(center: Vector2, radius: float, visual_sc
 	draw_arc(center, ring_r + 3.5 * visual_scale, 0.0, TAU, 36, Color(1.0, 0.95, 0.5, 0.7), 1.8 * visual_scale, true)
 
 
+func _get_map_texture() -> Texture2D:
+	if _map_texture != null:
+		return _map_texture
+	if ResourceLoader.exists(MAP_TEXTURE_PATH):
+		var res: Resource = ResourceLoader.load(MAP_TEXTURE_PATH)
+		if res is Texture2D:
+			_map_texture = res as Texture2D
+			return _map_texture
+	var global_path: String = ProjectSettings.globalize_path(MAP_TEXTURE_PATH)
+	if FileAccess.file_exists(global_path):
+		var img: Image = Image.load_from_file(global_path)
+		if img != null and not img.is_empty():
+			_map_texture = ImageTexture.create_from_image(img)
+			return _map_texture
+	return null
+
+
+func _map_texture_world_rect() -> Rect2:
+	return Rect2(Vector2(-180.0, -560.0), Vector2(3560.0, 5000.0))
+
+
+func has_custom_map_texture() -> bool:
+	return _get_map_texture() != null
+
+
 func _draw_board_background() -> void:
-	draw_rect(Rect2(Vector2.ZERO, size), Color(0.075, 0.095, 0.09, 1.0), true)
+	# Deep antique charcoal tabletop border / table mat
+	draw_rect(Rect2(Vector2.ZERO, size), Color(0.065, 0.08, 0.075, 1.0), true)
 	if not _uses_authored_world_coordinates():
 		return
+	var tex: Texture2D = _get_map_texture()
+	if tex != null:
+		var tex_world_rect: Rect2 = _map_texture_world_rect()
+		var screen_pos: Vector2 = _world_to_screen(tex_world_rect.position)
+		var screen_rect := Rect2(screen_pos, tex_world_rect.size * _zoom)
+		# Soft drop shadow for parchment map scroll
+		var shadow_rect := screen_rect.grow(16.0 * _visual_scale())
+		shadow_rect.position += Vector2(10.0, 16.0) * _visual_scale()
+		draw_rect(shadow_rect, Color(0.02, 0.03, 0.025, 0.68), true)
+		# Outer antique scroll border
+		var border_rect := screen_rect.grow(4.0 * _visual_scale())
+		draw_rect(border_rect, Color(0.32, 0.25, 0.16, 0.95), false, 5.0 * _visual_scale())
+		# Authentic illustrated Imperial Court Map
+		draw_texture_rect(tex, screen_rect, false)
+	else:
+		_draw_fallback_background()
+
+
+func _draw_fallback_background() -> void:
 	_draw_world_rect(
 		Rect2(Vector2(1080.0, 40.0), Vector2(1040.0, 2580.0)),
 		Color(0.16, 0.17, 0.15, 0.9), Color(0.52, 0.43, 0.27, 0.8), 7.0
