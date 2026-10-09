@@ -409,14 +409,15 @@ func _build_ui() -> void:
 	_build_sidebar_tabs()
 
 	# --- CENTER STAGE ---
-	_center_box = Control.new()
+	_center_box = MarginContainer.new()
 	_center_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_center_box.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	body_row.add_child(_center_box)
 
 	# 1. Normal Character Display (Avatar & Pedestal Badge)
 	_center_vbox = VBoxContainer.new()
-	_center_vbox.anchors_preset = Control.PRESET_FULL_RECT
+	_center_vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_center_vbox.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	_center_vbox.alignment = BoxContainer.ALIGNMENT_CENTER
 	_center_vbox.add_theme_constant_override("separation", 24)
 	_center_box.add_child(_center_vbox)
@@ -458,13 +459,15 @@ func _build_ui() -> void:
 
 	# 2. Large 3D Floating Relic Card Showcase (Ảnh 1)
 	_center_relic_showcase_panel = CenterContainer.new()
-	_center_relic_showcase_panel.anchors_preset = Control.PRESET_FULL_RECT
+	_center_relic_showcase_panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_center_relic_showcase_panel.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	_center_relic_showcase_panel.visible = false
 	_center_box.add_child(_center_relic_showcase_panel)
 
 	# 3. Grid of Owned Relics (Ảnh 2)
 	_relic_grid_scroll = ScrollContainer.new()
-	_relic_grid_scroll.anchors_preset = Control.PRESET_FULL_RECT
+	_relic_grid_scroll.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_relic_grid_scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	_relic_grid_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	_relic_grid_scroll.visible = false
 	_center_box.add_child(_relic_grid_scroll)
@@ -1013,7 +1016,7 @@ func _refresh_sidebar_buttons() -> void:
 		if _header_back_btn != null:
 			_header_back_btn.visible = true
 		if _header_title_lbl != null:
-			_header_title_lbl.text = "🔄 ĐỔI KỶ VẬT (Switch Light Cone)"
+			_header_title_lbl.text = "🔄 ĐỔI KỶ VẬT"
 		if _header_sub_lbl != null:
 			var p_st: PlayerPhaseState = _get_active_player_state()
 			var c_def: CharacterDefinition = _setup_session.find_character(p_st.character_id) if (p_st != null and _setup_session != null) else null
@@ -1025,7 +1028,7 @@ func _refresh_sidebar_buttons() -> void:
 			_header_back_btn.visible = false
 		if _current_sidebar_tab == SidebarTab.RELICS:
 			if _header_title_lbl != null:
-				_header_title_lbl.text = "🏺 KỶ VẬT HOÀNG GIA (Light Cone)"
+				_header_title_lbl.text = "🏺 KỶ VẬT HOÀNG GIA"
 			if _header_sub_lbl != null:
 				_header_sub_lbl.text = "Kỷ Vật Thần Thám Hoàng Cung"
 		else:
@@ -1192,7 +1195,7 @@ func _render_tab_details() -> void:
 	var diamonds_row := HBoxContainer.new()
 	diamonds_row.add_theme_constant_override("separation", 8)
 	var dia_prefix := Label.new()
-	dia_prefix.text = "Năng lượng kĩ năng (Orb):"
+	dia_prefix.text = "Năng lượng kĩ năng:"
 	dia_prefix.add_theme_font_size_override("font_size", 12)
 	dia_prefix.add_theme_color_override("font_color", Color(0.68, 0.74, 0.8))
 	diamonds_row.add_child(dia_prefix)
@@ -1521,6 +1524,31 @@ func _render_skills_subtab(container: Control, lore: Dictionary) -> void:
 # -----------------------------------------------------------------------------
 # TAB 2: KỶ VẬT (Relics - Honkai: Star Rail Style)
 # -----------------------------------------------------------------------------
+func _get_relic_icon(inst: EquipmentInstance) -> String:
+	if inst == null:
+		return "🏺"
+	var def_id_str: String = String(inst.equipment_definition_id).to_lower()
+	if "sword" in def_id_str or "kiem" in def_id_str or "blade" in def_id_str or "dao" in def_id_str:
+		return "⚔️"
+	elif "shield" in def_id_str or "khien" in def_id_str or "giap" in def_id_str or "armor" in def_id_str:
+		return "🛡️"
+	elif "scroll" in def_id_str or "sach" in def_id_str or "chieu" in def_id_str or "thu" in def_id_str:
+		return "📜"
+	elif "orb" in def_id_str or "chau" in def_id_str or "crystal" in def_id_str or "ngoc" in def_id_str:
+		return "🔮"
+	elif "crown" in def_id_str or "ti" in def_id_str or "vuong" in def_id_str:
+		return "👑"
+	elif "mirror" in def_id_str or "kinh" in def_id_str:
+		return "🪞"
+	elif "scale" in def_id_str or "can" in def_id_str:
+		return "⚖️"
+	elif "fan" in def_id_str or "quat" in def_id_str:
+		return "🪭"
+	var icons: Array[String] = ["🏺", "⚔️", "📜", "🔮", "👑", "🛡️", "🪞", "⚖️", "🪭"]
+	var h: int = absi(hash(inst.instance_id)) % icons.size()
+	return icons[h]
+
+
 func _get_relic_data(inst: EquipmentInstance) -> Dictionary:
 	if inst == null:
 		return {
@@ -1535,12 +1563,16 @@ func _get_relic_data(inst: EquipmentInstance) -> Dictionary:
 			"max_level": 80,
 			"superimposition": 1,
 			"superimposition_roman": "I",
+			"stamina": 0,
+			"speed": 0,
+			"strength": 0,
 			"hp": 0,
 			"atk": 0,
 			"def": 0,
 			"skill_name": "Chưa Kích Hoạt",
 			"skill_desc": "Không có hiệu ứng Kỷ Vật nào đang kích hoạt.",
 			"category": "Thần Thám Hoàng Gia",
+			"icon": "🏺",
 		}
 
 	var tb: Dictionary = _tier_badge_info(inst.tier)
@@ -1554,8 +1586,8 @@ func _get_relic_data(inst: EquipmentInstance) -> Dictionary:
 
 	var lvl: int = clampi(inst.gold_star_level * 15 + inst.purple_star_level * 5, 20, 80)
 	var base_hp: int = 240 + inst.gold_star_level * 110 + int(inst.tier) * 260
-	var base_atk: int = 120 + inst.gold_star_level * 65 + int(inst.tier) * 140
-	var base_def: int = 100 + inst.gold_star_level * 50 + int(inst.tier) * 120
+	var base_spd: int = 120 + inst.gold_star_level * 65 + int(inst.tier) * 140
+	var base_str: int = 100 + inst.gold_star_level * 50 + int(inst.tier) * 120
 
 	var sk_name: String = ""
 	var sk_desc: String = ""
@@ -1570,6 +1602,8 @@ func _get_relic_data(inst: EquipmentInstance) -> Dictionary:
 			sk_name = "Bàn Thạch Hộ Thể"
 			sk_desc = "Cường hóa tinh thần, gia tăng 10% Thể Lực và ổn định lộ trình di chuyển. Giảm thiểu khả năng rơi vào bẫy hiểm ác trong hoàng cung."
 
+	var icon_sym: String = _get_relic_icon(inst)
+
 	return {
 		"instance_id": inst.instance_id,
 		"name": disp_name,
@@ -1582,12 +1616,16 @@ func _get_relic_data(inst: EquipmentInstance) -> Dictionary:
 		"max_level": 80,
 		"superimposition": super_val,
 		"superimposition_roman": roman,
+		"stamina": base_hp,
+		"speed": base_spd,
+		"strength": base_str,
 		"hp": base_hp,
-		"atk": base_atk,
-		"def": base_def,
+		"atk": base_spd,
+		"def": base_str,
 		"skill_name": sk_name,
 		"skill_desc": sk_desc,
 		"category": "Thần Thám Hoàng Gia",
+		"icon": icon_sym,
 	}
 
 
@@ -1668,25 +1706,43 @@ func _render_center_relic_showcase() -> void:
 	card_top_row.add_child(lock_lbl)
 	inner_vbox.add_child(card_top_row)
 
-	# Card Center Artwork Illustration Area
+	# Card Center Artwork Illustration Area (Vertical rectangle frame)
+	var art_frame := PanelContainer.new()
+	art_frame.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	art_frame.custom_minimum_size = Vector2(230, 260)
+	var af_style := StyleBoxFlat.new()
+	af_style.bg_color = Color(0.04, 0.05, 0.09, 0.95)
+	af_style.corner_radius_top_left = 10
+	af_style.corner_radius_top_right = 10
+	af_style.corner_radius_bottom_right = 10
+	af_style.corner_radius_bottom_left = 10
+	af_style.border_width_left = 1
+	af_style.border_width_top = 1
+	af_style.border_width_right = 1
+	af_style.border_width_bottom = 1
+	af_style.border_color = Color(0.3, 0.38, 0.52, 0.45)
+	art_frame.add_theme_stylebox_override("panel", af_style)
+	inner_vbox.add_child(art_frame)
+
 	var art_center := CenterContainer.new()
+	art_center.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	art_center.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	inner_vbox.add_child(art_center)
+	art_frame.add_child(art_center)
 
 	var art_vbox := VBoxContainer.new()
 	art_vbox.alignment = BoxContainer.ALIGNMENT_CENTER
-	art_vbox.add_theme_constant_override("separation", 8)
+	art_vbox.add_theme_constant_override("separation", 10)
 	art_center.add_child(art_vbox)
 
 	var icon_large := Label.new()
-	icon_large.text = "🏺" if relic_inst.tier == EQUIPMENT_ENUMS.Tier.A else ("⚔️" if relic_inst.tier == EQUIPMENT_ENUMS.Tier.S else "👑")
+	icon_large.text = r_data["icon"]
 	icon_large.add_theme_font_size_override("font_size", 72)
 	icon_large.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	art_vbox.add_child(icon_large)
 
 	var emblem_lbl := Label.new()
 	emblem_lbl.text = "✦ %s ✦" % r_data["tier_name"].to_upper()
-	emblem_lbl.add_theme_font_size_override("font_size", 12)
+	emblem_lbl.add_theme_font_size_override("font_size", 13)
 	emblem_lbl.add_theme_color_override("font_color", r_data["tier_color"])
 	emblem_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	art_vbox.add_child(emblem_lbl)
@@ -1805,12 +1861,13 @@ func _render_center_relic_grid() -> void:
 		var is_selected: bool = (inst.instance_id == _selected_relic_in_grid_id)
 		var is_equipped_by_me: bool = (p_state != null and inst.instance_id == p_state.relic_instance_id)
 
-		var card_btn := Button.new()
-		card_btn.custom_minimum_size = Vector2(104, 146)
-		card_btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+		var card_panel := PanelContainer.new()
+		card_panel.custom_minimum_size = Vector2(112, 160)
+		card_panel.mouse_filter = Control.MOUSE_FILTER_STOP
+		card_panel.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 
 		var style := StyleBoxFlat.new()
-		style.bg_color = Color(0.1, 0.13, 0.2, 0.95) if is_selected else Color(0.06, 0.08, 0.13, 0.85)
+		style.bg_color = Color(0.12, 0.16, 0.26, 0.95) if is_selected else Color(0.06, 0.08, 0.14, 0.9)
 		style.corner_radius_top_left = 8
 		style.corner_radius_top_right = 8
 		style.corner_radius_bottom_right = 8
@@ -1821,21 +1878,23 @@ func _render_center_relic_grid() -> void:
 		style.border_width_bottom = 3 if is_selected else 1
 		style.border_color = Color(1.0, 0.88, 0.3) if is_selected else r_data["tier_color"]
 		if is_selected:
-			style.shadow_color = Color(1.0, 0.84, 0.2, 0.45)
-			style.shadow_size = 8
-		card_btn.add_theme_stylebox_override("normal", style)
-		card_btn.add_theme_stylebox_override("hover", style)
-		card_btn.add_theme_stylebox_override("pressed", style)
+			style.shadow_color = Color(1.0, 0.84, 0.2, 0.5)
+			style.shadow_size = 10
+		style.content_margin_left = 6.0
+		style.content_margin_top = 6.0
+		style.content_margin_right = 6.0
+		style.content_margin_bottom = 6.0
+		card_panel.add_theme_stylebox_override("panel", style)
 
-		# Content inside mini card
+		# Content inside mini vertical rectangle card
 		var card_inner := VBoxContainer.new()
 		card_inner.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		card_inner.anchors_preset = Control.PRESET_FULL_RECT
-		card_inner.add_theme_constant_override("separation", 2)
-		card_btn.add_child(card_inner)
+		card_inner.add_theme_constant_override("separation", 3)
+		card_panel.add_child(card_inner)
 
 		# Top row: Roman numeral on left, badge on right
 		var top_row := HBoxContainer.new()
+		top_row.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		var rom_lbl := Label.new()
 		rom_lbl.text = " %s " % r_data["superimposition_roman"]
 		rom_lbl.add_theme_font_size_override("font_size", 10)
@@ -1844,6 +1903,7 @@ func _render_center_relic_grid() -> void:
 
 		var sp_m := Control.new()
 		sp_m.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		sp_m.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		top_row.add_child(sp_m)
 
 		if is_equipped_by_me:
@@ -1854,14 +1914,32 @@ func _render_center_relic_grid() -> void:
 			top_row.add_child(eq_tag)
 		card_inner.add_child(top_row)
 
-		# Center icon
-		var center_art := CenterContainer.new()
-		center_art.size_flags_vertical = Control.SIZE_EXPAND_FILL
+		# Middle: Vertical rectangular art picture frame
+		var art_frame := PanelContainer.new()
+		art_frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		art_frame.size_flags_vertical = Control.SIZE_EXPAND_FILL
+		var af_style := StyleBoxFlat.new()
+		af_style.bg_color = Color(0.04, 0.05, 0.08, 0.85)
+		af_style.corner_radius_top_left = 6
+		af_style.corner_radius_top_right = 6
+		af_style.corner_radius_bottom_right = 6
+		af_style.corner_radius_bottom_left = 6
+		af_style.border_width_left = 1
+		af_style.border_width_top = 1
+		af_style.border_width_right = 1
+		af_style.border_width_bottom = 1
+		af_style.border_color = Color(0.25, 0.32, 0.45, 0.4)
+		art_frame.add_theme_stylebox_override("panel", af_style)
+		card_inner.add_child(art_frame)
+
+		var art_center := CenterContainer.new()
+		art_center.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		art_frame.add_child(art_center)
+
 		var icon_lbl := Label.new()
-		icon_lbl.text = "🏺" if inst.tier == EQUIPMENT_ENUMS.Tier.A else ("⚔️" if inst.tier == EQUIPMENT_ENUMS.Tier.S else "👑")
-		icon_lbl.add_theme_font_size_override("font_size", 38)
-		center_art.add_child(icon_lbl)
-		card_inner.add_child(center_art)
+		icon_lbl.text = r_data["icon"]
+		icon_lbl.add_theme_font_size_override("font_size", 34)
+		art_center.add_child(icon_lbl)
 
 		# Bottom: Level & stars
 		var lvl_lbl := Label.new()
@@ -1883,11 +1961,12 @@ func _render_center_relic_grid() -> void:
 		card_inner.add_child(st_lbl)
 
 		var target_id: StringName = inst.instance_id
-		card_btn.pressed.connect(func() -> void:
-			_selected_relic_in_grid_id = target_id
-			refresh()
+		card_panel.gui_input.connect(func(ev: InputEvent) -> void:
+			if ev is InputEventMouseButton and ev.button_index == MOUSE_BUTTON_LEFT and ev.pressed:
+				_selected_relic_in_grid_id = target_id
+				refresh()
 		)
-		grid.add_child(card_btn)
+		grid.add_child(card_panel)
 
 
 func _render_tab_relics() -> void:
@@ -1983,13 +2062,13 @@ func _render_tab_relics_showcase() -> void:
 	lvl_row.add_child(lvl_lbl)
 
 	var star_badges := Label.new()
-	star_badges.text = "⭐ %d (Vàng) · ✦ %d (Tím)" % [r_data["gold_star"], r_data["purple_star"]]
+	star_badges.text = "⭐ %d · ✦ %d" % [r_data["gold_star"], r_data["purple_star"]]
 	star_badges.add_theme_font_size_override("font_size", 12)
 	star_badges.add_theme_color_override("font_color", Color(0.75, 0.82, 0.9))
 	lvl_row.add_child(star_badges)
 	h_vbox.add_child(lvl_row)
 
-	# 2. Stats Box (HP, ATK, DEF)
+	# 2. Stats Box (Thể Lực, Tốc Độ, Sức Mạnh)
 	var stats_panel := PanelContainer.new()
 	var s_style := StyleBoxFlat.new()
 	s_style.bg_color = Color(0.06, 0.08, 0.12, 0.85)
@@ -2009,9 +2088,9 @@ func _render_tab_relics_showcase() -> void:
 	stats_panel.add_child(stats_vbox)
 
 	var stat_items: Array[Dictionary] = [
-		{"icon": "💖", "name": "Thể Lực (HP)", "val": r_data["hp"]},
-		{"icon": "⚔️", "name": "Sức Mạnh (ATK)", "val": r_data["atk"]},
-		{"icon": "🛡️", "name": "Tốc Độ / Phòng Ngự (DEF)", "val": r_data["def"]}
+		{"icon": "💖", "name": "Thể Lực", "val": r_data["stamina"]},
+		{"icon": "⚡", "name": "Tốc Độ", "val": r_data["speed"]},
+		{"icon": "💪", "name": "Sức Mạnh", "val": r_data["strength"]}
 	]
 	for st in stat_items:
 		var st_row := HBoxContainer.new()
@@ -2029,7 +2108,7 @@ func _render_tab_relics_showcase() -> void:
 		st_row.add_child(v_lbl)
 		stats_vbox.add_child(st_row)
 
-	# 3. Ability Box ("Kỹ Năng Kỷ Vật" / Light Cone Ability)
+	# 3. Ability Box ("Hiệu Ứng Kỷ Vật")
 	var ability_box := PanelContainer.new()
 	ability_box.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	var ab_style := StyleBoxFlat.new()
@@ -2050,7 +2129,7 @@ func _render_tab_relics_showcase() -> void:
 	ability_box.add_child(ab_vbox)
 
 	var ab_head := Label.new()
-	ab_head.text = "Hiệu Ứng Kỷ Vật (Light Cone Ability)"
+	ab_head.text = "Hiệu Ứng Kỷ Vật"
 	ab_head.add_theme_font_size_override("font_size", 13)
 	ab_head.add_theme_color_override("font_color", Color(0.55, 0.65, 0.78))
 	ab_vbox.add_child(ab_head)
@@ -2084,13 +2163,13 @@ func _render_tab_relics_showcase() -> void:
 	sk_desc.add_theme_color_override("font_color", Color(0.85, 0.9, 0.96))
 	ab_vbox.add_child(sk_desc)
 
-	# 4. Action Buttons (Switch / Enhance / Unequip)
+	# 4. Action Buttons (Đổi & Nâng Cấp)
 	var btn_row := HBoxContainer.new()
-	btn_row.add_theme_constant_override("separation", 12)
+	btn_row.add_theme_constant_override("separation", 14)
 	vbox.add_child(btn_row)
 
 	var switch_btn := Button.new()
-	switch_btn.text = "🔄 Đổi (Switch)"
+	switch_btn.text = "🔄 Đổi"
 	switch_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	switch_btn.custom_minimum_size = Vector2(0, 42)
 	switch_btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
@@ -2115,25 +2194,22 @@ func _render_tab_relics_showcase() -> void:
 	)
 	btn_row.add_child(switch_btn)
 
-	var unequip_btn := Button.new()
-	unequip_btn.text = "✕ Tháo"
-	unequip_btn.custom_minimum_size = Vector2(90, 42)
-	unequip_btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
-	var un_style := StyleBoxFlat.new()
-	un_style.bg_color = Color(0.28, 0.14, 0.18, 0.9)
-	un_style.corner_radius_top_left = 8
-	un_style.corner_radius_top_right = 8
-	un_style.corner_radius_bottom_right = 8
-	un_style.corner_radius_bottom_left = 8
-	unequip_btn.add_theme_stylebox_override("normal", un_style)
-	unequip_btn.add_theme_stylebox_override("hover", un_style)
-	unequip_btn.add_theme_stylebox_override("pressed", un_style)
-	unequip_btn.pressed.connect(func() -> void:
-		_unequip_slot(EQUIPMENT_SERVICE.SLOT_RELIC)
-		_relic_view_mode = RelicViewMode.SWITCH_SELECTOR
-		refresh()
-	)
-	btn_row.add_child(unequip_btn)
+	var upgrade_btn := Button.new()
+	upgrade_btn.text = "⚡ Nâng Cấp"
+	upgrade_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	upgrade_btn.custom_minimum_size = Vector2(0, 42)
+	upgrade_btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	var up_style := StyleBoxFlat.new()
+	up_style.bg_color = Color(0.85, 0.65, 0.18, 0.95)
+	up_style.corner_radius_top_left = 8
+	up_style.corner_radius_top_right = 8
+	up_style.corner_radius_bottom_right = 8
+	up_style.corner_radius_bottom_left = 8
+	upgrade_btn.add_theme_stylebox_override("normal", up_style)
+	upgrade_btn.add_theme_stylebox_override("hover", up_style)
+	upgrade_btn.add_theme_stylebox_override("pressed", up_style)
+	upgrade_btn.add_theme_color_override("font_color", Color(0.12, 0.12, 0.14))
+	btn_row.add_child(upgrade_btn)
 
 
 func _render_tab_relics_switch_comparison() -> void:
@@ -2189,7 +2265,7 @@ func _render_tab_relics_switch_comparison() -> void:
 
 	var status_row := HBoxContainer.new()
 	var status_tag := Label.new()
-	status_tag.text = "Đang Trang Bị (Equipped)" if is_already_equipped else "Chưa Trang Bị (Unequipped)"
+	status_tag.text = "Đang Trang Bị" if is_already_equipped else "Chưa Trang Bị"
 	status_tag.add_theme_font_size_override("font_size", 12)
 	status_tag.add_theme_color_override("font_color", Color(0.4, 0.88, 0.5) if is_already_equipped else Color(0.72, 0.78, 0.88))
 	status_row.add_child(status_tag)
@@ -2207,7 +2283,7 @@ func _render_tab_relics_switch_comparison() -> void:
 	lvl_lbl.add_theme_color_override("font_color", Color(0.9, 0.92, 0.96))
 	h_vbox.add_child(lvl_lbl)
 
-	# 2. Stat Comparison Box (HP, ATK, DEF with deltas)
+	# 2. Stat Comparison Box (Thể Lực, Tốc Độ, Sức Mạnh with deltas)
 	var stats_panel := PanelContainer.new()
 	var s_style := StyleBoxFlat.new()
 	s_style.bg_color = Color(0.06, 0.08, 0.12, 0.85)
@@ -2227,9 +2303,9 @@ func _render_tab_relics_switch_comparison() -> void:
 	stats_panel.add_child(stats_vbox)
 
 	var comp_rows: Array[Dictionary] = [
-		{"icon": "💖", "name": "HP", "old": cur_data["hp"], "new": sel_data["hp"]},
-		{"icon": "⚔️", "name": "ATK", "old": cur_data["atk"], "new": sel_data["atk"]},
-		{"icon": "🛡️", "name": "DEF", "old": cur_data["def"], "new": sel_data["def"]}
+		{"icon": "💖", "name": "Thể Lực", "old": cur_data["stamina"], "new": sel_data["stamina"]},
+		{"icon": "⚡", "name": "Tốc Độ", "old": cur_data["speed"], "new": sel_data["speed"]},
+		{"icon": "💪", "name": "Sức Mạnh", "old": cur_data["strength"], "new": sel_data["strength"]}
 	]
 	for cr in comp_rows:
 		var st_row := HBoxContainer.new()
@@ -2292,7 +2368,7 @@ func _render_tab_relics_switch_comparison() -> void:
 	ability_box.add_child(ab_vbox)
 
 	var ab_head := Label.new()
-	ab_head.text = "Hiệu Ứng Kỷ Vật (Light Cone Ability)"
+	ab_head.text = "Hiệu Ứng Kỷ Vật"
 	ab_head.add_theme_font_size_override("font_size", 13)
 	ab_head.add_theme_color_override("font_color", Color(0.55, 0.65, 0.78))
 	ab_vbox.add_child(ab_head)
@@ -2354,7 +2430,7 @@ func _render_tab_relics_switch_comparison() -> void:
 		dis_st.corner_radius_bottom_left = 8
 		equip_btn.add_theme_stylebox_override("disabled", dis_st)
 	elif sel_inst != null:
-		equip_btn.text = "⚔️ Thay Thế (Replace)" if cur_inst != null else "⚔️ Trang Bị (Equip)"
+		equip_btn.text = "⚔️ Thay Thế" if cur_inst != null else "⚔️ Trang Bị"
 		equip_btn.disabled = false
 		var eq_st := StyleBoxFlat.new()
 		eq_st.bg_color = Color(0.85, 0.65, 0.18, 0.95)
@@ -2389,7 +2465,7 @@ func _render_tab_stigmata() -> void:
 	_right_panel_container.add_child(vbox)
 
 	var title_lbl := Label.new()
-	title_lbl.text = "📜 VẾT THÁNH BẢO VỆ (STIGMATA)"
+	title_lbl.text = "📜 VẾT THÁNH BẢO VỆ"
 	title_lbl.add_theme_font_size_override("font_size", 20)
 	title_lbl.add_theme_color_override("font_color", Color(1.0, 0.85, 0.3))
 	vbox.add_child(title_lbl)
@@ -2826,9 +2902,9 @@ func _on_open_stat_detail_modal_pressed() -> void:
 	var bonus_str: int = 0
 
 	var modal_stats: Array[Dictionary] = [
-		{"icon": "❤️", "name": "Thể Lực (HP)", "base": base_hp, "bonus": bonus_hp},
+		{"icon": "❤️", "name": "Thể Lực", "base": base_hp, "bonus": bonus_hp},
 		{"icon": "👟", "name": "Tốc Độ", "base": base_spd, "bonus": bonus_spd},
-		{"icon": "🎒", "name": "Sức Mạnh (Túi đồ)", "base": base_str, "bonus": bonus_str},
+		{"icon": "🎒", "name": "Sức Mạnh", "base": base_str, "bonus": bonus_str},
 	]
 
 	for item: Dictionary in modal_stats:
