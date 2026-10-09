@@ -593,17 +593,34 @@ func _handle_loot_z_press() -> void:
 			_refresh_loot()
 			return
 		_refresh_loot()
-		if session.phase == LOOT_REWARD_SESSION.Phase.MOVEMENT and not branch_panel.visible:
-			_on_move_pressed()
+		if session.phase == LOOT_REWARD_SESSION.Phase.MOVEMENT:
+			var default_branch: StringName = _selected_branch_id
+			if default_branch.is_empty():
+				var movement_player: LOOT_MOVEMENT_PLAYER_STATE = session.movement_session.current_player()
+				if movement_player != null and case_flow != null:
+					var current_node: LootNodeDefinition = case_flow.loot_map_definition().find_node(
+						movement_player.current_node_id
+					)
+					if current_node != null and not current_node.outgoing_neighbor_ids.is_empty():
+						default_branch = current_node.outgoing_neighbor_ids[0]
+			_selected_branch_id = &""
+			_handle_loot_result(case_flow.move(default_branch))
 		return
 	if session.phase == LOOT_REWARD_SESSION.Phase.MOVEMENT:
-		if branch_panel.visible and _selected_branch_id.is_empty():
-			_show_message("Hãy bấm vào một ô cờ trên bản đồ để chọn hướng rẽ!", true)
-			return
-		_on_move_pressed()
+		var default_branch: StringName = _selected_branch_id
+		if default_branch.is_empty():
+			var movement_player: LOOT_MOVEMENT_PLAYER_STATE = session.movement_session.current_player()
+			if movement_player != null and case_flow != null:
+				var current_node: LootNodeDefinition = case_flow.loot_map_definition().find_node(
+					movement_player.current_node_id
+				)
+				if current_node != null and not current_node.outgoing_neighbor_ids.is_empty():
+					default_branch = current_node.outgoing_neighbor_ids[0]
+		_selected_branch_id = &""
+		_handle_loot_result(case_flow.move(default_branch))
 		return
 	if session.phase == LOOT_REWARD_SESSION.Phase.BRANCH_SELECTION:
-		_show_message("Đang ở ngã rẽ! Hãy bấm trực tiếp lên ô cờ trên bản đồ để chọn hướng.", true)
+		_show_message("Đang ở ngã rẽ! Hãy bấm trực tiếp lên ô cờ vàng trên bản đồ để chọn hướng.", true)
 		return
 
 
@@ -613,11 +630,24 @@ func _on_map_node_clicked(node_id: StringName) -> void:
 	if case_flow == null or case_flow.loot_session == null:
 		return
 	var session: LOOT_REWARD_SESSION = case_flow.loot_session
+	if session.overflow.active:
+		return
 	if session.phase == LOOT_REWARD_SESSION.Phase.BRANCH_SELECTION:
 		var pending: PendingBranchState = session.movement_session.pending_branch
 		if pending != null and pending.available_branch_ids.has(node_id):
 			_on_branch_chosen(node_id)
 			return
+	elif session.phase == LOOT_REWARD_SESSION.Phase.ITEM_WINDOW:
+		var movement_player: LOOT_MOVEMENT_PLAYER_STATE = session.movement_session.current_player()
+		if movement_player != null:
+			var current_node: LootNodeDefinition = case_flow.loot_map_definition().find_node(
+				movement_player.current_node_id
+			)
+			if current_node != null and current_node.outgoing_neighbor_ids.has(node_id):
+				case_flow.continue_without_item()
+				_selected_branch_id = &""
+				_handle_loot_result(case_flow.move(node_id))
+				return
 	elif session.phase == LOOT_REWARD_SESSION.Phase.MOVEMENT:
 		var movement_player: LOOT_MOVEMENT_PLAYER_STATE = session.movement_session.current_player()
 		if movement_player != null:
@@ -625,9 +655,8 @@ func _on_map_node_clicked(node_id: StringName) -> void:
 				movement_player.current_node_id
 			)
 			if current_node != null and current_node.outgoing_neighbor_ids.has(node_id):
-				_selected_branch_id = node_id
-				_show_message("Đã chọn hướng rẽ: %s. Bấm [Z] để đổ xúc xắc!" % _node_display_name(node_id))
-				_refresh_loot()
+				_selected_branch_id = &""
+				_handle_loot_result(case_flow.move(node_id))
 				return
 
 
@@ -1194,25 +1223,16 @@ func _refresh_branch_ui(
 	movement_player: LOOT_MOVEMENT_PLAYER_STATE,
 	movement_ready: bool
 ) -> void:
-	if branch_buttons_container == null or branch_panel == null:
-		return
-	for child: Node in branch_buttons_container.get_children():
-		child.queue_free()
+	if branch_panel != null:
+		branch_panel.visible = false
+	if branch_buttons_container != null:
+		for child: Node in branch_buttons_container.get_children():
+			child.queue_free()
 
 	if session.phase == LOOT_REWARD_SESSION.Phase.BRANCH_SELECTION:
-		branch_panel.visible = true
 		var pending: PendingBranchState = session.movement_session.pending_branch
-		var fork_name: String = _node_display_name(pending.fork_node_id)
-		branch_title.text = "⚠️ GẶP NGÃ RẼ TẠI %s (%d bước)! Bấm ô cờ trên bản đồ hoặc chọn nút bên dưới:" % [
-			fork_name, pending.remaining_steps
-		]
-		loot_map_view.set_selectable_branches(pending.available_branch_ids)
-		for branch_id: StringName in pending.available_branch_ids:
-			var btn := Button.new()
-			btn.focus_mode = Control.FOCUS_NONE
-			btn.text = _node_display_name(branch_id)
-			btn.pressed.connect(func(): _on_branch_chosen(branch_id))
-			branch_buttons_container.add_child(btn)
+		if pending != null:
+			loot_map_view.set_selectable_branches(pending.available_branch_ids)
 		if move_button != null:
 			move_button.visible = false
 		if item_window_panel != null:
@@ -1224,29 +1244,14 @@ func _refresh_branch_ui(
 	if item_window_panel != null:
 		item_window_panel.visible = session.phase == LOOT_REWARD_SESSION.Phase.ITEM_WINDOW
 
-	if movement_ready and movement_player != null and case_flow != null:
+	if movement_player != null and case_flow != null:
 		var current_node: LootNodeDefinition = case_flow.loot_map_definition().find_node(
 			movement_player.current_node_id
 		)
 		if current_node != null and current_node.outgoing_neighbor_ids.size() > 1:
-			branch_panel.visible = true
-			branch_title.text = "Chọn hướng rẽ xuất phát (bấm ô cờ trên bản đồ hoặc chọn nút):"
 			loot_map_view.set_selectable_branches(current_node.outgoing_neighbor_ids)
-			if _selected_branch_id.is_empty() or not current_node.outgoing_neighbor_ids.has(_selected_branch_id):
-				_selected_branch_id = current_node.outgoing_neighbor_ids[0]
-			for neighbor_id: StringName in current_node.outgoing_neighbor_ids:
-				var btn := Button.new()
-				btn.focus_mode = Control.FOCUS_NONE
-				var is_selected: bool = neighbor_id == _selected_branch_id
-				btn.text = ("👉 " if is_selected else "") + _node_display_name(neighbor_id)
-				btn.pressed.connect(func():
-					_selected_branch_id = neighbor_id
-					_refresh_loot()
-				)
-				branch_buttons_container.add_child(btn)
 			return
 
-	branch_panel.visible = false
 	_selected_branch_id = &""
 	loot_map_view.set_selectable_branches([])
 
@@ -1839,17 +1844,17 @@ func _loot_action_guidance(
 ) -> String:
 	match session.phase:
 		LOOT_REWARD_SESSION.Phase.ITEM_WINDOW:
-			return "CỬA SỔ VẬT PHẨM: Dùng vật phẩm bên dưới hoặc bấm [Z] để bỏ qua & đổ xúc xắc."
+			return "Bấm ô cờ trên bản đồ để di chuyển · Hoặc bấm [Z] để đổ xúc xắc."
 		LOOT_REWARD_SESSION.Phase.MOVEMENT:
 			if movement_player.remaining_moves <= 0:
 				return "Đã dùng hết thể lực di chuyển. Chuẩn bị chuyển lượt."
-			return "Bấm [Z] để đổ xúc xắc & di chuyển · Bấm trực tiếp ô cờ trên bản đồ để chọn hướng."
+			return "Bấm ô cờ vàng trên bản đồ để di chuyển · Hoặc bấm [Z] để đổ xúc xắc."
 		LOOT_REWARD_SESSION.Phase.BAG_OVERFLOW_PENDING:
 			return "⚠️ TÚI ĐỒ ĐẦY: Xử lý thay thế hoặc bỏ vật phẩm trước khi đi tiếp."
 		LOOT_REWARD_SESSION.Phase.REWARD_RESOLUTION:
 			return "Đang trích xuất phần thưởng tại các điểm vừa đi qua..."
 		LOOT_REWARD_SESSION.Phase.BRANCH_SELECTION:
-			return "⚠️ GẶP NGÃ RẼ: Bấm trực tiếp lên ô cờ trên bản đồ để chọn hướng rẽ!"
+			return "⚠️ GẶP NGÃ RẼ: Bấm trực tiếp lên ô cờ vàng trên bản đồ để chọn hướng!"
 		LOOT_REWARD_SESSION.Phase.LOOT_END_CONFIRMATION_READY:
 			return "Mọi người đã hoàn tất Loot. Xác nhận để vào giai đoạn Trang Bị."
 		_:

@@ -10,7 +10,7 @@ const CAMERA_DEFAULT_ZOOM := 1.0
 const CAMERA_MAX_ZOOM := 1.4
 const CAMERA_ZOOM_STEP := 0.1
 const CAMERA_FIT_SCREEN_MARGIN := 32.0
-const CAMERA_DRAG_THRESHOLD := 6.0
+const CAMERA_DRAG_THRESHOLD := 16.0
 const BOARD_ROUTE_WIDTH := 11.0
 const BOARD_ROUTE_SHADOW_WIDTH := 19.0
 
@@ -76,7 +76,20 @@ func set_selectable_branches(node_ids: Array[StringName]) -> void:
 
 
 func find_node_at_screen_position(screen_pos: Vector2) -> StringName:
-	var max_dist: float = (NODE_RADIUS + 14.0) * _visual_scale()
+	var branch_hit_radius: float = maxf((NODE_RADIUS + 28.0) * _visual_scale(), 50.0)
+	var best_branch_id: StringName = &""
+	var best_branch_dist: float = branch_hit_radius
+	for branch_id: StringName in selectable_branch_nodes:
+		if _node_positions.has(branch_id):
+			var pos: Vector2 = _node_positions[branch_id]
+			var d: float = pos.distance_to(screen_pos)
+			if d <= best_branch_dist:
+				best_branch_dist = d
+				best_branch_id = branch_id
+	if not best_branch_id.is_empty():
+		return best_branch_id
+
+	var max_dist: float = maxf((NODE_RADIUS + 18.0) * _visual_scale(), 38.0)
 	var best_id: StringName = &""
 	var best_dist: float = max_dist
 	for node_id: StringName in _node_positions:
@@ -158,7 +171,17 @@ func _unhandled_key_input(event: InputEvent) -> void:
 	get_viewport().set_input_as_handled()
 
 
+func _gui_input(event: InputEvent) -> void:
+	if _handle_pointer_input(event):
+		accept_event()
+
+
 func _unhandled_input(event: InputEvent) -> void:
+	if _handle_pointer_input(event):
+		get_viewport().set_input_as_handled()
+
+
+func _handle_pointer_input(event: InputEvent) -> bool:
 	var mouse_button: InputEventMouseButton = event as InputEventMouseButton
 	if mouse_button != null:
 		var local_position: Vector2 = _viewport_to_local(mouse_button.position)
@@ -166,16 +189,19 @@ func _unhandled_input(event: InputEvent) -> void:
 			if mouse_button.pressed:
 				if is_visible_in_tree() and Rect2(Vector2.ZERO, size).has_point(local_position):
 					begin_pointer_drag(local_position)
-				return
+					return true
+				return false
 			var was_dragging: bool = end_pointer_drag()
 			if was_dragging:
-				get_viewport().set_input_as_handled()
-			elif is_visible_in_tree() and Rect2(Vector2.ZERO, size).has_point(local_position):
+				return true
+			if is_visible_in_tree() and Rect2(Vector2.ZERO, size).has_point(local_position):
 				var clicked_node: StringName = find_node_at_screen_position(local_position)
+				if clicked_node.is_empty() and _drag_start_screen_position != Vector2.ZERO:
+					clicked_node = find_node_at_screen_position(_drag_start_screen_position)
 				if not clicked_node.is_empty():
 					node_clicked.emit(clicked_node)
-					get_viewport().set_input_as_handled()
-			return
+					return true
+			return false
 		if (
 			mouse_button.pressed
 			and is_visible_in_tree()
@@ -183,13 +209,20 @@ func _unhandled_input(event: InputEvent) -> void:
 			and Rect2(Vector2.ZERO, size).has_point(local_position)
 			and apply_wheel_zoom_at(mouse_button.button_index, local_position)
 		):
-			get_viewport().set_input_as_handled()
-		return
+			return true
+		return false
 	var mouse_motion: InputEventMouseMotion = event as InputEventMouseMotion
-	if mouse_motion == null or not _drag_press_held:
-		return
-	if update_pointer_drag(_viewport_to_local(mouse_motion.position)):
-		get_viewport().set_input_as_handled()
+	if mouse_motion != null:
+		var local_pos: Vector2 = _viewport_to_local(mouse_motion.position)
+		if _drag_press_held:
+			return update_pointer_drag(local_pos)
+		if is_visible_in_tree() and Rect2(Vector2.ZERO, size).has_point(local_pos):
+			var hovered: StringName = find_node_at_screen_position(local_pos)
+			if not hovered.is_empty() and selectable_branch_nodes.has(hovered):
+				mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+			else:
+				mouse_default_cursor_shape = Control.CURSOR_ARROW
+	return false
 
 
 func _rebuild_binding() -> void:
