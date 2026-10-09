@@ -104,8 +104,8 @@ var _autosave_service: PLAYER_FACING_AUTOSAVE_SERVICE = (
 @onready var branch_panel: Control = %BranchPanel
 @onready var branch_title: Label = %BranchTitle
 @onready var branch_buttons_container: HBoxContainer = %BranchButtonsContainer
-@onready var move_button: Button = %Move
-@onready var toggle_detail_button: Button = %ToggleDetailButton
+@onready var move_button: Button = get_node_or_null("%Move") as Button
+@onready var toggle_detail_button: Button = get_node_or_null("%ToggleDetailButton") as Button
 @onready var loot_detail_panel: Control = %LootDetailPanel
 @onready var overflow_panel: Control = %OverflowPanel
 @onready var overflow_text: Label = %OverflowText
@@ -159,25 +159,31 @@ func _ready() -> void:
 	_show_phase(SETUP_SESSION.Phase.MAIN_MENU)
 
 
-func _unhandled_key_input(event: InputEvent) -> void:
+func _input(event: InputEvent) -> void:
 	var key_event := event as InputEventKey
 	if key_event == null or not key_event.pressed or key_event.echo:
 		return
 	if key_event.keycode == KEY_F12:
 		AppFlow.go_to_debug_home()
+		get_viewport().set_input_as_handled()
 		return
 	if setup.phase == SETUP_SESSION.Phase.LOOT_ACTIVE and case_flow != null and case_flow.loot_session != null:
 		var focus: Control = get_viewport().gui_get_focus_owner()
 		if focus is LineEdit or focus is TextEdit:
 			return
-		if key_event.keycode == KEY_Z:
-			_handle_loot_z_press()
-			get_viewport().set_input_as_handled()
-			return
 		if key_event.keycode == KEY_TAB or key_event.keycode == KEY_I:
 			_toggle_loot_detail_panel()
 			get_viewport().set_input_as_handled()
 			return
+		if key_event.keycode == KEY_Z:
+			_handle_loot_z_press()
+			get_viewport().set_input_as_handled()
+			return
+		if key_event.keycode == KEY_SPACE:
+			if loot_map_view != null:
+				loot_map_view.focus_active_player()
+				get_viewport().set_input_as_handled()
+				return
 
 
 func _on_new_game_pressed() -> void:
@@ -1157,20 +1163,21 @@ func _refresh_loot() -> void:
 			"Dùng vật phẩm đã chọn; mỗi lượt chỉ dùng một vật phẩm."
 		)
 	continue_without_item_button.disabled = not item_window
-	move_button.disabled = not movement_ready
-	move_button.tooltip_text = (
-		"Bấm [Z] để đổ xúc xắc."
-		if movement_ready
-		else (
-			"Hãy hoàn tất Cửa sổ Vật phẩm trước (hoặc bấm [Z] để bỏ qua)."
-			if item_window
+	if move_button != null:
+		move_button.disabled = not movement_ready
+		move_button.tooltip_text = (
+			"Bấm [Z] để đổ xúc xắc."
+			if movement_ready
 			else (
-				"Hãy xử lý vật phẩm đang chờ trước."
-				if session.overflow.active
-				else "Chưa thể di chuyển."
+				"Hãy hoàn tất Cửa sổ Vật phẩm trước (hoặc bấm [Z] để bỏ qua)."
+				if item_window
+				else (
+					"Hãy xử lý vật phẩm đang chờ trước."
+					if session.overflow.active
+					else "Chưa thể di chuyển."
+				)
 			)
 		)
-	)
 	action_guide.text = _loot_action_guidance(session, movement_player)
 	_refresh_branch_ui(session, movement_player, movement_ready)
 	overflow_panel.visible = session.overflow.active
@@ -1202,15 +1209,18 @@ func _refresh_branch_ui(
 		loot_map_view.set_selectable_branches(pending.available_branch_ids)
 		for branch_id: StringName in pending.available_branch_ids:
 			var btn := Button.new()
+			btn.focus_mode = Control.FOCUS_NONE
 			btn.text = _node_display_name(branch_id)
 			btn.pressed.connect(func(): _on_branch_chosen(branch_id))
 			branch_buttons_container.add_child(btn)
-		move_button.visible = false
+		if move_button != null:
+			move_button.visible = false
 		if item_window_panel != null:
 			item_window_panel.visible = false
 		return
 
-	move_button.visible = true
+	if move_button != null:
+		move_button.visible = true
 	if item_window_panel != null:
 		item_window_panel.visible = session.phase == LOOT_REWARD_SESSION.Phase.ITEM_WINDOW
 
@@ -1226,6 +1236,7 @@ func _refresh_branch_ui(
 				_selected_branch_id = current_node.outgoing_neighbor_ids[0]
 			for neighbor_id: StringName in current_node.outgoing_neighbor_ids:
 				var btn := Button.new()
+				btn.focus_mode = Control.FOCUS_NONE
 				var is_selected: bool = neighbor_id == _selected_branch_id
 				btn.text = ("👉 " if is_selected else "") + _node_display_name(neighbor_id)
 				btn.pressed.connect(func():
@@ -2038,6 +2049,10 @@ func _show_phase(next_phase: int) -> void:
 	results_panel.visible = next_phase == SETUP_SESSION.Phase.CASE_RESULTS
 	loot_ready_panel.visible = next_phase == SETUP_SESSION.Phase.LOOT_READY
 	loot_panel.visible = next_phase == SETUP_SESSION.Phase.LOOT_ACTIVE
+	if next_phase == SETUP_SESSION.Phase.LOOT_ACTIVE:
+		var current_focus := get_viewport().gui_get_focus_owner()
+		if current_focus != null:
+			current_focus.release_focus()
 	confirmation_panel.visible = next_phase == SETUP_SESSION.Phase.LOOT_END_CONFIRMATION
 	equipment_panel.visible = next_phase == SETUP_SESSION.Phase.EQUIPMENT_MANAGEMENT
 	round_summary_ready_panel.visible = next_phase == SETUP_SESSION.Phase.ROUND_SUMMARY_READY
