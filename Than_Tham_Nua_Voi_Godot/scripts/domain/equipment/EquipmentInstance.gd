@@ -8,7 +8,7 @@ extends Resource
 @export var equipment_type: EquipmentEnums.EquipmentType = EquipmentEnums.EquipmentType.RELIC
 @export var stigmata_slot: EquipmentEnums.StigmataSlot = EquipmentEnums.StigmataSlot.NONE
 @export var tier: EquipmentEnums.Tier = EquipmentEnums.Tier.A
-@export_range(1, 6, 1) var gold_star_level := 1
+@export_range(0, 6, 1) var gold_star_level := 0
 @export_range(0, 6, 1) var purple_star_level := 0
 @export var test_only_not_canon_locked := true
 
@@ -20,5 +20,5 @@ static func from_dict(data: Dictionary) -> EquipmentInstance:
 	result.instance_id = StringName(data.get("instance_id", "")); result.equipment_definition_id = StringName(data.get("equipment_definition_id", ""))
 	result.owner_player_id = StringName(data.get("owner_player_id", "")); result.acquired_source = StringName(data.get("acquired_source", ""))
 	result.equipment_type = int(data.get("equipment_type", 0)); result.stigmata_slot = int(data.get("stigmata_slot", 0)); result.tier = int(data.get("tier", 0))
-	result.gold_star_level = int(data.get("gold_star_level", 1)); result.purple_star_level = int(data.get("purple_star_level", 0))
+	result.gold_star_level = int(data.get("gold_star_level", 0)); result.purple_star_level = int(data.get("purple_star_level", 0))
 	return result

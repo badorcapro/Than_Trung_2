@@ -2135,7 +2135,7 @@ func _get_relic_data(inst: EquipmentInstance) -> Dictionary:
 	var roman_numerals: Array[String] = ["I", "II", "III", "IV", "V"]
 	var roman: String = roman_numerals[super_val - 1]
 
-	var lvl: int = clampi(inst.gold_star_level * 15 + inst.purple_star_level * 5, 20, 80)
+	var lvl: int = clampi(inst.gold_star_level * 15 + inst.purple_star_level * 5, 0, 80)
 	var base_hp: int = 240 + inst.gold_star_level * 110 + int(inst.tier) * 260
 	var base_spd: int = 120 + inst.gold_star_level * 65 + int(inst.tier) * 140
 	var base_str: int = 100 + inst.gold_star_level * 50 + int(inst.tier) * 120

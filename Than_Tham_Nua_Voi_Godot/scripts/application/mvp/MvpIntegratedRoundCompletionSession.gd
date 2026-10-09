@@ -124,6 +124,12 @@ func _seed_test_only_player_facing_collections(session: EQUIPMENT_SESSION) -> vo
 		player.equipment_exp_material_count = maxi(
 			player.equipment_exp_material_count, 200
 		)
+		player.relic_exp_material_count = maxi(
+			player.relic_exp_material_count, 200
+		)
+		player.stigmata_exp_material_count = maxi(
+			player.stigmata_exp_material_count, 200
+		)
 		player.gacha_ticket_count = maxi(player.gacha_ticket_count, 4)
 
 

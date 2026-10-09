@@ -81,7 +81,8 @@ func _test_collection_loadout(rows:Array[Dictionary])->void:
 
 func _test_gold(rows:Array[Dictionary])->void:
 	var player:=_player();var definition:=_definition(&"m5_a_relic");var instance:=equipment.grant(player,definition,&"BASIC")
-	_add(rows,"New Equipment starts Gold 1",instance.gold_star_level==1)
+	_add(rows,"New Equipment starts Gold 0",instance.gold_star_level==0)
+	instance.gold_star_level=1
 	var before:=player.equipment_exp_material_count;var one:=progression.upgrade_gold_one(player,instance,definition)
 	_add(rows,"Gold one-level succeeds",one.success and instance.gold_star_level==2)
 	_add(rows,"Gold consumes integer authored cost",player.equipment_exp_material_count==before-11)

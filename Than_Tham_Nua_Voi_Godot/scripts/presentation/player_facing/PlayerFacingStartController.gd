@@ -69,6 +69,11 @@ var _card_hold_token: int = 0
 var _autosave_service: PLAYER_FACING_AUTOSAVE_SERVICE = (
 	PLAYER_FACING_AUTOSAVE_SERVICE.new()
 )
+var _cheat_layer: CanvasLayer = null
+var _cheat_overlay: Control = null
+var _cheat_feedback_lbl: Label = null
+var _cheat_player_lbl: Label = null
+var _cheat_target_player_index: int = 0
 
 @onready var main_menu: Control = %MainMenu
 @onready var continue_button: Button = (
@@ -201,6 +206,7 @@ func _ready() -> void:
 	_character_sheet.visible = false
 	_character_sheet.finish_equipment_phase_requested.connect(_on_finish_equipment_phase_confirmed)
 	sheet_layer.add_child(_character_sheet)
+	_init_cheat_layer()
 	_show_phase(SETUP_SESSION.Phase.MAIN_MENU)
 
 
@@ -260,6 +266,15 @@ func _input(event: InputEvent) -> void:
 		AppFlow.go_to_debug_home()
 		get_viewport().set_input_as_handled()
 		return
+	if key_event.keycode == KEY_F10:
+		_toggle_cheat_menu()
+		get_viewport().set_input_as_handled()
+		return
+	if _cheat_overlay != null and _cheat_overlay.visible:
+		if key_event.keycode == KEY_ESCAPE:
+			_cheat_overlay.visible = false
+			get_viewport().set_input_as_handled()
+			return
 	if _character_sheet != null and _character_sheet.visible:
 		if key_event.keycode == KEY_ESCAPE or key_event.keycode == KEY_C:
 			_character_sheet.visible = false
@@ -2611,3 +2626,329 @@ func _show_phase(next_phase: int) -> void:
 func _show_message(message: String, is_error: bool = false) -> void:
 	message_label.text = message
 	message_label.modulate = Color(1.0, 0.45, 0.45) if is_error else Color(0.5, 0.9, 1.0)
+
+
+func _init_cheat_layer() -> void:
+	_cheat_layer = CanvasLayer.new()
+	_cheat_layer.name = "CheatLayer"
+	_cheat_layer.layer = 140
+	add_child(_cheat_layer)
+
+	_cheat_overlay = Control.new()
+	_cheat_overlay.name = "CheatOverlay"
+	_cheat_overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_cheat_overlay.visible = false
+	_cheat_layer.add_child(_cheat_overlay)
+
+	var backdrop := ColorRect.new()
+	backdrop.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	backdrop.color = Color(0.0, 0.0, 0.0, 0.75)
+	_cheat_overlay.add_child(backdrop)
+
+	var center_box := CenterContainer.new()
+	center_box.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_cheat_overlay.add_child(center_box)
+
+	var panel := PanelContainer.new()
+	panel.custom_minimum_size = Vector2(760, 560)
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color(0.09, 0.11, 0.15, 0.98)
+	style.border_color = Color(0.3, 0.75, 1.0, 0.9)
+	style.border_width_left = 2
+	style.border_width_top = 2
+	style.border_width_right = 2
+	style.border_width_bottom = 2
+	style.corner_radius_top_left = 12
+	style.corner_radius_top_right = 12
+	style.corner_radius_bottom_right = 12
+	style.corner_radius_bottom_left = 12
+	style.content_margin_left = 24.0
+	style.content_margin_top = 20.0
+	style.content_margin_right = 24.0
+	style.content_margin_bottom = 20.0
+	panel.add_theme_stylebox_override("panel", style)
+	center_box.add_child(panel)
+
+	var main_vbox := VBoxContainer.new()
+	main_vbox.add_theme_constant_override("separation", 12)
+	panel.add_child(main_vbox)
+
+	var header_hbox := HBoxContainer.new()
+	var title_lbl := Label.new()
+	title_lbl.text = "🛠️ MENU CHEAT KIỂM THỬ [F10]"
+	title_lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	title_lbl.add_theme_font_size_override("font_size", 18)
+	title_lbl.add_theme_color_override("font_color", Color(0.4, 0.85, 1.0))
+	header_hbox.add_child(title_lbl)
+
+	var close_btn := Button.new()
+	close_btn.text = "✖ ĐÓNG [F10 / ESC]"
+	close_btn.custom_minimum_size = Vector2(160, 36)
+	close_btn.pressed.connect(func() -> void: _cheat_overlay.visible = false)
+	header_hbox.add_child(close_btn)
+	main_vbox.add_child(header_hbox)
+
+	var desc_lbl := Label.new()
+	desc_lbl.text = "Bảng cheat tạm phục vụ thử nghiệm nâng cấp Kỷ Vật, Vết Thánh, EXP và vật phẩm."
+	desc_lbl.add_theme_font_size_override("font_size", 12)
+	desc_lbl.add_theme_color_override("font_color", Color(0.68, 0.72, 0.78))
+	main_vbox.add_child(desc_lbl)
+
+	var player_box := HBoxContainer.new()
+	player_box.add_theme_constant_override("separation", 12)
+	var prev_player_btn := Button.new()
+	prev_player_btn.text = "◀ P Trước"
+	prev_player_btn.custom_minimum_size = Vector2(110, 34)
+	prev_player_btn.pressed.connect(func() -> void: _cycle_cheat_target_player(-1))
+	player_box.add_child(prev_player_btn)
+
+	_cheat_player_lbl = Label.new()
+	_cheat_player_lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_cheat_player_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_cheat_player_lbl.add_theme_font_size_override("font_size", 14)
+	_cheat_player_lbl.add_theme_color_override("font_color", Color(1.0, 0.85, 0.25))
+	player_box.add_child(_cheat_player_lbl)
+
+	var next_player_btn := Button.new()
+	next_player_btn.text = "P Sau ▶"
+	next_player_btn.custom_minimum_size = Vector2(110, 34)
+	next_player_btn.pressed.connect(func() -> void: _cycle_cheat_target_player(1))
+	player_box.add_child(next_player_btn)
+	main_vbox.add_child(player_box)
+
+	_cheat_feedback_lbl = Label.new()
+	_cheat_feedback_lbl.text = "Sẵn sàng."
+	_cheat_feedback_lbl.add_theme_font_size_override("font_size", 13)
+	_cheat_feedback_lbl.add_theme_color_override("font_color", Color(0.3, 1.0, 0.5))
+	_cheat_feedback_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	main_vbox.add_child(_cheat_feedback_lbl)
+
+	var grid := GridContainer.new()
+	grid.columns = 3
+	grid.add_theme_constant_override("h_separation", 10)
+	grid.add_theme_constant_override("v_separation", 10)
+	main_vbox.add_child(grid)
+
+	_add_cheat_btn(grid, "💎 +100 EXP Kỷ Vật", func() -> void:
+		var p := _get_cheat_target_player()
+		if p != null:
+			p.relic_exp_material_count += 100
+			_notify_cheat("Đã thêm 100 EXP Kỷ Vật!")
+			_refresh_after_cheat()
+	)
+	_add_cheat_btn(grid, "💎 +1000 EXP Kỷ Vật", func() -> void:
+		var p := _get_cheat_target_player()
+		if p != null:
+			p.relic_exp_material_count += 1000
+			_notify_cheat("Đã thêm 1000 EXP Kỷ Vật!")
+			_refresh_after_cheat()
+	)
+	_add_cheat_btn(grid, "🔮 +100 EXP Vết Thánh", func() -> void:
+		var p := _get_cheat_target_player()
+		if p != null:
+			p.stigmata_exp_material_count += 100
+			_notify_cheat("Đã thêm 100 EXP Vết Thánh!")
+			_refresh_after_cheat()
+	)
+	_add_cheat_btn(grid, "🔮 +1000 EXP Vết Thánh", func() -> void:
+		var p := _get_cheat_target_player()
+		if p != null:
+			p.stigmata_exp_material_count += 1000
+			_notify_cheat("Đã thêm 1000 EXP Vết Thánh!")
+			_refresh_after_cheat()
+	)
+	_add_cheat_btn(grid, "🎟️ +10 Vé Gacha", func() -> void:
+		var p := _get_cheat_target_player()
+		if p != null:
+			p.gacha_ticket_count += 10
+			_notify_cheat("Đã thêm 10 Vé Gacha!")
+			_refresh_after_cheat()
+	)
+	_add_cheat_btn(grid, "🪙 +5000 Xu Bạc", func() -> void:
+		var p := _get_cheat_target_player()
+		if p != null:
+			p.silver_coin_count += 5000
+			_notify_cheat("Đã thêm 5000 Xu Bạc!")
+			_refresh_after_cheat()
+	)
+	_add_cheat_btn(grid, "🎁 Bản Trùng Kỷ Vật (Đang Mang)", func() -> void:
+		_cheat_grant_duplicate_equipped(&"relic")
+	)
+	_add_cheat_btn(grid, "🎁 Bản Trùng Vết Thánh A", func() -> void:
+		_cheat_grant_duplicate_equipped(&"stigmata_a")
+	)
+	_add_cheat_btn(grid, "🎁 Bản Trùng Vết Thánh B", func() -> void:
+		_cheat_grant_duplicate_equipped(&"stigmata_b")
+	)
+	_add_cheat_btn(grid, "⭐ Set 6★ Vàng (Kỷ Vật)", func() -> void:
+		_cheat_set_relic_stars(6, 0)
+	)
+	_add_cheat_btn(grid, "🟣 Set 6★ Tím (Kỷ Vật)", func() -> void:
+		_cheat_set_relic_stars(6, 6)
+	)
+	_add_cheat_btn(grid, "🔄 Reset 0★ (Kỷ Vật)", func() -> void:
+		_cheat_set_relic_stars(0, 0)
+	)
+	_add_cheat_btn(grid, "⭐ Set 6★ Vàng (Vết Thánh A)", func() -> void:
+		_cheat_set_stigmata_stars(&"stigmata_a", 6, 0)
+	)
+	_add_cheat_btn(grid, "🟣 Set 6★ Tím (Vết Thánh A)", func() -> void:
+		_cheat_set_stigmata_stars(&"stigmata_a", 6, 6)
+	)
+	_add_cheat_btn(grid, "🔄 Reset 0★ (Vết Thánh A)", func() -> void:
+		_cheat_set_stigmata_stars(&"stigmata_a", 0, 0)
+	)
+
+
+func _toggle_cheat_menu() -> void:
+	if _cheat_overlay == null:
+		return
+	_cheat_overlay.visible = not _cheat_overlay.visible
+	if _cheat_overlay.visible:
+		_refresh_cheat_player_display()
+
+
+func _refresh_cheat_player_display() -> void:
+	var player := _get_cheat_target_player()
+	if player == null:
+		if _cheat_player_lbl != null:
+			_cheat_player_lbl.text = "⚠️ Chưa có người chơi trong phiên"
+		return
+	var char_def: CHARACTER_DEFINITION = setup.find_character(player.character_id) if setup != null else null
+	var name_str: String = char_def.display_name if char_def != null else String(player.player_id)
+	if _cheat_player_lbl != null:
+		_cheat_player_lbl.text = "🎯 Đang chọn: P%d - %s  (Relic EXP: %d | Stig EXP: %d | Vé: %d | Xu: %d)" % [
+			player.seat_index + 1,
+			name_str,
+			player.relic_exp_material_count,
+			player.stigmata_exp_material_count,
+			player.gacha_ticket_count,
+			player.silver_coin_count,
+		]
+
+
+func _get_all_active_players() -> Array:
+	if case_flow != null and case_flow.equipment_session != null and not case_flow.equipment_session.players.is_empty():
+		return case_flow.equipment_session.players
+	if case_flow != null and case_flow.loot_session != null and not case_flow.loot_session.players.is_empty():
+		return case_flow.loot_session.players
+	if setup != null and not setup.players.is_empty():
+		return setup.players
+	return []
+
+
+func _get_cheat_target_player() -> PLAYER_PHASE_STATE:
+	var list := _get_all_active_players()
+	if list.is_empty():
+		return null
+	if _cheat_target_player_index < 0 or _cheat_target_player_index >= list.size():
+		_cheat_target_player_index = 0
+	return list[_cheat_target_player_index] as PLAYER_PHASE_STATE
+
+
+func _cycle_cheat_target_player(delta: int) -> void:
+	var list := _get_all_active_players()
+	if list.is_empty():
+		return
+	_cheat_target_player_index = (_cheat_target_player_index + delta + list.size()) % list.size()
+	_refresh_cheat_player_display()
+
+
+func _notify_cheat(msg: String, is_err: bool = false) -> void:
+	if _cheat_feedback_lbl != null:
+		_cheat_feedback_lbl.text = msg
+		_cheat_feedback_lbl.add_theme_color_override(
+			"font_color",
+			Color(1.0, 0.45, 0.45) if is_err else Color(0.3, 1.0, 0.5)
+		)
+
+
+func _refresh_after_cheat() -> void:
+	_refresh_cheat_player_display()
+	if _character_sheet != null and _character_sheet.visible:
+		_character_sheet.refresh()
+	if case_flow != null and case_flow.loot_session != null and loot_panel != null and loot_panel.visible:
+		_refresh_pummel_player_cards(case_flow.loot_session)
+
+
+func _cheat_grant_duplicate_equipped(slot_id: StringName) -> void:
+	var player := _get_cheat_target_player()
+	if player == null:
+		_notify_cheat("Không tìm thấy người chơi mục tiêu!", true)
+		return
+	var inst_id: StringName = &""
+	match slot_id:
+		&"relic":
+			inst_id = player.relic_instance_id
+		&"stigmata_a":
+			inst_id = player.stigmata_a_instance_id
+		&"stigmata_b":
+			inst_id = player.stigmata_b_instance_id
+	if inst_id.is_empty():
+		_notify_cheat("Người chơi chưa trang bị vị trí này!", true)
+		return
+	var target_item: EQUIPMENT_INSTANCE = null
+	for item: EQUIPMENT_INSTANCE in player.equipment_collection:
+		if item.instance_id == inst_id:
+			target_item = item
+			break
+	if target_item == null:
+		_notify_cheat("Không tìm thấy dữ liệu trang bị đã mang!", true)
+		return
+	var dup := EQUIPMENT_INSTANCE.new()
+	dup.instance_id = StringName("%s_dup_%d" % [String(target_item.equipment_definition_id), Time.get_ticks_msec()])
+	dup.equipment_definition_id = target_item.equipment_definition_id
+	dup.owner_player_id = player.player_id
+	dup.equipment_type = target_item.equipment_type
+	dup.stigmata_slot = target_item.stigmata_slot
+	dup.tier = target_item.tier
+	dup.gold_star_level = 0
+	dup.purple_star_level = 0
+	dup.acquired_source = &"CHEAT_F10"
+	player.equipment_collection.append(dup)
+	_notify_cheat("Đã thêm 1 bản trùng [0★] của %s vào túi!" % String(target_item.equipment_definition_id))
+	_refresh_after_cheat()
+
+
+func _cheat_set_relic_stars(gold: int, purple: int) -> void:
+	var player := _get_cheat_target_player()
+	if player == null or player.relic_instance_id.is_empty():
+		_notify_cheat("Người chơi chưa trang bị Kỷ Vật!", true)
+		return
+	for item: EQUIPMENT_INSTANCE in player.equipment_collection:
+		if item.instance_id == player.relic_instance_id:
+			item.gold_star_level = clampi(gold, 0, 6)
+			item.purple_star_level = clampi(purple, 0, item.gold_star_level)
+			_notify_cheat("Đã đặt Kỷ Vật: %d★ Vàng, %d★ Tím!" % [item.gold_star_level, item.purple_star_level])
+			_refresh_after_cheat()
+			return
+	_notify_cheat("Không tìm thấy Kỷ Vật!", true)
+
+
+func _cheat_set_stigmata_stars(slot_id: StringName, gold: int, purple: int) -> void:
+	var player := _get_cheat_target_player()
+	if player == null:
+		_notify_cheat("Không tìm thấy người chơi mục tiêu!", true)
+		return
+	var inst_id: StringName = player.stigmata_a_instance_id if slot_id == &"stigmata_a" else player.stigmata_b_instance_id
+	if inst_id.is_empty():
+		_notify_cheat("Người chơi chưa trang bị Vết Thánh này!", true)
+		return
+	for item: EQUIPMENT_INSTANCE in player.equipment_collection:
+		if item.instance_id == inst_id:
+			item.gold_star_level = clampi(gold, 0, 6)
+			item.purple_star_level = clampi(purple, 0, item.gold_star_level)
+			_notify_cheat("Đã đặt Vết Thánh: %d★ Vàng, %d★ Tím!" % [item.gold_star_level, item.purple_star_level])
+			_refresh_after_cheat()
+			return
+	_notify_cheat("Không tìm thấy Vết Thánh!", true)
+
+
+func _add_cheat_btn(parent: Node, label_text: String, callback: Callable) -> Button:
+	var btn := Button.new()
+	btn.text = label_text
+	btn.custom_minimum_size = Vector2(220, 42)
+	btn.focus_mode = Control.FOCUS_NONE
+	btn.pressed.connect(callback)
+	parent.add_child(btn)
+	return btn

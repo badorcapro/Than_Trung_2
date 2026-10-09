@@ -11,7 +11,7 @@ func validate(instance: EquipmentInstance) -> LootValidationReport:
 	if instance.equipment_type < EquipmentEnums.EquipmentType.RELIC or instance.equipment_type > EquipmentEnums.EquipmentType.STIGMATA: report.add_error(&"EQUIPMENT_TYPE_INVALID", "Invalid equipment type")
 	if instance.stigmata_slot < EquipmentEnums.StigmataSlot.NONE or instance.stigmata_slot > EquipmentEnums.StigmataSlot.C: report.add_error(&"STIGMATA_SLOT_INVALID", "Invalid stigmata slot")
 	if instance.tier < EquipmentEnums.Tier.A or instance.tier > EquipmentEnums.Tier.SS: report.add_error(&"EQUIPMENT_TIER_INVALID", "Invalid equipment tier")
-	if instance.gold_star_level < 1 or instance.gold_star_level > 6: report.add_error(&"GOLD_STAR_OUT_OF_RANGE", "Gold must be 1..6")
+	if instance.gold_star_level < 0 or instance.gold_star_level > 6: report.add_error(&"GOLD_STAR_OUT_OF_RANGE", "Gold must be 0..6")
 	if instance.purple_star_level < 0 or instance.purple_star_level > 6: report.add_error(&"PURPLE_STAR_OUT_OF_RANGE", "Purple must be 0..6")
 	if instance.purple_star_level > instance.gold_star_level: report.add_error(&"PURPLE_EXCEEDS_GOLD", "Purple cannot exceed Gold")
 	if instance.equipment_type == EquipmentEnums.EquipmentType.RELIC and instance.stigmata_slot != EquipmentEnums.StigmataSlot.NONE: report.add_error(&"RELIC_SLOT_INVALID", "Relic must use NONE slot")

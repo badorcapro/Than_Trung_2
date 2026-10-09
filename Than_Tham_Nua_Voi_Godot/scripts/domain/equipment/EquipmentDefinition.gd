@@ -17,10 +17,21 @@ extends Resource
 @export var test_only_not_canon_locked := true
 
 func stat_row(gold_level: int) -> Dictionary:
+	if gold_level == 0:
+		if not gold_stat_rows.is_empty():
+			var r1: Dictionary = gold_stat_rows[0]
+			var r0: Dictionary = {}
+			for k: Variant in r1.keys():
+				r0[k] = int(float(r1[k]) * 0.7)
+			return r0
+		return {}
 	if gold_level < 1 or gold_level > gold_stat_rows.size(): return {}
 	return gold_stat_rows[gold_level - 1].duplicate(true)
 
 func gold_cost(from_level: int) -> int:
+	if from_level == 0:
+		if gold_upgrade_costs.is_empty(): return 5
+		return maxi(1, int(floor(float(gold_upgrade_costs[0]) * 0.5)))
 	if from_level < 1 or from_level > gold_upgrade_costs.size(): return -1
 	return gold_upgrade_costs[from_level - 1]
 

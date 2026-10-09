@@ -22,7 +22,7 @@ func run() -> Array[Dictionary]:
 	rows.append(_row("Character negative Bag fails", _has_error(character_validator.validate(invalid_character), &"BAG_LEVEL_NEGATIVE")))
 	rows.append(_row("Valid Character fixture passes", character_validator.validate(characters[0]).is_valid))
 	var equipment_validator := EquipmentValidator.new()
-	var invalid_equipment := EquipmentInstance.new(); invalid_equipment.instance_id = &"invalid"; invalid_equipment.equipment_definition_id = &"test"; invalid_equipment.gold_star_level = 0
+	var invalid_equipment := EquipmentInstance.new(); invalid_equipment.instance_id = &"invalid"; invalid_equipment.equipment_definition_id = &"test"; invalid_equipment.gold_star_level = -1
 	rows.append(_row("Gold below range fails", _has_error(equipment_validator.validate(invalid_equipment), &"GOLD_STAR_OUT_OF_RANGE")))
 	invalid_equipment.gold_star_level = 6; invalid_equipment.purple_star_level = 7
 	rows.append(_row("Purple above range fails", _has_error(equipment_validator.validate(invalid_equipment), &"PURPLE_STAR_OUT_OF_RANGE")))
