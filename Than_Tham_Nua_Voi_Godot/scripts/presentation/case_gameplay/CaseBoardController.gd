@@ -36,14 +36,14 @@ var _tile_size: Vector2 = BOARD_TILE_SIZE
 func _ready() -> void:
 	var style := StyleBoxTexture.new()
 	style.texture = preload("res://assets/ui/case/case_board_mat.png")
-	style.texture_margin_left = 68.0
-	style.texture_margin_top = 68.0
-	style.texture_margin_right = 68.0
-	style.texture_margin_bottom = 68.0
-	style.content_margin_left = 42.0
-	style.content_margin_right = 42.0
-	style.content_margin_top = 38.0
-	style.content_margin_bottom = 40.0
+	style.texture_margin_left = 60.0
+	style.texture_margin_top = 60.0
+	style.texture_margin_right = 60.0
+	style.texture_margin_bottom = 60.0
+	style.content_margin_left = 52.0
+	style.content_margin_right = 52.0
+	style.content_margin_top = 46.0
+	style.content_margin_bottom = 48.0
 	add_theme_stylebox_override("panel", style)
 	var board_title: Label = get_node_or_null("BoardColumn/BoardTitle") as Label
 	if board_title != null:
