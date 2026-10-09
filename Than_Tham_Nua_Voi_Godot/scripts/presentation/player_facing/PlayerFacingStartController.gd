@@ -187,6 +187,8 @@ var _cheat_target_player_index: int = 0
 func _ready() -> void:
 	if loot_map_view != null:
 		loot_map_view.node_clicked.connect(_on_map_node_clicked)
+		loot_map_view.node_hovered.connect(_on_map_node_hovered)
+		loot_map_view.node_unhovered.connect(_on_map_node_unhovered)
 	_init_pummel_styles()
 	if roll_dice_button != null and not roll_dice_button.pressed.is_connected(_on_move_pressed):
 		roll_dice_button.pressed.connect(_on_move_pressed)
@@ -872,6 +874,22 @@ func _on_map_node_clicked(node_id: StringName) -> void:
 	):
 		_show_message("Hãy bấm phím [Z] để đổ xúc xắc trước!", false)
 		return
+
+
+func _on_map_node_hovered(node_id: StringName) -> void:
+	if setup == null or setup.phase != SETUP_SESSION.Phase.LOOT_ACTIVE:
+		return
+	if loot_map_view != null and action_guidance != null:
+		var label: String = loot_map_view.label_for_node(node_id)
+		action_guidance.text = "📍 Đang soi: [color=#ffe680]%s[/color]" % label
+
+
+func _on_map_node_unhovered() -> void:
+	if setup == null or setup.phase != SETUP_SESSION.Phase.LOOT_ACTIVE:
+		return
+	if case_flow != null and case_flow.loot_session != null and action_guidance != null:
+		var current_player: LOOT_MOVEMENT_PLAYER_STATE = case_flow.loot_session.movement_session.current_player()
+		action_guidance.text = _loot_action_guidance(case_flow.loot_session, current_player)
 
 
 func _on_overflow_discard_pressed() -> void:

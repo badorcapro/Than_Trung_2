@@ -22,6 +22,8 @@ const PRODUCTION_CONSUMABLE_REPO := preload("res://scripts/application/loot/Prod
 const SEQUENCE_REWARD_ROLL_SOURCE := preload("res://scripts/infrastructure/SequenceRewardRollSource.gd")
 
 signal node_clicked(node_id: StringName)
+signal node_hovered(node_id: StringName)
+signal node_unhovered()
 
 var map_definition: LootMapDefinition
 var movement_session: LootMovementSession
@@ -37,6 +39,7 @@ var consumed_special_node_ids: Array[StringName] = []
 var _cached_rewards: Array[RewardDefinition] = []
 var _cached_items: Array[ConsumableItemDefinition] = []
 var _node_positions: Dictionary = {}
+var _hovered_node_id: StringName = &""
 var _camera_center := Vector2.ZERO
 var _camera_initialized := false
 var _debug_labels_visible := false
@@ -88,6 +91,7 @@ func presentation_snapshot() -> Dictionary:
 		"house_region_count": house_region_count(),
 		"has_custom_map_texture": has_custom_map_texture(),
 		"reward_node_count": reward_snapshots_by_node.size(),
+		"hovered_node_id": String(_hovered_node_id),
 	}
 
 
@@ -162,6 +166,12 @@ func _notification(what: int) -> void:
 			_clamp_camera()
 		_build_positions()
 		queue_redraw()
+	elif what == NOTIFICATION_MOUSE_EXIT:
+		if not _hovered_node_id.is_empty():
+			_hovered_node_id = &""
+			node_unhovered.emit()
+			tooltip_text = ""
+			queue_redraw()
 
 
 func _process(delta: float) -> void:
@@ -236,13 +246,32 @@ func _handle_pointer_input(event: InputEvent) -> bool:
 	if mouse_motion != null:
 		var local_pos: Vector2 = _viewport_to_local(mouse_motion.position)
 		if _drag_press_held:
+			if not _hovered_node_id.is_empty():
+				_hovered_node_id = &""
+				node_unhovered.emit()
+				tooltip_text = ""
+				queue_redraw()
 			return update_pointer_drag(local_pos)
 		if is_visible_in_tree() and Rect2(Vector2.ZERO, size).has_point(local_pos):
 			var hovered: StringName = find_node_at_screen_position(local_pos)
-			if not hovered.is_empty() and selectable_branch_nodes.has(hovered):
+			if hovered != _hovered_node_id:
+				_hovered_node_id = hovered
+				if not _hovered_node_id.is_empty():
+					node_hovered.emit(_hovered_node_id)
+				else:
+					node_unhovered.emit()
+				_update_hovered_tooltip_text()
+				queue_redraw()
+			if not hovered.is_empty():
 				mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 			else:
 				mouse_default_cursor_shape = Control.CURSOR_ARROW
+		else:
+			if not _hovered_node_id.is_empty():
+				_hovered_node_id = &""
+				node_unhovered.emit()
+				tooltip_text = ""
+				queue_redraw()
 	return false
 
 
@@ -480,6 +509,7 @@ func _draw() -> void:
 		if _debug_labels_visible:
 			_draw_debug_node_label(center, node_id)
 	_draw_tokens()
+	_draw_hovered_node_tooltip()
 
 
 func _draw_branch_arrow(from_pos: Vector2, to_pos: Vector2, visual_scale: float) -> void:
@@ -735,6 +765,128 @@ func _draw_tokens() -> void:
 		draw_string(ThemeDB.fallback_font, text_pos, "P%d" % (player_index + 1), HORIZONTAL_ALIGNMENT_CENTER, text_w, font_size, Color(0.04, 0.05, 0.08))
 
 
+func _update_hovered_tooltip_text() -> void:
+	if _hovered_node_id.is_empty() or map_definition == null:
+		tooltip_text = ""
+		return
+	var rew: Dictionary = _get_node_reward_presentation(_hovered_node_id)
+	if rew.get("has_reward", false):
+		var amount: int = int(rew.get("amount", 1))
+		var r_name: String = String(rew.get("reward_name", ""))
+		var icon_str: String = String(rew.get("icon", ""))
+		var desc: String = String(rew.get("description", ""))
+		if desc.is_empty():
+			tooltip_text = "%s %s (+%d)" % [icon_str, r_name, amount]
+		else:
+			tooltip_text = "%s %s (+%d)\n%s" % [icon_str, r_name, amount, desc]
+	else:
+		var node: LootNodeDefinition = map_definition.find_node(_hovered_node_id)
+		tooltip_text = _build_node_base_name(node)
+
+
+func _draw_hovered_node_tooltip() -> void:
+	if _hovered_node_id.is_empty() or not _node_positions.has(_hovered_node_id) or map_definition == null:
+		return
+	if _drag_active:
+		return
+	var center: Vector2 = _node_positions[_hovered_node_id]
+	var node: LootNodeDefinition = map_definition.find_node(_hovered_node_id)
+	if node == null:
+		return
+
+	var visual_scale: float = _visual_scale()
+	var radius: float = _node_radius(node) * visual_scale
+
+	# 1. Subtle selection / hover halo ring around the node
+	draw_arc(center, radius + 4.0 * visual_scale, 0.0, TAU, 32, Color(1.0, 1.0, 1.0, 0.9), 2.2 * visual_scale, true)
+	draw_arc(center, radius + 7.5 * visual_scale, 0.0, TAU, 32, Color(1.0, 0.88, 0.35, 0.45), 1.6 * visual_scale, true)
+
+	# 2. Prepare tooltip content
+	var rew: Dictionary = _get_node_reward_presentation(_hovered_node_id)
+	var title_text: String = ""
+	var desc_text: String = ""
+	var theme_col: Color = Color(1.0, 0.84, 0.25)
+
+	if rew.get("has_reward", false):
+		var icon_str: String = String(rew.get("icon", "🎁"))
+		var r_name: String = String(rew.get("reward_name", "Vật phẩm"))
+		var amount: int = int(rew.get("amount", 1))
+		var show_count: bool = bool(rew.get("show_count", true))
+		theme_col = rew.get("theme_color", Color(1.0, 0.84, 0.25))
+
+		if show_count:
+			title_text = "%s %s (+%d)" % [icon_str, r_name, amount]
+		else:
+			title_text = "%s %s" % [icon_str, r_name]
+		desc_text = String(rew.get("description", ""))
+	elif node.node_kind == &"ORIGIN_SPAWN":
+		title_text = "Nhà họ %s · Điểm Xuất Phát" % _house_letter(node.origin_house_id)
+		desc_text = "Vị trí khởi đầu của gia tộc"
+		theme_col = _house_color(node.origin_house_id).lightened(0.2)
+	elif node.node_kind == &"CENTRAL_HUB":
+		title_text = "◆ Đại Sân Trung Tâm"
+		desc_text = "Điểm giao thoa giữa các lối đi của 5 Gia tộc"
+		theme_col = Color(0.85, 0.65, 1.0)
+	elif node.node_kind == &"MAUSOLEUM_HUB":
+		title_text = "◇ Lăng Miếu"
+		desc_text = "Ngã rẽ dẫn lối vào ba Hoàng lộ phương Nam"
+		theme_col = Color(1.0, 0.75, 0.4)
+	else:
+		title_text = _build_node_base_name(node)
+		desc_text = "Ô đá di chuyển trong Hoàng Cung"
+		theme_col = Color(0.8, 0.85, 0.8)
+
+	# 3. Calculate tooltip dimensions
+	var title_font_size: int = maxi(int(13.0 * visual_scale), 11)
+	var desc_font_size: int = maxi(int(10.0 * visual_scale), 9)
+
+	var title_width: float = ThemeDB.fallback_font.get_string_size(
+		title_text, HORIZONTAL_ALIGNMENT_LEFT, -1, title_font_size
+	).x
+	var desc_width: float = 0.0
+	if not desc_text.is_empty():
+		desc_width = ThemeDB.fallback_font.get_string_size(
+			desc_text, HORIZONTAL_ALIGNMENT_LEFT, -1, desc_font_size
+		).x
+
+	var pad_h: float = 12.0 * visual_scale
+	var pad_v: float = 7.0 * visual_scale
+	var content_w: float = maxf(title_width, desc_width)
+	var box_w: float = content_w + pad_h * 2.0
+	var box_h: float = float(title_font_size) + (float(desc_font_size) + 4.0 * visual_scale if not desc_text.is_empty() else 0.0) + pad_v * 2.0
+
+	# 4. Position above the node (or below if too close to top edge)
+	var tooltip_y: float = center.y - radius - box_h - 12.0 * visual_scale
+	if tooltip_y < 10.0:
+		tooltip_y = center.y + radius + 14.0 * visual_scale
+	var tooltip_x: float = clampf(center.x - box_w * 0.5, 10.0, size.x - box_w - 10.0)
+	var box_rect := Rect2(Vector2(tooltip_x, tooltip_y), Vector2(box_w, box_h))
+
+	# 5. Draw tooltip background with shadow and gold rim
+	# Drop shadow
+	draw_rect(box_rect.grow(2.5 * visual_scale), Color(0.02, 0.02, 0.03, 0.65), true)
+	# Outer border matching theme
+	draw_rect(box_rect, Color(theme_col.r, theme_col.g, theme_col.b, 0.95), false, 1.8 * visual_scale)
+	# Inner deep dark fill
+	draw_rect(box_rect.grow(-1.0 * visual_scale), Color(0.08, 0.09, 0.12, 0.94), true)
+
+	# 6. Draw text inside
+	var title_pos: Vector2 = box_rect.position + Vector2(pad_h, pad_v + float(title_font_size) * 0.85)
+	draw_string(
+		ThemeDB.fallback_font, title_pos, title_text,
+		HORIZONTAL_ALIGNMENT_LEFT, box_w - pad_h * 2.0, title_font_size,
+		Color(1.0, 0.96, 0.85)
+	)
+
+	if not desc_text.is_empty():
+		var desc_pos: Vector2 = title_pos + Vector2(0.0, float(desc_font_size) + 4.0 * visual_scale)
+		draw_string(
+			ThemeDB.fallback_font, desc_pos, desc_text,
+			HORIZONTAL_ALIGNMENT_LEFT, box_w - pad_h * 2.0, desc_font_size,
+			Color(0.72, 0.78, 0.84)
+		)
+
+
 
 func _path_contains_edge(from_id: StringName, to_id: StringName) -> bool:
 	for index: int in range(highlighted_path.size() - 1):
@@ -743,29 +895,32 @@ func _path_contains_edge(from_id: StringName, to_id: StringName) -> bool:
 	return false
 
 
-func _build_node_label(node: LootNodeDefinition) -> String:
-	var base_name: String = ""
+func _build_node_base_name(node: LootNodeDefinition) -> String:
+	if node == null:
+		return "Đường trong Hoàng Cung"
 	if not node.display_name.is_empty():
-		base_name = node.display_name
-	else:
-		match node.node_kind:
-			&"ORIGIN_SPAWN":
-				base_name = "Nhà %s" % _house_letter(node.origin_house_id)
-			&"HOUSE_PATH":
-				base_name = "Lối Nhà %s" % _house_letter(node.origin_house_id)
-			&"CENTRAL_HUB":
-				base_name = "Đại sân Trung tâm"
-			&"MIDDLE_PATH":
-				base_name = "Trung lộ"
-			&"MAUSOLEUM_HUB":
-				base_name = "Lăng Miếu"
-			&"FINAL_PATH":
-				base_name = "Hoàng lộ"
-			&"END":
-				base_name = "Điểm kết thúc"
-			_:
-				base_name = "Đường trong Hoàng Cung"
+		return node.display_name
+	match node.node_kind:
+		&"ORIGIN_SPAWN":
+			return "Nhà %s" % _house_letter(node.origin_house_id)
+		&"HOUSE_PATH":
+			return "Lối Nhà %s" % _house_letter(node.origin_house_id)
+		&"CENTRAL_HUB":
+			return "Đại sân Trung tâm"
+		&"MIDDLE_PATH":
+			return "Trung lộ"
+		&"MAUSOLEUM_HUB":
+			return "Lăng Miếu"
+		&"FINAL_PATH":
+			return "Hoàng lộ"
+		&"END":
+			return "Điểm kết thúc"
+		_:
+			return "Đường trong Hoàng Cung"
 
+
+func _build_node_label(node: LootNodeDefinition) -> String:
+	var base_name: String = _build_node_base_name(node)
 	var rew: Dictionary = _get_node_reward_presentation(node.node_id)
 	if rew.get("has_reward", false):
 		var rew_name: String = String(rew.get("reward_name", ""))
@@ -827,6 +982,7 @@ func _get_node_reward_presentation(node_id: StringName) -> Dictionary:
 	var is_consumed: bool = consumed_special_node_ids.has(node_id)
 	var icon: String = "🎁"
 	var reward_name: String = "Phần Thưởng"
+	var desc: String = ""
 	var show_count: bool = (def.amount > 0)
 	var theme_color := Color(1.0, 0.85, 0.3)
 	var tile_bg := Color(0.18, 0.22, 0.26)
@@ -839,18 +995,21 @@ func _get_node_reward_presentation(node_id: StringName) -> Dictionary:
 			else:
 				icon = "🪙"
 				reward_name = "Xu Bạc"
+			desc = "Tiền tệ lưu thông trong Hoàng Cung"
 			show_count = true
 			theme_color = Color(1.0, 0.86, 0.35)
 			tile_bg = Color(0.24, 0.22, 0.16)
 		RewardDefinition.Type.ORB:
 			icon = "🔮"
 			reward_name = "Linh Ngọc"
+			desc = "Linh bảo kích hoạt năng lực thám tử"
 			show_count = true
 			theme_color = Color(0.85, 0.5, 1.0)
 			tile_bg = Color(0.25, 0.16, 0.32)
 		RewardDefinition.Type.GACHA_TICKET:
 			icon = "🎫"
 			reward_name = "Vé Gacha"
+			desc = "Dùng trong Chiêu Mộ Kỷ Vật & Vết Thánh"
 			show_count = true
 			theme_color = Color(1.0, 0.78, 0.25)
 			tile_bg = Color(0.28, 0.22, 0.12)
@@ -858,18 +1017,21 @@ func _get_node_reward_presentation(node_id: StringName) -> Dictionary:
 			if String(def.reward_id).contains("large") or def.amount >= 5:
 				icon = "🔱"
 				reward_name = "EXP Vết Thánh"
+				desc = "Vật liệu cường hóa Sao Vết Thánh"
 				show_count = true
 				theme_color = Color(0.95, 0.55, 0.9)
 				tile_bg = Color(0.3, 0.16, 0.28)
 			else:
 				icon = "📿"
 				reward_name = "EXP Kỷ Vật"
+				desc = "Vật liệu cường hóa Sao Kỷ Vật"
 				show_count = true
 				theme_color = Color(0.4, 0.85, 1.0)
 				tile_bg = Color(0.14, 0.24, 0.32)
 		RewardDefinition.Type.EQUIPMENT_EXCHANGE_MATERIAL:
 			icon = "💠"
 			reward_name = "Phôi Đổi"
+			desc = "Phôi trao đổi vật phẩm quý"
 			show_count = true
 			theme_color = Color(0.35, 0.95, 0.85)
 			tile_bg = Color(0.12, 0.26, 0.28)
@@ -896,6 +1058,14 @@ func _get_node_reward_presentation(node_id: StringName) -> Dictionary:
 					reward_name = "Vật Phẩm"
 					theme_color = Color(0.85, 0.7, 0.4)
 					tile_bg = Color(0.22, 0.2, 0.18)
+			for item_def: ConsumableItemDefinition in _cached_items:
+				if item_def != null and item_def.item_id == def.item_id:
+					desc = item_def.description
+					if not item_def.display_name.is_empty():
+						reward_name = item_def.display_name
+					break
+			if desc.is_empty():
+				desc = "Vật phẩm hỗ trợ hành trình"
 
 	return {
 		"has_reward": true,
@@ -904,6 +1074,7 @@ func _get_node_reward_presentation(node_id: StringName) -> Dictionary:
 		"amount": def.amount,
 		"icon": icon,
 		"reward_name": reward_name,
+		"description": desc,
 		"show_count": show_count,
 		"theme_color": theme_color,
 		"tile_bg": tile_bg,
