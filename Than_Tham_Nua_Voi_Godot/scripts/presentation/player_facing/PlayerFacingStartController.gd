@@ -2021,10 +2021,11 @@ func _show_phase(next_phase: int) -> void:
 		SETUP_SESSION.Phase.ROUND_SUMMARY,
 		SETUP_SESSION.Phase.NEXT_CASE_SELECTION,
 	]
-	safe_margin.visible = (
-		next_phase != SETUP_SESSION.Phase.CASE_ACTIVE
-		and next_phase != SETUP_SESSION.Phase.LOOT_ACTIVE
-	)
+	if safe_margin != null:
+		safe_margin.visible = (
+			next_phase != SETUP_SESSION.Phase.CASE_ACTIVE
+			and next_phase != SETUP_SESSION.Phase.LOOT_ACTIVE
+		)
 	main_menu.visible = next_phase == SETUP_SESSION.Phase.MAIN_MENU
 	match_mode.visible = next_phase == SETUP_SESSION.Phase.MATCH_MODE
 	match_rules_panel.visible = next_phase == SETUP_SESSION.Phase.MATCH_RULES
