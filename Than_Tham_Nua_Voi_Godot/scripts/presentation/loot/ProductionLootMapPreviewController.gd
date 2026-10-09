@@ -12,6 +12,7 @@ const MAP_VIEW := preload(
 @onready var state_label: Label = %StateLabel
 @onready var camera_label: Label = %CameraLabel
 @onready var move_button: Button = %MoveButton
+@onready var branch_buttons: HBoxContainer = %BranchButtons
 @onready var debug_overlay: Control = %DebugOverlay
 
 var map_definition: LootMapDefinition
@@ -19,6 +20,7 @@ var session := LootMovementSession.new()
 var movement_service := LootMovementService.new()
 var roll_source: MovementRollSource = SequenceMovementRollSource.new([1, 2, 1, 2, 1])
 var _debug_visible := false
+var _selected_preview_branch: StringName = &""
 var _windowed_size := Vector2i.ZERO
 var _windowed_position := Vector2i.ZERO
 var _windowed_geometry_captured := false
@@ -155,11 +157,22 @@ func _build_preview_session() -> void:
 
 
 func _on_move_pressed() -> void:
-	var action: MovementActionResult = movement_service.roll_move(
-		session, map_definition, roll_source
+	if session.pending_branch != null and session.pending_branch.active:
+		return
+	var chosen: StringName = _selected_preview_branch
+	_selected_preview_branch = &""
+	var _action: MovementActionResult = movement_service.roll_move(
+		session, map_definition, roll_source, [], chosen, true
 	)
-	if action != null:
-		_refresh()
+	_refresh()
+
+
+func _on_branch_chosen(chosen_branch_id: StringName) -> void:
+	_selected_preview_branch = &""
+	var _action: MovementActionResult = movement_service.continue_branch_move(
+		session, map_definition, chosen_branch_id, []
+	)
+	_refresh()
 
 
 func _on_next_player_pressed() -> void:
@@ -183,6 +196,10 @@ func _apply_debug_visibility(visible: bool) -> void:
 
 func _refresh() -> void:
 	map_view.configure(map_definition, session)
+	if branch_buttons != null:
+		for child: Node in branch_buttons.get_children():
+			child.queue_free()
+
 	var current: LootMovementPlayerState = session.current_player()
 	if current == null:
 		active_player_label.text = "Đã hoàn tất lượt xem trước"
@@ -190,10 +207,50 @@ func _refresh() -> void:
 		move_button.disabled = true
 		return
 	var house: HouseDefinition = HOUSE_REPOSITORY.find(current.origin_house_id)
-	active_player_label.text = "Lượt hiện tại: %s" % (
+	var house_name: String = (
 		house.display_name if house != null else String(current.origin_house_id)
 	)
+
+	if session.pending_branch != null and session.pending_branch.active:
+		active_player_label.text = "⚠️ %s: Gặp ngã rẽ tại %s (còn %d bước)" % [
+			house_name,
+			map_view.label_for_node(session.pending_branch.fork_node_id),
+			session.pending_branch.remaining_steps,
+		]
+		state_label.text = "Hãy chọn một trong các nhánh để tiếp tục di chuyển."
+		move_button.disabled = true
+		for branch_id: StringName in session.pending_branch.available_branch_ids:
+			var btn := Button.new()
+			btn.text = map_view.label_for_node(branch_id)
+			btn.pressed.connect(func(): _on_branch_chosen(branch_id))
+			branch_buttons.add_child(btn)
+		return
+
+	active_player_label.text = "Lượt hiện tại: %s" % house_name
 	state_label.text = "Nút: %s  ·  Speed xem trước: %d  ·  Stamina còn lại: %d" % [
 		current.current_node_id, current.speed_snapshot, current.remaining_moves
 	]
 	move_button.disabled = session.completed
+
+	var branches: Array[LootNodeDefinition] = movement_service.get_available_branches(
+		map_definition, current.current_node_id
+	)
+	if branches.size() > 1:
+		if _selected_preview_branch.is_empty() or not _has_branch_node(branches, _selected_preview_branch):
+			_selected_preview_branch = branches[0].node_id
+		for b: LootNodeDefinition in branches:
+			var btn := Button.new()
+			var is_sel: bool = b.node_id == _selected_preview_branch
+			btn.text = ("👉 " if is_sel else "") + map_view.label_for_node(b.node_id)
+			btn.pressed.connect(func():
+				_selected_preview_branch = b.node_id
+				_refresh()
+			)
+			branch_buttons.add_child(btn)
+
+
+func _has_branch_node(branches: Array[LootNodeDefinition], node_id: StringName) -> bool:
+	for b: LootNodeDefinition in branches:
+		if b.node_id == node_id:
+			return true
+	return false

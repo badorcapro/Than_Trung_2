@@ -308,12 +308,24 @@ func use_item(
 	return _after_loot_action(&"ITEM_USED", String(result.code))
 
 
-func move() -> Dictionary:
+func move(branch_choice: StringName = &"") -> Dictionary:
 	if loot_session == null:
 		return _failure(&"LOOT_SESSION_MISSING", "Begin Loot first")
 	var action: MovementActionResult = _loot_service.perform_movement(
-		loot_session, _map_definition, _movement_rng, _rewards
+		loot_session, _map_definition, _movement_rng, _rewards, branch_choice, true
 	)
+	if loot_session.phase == LOOT_REWARD_SESSION.Phase.BRANCH_SELECTION:
+		var fork_id: StringName = (
+			loot_session.movement_session.pending_branch.fork_node_id
+			if loot_session.movement_session != null and loot_session.movement_session.pending_branch != null
+			else &""
+		)
+		var pending_res: Dictionary = _after_loot_action(
+			&"BRANCH_SELECTION_REQUIRED",
+			"Đã đến ngã rẽ. Hãy chọn nhánh để tiếp tục di chuyển."
+		)
+		pending_res["fork_node_id"] = fork_id
+		return pending_res
 	if action == null:
 		return _failure(&"MOVEMENT_ACTION_UNAVAILABLE", "Movement action is not legal now")
 	var result: Dictionary = _after_loot_action(
@@ -321,6 +333,25 @@ func move() -> Dictionary:
 		(
 			"%s rolled %d and reached %s"
 			% [String(action.player_id), action.roll_distance, String(action.end_node_id)]
+		)
+	)
+	result["action"] = action
+	return result
+
+
+func choose_branch(chosen_branch_id: StringName) -> Dictionary:
+	if loot_session == null:
+		return _failure(&"LOOT_SESSION_MISSING", "Begin Loot first")
+	var action: MovementActionResult = _loot_service.choose_branch(
+		loot_session, _map_definition, chosen_branch_id, _rewards
+	)
+	if action == null:
+		return _failure(&"BRANCH_CHOICE_REJECTED", "Không thể chọn nhánh này")
+	var result: Dictionary = _after_loot_action(
+		&"BRANCH_RESOLVED",
+		(
+			"%s took branch %s and reached %s"
+			% [String(action.player_id), String(chosen_branch_id), String(action.end_node_id)]
 		)
 	)
 	result["action"] = action

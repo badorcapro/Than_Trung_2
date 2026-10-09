@@ -58,12 +58,67 @@ func use_item(
 	)
 	return result
 
-func perform_movement(session: LootRewardSession, map_definition: LootMapDefinition, movement_rng: MovementRollSource, rewards: Array[RewardDefinition]) -> MovementActionResult:
-	if session == null or session.phase != LootRewardSession.Phase.MOVEMENT: return null
+func perform_movement(
+	session: LootRewardSession,
+	map_definition: LootMapDefinition,
+	movement_rng: MovementRollSource,
+	rewards: Array[RewardDefinition],
+	branch_choice: StringName = &"",
+	interactive: bool = false
+) -> MovementActionResult:
+	if session == null or session.phase != LootRewardSession.Phase.MOVEMENT:
+		return null
 	var before_player: LootMovementPlayerState = session.movement_session.current_player()
-	var action: MovementActionResult = movement_service.roll_move(session.movement_session, map_definition, movement_rng, before_player.temporary_effects)
-	if action == null: return null
-	session.pending_trace = action.traversed_node_ids.duplicate(); session.pending_trace_index = 0; session.phase = LootRewardSession.Phase.REWARD_RESOLUTION
+	if before_player == null:
+		return null
+	var action: MovementActionResult = movement_service.roll_move(
+		session.movement_session,
+		map_definition,
+		movement_rng,
+		before_player.temporary_effects,
+		branch_choice,
+		interactive
+	)
+	if session.movement_session.pending_branch != null and session.movement_session.pending_branch.active:
+		session.phase = LootRewardSession.Phase.BRANCH_SELECTION
+		return null
+	if action == null:
+		return null
+	session.pending_trace = action.traversed_node_ids.duplicate()
+	session.pending_trace_index = 0
+	session.phase = LootRewardSession.Phase.REWARD_RESOLUTION
+	_resolve_pending(session, rewards)
+	return action
+
+
+func choose_branch(
+	session: LootRewardSession,
+	map_definition: LootMapDefinition,
+	chosen_branch_id: StringName,
+	rewards: Array[RewardDefinition]
+) -> MovementActionResult:
+	if session == null or session.phase != LootRewardSession.Phase.BRANCH_SELECTION:
+		return null
+	if (
+		session.movement_session == null
+		or session.movement_session.pending_branch == null
+		or not session.movement_session.pending_branch.active
+	):
+		return null
+	var player: LootMovementPlayerState = session.movement_session.current_player()
+	if player == null:
+		return null
+	var action: MovementActionResult = movement_service.continue_branch_move(
+		session.movement_session,
+		map_definition,
+		chosen_branch_id,
+		player.temporary_effects
+	)
+	if action == null:
+		return null
+	session.pending_trace = action.traversed_node_ids.duplicate()
+	session.pending_trace_index = 0
+	session.phase = LootRewardSession.Phase.REWARD_RESOLUTION
 	_resolve_pending(session, rewards)
 	return action
 

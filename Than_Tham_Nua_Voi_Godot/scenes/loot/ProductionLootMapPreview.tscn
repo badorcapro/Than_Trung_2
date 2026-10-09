@@ -56,6 +56,11 @@ text = "Cuộn chuột: thu/phóng  ·  SPACE: tìm người chơi  ·  F9: DEV 
 theme_override_colors/font_color = Color(0.72, 0.75, 0.7, 1)
 theme_override_font_sizes/font_size = 13
 
+[node name="BranchButtons" type="HBoxContainer" parent="PlayerHud/Panel/Row"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 6
+
 [node name="MoveButton" type="Button" parent="PlayerHud/Panel/Row"]
 unique_name_in_owner = true
 layout_mode = 2

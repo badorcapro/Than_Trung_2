@@ -49,6 +49,7 @@ var case_flow: CASE_FLOW_SESSION
 var case_controller: CASE_CONTROLLER
 var _loot_activity_lines: Array[String] = []
 var _logged_reward_count := 0
+var _selected_branch_id: StringName = &""
 var _autosave_service: PLAYER_FACING_AUTOSAVE_SERVICE = (
 	PLAYER_FACING_AUTOSAVE_SERVICE.new()
 )
@@ -98,6 +99,9 @@ var _autosave_service: PLAYER_FACING_AUTOSAVE_SERVICE = (
 @onready var item_source_selector: OptionButton = %ItemSourceSelector
 @onready var use_item_button: Button = %UseItem
 @onready var continue_without_item_button: Button = %ContinueWithoutItem
+@onready var branch_panel: Control = %BranchPanel
+@onready var branch_title: Label = %BranchTitle
+@onready var branch_buttons_container: HBoxContainer = %BranchButtonsContainer
 @onready var move_button: Button = %Move
 @onready var overflow_panel: Control = %OverflowPanel
 @onready var overflow_text: Label = %OverflowText
@@ -530,7 +534,14 @@ func _on_use_item_pressed() -> void:
 
 
 func _on_move_pressed() -> void:
-	_handle_loot_result(case_flow.move())
+	var chosen: StringName = _selected_branch_id
+	_selected_branch_id = &""
+	_handle_loot_result(case_flow.move(chosen))
+
+
+func _on_branch_chosen(chosen_branch_id: StringName) -> void:
+	_selected_branch_id = &""
+	_handle_loot_result(case_flow.choose_branch(chosen_branch_id))
 
 
 func _on_overflow_discard_pressed() -> void:
@@ -1074,6 +1085,7 @@ func _refresh_loot() -> void:
 		)
 	)
 	action_guide.text = _loot_action_guidance(session, movement_player)
+	_refresh_branch_ui(session, movement_player, movement_ready)
 	overflow_panel.visible = session.overflow.active
 	if session.overflow.active:
 		overflow_text.text = (
@@ -1081,6 +1093,63 @@ func _refresh_loot() -> void:
 			+ "Chọn một vật phẩm đang mang để thay thế, hoặc bỏ vật phẩm mới."
 		) % _item_display_name(session.overflow.incoming_item_id)
 	_refresh_overflow_choice(session, movement_player.player_id)
+
+
+func _refresh_branch_ui(
+	session: LOOT_REWARD_SESSION,
+	movement_player: LOOT_MOVEMENT_PLAYER_STATE,
+	movement_ready: bool
+) -> void:
+	if branch_buttons_container == null or branch_panel == null:
+		return
+	for child: Node in branch_buttons_container.get_children():
+		child.queue_free()
+
+	if session.phase == LOOT_REWARD_SESSION.Phase.BRANCH_SELECTION:
+		branch_panel.visible = true
+		var pending: PendingBranchState = session.movement_session.pending_branch
+		var fork_name: String = _node_display_name(pending.fork_node_id)
+		branch_title.text = "⚠️ GẶP NGÃ RẼ TẠI %s! Còn %d bước — Chọn hướng rẽ:" % [
+			fork_name, pending.remaining_steps
+		]
+		for branch_id: StringName in pending.available_branch_ids:
+			var btn := Button.new()
+			btn.text = _node_display_name(branch_id)
+			btn.pressed.connect(func(): _on_branch_chosen(branch_id))
+			branch_buttons_container.add_child(btn)
+		move_button.visible = false
+		continue_without_item_button.visible = false
+		use_item_button.visible = false
+		item_source_selector.visible = false
+		return
+
+	move_button.visible = true
+	continue_without_item_button.visible = true
+	use_item_button.visible = true
+	item_source_selector.visible = true
+
+	if movement_ready and movement_player != null and case_flow != null:
+		var current_node: LootNodeDefinition = case_flow.loot_map_definition().find_node(
+			movement_player.current_node_id
+		)
+		if current_node != null and current_node.outgoing_neighbor_ids.size() > 1:
+			branch_panel.visible = true
+			branch_title.text = "Chọn hướng rẽ xuất phát:"
+			if _selected_branch_id.is_empty() or not current_node.outgoing_neighbor_ids.has(_selected_branch_id):
+				_selected_branch_id = current_node.outgoing_neighbor_ids[0]
+			for neighbor_id: StringName in current_node.outgoing_neighbor_ids:
+				var btn := Button.new()
+				var is_selected: bool = neighbor_id == _selected_branch_id
+				btn.text = ("👉 " if is_selected else "") + _node_display_name(neighbor_id)
+				btn.pressed.connect(func():
+					_selected_branch_id = neighbor_id
+					_refresh_loot()
+				)
+				branch_buttons_container.add_child(btn)
+			return
+
+	branch_panel.visible = false
+	_selected_branch_id = &""
 
 
 func _refresh_confirmation() -> void:
@@ -1680,6 +1749,8 @@ func _loot_action_guidance(
 			return "TIẾP THEO: Xử lý Túi đồ đầy trước khi di chuyển tiếp."
 		LOOT_REWARD_SESSION.Phase.REWARD_RESOLUTION:
 			return "Đang trích xuất phần thưởng tại các điểm vừa đi qua..."
+		LOOT_REWARD_SESSION.Phase.BRANCH_SELECTION:
+			return "TIẾP THEO: Hãy chọn ngã rẽ bạn muốn đi tiếp."
 		LOOT_REWARD_SESSION.Phase.LOOT_END_CONFIRMATION_READY:
 			return "Mọi người đã hoàn tất Loot. Xác nhận để vào giai đoạn Trang Bị."
 		_:

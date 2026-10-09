@@ -72,6 +72,9 @@ func run() -> Array[Dictionary]:
 	rows.append(_row("GĐ2-M0A preview background leaves drag gestures unhandled", _preview_drag_input_contract()))
 	rows.append(_row("GĐ2-M0A F9 debug toggle is presentation-only", _debug_toggle_is_presentation_only(map_definition, houses)))
 	rows.append(_row("GĐ2-M0A F11 true fullscreen hook and clean HUD exist", _fullscreen_and_hud_contract(map_definition, houses)))
+	rows.append(_row("GĐ2-M0A get_available_branches returns correct fork branches", _available_branches_match(map_definition)))
+	rows.append(_row("GĐ2-M0A movement can choose branch A or branch B at House spawn", _movement_can_choose_branch(houses, map_definition)))
+	rows.append(_row("GĐ2-M0A interactive movement pauses at fork and resumes along chosen branch", _interactive_branch_pauses_and_resumes(houses, map_definition)))
 	return rows
 
 
@@ -919,3 +922,69 @@ func _node_world_bounds(map_definition: LootMapDefinition) -> Rect2:
 		maximum.x = maxf(maximum.x, node.world_position.x)
 		maximum.y = maxf(maximum.y, node.world_position.y)
 	return Rect2(minimum, maximum - minimum)
+
+
+func _available_branches_match(map_definition: LootMapDefinition) -> bool:
+	var service := LootMovementService.new()
+	var spawn_branches: Array[LootNodeDefinition] = service.get_available_branches(map_definition, &"hoang_spawn")
+	if spawn_branches.size() != 2:
+		return false
+	var central_branches: Array[LootNodeDefinition] = service.get_available_branches(map_definition, &"central_hub")
+	if central_branches.size() != 3:
+		return false
+	var mausoleum_branches: Array[LootNodeDefinition] = service.get_available_branches(map_definition, &"mausoleum_hub")
+	if mausoleum_branches.size() != 3:
+		return false
+	var linear_branches: Array[LootNodeDefinition] = service.get_available_branches(map_definition, &"hoang_lane_a_1")
+	return linear_branches.is_empty()
+
+
+func _movement_can_choose_branch(
+	houses: Array[HouseDefinition], map_definition: LootMapDefinition
+) -> bool:
+	var service := LootMovementService.new()
+	var session_a: LootMovementSession = _service_session(houses, map_definition)
+	var result_a: MovementActionResult = service.roll_move(
+		session_a, map_definition, SequenceMovementRollSource.new([2]), [], &"hoang_lane_a_1"
+	)
+	var session_b: LootMovementSession = _service_session(houses, map_definition)
+	var result_b: MovementActionResult = service.roll_move(
+		session_b, map_definition, SequenceMovementRollSource.new([2]), [], &"hoang_lane_b_1"
+	)
+	return (
+		result_a != null
+		and result_a.traversed_node_ids.has(&"hoang_lane_a_1")
+		and not result_a.traversed_node_ids.has(&"hoang_lane_b_1")
+		and result_b != null
+		and result_b.traversed_node_ids.has(&"hoang_lane_b_1")
+		and not result_b.traversed_node_ids.has(&"hoang_lane_a_1")
+	)
+
+
+func _interactive_branch_pauses_and_resumes(
+	houses: Array[HouseDefinition], map_definition: LootMapDefinition
+) -> bool:
+	var service := LootMovementService.new()
+	var session: LootMovementSession = _service_session(houses, map_definition)
+	var player: LootMovementPlayerState = session.current_player()
+	player.current_node_id = &"hoang_lane_a_4"
+	var action: MovementActionResult = service.roll_move(
+		session, map_definition, SequenceMovementRollSource.new([2]), [], &"", true
+	)
+	if action != null:
+		return false
+	if not session.pending_branch.active:
+		return false
+	if session.pending_branch.fork_node_id != &"central_hub":
+		return false
+	if session.pending_branch.remaining_steps != 1:
+		return false
+	var resumed: MovementActionResult = service.continue_branch_move(
+		session, map_definition, &"middle_lane_2_1"
+	)
+	return (
+		resumed != null
+		and resumed.end_node_id == &"middle_lane_2_1"
+		and resumed.traversed_node_ids == [&"central_hub", &"middle_lane_2_1"]
+		and not session.pending_branch.active
+	)

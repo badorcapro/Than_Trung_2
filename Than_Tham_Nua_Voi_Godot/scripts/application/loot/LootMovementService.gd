@@ -33,8 +33,33 @@ func build_session_from_selection(players: Array[PlayerPhaseState], characters: 
 	return session
 
 
-func roll_move(session: LootMovementSession, map_definition: LootMapDefinition, roll_source: MovementRollSource, temporary_effects: Array[TemporaryEffectState] = []) -> MovementActionResult:
+func get_available_branches(
+	map_definition: LootMapDefinition, node_id: StringName
+) -> Array[LootNodeDefinition]:
+	var result: Array[LootNodeDefinition] = []
+	if map_definition == null or node_id.is_empty():
+		return result
+	var node: LootNodeDefinition = map_definition.find_node(node_id)
+	if node == null or node.outgoing_neighbor_ids.size() <= 1:
+		return result
+	for neighbor_id: StringName in node.outgoing_neighbor_ids:
+		var neighbor: LootNodeDefinition = map_definition.find_node(neighbor_id)
+		if neighbor != null:
+			result.append(neighbor)
+	return result
+
+
+func roll_move(
+	session: LootMovementSession,
+	map_definition: LootMapDefinition,
+	roll_source: MovementRollSource,
+	temporary_effects: Array[TemporaryEffectState] = [],
+	branch_choice: StringName = &"",
+	interactive: bool = false
+) -> MovementActionResult:
 	if session == null or map_definition == null or roll_source == null or session.completed:
+		return null
+	if session.pending_branch != null and session.pending_branch.active:
 		return null
 	var player: LootMovementPlayerState = session.current_player()
 	if player == null or player.remaining_moves <= 0:
@@ -45,32 +70,114 @@ func roll_move(session: LootMovementSession, map_definition: LootMapDefinition, 
 	var speed_bonus := 0
 	var distance_bonus := 0
 	for effect: TemporaryEffectState in temporary_effects:
-		if not effect.active: continue
-		if effect.effect_kind == &"SPEED_BONUS": speed_bonus += int(effect.magnitude)
-		elif effect.effect_kind == &"MOVE_DISTANCE_BONUS": distance_bonus += int(effect.magnitude)
-	result.roll_distance = roll_source.roll_distance(maxi(1, player.speed_snapshot + speed_bonus)) + distance_bonus
+		if not effect.active:
+			continue
+		if effect.effect_kind == &"SPEED_BONUS":
+			speed_bonus += int(effect.magnitude)
+		elif effect.effect_kind == &"MOVE_DISTANCE_BONUS":
+			distance_bonus += int(effect.magnitude)
+	result.roll_distance = (
+		roll_source.roll_distance(maxi(1, player.speed_snapshot + speed_bonus))
+		+ distance_bonus
+	)
 	result.start_node_id = player.current_node_id
 	result.turn_number = session.turn_number
 	var current_id := player.current_node_id
+	var active_branch_choice := branch_choice
 	for step: int in range(result.roll_distance):
 		var node: LootNodeDefinition = map_definition.find_node(current_id)
 		if node == null or node.outgoing_neighbor_ids.is_empty():
 			result.truncated_by_end_of_path = true
 			break
-		current_id = node.outgoing_neighbor_ids[0]
-		result.traversed_node_ids.append(current_id)
-	player.current_node_id = current_id
+		if node.outgoing_neighbor_ids.size() == 1:
+			current_id = node.outgoing_neighbor_ids[0]
+			result.traversed_node_ids.append(current_id)
+		else:
+			# Fork encountered!
+			if not active_branch_choice.is_empty() and node.outgoing_neighbor_ids.has(active_branch_choice):
+				current_id = active_branch_choice
+				active_branch_choice = &""
+				result.traversed_node_ids.append(current_id)
+			elif interactive:
+				var remaining: int = result.roll_distance - step
+				session.pending_branch.active = true
+				session.pending_branch.player_id = player.player_id
+				session.pending_branch.fork_node_id = current_id
+				session.pending_branch.available_branch_ids = node.outgoing_neighbor_ids.duplicate()
+				session.pending_branch.remaining_steps = remaining
+				session.pending_branch.traversed_node_ids = result.traversed_node_ids.duplicate()
+				session.pending_branch.roll_distance = result.roll_distance
+				session.pending_branch.start_node_id = result.start_node_id
+				return null
+			else:
+				current_id = node.outgoing_neighbor_ids[0]
+				result.traversed_node_ids.append(current_id)
+	_finalize_movement_success(session, player, current_id, result, temporary_effects)
+	return result
+
+
+func continue_branch_move(
+	session: LootMovementSession,
+	map_definition: LootMapDefinition,
+	chosen_branch_id: StringName,
+	temporary_effects: Array[TemporaryEffectState] = []
+) -> MovementActionResult:
+	if (
+		session == null
+		or session.pending_branch == null
+		or not session.pending_branch.active
+		or map_definition == null
+	):
+		return null
+	if not session.pending_branch.available_branch_ids.has(chosen_branch_id):
+		return null
+	var player: LootMovementPlayerState = session.current_player()
+	if player == null or player.player_id != session.pending_branch.player_id:
+		return null
+	var result := MovementActionResult.new()
+	result.player_id = session.pending_branch.player_id
+	result.roll_distance = session.pending_branch.roll_distance
+	result.start_node_id = session.pending_branch.start_node_id
+	result.turn_number = session.turn_number
+	result.traversed_node_ids = session.pending_branch.traversed_node_ids.duplicate()
+	var current_id := chosen_branch_id
+	result.traversed_node_ids.append(current_id)
+	var remaining: int = session.pending_branch.remaining_steps - 1
+	for _step: int in range(remaining):
+		var node: LootNodeDefinition = map_definition.find_node(current_id)
+		if node == null or node.outgoing_neighbor_ids.is_empty():
+			result.truncated_by_end_of_path = true
+			break
+		if node.outgoing_neighbor_ids.size() == 1:
+			current_id = node.outgoing_neighbor_ids[0]
+			result.traversed_node_ids.append(current_id)
+		else:
+			current_id = node.outgoing_neighbor_ids[0]
+			result.traversed_node_ids.append(current_id)
+	session.pending_branch = PendingBranchState.new()
+	_finalize_movement_success(session, player, current_id, result, temporary_effects)
+	return result
+
+
+func _finalize_movement_success(
+	session: LootMovementSession,
+	player: LootMovementPlayerState,
+	end_node_id: StringName,
+	result: MovementActionResult,
+	temporary_effects: Array[TemporaryEffectState]
+) -> void:
+	player.current_node_id = end_node_id
 	player.remaining_moves = maxi(0, player.remaining_moves - 1)
-	result.end_node_id = current_id
+	result.end_node_id = end_node_id
 	result.remaining_moves_after = player.remaining_moves
 	result.movement_consumed = true
 	session.movement_history.append(result)
 	session.turn_number += 1
 	for effect: TemporaryEffectState in temporary_effects:
 		if effect.active and effect.duration == TemporaryEffectState.Duration.THIS_MOVE:
-			effect.active = false; effect.remaining = 0
+			effect.active = false
+			effect.remaining = 0
 	_advance_turn(session)
-	return result
 
 
 func _advance_turn(session: LootMovementSession) -> void:

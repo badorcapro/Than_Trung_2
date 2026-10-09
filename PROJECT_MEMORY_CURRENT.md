@@ -351,6 +351,14 @@ Right:
 
 This corrected an earlier wrong flaring layout.
 
+## Branch Selection UX & Mechanics --- IMPLEMENTED
+- Khi bắt đầu lượt tại ngã rẽ (House spawn hoặc đỗ tại Hub): HUD hiển thị các nút chọn hướng rẽ xuất phát (Nhánh A / Nhánh B hoặc Trung/Hoàng lộ 1/2/3).
+- Khi di chuyển xuyên qua ngã rẽ (Central Hub hoặc Mausoleum Hub) mà số bước còn dư: Hệ thống tạm dừng di chuyển, chuyển sang phase `BRANCH_SELECTION`, hiển thị các nút chọn ngã rẽ trên UI/HUD.
+- Sau khi người chơi bấm chọn nhánh: Số bước còn lại tiếp tục đi vào nhánh đã chọn, trích xuất phần thưởng và hoàn tất lượt theo đúng thiết kế "Cho phép đi xuyên qua".
+- `PendingBranchState` quản lý trạng thái chờ ngã rẽ trong Domain layer.
+- `LootMovementService` cung cấp `get_available_branches()`, `roll_move()` với `branch_choice` / `interactive`, và `continue_branch_move()`.
+- Dự kiến Smoke Tests: **3191/3191** (+3 assertions mới trong `Gd2M0AProductionMapTestSuite.gd`).
+
 ## Visual priority
 
 Map topology/layout is now about 80% aligned with user intent.

@@ -11,6 +11,7 @@ var current_turn_index := 0
 var turn_number := 0
 var player_states: Array[LootMovementPlayerState] = []
 var movement_history: Array[MovementActionResult] = []
+var pending_branch: PendingBranchState = PendingBranchState.new()
 var started := false
 var completed := false
 
@@ -42,7 +43,8 @@ func to_dict() -> Dictionary:
 		"schema_version": schema_version, "phase": phase, "round_id": String(round_id),
 		"ordered_player_ids": order, "current_turn_index": current_turn_index,
 		"turn_number": turn_number, "player_states": players,
-		"movement_history": history, "started": started, "completed": completed,
+		"movement_history": history, "pending_branch": pending_branch.to_dict(),
+		"started": started, "completed": completed,
 	}
 
 
@@ -67,6 +69,9 @@ static func from_dict(data: Dictionary) -> LootMovementSession:
 		for action_value: Variant in history_value:
 			if action_value is Dictionary:
 				session.movement_history.append(MovementActionResult.from_dict(action_value))
+	var branch_value: Variant = data.get("pending_branch", {})
+	if branch_value is Dictionary:
+		session.pending_branch = PendingBranchState.from_dict(branch_value)
 	session.started = bool(data.get("started", false))
 	session.completed = bool(data.get("completed", false))
 	return session
