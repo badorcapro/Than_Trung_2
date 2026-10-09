@@ -617,6 +617,7 @@ func _draw_tokens() -> void:
 		Color(0.3, 0.8, 1.0), Color(1.0, 0.42, 0.48),
 		Color(0.5, 0.92, 0.5), Color(0.85, 0.62, 1.0), Color(1.0, 0.78, 0.28),
 	]
+	var visual_scale: float = _visual_scale()
 	for player_index: int in range(movement_session.ordered_player_ids.size()):
 		var player_id: StringName = movement_session.ordered_player_ids[player_index]
 		var node_id: StringName = StringName(token_node_by_player.get(player_id, &""))
@@ -624,15 +625,33 @@ func _draw_tokens() -> void:
 			continue
 		var occupants: Array = occupants_by_node.get(node_id, [])
 		var occupant_index: int = occupants.find(player_id)
-		var offset: Vector2 = Vector2(-14.0 + float(occupant_index) * 14.0, -28.0)
+		var offset: Vector2 = Vector2.ZERO
+		if occupants.size() > 1:
+			var spacing: float = 16.0 * visual_scale
+			var start_x: float = -float(occupants.size() - 1) * spacing * 0.5
+			offset = Vector2(start_x + float(occupant_index) * spacing, 0.0)
 		var center: Vector2 = _node_positions[node_id] + offset
 		var active: bool = player_id == active_player_id
 		var color: Color = token_colors[player_index % token_colors.size()]
-		draw_circle(center + Vector2(1.0, 3.0), 16.0 if active else 13.0, Color(0.02, 0.025, 0.025, 0.72))
-		draw_circle(center, 14.0 if active else 12.0, color)
+		var radius: float = (15.0 if active else 12.0) * visual_scale
+
+		# Token drop shadow
+		draw_circle(center + Vector2(1.5, 3.0) * visual_scale, radius + 2.0 * visual_scale, Color(0.02, 0.025, 0.025, 0.65))
+		# Outer rim
+		draw_circle(center, radius + 1.5 * visual_scale, Color(0.1, 0.1, 0.12, 0.95))
+		# Main token colored disc
+		draw_circle(center, radius, color)
+		# Specular arc highlight
+		draw_arc(center, radius - 2.5 * visual_scale, -PI * 0.8, -PI * 0.2, 16, Color(1.0, 1.0, 1.0, 0.45), 1.8 * visual_scale, true)
+		# Active gold indicator ring
 		if active:
-			draw_arc(center, 20.0, 0.0, TAU, 28, Color(1.0, 0.82, 0.28), 4.0, true)
-		draw_string(ThemeDB.fallback_font, center + Vector2(-8.0, 5.0), "P%d" % (player_index + 1), HORIZONTAL_ALIGNMENT_CENTER, 16.0, 11, Color(0.04, 0.05, 0.08))
+			draw_arc(center, radius + 5.0 * visual_scale, 0.0, TAU, 28, Color(1.0, 0.84, 0.22), 3.2 * visual_scale, true)
+
+		var font_size: int = maxi(int(11.0 * visual_scale), 9)
+		var text_w: float = 20.0 * visual_scale
+		var text_pos: Vector2 = center + Vector2(-text_w * 0.5, float(font_size) * 0.38)
+		draw_string(ThemeDB.fallback_font, text_pos, "P%d" % (player_index + 1), HORIZONTAL_ALIGNMENT_CENTER, text_w, font_size, Color(0.04, 0.05, 0.08))
+
 
 
 func _path_contains_edge(from_id: StringName, to_id: StringName) -> bool:
@@ -911,20 +930,20 @@ func _clamp_zoom() -> void:
 	_zoom = clampf(_zoom, minimum_zoom(), CAMERA_MAX_ZOOM)
 
 
-func focus_active_player() -> void:
+func focus_player(player_id: StringName) -> void:
 	_clear_drag_state()
 	if movement_session == null or not _uses_authored_world_coordinates():
 		return
-	var player: LootMovementPlayerState = movement_session.current_player()
-	if player == null:
+	var target_player: LootMovementPlayerState = null
+	for p: LootMovementPlayerState in movement_session.player_states:
+		if p != null and p.player_id == player_id:
+			target_player = p
+			break
+	if target_player == null:
 		return
-	var target_node_id: StringName = player.current_node_id
-	if (
-		movement_session.pending_branch != null
-		and movement_session.pending_branch.active
-		and movement_session.pending_branch.player_id == player.player_id
-	):
-		target_node_id = movement_session.pending_branch.fork_node_id
+	var target_node_id: StringName = StringName(
+		token_node_by_player.get(target_player.player_id, target_player.current_node_id)
+	)
 	var node: LootNodeDefinition = map_definition.find_node(target_node_id)
 	if node == null:
 		return
@@ -933,6 +952,15 @@ func focus_active_player() -> void:
 	_clamp_camera()
 	_build_positions()
 	queue_redraw()
+
+
+func focus_active_player() -> void:
+	if movement_session == null:
+		return
+	var current: LootMovementPlayerState = movement_session.current_player()
+	if current != null:
+		focus_player(current.player_id)
+
 
 
 func camera_center() -> Vector2:

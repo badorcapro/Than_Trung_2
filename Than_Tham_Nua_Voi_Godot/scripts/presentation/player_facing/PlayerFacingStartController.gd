@@ -1444,6 +1444,15 @@ func _refresh_pummel_player_cards(session: LOOT_REWARD_SESSION) -> void:
 		var char_name: String = character.display_name if character != null else _player_name(player_id)
 
 		card.add_theme_stylebox_override("panel", _pummel_style_active if is_active else _pummel_style_normal)
+		card.mouse_filter = Control.MOUSE_FILTER_STOP
+		card.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+		card.set_meta("player_id", player_id)
+		if not card.has_meta("click_connected"):
+			card.set_meta("click_connected", true)
+			card.gui_input.connect(func(event: InputEvent) -> void:
+				_on_pummel_player_card_gui_input(event, card)
+			)
+		_make_children_mouse_pass(card)
 
 		var badge_label: Label = card.find_child("Badge", true, false) as Label
 		if badge_label != null:
@@ -1489,6 +1498,22 @@ func _refresh_pummel_player_cards(session: LOOT_REWARD_SESSION) -> void:
 			var cap: int = round_loot.capacity if round_loot != null else 2
 			bag_label.text = "🎒 %d/%d" % [carried, cap]
 			bag_label.tooltip_text = "Túi đồ: %d/%d món" % [carried, cap]
+
+
+func _on_pummel_player_card_gui_input(event: InputEvent, card: Control) -> void:
+	var mouse_event := event as InputEventMouseButton
+	if mouse_event != null and mouse_event.pressed and mouse_event.button_index == MOUSE_BUTTON_LEFT:
+		var target_player_id: StringName = StringName(card.get_meta("player_id", &""))
+		if not target_player_id.is_empty() and loot_map_view != null:
+			loot_map_view.focus_player(target_player_id)
+			get_viewport().set_input_as_handled()
+
+
+func _make_children_mouse_pass(parent: Node) -> void:
+	for child: Node in parent.get_children():
+		if child is Control:
+			(child as Control).mouse_filter = Control.MOUSE_FILTER_PASS
+		_make_children_mouse_pass(child)
 
 
 func _refresh_pummel_item_hotbar(session: LOOT_REWARD_SESSION) -> void:
