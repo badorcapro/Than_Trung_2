@@ -2,9 +2,10 @@ class_name CharacterDetailSheet
 extends Control
 
 ## CharacterDetailSheet
-## Giao diện hồ sơ / trạng thái người chơi phong cách Honkai: Star Rail.
-## Bao gồm: Switcher nhân vật ở trên cùng, Thanh điều hướng bên trái (Chi Tiết, Kỷ Vật, Vết Thánh, Túi Đồ, Thông Tin, Thời Trang),
-## Khu vực trung tâm mô hình/ấn tín, và Bảng thuộc tính/kỹ năng chi tiết bên phải cùng modal popup Chi Tiết Thuộc Tính.
+## Giao diện hồ sơ / trạng thái người chơi toàn màn hình phong cách Honkai: Star Rail.
+## Bao gồm: Nền vũ trụ huyền ảo toàn màn hình, Switcher nhân vật ở trên đỉnh,
+## Thanh điều hướng bên trái (Chi Tiết, Kỷ Vật, Vết Thánh, Túi Đồ, Thông Tin, Thời Trang),
+## Khu vực đài tế hoàng cung ở trung tâm, và Bảng chi tiết thuộc tính/kỹ năng ở bên phải.
 
 signal closed
 
@@ -176,152 +177,278 @@ var _selected_skill_index: int = 0
 var _case_flow_session: Variant = null
 var _setup_session: Variant = null
 
-# UI Root Nodes
-var _backdrop_panel: Panel
+# Fullscreen Root Components
+var _backdrop_rect: ColorRect
+var _celestial_backdrop: Control
+var _main_margin: MarginContainer
 var _player_switcher_container: HBoxContainer
 var _sidebar_container: VBoxContainer
 var _center_avatar_rect: TextureRect
+var _center_pedestal_badge: PanelContainer
 var _center_pedestal_label: Label
-var _right_panel_container: Control
+var _right_panel_container: MarginContainer
 
-# Sub-components
+# Popups
+var _stat_modal_overlay: Control
 var _stat_detail_modal: PanelContainer
+var _rank_popup_overlay: Control
 var _rank_detail_popup: PanelContainer
 
 
 func _init() -> void:
-	anchors_preset = PRESET_FULL_RECT
 	mouse_filter = MOUSE_FILTER_STOP
 	_build_ui()
 
 
-func _build_ui() -> void:
-	# 1. Dark celestial cosmic backdrop
-	_backdrop_panel = Panel.new()
-	_backdrop_panel.anchors_preset = PRESET_FULL_RECT
-	var bg_style := StyleBoxFlat.new()
-	bg_style.bg_color = Color(0.04, 0.055, 0.085, 0.96)
-	_backdrop_panel.add_theme_stylebox_override("panel", bg_style)
-	add_child(_backdrop_panel)
+func _ready() -> void:
+	_apply_fullscreen_layout()
 
-	# Main layout margin
-	var margin := MarginContainer.new()
-	margin.anchors_preset = PRESET_FULL_RECT
-	margin.add_theme_constant_override("margin_left", 36)
-	margin.add_theme_constant_override("margin_top", 24)
-	margin.add_theme_constant_override("margin_right", 36)
-	margin.add_theme_constant_override("margin_bottom", 24)
-	add_child(margin)
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_RESIZED or what == NOTIFICATION_VISIBILITY_CHANGED:
+		if is_inside_tree() and visible:
+			_apply_fullscreen_layout()
+
+
+func _apply_fullscreen_layout() -> void:
+	layout_mode = 1
+	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	anchor_left = 0.0
+	anchor_top = 0.0
+	anchor_right = 1.0
+	anchor_bottom = 1.0
+	offset_left = 0.0
+	offset_top = 0.0
+	offset_right = 0.0
+	offset_bottom = 0.0
+	grow_horizontal = Control.GROW_DIRECTION_BOTH
+	grow_vertical = Control.GROW_DIRECTION_BOTH
+	var vp_size: Vector2 = get_viewport_rect().size if is_inside_tree() else Vector2(1920, 1080)
+	size = vp_size
+	custom_minimum_size = vp_size
+
+	if _backdrop_rect != null:
+		_backdrop_rect.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		_backdrop_rect.size = vp_size
+	if _celestial_backdrop != null:
+		_celestial_backdrop.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		_celestial_backdrop.size = vp_size
+	if _main_margin != null:
+		_main_margin.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		_main_margin.size = vp_size
+	if _stat_modal_overlay != null:
+		_stat_modal_overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		_stat_modal_overlay.size = vp_size
+	if _rank_popup_overlay != null:
+		_rank_popup_overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		_rank_popup_overlay.size = vp_size
+
+
+func _build_ui() -> void:
+	# 1. Solid opaque cosmic backdrop (100% OPAQUE - completely covers everything)
+	_backdrop_rect = ColorRect.new()
+	_backdrop_rect.color = Color(0.035, 0.045, 0.075, 1.0)
+	_backdrop_rect.mouse_filter = MOUSE_FILTER_STOP
+	add_child(_backdrop_rect)
+
+	# 2. Celestial canvas (drawing stars and luminous magic circle pedestal)
+	_celestial_backdrop = Control.new()
+	_celestial_backdrop.mouse_filter = MOUSE_FILTER_IGNORE
+	_celestial_backdrop.draw.connect(_on_celestial_draw)
+	add_child(_celestial_backdrop)
+
+	# 3. Main Fullscreen Layout Margin
+	_main_margin = MarginContainer.new()
+	_main_margin.mouse_filter = MOUSE_FILTER_PASS
+	_main_margin.add_theme_constant_override("margin_left", 48)
+	_main_margin.add_theme_constant_override("margin_top", 24)
+	_main_margin.add_theme_constant_override("margin_right", 48)
+	_main_margin.add_theme_constant_override("margin_bottom", 28)
+	add_child(_main_margin)
 
 	var main_vbox := VBoxContainer.new()
-	main_vbox.add_theme_constant_override("separation", 16)
-	margin.add_child(main_vbox)
+	main_vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	main_vbox.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	main_vbox.add_theme_constant_override("separation", 18)
+	_main_margin.add_child(main_vbox)
 
-	# 2. Top Header: Title, Player Switcher Row, Close Button
+	# --- TOP HEADER BAR ---
 	var header_row := HBoxContainer.new()
+	header_row.custom_minimum_size = Vector2(0, 56)
+	header_row.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	header_row.add_theme_constant_override("separation", 24)
 	main_vbox.add_child(header_row)
 
+	# Top-Left: Screen title & subtitle
 	var title_vbox := VBoxContainer.new()
+	title_vbox.custom_minimum_size = Vector2(240, 0)
 	title_vbox.add_theme_constant_override("separation", 2)
 	var title_lbl := Label.new()
-	title_lbl.text = "⭐ HỒ SƠ THẦN THÁM"
+	title_lbl.text = "⭐ CHI TIẾT NHÂN VẬT"
 	title_lbl.add_theme_font_size_override("font_size", 20)
 	title_lbl.add_theme_color_override("font_color", Color(1.0, 0.88, 0.45))
 	title_vbox.add_child(title_lbl)
 
 	var sub_lbl := Label.new()
-	sub_lbl.text = "Trạng thái người chơi & Thuộc tính hoàng gia"
+	sub_lbl.text = "Hồ sơ Thần Thám Hoàng Cung"
 	sub_lbl.add_theme_font_size_override("font_size", 12)
-	sub_lbl.add_theme_color_override("font_color", Color(0.65, 0.72, 0.8))
+	sub_lbl.add_theme_color_override("font_color", Color(0.65, 0.72, 0.82))
 	title_vbox.add_child(sub_lbl)
 	header_row.add_child(title_vbox)
 
 	# Spacer
 	var spacer_left := Control.new()
-	spacer_left.size_flags_horizontal = SIZE_EXPAND_FILL
+	spacer_left.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	header_row.add_child(spacer_left)
 
-	# Player Switcher Container (Horizontal avatars like HSR)
+	# Top-Center: Player Switcher Container (Horizontal avatar chips)
 	_player_switcher_container = HBoxContainer.new()
-	_player_switcher_container.add_theme_constant_override("separation", 14)
+	_player_switcher_container.add_theme_constant_override("separation", 16)
 	header_row.add_child(_player_switcher_container)
 
 	# Spacer right
 	var spacer_right := Control.new()
-	spacer_right.size_flags_horizontal = SIZE_EXPAND_FILL
+	spacer_right.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	header_row.add_child(spacer_right)
 
-	# Close button (X)
+	# Top-Right: Close button (✕)
 	var close_btn := Button.new()
 	close_btn.text = " ✕ "
-	close_btn.custom_minimum_size = Vector2(40, 40)
+	close_btn.custom_minimum_size = Vector2(44, 44)
 	close_btn.add_theme_font_size_override("font_size", 18)
 	close_btn.mouse_default_cursor_shape = CURSOR_POINTING_HAND
+	var close_style := StyleBoxFlat.new()
+	close_style.bg_color = Color(0.12, 0.14, 0.2, 0.85)
+	close_style.corner_radius_top_left = 22
+	close_style.corner_radius_top_right = 22
+	close_style.corner_radius_bottom_right = 22
+	close_style.corner_radius_bottom_left = 22
+	close_style.border_width_left = 1
+	close_style.border_width_top = 1
+	close_style.border_width_right = 1
+	close_style.border_width_bottom = 1
+	close_style.border_color = Color(0.4, 0.45, 0.55, 0.6)
+	close_btn.add_theme_stylebox_override("normal", close_style)
+	close_btn.add_theme_stylebox_override("hover", close_style)
+	close_btn.add_theme_stylebox_override("pressed", close_style)
 	close_btn.pressed.connect(_on_close_pressed)
 	header_row.add_child(close_btn)
 
-	# 3. Content Body (Left Sidebar, Center Stage, Right Panel)
+	# --- CONTENT BODY ROW (Sidebar, Center Stage, Right Panel) ---
 	var body_row := HBoxContainer.new()
-	body_row.size_flags_vertical = SIZE_EXPAND_FILL
-	body_row.add_theme_constant_override("separation", 24)
+	body_row.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	body_row.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	body_row.add_theme_constant_override("separation", 28)
 	main_vbox.add_child(body_row)
 
-	# --- LEFT SIDEBAR ---
+	# --- LEFT SIDEBAR (Tabs) ---
 	_sidebar_container = VBoxContainer.new()
-	_sidebar_container.custom_minimum_size = Vector2(170, 0)
+	_sidebar_container.custom_minimum_size = Vector2(190, 0)
+	_sidebar_container.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	_sidebar_container.add_theme_constant_override("separation", 10)
 	body_row.add_child(_sidebar_container)
 	_build_sidebar_tabs()
 
-	# --- CENTER STAGE (Avatar / Pedestal / Crest) ---
-	var center_container := PanelContainer.new()
-	center_container.size_flags_horizontal = SIZE_EXPAND_FILL
-	center_container.size_flags_vertical = SIZE_EXPAND_FILL
-	var center_style := StyleBoxFlat.new()
-	center_style.bg_color = Color(0.06, 0.08, 0.12, 0.45)
-	center_style.corner_radius_top_left = 12
-	center_style.corner_radius_top_right = 12
-	center_style.corner_radius_bottom_right = 12
-	center_style.corner_radius_bottom_left = 12
-	center_style.border_width_left = 1
-	center_style.border_width_top = 1
-	center_style.border_width_right = 1
-	center_style.border_width_bottom = 1
-	center_style.border_color = Color(0.25, 0.32, 0.42, 0.35)
-	center_container.add_theme_stylebox_override("panel", center_style)
-	body_row.add_child(center_container)
+	# --- CENTER STAGE (Character Medallion & Pedestal) ---
+	var center_box := Control.new()
+	center_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	center_box.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	body_row.add_child(center_box)
 
 	var center_vbox := VBoxContainer.new()
+	center_vbox.anchors_preset = Control.PRESET_FULL_RECT
 	center_vbox.alignment = BoxContainer.ALIGNMENT_CENTER
-	center_vbox.add_theme_constant_override("separation", 18)
-	center_container.add_child(center_vbox)
+	center_vbox.add_theme_constant_override("separation", 24)
+	center_box.add_child(center_vbox)
 
 	_center_avatar_rect = TextureRect.new()
-	_center_avatar_rect.custom_minimum_size = Vector2(260, 260)
+	_center_avatar_rect.custom_minimum_size = Vector2(340, 340)
 	_center_avatar_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	_center_avatar_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	_center_avatar_rect.size_flags_horizontal = SIZE_SHRINK_CENTER
+	_center_avatar_rect.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	center_vbox.add_child(_center_avatar_rect)
 
+	# Frosted glass badge below character
+	_center_pedestal_badge = PanelContainer.new()
+	_center_pedestal_badge.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	var badge_style := StyleBoxFlat.new()
+	badge_style.bg_color = Color(0.08, 0.1, 0.16, 0.8)
+	badge_style.corner_radius_top_left = 18
+	badge_style.corner_radius_top_right = 18
+	badge_style.corner_radius_bottom_right = 18
+	badge_style.corner_radius_bottom_left = 18
+	badge_style.border_width_left = 1
+	badge_style.border_width_top = 1
+	badge_style.border_width_right = 1
+	badge_style.border_width_bottom = 1
+	badge_style.border_color = Color(1.0, 0.82, 0.35, 0.7)
+	badge_style.content_margin_left = 22.0
+	badge_style.content_margin_top = 8.0
+	badge_style.content_margin_right = 22.0
+	badge_style.content_margin_bottom = 8.0
+	_center_pedestal_badge.add_theme_stylebox_override("panel", badge_style)
+	center_vbox.add_child(_center_pedestal_badge)
+
 	_center_pedestal_label = Label.new()
-	_center_pedestal_label.text = "◆ ĐÀN TẾ THẦN THÁM ◆"
+	_center_pedestal_label.text = "◆ THẦN THÁM HOÀNG CUNG ◆"
 	_center_pedestal_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_center_pedestal_label.add_theme_color_override("font_color", Color(0.85, 0.75, 0.45, 0.8))
+	_center_pedestal_label.add_theme_color_override("font_color", Color(1.0, 0.92, 0.7))
 	_center_pedestal_label.add_theme_font_size_override("font_size", 14)
-	center_vbox.add_child(_center_pedestal_label)
+	_center_pedestal_badge.add_child(_center_pedestal_label)
 
 	# --- RIGHT PANEL ---
-	_right_panel_container = Control.new()
-	_right_panel_container.custom_minimum_size = Vector2(440, 0)
-	_right_panel_container.size_flags_vertical = SIZE_EXPAND_FILL
+	_right_panel_container = MarginContainer.new()
+	_right_panel_container.custom_minimum_size = Vector2(460, 0)
+	_right_panel_container.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	body_row.add_child(_right_panel_container)
 
-	# 4. Stat Detail Modal (Popup matching Image 3)
+	# 4. Modals
 	_build_stat_detail_modal()
-
-	# 5. Rank Detail Popup (Magnifying glass popup)
 	_build_rank_detail_popup()
+
+
+func _on_celestial_draw() -> void:
+	if _celestial_backdrop == null:
+		return
+	var s: Vector2 = _celestial_backdrop.size
+	if s.x <= 0.0 or s.y <= 0.0:
+		return
+
+	# Cosmic radial aura in the center
+	var center := Vector2(s.x * 0.45, s.y * 0.5)
+	_celestial_backdrop.draw_circle(center, s.y * 0.45, Color(0.12, 0.16, 0.28, 0.35))
+	_celestial_backdrop.draw_circle(center, s.y * 0.28, Color(0.2, 0.26, 0.42, 0.22))
+
+	# Glowing perspective magic pedestal ring on the floor (underneath character)
+	var ped_center := Vector2(s.x * 0.45, s.y * 0.78)
+	var rx: float = s.x * 0.18
+	var ry: float = s.y * 0.075
+
+	# Drop shadow under pedestal
+	var shadow_pts := PackedVector2Array()
+	var ring_pts := PackedVector2Array()
+	var segs := 48
+	for i in range(segs + 1):
+		var ang: float = float(i) / float(segs) * TAU
+		var pt := ped_center + Vector2(cos(ang) * rx, sin(ang) * ry)
+		ring_pts.append(pt)
+		shadow_pts.append(pt + Vector2(0.0, 6.0))
+
+	_celestial_backdrop.draw_polyline(shadow_pts, Color(0.02, 0.02, 0.04, 0.5), 6.0, true)
+	_celestial_backdrop.draw_polyline(ring_pts, Color(0.35, 0.65, 0.95, 0.5), 4.0, true)
+	_celestial_backdrop.draw_polyline(ring_pts, Color(1.0, 0.88, 0.45, 0.85), 2.0, true)
+
+	# Fixed pseudo-random stellar dots
+	var star_seeds: Array[Vector2] = [
+		Vector2(0.1, 0.15), Vector2(0.18, 0.32), Vector2(0.25, 0.18), Vector2(0.32, 0.4),
+		Vector2(0.42, 0.12), Vector2(0.5, 0.22), Vector2(0.58, 0.14), Vector2(0.68, 0.35),
+		Vector2(0.75, 0.18), Vector2(0.82, 0.42), Vector2(0.88, 0.2), Vector2(0.15, 0.75),
+		Vector2(0.28, 0.85), Vector2(0.72, 0.8), Vector2(0.85, 0.72), Vector2(0.52, 0.85)
+	]
+	for seed_pt: Vector2 in star_seeds:
+		var pos := Vector2(seed_pt.x * s.x, seed_pt.y * s.y)
+		_celestial_backdrop.draw_circle(pos + Vector2(1, 1), 2.0, Color(0.0, 0.0, 0.0, 0.4))
+		_celestial_backdrop.draw_circle(pos, 1.8, Color(0.9, 0.95, 1.0, 0.75))
 
 
 func _build_sidebar_tabs() -> void:
@@ -337,7 +464,7 @@ func _build_sidebar_tabs() -> void:
 		var btn := Button.new()
 		var tab_id: SidebarTab = t["id"] as SidebarTab
 		btn.text = String(t["title"])
-		btn.custom_minimum_size = Vector2(0, 48)
+		btn.custom_minimum_size = Vector2(0, 52)
 		btn.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		btn.mouse_default_cursor_shape = CURSOR_POINTING_HAND
 		btn.set_meta("tab_id", tab_id)
@@ -346,24 +473,43 @@ func _build_sidebar_tabs() -> void:
 
 
 func _build_stat_detail_modal() -> void:
-	_stat_detail_modal = PanelContainer.new()
-	_stat_detail_modal.visible = false
-	_stat_detail_modal.custom_minimum_size = Vector2(400, 320)
-	_stat_detail_modal.anchors_preset = PRESET_CENTER
+	_stat_modal_overlay = Control.new()
+	_stat_modal_overlay.visible = false
+	_stat_modal_overlay.mouse_filter = Control.MOUSE_FILTER_STOP
+	_stat_modal_overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	add_child(_stat_modal_overlay)
 
+	var dim_rect := ColorRect.new()
+	dim_rect.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	dim_rect.color = Color(0, 0, 0, 0.6)
+	dim_rect.mouse_filter = Control.MOUSE_FILTER_STOP
+	dim_rect.gui_input.connect(func(ev: InputEvent) -> void:
+		if ev is InputEventMouseButton and ev.pressed:
+			_stat_modal_overlay.visible = false
+	)
+	_stat_modal_overlay.add_child(dim_rect)
+
+	var center := CenterContainer.new()
+	center.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	center.mouse_filter = Control.MOUSE_FILTER_PASS
+	_stat_modal_overlay.add_child(center)
+
+	_stat_detail_modal = PanelContainer.new()
+	_stat_detail_modal.custom_minimum_size = Vector2(460, 360)
 	var modal_style := StyleBoxFlat.new()
-	modal_style.bg_color = Color(0.94, 0.95, 0.96, 0.98) # Light modal like Image 3
-	modal_style.corner_radius_top_left = 12
-	modal_style.corner_radius_top_right = 12
-	modal_style.corner_radius_bottom_right = 12
-	modal_style.corner_radius_bottom_left = 12
-	modal_style.shadow_color = Color(0, 0, 0, 0.55)
-	modal_style.shadow_size = 18
-	modal_style.content_margin_left = 24.0
-	modal_style.content_margin_top = 20.0
-	modal_style.content_margin_right = 24.0
-	modal_style.content_margin_bottom = 20.0
+	modal_style.bg_color = Color(0.95, 0.96, 0.97, 0.99) # Light modal like Image 2
+	modal_style.corner_radius_top_left = 14
+	modal_style.corner_radius_top_right = 14
+	modal_style.corner_radius_bottom_right = 14
+	modal_style.corner_radius_bottom_left = 14
+	modal_style.shadow_color = Color(0, 0, 0, 0.65)
+	modal_style.shadow_size = 28
+	modal_style.content_margin_left = 28.0
+	modal_style.content_margin_top = 22.0
+	modal_style.content_margin_right = 28.0
+	modal_style.content_margin_bottom = 22.0
 	_stat_detail_modal.add_theme_stylebox_override("panel", modal_style)
+	center.add_child(_stat_detail_modal)
 
 	var modal_vbox := VBoxContainer.new()
 	modal_vbox.name = "ModalVBox"
@@ -375,14 +521,15 @@ func _build_stat_detail_modal() -> void:
 	title.text = "Chi Tiết Thuộc Tính"
 	title.add_theme_font_size_override("font_size", 18)
 	title.add_theme_color_override("font_color", Color(0.12, 0.14, 0.18))
-	title.size_flags_horizontal = SIZE_EXPAND_FILL
+	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	header_bar.add_child(title)
 
 	var close_x := Button.new()
 	close_x.text = " ✕ "
 	close_x.flat = true
+	close_x.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	close_x.add_theme_color_override("font_color", Color(0.2, 0.2, 0.2))
-	close_x.pressed.connect(func() -> void: _stat_detail_modal.visible = false)
+	close_x.pressed.connect(func() -> void: _stat_modal_overlay.visible = false)
 	header_bar.add_child(close_x)
 	modal_vbox.add_child(header_bar)
 
@@ -397,65 +544,81 @@ func _build_stat_detail_modal() -> void:
 
 	var stats_rows_container := VBoxContainer.new()
 	stats_rows_container.name = "StatsRows"
-	stats_rows_container.add_theme_constant_override("separation", 10)
+	stats_rows_container.add_theme_constant_override("separation", 12)
 	modal_vbox.add_child(stats_rows_container)
-
-	add_child(_stat_detail_modal)
 
 
 func _build_rank_detail_popup() -> void:
-	_rank_detail_popup = PanelContainer.new()
-	_rank_detail_popup.visible = false
-	_rank_detail_popup.custom_minimum_size = Vector2(320, 200)
-	_rank_detail_popup.anchors_preset = PRESET_CENTER
+	_rank_popup_overlay = Control.new()
+	_rank_popup_overlay.visible = false
+	_rank_popup_overlay.mouse_filter = Control.MOUSE_FILTER_STOP
+	_rank_popup_overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	add_child(_rank_popup_overlay)
 
+	var dim_rect := ColorRect.new()
+	dim_rect.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	dim_rect.color = Color(0, 0, 0, 0.6)
+	dim_rect.mouse_filter = Control.MOUSE_FILTER_STOP
+	dim_rect.gui_input.connect(func(ev: InputEvent) -> void:
+		if ev is InputEventMouseButton and ev.pressed:
+			_rank_popup_overlay.visible = false
+	)
+	_rank_popup_overlay.add_child(dim_rect)
+
+	var center := CenterContainer.new()
+	center.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	center.mouse_filter = Control.MOUSE_FILTER_PASS
+	_rank_popup_overlay.add_child(center)
+
+	_rank_detail_popup = PanelContainer.new()
+	_rank_detail_popup.custom_minimum_size = Vector2(380, 240)
 	var pop_style := StyleBoxFlat.new()
-	pop_style.bg_color = Color(0.1, 0.12, 0.17, 0.98)
-	pop_style.corner_radius_top_left = 10
-	pop_style.corner_radius_top_right = 10
-	pop_style.corner_radius_bottom_right = 10
-	pop_style.corner_radius_bottom_left = 10
+	pop_style.bg_color = Color(0.1, 0.12, 0.18, 0.98)
+	pop_style.corner_radius_top_left = 14
+	pop_style.corner_radius_top_right = 14
+	pop_style.corner_radius_bottom_right = 14
+	pop_style.corner_radius_bottom_left = 14
 	pop_style.border_width_left = 1
 	pop_style.border_width_top = 1
 	pop_style.border_width_right = 1
 	pop_style.border_width_bottom = 1
-	pop_style.border_color = Color(1.0, 0.82, 0.28, 0.85)
-	pop_style.shadow_color = Color(0, 0, 0, 0.6)
-	pop_style.shadow_size = 14
-	pop_style.content_margin_left = 18.0
-	pop_style.content_margin_top = 16.0
-	pop_style.content_margin_right = 18.0
-	pop_style.content_margin_bottom = 16.0
+	pop_style.border_color = Color(1.0, 0.82, 0.28, 0.9)
+	pop_style.shadow_color = Color(0, 0, 0, 0.65)
+	pop_style.shadow_size = 28
+	pop_style.content_margin_left = 24.0
+	pop_style.content_margin_top = 20.0
+	pop_style.content_margin_right = 24.0
+	pop_style.content_margin_bottom = 20.0
 	_rank_detail_popup.add_theme_stylebox_override("panel", pop_style)
+	center.add_child(_rank_detail_popup)
 
 	var pop_vbox := VBoxContainer.new()
 	pop_vbox.name = "RankPopVBox"
-	pop_vbox.add_theme_constant_override("separation", 8)
+	pop_vbox.add_theme_constant_override("separation", 10)
 	_rank_detail_popup.add_child(pop_vbox)
 
 	var pop_head := HBoxContainer.new()
 	var pop_title := Label.new()
 	pop_title.text = "🔍 BẬC CÔNG DANH HOÀNG CUNG"
-	pop_title.add_theme_font_size_override("font_size", 14)
+	pop_title.add_theme_font_size_override("font_size", 15)
 	pop_title.add_theme_color_override("font_color", Color(1.0, 0.84, 0.25))
-	pop_title.size_flags_horizontal = SIZE_EXPAND_FILL
+	pop_title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	pop_head.add_child(pop_title)
 
 	var close_pop := Button.new()
 	close_pop.text = " ✕ "
 	close_pop.flat = true
-	close_pop.pressed.connect(func() -> void: _rank_detail_popup.visible = false)
+	close_pop.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	close_pop.pressed.connect(func() -> void: _rank_popup_overlay.visible = false)
 	pop_head.add_child(close_pop)
 	pop_vbox.add_child(pop_head)
 
 	var pop_content := Label.new()
 	pop_content.name = "RankContent"
 	pop_content.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	pop_content.add_theme_font_size_override("font_size", 12)
-	pop_content.add_theme_color_override("font_color", Color(0.88, 0.9, 0.94))
+	pop_content.add_theme_font_size_override("font_size", 13)
+	pop_content.add_theme_color_override("font_color", Color(0.88, 0.92, 0.96))
 	pop_vbox.add_child(pop_content)
-
-	add_child(_rank_detail_popup)
 
 
 func open_sheet(
@@ -463,15 +626,20 @@ func open_sheet(
 	case_flow_session: Variant,
 	setup_session: Variant
 ) -> void:
+	_apply_fullscreen_layout()
 	_case_flow_session = case_flow_session
 	_setup_session = setup_session
 	_active_player_id = player_id
 	_current_sidebar_tab = SidebarTab.DETAILS
 	_current_detail_subtab = DetailSubTab.ATTRIBUTES
 	visible = true
-	_stat_detail_modal.visible = false
-	_rank_detail_popup.visible = false
+	if _stat_modal_overlay != null:
+		_stat_modal_overlay.visible = false
+	if _rank_popup_overlay != null:
+		_rank_popup_overlay.visible = false
 	refresh()
+	if _celestial_backdrop != null:
+		_celestial_backdrop.queue_redraw()
 
 
 func refresh() -> void:
@@ -489,6 +657,8 @@ func refresh() -> void:
 	_refresh_sidebar_buttons()
 	_refresh_center_display()
 	_refresh_right_panel()
+	if _celestial_backdrop != null:
+		_celestial_backdrop.queue_redraw()
 
 
 func _refresh_player_switcher(player_order: Array[StringName]) -> void:
@@ -511,7 +681,7 @@ func _refresh_player_switcher(player_order: Array[StringName]) -> void:
 		var lore: Dictionary = CHARACTER_LORE.get(char_def.character_id, {}) if char_def != null else {}
 
 		var btn := Button.new()
-		btn.custom_minimum_size = Vector2(52, 52)
+		btn.custom_minimum_size = Vector2(56, 56)
 		btn.mouse_default_cursor_shape = CURSOR_POINTING_HAND
 		btn.tooltip_text = "%s - %s" % [
 			badges[i % badges.size()],
@@ -519,16 +689,19 @@ func _refresh_player_switcher(player_order: Array[StringName]) -> void:
 		]
 
 		var style := StyleBoxFlat.new()
-		style.bg_color = Color(0.12, 0.15, 0.22, 0.95) if is_current else Color(0.08, 0.09, 0.12, 0.8)
-		style.corner_radius_top_left = 26
-		style.corner_radius_top_right = 26
-		style.corner_radius_bottom_right = 26
-		style.corner_radius_bottom_left = 26
-		style.border_width_left = 2 if is_current else 1
-		style.border_width_top = 2 if is_current else 1
-		style.border_width_right = 2 if is_current else 1
-		style.border_width_bottom = 2 if is_current else 1
+		style.bg_color = Color(0.14, 0.18, 0.26, 0.95) if is_current else Color(0.08, 0.1, 0.14, 0.8)
+		style.corner_radius_top_left = 28
+		style.corner_radius_top_right = 28
+		style.corner_radius_bottom_right = 28
+		style.corner_radius_bottom_left = 28
+		style.border_width_left = 3 if is_current else 1
+		style.border_width_top = 3 if is_current else 1
+		style.border_width_right = 3 if is_current else 1
+		style.border_width_bottom = 3 if is_current else 1
 		style.border_color = Color(1.0, 0.84, 0.22) if is_current else badge_colors[i % badge_colors.size()]
+		if is_current:
+			style.shadow_color = Color(1.0, 0.8, 0.2, 0.4)
+			style.shadow_size = 8
 		btn.add_theme_stylebox_override("normal", style)
 		btn.add_theme_stylebox_override("hover", style)
 		btn.add_theme_stylebox_override("pressed", style)
@@ -555,21 +728,21 @@ func _refresh_sidebar_buttons() -> void:
 		var tab_id: SidebarTab = btn.get_meta("tab_id", SidebarTab.DETAILS) as SidebarTab
 		var is_active: bool = (tab_id == _current_sidebar_tab)
 		var style := StyleBoxFlat.new()
-		style.corner_radius_top_left = 8
-		style.corner_radius_top_right = 8
-		style.corner_radius_bottom_right = 8
-		style.corner_radius_bottom_left = 8
-		style.content_margin_left = 16.0
-		style.content_margin_top = 10.0
-		style.content_margin_right = 16.0
-		style.content_margin_bottom = 10.0
+		style.corner_radius_top_left = 10
+		style.corner_radius_top_right = 10
+		style.corner_radius_bottom_right = 10
+		style.corner_radius_bottom_left = 10
+		style.content_margin_left = 18.0
+		style.content_margin_top = 12.0
+		style.content_margin_right = 18.0
+		style.content_margin_bottom = 12.0
 		if is_active:
-			style.bg_color = Color(0.2, 0.24, 0.35, 0.95)
-			style.border_width_left = 3
+			style.bg_color = Color(0.2, 0.25, 0.38, 0.95)
+			style.border_width_left = 4
 			style.border_color = Color(1.0, 0.84, 0.25)
 			btn.add_theme_color_override("font_color", Color(1.0, 0.92, 0.65))
 		else:
-			style.bg_color = Color(0.08, 0.1, 0.14, 0.65)
+			style.bg_color = Color(0.08, 0.1, 0.14, 0.7)
 			btn.add_theme_color_override("font_color", Color(0.72, 0.78, 0.85))
 		btn.add_theme_stylebox_override("normal", style)
 		btn.add_theme_stylebox_override("hover", style)
@@ -591,7 +764,12 @@ func _refresh_center_display() -> void:
 
 	var char_name: String = char_def.display_name if char_def != null else "Thần Thám"
 	var house_name: String = String(lore.get("house_name", "Hoàng Cung"))
-	_center_pedestal_label.text = "◆ %s · %s ◆" % [char_name.to_upper(), house_name.to_upper()]
+	var elem_icon: String = String(lore.get("element_icon", "★"))
+	_center_pedestal_label.text = "✦ %s  %s · %s ✦" % [
+		elem_icon,
+		char_name.to_upper(),
+		house_name.to_upper()
+	]
 
 
 func _refresh_right_panel() -> void:
@@ -624,42 +802,48 @@ func _render_tab_details() -> void:
 	var lore: Dictionary = CHARACTER_LORE.get(char_def.character_id, {}) if char_def != null else {}
 
 	var vbox := VBoxContainer.new()
-	vbox.anchors_preset = PRESET_FULL_RECT
-	vbox.add_theme_constant_override("separation", 14)
+	vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	vbox.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	vbox.add_theme_constant_override("separation", 16)
 	_right_panel_container.add_child(vbox)
 
 	# 1. Header Card (Name, Element, House, Diamonds, Merit)
 	var header_panel := PanelContainer.new()
 	var h_style := StyleBoxFlat.new()
-	h_style.bg_color = Color(0.08, 0.1, 0.15, 0.85)
-	h_style.corner_radius_top_left = 10
-	h_style.corner_radius_top_right = 10
-	h_style.corner_radius_bottom_right = 10
-	h_style.corner_radius_bottom_left = 10
-	h_style.content_margin_left = 18.0
-	h_style.content_margin_top = 14.0
-	h_style.content_margin_right = 18.0
-	h_style.content_margin_bottom = 14.0
+	h_style.bg_color = Color(0.08, 0.1, 0.16, 0.88)
+	h_style.corner_radius_top_left = 12
+	h_style.corner_radius_top_right = 12
+	h_style.corner_radius_bottom_right = 12
+	h_style.corner_radius_bottom_left = 12
+	h_style.border_width_left = 1
+	h_style.border_width_top = 1
+	h_style.border_width_right = 1
+	h_style.border_width_bottom = 1
+	h_style.border_color = Color(0.3, 0.38, 0.5, 0.45)
+	h_style.content_margin_left = 20.0
+	h_style.content_margin_top = 16.0
+	h_style.content_margin_right = 20.0
+	h_style.content_margin_bottom = 16.0
 	header_panel.add_theme_stylebox_override("panel", h_style)
 	vbox.add_child(header_panel)
 
 	var h_vbox := VBoxContainer.new()
-	h_vbox.add_theme_constant_override("separation", 6)
+	h_vbox.add_theme_constant_override("separation", 8)
 	header_panel.add_child(h_vbox)
 
 	# Name + Element
 	var name_row := HBoxContainer.new()
 	var name_lbl := Label.new()
 	name_lbl.text = "⭐ %s" % (char_def.display_name if char_def != null else "Nhân vật")
-	name_lbl.add_theme_font_size_override("font_size", 22)
+	name_lbl.add_theme_font_size_override("font_size", 24)
 	name_lbl.add_theme_color_override("font_color", Color(1.0, 0.94, 0.8))
-	name_lbl.size_flags_horizontal = SIZE_EXPAND_FILL
+	name_lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	name_row.add_child(name_lbl)
 
 	var elem_lbl := Label.new()
 	var elem_color: Color = lore.get("element_color", Color(0.4, 0.8, 1.0))
 	elem_lbl.text = "%s %s" % [lore.get("element_icon", "★"), lore.get("element_name", "Vô Cực")]
-	elem_lbl.add_theme_font_size_override("font_size", 16)
+	elem_lbl.add_theme_font_size_override("font_size", 17)
 	elem_lbl.add_theme_color_override("font_color", elem_color)
 	name_row.add_child(elem_lbl)
 	h_vbox.add_child(name_row)
@@ -668,7 +852,7 @@ func _render_tab_details() -> void:
 	var house_lbl := Label.new()
 	house_lbl.text = "🏛️ %s" % lore.get("house_name", "Hoàng Cung")
 	house_lbl.add_theme_font_size_override("font_size", 13)
-	house_lbl.add_theme_color_override("font_color", Color(0.7, 0.78, 0.88))
+	house_lbl.add_theme_color_override("font_color", Color(0.72, 0.8, 0.9))
 	h_vbox.add_child(house_lbl)
 
 	# Diamonds row (Orb requirement & current orbs)
@@ -680,7 +864,7 @@ func _render_tab_details() -> void:
 	var dia_prefix := Label.new()
 	dia_prefix.text = "Năng lượng kĩ năng (Orb):"
 	dia_prefix.add_theme_font_size_override("font_size", 12)
-	dia_prefix.add_theme_color_override("font_color", Color(0.65, 0.7, 0.75))
+	dia_prefix.add_theme_color_override("font_color", Color(0.68, 0.74, 0.8))
 	diamonds_row.add_child(dia_prefix)
 
 	var dia_str: String = ""
@@ -698,7 +882,7 @@ func _render_tab_details() -> void:
 	var orb_count_tag := Label.new()
 	orb_count_tag.text = "(%d/%d)" % [cur_orbs, req_orbs]
 	orb_count_tag.add_theme_font_size_override("font_size", 12)
-	orb_count_tag.add_theme_color_override("font_color", Color(0.85, 0.85, 0.85))
+	orb_count_tag.add_theme_color_override("font_color", Color(0.85, 0.88, 0.9))
 	diamonds_row.add_child(orb_count_tag)
 	h_vbox.add_child(diamonds_row)
 
@@ -714,8 +898,8 @@ func _render_tab_details() -> void:
 	var merit_lbl := Label.new()
 	merit_lbl.text = "⭐ Công Danh: %.2f  [%s]" % [merit_val, rank_title]
 	merit_lbl.add_theme_font_size_override("font_size", 14)
-	merit_lbl.add_theme_color_override("font_color", Color(0.95, 0.88, 0.65))
-	merit_lbl.size_flags_horizontal = SIZE_EXPAND_FILL
+	merit_lbl.add_theme_color_override("font_color", Color(0.96, 0.9, 0.7))
+	merit_lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	merit_row.add_child(merit_lbl)
 
 	# Magnifying glass button
@@ -732,13 +916,13 @@ func _render_tab_details() -> void:
 
 	# 2. Pill Switcher: [ Thuộc Tính ] [ Kỹ Năng ]
 	var pill_row := HBoxContainer.new()
-	pill_row.add_theme_constant_override("separation", 10)
+	pill_row.add_theme_constant_override("separation", 12)
 	vbox.add_child(pill_row)
 
 	var attr_pill := Button.new()
 	attr_pill.text = "Thuộc Tính"
-	attr_pill.size_flags_horizontal = SIZE_EXPAND_FILL
-	attr_pill.custom_minimum_size = Vector2(0, 38)
+	attr_pill.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	attr_pill.custom_minimum_size = Vector2(0, 42)
 	attr_pill.mouse_default_cursor_shape = CURSOR_POINTING_HAND
 	_style_subtab_pill(attr_pill, _current_detail_subtab == DetailSubTab.ATTRIBUTES)
 	attr_pill.pressed.connect(func() -> void:
@@ -749,8 +933,8 @@ func _render_tab_details() -> void:
 
 	var skill_pill := Button.new()
 	skill_pill.text = "Kỹ Năng"
-	skill_pill.size_flags_horizontal = SIZE_EXPAND_FILL
-	skill_pill.custom_minimum_size = Vector2(0, 38)
+	skill_pill.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	skill_pill.custom_minimum_size = Vector2(0, 42)
 	skill_pill.mouse_default_cursor_shape = CURSOR_POINTING_HAND
 	_style_subtab_pill(skill_pill, _current_detail_subtab == DetailSubTab.SKILLS)
 	skill_pill.pressed.connect(func() -> void:
@@ -761,17 +945,22 @@ func _render_tab_details() -> void:
 
 	# 3. Subtab Content Area
 	var subtab_panel := PanelContainer.new()
-	subtab_panel.size_flags_vertical = SIZE_EXPAND_FILL
+	subtab_panel.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	var s_style := StyleBoxFlat.new()
-	s_style.bg_color = Color(0.07, 0.08, 0.12, 0.85)
-	s_style.corner_radius_top_left = 10
-	s_style.corner_radius_top_right = 10
-	s_style.corner_radius_bottom_right = 10
-	s_style.corner_radius_bottom_left = 10
-	s_style.content_margin_left = 16.0
-	s_style.content_margin_top = 14.0
-	s_style.content_margin_right = 16.0
-	s_style.content_margin_bottom = 14.0
+	s_style.bg_color = Color(0.07, 0.085, 0.13, 0.9)
+	s_style.corner_radius_top_left = 12
+	s_style.corner_radius_top_right = 12
+	s_style.corner_radius_bottom_right = 12
+	s_style.corner_radius_bottom_left = 12
+	s_style.border_width_left = 1
+	s_style.border_width_top = 1
+	s_style.border_width_right = 1
+	s_style.border_width_bottom = 1
+	s_style.border_color = Color(0.25, 0.32, 0.44, 0.4)
+	s_style.content_margin_left = 18.0
+	s_style.content_margin_top = 16.0
+	s_style.content_margin_right = 18.0
+	s_style.content_margin_bottom = 16.0
 	subtab_panel.add_theme_stylebox_override("panel", s_style)
 	vbox.add_child(subtab_panel)
 
@@ -783,16 +972,16 @@ func _render_tab_details() -> void:
 
 func _style_subtab_pill(btn: Button, is_active: bool) -> void:
 	var style := StyleBoxFlat.new()
-	style.corner_radius_top_left = 19
-	style.corner_radius_top_right = 19
-	style.corner_radius_bottom_right = 19
-	style.corner_radius_bottom_left = 19
+	style.corner_radius_top_left = 21
+	style.corner_radius_top_right = 21
+	style.corner_radius_bottom_right = 21
+	style.corner_radius_bottom_left = 21
 	if is_active:
-		style.bg_color = Color(0.94, 0.96, 0.98, 0.95)
+		style.bg_color = Color(0.94, 0.96, 0.98, 0.96)
 		btn.add_theme_color_override("font_color", Color(0.08, 0.1, 0.15))
 	else:
-		style.bg_color = Color(0.12, 0.14, 0.19, 0.75)
-		btn.add_theme_color_override("font_color", Color(0.75, 0.8, 0.85))
+		style.bg_color = Color(0.12, 0.15, 0.22, 0.8)
+		btn.add_theme_color_override("font_color", Color(0.75, 0.82, 0.9))
 	btn.add_theme_stylebox_override("normal", style)
 	btn.add_theme_stylebox_override("hover", style)
 	btn.add_theme_stylebox_override("pressed", style)
@@ -800,7 +989,9 @@ func _style_subtab_pill(btn: Button, is_active: bool) -> void:
 
 func _render_attributes_subtab(container: Control) -> void:
 	var vbox := VBoxContainer.new()
-	vbox.add_theme_constant_override("separation", 16)
+	vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	vbox.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	vbox.add_theme_constant_override("separation", 18)
 	container.add_child(vbox)
 
 	var p_state: PlayerPhaseState = _case_flow_session.loot_session.find_player(_active_player_id)
@@ -832,47 +1023,63 @@ func _render_attributes_subtab(container: Control) -> void:
 		var row := HBoxContainer.new()
 		var icon_lbl := Label.new()
 		icon_lbl.text = s["icon"]
-		icon_lbl.add_theme_font_size_override("font_size", 18)
+		icon_lbl.add_theme_font_size_override("font_size", 20)
 		row.add_child(icon_lbl)
 
 		var name_lbl := Label.new()
 		name_lbl.text = s["name"]
-		name_lbl.add_theme_font_size_override("font_size", 14)
-		name_lbl.add_theme_color_override("font_color", Color(0.82, 0.88, 0.92))
-		name_lbl.size_flags_horizontal = SIZE_EXPAND_FILL
+		name_lbl.add_theme_font_size_override("font_size", 15)
+		name_lbl.add_theme_color_override("font_color", Color(0.85, 0.9, 0.95))
+		name_lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		row.add_child(name_lbl)
 
 		var val_lbl := Label.new()
 		val_lbl.text = s["val"]
-		val_lbl.add_theme_font_size_override("font_size", 16)
+		val_lbl.add_theme_font_size_override("font_size", 18)
 		val_lbl.add_theme_color_override("font_color", Color(1.0, 0.95, 0.8))
 		row.add_child(val_lbl)
 		vbox.add_child(row)
 
 	var note_lbl := Label.new()
 	note_lbl.text = "💡 Sức Mạnh tương đương dung tích túi đồ. Mỗi điểm cầm thêm 1 món khi loot."
-	note_lbl.add_theme_font_size_override("font_size", 11)
-	note_lbl.add_theme_color_override("font_color", Color(0.65, 0.72, 0.75))
+	note_lbl.add_theme_font_size_override("font_size", 12)
+	note_lbl.add_theme_color_override("font_color", Color(0.68, 0.75, 0.8))
 	note_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	vbox.add_child(note_lbl)
 
 	var spacer := Control.new()
-	spacer.size_flags_vertical = SIZE_EXPAND_FILL
+	spacer.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	vbox.add_child(spacer)
 
 	# Button "Chi Tiết Thuộc Tính" (Opens Image 3 popup)
 	var detail_btn := Button.new()
 	detail_btn.text = "Chi Tiết Thuộc Tính"
-	detail_btn.custom_minimum_size = Vector2(170, 38)
-	detail_btn.size_flags_horizontal = SIZE_SHRINK_END
+	detail_btn.custom_minimum_size = Vector2(180, 42)
+	detail_btn.size_flags_horizontal = Control.SIZE_SHRINK_END
 	detail_btn.mouse_default_cursor_shape = CURSOR_POINTING_HAND
+	var btn_style := StyleBoxFlat.new()
+	btn_style.bg_color = Color(0.18, 0.22, 0.32, 0.9)
+	btn_style.corner_radius_top_left = 10
+	btn_style.corner_radius_top_right = 10
+	btn_style.corner_radius_bottom_right = 10
+	btn_style.corner_radius_bottom_left = 10
+	btn_style.border_width_left = 1
+	btn_style.border_width_top = 1
+	btn_style.border_width_right = 1
+	btn_style.border_width_bottom = 1
+	btn_style.border_color = Color(0.4, 0.5, 0.65, 0.6)
+	detail_btn.add_theme_stylebox_override("normal", btn_style)
+	detail_btn.add_theme_stylebox_override("hover", btn_style)
+	detail_btn.add_theme_stylebox_override("pressed", btn_style)
 	detail_btn.pressed.connect(_on_open_stat_detail_modal_pressed)
 	vbox.add_child(detail_btn)
 
 
 func _render_skills_subtab(container: Control, lore: Dictionary) -> void:
 	var vbox := VBoxContainer.new()
-	vbox.add_theme_constant_override("separation", 10)
+	vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	vbox.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	vbox.add_theme_constant_override("separation", 12)
 	container.add_child(vbox)
 
 	var skills_dict: Dictionary = lore.get("skills", {})
@@ -910,34 +1117,34 @@ func _render_skills_subtab(container: Control, lore: Dictionary) -> void:
 	# Grid of 4 skill buttons (circular style representation)
 	var grid := GridContainer.new()
 	grid.columns = 2
-	grid.add_theme_constant_override("h_separation", 10)
-	grid.add_theme_constant_override("v_separation", 10)
+	grid.add_theme_constant_override("h_separation", 12)
+	grid.add_theme_constant_override("v_separation", 12)
 	vbox.add_child(grid)
 
 	for i in range(skill_list.size()):
 		var sk: Dictionary = skill_list[i]
 		var btn := Button.new()
-		btn.custom_minimum_size = Vector2(195, 62)
+		btn.custom_minimum_size = Vector2(204, 68)
 		btn.mouse_default_cursor_shape = CURSOR_POINTING_HAND
 
 		var style := StyleBoxFlat.new()
-		style.bg_color = Color(0.12, 0.15, 0.22, 0.85) if _selected_skill_index == i else Color(0.08, 0.1, 0.14, 0.65)
-		style.corner_radius_top_left = 8
-		style.corner_radius_top_right = 8
-		style.corner_radius_bottom_right = 8
-		style.corner_radius_bottom_left = 8
+		style.bg_color = Color(0.14, 0.18, 0.26, 0.9) if _selected_skill_index == i else Color(0.08, 0.1, 0.15, 0.7)
+		style.corner_radius_top_left = 10
+		style.corner_radius_top_right = 10
+		style.corner_radius_bottom_right = 10
+		style.corner_radius_bottom_left = 10
 		style.border_width_left = 2 if _selected_skill_index == i else 1
 		style.border_width_top = 2 if _selected_skill_index == i else 1
 		style.border_width_right = 2 if _selected_skill_index == i else 1
 		style.border_width_bottom = 2 if _selected_skill_index == i else 1
-		style.border_color = Color(1.0, 0.84, 0.25) if _selected_skill_index == i else Color(0.3, 0.35, 0.45, 0.4)
+		style.border_color = Color(1.0, 0.84, 0.25) if _selected_skill_index == i else Color(0.3, 0.38, 0.5, 0.4)
 		btn.add_theme_stylebox_override("normal", style)
 		btn.add_theme_stylebox_override("hover", style)
 		btn.add_theme_stylebox_override("pressed", style)
 
 		btn.text = "%s %s\n[%s]" % [sk["icon"], sk["name"], sk["tag"]]
 		btn.add_theme_font_size_override("font_size", 12)
-		btn.add_theme_color_override("font_color", Color(1.0, 0.9, 0.7) if _selected_skill_index == i else Color(0.75, 0.8, 0.85))
+		btn.add_theme_color_override("font_color", Color(1.0, 0.9, 0.7) if _selected_skill_index == i else Color(0.78, 0.84, 0.9))
 
 		var cur_i := i
 		btn.pressed.connect(func() -> void:
@@ -949,35 +1156,35 @@ func _render_skills_subtab(container: Control, lore: Dictionary) -> void:
 	# Selected skill detail description box
 	var selected_sk: Dictionary = skill_list[clampi(_selected_skill_index, 0, skill_list.size() - 1)]
 	var desc_box := PanelContainer.new()
-	desc_box.size_flags_vertical = SIZE_EXPAND_FILL
+	desc_box.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	var db_style := StyleBoxFlat.new()
-	db_style.bg_color = Color(0.05, 0.065, 0.09, 0.9)
-	db_style.corner_radius_top_left = 8
-	db_style.corner_radius_top_right = 8
-	db_style.corner_radius_bottom_right = 8
-	db_style.corner_radius_bottom_left = 8
-	db_style.content_margin_left = 12.0
-	db_style.content_margin_top = 10.0
-	db_style.content_margin_right = 12.0
-	db_style.content_margin_bottom = 10.0
+	db_style.bg_color = Color(0.05, 0.065, 0.1, 0.95)
+	db_style.corner_radius_top_left = 10
+	db_style.corner_radius_top_right = 10
+	db_style.corner_radius_bottom_right = 10
+	db_style.corner_radius_bottom_left = 10
+	db_style.content_margin_left = 16.0
+	db_style.content_margin_top = 14.0
+	db_style.content_margin_right = 16.0
+	db_style.content_margin_bottom = 14.0
 	desc_box.add_theme_stylebox_override("panel", db_style)
 	vbox.add_child(desc_box)
 
 	var desc_vbox := VBoxContainer.new()
-	desc_vbox.add_theme_constant_override("separation", 6)
+	desc_vbox.add_theme_constant_override("separation", 8)
 	desc_box.add_child(desc_vbox)
 
 	var sk_title := Label.new()
 	sk_title.text = "%s %s (%s)" % [selected_sk["icon"], selected_sk["name"], selected_sk["type"]]
-	sk_title.add_theme_font_size_override("font_size", 14)
+	sk_title.add_theme_font_size_override("font_size", 15)
 	sk_title.add_theme_color_override("font_color", Color(1.0, 0.84, 0.3))
 	desc_vbox.add_child(sk_title)
 
 	var sk_desc := Label.new()
 	sk_desc.text = selected_sk["desc"]
 	sk_desc.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	sk_desc.add_theme_font_size_override("font_size", 12)
-	sk_desc.add_theme_color_override("font_color", Color(0.88, 0.9, 0.94))
+	sk_desc.add_theme_font_size_override("font_size", 13)
+	sk_desc.add_theme_color_override("font_color", Color(0.9, 0.92, 0.96))
 	desc_vbox.add_child(sk_desc)
 
 
@@ -986,13 +1193,14 @@ func _render_skills_subtab(container: Control, lore: Dictionary) -> void:
 # -----------------------------------------------------------------------------
 func _render_tab_relics() -> void:
 	var vbox := VBoxContainer.new()
-	vbox.anchors_preset = PRESET_FULL_RECT
-	vbox.add_theme_constant_override("separation", 14)
+	vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	vbox.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	vbox.add_theme_constant_override("separation", 16)
 	_right_panel_container.add_child(vbox)
 
 	var title_lbl := Label.new()
 	title_lbl.text = "🏺 KỶ VẬT HOÀNG GIA (RELICS)"
-	title_lbl.add_theme_font_size_override("font_size", 18)
+	title_lbl.add_theme_font_size_override("font_size", 20)
 	title_lbl.add_theme_color_override("font_color", Color(1.0, 0.85, 0.3))
 	vbox.add_child(title_lbl)
 
@@ -1006,20 +1214,20 @@ func _render_tab_relics() -> void:
 
 	var card := PanelContainer.new()
 	var c_style := StyleBoxFlat.new()
-	c_style.bg_color = Color(0.08, 0.1, 0.15, 0.85)
-	c_style.corner_radius_top_left = 10
-	c_style.corner_radius_top_right = 10
-	c_style.corner_radius_bottom_right = 10
-	c_style.corner_radius_bottom_left = 10
-	c_style.content_margin_left = 18.0
-	c_style.content_margin_top = 16.0
-	c_style.content_margin_right = 18.0
-	c_style.content_margin_bottom = 16.0
+	c_style.bg_color = Color(0.08, 0.1, 0.16, 0.9)
+	c_style.corner_radius_top_left = 12
+	c_style.corner_radius_top_right = 12
+	c_style.corner_radius_bottom_right = 12
+	c_style.corner_radius_bottom_left = 12
+	c_style.content_margin_left = 20.0
+	c_style.content_margin_top = 18.0
+	c_style.content_margin_right = 20.0
+	c_style.content_margin_bottom = 18.0
 	card.add_theme_stylebox_override("panel", c_style)
 	vbox.add_child(card)
 
 	var cvbox := VBoxContainer.new()
-	cvbox.add_theme_constant_override("separation", 8)
+	cvbox.add_theme_constant_override("separation", 10)
 	card.add_child(cvbox)
 
 	if relic_inst != null:
@@ -1036,14 +1244,14 @@ func _render_tab_relics() -> void:
 			relic_inst.purple_level
 		]
 		tier_lbl.add_theme_font_size_override("font_size", 13)
-		tier_lbl.add_theme_color_override("font_color", Color(0.7, 0.8, 0.9))
+		tier_lbl.add_theme_color_override("font_color", Color(0.72, 0.82, 0.92))
 		cvbox.add_child(tier_lbl)
 	else:
 		var empty_lbl := Label.new()
 		empty_lbl.text = "Chưa trang bị Kỷ Vật.\nHãy tham gia Gacha hoặc quản lý trang bị giữa các Kỳ Án để nhận Kỷ Vật."
 		empty_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		empty_lbl.add_theme_font_size_override("font_size", 13)
-		empty_lbl.add_theme_color_override("font_color", Color(0.65, 0.7, 0.75))
+		empty_lbl.add_theme_color_override("font_color", Color(0.65, 0.72, 0.78))
 		cvbox.add_child(empty_lbl)
 
 
@@ -1052,13 +1260,14 @@ func _render_tab_relics() -> void:
 # -----------------------------------------------------------------------------
 func _render_tab_stigmata() -> void:
 	var vbox := VBoxContainer.new()
-	vbox.anchors_preset = PRESET_FULL_RECT
-	vbox.add_theme_constant_override("separation", 14)
+	vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	vbox.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	vbox.add_theme_constant_override("separation", 16)
 	_right_panel_container.add_child(vbox)
 
 	var title_lbl := Label.new()
 	title_lbl.text = "📜 VẾT THÁNH BẢO VỆ (STIGMATA)"
-	title_lbl.add_theme_font_size_override("font_size", 18)
+	title_lbl.add_theme_font_size_override("font_size", 20)
 	title_lbl.add_theme_color_override("font_color", Color(1.0, 0.85, 0.3))
 	vbox.add_child(title_lbl)
 
@@ -1072,15 +1281,15 @@ func _render_tab_stigmata() -> void:
 	for s: Dictionary in slots:
 		var slot_card := PanelContainer.new()
 		var sc_style := StyleBoxFlat.new()
-		sc_style.bg_color = Color(0.08, 0.1, 0.14, 0.8)
-		sc_style.corner_radius_top_left = 8
-		sc_style.corner_radius_top_right = 8
-		sc_style.corner_radius_bottom_right = 8
-		sc_style.corner_radius_bottom_left = 8
-		sc_style.content_margin_left = 14.0
-		sc_style.content_margin_top = 10.0
-		sc_style.content_margin_right = 14.0
-		sc_style.content_margin_bottom = 10.0
+		sc_style.bg_color = Color(0.08, 0.1, 0.15, 0.85)
+		sc_style.corner_radius_top_left = 10
+		sc_style.corner_radius_top_right = 10
+		sc_style.corner_radius_bottom_right = 10
+		sc_style.corner_radius_bottom_left = 10
+		sc_style.content_margin_left = 16.0
+		sc_style.content_margin_top = 12.0
+		sc_style.content_margin_right = 16.0
+		sc_style.content_margin_bottom = 12.0
 		slot_card.add_theme_stylebox_override("panel", sc_style)
 		vbox.add_child(slot_card)
 
@@ -1089,7 +1298,7 @@ func _render_tab_stigmata() -> void:
 
 		var s_name := Label.new()
 		s_name.text = s["name"]
-		s_name.add_theme_font_size_override("font_size", 13)
+		s_name.add_theme_font_size_override("font_size", 14)
 		s_name.add_theme_color_override("font_color", Color(1.0, 0.88, 0.45))
 		sc_vbox.add_child(s_name)
 
@@ -1097,7 +1306,7 @@ func _render_tab_stigmata() -> void:
 		var s_detail := Label.new()
 		if inst_id.is_empty():
 			s_detail.text = "Trống"
-			s_detail.add_theme_color_override("font_color", Color(0.5, 0.55, 0.6))
+			s_detail.add_theme_color_override("font_color", Color(0.5, 0.55, 0.62))
 		else:
 			s_detail.text = "Đã trang bị: %s" % inst_id
 			s_detail.add_theme_color_override("font_color", Color(0.85, 0.92, 0.98))
@@ -1110,13 +1319,14 @@ func _render_tab_stigmata() -> void:
 # -----------------------------------------------------------------------------
 func _render_tab_inventory() -> void:
 	var vbox := VBoxContainer.new()
-	vbox.anchors_preset = PRESET_FULL_RECT
-	vbox.add_theme_constant_override("separation", 14)
+	vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	vbox.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	vbox.add_theme_constant_override("separation", 16)
 	_right_panel_container.add_child(vbox)
 
 	var title_lbl := Label.new()
 	title_lbl.text = "🎒 TÚI HÀNH TRANG & TÀI BẢO"
-	title_lbl.add_theme_font_size_override("font_size", 18)
+	title_lbl.add_theme_font_size_override("font_size", 20)
 	title_lbl.add_theme_color_override("font_color", Color(1.0, 0.85, 0.3))
 	vbox.add_child(title_lbl)
 
@@ -1126,20 +1336,20 @@ func _render_tab_inventory() -> void:
 	# Resources row
 	var res_card := PanelContainer.new()
 	var rc_style := StyleBoxFlat.new()
-	rc_style.bg_color = Color(0.08, 0.1, 0.14, 0.85)
-	rc_style.corner_radius_top_left = 8
-	rc_style.corner_radius_top_right = 8
-	rc_style.corner_radius_bottom_right = 8
-	rc_style.corner_radius_bottom_left = 8
-	rc_style.content_margin_left = 14.0
-	rc_style.content_margin_top = 10.0
-	rc_style.content_margin_right = 14.0
-	rc_style.content_margin_bottom = 10.0
+	rc_style.bg_color = Color(0.08, 0.1, 0.15, 0.9)
+	rc_style.corner_radius_top_left = 10
+	rc_style.corner_radius_top_right = 10
+	rc_style.corner_radius_bottom_right = 10
+	rc_style.corner_radius_bottom_left = 10
+	rc_style.content_margin_left = 16.0
+	rc_style.content_margin_top = 12.0
+	rc_style.content_margin_right = 16.0
+	rc_style.content_margin_bottom = 12.0
 	res_card.add_theme_stylebox_override("panel", rc_style)
 	vbox.add_child(res_card)
 
 	var res_vbox := VBoxContainer.new()
-	res_vbox.add_theme_constant_override("separation", 6)
+	res_vbox.add_theme_constant_override("separation", 8)
 	res_card.add_child(res_vbox)
 
 	var coins: int = p_state.silver_coin_count if p_state != null else 0
@@ -1151,7 +1361,7 @@ func _render_tab_inventory() -> void:
 	res_lbl.text = "🪙 Xu Bạc: %d   🎟️ Vé Gacha: %d   🔮 Orb: %d   🛡️ Danh Tiếng: %d" % [
 		coins, tickets, orbs, rep
 	]
-	res_lbl.add_theme_font_size_override("font_size", 13)
+	res_lbl.add_theme_font_size_override("font_size", 14)
 	res_lbl.add_theme_color_override("font_color", Color(0.95, 0.9, 0.75))
 	res_vbox.add_child(res_lbl)
 
@@ -1160,8 +1370,8 @@ func _render_tab_inventory() -> void:
 	var carried_count: int = round_loot.carried_items.size() if round_loot != null else 0
 	var carried_cap: int = round_loot.capacity if round_loot != null else 2
 	carried_title.text = "📦 Vật Phẩm Đang Mang Khi Loot (%d/%d)" % [carried_count, carried_cap]
-	carried_title.add_theme_font_size_override("font_size", 14)
-	carried_title.add_theme_color_override("font_color", Color(0.85, 0.9, 0.95))
+	carried_title.add_theme_font_size_override("font_size", 15)
+	carried_title.add_theme_color_override("font_color", Color(0.85, 0.9, 0.96))
 	vbox.add_child(carried_title)
 
 	var carried_card := PanelContainer.new()
@@ -1169,6 +1379,7 @@ func _render_tab_inventory() -> void:
 	vbox.add_child(carried_card)
 
 	var carried_vbox := VBoxContainer.new()
+	carried_vbox.add_theme_constant_override("separation", 6)
 	carried_card.add_child(carried_vbox)
 
 	if round_loot != null and not round_loot.carried_items.is_empty():
@@ -1177,22 +1388,22 @@ func _render_tab_inventory() -> void:
 			var it_name: String = _item_name(item_id)
 			var it_lbl := Label.new()
 			it_lbl.text = "• %s" % it_name
-			it_lbl.add_theme_font_size_override("font_size", 12)
+			it_lbl.add_theme_font_size_override("font_size", 13)
 			it_lbl.add_theme_color_override("font_color", Color(0.85, 0.95, 0.88))
 			carried_vbox.add_child(it_lbl)
 	else:
 		var empty_c := Label.new()
 		empty_c.text = "(Túi rỗng - nhặt vật phẩm trên các ô bản đồ để sử dụng)"
-		empty_c.add_theme_font_size_override("font_size", 12)
+		empty_c.add_theme_font_size_override("font_size", 13)
 		empty_c.add_theme_color_override("font_color", Color(0.55, 0.6, 0.65))
 		carried_vbox.add_child(empty_c)
 
-	# Persistent Consumables
+	# Persistent Consumables in Vault
 	var persistent_title := Label.new()
 	var persistent_count: int = p_state.consumable_inventory.size() if p_state != null else 0
 	persistent_title.text = "🏛️ Vật Phẩm Vĩnh Viễn Trong Kho (%d món)" % persistent_count
-	persistent_title.add_theme_font_size_override("font_size", 14)
-	persistent_title.add_theme_color_override("font_color", Color(0.85, 0.9, 0.95))
+	persistent_title.add_theme_font_size_override("font_size", 15)
+	persistent_title.add_theme_color_override("font_color", Color(0.85, 0.9, 0.96))
 	vbox.add_child(persistent_title)
 
 	var persistent_card := PanelContainer.new()
@@ -1200,6 +1411,7 @@ func _render_tab_inventory() -> void:
 	vbox.add_child(persistent_card)
 
 	var persistent_vbox := VBoxContainer.new()
+	persistent_vbox.add_theme_constant_override("separation", 6)
 	persistent_card.add_child(persistent_vbox)
 
 	if p_state != null and not p_state.consumable_inventory.is_empty():
@@ -1209,13 +1421,13 @@ func _render_tab_inventory() -> void:
 			var it_name: String = _item_name(item_id)
 			var it_lbl := Label.new()
 			it_lbl.text = "• %s (x%d)" % [it_name, qty]
-			it_lbl.add_theme_font_size_override("font_size", 12)
+			it_lbl.add_theme_font_size_override("font_size", 13)
 			it_lbl.add_theme_color_override("font_color", Color(0.85, 0.9, 0.95))
 			persistent_vbox.add_child(it_lbl)
 	else:
 		var empty_p := Label.new()
 		empty_p.text = "(Kho trống - vật phẩm mang trong túi sẽ chuyển về kho khi kết thúc Loot)"
-		empty_p.add_theme_font_size_override("font_size", 12)
+		empty_p.add_theme_font_size_override("font_size", 13)
 		empty_p.add_theme_color_override("font_color", Color(0.55, 0.6, 0.65))
 		persistent_vbox.add_child(empty_p)
 
@@ -1235,19 +1447,19 @@ func _item_name(item_id: StringName) -> String:
 	return String(item_id) if item_id != &"" else "Vật phẩm"
 
 
-
 # -----------------------------------------------------------------------------
 # TAB 5: THÔNG TIN (Info / Lore)
 # -----------------------------------------------------------------------------
 func _render_tab_info() -> void:
 	var vbox := VBoxContainer.new()
-	vbox.anchors_preset = PRESET_FULL_RECT
-	vbox.add_theme_constant_override("separation", 14)
+	vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	vbox.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	vbox.add_theme_constant_override("separation", 16)
 	_right_panel_container.add_child(vbox)
 
 	var title_lbl := Label.new()
 	title_lbl.text = "ℹ️ TIỂU SỬ & THÂN THẾ"
-	title_lbl.add_theme_font_size_override("font_size", 18)
+	title_lbl.add_theme_font_size_override("font_size", 20)
 	title_lbl.add_theme_color_override("font_color", Color(1.0, 0.85, 0.3))
 	vbox.add_child(title_lbl)
 
@@ -1259,26 +1471,26 @@ func _render_tab_info() -> void:
 
 	var card := PanelContainer.new()
 	var c_style := StyleBoxFlat.new()
-	c_style.bg_color = Color(0.08, 0.1, 0.14, 0.85)
-	c_style.corner_radius_top_left = 8
-	c_style.corner_radius_top_right = 8
-	c_style.corner_radius_bottom_right = 8
-	c_style.corner_radius_bottom_left = 8
-	c_style.content_margin_left = 16.0
-	c_style.content_margin_top = 14.0
-	c_style.content_margin_right = 16.0
-	c_style.content_margin_bottom = 14.0
+	c_style.bg_color = Color(0.08, 0.1, 0.15, 0.9)
+	c_style.corner_radius_top_left = 12
+	c_style.corner_radius_top_right = 12
+	c_style.corner_radius_bottom_right = 12
+	c_style.corner_radius_bottom_left = 12
+	c_style.content_margin_left = 20.0
+	c_style.content_margin_top = 18.0
+	c_style.content_margin_right = 20.0
+	c_style.content_margin_bottom = 18.0
 	card.add_theme_stylebox_override("panel", c_style)
 	vbox.add_child(card)
 
 	var cvbox := VBoxContainer.new()
-	cvbox.add_theme_constant_override("separation", 10)
+	cvbox.add_theme_constant_override("separation", 12)
 	card.add_child(cvbox)
 
 	var bio_lbl := Label.new()
 	bio_lbl.text = lore.get("bio", "Chưa có dữ liệu tiểu sử.")
 	bio_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	bio_lbl.add_theme_font_size_override("font_size", 13)
+	bio_lbl.add_theme_font_size_override("font_size", 14)
 	bio_lbl.add_theme_color_override("font_color", Color(0.88, 0.92, 0.96))
 	cvbox.add_child(bio_lbl)
 
@@ -1288,35 +1500,36 @@ func _render_tab_info() -> void:
 # -----------------------------------------------------------------------------
 func _render_tab_costumes() -> void:
 	var vbox := VBoxContainer.new()
-	vbox.anchors_preset = PRESET_FULL_RECT
-	vbox.add_theme_constant_override("separation", 14)
+	vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	vbox.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	vbox.add_theme_constant_override("separation", 16)
 	_right_panel_container.add_child(vbox)
 
 	var title_lbl := Label.new()
 	title_lbl.text = "👘 TỦ ĐỒ & THỜI TRANG"
-	title_lbl.add_theme_font_size_override("font_size", 18)
+	title_lbl.add_theme_font_size_override("font_size", 20)
 	title_lbl.add_theme_color_override("font_color", Color(1.0, 0.85, 0.3))
 	vbox.add_child(title_lbl)
 
 	var card := PanelContainer.new()
 	var c_style := StyleBoxFlat.new()
-	c_style.bg_color = Color(0.08, 0.1, 0.14, 0.85)
-	c_style.corner_radius_top_left = 8
-	c_style.corner_radius_top_right = 8
-	c_style.corner_radius_bottom_right = 8
-	c_style.corner_radius_bottom_left = 8
-	c_style.content_margin_left = 16.0
-	c_style.content_margin_top = 14.0
-	c_style.content_margin_right = 16.0
-	c_style.content_margin_bottom = 14.0
+	c_style.bg_color = Color(0.08, 0.1, 0.15, 0.9)
+	c_style.corner_radius_top_left = 12
+	c_style.corner_radius_top_right = 12
+	c_style.corner_radius_bottom_right = 12
+	c_style.corner_radius_bottom_left = 12
+	c_style.content_margin_left = 20.0
+	c_style.content_margin_top = 18.0
+	c_style.content_margin_right = 20.0
+	c_style.content_margin_bottom = 18.0
 	card.add_theme_stylebox_override("panel", c_style)
 	vbox.add_child(card)
 
 	var lbl := Label.new()
 	lbl.text = "• Trang phục hiện tại: Thường phục Thần Thám Hoàng Cung.\n\n(Tính năng Tủ Đồ Ngoại Trang đang được phát triển trong các bản mở rộng tương lai)."
 	lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	lbl.add_theme_font_size_override("font_size", 13)
-	lbl.add_theme_color_override("font_color", Color(0.7, 0.75, 0.8))
+	lbl.add_theme_font_size_override("font_size", 14)
+	lbl.add_theme_color_override("font_color", Color(0.72, 0.78, 0.85))
 	card.add_child(lbl)
 
 
@@ -1339,7 +1552,6 @@ func _on_open_stat_detail_modal_pressed() -> void:
 	var base_spd: int = char_def.base_speed if char_def != null else 2
 	var base_str: int = char_def.base_bag_level if char_def != null else 2
 
-	# In current balance, bonus comes from equipment / temporary effects (or 0)
 	var bonus_hp: int = 0
 	var bonus_spd: int = 0
 	var bonus_str: int = 0
@@ -1355,14 +1567,14 @@ func _on_open_stat_detail_modal_pressed() -> void:
 
 		var icon_lbl := Label.new()
 		icon_lbl.text = item["icon"]
-		icon_lbl.add_theme_font_size_override("font_size", 14)
+		icon_lbl.add_theme_font_size_override("font_size", 15)
 		row.add_child(icon_lbl)
 
 		var name_lbl := Label.new()
 		name_lbl.text = item["name"]
-		name_lbl.add_theme_font_size_override("font_size", 13)
+		name_lbl.add_theme_font_size_override("font_size", 14)
 		name_lbl.add_theme_color_override("font_color", Color(0.2, 0.22, 0.25)) # Dark text like Image 3
-		name_lbl.size_flags_horizontal = SIZE_EXPAND_FILL
+		name_lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		row.add_child(name_lbl)
 
 		var val_row := HBoxContainer.new()
@@ -1371,21 +1583,22 @@ func _on_open_stat_detail_modal_pressed() -> void:
 		# Base stat in black/dark
 		var base_lbl := Label.new()
 		base_lbl.text = "%d" % int(item["base"])
-		base_lbl.add_theme_font_size_override("font_size", 14)
+		base_lbl.add_theme_font_size_override("font_size", 15)
 		base_lbl.add_theme_color_override("font_color", Color(0.12, 0.12, 0.15))
 		val_row.add_child(base_lbl)
 
 		# Bonus stat in bright cyan/blue like Image 3
 		var bonus_lbl := Label.new()
 		bonus_lbl.text = "+%d" % int(item["bonus"])
-		bonus_lbl.add_theme_font_size_override("font_size", 14)
-		bonus_lbl.add_theme_color_override("font_color", Color(0.15, 0.6, 0.95))
+		bonus_lbl.add_theme_font_size_override("font_size", 15)
+		bonus_lbl.add_theme_color_override("font_color", Color(0.12, 0.58, 0.95))
 		val_row.add_child(bonus_lbl)
 
 		row.add_child(val_row)
 		rows_container.add_child(row)
 
-	_stat_detail_modal.visible = true
+	if _stat_modal_overlay != null:
+		_stat_modal_overlay.visible = true
 
 
 func _show_rank_popup(merit_val: float, rank_info: Dictionary) -> void:
@@ -1408,13 +1621,16 @@ func _show_rank_popup(merit_val: float, rank_info: Dictionary) -> void:
 			needed, next_name, next_threshold
 		]
 	content.text = text
-	_rank_detail_popup.visible = true
+	if _rank_popup_overlay != null:
+		_rank_popup_overlay.visible = true
 
 
 func _switch_sidebar_tab(tab_id: SidebarTab) -> void:
 	_current_sidebar_tab = tab_id
-	_stat_detail_modal.visible = false
-	_rank_detail_popup.visible = false
+	if _stat_modal_overlay != null:
+		_stat_modal_overlay.visible = false
+	if _rank_popup_overlay != null:
+		_rank_popup_overlay.visible = false
 	refresh()
 
 

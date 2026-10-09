@@ -190,9 +190,13 @@ func _ready() -> void:
 	_build_character_buttons()
 	_build_equipment_slot_options()
 	_refresh_continue_button()
+	var sheet_layer := CanvasLayer.new()
+	sheet_layer.name = "CharacterDetailSheetLayer"
+	sheet_layer.layer = 120
+	add_child(sheet_layer)
 	_character_sheet = CHARACTER_DETAIL_SHEET.new()
 	_character_sheet.visible = false
-	add_child(_character_sheet)
+	sheet_layer.add_child(_character_sheet)
 	_show_phase(SETUP_SESSION.Phase.MAIN_MENU)
 
 
@@ -255,8 +259,8 @@ func _input(event: InputEvent) -> void:
 	if _character_sheet != null and _character_sheet.visible:
 		if key_event.keycode == KEY_ESCAPE or key_event.keycode == KEY_C:
 			_character_sheet.visible = false
-			get_viewport().set_input_as_handled()
-			return
+		get_viewport().set_input_as_handled()
+		return
 	if setup.phase == SETUP_SESSION.Phase.LOOT_ACTIVE and case_flow != null and case_flow.loot_session != null:
 		var focus: Control = get_viewport().gui_get_focus_owner()
 		if focus is LineEdit or focus is TextEdit:
