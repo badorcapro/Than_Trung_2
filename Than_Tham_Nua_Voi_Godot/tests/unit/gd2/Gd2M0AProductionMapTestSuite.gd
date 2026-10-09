@@ -75,6 +75,8 @@ func run() -> Array[Dictionary]:
 	rows.append(_row("GĐ2-M0A get_available_branches returns correct fork branches", _available_branches_match(map_definition)))
 	rows.append(_row("GĐ2-M0A movement can choose branch A or branch B at House spawn", _movement_can_choose_branch(houses, map_definition)))
 	rows.append(_row("GĐ2-M0A interactive movement pauses at fork and resumes along chosen branch", _interactive_branch_pauses_and_resumes(houses, map_definition)))
+	rows.append(_row("GĐ2-M0A map view highlights selectable branches without mutating state", _map_view_selectable_branches(view)))
+	rows.append(_row("GĐ2-M0A map view detects clicked node on screen position", _map_view_finds_node_at_screen_pos(view)))
 	return rows
 
 
@@ -988,3 +990,28 @@ func _interactive_branch_pauses_and_resumes(
 		and resumed.traversed_node_ids == [&"central_hub", &"middle_lane_2_1"]
 		and not session.pending_branch.active
 	)
+
+
+func _map_view_selectable_branches(view: PlayerFacingLootMapView) -> bool:
+	view.set_selectable_branches([&"hoang_lane_a_1", &"hoang_lane_b_1"])
+	var snapshot: Dictionary = view.presentation_snapshot()
+	var branches_val: Variant = snapshot.get("selectable_branches", [])
+	if not branches_val is Array:
+		return false
+	var branches: Array = branches_val
+	var match_count := 0
+	for item in branches:
+		if item == &"hoang_lane_a_1" or item == &"hoang_lane_b_1":
+			match_count += 1
+	view.set_selectable_branches([])
+	return match_count == 2 and view.selectable_branch_nodes.is_empty()
+
+
+func _map_view_finds_node_at_screen_pos(view: PlayerFacingLootMapView) -> bool:
+	var node_id: StringName = &"central_hub"
+	var screen_pos: Vector2 = view.node_screen_position(node_id)
+	if screen_pos == Vector2.ZERO:
+		return false
+	var found: StringName = view.find_node_at_screen_position(screen_pos)
+	return found == node_id
+

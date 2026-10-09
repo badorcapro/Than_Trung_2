@@ -14,6 +14,8 @@ const CAMERA_DRAG_THRESHOLD := 6.0
 const BOARD_ROUTE_WIDTH := 11.0
 const BOARD_ROUTE_SHADOW_WIDTH := 19.0
 
+signal node_clicked(node_id: StringName)
+
 var map_definition: LootMapDefinition
 var movement_session: LootMovementSession
 var represented_node_ids: Array[StringName] = []
@@ -22,6 +24,7 @@ var player_facing_labels: Dictionary = {}
 var token_node_by_player: Dictionary = {}
 var active_player_id: StringName
 var highlighted_path: Array[StringName] = []
+var selectable_branch_nodes: Array[StringName] = []
 var _node_positions: Dictionary = {}
 var _camera_center := Vector2.ZERO
 var _camera_initialized := false
@@ -56,6 +59,7 @@ func presentation_snapshot() -> Dictionary:
 		"token_nodes": token_node_by_player.duplicate(true),
 		"active_player_id": String(active_player_id),
 		"highlighted_path": highlighted_path.duplicate(),
+		"selectable_branches": selectable_branch_nodes.duplicate(),
 		"camera_center": _camera_center,
 		"zoom": _zoom,
 		"minimum_zoom": minimum_zoom(),
@@ -64,6 +68,24 @@ func presentation_snapshot() -> Dictionary:
 		"debug_labels_visible": _debug_labels_visible,
 		"house_region_count": house_region_count(),
 	}
+
+
+func set_selectable_branches(node_ids: Array[StringName]) -> void:
+	selectable_branch_nodes = node_ids.duplicate()
+	queue_redraw()
+
+
+func find_node_at_screen_position(screen_pos: Vector2) -> StringName:
+	var max_dist: float = (NODE_RADIUS + 14.0) * _visual_scale()
+	var best_id: StringName = &""
+	var best_dist: float = max_dist
+	for node_id: StringName in _node_positions:
+		var pos: Vector2 = _node_positions[node_id]
+		var d: float = pos.distance_to(screen_pos)
+		if d <= best_dist:
+			best_dist = d
+			best_id = node_id
+	return best_id
 
 
 func label_for_node(node_id: StringName) -> String:
@@ -142,16 +164,17 @@ func _unhandled_input(event: InputEvent) -> void:
 		var local_position: Vector2 = _viewport_to_local(mouse_button.position)
 		if mouse_button.button_index == MOUSE_BUTTON_LEFT:
 			if mouse_button.pressed:
-				if (
-					is_visible_in_tree()
-					and _uses_authored_world_coordinates()
-					and Rect2(Vector2.ZERO, size).has_point(local_position)
-				):
+				if is_visible_in_tree() and Rect2(Vector2.ZERO, size).has_point(local_position):
 					begin_pointer_drag(local_position)
 				return
 			var was_dragging: bool = end_pointer_drag()
 			if was_dragging:
 				get_viewport().set_input_as_handled()
+			elif is_visible_in_tree() and Rect2(Vector2.ZERO, size).has_point(local_position):
+				var clicked_node: StringName = find_node_at_screen_position(local_position)
+				if not clicked_node.is_empty():
+					node_clicked.emit(clicked_node)
+					get_viewport().set_input_as_handled()
 			return
 		if (
 			mouse_button.pressed
@@ -280,9 +303,18 @@ func _draw() -> void:
 		draw_arc(center, radius - 4.0, 0.0, TAU, 32, fill.lightened(0.27), 2.0, true)
 		if node != null and node.node_kind == &"ORIGIN_SPAWN":
 			_draw_origin_seal(center, node.origin_house_id)
+		if selectable_branch_nodes.has(node_id):
+			_draw_selectable_branch_highlight(center, radius, visual_scale)
 		if _debug_labels_visible:
 			_draw_debug_node_label(center, node_id)
 	_draw_tokens()
+
+
+func _draw_selectable_branch_highlight(center: Vector2, radius: float, visual_scale: float) -> void:
+	var ring_r: float = radius + 6.0 * visual_scale
+	draw_circle(center, ring_r + 6.0 * visual_scale, Color(1.0, 0.88, 0.25, 0.22))
+	draw_arc(center, ring_r, 0.0, TAU, 36, Color(1.0, 0.85, 0.2, 0.95), 3.5 * visual_scale, true)
+	draw_arc(center, ring_r + 3.5 * visual_scale, 0.0, TAU, 36, Color(1.0, 0.95, 0.5, 0.7), 1.8 * visual_scale, true)
 
 
 func _draw_board_background() -> void:
@@ -614,8 +646,6 @@ func apply_wheel_zoom_at(button_index: int, screen_position: Vector2) -> bool:
 
 
 func begin_pointer_drag(screen_position: Vector2) -> void:
-	if not _uses_authored_world_coordinates():
-		return
 	_drag_press_held = true
 	_drag_active = false
 	_drag_start_screen_position = screen_position

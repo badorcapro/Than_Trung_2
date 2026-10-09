@@ -28,6 +28,8 @@ var _windowed_geometry_captured := false
 
 func _ready() -> void:
 	map_definition = Gd2FixtureRepository.load_production_map()
+	if map_view != null:
+		map_view.node_clicked.connect(_on_map_node_clicked)
 	_build_preview_session()
 	_apply_debug_visibility(false)
 	_refresh()
@@ -51,6 +53,9 @@ func _unhandled_key_input(event: InputEvent) -> void:
 		&"TOGGLE_FULLSCREEN":
 			_toggle_true_fullscreen()
 			get_viewport().set_input_as_handled()
+		&"ROLL_MOVE":
+			_on_move_pressed()
+			get_viewport().set_input_as_handled()
 
 
 static func preview_hotkey_action(keycode: int) -> StringName:
@@ -58,6 +63,8 @@ static func preview_hotkey_action(keycode: int) -> StringName:
 		return &"TOGGLE_DEBUG"
 	if keycode == KEY_F11:
 		return &"TOGGLE_FULLSCREEN"
+	if keycode == KEY_Z:
+		return &"ROLL_MOVE"
 	return &""
 
 
@@ -194,6 +201,23 @@ func _apply_debug_visibility(visible: bool) -> void:
 	map_view.set_debug_labels_visible(visible)
 
 
+func _on_map_node_clicked(node_id: StringName) -> void:
+	if session.pending_branch != null and session.pending_branch.active:
+		if session.pending_branch.available_branch_ids.has(node_id):
+			_on_branch_chosen(node_id)
+			return
+	else:
+		var current: LootMovementPlayerState = session.current_player()
+		if current != null:
+			var branches: Array[LootNodeDefinition] = movement_service.get_available_branches(
+				map_definition, current.current_node_id
+			)
+			if _has_branch_node(branches, node_id):
+				_selected_preview_branch = node_id
+				_refresh()
+				return
+
+
 func _refresh() -> void:
 	map_view.configure(map_definition, session)
 	if branch_buttons != null:
@@ -205,6 +229,7 @@ func _refresh() -> void:
 		active_player_label.text = "Đã hoàn tất lượt xem trước"
 		state_label.text = ""
 		move_button.disabled = true
+		map_view.set_selectable_branches([])
 		return
 	var house: HouseDefinition = HOUSE_REPOSITORY.find(current.origin_house_id)
 	var house_name: String = (
@@ -217,8 +242,9 @@ func _refresh() -> void:
 			map_view.label_for_node(session.pending_branch.fork_node_id),
 			session.pending_branch.remaining_steps,
 		]
-		state_label.text = "Hãy chọn một trong các nhánh để tiếp tục di chuyển."
+		state_label.text = "Hãy bấm ô cờ trên bản đồ hoặc chọn nút bên dưới để tiếp tục di chuyển."
 		move_button.disabled = true
+		map_view.set_selectable_branches(session.pending_branch.available_branch_ids)
 		for branch_id: StringName in session.pending_branch.available_branch_ids:
 			var btn := Button.new()
 			btn.text = map_view.label_for_node(branch_id)
@@ -227,7 +253,7 @@ func _refresh() -> void:
 		return
 
 	active_player_label.text = "Lượt hiện tại: %s" % house_name
-	state_label.text = "Nút: %s  ·  Speed xem trước: %d  ·  Stamina còn lại: %d" % [
+	state_label.text = "Nút: %s  ·  Speed xem trước: %d  ·  Stamina còn lại: %d  ·  [Z] Đổ xúc xắc" % [
 		current.current_node_id, current.speed_snapshot, current.remaining_moves
 	]
 	move_button.disabled = session.completed
@@ -236,6 +262,10 @@ func _refresh() -> void:
 		map_definition, current.current_node_id
 	)
 	if branches.size() > 1:
+		var branch_ids: Array[StringName] = []
+		for b: LootNodeDefinition in branches:
+			branch_ids.append(b.node_id)
+		map_view.set_selectable_branches(branch_ids)
 		if _selected_preview_branch.is_empty() or not _has_branch_node(branches, _selected_preview_branch):
 			_selected_preview_branch = branches[0].node_id
 		for b: LootNodeDefinition in branches:
@@ -247,6 +277,8 @@ func _refresh() -> void:
 				_refresh()
 			)
 			branch_buttons.add_child(btn)
+	else:
+		map_view.set_selectable_branches([])
 
 
 func _has_branch_node(branches: Array[LootNodeDefinition], node_id: StringName) -> bool:

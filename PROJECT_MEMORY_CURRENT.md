@@ -72,10 +72,12 @@ active project conversation supersede stale statements in the older
   GĐ2 Production Loot V1              PASS
 
   Production Consumables V1           PASS (3188/3188 verified)
+
+  GĐ2 Fullscreen Loot Map & Z-Roll    PASS (3193/3193 verified)
   -----------------------------------------------------------------------
 
-Confirmed Smoke baseline: **3188/3188 PASS**.
-Consumables V1 and PF-M3/PF-M4 transition: **PASS**.
+Confirmed Smoke baseline: **3193/3193 PASS**.
+Fullscreen Loot Tabletop Map UX with Z-Roll and on-map branch clicking: **PASS**.
 
 ------------------------------------------------------------------------
 

@@ -435,180 +435,6 @@ custom_minimum_size = Vector2(0, 54)
 text = "Bắt đầu Loot"
 tooltip_text = "Bắt đầu hành trình Loot"
 
-[node name="LootPanel" type="VBoxContainer" parent="SafeMargin/Page/Content"]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-theme_override_constants/separation = 8
-
-[node name="LootHeading" type="Label" parent="SafeMargin/Page/Content/LootPanel"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 22
-text = "HÀNH TRÌNH LOOT"
-horizontal_alignment = 1
-
-[node name="LootMain" type="HBoxContainer" parent="SafeMargin/Page/Content/LootPanel"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/separation = 10
-
-[node name="MapPanel" type="PanelContainer" parent="SafeMargin/Page/Content/LootPanel/LootMain"]
-custom_minimum_size = Vector2(650, 360)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 1.8
-
-[node name="MapColumn" type="VBoxContainer" parent="SafeMargin/Page/Content/LootPanel/LootMain/MapPanel"]
-layout_mode = 2
-theme_override_constants/separation = 4
-
-[node name="MapTitle" type="Label" parent="SafeMargin/Page/Content/LootPanel/LootMain/MapPanel/MapColumn"]
-layout_mode = 2
-text = "Bản đồ Hoàng Cung"
-horizontal_alignment = 1
-
-[node name="LootMapView" type="Control" parent="SafeMargin/Page/Content/LootPanel/LootMain/MapPanel/MapColumn"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(620, 330)
-layout_mode = 2
-size_flags_vertical = 3
-mouse_filter = 2
-script = ExtResource("3")
-
-[node name="MapLegend" type="Label" parent="SafeMargin/Page/Content/LootPanel/LootMain/MapPanel/MapColumn"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "P1 / P2 / P3: vị trí người chơi · Viền vàng: người đang đi · Đường vàng: bước vừa đi"
-horizontal_alignment = 1
-autowrap_mode = 2
-
-[node name="TurnPanel" type="PanelContainer" parent="SafeMargin/Page/Content/LootPanel/LootMain"]
-custom_minimum_size = Vector2(330, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="TurnColumn" type="VBoxContainer" parent="SafeMargin/Page/Content/LootPanel/LootMain/TurnPanel"]
-layout_mode = 2
-theme_override_constants/separation = 8
-
-[node name="ActiveTurnLabel" type="Label" parent="SafeMargin/Page/Content/LootPanel/LootMain/TurnPanel/TurnColumn"]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_font_sizes/font_size = 22
-text = "Lượt của Người chơi"
-horizontal_alignment = 1
-autowrap_mode = 2
-
-[node name="LootText" type="RichTextLabel" parent="SafeMargin/Page/Content/LootPanel/LootMain/TurnPanel/TurnColumn"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 145)
-layout_mode = 2
-size_flags_horizontal = 3
-bbcode_enabled = true
-autowrap_mode = 2
-
-[node name="ActionGuide" type="Label" parent="SafeMargin/Page/Content/LootPanel/LootMain/TurnPanel/TurnColumn"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Hành động tiếp theo"
-autowrap_mode = 2
-
-[node name="OverflowPanel" type="PanelContainer" parent="SafeMargin/Page/Content/LootPanel/LootMain/TurnPanel/TurnColumn"]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-
-[node name="Column" type="VBoxContainer" parent="SafeMargin/Page/Content/LootPanel/LootMain/TurnPanel/TurnColumn/OverflowPanel"]
-layout_mode = 2
-
-[node name="OverflowText" type="Label" parent="SafeMargin/Page/Content/LootPanel/LootMain/TurnPanel/TurnColumn/OverflowPanel/Column"]
-unique_name_in_owner = true
-layout_mode = 2
-autowrap_mode = 2
-
-[node name="OverflowTargetSelector" type="OptionButton" parent="SafeMargin/Page/Content/LootPanel/LootMain/TurnPanel/TurnColumn/OverflowPanel/Column"]
-unique_name_in_owner = true
-layout_mode = 2
-tooltip_text = "Chọn đúng một vật phẩm đang mang để thay thế."
-
-[node name="Actions" type="HBoxContainer" parent="SafeMargin/Page/Content/LootPanel/LootMain/TurnPanel/TurnColumn/OverflowPanel/Column"]
-layout_mode = 2
-alignment = 1
-
-[node name="OverflowReplace" type="Button" parent="SafeMargin/Page/Content/LootPanel/LootMain/TurnPanel/TurnColumn/OverflowPanel/Column/Actions"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Thay thế"
-
-[node name="OverflowSkip" type="Button" parent="SafeMargin/Page/Content/LootPanel/LootMain/TurnPanel/TurnColumn/OverflowPanel/Column/Actions"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Bỏ vật phẩm mới"
-
-[node name="LootActions" type="GridContainer" parent="SafeMargin/Page/Content/LootPanel/LootMain/TurnPanel/TurnColumn"]
-layout_mode = 2
-columns = 1
-
-[node name="ItemSourceSelector" type="OptionButton" parent="SafeMargin/Page/Content/LootPanel/LootMain/TurnPanel/TurnColumn/LootActions"]
-unique_name_in_owner = true
-layout_mode = 2
-tooltip_text = "Chọn vật phẩm đang sở hữu hoặc vật phẩm nhặt trong vòng này."
-
-[node name="UseItem" type="Button" parent="SafeMargin/Page/Content/LootPanel/LootMain/TurnPanel/TurnColumn/LootActions"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Dùng vật phẩm"
-
-[node name="ContinueWithoutItem" type="Button" parent="SafeMargin/Page/Content/LootPanel/LootMain/TurnPanel/TurnColumn/LootActions"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Tiếp tục không dùng vật phẩm"
-
-[node name="BranchPanel" type="VBoxContainer" parent="SafeMargin/Page/Content/LootPanel/LootMain/TurnPanel/TurnColumn/LootActions"]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-theme_override_constants/separation = 4
-
-[node name="BranchTitle" type="Label" parent="SafeMargin/Page/Content/LootPanel/LootMain/TurnPanel/TurnColumn/LootActions/BranchPanel"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Chọn ngã rẽ:"
-
-[node name="BranchButtonsContainer" type="HBoxContainer" parent="SafeMargin/Page/Content/LootPanel/LootMain/TurnPanel/TurnColumn/LootActions/BranchPanel"]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_constants/separation = 6
-
-[node name="Move" type="Button" parent="SafeMargin/Page/Content/LootPanel/LootMain/TurnPanel/TurnColumn/LootActions"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Roll & Di chuyển"
-
-[node name="LootInfo" type="HBoxContainer" parent="SafeMargin/Page/Content/LootPanel"]
-custom_minimum_size = Vector2(0, 100)
-layout_mode = 2
-theme_override_constants/separation = 10
-
-[node name="ResourceSummary" type="Label" parent="SafeMargin/Page/Content/LootPanel/LootInfo"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-autowrap_mode = 2
-
-[node name="BagSummary" type="Label" parent="SafeMargin/Page/Content/LootPanel/LootInfo"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-autowrap_mode = 2
-
-[node name="ActivityLog" type="RichTextLabel" parent="SafeMargin/Page/Content/LootPanel/LootInfo"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-bbcode_enabled = true
-autowrap_mode = 2
-
 [node name="LootConfirmationPanel" type="CenterContainer" parent="SafeMargin/Page/Content"]
 unique_name_in_owner = true
 visible = false
@@ -986,6 +812,240 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="LootPanel" type="Control" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="LootMapView" type="Control" parent="LootPanel"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("3")
+
+[node name="LootTopHud" type="MarginContainer" parent="LootPanel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 76.0
+grow_horizontal = 2
+mouse_filter = 1
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 18
+
+[node name="Bar" type="PanelContainer" parent="LootPanel/LootTopHud"]
+layout_mode = 2
+
+[node name="Row" type="HBoxContainer" parent="LootPanel/LootTopHud/Bar"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="ActiveTurnLabel" type="Label" parent="LootPanel/LootTopHud/Bar/Row"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Lượt của Người chơi"
+
+[node name="LootText" type="RichTextLabel" parent="LootPanel/LootTopHud/Bar/Row"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(360, 48)
+layout_mode = 2
+bbcode_enabled = true
+fit_content = true
+autowrap_mode = 2
+
+[node name="ActionGuide" type="Label" parent="LootPanel/LootTopHud/Bar/Row"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.72, 0.78, 0.72, 1)
+theme_override_font_sizes/font_size = 13
+text = "Bấm [Z] để đổ xúc xắc · Bấm ô cờ để chọn rẽ · [TAB] Túi & Chỉ số"
+autowrap_mode = 2
+
+[node name="Move" type="Button" parent="LootPanel/LootTopHud/Bar/Row"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(140, 42)
+layout_mode = 2
+text = "[Z] Đổ xúc xắc"
+
+[node name="ToggleDetailButton" type="Button" parent="LootPanel/LootTopHud/Bar/Row"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(130, 42)
+layout_mode = 2
+text = "[TAB] Túi đồ"
+
+[node name="BranchPanel" type="MarginContainer" parent="LootPanel"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -280.0
+offset_top = 84.0
+offset_right = 280.0
+offset_bottom = 156.0
+grow_horizontal = 2
+mouse_filter = 1
+
+[node name="Panel" type="PanelContainer" parent="LootPanel/BranchPanel"]
+layout_mode = 2
+
+[node name="Column" type="VBoxContainer" parent="LootPanel/BranchPanel/Panel"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="BranchTitle" type="Label" parent="LootPanel/BranchPanel/Panel/Column"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.88, 0.35, 1)
+text = "⚠️ GẶP NGÃ RẼ: Bấm ô cờ trên bản đồ hoặc nút bên dưới:"
+horizontal_alignment = 1
+
+[node name="BranchButtonsContainer" type="HBoxContainer" parent="LootPanel/BranchPanel/Panel/Column"]
+unique_name_in_owner = true
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 8
+
+[node name="ItemWindowPanel" type="MarginContainer" parent="LootPanel"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -260.0
+offset_top = -80.0
+offset_right = 260.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 1
+
+[node name="Panel" type="PanelContainer" parent="LootPanel/ItemWindowPanel"]
+layout_mode = 2
+
+[node name="Row" type="HBoxContainer" parent="LootPanel/ItemWindowPanel/Panel"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="ItemSourceSelector" type="OptionButton" parent="LootPanel/ItemWindowPanel/Panel/Row"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(220, 36)
+layout_mode = 2
+tooltip_text = "Chọn vật phẩm mang theo để sử dụng."
+
+[node name="UseItem" type="Button" parent="LootPanel/ItemWindowPanel/Panel/Row"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Dùng vật phẩm"
+
+[node name="ContinueWithoutItem" type="Button" parent="LootPanel/ItemWindowPanel/Panel/Row"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "[Z] Không dùng"
+
+[node name="OverflowPanel" type="CenterContainer" parent="LootPanel"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="Modal" type="PanelContainer" parent="LootPanel/OverflowPanel"]
+custom_minimum_size = Vector2(480, 0)
+layout_mode = 2
+
+[node name="Column" type="VBoxContainer" parent="LootPanel/OverflowPanel/Modal"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="OverflowText" type="Label" parent="LootPanel/OverflowPanel/Modal/Column"]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 2
+
+[node name="OverflowTargetSelector" type="OptionButton" parent="LootPanel/OverflowPanel/Modal/Column"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Chọn đúng một vật phẩm đang mang để thay thế."
+
+[node name="Actions" type="HBoxContainer" parent="LootPanel/OverflowPanel/Modal/Column"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 10
+
+[node name="OverflowReplace" type="Button" parent="LootPanel/OverflowPanel/Modal/Column/Actions"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Thay thế"
+
+[node name="OverflowSkip" type="Button" parent="LootPanel/OverflowPanel/Modal/Column/Actions"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Bỏ vật phẩm mới"
+
+[node name="LootDetailPanel" type="MarginContainer" parent="LootPanel"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -180.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 1
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 14
+
+[node name="Panel" type="PanelContainer" parent="LootPanel/LootDetailPanel"]
+layout_mode = 2
+
+[node name="Row" type="HBoxContainer" parent="LootPanel/LootDetailPanel/Panel"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="ResourceSummary" type="Label" parent="LootPanel/LootDetailPanel/Panel/Row"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+autowrap_mode = 2
+
+[node name="BagSummary" type="Label" parent="LootPanel/LootDetailPanel/Panel/Row"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+autowrap_mode = 2
+
+[node name="ActivityLog" type="RichTextLabel" parent="LootPanel/LootDetailPanel/Panel/Row"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+autowrap_mode = 2
+
 [connection signal="pressed" from="SafeMargin/Page/Content/MainMenu/Buttons/NewGame" to="." method="_on_new_game_pressed"]
 [connection signal="pressed" from="SafeMargin/Page/Content/MainMenu/Buttons/Continue" to="." method="_on_continue_pressed"]
 [connection signal="pressed" from="SafeMargin/Page/Content/MainMenu/Buttons/Settings" to="." method="_on_settings_pressed"]
@@ -1007,12 +1067,13 @@ grow_vertical = 2
 [connection signal="pressed" from="SafeMargin/Page/Content/CaseSelection/CaseCard/Column/StartCase" to="." method="_on_start_case_pressed"]
 [connection signal="pressed" from="SafeMargin/Page/Content/ResultsPanel/ResultsContinue" to="." method="_on_results_continue_pressed"]
 [connection signal="pressed" from="SafeMargin/Page/Content/LootReadyPanel/Column/StartLoot" to="." method="_on_start_loot_pressed"]
-[connection signal="pressed" from="SafeMargin/Page/Content/LootPanel/LootMain/TurnPanel/TurnColumn/LootActions/UseItem" to="." method="_on_use_item_pressed"]
-[connection signal="pressed" from="SafeMargin/Page/Content/LootPanel/LootMain/TurnPanel/TurnColumn/LootActions/ContinueWithoutItem" to="." method="_on_continue_without_item_pressed"]
-[connection signal="pressed" from="SafeMargin/Page/Content/LootPanel/LootMain/TurnPanel/TurnColumn/LootActions/Move" to="." method="_on_move_pressed"]
-[connection signal="item_selected" from="SafeMargin/Page/Content/LootPanel/LootMain/TurnPanel/TurnColumn/OverflowPanel/Column/OverflowTargetSelector" to="." method="_on_overflow_target_selected"]
-[connection signal="pressed" from="SafeMargin/Page/Content/LootPanel/LootMain/TurnPanel/TurnColumn/OverflowPanel/Column/Actions/OverflowReplace" to="." method="_on_overflow_discard_pressed"]
-[connection signal="pressed" from="SafeMargin/Page/Content/LootPanel/LootMain/TurnPanel/TurnColumn/OverflowPanel/Column/Actions/OverflowSkip" to="." method="_on_overflow_skip_pressed"]
+[connection signal="pressed" from="LootPanel/ItemWindowPanel/Panel/Row/UseItem" to="." method="_on_use_item_pressed"]
+[connection signal="pressed" from="LootPanel/ItemWindowPanel/Panel/Row/ContinueWithoutItem" to="." method="_on_continue_without_item_pressed"]
+[connection signal="pressed" from="LootPanel/LootTopHud/Bar/Row/Move" to="." method="_on_move_pressed"]
+[connection signal="pressed" from="LootPanel/LootTopHud/Bar/Row/ToggleDetailButton" to="." method="_on_toggle_detail_button_pressed"]
+[connection signal="item_selected" from="LootPanel/OverflowPanel/Modal/Column/OverflowTargetSelector" to="." method="_on_overflow_target_selected"]
+[connection signal="pressed" from="LootPanel/OverflowPanel/Modal/Column/Actions/OverflowReplace" to="." method="_on_overflow_discard_pressed"]
+[connection signal="pressed" from="LootPanel/OverflowPanel/Modal/Column/Actions/OverflowSkip" to="." method="_on_overflow_skip_pressed"]
 [connection signal="pressed" from="SafeMargin/Page/Content/LootConfirmationPanel/Column/ConfirmLootEnd" to="." method="_on_confirm_loot_end_pressed"]
 [connection signal="item_selected" from="SafeMargin/Page/Content/EquipmentPanel/LoadoutControls/Selectors/EquipmentSlotSelector" to="." method="_on_equipment_slot_selected"]
 [connection signal="item_selected" from="SafeMargin/Page/Content/EquipmentPanel/LoadoutControls/Selectors/OwnedEquipmentSelector" to="." method="_on_owned_equipment_selected"]
