@@ -876,7 +876,6 @@ func _unequip_slot(slot_id: StringName) -> void:
 		var svc := EQUIPMENT_SERVICE.new()
 		var _res: EquipmentActionResult = svc.unequip_slot(p_state, slot_id)
 	refresh()
-		_celestial_backdrop.queue_redraw()
 
 
 func _refresh_player_switcher(player_order: Array[StringName]) -> void:

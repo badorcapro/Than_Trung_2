@@ -36,6 +36,9 @@ const MATCH_RULES := preload("res://scripts/domain/mvp/MatchRules.gd")
 const EQUIPMENT_INSTANCE := preload("res://scripts/domain/equipment/EquipmentInstance.gd")
 const EQUIPMENT_DEFINITION := preload("res://scripts/domain/equipment/EquipmentDefinition.gd")
 const EQUIPMENT_ENUMS := preload("res://scripts/domain/equipment/EquipmentEnums.gd")
+const EQUIPMENT_SESSION := preload(
+	"res://scripts/domain/equipment/EquipmentManagementSession.gd"
+)
 const EQUIPMENT_SERVICE := preload(
 	"res://scripts/application/equipment/EquipmentManagementService.gd"
 )
