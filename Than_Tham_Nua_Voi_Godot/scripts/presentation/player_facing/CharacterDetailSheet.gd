@@ -193,6 +193,17 @@ var _relic_view_mode: RelicViewMode = RelicViewMode.EQUIPPED_SHOWCASE
 var _selected_relic_in_grid_id: StringName = &""
 var _relic_sort_ascending: bool = false
 
+enum StigmataViewMode {
+	EQUIPPED_SHOWCASE,
+	SWITCH_SELECTOR
+}
+
+var _stigmata_view_mode: StigmataViewMode = StigmataViewMode.EQUIPPED_SHOWCASE
+var _selected_stigmata_slot: EquipmentEnums.StigmataSlot = EquipmentEnums.StigmataSlot.A
+var _selected_stigmata_in_grid_id: StringName = &""
+var _stigmata_filter_slot: int = -1
+var _stigmata_sort_ascending: bool = false
+
 # Cached session references
 var _case_flow_session: Variant = null
 var _setup_session: Variant = null
@@ -215,6 +226,8 @@ var _center_pedestal_badge: PanelContainer
 var _center_pedestal_label: Label
 var _center_relic_showcase_panel: CenterContainer
 var _relic_grid_scroll: ScrollContainer
+var _center_stigmata_showcase_panel: CenterContainer
+var _stigmata_grid_scroll: ScrollContainer
 
 var _right_panel_container: MarginContainer
 
@@ -484,6 +497,21 @@ func _build_ui() -> void:
 	_relic_grid_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	_relic_grid_scroll.visible = false
 	_center_box.add_child(_relic_grid_scroll)
+
+	# 4. 3-Orbit Constellation Stigmata Showcase (Ảnh 1)
+	_center_stigmata_showcase_panel = CenterContainer.new()
+	_center_stigmata_showcase_panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_center_stigmata_showcase_panel.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	_center_stigmata_showcase_panel.visible = false
+	_center_box.add_child(_center_stigmata_showcase_panel)
+
+	# 5. Stigmata Switch View Container (Grid + Showcase - Ảnh 2)
+	_stigmata_grid_scroll = ScrollContainer.new()
+	_stigmata_grid_scroll.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_stigmata_grid_scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	_stigmata_grid_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	_stigmata_grid_scroll.visible = false
+	_center_box.add_child(_stigmata_grid_scroll)
 
 	# --- RIGHT PANEL ---
 	_right_panel_container = MarginContainer.new()
@@ -1573,6 +1601,17 @@ func _refresh_sidebar_buttons() -> void:
 			var c_def: CharacterDefinition = _setup_session.find_character(p_st.character_id) if (p_st != null and _setup_session != null) else null
 			var c_name: String = c_def.display_name if c_def != null else "Nhân vật"
 			_header_sub_lbl.text = "Chọn Kỷ Vật cho %s" % c_name
+	elif _current_sidebar_tab == SidebarTab.STIGMATA and _stigmata_view_mode == StigmataViewMode.SWITCH_SELECTOR:
+		_sidebar_container.visible = false
+		if _header_back_btn != null:
+			_header_back_btn.visible = true
+		if _header_title_lbl != null:
+			_header_title_lbl.text = "🔄 ĐỔI VẾT THÁNH"
+		if _header_sub_lbl != null:
+			var p_st: PlayerPhaseState = _get_active_player_state()
+			var c_def: CharacterDefinition = _setup_session.find_character(p_st.character_id) if (p_st != null and _setup_session != null) else null
+			var c_name: String = c_def.display_name if c_def != null else "Nhân vật"
+			_header_sub_lbl.text = "Chọn Vết Thánh cho %s" % c_name
 	else:
 		_sidebar_container.visible = true
 		if _header_back_btn != null:
@@ -1582,6 +1621,11 @@ func _refresh_sidebar_buttons() -> void:
 				_header_title_lbl.text = "🏺 KỶ VẬT HOÀNG GIA"
 			if _header_sub_lbl != null:
 				_header_sub_lbl.text = "Kỷ Vật Thần Thám Hoàng Cung"
+		elif _current_sidebar_tab == SidebarTab.STIGMATA:
+			if _header_title_lbl != null:
+				_header_title_lbl.text = "📜 VẾT THÁNH BẢO VỆ"
+			if _header_sub_lbl != null:
+				_header_sub_lbl.text = "Trận Đồ Vết Thánh Hoàng Cung"
 		else:
 			if _header_title_lbl != null:
 				_header_title_lbl.text = "⭐ CHI TIẾT NHÂN VẬT"
@@ -1618,20 +1662,36 @@ func _refresh_sidebar_buttons() -> void:
 
 func _refresh_center_display() -> void:
 	if _current_sidebar_tab == SidebarTab.RELICS:
+		_center_vbox.visible = false
+		_center_stigmata_showcase_panel.visible = false
+		_stigmata_grid_scroll.visible = false
 		if _relic_view_mode == RelicViewMode.EQUIPPED_SHOWCASE:
-			_center_vbox.visible = false
 			_relic_grid_scroll.visible = false
 			_center_relic_showcase_panel.visible = true
 			_render_center_relic_showcase()
 		else:
-			_center_vbox.visible = false
 			_center_relic_showcase_panel.visible = false
 			_relic_grid_scroll.visible = true
 			_render_center_relic_grid()
 		return
+	elif _current_sidebar_tab == SidebarTab.STIGMATA:
+		_center_vbox.visible = false
+		_center_relic_showcase_panel.visible = false
+		_relic_grid_scroll.visible = false
+		if _stigmata_view_mode == StigmataViewMode.EQUIPPED_SHOWCASE:
+			_stigmata_grid_scroll.visible = false
+			_center_stigmata_showcase_panel.visible = true
+			_render_center_stigmata_showcase()
+		else:
+			_center_stigmata_showcase_panel.visible = false
+			_stigmata_grid_scroll.visible = true
+			_render_center_stigmata_switch()
+		return
 
 	_center_relic_showcase_panel.visible = false
 	_relic_grid_scroll.visible = false
+	_center_stigmata_showcase_panel.visible = false
+	_stigmata_grid_scroll.visible = false
 	_center_vbox.visible = true
 
 	var p_state: PlayerPhaseState = _get_active_player_state()
@@ -3024,249 +3084,1068 @@ func _render_tab_relics_switch_comparison() -> void:
 # -----------------------------------------------------------------------------
 # TAB 3: VẾT THÁNH (Stigmata)
 # -----------------------------------------------------------------------------
-func _render_tab_stigmata() -> void:
+func _calculate_character_total_stats() -> Dictionary:
+	var p_state: PlayerPhaseState = _get_active_player_state()
+	var char_def: CharacterDefinition = (
+		_setup_session.find_character(p_state.character_id) if p_state != null and _setup_session != null else null
+	)
+	var base_hp: int = char_def.base_stamina if char_def != null else 2
+	var base_spd: int = char_def.base_speed if char_def != null else 2
+	var base_str: int = char_def.base_bag_level if char_def != null else 2
+
+	var bonus_hp: int = 0
+	var bonus_spd: int = 0
+	var bonus_str: int = 0
+
+	if p_state != null:
+		var slot_ids: Array[StringName] = [
+			p_state.relic_instance_id,
+			p_state.stigmata_a_instance_id,
+			p_state.stigmata_b_instance_id,
+			p_state.stigmata_c_instance_id
+		]
+		for eq_id: StringName in slot_ids:
+			if eq_id.is_empty():
+				continue
+			for inst: EquipmentInstance in p_state.equipment_collection:
+				if inst.instance_id == eq_id:
+					var def: EquipmentDefinition = _find_equipment_def(inst.equipment_definition_id)
+					if def != null:
+						var stats: Dictionary = def.get_total_stats(inst.gold_star_level, inst.purple_star_level)
+						bonus_hp += int(stats.get("stamina", 0))
+						bonus_spd += int(stats.get("speed", 0))
+						bonus_str += int(stats.get("strength", 0))
+						if stats.has("power"):
+							bonus_str += int(stats["power"])
+					break
+
+	return {
+		"base_hp": base_hp,
+		"bonus_hp": bonus_hp,
+		"total_hp": base_hp + bonus_hp,
+		"base_spd": base_spd,
+		"bonus_spd": bonus_spd,
+		"total_spd": base_spd + bonus_spd,
+		"base_str": base_str,
+		"bonus_str": bonus_str,
+		"total_str": base_str + bonus_str
+	}
+
+
+func _get_stigmata_icon(inst: EquipmentInstance) -> String:
+	if inst == null:
+		return "🛡️"
+	match inst.stigmata_slot:
+		EQUIPMENT_ENUMS.StigmataSlot.A:
+			return "🪖"
+		EQUIPMENT_ENUMS.StigmataSlot.B:
+			return "🥋"
+		EQUIPMENT_ENUMS.StigmataSlot.C:
+			return "👢"
+		_:
+			return "📜"
+
+
+func _get_stigmata_set_info(set_id: StringName) -> Dictionary:
+	match set_id:
+		&"m5_set_s":
+			return {
+				"name": "Cung Điện Rèn Đúc Kiếp Hỏa",
+				"piece_2": "Tăng 15% Tốc Độ của người trang bị. Khi bắt đầu lượt đi, nhận thêm 1 Thể Lực.",
+				"piece_3": "Tăng 25% Sức Mạnh (mang thêm 1 vật phẩm khi loot). Giảm 1 tiêu hao khi kích hoạt kỹ năng Kỷ Vật."
+			}
+		&"m5_set_ss":
+			return {
+				"name": "Thiết Kỵ Diệt Trừ Tai Họa",
+				"piece_2": "Tăng 20% Thể Lực và +2 Tốc Độ. Miễn nhiễm 1 lần hiệu ứng cạm bẫy bất lợi mỗi vòng.",
+				"piece_3": "Tăng 30% Sức Mạnh (mang thêm 2 vật phẩm khi loot). Tự động nhận thêm 1 Orb khi hoàn tất di chuyển."
+			}
+		&"m5_set_a", _:
+			var disp_name: String = "Long Vân Trấn Quốc" if set_id == &"m5_set_a" else ("Bộ Vết Thánh " + String(set_id).replace("_", " ").capitalize())
+			return {
+				"name": disp_name,
+				"piece_2": "Tăng 10% Thể Lực và +1 Tốc Độ của người trang bị.",
+				"piece_3": "Tăng 15% Sức Mạnh (mang thêm 1 vật phẩm khi loot). Nhận thêm 100 Xu Bạc khi qua vạch xuất phát."
+			}
+
+
+func _get_stigmata_set_counts(p_state: PlayerPhaseState) -> Dictionary:
+	var counts: Dictionary = {}
+	if p_state == null:
+		return counts
+	var slot_ids: Array[StringName] = [
+		p_state.stigmata_a_instance_id,
+		p_state.stigmata_b_instance_id,
+		p_state.stigmata_c_instance_id
+	]
+	for eq_id: StringName in slot_ids:
+		if eq_id.is_empty():
+			continue
+		for inst: EquipmentInstance in p_state.equipment_collection:
+			if inst.instance_id == eq_id:
+				var def: EquipmentDefinition = _find_equipment_def(inst.equipment_definition_id)
+				var set_id: StringName = def.set_id if (def != null and not def.set_id.is_empty()) else &"m5_set_a"
+				counts[set_id] = int(counts.get(set_id, 0)) + 1
+				break
+	return counts
+
+
+func _render_center_stigmata_showcase() -> void:
+	for child in _center_stigmata_showcase_panel.get_children():
+		child.queue_free()
+
+	var stage := Control.new()
+	stage.custom_minimum_size = Vector2(580, 520)
+	stage.size = Vector2(580, 520)
+	_center_stigmata_showcase_panel.add_child(stage)
+
+	var p_state: PlayerPhaseState = _get_active_player_state()
+
+	var center := Vector2(290, 260)
+	var radius: float = 175.0
+	var pos_a := Vector2(290, 85)
+	var pos_b := Vector2(442, 348)
+	var pos_c := Vector2(138, 348)
+
+	var canvas := Control.new()
+	canvas.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	canvas.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	canvas.draw.connect(func() -> void:
+		canvas.draw_circle(center, radius + 20, Color(0.12, 0.18, 0.32, 0.18))
+		canvas.draw_arc(center, radius, 0.0, TAU, 64, Color(0.2, 0.45, 0.8, 0.25), 6.0)
+		canvas.draw_arc(center, radius, 0.0, TAU, 64, Color(0.4, 0.75, 1.0, 0.7), 2.0)
+		canvas.draw_arc(center, 110.0, 0.0, TAU, 48, Color(0.25, 0.4, 0.65, 0.25), 1.5)
+		canvas.draw_line(pos_a, pos_b, Color(1.0, 0.84, 0.3, 0.3), 1.5)
+		canvas.draw_line(pos_b, pos_c, Color(1.0, 0.84, 0.3, 0.3), 1.5)
+		canvas.draw_line(pos_c, pos_a, Color(1.0, 0.84, 0.3, 0.3), 1.5)
+	)
+	stage.add_child(canvas)
+
+	var center_emblem := PanelContainer.new()
+	center_emblem.custom_minimum_size = Vector2(84, 84)
+	center_emblem.position = center - Vector2(42, 42)
+	var ce_style := StyleBoxFlat.new()
+	ce_style.bg_color = Color(0.06, 0.08, 0.14, 0.88)
+	ce_style.corner_radius_top_left = 42
+	ce_style.corner_radius_top_right = 42
+	ce_style.corner_radius_bottom_right = 42
+	ce_style.corner_radius_bottom_left = 42
+	ce_style.border_width_left = 2
+	ce_style.border_width_top = 2
+	ce_style.border_width_right = 2
+	ce_style.border_width_bottom = 2
+	ce_style.border_color = Color(0.35, 0.65, 0.95, 0.6)
+	center_emblem.add_theme_stylebox_override("panel", ce_style)
+	stage.add_child(center_emblem)
+
+	var ce_center := CenterContainer.new()
+	center_emblem.add_child(ce_center)
+	var ce_lbl := Label.new()
+	ce_lbl.text = "☯️\nTRẬN ĐỒ"
+	ce_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	ce_lbl.add_theme_font_size_override("font_size", 11)
+	ce_lbl.add_theme_color_override("font_color", Color(0.75, 0.85, 1.0, 0.85))
+	ce_center.add_child(ce_lbl)
+
+	var node_configs: Array[Dictionary] = [
+		{
+			"slot_enum": EQUIPMENT_ENUMS.StigmataSlot.A,
+			"slot_name": "Vết Thánh A",
+			"slot_sub": "Thượng",
+			"default_icon": "🪖",
+			"position": pos_a,
+			"eq_id": p_state.stigmata_a_instance_id if p_state != null else &""
+		},
+		{
+			"slot_enum": EQUIPMENT_ENUMS.StigmataSlot.B,
+			"slot_name": "Vết Thánh B",
+			"slot_sub": "Trung",
+			"default_icon": "🥋",
+			"position": pos_b,
+			"eq_id": p_state.stigmata_b_instance_id if p_state != null else &""
+		},
+		{
+			"slot_enum": EQUIPMENT_ENUMS.StigmataSlot.C,
+			"slot_name": "Vết Thánh C",
+			"slot_sub": "Hạ",
+			"default_icon": "👢",
+			"position": pos_c,
+			"eq_id": p_state.stigmata_c_instance_id if p_state != null else &""
+		}
+	]
+
+	for cfg: Dictionary in node_configs:
+		var eq_id: StringName = cfg["eq_id"] as StringName
+		var eq_inst: EquipmentInstance = null
+		if p_state != null and not eq_id.is_empty():
+			for item in p_state.equipment_collection:
+				if item.instance_id == eq_id:
+					eq_inst = item
+					break
+		_build_stigmata_orbit_node(stage, cfg, eq_inst)
+
+
+func _build_stigmata_orbit_node(parent: Control, cfg: Dictionary, eq_inst: EquipmentInstance) -> void:
+	var pos: Vector2 = cfg["position"] as Vector2
+	var slot_enum: EquipmentEnums.StigmataSlot = cfg["slot_enum"] as EquipmentEnums.StigmataSlot
+
+	var node_box := VBoxContainer.new()
+	node_box.custom_minimum_size = Vector2(110, 130)
+	node_box.position = pos - Vector2(55, 50)
+	node_box.alignment = BoxContainer.ALIGNMENT_CENTER
+	node_box.add_theme_constant_override("separation", 4)
+	parent.add_child(node_box)
+
+	var btn := Button.new()
+	btn.custom_minimum_size = Vector2(92, 92)
+	btn.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	var b_st := StyleBoxFlat.new()
+	b_st.corner_radius_top_left = 46
+	b_st.corner_radius_top_right = 46
+	b_st.corner_radius_bottom_right = 46
+	b_st.corner_radius_bottom_left = 46
+	b_st.bg_color = Color(0.08, 0.1, 0.16, 0.95)
+
+	if eq_inst != null:
+		b_st.border_width_left = 3
+		b_st.border_width_top = 3
+		b_st.border_width_right = 3
+		b_st.border_width_bottom = 3
+		b_st.border_color = Color(1.0, 0.84, 0.32, 0.95)
+		b_st.shadow_color = Color(1.0, 0.8, 0.2, 0.35)
+		b_st.shadow_size = 8
+		btn.text = _get_stigmata_icon(eq_inst)
+		btn.add_theme_font_size_override("font_size", 38)
+	else:
+		b_st.border_width_left = 2
+		b_st.border_width_top = 2
+		b_st.border_width_right = 2
+		b_st.border_width_bottom = 2
+		b_st.border_color = Color(0.35, 0.45, 0.65, 0.55)
+		btn.text = "➕"
+		btn.add_theme_font_size_override("font_size", 28)
+		btn.add_theme_color_override("font_color", Color(0.5, 0.6, 0.75, 0.7))
+
+	btn.add_theme_stylebox_override("normal", b_st)
+	btn.add_theme_stylebox_override("hover", b_st)
+	btn.add_theme_stylebox_override("pressed", b_st)
+
+	btn.pressed.connect(func() -> void:
+		_selected_stigmata_slot = slot_enum
+		_stigmata_filter_slot = int(slot_enum)
+		if eq_inst != null:
+			_selected_stigmata_in_grid_id = eq_inst.instance_id
+		else:
+			_selected_stigmata_in_grid_id = &""
+		_stigmata_view_mode = StigmataViewMode.SWITCH_SELECTOR
+		refresh()
+	)
+	node_box.add_child(btn)
+
+	# Level badge pill beneath icon
+	var pill := PanelContainer.new()
+	pill.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	var p_st := StyleBoxFlat.new()
+	p_st.bg_color = Color(0.04, 0.05, 0.08, 0.9)
+	p_st.corner_radius_top_left = 6
+	p_st.corner_radius_top_right = 6
+	p_st.corner_radius_bottom_right = 6
+	p_st.corner_radius_bottom_left = 6
+	p_st.content_margin_left = 8.0
+	p_st.content_margin_top = 2.0
+	p_st.content_margin_right = 8.0
+	p_st.content_margin_bottom = 2.0
+	pill.add_theme_stylebox_override("panel", p_st)
+	node_box.add_child(pill)
+
+	var p_lbl := Label.new()
+	if eq_inst != null:
+		var display_lv: int = clampi(eq_inst.gold_star_level * 15, 0, 80) if eq_inst.gold_star_level > 0 else 0
+		p_lbl.text = "+%d" % display_lv
+		p_lbl.add_theme_color_override("font_color", Color(1.0, 0.85, 0.35))
+	else:
+		p_lbl.text = "Trống"
+		p_lbl.add_theme_color_override("font_color", Color(0.5, 0.55, 0.65))
+	p_lbl.add_theme_font_size_override("font_size", 11)
+	pill.add_child(p_lbl)
+
+	# Stars row
+	if eq_inst != null:
+		var star_box := _build_overlaid_star_row(eq_inst.gold_star_level, eq_inst.purple_star_level, 6, 9)
+		node_box.add_child(star_box)
+
+	# Title label
+	var name_lbl := Label.new()
+	name_lbl.text = "%s (%s)" % [cfg["slot_name"], cfg["slot_sub"]]
+	name_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	name_lbl.add_theme_font_size_override("font_size", 11)
+	name_lbl.add_theme_color_override(
+		"font_color",
+		Color(1.0, 0.9, 0.7) if eq_inst != null else Color(0.55, 0.6, 0.7)
+	)
+	node_box.add_child(name_lbl)
+
+
+func _render_center_stigmata_switch() -> void:
+	for child in _stigmata_grid_scroll.get_children():
+		child.queue_free()
+
+	var p_state: PlayerPhaseState = _get_active_player_state()
+	var hbox := HBoxContainer.new()
+	hbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	hbox.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	hbox.add_theme_constant_override("separation", 24)
+	_stigmata_grid_scroll.add_child(hbox)
+
+	# --- 1. LEFT COLUMN: FILTER BAR + GRID OF STIGMATA ---
+	var left_vbox := VBoxContainer.new()
+	left_vbox.custom_minimum_size = Vector2(440, 0)
+	left_vbox.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	left_vbox.add_theme_constant_override("separation", 10)
+	hbox.add_child(left_vbox)
+
+	# Filter bar tabs
+	var filter_row := HBoxContainer.new()
+	filter_row.add_theme_constant_override("separation", 8)
+	left_vbox.add_child(filter_row)
+
+	var filter_tabs: Array[Dictionary] = [
+		{"slot": -1, "label": "Tất Cả"},
+		{"slot": 1, "label": "🪖 Ô A"},
+		{"slot": 2, "label": "🥋 Ô B"},
+		{"slot": 3, "label": "👢 Ô C"},
+	]
+	for ft in filter_tabs:
+		var f_slot: int = int(ft["slot"])
+		var f_btn := Button.new()
+		f_btn.text = String(ft["label"])
+		f_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		f_btn.custom_minimum_size = Vector2(0, 36)
+		f_btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+		var is_cur: bool = (_stigmata_filter_slot == f_slot)
+		var f_st := StyleBoxFlat.new()
+		f_st.corner_radius_top_left = 8
+		f_st.corner_radius_top_right = 8
+		f_st.corner_radius_bottom_right = 8
+		f_st.corner_radius_bottom_left = 8
+		if is_cur:
+			f_st.bg_color = Color(0.22, 0.28, 0.42, 0.95)
+			f_st.border_width_left = 2
+			f_st.border_width_top = 2
+			f_st.border_width_right = 2
+			f_st.border_width_bottom = 2
+			f_st.border_color = Color(1.0, 0.84, 0.3)
+			f_btn.add_theme_color_override("font_color", Color(1.0, 0.92, 0.7))
+		else:
+			f_st.bg_color = Color(0.08, 0.1, 0.15, 0.8)
+			f_btn.add_theme_color_override("font_color", Color(0.7, 0.76, 0.85))
+		f_btn.add_theme_stylebox_override("normal", f_st)
+		f_btn.add_theme_stylebox_override("hover", f_st)
+		f_btn.add_theme_stylebox_override("pressed", f_st)
+		f_btn.pressed.connect(func() -> void:
+			_stigmata_filter_slot = f_slot
+			refresh()
+		)
+		filter_row.add_child(f_btn)
+
+	# Collect owned stigmata
+	var owned_stig: Array[EquipmentInstance] = []
+	if p_state != null:
+		for inst: EquipmentInstance in p_state.equipment_collection:
+			if inst.equipment_type == EQUIPMENT_ENUMS.EquipmentType.STIGMATA:
+				if _stigmata_filter_slot == -1 or int(inst.stigmata_slot) == _stigmata_filter_slot:
+					owned_stig.append(inst)
+
+	# Sort
+	owned_stig.sort_custom(func(a: EquipmentInstance, b: EquipmentInstance) -> bool:
+		if _stigmata_sort_ascending:
+			return a.tier < b.tier
+		return a.tier > b.tier
+	)
+
+	# Top info row with count and sort
+	var sort_row := HBoxContainer.new()
+	var count_lbl := Label.new()
+	count_lbl.text = "KHO VẾT THÁNH SỞ HỮU (%d)" % owned_stig.size()
+	count_lbl.add_theme_font_size_override("font_size", 12)
+	count_lbl.add_theme_color_override("font_color", Color(0.68, 0.75, 0.85))
+	count_lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	sort_row.add_child(count_lbl)
+
+	var sort_btn := Button.new()
+	sort_btn.text = "⇅ Sắp Xếp"
+	sort_btn.flat = true
+	sort_btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	sort_btn.add_theme_font_size_override("font_size", 11)
+	sort_btn.add_theme_color_override("font_color", Color(0.4, 0.8, 1.0))
+	sort_btn.pressed.connect(func() -> void:
+		_stigmata_sort_ascending = not _stigmata_sort_ascending
+		refresh()
+	)
+	sort_row.add_child(sort_btn)
+	left_vbox.add_child(sort_row)
+
+	# Ensure selected item exists
+	if _selected_stigmata_in_grid_id.is_empty() and not owned_stig.is_empty():
+		_selected_stigmata_in_grid_id = owned_stig[0].instance_id
+
+	# Grid container inside a ScrollContainer
+	var grid_scroll := ScrollContainer.new()
+	grid_scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	grid_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	left_vbox.add_child(grid_scroll)
+
+	var grid := GridContainer.new()
+	grid.columns = 3
+	grid.add_theme_constant_override("h_separation", 10)
+	grid.add_theme_constant_override("v_separation", 10)
+	grid_scroll.add_child(grid)
+
+	for inst in owned_stig:
+		var is_selected: bool = (inst.instance_id == _selected_stigmata_in_grid_id)
+		var is_equipped: bool = false
+		if p_state != null:
+			is_equipped = (
+				inst.instance_id == p_state.stigmata_a_instance_id
+				or inst.instance_id == p_state.stigmata_b_instance_id
+				or inst.instance_id == p_state.stigmata_c_instance_id
+			)
+
+		var card_btn := Button.new()
+		card_btn.custom_minimum_size = Vector2(130, 142)
+		card_btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+
+		var c_st := StyleBoxFlat.new()
+		c_st.corner_radius_top_left = 10
+		c_st.corner_radius_top_right = 10
+		c_st.corner_radius_bottom_right = 10
+		c_st.corner_radius_bottom_left = 10
+		c_st.bg_color = Color(0.08, 0.1, 0.16, 0.95)
+		if is_selected:
+			c_st.border_width_left = 2
+			c_st.border_width_top = 2
+			c_st.border_width_right = 2
+			c_st.border_width_bottom = 2
+			c_st.border_color = Color(1.0, 0.84, 0.3, 1.0)
+			c_st.shadow_color = Color(1.0, 0.8, 0.2, 0.35)
+			c_st.shadow_size = 6
+		else:
+			c_st.border_width_left = 1
+			c_st.border_width_top = 1
+			c_st.border_width_right = 1
+			c_st.border_width_bottom = 1
+			c_st.border_color = Color(0.28, 0.35, 0.48, 0.5)
+
+		card_btn.add_theme_stylebox_override("normal", c_st)
+		card_btn.add_theme_stylebox_override("hover", c_st)
+		card_btn.add_theme_stylebox_override("pressed", c_st)
+
+		var c_vbox := VBoxContainer.new()
+		c_vbox.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		c_vbox.alignment = BoxContainer.ALIGNMENT_CENTER
+		c_vbox.add_theme_constant_override("separation", 2)
+		c_vbox.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		card_btn.add_child(c_vbox)
+
+		# Top header row: Tier & Slot badge
+		var top_row := HBoxContainer.new()
+		top_row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		top_row.add_theme_constant_override("separation", 4)
+		var tb := _tier_badge_info(inst.tier)
+		var t_lbl := Label.new()
+		t_lbl.text = String(tb.get("name", "A"))
+		t_lbl.add_theme_font_size_override("font_size", 10)
+		t_lbl.add_theme_color_override("font_color", tb.get("color", Color(0.5, 0.8, 1.0)))
+		t_lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		top_row.add_child(t_lbl)
+
+		if is_equipped:
+			var eq_badge := Label.new()
+			eq_badge.text = "[Đang Mang]"
+			eq_badge.add_theme_font_size_override("font_size", 9)
+			eq_badge.add_theme_color_override("font_color", Color(0.3, 0.95, 0.5))
+			top_row.add_child(eq_badge)
+		c_vbox.add_child(top_row)
+
+		# Icon
+		var ic_lbl := Label.new()
+		ic_lbl.text = _get_stigmata_icon(inst)
+		ic_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		ic_lbl.add_theme_font_size_override("font_size", 34)
+		ic_lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		c_vbox.add_child(ic_lbl)
+
+		# Stars
+		var s_row := _build_overlaid_star_row(inst.gold_star_level, inst.purple_star_level, 6, 9)
+		c_vbox.add_child(s_row)
+
+		# Level
+		var lv_lbl := Label.new()
+		var display_lv: int = clampi(inst.gold_star_level * 15, 0, 80) if inst.gold_star_level > 0 else 0
+		lv_lbl.text = "+%d" % display_lv
+		lv_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		lv_lbl.add_theme_font_size_override("font_size", 11)
+		lv_lbl.add_theme_color_override("font_color", Color(1.0, 0.85, 0.3))
+		lv_lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		c_vbox.add_child(lv_lbl)
+
+		var cur_id: StringName = inst.instance_id
+		card_btn.pressed.connect(func() -> void:
+			_selected_stigmata_in_grid_id = cur_id
+			refresh()
+		)
+		grid.add_child(card_btn)
+
+	# --- 2. MIDDLE COLUMN: LARGE SHOWCASE OF SELECTED STIGMATA (Ảnh 2) ---
+	var mid_vbox := VBoxContainer.new()
+	mid_vbox.custom_minimum_size = Vector2(300, 0)
+	mid_vbox.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	mid_vbox.alignment = BoxContainer.ALIGNMENT_CENTER
+	mid_vbox.add_theme_constant_override("separation", 16)
+	hbox.add_child(mid_vbox)
+
+	var sel_inst: EquipmentInstance = null
+	if p_state != null and not _selected_stigmata_in_grid_id.is_empty():
+		for inst in p_state.equipment_collection:
+			if inst.instance_id == _selected_stigmata_in_grid_id:
+				sel_inst = inst
+				break
+
+	if sel_inst != null:
+		var circle_panel := PanelContainer.new()
+		circle_panel.custom_minimum_size = Vector2(210, 210)
+		circle_panel.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+		var cp_st := StyleBoxFlat.new()
+		cp_st.corner_radius_top_left = 105
+		cp_st.corner_radius_top_right = 105
+		cp_st.corner_radius_bottom_right = 105
+		cp_st.corner_radius_bottom_left = 105
+		cp_st.bg_color = Color(0.06, 0.08, 0.13, 0.95)
+		cp_st.border_width_left = 3
+		cp_st.border_width_top = 3
+		cp_st.border_width_right = 3
+		cp_st.border_width_bottom = 3
+		cp_st.border_color = Color(1.0, 0.84, 0.35, 0.95)
+		cp_st.shadow_color = Color(1.0, 0.8, 0.2, 0.35)
+		cp_st.shadow_size = 14
+		circle_panel.add_theme_stylebox_override("panel", cp_st)
+		mid_vbox.add_child(circle_panel)
+
+		var cp_center := CenterContainer.new()
+		circle_panel.add_child(cp_center)
+		var big_ic := Label.new()
+		big_ic.text = _get_stigmata_icon(sel_inst)
+		big_ic.add_theme_font_size_override("font_size", 84)
+		cp_center.add_child(big_ic)
+
+		# Level pill
+		var lv_pill := PanelContainer.new()
+		lv_pill.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+		var lp_st := StyleBoxFlat.new()
+		lp_st.bg_color = Color(0.04, 0.05, 0.08, 0.9)
+		lp_st.corner_radius_top_left = 8
+		lp_st.corner_radius_top_right = 8
+		lp_st.corner_radius_bottom_right = 8
+		lp_st.corner_radius_bottom_left = 8
+		lp_st.content_margin_left = 14.0
+		lp_st.content_margin_top = 4.0
+		lp_st.content_margin_right = 14.0
+		lp_st.content_margin_bottom = 4.0
+		lv_pill.add_theme_stylebox_override("panel", lp_st)
+		mid_vbox.add_child(lv_pill)
+
+		var lp_lbl := Label.new()
+		var d_lv: int = clampi(sel_inst.gold_star_level * 15, 0, 80) if sel_inst.gold_star_level > 0 else 0
+		lp_lbl.text = "⭐ +%d" % d_lv
+		lp_lbl.add_theme_font_size_override("font_size", 14)
+		lp_lbl.add_theme_color_override("font_color", Color(1.0, 0.85, 0.3))
+		lv_pill.add_child(lp_lbl)
+
+		# Big Overlaid Star row
+		var big_stars := _build_overlaid_star_row(sel_inst.gold_star_level, sel_inst.purple_star_level, 6, 18)
+		mid_vbox.add_child(big_stars)
+
+		var slot_tag := Label.new()
+		var s_name: String = "Vị Trí A (Thượng)" if sel_inst.stigmata_slot == EQUIPMENT_ENUMS.StigmataSlot.A else ("Vị Trí B (Trung)" if sel_inst.stigmata_slot == EQUIPMENT_ENUMS.StigmataSlot.B else "Vị Trí C (Hạ)")
+		slot_tag.text = "✦ %s ✦" % s_name
+		slot_tag.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		slot_tag.add_theme_font_size_override("font_size", 12)
+		slot_tag.add_theme_color_override("font_color", Color(0.4, 0.8, 1.0))
+		mid_vbox.add_child(slot_tag)
+
+
+func _render_tab_stigmata_showcase_right() -> void:
 	var vbox := VBoxContainer.new()
 	vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	vbox.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	vbox.add_theme_constant_override("separation", 14)
 	_right_panel_container.add_child(vbox)
 
+	var p_state: PlayerPhaseState = _get_active_player_state()
+
+	# 1. Header
 	var title_lbl := Label.new()
-	title_lbl.text = "📜 VẾT THÁNH BẢO VỆ"
+	title_lbl.text = "📜 TRANG BỊ VẾT THÁNH"
 	title_lbl.add_theme_font_size_override("font_size", 20)
 	title_lbl.add_theme_color_override("font_color", Color(1.0, 0.85, 0.3))
 	vbox.add_child(title_lbl)
 
-	if is_post_loot_equipment_phase:
-		var phase_hint := Label.new()
-		phase_hint.text = "⚖️ Giai đoạn chuẩn bị: Thiết lập Kỷ Vật & Vết Thánh cho các người chơi. Bấm ✕ khi hoàn tất để đi đến Tổng Kết Round."
-		phase_hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		phase_hint.add_theme_font_size_override("font_size", 12)
-		phase_hint.add_theme_color_override("font_color", Color(0.95, 0.8, 0.4))
-		vbox.add_child(phase_hint)
+	# 2. Total Stats Panel (Tổng Thuộc Tính Người Trang Bị)
+	var stats_panel := PanelContainer.new()
+	var sp_st := StyleBoxFlat.new()
+	sp_st.bg_color = Color(0.08, 0.1, 0.16, 0.9)
+	sp_st.corner_radius_top_left = 10
+	sp_st.corner_radius_top_right = 10
+	sp_st.corner_radius_bottom_right = 10
+	sp_st.corner_radius_bottom_left = 10
+	sp_st.content_margin_left = 16.0
+	sp_st.content_margin_top = 12.0
+	sp_st.content_margin_right = 16.0
+	sp_st.content_margin_bottom = 12.0
+	stats_panel.add_theme_stylebox_override("panel", sp_st)
+	vbox.add_child(stats_panel)
 
-	var scroll := ScrollContainer.new()
-	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-	vbox.add_child(scroll)
+	var stats_vbox := VBoxContainer.new()
+	stats_vbox.add_theme_constant_override("separation", 8)
+	stats_panel.add_child(stats_vbox)
 
-	var content_vbox := VBoxContainer.new()
-	content_vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	content_vbox.add_theme_constant_override("separation", 16)
-	scroll.add_child(content_vbox)
+	var st_head := HBoxContainer.new()
+	var st_title := Label.new()
+	st_title.text = "Tổng Thuộc Tính"
+	st_title.add_theme_font_size_override("font_size", 14)
+	st_title.add_theme_color_override("font_color", Color(0.85, 0.9, 0.98))
+	st_title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	st_head.add_child(st_title)
+
+	var detail_btn := Button.new()
+	detail_btn.text = "Chi Tiết Thuộc Tính"
+	detail_btn.flat = true
+	detail_btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	detail_btn.add_theme_font_size_override("font_size", 12)
+	detail_btn.add_theme_color_override("font_color", Color(0.4, 0.8, 1.0))
+	detail_btn.pressed.connect(_on_open_stat_detail_modal_pressed)
+	st_head.add_child(detail_btn)
+	stats_vbox.add_child(st_head)
+
+	var tot: Dictionary = _calculate_character_total_stats()
+	var stat_rows: Array[Dictionary] = [
+		{"icon": "❤️", "name": "Thể Lực", "base": tot["base_hp"], "bonus": tot["bonus_hp"], "total": tot["total_hp"]},
+		{"icon": "⚡", "name": "Tốc Độ", "base": tot["base_spd"], "bonus": tot["bonus_spd"], "total": tot["total_spd"]},
+		{"icon": "🎒", "name": "Sức Mạnh", "base": tot["base_str"], "bonus": tot["bonus_str"], "total": tot["total_str"]}
+	]
+
+	for sr in stat_rows:
+		var r_hbox := HBoxContainer.new()
+		var n_lbl := Label.new()
+		n_lbl.text = "%s %s" % [sr["icon"], sr["name"]]
+		n_lbl.add_theme_font_size_override("font_size", 13)
+		n_lbl.add_theme_color_override("font_color", Color(0.75, 0.8, 0.88))
+		n_lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		r_hbox.add_child(n_lbl)
+
+		var val_hbox := HBoxContainer.new()
+		val_hbox.add_theme_constant_override("separation", 6)
+
+		var total_lbl := Label.new()
+		total_lbl.text = "%d" % int(sr["total"])
+		total_lbl.add_theme_font_size_override("font_size", 14)
+		total_lbl.add_theme_color_override("font_color", Color(0.96, 0.96, 0.98))
+		val_hbox.add_child(total_lbl)
+
+		if int(sr["bonus"]) > 0:
+			var bonus_lbl := Label.new()
+			bonus_lbl.text = "(+%d)" % int(sr["bonus"])
+			bonus_lbl.add_theme_font_size_override("font_size", 12)
+			bonus_lbl.add_theme_color_override("font_color", Color(0.0, 0.85, 1.0))
+			val_hbox.add_child(bonus_lbl)
+
+		r_hbox.add_child(val_hbox)
+		stats_vbox.add_child(r_hbox)
+
+	# 3. Set Effects Panel (Hiệu Ứng Bộ)
+	var set_panel := PanelContainer.new()
+	set_panel.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	var set_st := StyleBoxFlat.new()
+	set_st.bg_color = Color(0.06, 0.075, 0.12, 0.9)
+	set_st.corner_radius_top_left = 10
+	set_st.corner_radius_top_right = 10
+	set_st.corner_radius_bottom_right = 10
+	set_st.corner_radius_bottom_left = 10
+	set_st.content_margin_left = 16.0
+	set_st.content_margin_top = 14.0
+	set_st.content_margin_right = 16.0
+	set_st.content_margin_bottom = 14.0
+	set_panel.add_theme_stylebox_override("panel", set_st)
+	vbox.add_child(set_panel)
+
+	var set_vbox := VBoxContainer.new()
+	set_vbox.add_theme_constant_override("separation", 10)
+	set_panel.add_child(set_vbox)
+
+	var set_head := Label.new()
+	set_head.text = "✨ Hiệu Ứng Bộ"
+	set_head.add_theme_font_size_override("font_size", 14)
+	set_head.add_theme_color_override("font_color", Color(1.0, 0.84, 0.25))
+	set_vbox.add_child(set_head)
+
+	var set_counts: Dictionary = _get_stigmata_set_counts(p_state)
+	var has_any_active_set := false
+
+	for set_id: StringName in set_counts.keys():
+		var count: int = int(set_counts[set_id])
+		if count >= 2:
+			has_any_active_set = true
+			var s_info: Dictionary = _get_stigmata_set_info(set_id)
+
+			var s_box := VBoxContainer.new()
+			s_box.add_theme_constant_override("separation", 4)
+			set_vbox.add_child(s_box)
+
+			var s_title := Label.new()
+			s_title.text = "%s (%d Món)" % [s_info["name"], count]
+			s_title.add_theme_font_size_override("font_size", 13)
+			s_title.add_theme_color_override("font_color", Color(1.0, 0.88, 0.45))
+			s_box.add_child(s_title)
+
+			var p2_lbl := Label.new()
+			p2_lbl.text = "✔ Bộ 2 Món: %s" % s_info["piece_2"]
+			p2_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+			p2_lbl.add_theme_font_size_override("font_size", 12)
+			p2_lbl.add_theme_color_override("font_color", Color(0.3, 0.95, 0.5))
+			s_box.add_child(p2_lbl)
+
+			if count >= 3:
+				var p3_lbl := Label.new()
+				p3_lbl.text = "✔ Bộ 3 Món: %s" % s_info["piece_3"]
+				p3_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+				p3_lbl.add_theme_font_size_override("font_size", 12)
+				p3_lbl.add_theme_color_override("font_color", Color(0.3, 0.95, 0.5))
+				s_box.add_child(p3_lbl)
+
+	if not has_any_active_set:
+		var empty_set_lbl := Label.new()
+		empty_set_lbl.text = "Chưa kích hoạt hiệu ứng bộ.\n(Trang bị 2 hoặc 3 Vết Thánh cùng loại để mở khóa hiệu ứng đặc biệt)"
+		empty_set_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		empty_set_lbl.add_theme_font_size_override("font_size", 12)
+		empty_set_lbl.add_theme_color_override("font_color", Color(0.48, 0.54, 0.65))
+		set_vbox.add_child(empty_set_lbl)
+
+	# 4. Action Buttons (Đổi & Nâng Cấp)
+	var btn_row := HBoxContainer.new()
+	btn_row.add_theme_constant_override("separation", 14)
+	vbox.add_child(btn_row)
+
+	var switch_btn := Button.new()
+	switch_btn.text = "🔄 Đổi"
+	switch_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	switch_btn.custom_minimum_size = Vector2(0, 42)
+	switch_btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	var sw_st := StyleBoxFlat.new()
+	sw_st.bg_color = Color(0.2, 0.28, 0.44, 0.95)
+	sw_st.border_width_left = 2
+	sw_st.border_width_top = 2
+	sw_st.border_width_right = 2
+	sw_st.border_width_bottom = 2
+	sw_st.border_color = Color(1.0, 0.84, 0.3)
+	sw_st.corner_radius_top_left = 8
+	sw_st.corner_radius_top_right = 8
+	sw_st.corner_radius_bottom_right = 8
+	sw_st.corner_radius_bottom_left = 8
+	switch_btn.add_theme_stylebox_override("normal", sw_st)
+	switch_btn.add_theme_stylebox_override("hover", sw_st)
+	switch_btn.add_theme_stylebox_override("pressed", sw_st)
+	switch_btn.add_theme_color_override("font_color", Color(1.0, 0.95, 0.8))
+	switch_btn.pressed.connect(func() -> void:
+		_stigmata_view_mode = StigmataViewMode.SWITCH_SELECTOR
+		_stigmata_filter_slot = -1
+		refresh()
+	)
+	btn_row.add_child(switch_btn)
+
+	var upgrade_target_id: StringName = &""
+	if p_state != null:
+		if not p_state.stigmata_a_instance_id.is_empty():
+			upgrade_target_id = p_state.stigmata_a_instance_id
+		elif not p_state.stigmata_b_instance_id.is_empty():
+			upgrade_target_id = p_state.stigmata_b_instance_id
+		elif not p_state.stigmata_c_instance_id.is_empty():
+			upgrade_target_id = p_state.stigmata_c_instance_id
+
+	var upgrade_btn := Button.new()
+	upgrade_btn.text = "⚡ Nâng Cấp"
+	upgrade_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	upgrade_btn.custom_minimum_size = Vector2(0, 42)
+	upgrade_btn.disabled = upgrade_target_id.is_empty()
+	upgrade_btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND if not upgrade_target_id.is_empty() else Control.CURSOR_ARROW
+	var up_st := StyleBoxFlat.new()
+	up_st.bg_color = Color(0.85, 0.65, 0.18, 0.95) if not upgrade_target_id.is_empty() else Color(0.2, 0.22, 0.28, 0.8)
+	up_st.corner_radius_top_left = 8
+	up_st.corner_radius_top_right = 8
+	up_st.corner_radius_bottom_right = 8
+	up_st.corner_radius_bottom_left = 8
+	upgrade_btn.add_theme_stylebox_override("normal", up_st)
+	upgrade_btn.add_theme_stylebox_override("hover", up_st)
+	upgrade_btn.add_theme_stylebox_override("pressed", up_st)
+	upgrade_btn.add_theme_stylebox_override("disabled", up_st)
+	upgrade_btn.add_theme_color_override("font_color", Color(0.12, 0.12, 0.14) if not upgrade_target_id.is_empty() else Color(0.5, 0.55, 0.65))
+	upgrade_btn.pressed.connect(func() -> void:
+		_show_equipment_upgrade_modal(upgrade_target_id)
+	)
+	btn_row.add_child(upgrade_btn)
+
+
+func _render_tab_stigmata_switch_right() -> void:
+	var vbox := VBoxContainer.new()
+	vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	vbox.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	vbox.add_theme_constant_override("separation", 14)
+	_right_panel_container.add_child(vbox)
 
 	var p_state: PlayerPhaseState = _get_active_player_state()
 
-	var slot_configs: Array[Dictionary] = [
-		{
-			"title": "✨ VỊ TRÍ A (THƯỢNG)",
-			"slot_const": EQUIPMENT_SERVICE.SLOT_STIGMATA_A,
-			"slot_enum": EQUIPMENT_ENUMS.StigmataSlot.A,
-			"equipped_id": p_state.stigmata_a_instance_id if p_state != null else &""
-		},
-		{
-			"title": "✨ VỊ TRÍ B (TRUNG)",
-			"slot_const": EQUIPMENT_SERVICE.SLOT_STIGMATA_B,
-			"slot_enum": EQUIPMENT_ENUMS.StigmataSlot.B,
-			"equipped_id": p_state.stigmata_b_instance_id if p_state != null else &""
-		},
-		{
-			"title": "✨ VỊ TRÍ C (HẠ)",
-			"slot_const": EQUIPMENT_SERVICE.SLOT_STIGMATA_C,
-			"slot_enum": EQUIPMENT_ENUMS.StigmataSlot.C,
-			"equipped_id": p_state.stigmata_c_instance_id if p_state != null else &""
-		},
+	var sel_inst: EquipmentInstance = null
+	if p_state != null and not _selected_stigmata_in_grid_id.is_empty():
+		for inst in p_state.equipment_collection:
+			if inst.instance_id == _selected_stigmata_in_grid_id:
+				sel_inst = inst
+				break
+
+	if sel_inst == null:
+		var empty_lbl := Label.new()
+		empty_lbl.text = "Hãy chọn một Vết Thánh trong kho để xem chi tiết."
+		empty_lbl.add_theme_font_size_override("font_size", 14)
+		empty_lbl.add_theme_color_override("font_color", Color(0.65, 0.7, 0.8))
+		vbox.add_child(empty_lbl)
+		return
+
+	var def: EquipmentDefinition = _find_equipment_def(sel_inst.equipment_definition_id)
+	var tb: Dictionary = _tier_badge_info(sel_inst.tier)
+
+	# 1. Header Box
+	var head_panel := PanelContainer.new()
+	var hp_st := StyleBoxFlat.new()
+	hp_st.bg_color = Color(0.08, 0.1, 0.16, 0.9)
+	hp_st.corner_radius_top_left = 10
+	hp_st.corner_radius_top_right = 10
+	hp_st.corner_radius_bottom_right = 10
+	hp_st.corner_radius_bottom_left = 10
+	hp_st.content_margin_left = 16.0
+	hp_st.content_margin_top = 12.0
+	hp_st.content_margin_right = 16.0
+	hp_st.content_margin_bottom = 12.0
+	head_panel.add_theme_stylebox_override("panel", hp_st)
+	vbox.add_child(head_panel)
+
+	var hp_vbox := VBoxContainer.new()
+	hp_vbox.add_theme_constant_override("separation", 4)
+	head_panel.add_child(hp_vbox)
+
+	var name_row := HBoxContainer.new()
+	name_row.add_theme_constant_override("separation", 8)
+	var name_lbl := Label.new()
+	name_lbl.text = _equipment_display_name(sel_inst)
+	name_lbl.add_theme_font_size_override("font_size", 16)
+	name_lbl.add_theme_color_override("font_color", Color(1.0, 0.95, 0.85))
+	name_lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	name_row.add_child(name_lbl)
+
+	var tier_lbl := Label.new()
+	tier_lbl.text = "[%s]" % String(tb.get("name", "Phẩm A"))
+	tier_lbl.add_theme_font_size_override("font_size", 12)
+	tier_lbl.add_theme_color_override("font_color", tb.get("color", Color(0.4, 0.8, 1.0)))
+	name_row.add_child(tier_lbl)
+	hp_vbox.add_child(name_row)
+
+	var slot_name_str: String = "Vết Thánh A (Thượng)" if sel_inst.stigmata_slot == EQUIPMENT_ENUMS.StigmataSlot.A else ("Vết Thánh B (Trung)" if sel_inst.stigmata_slot == EQUIPMENT_ENUMS.StigmataSlot.B else "Vết Thánh C (Hạ)")
+	var slot_lbl := Label.new()
+	slot_lbl.text = "Vị trí: %s" % slot_name_str
+	slot_lbl.add_theme_font_size_override("font_size", 12)
+	slot_lbl.add_theme_color_override("font_color", Color(0.7, 0.76, 0.85))
+	hp_vbox.add_child(slot_lbl)
+
+	# 2. Stats Panel of this Stigmata
+	var stats_panel := PanelContainer.new()
+	var sp_st := StyleBoxFlat.new()
+	sp_st.bg_color = Color(0.06, 0.075, 0.12, 0.9)
+	sp_st.corner_radius_top_left = 10
+	sp_st.corner_radius_top_right = 10
+	sp_st.corner_radius_bottom_right = 10
+	sp_st.corner_radius_bottom_left = 10
+	sp_st.content_margin_left = 16.0
+	sp_st.content_margin_top = 12.0
+	sp_st.content_margin_right = 16.0
+	sp_st.content_margin_bottom = 12.0
+	stats_panel.add_theme_stylebox_override("panel", sp_st)
+	vbox.add_child(stats_panel)
+
+	var stats_vbox := VBoxContainer.new()
+	stats_vbox.add_theme_constant_override("separation", 6)
+	stats_panel.add_child(stats_vbox)
+
+	var st_title := Label.new()
+	var cur_display_lv: int = clampi(sel_inst.gold_star_level * 15, 0, 80) if sel_inst.gold_star_level > 0 else 0
+	st_title.text = "Thuộc Tính Trang Bị (+%d)" % cur_display_lv
+	st_title.add_theme_font_size_override("font_size", 13)
+	st_title.add_theme_color_override("font_color", Color(0.85, 0.9, 0.98))
+	stats_vbox.add_child(st_title)
+
+	var inst_stats: Dictionary = def.get_total_stats(sel_inst.gold_star_level, sel_inst.purple_star_level) if def != null else {}
+	var rows: Array[Dictionary] = [
+		{"icon": "❤️", "name": "Thể Lực", "val": int(inst_stats.get("stamina", 0))},
+		{"icon": "⚡", "name": "Tốc Độ", "val": int(inst_stats.get("speed", 0))},
+		{"icon": "🎒", "name": "Sức Mạnh", "val": int(inst_stats.get("strength", int(inst_stats.get("power", 0))))}
 	]
+	for r in rows:
+		var r_box := HBoxContainer.new()
+		var n_l := Label.new()
+		n_l.text = "%s %s" % [r["icon"], r["name"]]
+		n_l.add_theme_font_size_override("font_size", 12)
+		n_l.add_theme_color_override("font_color", Color(0.75, 0.8, 0.88))
+		n_l.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		r_box.add_child(n_l)
 
-	for cfg: Dictionary in slot_configs:
-		var slot_card := PanelContainer.new()
-		var sc_style := StyleBoxFlat.new()
-		sc_style.bg_color = Color(0.08, 0.1, 0.16, 0.9)
-		sc_style.corner_radius_top_left = 10
-		sc_style.corner_radius_top_right = 10
-		sc_style.corner_radius_bottom_right = 10
-		sc_style.corner_radius_bottom_left = 10
-		sc_style.border_width_left = 1
-		sc_style.border_width_top = 1
-		sc_style.border_width_right = 1
-		sc_style.border_width_bottom = 1
-		sc_style.border_color = Color(0.3, 0.38, 0.52, 0.5)
-		sc_style.content_margin_left = 16.0
-		sc_style.content_margin_top = 12.0
-		sc_style.content_margin_right = 16.0
-		sc_style.content_margin_bottom = 12.0
-		slot_card.add_theme_stylebox_override("panel", sc_style)
-		content_vbox.add_child(slot_card)
+		var v_l := Label.new()
+		v_l.text = "+%d" % int(r["val"])
+		v_l.add_theme_font_size_override("font_size", 13)
+		v_l.add_theme_color_override("font_color", Color(0.0, 0.85, 1.0))
+		r_box.add_child(v_l)
+		stats_vbox.add_child(r_box)
 
-		var sc_vbox := VBoxContainer.new()
-		sc_vbox.add_theme_constant_override("separation", 8)
-		slot_card.add_child(sc_vbox)
+	# 3. Set Effects Panel (Hiệu Ứng Bộ của món này - Ảnh 2)
+	var set_panel := PanelContainer.new()
+	set_panel.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	var set_st := StyleBoxFlat.new()
+	set_st.bg_color = Color(0.06, 0.075, 0.12, 0.9)
+	set_st.corner_radius_top_left = 10
+	set_st.corner_radius_top_right = 10
+	set_st.corner_radius_bottom_right = 10
+	set_st.corner_radius_bottom_left = 10
+	set_st.content_margin_left = 16.0
+	set_st.content_margin_top = 14.0
+	set_st.content_margin_right = 16.0
+	set_st.content_margin_bottom = 14.0
+	set_panel.add_theme_stylebox_override("panel", set_st)
+	vbox.add_child(set_panel)
 
-		# Slot header
-		var s_head := Label.new()
-		s_head.text = String(cfg["title"])
-		s_head.add_theme_font_size_override("font_size", 14)
-		s_head.add_theme_color_override("font_color", Color(1.0, 0.88, 0.45))
-		sc_vbox.add_child(s_head)
+	var set_vbox := VBoxContainer.new()
+	set_vbox.add_theme_constant_override("separation", 10)
+	set_panel.add_child(set_vbox)
 
-		var eq_id: StringName = cfg["equipped_id"] as StringName
-		var eq_inst: EquipmentInstance = null
-		if p_state != null and not eq_id.is_empty():
-			for inst: EquipmentInstance in p_state.equipment_collection:
-				if inst.instance_id == eq_id:
-					eq_inst = inst
-					break
+	var set_id: StringName = def.set_id if (def != null and not def.set_id.is_empty()) else &"m5_set_a"
+	var s_info: Dictionary = _get_stigmata_set_info(set_id)
+	var set_counts: Dictionary = _get_stigmata_set_counts(p_state)
+	var current_equipped_count: int = int(set_counts.get(set_id, 0))
 
-		# Current equipped row
-		var eq_row := HBoxContainer.new()
-		eq_row.add_theme_constant_override("separation", 10)
-		sc_vbox.add_child(eq_row)
+	var head_lbl := Label.new()
+	head_lbl.text = "Hiệu Ứng Bộ"
+	head_lbl.add_theme_font_size_override("font_size", 14)
+	head_lbl.add_theme_color_override("font_color", Color(1.0, 0.84, 0.25))
+	set_vbox.add_child(head_lbl)
 
-		var eq_info := VBoxContainer.new()
-		eq_info.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		eq_row.add_child(eq_info)
+	var s_title := Label.new()
+	s_title.text = "%s (%d)" % [s_info["name"], current_equipped_count]
+	s_title.add_theme_font_size_override("font_size", 13)
+	s_title.add_theme_color_override("font_color", Color(1.0, 0.88, 0.45))
+	set_vbox.add_child(s_title)
 
-		if eq_inst != null:
-			var name_l := Label.new()
-			name_l.text = "Đang trang bị: %s" % _equipment_display_name(eq_inst)
-			name_l.add_theme_font_size_override("font_size", 13)
-			name_l.add_theme_color_override("font_color", Color(0.9, 0.95, 1.0))
-			eq_info.add_child(name_l)
+	# 2-piece set line: bright if equipped >= 2, dimmed otherwise
+	var p2_lbl := Label.new()
+	p2_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	p2_lbl.add_theme_font_size_override("font_size", 12)
+	if current_equipped_count >= 2:
+		p2_lbl.text = "✔ Bộ 2 Món: %s" % s_info["piece_2"]
+		p2_lbl.add_theme_color_override("font_color", Color(0.3, 0.95, 0.5))
+	else:
+		p2_lbl.text = "Bộ 2 Món: %s" % s_info["piece_2"]
+		p2_lbl.add_theme_color_override("font_color", Color(0.42, 0.48, 0.6))
+	set_vbox.add_child(p2_lbl)
 
-			var sub_row := HBoxContainer.new()
-			sub_row.add_theme_constant_override("separation", 8)
-			var tb := _tier_badge_info(eq_inst.tier)
-			var sub_l := Label.new()
-			sub_l.text = "[%s]" % String(tb.get("name", "Phẩm A"))
-			sub_l.add_theme_font_size_override("font_size", 11)
-			sub_l.add_theme_color_override("font_color", tb.get("color", Color(0.65, 0.75, 0.85)))
-			sub_row.add_child(sub_l)
+	# 3-piece set line: bright if equipped >= 3, dimmed otherwise
+	var p3_lbl := Label.new()
+	p3_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	p3_lbl.add_theme_font_size_override("font_size", 12)
+	if current_equipped_count >= 3:
+		p3_lbl.text = "✔ Bộ 3 Món: %s" % s_info["piece_3"]
+		p3_lbl.add_theme_color_override("font_color", Color(0.3, 0.95, 0.5))
+	else:
+		p3_lbl.text = "Bộ 3 Món: %s" % s_info["piece_3"]
+		p3_lbl.add_theme_color_override("font_color", Color(0.42, 0.48, 0.6))
+	set_vbox.add_child(p3_lbl)
 
-			var st_row := _build_overlaid_star_row(eq_inst.gold_star_level, eq_inst.purple_star_level, 6, 12)
-			sub_row.add_child(st_row)
-			eq_info.add_child(sub_row)
+	# 4. Action Buttons (Trang Bị & Cường Hóa / Nâng Cấp - Ảnh 2)
+	var btn_row := HBoxContainer.new()
+	btn_row.add_theme_constant_override("separation", 14)
+	vbox.add_child(btn_row)
 
-			var up_btn := Button.new()
-			up_btn.text = "⚡ Nâng Cấp"
-			up_btn.custom_minimum_size = Vector2(90, 30)
-			up_btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
-			var up_st := StyleBoxFlat.new()
-			up_st.bg_color = Color(0.85, 0.65, 0.18, 0.95)
-			up_st.corner_radius_top_left = 6
-			up_st.corner_radius_top_right = 6
-			up_st.corner_radius_bottom_right = 6
-			up_st.corner_radius_bottom_left = 6
-			up_btn.add_theme_stylebox_override("normal", up_st)
-			up_btn.add_theme_stylebox_override("hover", up_st)
-			up_btn.add_theme_stylebox_override("pressed", up_st)
-			up_btn.add_theme_color_override("font_color", Color(0.12, 0.12, 0.14))
-			var eq_target_id: StringName = eq_inst.instance_id
-			up_btn.pressed.connect(func() -> void:
-				_show_equipment_upgrade_modal(eq_target_id)
-			)
-			eq_row.add_child(up_btn)
+	var target_slot_const: StringName = EQUIPMENT_SERVICE.SLOT_STIGMATA_A
+	if sel_inst.stigmata_slot == EQUIPMENT_ENUMS.StigmataSlot.B:
+		target_slot_const = EQUIPMENT_SERVICE.SLOT_STIGMATA_B
+	elif sel_inst.stigmata_slot == EQUIPMENT_ENUMS.StigmataSlot.C:
+		target_slot_const = EQUIPMENT_SERVICE.SLOT_STIGMATA_C
 
-			var un_btn := Button.new()
-			un_btn.text = "✕ Tháo Ra"
-			un_btn.custom_minimum_size = Vector2(88, 30)
-			un_btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
-			var un_style := StyleBoxFlat.new()
-			un_style.bg_color = Color(0.35, 0.15, 0.18, 0.85)
-			un_style.corner_radius_top_left = 6
-			un_style.corner_radius_top_right = 6
-			un_style.corner_radius_bottom_right = 6
-			un_style.corner_radius_bottom_left = 6
-			un_btn.add_theme_stylebox_override("normal", un_style)
-			un_btn.add_theme_stylebox_override("hover", un_style)
-			un_btn.add_theme_stylebox_override("pressed", un_style)
-			var target_slot_const: StringName = cfg["slot_const"] as StringName
-			un_btn.pressed.connect(func() -> void:
-				_unequip_slot(target_slot_const)
-			)
-			eq_row.add_child(un_btn)
-		else:
-			var empty_l := Label.new()
-			empty_l.text = "Trạng thái: (Vị trí trống)"
-			empty_l.add_theme_font_size_override("font_size", 12)
-			empty_l.add_theme_color_override("font_color", Color(0.5, 0.55, 0.65))
-			eq_info.add_child(empty_l)
+	var is_already_equipped: bool = false
+	if p_state != null:
+		if target_slot_const == EQUIPMENT_SERVICE.SLOT_STIGMATA_A:
+			is_already_equipped = (p_state.stigmata_a_instance_id == sel_inst.instance_id)
+		elif target_slot_const == EQUIPMENT_SERVICE.SLOT_STIGMATA_B:
+			is_already_equipped = (p_state.stigmata_b_instance_id == sel_inst.instance_id)
+		elif target_slot_const == EQUIPMENT_SERVICE.SLOT_STIGMATA_C:
+			is_already_equipped = (p_state.stigmata_c_instance_id == sel_inst.instance_id)
 
-		# Available owned stigmata for this slot
-		var slot_owned: Array[EquipmentInstance] = []
-		var slot_target_enum: int = int(cfg["slot_enum"])
-		if p_state != null:
-			for inst: EquipmentInstance in p_state.equipment_collection:
-				if (
-					inst.equipment_type == EQUIPMENT_ENUMS.EquipmentType.STIGMATA
-					and inst.stigmata_slot == slot_target_enum
-				):
-					slot_owned.append(inst)
+	var equip_btn := Button.new()
+	equip_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	equip_btn.custom_minimum_size = Vector2(0, 42)
+	if is_already_equipped:
+		equip_btn.text = "Đang Trang Bị"
+		equip_btn.disabled = true
+	else:
+		equip_btn.text = "🔄 Đổi"
+		equip_btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+		var eq_st := StyleBoxFlat.new()
+		eq_st.bg_color = Color(0.85, 0.65, 0.18, 0.95)
+		eq_st.corner_radius_top_left = 8
+		eq_st.corner_radius_top_right = 8
+		eq_st.corner_radius_bottom_right = 8
+		eq_st.corner_radius_bottom_left = 8
+		equip_btn.add_theme_stylebox_override("normal", eq_st)
+		equip_btn.add_theme_stylebox_override("hover", eq_st)
+		equip_btn.add_theme_stylebox_override("pressed", eq_st)
+		equip_btn.add_theme_color_override("font_color", Color(0.1, 0.1, 0.14))
+		var target_id: StringName = sel_inst.instance_id
+		equip_btn.pressed.connect(func() -> void:
+			_equip_item(target_id, target_slot_const)
+			refresh()
+		)
+	btn_row.add_child(equip_btn)
 
-		if not slot_owned.is_empty():
-			var owned_sep := HSeparator.new()
-			sc_vbox.add_child(owned_sep)
+	var up_btn := Button.new()
+	up_btn.text = "⚡ Cường Hóa"
+	up_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	up_btn.custom_minimum_size = Vector2(0, 42)
+	up_btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	var ub_st := StyleBoxFlat.new()
+	ub_st.bg_color = Color(0.22, 0.32, 0.52, 0.95)
+	ub_st.corner_radius_top_left = 8
+	ub_st.corner_radius_top_right = 8
+	ub_st.corner_radius_bottom_right = 8
+	ub_st.corner_radius_bottom_left = 8
+	up_btn.add_theme_stylebox_override("normal", ub_st)
+	up_btn.add_theme_stylebox_override("hover", ub_st)
+	up_btn.add_theme_stylebox_override("pressed", ub_st)
+	up_btn.add_theme_color_override("font_color", Color(0.95, 0.96, 1.0))
+	var sel_up_id: StringName = sel_inst.instance_id
+	up_btn.pressed.connect(func() -> void:
+		_show_equipment_upgrade_modal(sel_up_id)
+	)
+	btn_row.add_child(up_btn)
 
-			for inst: EquipmentInstance in slot_owned:
-				var item_row := HBoxContainer.new()
-				item_row.add_theme_constant_override("separation", 8)
-				sc_vbox.add_child(item_row)
 
-				var item_info := VBoxContainer.new()
-				item_info.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-				item_row.add_child(item_info)
-
-				var i_name := Label.new()
-				i_name.text = "• %s" % _equipment_display_name(inst)
-				i_name.add_theme_font_size_override("font_size", 12)
-				i_name.add_theme_color_override("font_color", Color(0.85, 0.9, 0.95))
-				item_info.add_child(i_name)
-
-				var is_this_equipped: bool = (eq_inst != null and inst.instance_id == eq_inst.instance_id)
-				if is_this_equipped:
-					var eq_tag := Label.new()
-					eq_tag.text = "✔ Đang trang bị"
-					eq_tag.add_theme_font_size_override("font_size", 11)
-					eq_tag.add_theme_color_override("font_color", Color(0.4, 0.88, 0.5))
-					item_row.add_child(eq_tag)
-				else:
-					var eq_btn := Button.new()
-					eq_btn.text = "Trang Bị"
-					eq_btn.custom_minimum_size = Vector2(80, 26)
-					eq_btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
-					var eb_style := StyleBoxFlat.new()
-					eb_style.bg_color = Color(0.2, 0.35, 0.55, 0.9)
-					eb_style.corner_radius_top_left = 6
-					eb_style.corner_radius_top_right = 6
-					eb_style.corner_radius_bottom_right = 6
-					eb_style.corner_radius_bottom_left = 6
-					eq_btn.add_theme_stylebox_override("normal", eb_style)
-					eq_btn.add_theme_stylebox_override("hover", eb_style)
-					eq_btn.add_theme_stylebox_override("pressed", eb_style)
-					var target_inst_id: StringName = inst.instance_id
-					var target_slot_const: StringName = cfg["slot_const"] as StringName
-					eq_btn.pressed.connect(func() -> void:
-						_equip_item(target_inst_id, target_slot_const)
-					)
-					item_row.add_child(eq_btn)
-
-					var item_up_btn := Button.new()
-					item_up_btn.text = "⚡"
-					item_up_btn.custom_minimum_size = Vector2(32, 26)
-					item_up_btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
-					var iub_style := StyleBoxFlat.new()
-					iub_style.bg_color = Color(0.85, 0.65, 0.18, 0.95)
-					iub_style.corner_radius_top_left = 6
-					iub_style.corner_radius_top_right = 6
-					iub_style.corner_radius_bottom_right = 6
-					iub_style.corner_radius_bottom_left = 6
-					item_up_btn.add_theme_stylebox_override("normal", iub_style)
-					item_up_btn.add_theme_stylebox_override("hover", iub_style)
-					item_up_btn.add_theme_stylebox_override("pressed", iub_style)
-					item_up_btn.add_theme_color_override("font_color", Color(0.12, 0.12, 0.14))
-					item_up_btn.pressed.connect(func() -> void:
-						_show_equipment_upgrade_modal(target_inst_id)
-					)
-					item_row.add_child(item_up_btn)
+func _render_tab_stigmata() -> void:
+	if _stigmata_view_mode == StigmataViewMode.EQUIPPED_SHOWCASE:
+		_render_tab_stigmata_showcase_right()
+	else:
+		_render_tab_stigmata_switch_right()
 
 
 # -----------------------------------------------------------------------------
@@ -3498,23 +4377,11 @@ func _on_open_stat_detail_modal_pressed() -> void:
 	for child in rows_container.get_children():
 		child.queue_free()
 
-	var p_state: PlayerPhaseState = _case_flow_session.loot_session.find_player(_active_player_id)
-	var char_def: CharacterDefinition = (
-		_setup_session.find_character(p_state.character_id) if p_state != null else null
-	)
-
-	var base_hp: int = char_def.base_stamina if char_def != null else 2
-	var base_spd: int = char_def.base_speed if char_def != null else 2
-	var base_str: int = char_def.base_bag_level if char_def != null else 2
-
-	var bonus_hp: int = 0
-	var bonus_spd: int = 0
-	var bonus_str: int = 0
-
+	var tot: Dictionary = _calculate_character_total_stats()
 	var modal_stats: Array[Dictionary] = [
-		{"icon": "❤️", "name": "Thể Lực", "base": base_hp, "bonus": bonus_hp},
-		{"icon": "👟", "name": "Tốc Độ", "base": base_spd, "bonus": bonus_spd},
-		{"icon": "🎒", "name": "Sức Mạnh", "base": base_str, "bonus": bonus_str},
+		{"icon": "❤️", "name": "Thể Lực", "base": tot["base_hp"], "bonus": tot["bonus_hp"]},
+		{"icon": "👟", "name": "Tốc Độ", "base": tot["base_spd"], "bonus": tot["bonus_spd"]},
+		{"icon": "🎒", "name": "Sức Mạnh", "base": tot["base_str"], "bonus": tot["bonus_str"]},
 	]
 
 	for item: Dictionary in modal_stats:
@@ -3588,6 +4455,8 @@ func _switch_sidebar_tab(tab_id: SidebarTab) -> void:
 			_relic_view_mode = RelicViewMode.EQUIPPED_SHOWCASE
 		else:
 			_relic_view_mode = RelicViewMode.SWITCH_SELECTOR
+	elif _current_sidebar_tab == SidebarTab.STIGMATA:
+		_stigmata_view_mode = StigmataViewMode.EQUIPPED_SHOWCASE
 	if _stat_modal_overlay != null:
 		_stat_modal_overlay.visible = false
 	if _rank_popup_overlay != null:
@@ -3596,6 +4465,10 @@ func _switch_sidebar_tab(tab_id: SidebarTab) -> void:
 
 
 func _on_header_back_pressed() -> void:
+	if _current_sidebar_tab == SidebarTab.STIGMATA:
+		_stigmata_view_mode = StigmataViewMode.EQUIPPED_SHOWCASE
+		refresh()
+		return
 	var p_state: PlayerPhaseState = _get_active_player_state()
 	if p_state != null and not p_state.relic_instance_id.is_empty():
 		_relic_view_mode = RelicViewMode.EQUIPPED_SHOWCASE
@@ -3634,6 +4507,11 @@ func _unhandled_input(event: InputEvent) -> void:
 				return
 			if _rank_popup_overlay != null and _rank_popup_overlay.visible:
 				_rank_popup_overlay.visible = false
+				get_viewport().set_input_as_handled()
+				return
+			if _current_sidebar_tab == SidebarTab.STIGMATA and _stigmata_view_mode == StigmataViewMode.SWITCH_SELECTOR:
+				_stigmata_view_mode = StigmataViewMode.EQUIPPED_SHOWCASE
+				refresh()
 				get_viewport().set_input_as_handled()
 				return
 			if _current_sidebar_tab == SidebarTab.RELICS and _relic_view_mode == RelicViewMode.SWITCH_SELECTOR:
