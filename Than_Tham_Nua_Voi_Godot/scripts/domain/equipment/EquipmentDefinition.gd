@@ -27,8 +27,8 @@ func gold_cost(from_level: int) -> int:
 func get_purple_bonus(milestone: int) -> Dictionary:
 	if purple_stat_bonuses.has(milestone):
 		return (purple_stat_bonuses[milestone] as Dictionary).duplicate(true)
-	elif purple_stat_bonuses.has(String(milestone)):
-		return (purple_stat_bonuses[String(milestone)] as Dictionary).duplicate(true)
+	elif purple_stat_bonuses.has(str(milestone)):
+		return (purple_stat_bonuses[str(milestone)] as Dictionary).duplicate(true)
 	match milestone:
 		1:
 			return {"speed": 2 + int(tier)}
