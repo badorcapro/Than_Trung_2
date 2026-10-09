@@ -879,17 +879,17 @@ func _on_map_node_clicked(node_id: StringName) -> void:
 func _on_map_node_hovered(node_id: StringName) -> void:
 	if setup == null or setup.phase != SETUP_SESSION.Phase.LOOT_ACTIVE:
 		return
-	if loot_map_view != null and action_guidance != null:
+	if loot_map_view != null and action_guide != null:
 		var label: String = loot_map_view.label_for_node(node_id)
-		action_guidance.text = "📍 Đang soi: [color=#ffe680]%s[/color]" % label
+		action_guide.text = "📍 Đang soi: %s" % label
 
 
 func _on_map_node_unhovered() -> void:
 	if setup == null or setup.phase != SETUP_SESSION.Phase.LOOT_ACTIVE:
 		return
-	if case_flow != null and case_flow.loot_session != null and action_guidance != null:
+	if case_flow != null and case_flow.loot_session != null and action_guide != null:
 		var current_player: LOOT_MOVEMENT_PLAYER_STATE = case_flow.loot_session.movement_session.current_player()
-		action_guidance.text = _loot_action_guidance(case_flow.loot_session, current_player)
+		action_guide.text = _loot_action_guidance(case_flow.loot_session, current_player)
 
 
 func _on_overflow_discard_pressed() -> void:
