@@ -50,6 +50,7 @@ var case_controller: CASE_CONTROLLER
 var _loot_activity_lines: Array[String] = []
 var _logged_reward_count := 0
 var _selected_branch_id: StringName = &""
+var _is_rolling_dice: bool = false
 var _autosave_service: PLAYER_FACING_AUTOSAVE_SERVICE = (
 	PLAYER_FACING_AUTOSAVE_SERVICE.new()
 )
@@ -112,6 +113,10 @@ var _autosave_service: PLAYER_FACING_AUTOSAVE_SERVICE = (
 @onready var overflow_target_selector: OptionButton = %OverflowTargetSelector
 @onready var overflow_replace_button: Button = %OverflowReplace
 @onready var overflow_skip_button: Button = %OverflowSkip
+@onready var dice_roll_overlay: CenterContainer = %DiceRollOverlay
+@onready var dice_card: Control = %DiceCard
+@onready var dice_icon_label: Label = %DiceIconLabel
+@onready var dice_result_label: RichTextLabel = %DiceResultLabel
 @onready var confirmation_panel: Control = %LootConfirmationPanel
 @onready var confirmation_text: RichTextLabel = %ConfirmationText
 @onready var equipment_panel: Control = %EquipmentPanel
@@ -557,13 +562,14 @@ func _on_use_item_pressed() -> void:
 
 
 func _on_move_pressed() -> void:
-	var chosen: StringName = _selected_branch_id
-	_selected_branch_id = &""
-	_handle_loot_result(case_flow.move(chosen))
+	_handle_loot_z_press()
 
 
 func _on_branch_chosen(chosen_branch_id: StringName) -> void:
 	_selected_branch_id = &""
+	if dice_roll_overlay != null and dice_roll_overlay.visible:
+		dice_roll_overlay.visible = false
+		dice_roll_overlay.modulate.a = 1.0
 	_handle_loot_result(case_flow.choose_branch(chosen_branch_id))
 
 
@@ -582,10 +588,16 @@ func _toggle_loot_detail_panel() -> void:
 func _handle_loot_z_press() -> void:
 	if case_flow == null or case_flow.loot_session == null:
 		return
+	if _is_rolling_dice:
+		return
 	var session: LOOT_REWARD_SESSION = case_flow.loot_session
 	if session.overflow.active:
 		_show_message("Túi đang đầy! Hãy chọn thay thế hoặc bỏ vật phẩm mới trước.", true)
 		return
+	if session.phase == LOOT_REWARD_SESSION.Phase.BRANCH_SELECTION:
+		_show_message("Đang ở ngã rẽ! Hãy bấm trực tiếp lên ô cờ vàng trên bản đồ để chọn hướng.", true)
+		return
+
 	if session.phase == LOOT_REWARD_SESSION.Phase.ITEM_WINDOW:
 		var result: Dictionary = case_flow.continue_without_item()
 		if not bool(result.get("success", false)):
@@ -593,35 +605,116 @@ func _handle_loot_z_press() -> void:
 			_refresh_loot()
 			return
 		_refresh_loot()
-		if session.phase == LOOT_REWARD_SESSION.Phase.MOVEMENT:
-			var default_branch: StringName = _selected_branch_id
-			if default_branch.is_empty():
-				var movement_player: LOOT_MOVEMENT_PLAYER_STATE = session.movement_session.current_player()
-				if movement_player != null and case_flow != null:
-					var current_node: LootNodeDefinition = case_flow.loot_map_definition().find_node(
-						movement_player.current_node_id
-					)
-					if current_node != null and not current_node.outgoing_neighbor_ids.is_empty():
-						default_branch = current_node.outgoing_neighbor_ids[0]
-			_selected_branch_id = &""
-			_handle_loot_result(case_flow.move(default_branch))
+
+	if session.phase != LOOT_REWARD_SESSION.Phase.MOVEMENT:
 		return
-	if session.phase == LOOT_REWARD_SESSION.Phase.MOVEMENT:
-		var default_branch: StringName = _selected_branch_id
-		if default_branch.is_empty():
-			var movement_player: LOOT_MOVEMENT_PLAYER_STATE = session.movement_session.current_player()
-			if movement_player != null and case_flow != null:
-				var current_node: LootNodeDefinition = case_flow.loot_map_definition().find_node(
-					movement_player.current_node_id
-				)
-				if current_node != null and not current_node.outgoing_neighbor_ids.is_empty():
-					default_branch = current_node.outgoing_neighbor_ids[0]
-		_selected_branch_id = &""
-		_handle_loot_result(case_flow.move(default_branch))
+
+	_is_rolling_dice = true
+
+	# Thực hiện roll với branch_choice = &"" (không bao giờ tự chọn nhánh trước cho người chơi)
+	var move_res: Dictionary = case_flow.move(&"")
+	if not bool(move_res.get("success", false)):
+		_is_rolling_dice = false
+		_handle_loot_result(move_res)
 		return
-	if session.phase == LOOT_REWARD_SESSION.Phase.BRANCH_SELECTION:
-		_show_message("Đang ở ngã rẽ! Hãy bấm trực tiếp lên ô cờ vàng trên bản đồ để chọn hướng.", true)
+
+	var is_fork: bool = (session.phase == LOOT_REWARD_SESSION.Phase.BRANCH_SELECTION)
+	var roll_val: int = 1
+	var fork_steps_walked: int = 0
+	var fork_remaining: int = 0
+
+	if is_fork:
+		var pending: PendingBranchState = session.movement_session.pending_branch
+		if pending != null:
+			roll_val = pending.roll_distance
+			fork_steps_walked = pending.traversed_node_ids.size()
+			fork_remaining = pending.remaining_steps
+	else:
+		var action: MovementActionResult = move_res.get("action") as MovementActionResult
+		if action != null:
+			roll_val = action.roll_distance
+
+	await _play_dice_roll_animation(roll_val, is_fork, fork_steps_walked, fork_remaining)
+
+	if is_fork:
+		_is_rolling_dice = false
+		_refresh_loot()
+	else:
+		_is_rolling_dice = false
+		_handle_loot_result(move_res)
+
+
+func _play_dice_roll_animation(
+	roll_val: int, is_fork: bool, fork_steps_walked: int, fork_remaining: int
+) -> void:
+	if dice_roll_overlay == null or dice_icon_label == null or dice_result_label == null:
 		return
+	dice_roll_overlay.visible = true
+	dice_roll_overlay.modulate.a = 1.0
+	if dice_card != null:
+		dice_card.scale = Vector2.ONE
+		dice_card.pivot_offset = dice_card.size * 0.5
+
+	var dice_faces: Array[String] = ["⚀ 1", "⚁ 2", "⚂ 3", "⚃ 4", "⚄ 5", "⚅ 6"]
+	for i in range(8):
+		dice_icon_label.text = dice_faces[randi() % dice_faces.size()]
+		dice_result_label.text = "[center][b][color=#8be9fd]Đang gieo xúc xắc...[/color][/b][/center]"
+		await get_tree().create_timer(0.05).timeout
+		if not is_instance_valid(self):
+			return
+
+	var final_face: String = ""
+	match roll_val:
+		1: final_face = "⚀ 1"
+		2: final_face = "⚁ 2"
+		3: final_face = "⚂ 3"
+		4: final_face = "⚃ 4"
+		5: final_face = "⚄ 5"
+		6: final_face = "⚅ 6"
+		_: final_face = "🎲 %d" % roll_val
+	dice_icon_label.text = final_face
+
+	if dice_card != null:
+		dice_card.pivot_offset = dice_card.size * 0.5
+		var punch_tween: Tween = create_tween()
+		punch_tween.tween_property(dice_card, "scale", Vector2(1.18, 1.18), 0.08).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		punch_tween.tween_property(dice_card, "scale", Vector2.ONE, 0.1)
+
+	if is_fork:
+		if fork_steps_walked > 0:
+			dice_result_label.text = (
+				"[center][b][color=#f1fa8c]ĐÃ ĐỔ RA %d BƯỚC[/color][/b]\n"
+				+ "[font_size=13][color=#ffb86c]⚡ Đi %d bước gặp ngã rẽ! (Còn %d bước)\n"
+				+ "Bấm chọn ô cờ vàng trên bản đồ để đi tiếp[/color][/font_size][/center]"
+			) % [roll_val, fork_steps_walked, fork_remaining]
+		else:
+			dice_result_label.text = (
+				"[center][b][color=#f1fa8c]ĐÃ ĐỔ RA %d BƯỚC[/color][/b]\n"
+				+ "[font_size=13][color=#ffb86c]⚡ Đang ở ngã rẽ!\n"
+				+ "Bấm chọn ô cờ vàng trên bản đồ để chọn hướng[/color][/font_size][/center]"
+			) % roll_val
+		var fade_tween: Tween = create_tween()
+		fade_tween.tween_interval(2.0)
+		fade_tween.tween_property(dice_roll_overlay, "modulate:a", 0.0, 0.4)
+		fade_tween.finished.connect(func():
+			if is_instance_valid(dice_roll_overlay) and dice_roll_overlay.modulate.a <= 0.05:
+				dice_roll_overlay.visible = false
+				dice_roll_overlay.modulate.a = 1.0
+		)
+	else:
+		dice_result_label.text = (
+			"[center][b][color=#50fa7b]ĐÃ ĐỔ RA %d BƯỚC[/color][/b]\n"
+			+ "[font_size=13][color=#cccccc]Đang tiến bước...[/color][/font_size][/center]"
+		) % roll_val
+		await get_tree().create_timer(0.45).timeout
+		if not is_instance_valid(self):
+			return
+		var fade_tween: Tween = create_tween()
+		fade_tween.tween_property(dice_roll_overlay, "modulate:a", 0.0, 0.2)
+		await fade_tween.finished
+		if is_instance_valid(dice_roll_overlay):
+			dice_roll_overlay.visible = false
+			dice_roll_overlay.modulate.a = 1.0
 
 
 func _on_map_node_clicked(node_id: StringName) -> void:
@@ -632,32 +725,25 @@ func _on_map_node_clicked(node_id: StringName) -> void:
 	var session: LOOT_REWARD_SESSION = case_flow.loot_session
 	if session.overflow.active:
 		return
+	if _is_rolling_dice:
+		return
 	if session.phase == LOOT_REWARD_SESSION.Phase.BRANCH_SELECTION:
 		var pending: PendingBranchState = session.movement_session.pending_branch
 		if pending != null and pending.available_branch_ids.has(node_id):
+			if dice_roll_overlay != null:
+				dice_roll_overlay.visible = false
+				dice_roll_overlay.modulate.a = 1.0
 			_on_branch_chosen(node_id)
 			return
-	elif session.phase == LOOT_REWARD_SESSION.Phase.ITEM_WINDOW:
-		var movement_player: LOOT_MOVEMENT_PLAYER_STATE = session.movement_session.current_player()
-		if movement_player != null:
-			var current_node: LootNodeDefinition = case_flow.loot_map_definition().find_node(
-				movement_player.current_node_id
-			)
-			if current_node != null and current_node.outgoing_neighbor_ids.has(node_id):
-				case_flow.continue_without_item()
-				_selected_branch_id = &""
-				_handle_loot_result(case_flow.move(node_id))
-				return
-	elif session.phase == LOOT_REWARD_SESSION.Phase.MOVEMENT:
-		var movement_player: LOOT_MOVEMENT_PLAYER_STATE = session.movement_session.current_player()
-		if movement_player != null:
-			var current_node: LootNodeDefinition = case_flow.loot_map_definition().find_node(
-				movement_player.current_node_id
-			)
-			if current_node != null and current_node.outgoing_neighbor_ids.has(node_id):
-				_selected_branch_id = &""
-				_handle_loot_result(case_flow.move(node_id))
-				return
+		else:
+			_show_message("Hãy bấm vào 1 trong các ô cờ vàng trên bản đồ để chọn hướng!", false)
+			return
+	elif (
+		session.phase == LOOT_REWARD_SESSION.Phase.ITEM_WINDOW
+		or session.phase == LOOT_REWARD_SESSION.Phase.MOVEMENT
+	):
+		_show_message("Hãy bấm phím [Z] để đổ xúc xắc trước!", false)
+		return
 
 
 func _on_overflow_discard_pressed() -> void:
@@ -702,6 +788,8 @@ func _handle_loot_result(result: Dictionary) -> void:
 		_loot_activity_lines.append("Bỏ qua vật phẩm; tiến vào bước di chuyển.")
 	elif String(result.get("code", "")) == "ITEM_USED":
 		_loot_activity_lines.append("Đã kích hoạt vật phẩm từ Túi hành trang.")
+	elif String(result.get("code", "")) == "BRANCH_SELECTION_REQUIRED":
+		_loot_activity_lines.append("⚡ Gặp ngã rẽ! Hãy bấm chọn ô cờ vàng trên bản đồ.")
 	elif String(result.get("code", "")) == "OVERFLOW_RESOLVED":
 		_loot_activity_lines.append("Đã xử lý xong Túi đầy; tiếp tục hành trình.")
 	_append_latest_reward_feedback()
@@ -931,6 +1019,10 @@ func _clear_active_match() -> void:
 	case_flow = null
 	_loot_activity_lines.clear()
 	_logged_reward_count = 0
+	_is_rolling_dice = false
+	if dice_roll_overlay != null:
+		dice_roll_overlay.visible = false
+		dice_roll_overlay.modulate.a = 1.0
 
 
 func _refresh_continue_button() -> void:
@@ -1243,14 +1335,6 @@ func _refresh_branch_ui(
 		move_button.visible = true
 	if item_window_panel != null:
 		item_window_panel.visible = session.phase == LOOT_REWARD_SESSION.Phase.ITEM_WINDOW
-
-	if movement_player != null and case_flow != null:
-		var current_node: LootNodeDefinition = case_flow.loot_map_definition().find_node(
-			movement_player.current_node_id
-		)
-		if current_node != null and current_node.outgoing_neighbor_ids.size() > 1:
-			loot_map_view.set_selectable_branches(current_node.outgoing_neighbor_ids)
-			return
 
 	_selected_branch_id = &""
 	loot_map_view.set_selectable_branches([])
@@ -1844,11 +1928,11 @@ func _loot_action_guidance(
 ) -> String:
 	match session.phase:
 		LOOT_REWARD_SESSION.Phase.ITEM_WINDOW:
-			return "Bấm ô cờ trên bản đồ để di chuyển · Hoặc bấm [Z] để đổ xúc xắc."
+			return "Bấm [Z] để đổ xúc xắc · Hoặc dùng vật phẩm trong túi."
 		LOOT_REWARD_SESSION.Phase.MOVEMENT:
 			if movement_player.remaining_moves <= 0:
 				return "Đã dùng hết thể lực di chuyển. Chuẩn bị chuyển lượt."
-			return "Bấm ô cờ vàng trên bản đồ để di chuyển · Hoặc bấm [Z] để đổ xúc xắc."
+			return "Bấm [Z] để đổ xúc xắc di chuyển."
 		LOOT_REWARD_SESSION.Phase.BAG_OVERFLOW_PENDING:
 			return "⚠️ TÚI ĐỒ ĐẦY: Xử lý thay thế hoặc bỏ vật phẩm trước khi đi tiếp."
 		LOOT_REWARD_SESSION.Phase.REWARD_RESOLUTION:

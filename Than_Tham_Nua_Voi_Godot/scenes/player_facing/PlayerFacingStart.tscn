@@ -1145,6 +1145,52 @@ size_flags_horizontal = 3
 bbcode_enabled = true
 autowrap_mode = 2
 
+[node name="DiceRollOverlay" type="CenterContainer" parent="LootPanel"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="DiceCard" type="PanelContainer" parent="LootPanel/DiceRollOverlay"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 180)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_dark_card")
+
+[node name="Column" type="VBoxContainer" parent="LootPanel/DiceRollOverlay/DiceCard"]
+layout_mode = 2
+mouse_filter = 2
+alignment = 1
+theme_override_constants/separation = 8
+
+[node name="DiceIconLabel" type="Label" parent="LootPanel/DiceRollOverlay/DiceCard/Column"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.965, 0.788, 0.361, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.9)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 54
+text = "🎲 6"
+horizontal_alignment = 1
+
+[node name="DiceResultLabel" type="RichTextLabel" parent="LootPanel/DiceRollOverlay/DiceCard/Column"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+bbcode_enabled = true
+fit_content = true
+text = "[center][b][color=#f6c95c]ĐANG ĐỔ XÚC XẮC...[/color][/b][/center]"
+autowrap_mode = 2
+
 [connection signal="pressed" from="SafeMargin/Page/Content/MainMenu/Buttons/NewGame" to="." method="_on_new_game_pressed"]
 [connection signal="pressed" from="SafeMargin/Page/Content/MainMenu/Buttons/Continue" to="." method="_on_continue_pressed"]
 [connection signal="pressed" from="SafeMargin/Page/Content/MainMenu/Buttons/Settings" to="." method="_on_settings_pressed"]

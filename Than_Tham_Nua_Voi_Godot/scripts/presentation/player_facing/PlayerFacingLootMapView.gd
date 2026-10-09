@@ -245,8 +245,22 @@ func _rebuild_binding() -> void:
 		var current: LootMovementPlayerState = movement_session.current_player()
 		active_player_id = current.player_id if current != null else &""
 		for player: LootMovementPlayerState in movement_session.player_states:
-			token_node_by_player[player.player_id] = player.current_node_id
-		if not movement_session.movement_history.is_empty():
+			if (
+				movement_session.pending_branch != null
+				and movement_session.pending_branch.active
+				and movement_session.pending_branch.player_id == player.player_id
+			):
+				token_node_by_player[player.player_id] = movement_session.pending_branch.fork_node_id
+			else:
+				token_node_by_player[player.player_id] = player.current_node_id
+		if (
+			movement_session.pending_branch != null
+			and movement_session.pending_branch.active
+		):
+			highlighted_path.append(movement_session.pending_branch.start_node_id)
+			for node_id: StringName in movement_session.pending_branch.traversed_node_ids:
+				highlighted_path.append(node_id)
+		elif not movement_session.movement_history.is_empty():
 			var action_value: Variant = movement_session.movement_history.back()
 			var action: MovementActionResult = action_value as MovementActionResult
 			if action != null:
@@ -472,9 +486,10 @@ func _draw_tokens() -> void:
 		return
 	var occupants_by_node: Dictionary = {}
 	for player: LootMovementPlayerState in movement_session.player_states:
-		if not occupants_by_node.has(player.current_node_id):
-			occupants_by_node[player.current_node_id] = []
-		var occupants: Array = occupants_by_node[player.current_node_id]
+		var node_id: StringName = StringName(token_node_by_player.get(player.player_id, player.current_node_id))
+		if not occupants_by_node.has(node_id):
+			occupants_by_node[node_id] = []
+		var occupants: Array = occupants_by_node[node_id]
 		occupants.append(player.player_id)
 	var token_colors: Array[Color] = [
 		Color(0.3, 0.8, 1.0), Color(1.0, 0.42, 0.48),
@@ -781,7 +796,14 @@ func focus_active_player() -> void:
 	var player: LootMovementPlayerState = movement_session.current_player()
 	if player == null:
 		return
-	var node: LootNodeDefinition = map_definition.find_node(player.current_node_id)
+	var target_node_id: StringName = player.current_node_id
+	if (
+		movement_session.pending_branch != null
+		and movement_session.pending_branch.active
+		and movement_session.pending_branch.player_id == player.player_id
+	):
+		target_node_id = movement_session.pending_branch.fork_node_id
+	var node: LootNodeDefinition = map_definition.find_node(target_node_id)
 	if node == null:
 		return
 	_camera_center = node.world_position
