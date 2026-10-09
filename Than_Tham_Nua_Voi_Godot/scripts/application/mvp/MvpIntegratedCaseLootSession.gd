@@ -314,7 +314,7 @@ func move(branch_choice: StringName = &"") -> Dictionary:
 	var action: MovementActionResult = _loot_service.perform_movement(
 		loot_session, _map_definition, _movement_rng, _rewards, branch_choice, true
 	)
-	if loot_session.phase == LOOT_REWARD_SESSION.Phase.BRANCH_SELECTION:
+	if loot_session.phase == LootRewardSession.Phase.BRANCH_SELECTION:
 		var fork_id: StringName = (
 			loot_session.movement_session.pending_branch.fork_node_id
 			if loot_session.movement_session != null and loot_session.movement_session.pending_branch != null
