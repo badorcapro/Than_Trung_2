@@ -11,6 +11,8 @@ var orb_count := 0
 var gacha_ticket_count := 0
 var silver_coin_count := 0
 var equipment_exp_material_count := 0
+var relic_exp_material_count := 0
+var stigmata_exp_material_count := 0
 var equipment_exchange_material_count := 0
 # Persistent/shop inventory. Round map loot is owned by RoundLootInventoryState.
 var consumable_inventory: Array[Dictionary] = []
@@ -40,6 +42,8 @@ func to_persistent_dict() -> Dictionary:
 		"merit_progress": merit_progress, "reputation": reputation,
 		"orb_count": orb_count, "gacha_ticket_count": gacha_ticket_count, "silver_coin_count": silver_coin_count,
 		"equipment_exp_material_count": equipment_exp_material_count,
+		"relic_exp_material_count": relic_exp_material_count,
+		"stigmata_exp_material_count": stigmata_exp_material_count,
 		"equipment_exchange_material_count": equipment_exchange_material_count,
 		"consumable_inventory": consumable_inventory.duplicate(true), "equipment_collection": equipment_rows,
 		"relic_instance_id": String(relic_instance_id), "stigmata_a_instance_id": String(stigmata_a_instance_id),
@@ -54,7 +58,10 @@ static func from_persistent_dict(data: Dictionary) -> PlayerPhaseState:
 	state.player_id = StringName(data.get("player_id", "")); state.seat_index = int(data.get("seat_index", 0)); state.character_id = StringName(data.get("character_id", ""))
 	state.merit_progress = float(data.get("merit_progress", 0.0)); state.reputation = int(data.get("reputation", 5))
 	state.orb_count = int(data.get("orb_count", 0)); state.gacha_ticket_count = int(data.get("gacha_ticket_count", 0)); state.silver_coin_count = int(data.get("silver_coin_count", 0))
-	state.equipment_exp_material_count = int(data.get("equipment_exp_material_count", 0)); state.equipment_exchange_material_count = int(data.get("equipment_exchange_material_count", 0))
+	state.equipment_exp_material_count = int(data.get("equipment_exp_material_count", 0))
+	state.relic_exp_material_count = int(data.get("relic_exp_material_count", state.equipment_exp_material_count))
+	state.stigmata_exp_material_count = int(data.get("stigmata_exp_material_count", state.equipment_exp_material_count))
+	state.equipment_exchange_material_count = int(data.get("equipment_exchange_material_count", 0))
 	var inventory_value: Variant = data.get("consumable_inventory", [])
 	if inventory_value is Array:
 		state.consumable_inventory.assign(inventory_value)
@@ -95,6 +102,8 @@ func to_dict() -> Dictionary:
 		"merit_progress": merit_progress, "reputation": reputation,
 		"orb_count": orb_count, "gacha_ticket_count": gacha_ticket_count, "silver_coin_count": silver_coin_count,
 		"equipment_exp_material_count": equipment_exp_material_count,
+		"relic_exp_material_count": relic_exp_material_count,
+		"stigmata_exp_material_count": stigmata_exp_material_count,
 		"equipment_exchange_material_count": equipment_exchange_material_count,
 		"consumable_inventory": consumable_inventory.duplicate(true), "equipment_collection": equipment_rows,
 		"relic_instance_id": String(relic_instance_id), "stigmata_a_instance_id": String(stigmata_a_instance_id),
@@ -111,7 +120,10 @@ static func from_dict(data: Dictionary) -> PlayerPhaseState:
 	state.player_id = StringName(data.get("player_id", "")); state.seat_index = int(data.get("seat_index", 0)); state.character_id = StringName(data.get("character_id", ""))
 	state.merit_progress = float(data.get("merit_progress", 0.0)); state.reputation = int(data.get("reputation", 5))
 	state.orb_count = int(data.get("orb_count", 0)); state.gacha_ticket_count = int(data.get("gacha_ticket_count", 0)); state.silver_coin_count = int(data.get("silver_coin_count", 0))
-	state.equipment_exp_material_count = int(data.get("equipment_exp_material_count", 0)); state.equipment_exchange_material_count = int(data.get("equipment_exchange_material_count", 0))
+	state.equipment_exp_material_count = int(data.get("equipment_exp_material_count", 0))
+	state.relic_exp_material_count = int(data.get("relic_exp_material_count", state.equipment_exp_material_count))
+	state.stigmata_exp_material_count = int(data.get("stigmata_exp_material_count", state.equipment_exp_material_count))
+	state.equipment_exchange_material_count = int(data.get("equipment_exchange_material_count", 0))
 	var inventory_value: Variant = data.get("consumable_inventory", [])
 	if inventory_value is Array:
 		state.consumable_inventory.assign(inventory_value)
@@ -136,6 +148,37 @@ static func from_dict(data: Dictionary) -> PlayerPhaseState:
 	if gacha_value is Dictionary:
 		state.gacha_state = GachaState.from_dict(gacha_value)
 	return state
+
+
+func get_exp_material_count(eq_type: EquipmentEnums.EquipmentType) -> int:
+	if eq_type == EquipmentEnums.EquipmentType.RELIC:
+		if relic_exp_material_count > 0 or stigmata_exp_material_count > 0:
+			return relic_exp_material_count
+		return equipment_exp_material_count
+	else:
+		if relic_exp_material_count > 0 or stigmata_exp_material_count > 0:
+			return stigmata_exp_material_count
+		return equipment_exp_material_count
+
+
+func spend_exp_material(eq_type: EquipmentEnums.EquipmentType, amount: int) -> bool:
+	if amount <= 0:
+		return true
+	if eq_type == EquipmentEnums.EquipmentType.RELIC:
+		if relic_exp_material_count >= amount:
+			relic_exp_material_count -= amount
+			return true
+		elif equipment_exp_material_count >= amount:
+			equipment_exp_material_count -= amount
+			return true
+	else:
+		if stigmata_exp_material_count >= amount:
+			stigmata_exp_material_count -= amount
+			return true
+		elif equipment_exp_material_count >= amount:
+			equipment_exp_material_count -= amount
+			return true
+	return false
 
 
 func semantically_equals(other: PlayerPhaseState) -> bool:

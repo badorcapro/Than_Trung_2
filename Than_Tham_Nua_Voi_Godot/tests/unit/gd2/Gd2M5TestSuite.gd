@@ -20,7 +20,7 @@ func run()->Array[Dictionary]:
 	_add(rows,"Featured conditional split locked 14/22/22/22/20",config.featured_s_split=={"RELIC":14,"A":22,"B":22,"C":22,"OTHER_S":20})
 	_add(rows,"Rate Up pity scope explicitly TEST_ONLY",config.test_only_not_canon_locked)
 	_add(rows,"SS shop currency remains configurable",config.ss_shop_currency_type==&"TEST_ONLY_SS_SHOP_CURRENCY")
-	_test_confirmation(rows);_test_collection_loadout(rows);_test_gold(rows);_test_purple(rows);_test_basic(rows);_test_rate_up(rows);_test_perfect(rows);_test_ss_shop_guards(rows);_test_serialization(rows)
+	_test_confirmation(rows);_test_collection_loadout(rows);_test_gold(rows);_test_purple(rows);_test_equipment_upgrade_specification(rows);_test_basic(rows);_test_rate_up(rows);_test_perfect(rows);_test_ss_shop_guards(rows);_test_serialization(rows)
 	return rows
 
 func _add(rows:Array[Dictionary],name:String,passed:bool)->void:rows.append({"name":name,"passed":passed,"detail":"GĐ2-M5 Equipment/Gacha invariant"})
@@ -120,6 +120,19 @@ func _test_purple(rows:Array[Dictionary])->void:
 	_add(rows,"P5 to P6 cost floors 1.5 times",progression.purple_cost(6,definition)==37)
 	_add(rows,"Purple max 6",target.purple_star_level==6 and progression.upgrade_purple(player,target,target,definition).code==&"PURPLE_MAX")
 	_add(rows,"Purple leaves Gold unchanged",target.gold_star_level==6)
+
+func _test_equipment_upgrade_specification(rows: Array[Dictionary]) -> void:
+	var def := _definition(&"m5_a_relic")
+	_add(rows, "Skill level progression 1..4", def.get_skill_level(0) == 1 and def.get_skill_level(1) == 1 and def.get_skill_level(2) == 2 and def.get_skill_level(3) == 2 and def.get_skill_level(4) == 3 and def.get_skill_level(5) == 3 and def.get_skill_level(6) == 4)
+	var player := _player()
+	player.relic_exp_material_count = 50
+	player.stigmata_exp_material_count = 30
+	_add(rows, "Player separate relic EXP material count", player.get_exp_material_count(EquipmentEnums.EquipmentType.RELIC) == 50)
+	_add(rows, "Player separate stigmata EXP material count", player.get_exp_material_count(EquipmentEnums.EquipmentType.STIGMATA) == 30)
+	_add(rows, "Spend relic EXP leaves stigmata unchanged", player.spend_exp_material(EquipmentEnums.EquipmentType.RELIC, 20) and player.relic_exp_material_count == 30 and player.stigmata_exp_material_count == 30)
+	var inst := equipment.grant(player, def, &"BASIC")
+	var state := progression.progression_state(player, inst, def)
+	_add(rows, "Progression state includes current and next stats", state.has("current_stats") and state.has("next_gold_stats") and state.has("skill_level"))
 func _purple_step_code(player:PlayerPhaseState,target:EquipmentInstance,definition:EquipmentDefinition)->StringName:
 	var duplicate:=equipment.grant(player,definition,&"BASIC");return progression.upgrade_purple(player,target,duplicate,definition).code
 func _purple_diagnostic(player:PlayerPhaseState,target:EquipmentInstance,duplicate:EquipmentInstance,definition:EquipmentDefinition,result:EquipmentActionResult)->String:

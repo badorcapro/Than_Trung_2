@@ -22,6 +22,10 @@ const EQUIPMENT_DEFINITION := preload("res://scripts/domain/equipment/EquipmentD
 const EQUIPMENT_SERVICE := preload(
 	"res://scripts/application/equipment/EquipmentManagementService.gd"
 )
+const FIXTURES := preload("res://scripts/application/loot/Gd2FixtureRepository.gd")
+const EQUIPMENT_PROGRESSION := preload(
+	"res://scripts/application/equipment/EquipmentProgressionService.gd"
+)
 
 enum SidebarTab {
 	DETAILS,
@@ -221,6 +225,12 @@ var _rank_popup_overlay: Control
 var _rank_detail_popup: PanelContainer
 var _finish_phase_modal_overlay: Control
 var _finish_phase_modal: PanelContainer
+var _upgrade_modal_overlay: Control
+var _upgrade_modal: PanelContainer
+var _upgrade_active_instance_id: StringName = &""
+
+var _progression_service: EquipmentProgressionService = EQUIPMENT_PROGRESSION.new()
+var _cached_m5_defs: Array[EquipmentDefinition] = []
 
 var is_post_loot_equipment_phase: bool = false
 
@@ -275,6 +285,9 @@ func _apply_fullscreen_layout() -> void:
 	if _finish_phase_modal_overlay != null:
 		_finish_phase_modal_overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 		_finish_phase_modal_overlay.size = vp_size
+	if _upgrade_modal_overlay != null:
+		_upgrade_modal_overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		_upgrade_modal_overlay.size = vp_size
 
 
 func _build_ui() -> void:
@@ -482,6 +495,7 @@ func _build_ui() -> void:
 	_build_stat_detail_modal()
 	_build_rank_detail_popup()
 	_build_finish_phase_modal()
+	_build_equipment_upgrade_modal()
 
 
 func _on_celestial_draw() -> void:
@@ -810,6 +824,538 @@ func _build_finish_phase_modal() -> void:
 	btn_row.add_child(confirm_btn)
 
 
+func _build_overlaid_star_row(gold_stars: int, purple_stars: int, max_stars: int = 6, font_size: int = 14) -> HBoxContainer:
+	var row := HBoxContainer.new()
+	row.alignment = BoxContainer.ALIGNMENT_CENTER
+	row.add_theme_constant_override("separation", 3)
+	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+
+	var clamped_gold: int = clampi(gold_stars, 0, max_stars)
+	var clamped_purple: int = clampi(purple_stars, 0, max_stars)
+
+	for i in range(1, max_stars + 1):
+		var star_lbl := Label.new()
+		star_lbl.text = "★"
+		star_lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		star_lbl.add_theme_font_size_override("font_size", font_size)
+		if i <= clamped_purple:
+			# Purple Star overlaid on Gold Star (Purple core with gleaming gold outline)
+			star_lbl.add_theme_color_override("font_color", Color(0.86, 0.45, 1.0))
+			star_lbl.add_theme_color_override("font_outline_color", Color(1.0, 0.84, 0.25))
+			star_lbl.add_theme_constant_override("outline_size", 3)
+		elif i <= clamped_gold:
+			# Gold Star
+			star_lbl.add_theme_color_override("font_color", Color(1.0, 0.84, 0.25))
+		else:
+			# Dark/Empty Star slot
+			star_lbl.text = "☆"
+			star_lbl.add_theme_color_override("font_color", Color(0.35, 0.4, 0.52, 0.6))
+		row.add_child(star_lbl)
+	return row
+
+
+func _build_equipment_upgrade_modal() -> void:
+	_upgrade_modal_overlay = Control.new()
+	_upgrade_modal_overlay.visible = false
+	_upgrade_modal_overlay.mouse_filter = Control.MOUSE_FILTER_STOP
+	_upgrade_modal_overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	add_child(_upgrade_modal_overlay)
+
+	var dim_rect := ColorRect.new()
+	dim_rect.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	dim_rect.color = Color(0, 0, 0, 0.75)
+	dim_rect.mouse_filter = Control.MOUSE_FILTER_STOP
+	dim_rect.gui_input.connect(func(ev: InputEvent) -> void:
+		if ev is InputEventMouseButton and ev.pressed:
+			_upgrade_modal_overlay.visible = false
+			refresh()
+	)
+	_upgrade_modal_overlay.add_child(dim_rect)
+
+	var center := CenterContainer.new()
+	center.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	center.mouse_filter = Control.MOUSE_FILTER_PASS
+	_upgrade_modal_overlay.add_child(center)
+
+	_upgrade_modal = PanelContainer.new()
+	_upgrade_modal.custom_minimum_size = Vector2(740, 540)
+	var modal_style := StyleBoxFlat.new()
+	modal_style.bg_color = Color(0.08, 0.1, 0.16, 0.98)
+	modal_style.corner_radius_top_left = 14
+	modal_style.corner_radius_top_right = 14
+	modal_style.corner_radius_bottom_right = 14
+	modal_style.corner_radius_bottom_left = 14
+	modal_style.border_width_left = 2
+	modal_style.border_width_top = 2
+	modal_style.border_width_right = 2
+	modal_style.border_width_bottom = 2
+	modal_style.border_color = Color(1.0, 0.82, 0.3, 0.9)
+	modal_style.shadow_color = Color(0, 0, 0, 0.75)
+	modal_style.shadow_size = 32
+	modal_style.content_margin_left = 24.0
+	modal_style.content_margin_top = 20.0
+	modal_style.content_margin_right = 24.0
+	modal_style.content_margin_bottom = 20.0
+	_upgrade_modal.add_theme_stylebox_override("panel", modal_style)
+	center.add_child(_upgrade_modal)
+
+
+func _show_equipment_upgrade_modal(instance_id: StringName) -> void:
+	_upgrade_active_instance_id = instance_id
+	if _upgrade_modal_overlay != null:
+		_upgrade_modal_overlay.visible = true
+	_render_equipment_upgrade_modal_content()
+
+
+func _render_equipment_upgrade_modal_content() -> void:
+	if _upgrade_modal == null:
+		return
+	for child in _upgrade_modal.get_children():
+		child.queue_free()
+
+	var p_state: PlayerPhaseState = _get_active_player_state()
+	if p_state == null or _upgrade_active_instance_id.is_empty():
+		return
+
+	var target_inst: EquipmentInstance = null
+	for inst: EquipmentInstance in p_state.equipment_collection:
+		if inst.instance_id == _upgrade_active_instance_id:
+			target_inst = inst
+			break
+
+	if target_inst == null:
+		return
+
+	var def: EquipmentDefinition = _find_equipment_def(target_inst.equipment_definition_id)
+	if def == null:
+		return
+
+	var prog: Dictionary = _progression_service.progression_state(p_state, target_inst, def)
+
+	var main_vbox := VBoxContainer.new()
+	main_vbox.add_theme_constant_override("separation", 14)
+	_upgrade_modal.add_child(main_vbox)
+
+	# 1. Header Bar
+	var head_bar := HBoxContainer.new()
+	main_vbox.add_child(head_bar)
+
+	var title_lbl := Label.new()
+	title_lbl.text = "⚡ NÂNG CẤP TRANG BỊ HOÀNG CUNG"
+	title_lbl.add_theme_font_size_override("font_size", 18)
+	title_lbl.add_theme_color_override("font_color", Color(1.0, 0.85, 0.3))
+	title_lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	head_bar.add_child(title_lbl)
+
+	var close_btn := Button.new()
+	close_btn.text = " ✕ "
+	close_btn.flat = true
+	close_btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	close_btn.add_theme_font_size_override("font_size", 16)
+	close_btn.add_theme_color_override("font_color", Color(0.85, 0.88, 0.95))
+	close_btn.pressed.connect(func() -> void:
+		_upgrade_modal_overlay.visible = false
+		refresh()
+	)
+	head_bar.add_child(close_btn)
+
+	# 2. Equipment Summary Panel
+	var sum_panel := PanelContainer.new()
+	var sp_style := StyleBoxFlat.new()
+	sp_style.bg_color = Color(0.05, 0.07, 0.12, 0.9)
+	sp_style.corner_radius_top_left = 10
+	sp_style.corner_radius_top_right = 10
+	sp_style.corner_radius_bottom_right = 10
+	sp_style.corner_radius_bottom_left = 10
+	sp_style.border_width_left = 1
+	sp_style.border_width_top = 1
+	sp_style.border_width_right = 1
+	sp_style.border_width_bottom = 1
+	sp_style.border_color = Color(0.25, 0.35, 0.48, 0.5)
+	sp_style.content_margin_left = 16.0
+	sp_style.content_margin_top = 12.0
+	sp_style.content_margin_right = 16.0
+	sp_style.content_margin_bottom = 12.0
+	sum_panel.add_theme_stylebox_override("panel", sp_style)
+	main_vbox.add_child(sum_panel)
+
+	var sum_hbox := HBoxContainer.new()
+	sum_hbox.add_theme_constant_override("separation", 16)
+	sum_panel.add_child(sum_hbox)
+
+	var icon_box := PanelContainer.new()
+	icon_box.custom_minimum_size = Vector2(56, 56)
+	var ib_st := StyleBoxFlat.new()
+	ib_st.bg_color = Color(0.04, 0.05, 0.09, 0.95)
+	ib_st.corner_radius_top_left = 8
+	ib_st.corner_radius_top_right = 8
+	ib_st.corner_radius_bottom_right = 8
+	ib_st.corner_radius_bottom_left = 8
+	icon_box.add_theme_stylebox_override("panel", ib_st)
+	sum_hbox.add_child(icon_box)
+
+	var icon_center := CenterContainer.new()
+	icon_box.add_child(icon_center)
+	var ic_lbl := Label.new()
+	ic_lbl.text = _get_relic_icon(target_inst)
+	ic_lbl.add_theme_font_size_override("font_size", 28)
+	icon_center.add_child(ic_lbl)
+
+	var name_col := VBoxContainer.new()
+	name_col.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	name_col.add_theme_constant_override("separation", 4)
+	sum_hbox.add_child(name_col)
+
+	var name_row := HBoxContainer.new()
+	name_row.add_theme_constant_override("separation", 8)
+	name_col.add_child(name_row)
+
+	var eq_name_lbl := Label.new()
+	eq_name_lbl.text = _equipment_display_name(target_inst)
+	eq_name_lbl.add_theme_font_size_override("font_size", 16)
+	eq_name_lbl.add_theme_color_override("font_color", Color(1.0, 0.95, 0.85))
+	name_row.add_child(eq_name_lbl)
+
+	var tb: Dictionary = _tier_badge_info(target_inst.tier)
+	var tier_pill := Label.new()
+	tier_pill.text = " [%s] " % String(tb.get("name", "Phẩm A"))
+	tier_pill.add_theme_font_size_override("font_size", 11)
+	tier_pill.add_theme_color_override("font_color", tb.get("color", Color(0.4, 0.75, 1.0)))
+	name_row.add_child(tier_pill)
+
+	# Single Overlaid Star Row (6 stars)
+	var stars_box := _build_overlaid_star_row(target_inst.gold_star_level, target_inst.purple_star_level, 6, 16)
+	name_col.add_child(stars_box)
+
+	# Material Count Pill
+	var exp_col := VBoxContainer.new()
+	exp_col.alignment = BoxContainer.ALIGNMENT_CENTER
+	sum_hbox.add_child(exp_col)
+
+	var exp_lbl := Label.new()
+	var exp_type_name: String = "Kỷ Vật" if def.equipment_type == EQUIPMENT_ENUMS.EquipmentType.RELIC else "Vết Thánh"
+	var current_mat_count: int = p_state.get_exp_material_count(def.equipment_type)
+	exp_lbl.text = "✨ EXP %s: %d" % [exp_type_name, current_mat_count]
+	exp_lbl.add_theme_font_size_override("font_size", 13)
+	exp_lbl.add_theme_color_override("font_color", Color(0.9, 0.95, 1.0))
+	var ep_st := StyleBoxFlat.new()
+	ep_st.bg_color = Color(0.15, 0.22, 0.35, 0.9)
+	ep_st.corner_radius_top_left = 6
+	ep_st.corner_radius_top_right = 6
+	ep_st.corner_radius_bottom_right = 6
+	ep_st.corner_radius_bottom_left = 6
+	ep_st.content_margin_left = 12.0
+	ep_st.content_margin_top = 6.0
+	ep_st.content_margin_right = 12.0
+	ep_st.content_margin_bottom = 6.0
+	exp_lbl.add_theme_stylebox_override("normal", ep_st)
+	exp_col.add_child(exp_lbl)
+
+	# 3. Two Progression Columns (Gold Star Left, Purple Star Right)
+	var cols_box := HBoxContainer.new()
+	cols_box.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	cols_box.add_theme_constant_override("separation", 16)
+	main_vbox.add_child(cols_box)
+
+	# --- COLUMN 1: GOLD STARS (1★ -> 6★) ---
+	var gold_card := PanelContainer.new()
+	gold_card.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	var gc_st := StyleBoxFlat.new()
+	gc_st.bg_color = Color(0.06, 0.08, 0.13, 0.95)
+	gc_st.corner_radius_top_left = 10
+	gc_st.corner_radius_top_right = 10
+	gc_st.corner_radius_bottom_right = 10
+	gc_st.corner_radius_bottom_left = 10
+	gc_st.border_width_left = 1
+	gc_st.border_width_top = 1
+	gc_st.border_width_right = 1
+	gc_st.border_width_bottom = 1
+	gc_st.border_color = Color(1.0, 0.8, 0.25, 0.5)
+	gc_st.content_margin_left = 16.0
+	gc_st.content_margin_top = 14.0
+	gc_st.content_margin_right = 16.0
+	gc_st.content_margin_bottom = 14.0
+	gold_card.add_theme_stylebox_override("panel", gc_st)
+	cols_box.add_child(gold_card)
+
+	var gc_vbox := VBoxContainer.new()
+	gc_vbox.add_theme_constant_override("separation", 10)
+	gold_card.add_child(gc_vbox)
+
+	var gc_head := Label.new()
+	gc_head.text = "⭐ NÂNG SAO VÀNG (1★ ➜ 6★)"
+	gc_head.add_theme_font_size_override("font_size", 14)
+	gc_head.add_theme_color_override("font_color", Color(1.0, 0.85, 0.3))
+	gc_vbox.add_child(gc_head)
+
+	var cur_stats: Dictionary = prog.get("current_stats", {})
+	var next_g_stats: Dictionary = prog.get("next_gold_stats", {})
+	var gold_cost: int = int(prog.get("gold_next_cost", -1))
+	var can_up_gold: bool = bool(prog.get("can_upgrade_gold", false))
+	var gold_is_max: bool = (target_inst.gold_star_level >= 6)
+
+	var g_stat_box := VBoxContainer.new()
+	g_stat_box.add_theme_constant_override("separation", 6)
+	gc_vbox.add_child(g_stat_box)
+
+	var stat_keys: Array[Dictionary] = [
+		{"icon": "💖", "name": "Thể Lực", "key": "stamina"},
+		{"icon": "⚡", "name": "Tốc Độ", "key": "speed"},
+		{"icon": "💪", "name": "Sức Mạnh", "key": "strength"}
+	]
+	for sk: Dictionary in stat_keys:
+		var s_row := HBoxContainer.new()
+		var n_l := Label.new()
+		n_l.text = "%s %s" % [sk["icon"], sk["name"]]
+		n_l.add_theme_font_size_override("font_size", 13)
+		n_l.add_theme_color_override("font_color", Color(0.75, 0.8, 0.88))
+		n_l.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		s_row.add_child(n_l)
+
+		var v_cur: int = int(cur_stats.get(sk["key"], 0))
+		var val_l := Label.new()
+		if not gold_is_max and not next_g_stats.is_empty():
+			var v_nxt: int = int(next_g_stats.get(sk["key"], v_cur))
+			val_l.text = "%d ➜ %d (+%d)" % [v_cur, v_nxt, v_nxt - v_cur]
+			val_l.add_theme_color_override("font_color", Color(0.35, 0.9, 0.45) if v_nxt > v_cur else Color(0.9, 0.92, 0.96))
+		else:
+			val_l.text = "%d (Tối Đa)" % v_cur
+			val_l.add_theme_color_override("font_color", Color(0.9, 0.92, 0.96))
+		val_l.add_theme_font_size_override("font_size", 13)
+		s_row.add_child(val_l)
+		g_stat_box.add_child(s_row)
+
+	var g_sp := Control.new()
+	g_sp.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	gc_vbox.add_child(g_sp)
+
+	var g_cost_lbl := Label.new()
+	if gold_is_max:
+		g_cost_lbl.text = "✔ Đã đạt cấp sao vàng tối đa (6★)"
+		g_cost_lbl.add_theme_color_override("font_color", Color(0.4, 0.88, 0.5))
+	elif current_mat_count >= gold_cost:
+		g_cost_lbl.text = "Chi phí nâng 1 sao: %d EXP (Đủ EXP)" % gold_cost
+		g_cost_lbl.add_theme_color_override("font_color", Color(0.75, 0.9, 1.0))
+	else:
+		g_cost_lbl.text = "Chi phí nâng 1 sao: %d EXP (Thiếu %d EXP)" % [gold_cost, gold_cost - current_mat_count]
+		g_cost_lbl.add_theme_color_override("font_color", Color(1.0, 0.45, 0.45))
+	g_cost_lbl.add_theme_font_size_override("font_size", 12)
+	gc_vbox.add_child(g_cost_lbl)
+
+	var g_btn_row := HBoxContainer.new()
+	g_btn_row.add_theme_constant_override("separation", 10)
+	gc_vbox.add_child(g_btn_row)
+
+	var btn_up_gold_1 := Button.new()
+	btn_up_gold_1.text = "⭐ Nâng 1 Sao"
+	btn_up_gold_1.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	btn_up_gold_1.custom_minimum_size = Vector2(0, 38)
+	btn_up_gold_1.disabled = not can_up_gold
+	btn_up_gold_1.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND if can_up_gold else Control.CURSOR_ARROW
+	var b1_st := StyleBoxFlat.new()
+	b1_st.bg_color = Color(0.85, 0.65, 0.18, 0.95) if can_up_gold else Color(0.18, 0.2, 0.26, 0.8)
+	b1_st.corner_radius_top_left = 6
+	b1_st.corner_radius_top_right = 6
+	b1_st.corner_radius_bottom_right = 6
+	b1_st.corner_radius_bottom_left = 6
+	btn_up_gold_1.add_theme_stylebox_override("normal", b1_st)
+	btn_up_gold_1.add_theme_stylebox_override("hover", b1_st)
+	btn_up_gold_1.add_theme_stylebox_override("disabled", b1_st)
+	btn_up_gold_1.add_theme_color_override("font_color", Color(0.12, 0.12, 0.14) if can_up_gold else Color(0.5, 0.55, 0.65))
+	btn_up_gold_1.pressed.connect(func() -> void:
+		_progression_service.upgrade_gold_one(p_state, target_inst, def)
+		_render_equipment_upgrade_modal_content()
+		refresh()
+	)
+	g_btn_row.add_child(btn_up_gold_1)
+
+	var btn_up_gold_max := Button.new()
+	btn_up_gold_max.text = "🌟 Nâng Tối Đa"
+	btn_up_gold_max.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	btn_up_gold_max.custom_minimum_size = Vector2(0, 38)
+	btn_up_gold_max.disabled = not can_up_gold
+	btn_up_gold_max.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND if can_up_gold else Control.CURSOR_ARROW
+	var bm_st := StyleBoxFlat.new()
+	bm_st.bg_color = Color(0.95, 0.75, 0.2, 0.95) if can_up_gold else Color(0.18, 0.2, 0.26, 0.8)
+	bm_st.corner_radius_top_left = 6
+	bm_st.corner_radius_top_right = 6
+	bm_st.corner_radius_bottom_right = 6
+	bm_st.corner_radius_bottom_left = 6
+	btn_up_gold_max.add_theme_stylebox_override("normal", bm_st)
+	btn_up_gold_max.add_theme_stylebox_override("hover", bm_st)
+	btn_up_gold_max.add_theme_stylebox_override("disabled", bm_st)
+	btn_up_gold_max.add_theme_color_override("font_color", Color(0.12, 0.12, 0.14) if can_up_gold else Color(0.5, 0.55, 0.65))
+	btn_up_gold_max.pressed.connect(func() -> void:
+		_progression_service.upgrade_gold_max(p_state, target_inst, def)
+		_render_equipment_upgrade_modal_content()
+		refresh()
+	)
+	g_btn_row.add_child(btn_up_gold_max)
+
+	# --- COLUMN 2: PURPLE STARS (0★ -> 6★) ---
+	var purp_card := PanelContainer.new()
+	purp_card.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	var pc_st := StyleBoxFlat.new()
+	pc_st.bg_color = Color(0.08, 0.07, 0.14, 0.95)
+	pc_st.corner_radius_top_left = 10
+	pc_st.corner_radius_top_right = 10
+	pc_st.corner_radius_bottom_right = 10
+	pc_st.corner_radius_bottom_left = 10
+	pc_st.border_width_left = 1
+	pc_st.border_width_top = 1
+	pc_st.border_width_right = 1
+	pc_st.border_width_bottom = 1
+	pc_st.border_color = Color(0.85, 0.45, 1.0, 0.6)
+	pc_st.content_margin_left = 16.0
+	pc_st.content_margin_top = 14.0
+	pc_st.content_margin_right = 16.0
+	pc_st.content_margin_bottom = 14.0
+	purp_card.add_theme_stylebox_override("panel", pc_st)
+	cols_box.add_child(purp_card)
+
+	var pc_vbox := VBoxContainer.new()
+	pc_vbox.add_theme_constant_override("separation", 10)
+	purp_card.add_child(pc_vbox)
+
+	var pc_head := Label.new()
+	pc_head.text = "🔮 NÂNG SAO TÍM (0★ ➜ 6★)"
+	pc_head.add_theme_font_size_override("font_size", 14)
+	pc_head.add_theme_color_override("font_color", Color(0.88, 0.55, 1.0))
+	pc_vbox.add_child(pc_head)
+
+	var purple_level: int = target_inst.purple_star_level
+	var next_purple: int = purple_level + 1
+	var purple_is_max: bool = (purple_level >= 6)
+	var purple_cost_val: int = int(prog.get("purple_next_cost", -1))
+	var can_up_purple: bool = bool(prog.get("can_upgrade_purple", false))
+	var dup_ids: Array = prog.get("duplicate_instance_ids", [])
+
+	# Prerequisite feedback
+	var prereq_box := VBoxContainer.new()
+	prereq_box.add_theme_constant_override("separation", 4)
+	pc_vbox.add_child(prereq_box)
+
+	if not purple_is_max:
+		var prereq_ok: bool = (target_inst.gold_star_level >= next_purple)
+		var p_lbl := Label.new()
+		if prereq_ok:
+			p_lbl.text = "✔ Đạt điều kiện: Đã có %d★ Vàng (cần ≥ %d★)" % [target_inst.gold_star_level, next_purple]
+			p_lbl.add_theme_color_override("font_color", Color(0.4, 0.88, 0.5))
+		else:
+			p_lbl.text = "⚠️ Yêu cầu: Cần đạt ít nhất %d★ Vàng (Hiện tại: %d★)" % [next_purple, target_inst.gold_star_level]
+			p_lbl.add_theme_color_override("font_color", Color(1.0, 0.45, 0.45))
+		p_lbl.add_theme_font_size_override("font_size", 12)
+		prereq_box.add_child(p_lbl)
+
+		var dup_lbl := Label.new()
+		if not dup_ids.is_empty():
+			dup_lbl.text = "✔ Bản trùng sẵn sàng: %d bản (chưa trang bị)" % dup_ids.size()
+			dup_lbl.add_theme_color_override("font_color", Color(0.4, 0.88, 0.5))
+		else:
+			dup_lbl.text = "⚠️ Cần 1 bản trùng cùng loại (chưa trang bị) để nâng cấp"
+			dup_lbl.add_theme_color_override("font_color", Color(1.0, 0.45, 0.45))
+		dup_lbl.add_theme_font_size_override("font_size", 12)
+		prereq_box.add_child(dup_lbl)
+
+	# Milestone Effect Description
+	var effect_panel := PanelContainer.new()
+	var ef_st := StyleBoxFlat.new()
+	ef_st.bg_color = Color(0.05, 0.04, 0.08, 0.85)
+	ef_st.corner_radius_top_left = 6
+	ef_st.corner_radius_top_right = 6
+	ef_st.corner_radius_bottom_right = 6
+	ef_st.corner_radius_bottom_left = 6
+	ef_st.content_margin_left = 10.0
+	ef_st.content_margin_top = 8.0
+	ef_st.content_margin_right = 10.0
+	ef_st.content_margin_bottom = 8.0
+	effect_panel.add_theme_stylebox_override("panel", ef_st)
+	pc_vbox.add_child(effect_panel)
+
+	var ef_vbox := VBoxContainer.new()
+	ef_vbox.add_theme_constant_override("separation", 4)
+	effect_panel.add_child(ef_vbox)
+
+	var ef_title := Label.new()
+	ef_title.add_theme_font_size_override("font_size", 12)
+	ef_title.add_theme_color_override("font_color", Color(1.0, 0.85, 0.4))
+	ef_vbox.add_child(ef_title)
+
+	var ef_desc := Label.new()
+	ef_desc.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	ef_desc.add_theme_font_size_override("font_size", 11)
+	ef_desc.add_theme_color_override("font_color", Color(0.85, 0.88, 0.95))
+	ef_vbox.add_child(ef_desc)
+
+	if purple_is_max:
+		ef_title.text = "✔ Đạt mốc Sao Tím tối đa (6★)"
+		ef_desc.text = "Hiệu quả kỹ năng và chỉ số đã đạt đỉnh phong hoàn mỹ."
+	elif next_purple % 2 == 0:
+		var nxt_sk_lvl: int = def.get_skill_level(next_purple)
+		ef_title.text = "✨ Mốc %d★ Tím: Nâng kỹ năng lên Cấp %d" % [next_purple, nxt_sk_lvl]
+		var nxt_desc: String = String(prog.get("next_skill_description", ""))
+		ef_desc.text = nxt_desc if not nxt_desc.is_empty() else "Cường hóa hiệu quả kỹ năng thêm bậc tinh thông mới."
+	else:
+		ef_title.text = "💪 Mốc %d★ Tím: Tăng chỉ số thiết lập riêng" % next_purple
+		var p_bonus: Dictionary = def.get_purple_bonus(next_purple)
+		var b_str: String = ""
+		if not p_bonus.is_empty():
+			for k in p_bonus.keys():
+				var stat_name: String = "Thể Lực" if k == "stamina" else ("Tốc Độ" if k == "speed" else "Sức Mạnh")
+				b_str += "+%d %s   " % [int(p_bonus[k]), stat_name]
+		ef_desc.text = b_str if not b_str.is_empty() else "Gia tăng thuộc tính cơ bản độc quyền của trang bị."
+
+	var p_sp := Control.new()
+	p_sp.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	pc_vbox.add_child(p_sp)
+
+	var p_cost_lbl := Label.new()
+	if purple_is_max:
+		p_cost_lbl.text = "✔ Đã đạt cấp sao tím tối đa (6★)"
+		p_cost_lbl.add_theme_color_override("font_color", Color(0.4, 0.88, 0.5))
+	elif current_mat_count >= purple_cost_val:
+		p_cost_lbl.text = "Chi phí: %d EXP + 1 bản trùng (Đủ EXP)" % purple_cost_val
+		p_cost_lbl.add_theme_color_override("font_color", Color(0.75, 0.9, 1.0))
+	else:
+		p_cost_lbl.text = "Chi phí: %d EXP + 1 bản trùng (Thiếu %d EXP)" % [purple_cost_val, purple_cost_val - current_mat_count]
+		p_cost_lbl.add_theme_color_override("font_color", Color(1.0, 0.45, 0.45))
+	p_cost_lbl.add_theme_font_size_override("font_size", 12)
+	pc_vbox.add_child(p_cost_lbl)
+
+	var btn_up_purple := Button.new()
+	btn_up_purple.text = "🔮 Nâng 1 Sao Tím"
+	btn_up_purple.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	btn_up_purple.custom_minimum_size = Vector2(0, 38)
+	btn_up_purple.disabled = not can_up_purple
+	btn_up_purple.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND if can_up_purple else Control.CURSOR_ARROW
+	var bp_st := StyleBoxFlat.new()
+	bp_st.bg_color = Color(0.72, 0.35, 0.95, 0.95) if can_up_purple else Color(0.18, 0.2, 0.26, 0.8)
+	bp_st.corner_radius_top_left = 6
+	bp_st.corner_radius_top_right = 6
+	bp_st.corner_radius_bottom_right = 6
+	bp_st.corner_radius_bottom_left = 6
+	btn_up_purple.add_theme_stylebox_override("normal", bp_st)
+	btn_up_purple.add_theme_stylebox_override("hover", bp_st)
+	btn_up_purple.add_theme_stylebox_override("disabled", bp_st)
+	btn_up_purple.add_theme_color_override("font_color", Color(1.0, 1.0, 1.0) if can_up_purple else Color(0.5, 0.55, 0.65))
+	btn_up_purple.pressed.connect(func() -> void:
+		if dup_ids.is_empty():
+			return
+		var dup_id: StringName = dup_ids[0] as StringName
+		var dup_inst: EquipmentInstance = null
+		for candidate: EquipmentInstance in p_state.equipment_collection:
+			if candidate.instance_id == dup_id:
+				dup_inst = candidate
+				break
+		if dup_inst == null:
+			return
+		_progression_service.upgrade_purple(p_state, target_inst, dup_inst, def)
+		_render_equipment_upgrade_modal_content()
+		refresh()
+	)
+	pc_vbox.add_child(btn_up_purple)
+
+
 func open_sheet(
 	player_id: StringName,
 	case_flow_session: Variant,
@@ -889,6 +1435,11 @@ func _find_equipment_def(def_id: StringName) -> EquipmentDefinition:
 	if _case_flow_session != null and _case_flow_session.has_method("find_management_equipment_definition"):
 		var d: EquipmentDefinition = _case_flow_session.find_management_equipment_definition(def_id)
 		if d != null:
+			return d
+	if _cached_m5_defs.is_empty():
+		_cached_m5_defs = FIXTURES.load_m5_equipment_definitions()
+	for d: EquipmentDefinition in _cached_m5_defs:
+		if d.equipment_definition_id == def_id:
 			return d
 	return null
 
@@ -1602,6 +2153,24 @@ func _get_relic_data(inst: EquipmentInstance) -> Dictionary:
 			sk_name = "Bàn Thạch Hộ Thể"
 			sk_desc = "Cường hóa tinh thần, gia tăng 10% Thể Lực và ổn định lộ trình di chuyển. Giảm thiểu khả năng rơi vào bẫy hiểm ác trong hoàng cung."
 
+	var def: EquipmentDefinition = _find_equipment_def(inst.equipment_definition_id)
+	var stamina_val: int = base_hp
+	var speed_val: int = base_spd
+	var strength_val: int = base_str
+	if def != null:
+		var stats: Dictionary = def.get_total_stats(inst.gold_star_level, inst.purple_star_level)
+		if stats.has("stamina"):
+			stamina_val = int(stats["stamina"])
+		if stats.has("speed"):
+			speed_val = int(stats["speed"])
+		if stats.has("strength"):
+			strength_val = int(stats["strength"])
+		if not def.skill_name.is_empty():
+			sk_name = def.skill_name
+		var authored_desc: String = def.get_skill_description(inst.purple_star_level)
+		if not authored_desc.is_empty():
+			sk_desc = authored_desc
+
 	var icon_sym: String = _get_relic_icon(inst)
 
 	return {
@@ -1616,12 +2185,12 @@ func _get_relic_data(inst: EquipmentInstance) -> Dictionary:
 		"max_level": 80,
 		"superimposition": super_val,
 		"superimposition_roman": roman,
-		"stamina": base_hp,
-		"speed": base_spd,
-		"strength": base_str,
-		"hp": base_hp,
-		"atk": base_spd,
-		"def": base_str,
+		"stamina": stamina_val,
+		"speed": speed_val,
+		"strength": strength_val,
+		"hp": stamina_val,
+		"atk": speed_val,
+		"def": strength_val,
 		"skill_name": sk_name,
 		"skill_desc": sk_desc,
 		"category": "Thần Thám Hoàng Gia",
@@ -1753,15 +2322,8 @@ func _render_center_relic_showcase() -> void:
 	card_bot_row.add_theme_constant_override("separation", 8)
 	inner_vbox.add_child(card_bot_row)
 
-	var star_count: int = 5 if relic_inst.tier == EQUIPMENT_ENUMS.Tier.SS else (4 if relic_inst.tier == EQUIPMENT_ENUMS.Tier.S else 3)
-	var star_str: String = ""
-	for _si in range(star_count):
-		star_str += "★"
-	var stars_lbl := Label.new()
-	stars_lbl.text = star_str
-	stars_lbl.add_theme_font_size_override("font_size", 18)
-	stars_lbl.add_theme_color_override("font_color", Color(1.0, 0.84, 0.25))
-	card_bot_row.add_child(stars_lbl)
+	var stars_box := _build_overlaid_star_row(relic_inst.gold_star_level, relic_inst.purple_star_level, 6, 18)
+	card_bot_row.add_child(stars_box)
 
 	# Bottom Reflection Pad
 	var reflection_box := Control.new()
@@ -1949,16 +2511,8 @@ func _render_center_relic_grid() -> void:
 		lvl_lbl.add_theme_color_override("font_color", Color(0.9, 0.94, 0.98))
 		card_inner.add_child(lvl_lbl)
 
-		var star_s: String = ""
-		var s_cnt: int = 5 if inst.tier == EQUIPMENT_ENUMS.Tier.SS else (4 if inst.tier == EQUIPMENT_ENUMS.Tier.S else 3)
-		for _s_i in range(s_cnt):
-			star_s += "★"
-		var st_lbl := Label.new()
-		st_lbl.text = star_s
-		st_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		st_lbl.add_theme_font_size_override("font_size", 10)
-		st_lbl.add_theme_color_override("font_color", Color(1.0, 0.82, 0.25))
-		card_inner.add_child(st_lbl)
+		var st_box := _build_overlaid_star_row(inst.gold_star_level, inst.purple_star_level, 6, 11)
+		card_inner.add_child(st_box)
 
 		var target_id: StringName = inst.instance_id
 		card_panel.gui_input.connect(func(ev: InputEvent) -> void:
@@ -2042,30 +2596,19 @@ func _render_tab_relics_showcase() -> void:
 	h_vbox.add_child(path_lbl)
 
 	var stars_row := HBoxContainer.new()
-	var star_count: int = 5 if relic_inst.tier == EQUIPMENT_ENUMS.Tier.SS else (4 if relic_inst.tier == EQUIPMENT_ENUMS.Tier.S else 3)
-	var star_str: String = ""
-	for _si in range(star_count):
-		star_str += "★ "
-	var s_lbl := Label.new()
-	s_lbl.text = star_str
-	s_lbl.add_theme_font_size_override("font_size", 16)
-	s_lbl.add_theme_color_override("font_color", Color(1.0, 0.84, 0.25))
-	stars_row.add_child(s_lbl)
+	stars_row.alignment = BoxContainer.ALIGNMENT_BEGIN
+	stars_row.add_theme_constant_override("separation", 8)
+	var st_box := _build_overlaid_star_row(relic_inst.gold_star_level, relic_inst.purple_star_level, 6, 16)
+	stars_row.add_child(st_box)
 	h_vbox.add_child(stars_row)
 
 	var lvl_row := HBoxContainer.new()
 	var lvl_lbl := Label.new()
-	lvl_lbl.text = "Lv. %d / 80" % r_data["level"]
+	lvl_lbl.text = "Cấp %d / 6★" % relic_inst.gold_star_level
 	lvl_lbl.add_theme_font_size_override("font_size", 15)
 	lvl_lbl.add_theme_color_override("font_color", Color(0.96, 0.96, 0.98))
 	lvl_lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	lvl_row.add_child(lvl_lbl)
-
-	var star_badges := Label.new()
-	star_badges.text = "⭐ %d · ✦ %d" % [r_data["gold_star"], r_data["purple_star"]]
-	star_badges.add_theme_font_size_override("font_size", 12)
-	star_badges.add_theme_color_override("font_color", Color(0.75, 0.82, 0.9))
-	lvl_row.add_child(star_badges)
 	h_vbox.add_child(lvl_row)
 
 	# 2. Stats Box (Thể Lực, Tốc Độ, Sức Mạnh)
@@ -2209,6 +2752,10 @@ func _render_tab_relics_showcase() -> void:
 	upgrade_btn.add_theme_stylebox_override("hover", up_style)
 	upgrade_btn.add_theme_stylebox_override("pressed", up_style)
 	upgrade_btn.add_theme_color_override("font_color", Color(0.12, 0.12, 0.14))
+	var relic_target_id: StringName = relic_inst.instance_id
+	upgrade_btn.pressed.connect(func() -> void:
+		_show_equipment_upgrade_modal(relic_target_id)
+	)
 	btn_row.add_child(upgrade_btn)
 
 
@@ -2277,11 +2824,9 @@ func _render_tab_relics_switch_comparison() -> void:
 	name_lbl.add_theme_color_override("font_color", Color(1.0, 0.92, 0.75))
 	h_vbox.add_child(name_lbl)
 
-	var lvl_lbl := Label.new()
-	lvl_lbl.text = "Lv. %d / 20" % sel_data["level"] if sel_inst != null else "Lv. 0 / 20"
-	lvl_lbl.add_theme_font_size_override("font_size", 14)
-	lvl_lbl.add_theme_color_override("font_color", Color(0.9, 0.92, 0.96))
-	h_vbox.add_child(lvl_lbl)
+	if sel_inst != null:
+		var st_box := _build_overlaid_star_row(sel_inst.gold_star_level, sel_inst.purple_star_level, 6, 14)
+		h_vbox.add_child(st_box)
 
 	# 2. Stat Comparison Box (Thể Lực, Tốc Độ, Sức Mạnh with deltas)
 	var stats_panel := PanelContainer.new()
@@ -2453,6 +2998,28 @@ func _render_tab_relics_switch_comparison() -> void:
 		equip_btn.disabled = true
 	btn_row.add_child(equip_btn)
 
+	if sel_inst != null:
+		var up_btn := Button.new()
+		up_btn.text = "⚡ Nâng Cấp"
+		up_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		up_btn.custom_minimum_size = Vector2(0, 42)
+		up_btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+		var ub_st := StyleBoxFlat.new()
+		ub_st.bg_color = Color(0.25, 0.35, 0.55, 0.95)
+		ub_st.corner_radius_top_left = 8
+		ub_st.corner_radius_top_right = 8
+		ub_st.corner_radius_bottom_right = 8
+		ub_st.corner_radius_bottom_left = 8
+		up_btn.add_theme_stylebox_override("normal", ub_st)
+		up_btn.add_theme_stylebox_override("hover", ub_st)
+		up_btn.add_theme_stylebox_override("pressed", ub_st)
+		up_btn.add_theme_color_override("font_color", Color(0.95, 0.96, 1.0))
+		var sel_up_id: StringName = sel_inst.instance_id
+		up_btn.pressed.connect(func() -> void:
+			_show_equipment_upgrade_modal(sel_up_id)
+		)
+		btn_row.add_child(up_btn)
+
 
 # -----------------------------------------------------------------------------
 # TAB 3: VẾT THÁNH (Stigmata)
@@ -2566,14 +3133,38 @@ func _render_tab_stigmata() -> void:
 			name_l.add_theme_color_override("font_color", Color(0.9, 0.95, 1.0))
 			eq_info.add_child(name_l)
 
+			var sub_row := HBoxContainer.new()
+			sub_row.add_theme_constant_override("separation", 8)
 			var tb := _tier_badge_info(eq_inst.tier)
 			var sub_l := Label.new()
-			sub_l.text = "[%s]  ⭐ Cấp %d  |  🔮 Cấp %d" % [
-				tb.get("name", "Phẩm A"), eq_inst.gold_star_level, eq_inst.purple_star_level
-			]
+			sub_l.text = "[%s]" % String(tb.get("name", "Phẩm A"))
 			sub_l.add_theme_font_size_override("font_size", 11)
 			sub_l.add_theme_color_override("font_color", tb.get("color", Color(0.65, 0.75, 0.85)))
-			eq_info.add_child(sub_l)
+			sub_row.add_child(sub_l)
+
+			var st_row := _build_overlaid_star_row(eq_inst.gold_star_level, eq_inst.purple_star_level, 6, 12)
+			sub_row.add_child(st_row)
+			eq_info.add_child(sub_row)
+
+			var up_btn := Button.new()
+			up_btn.text = "⚡ Nâng Cấp"
+			up_btn.custom_minimum_size = Vector2(90, 30)
+			up_btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+			var up_st := StyleBoxFlat.new()
+			up_st.bg_color = Color(0.85, 0.65, 0.18, 0.95)
+			up_st.corner_radius_top_left = 6
+			up_st.corner_radius_top_right = 6
+			up_st.corner_radius_bottom_right = 6
+			up_st.corner_radius_bottom_left = 6
+			up_btn.add_theme_stylebox_override("normal", up_st)
+			up_btn.add_theme_stylebox_override("hover", up_st)
+			up_btn.add_theme_stylebox_override("pressed", up_st)
+			up_btn.add_theme_color_override("font_color", Color(0.12, 0.12, 0.14))
+			var eq_target_id: StringName = eq_inst.instance_id
+			up_btn.pressed.connect(func() -> void:
+				_show_equipment_upgrade_modal(eq_target_id)
+			)
+			eq_row.add_child(up_btn)
 
 			var un_btn := Button.new()
 			un_btn.text = "✕ Tháo Ra"
@@ -2657,6 +3248,25 @@ func _render_tab_stigmata() -> void:
 						_equip_item(target_inst_id, target_slot_const)
 					)
 					item_row.add_child(eq_btn)
+
+					var item_up_btn := Button.new()
+					item_up_btn.text = "⚡"
+					item_up_btn.custom_minimum_size = Vector2(32, 26)
+					item_up_btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+					var iub_style := StyleBoxFlat.new()
+					iub_style.bg_color = Color(0.85, 0.65, 0.18, 0.95)
+					iub_style.corner_radius_top_left = 6
+					iub_style.corner_radius_top_right = 6
+					iub_style.corner_radius_bottom_right = 6
+					iub_style.corner_radius_bottom_left = 6
+					item_up_btn.add_theme_stylebox_override("normal", iub_style)
+					item_up_btn.add_theme_stylebox_override("hover", iub_style)
+					item_up_btn.add_theme_stylebox_override("pressed", iub_style)
+					item_up_btn.add_theme_color_override("font_color", Color(0.12, 0.12, 0.14))
+					item_up_btn.pressed.connect(func() -> void:
+						_show_equipment_upgrade_modal(target_inst_id)
+					)
+					item_row.add_child(item_up_btn)
 
 
 # -----------------------------------------------------------------------------
@@ -3009,6 +3619,11 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo:
 		var key := event as InputEventKey
 		if key.keycode == KEY_ESCAPE or key.keycode == KEY_C:
+			if _upgrade_modal_overlay != null and _upgrade_modal_overlay.visible:
+				_upgrade_modal_overlay.visible = false
+				refresh()
+				get_viewport().set_input_as_handled()
+				return
 			if _finish_phase_modal_overlay != null and _finish_phase_modal_overlay.visible:
 				_finish_phase_modal_overlay.visible = false
 				get_viewport().set_input_as_handled()

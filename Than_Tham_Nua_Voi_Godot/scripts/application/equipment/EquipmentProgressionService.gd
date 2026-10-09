@@ -38,12 +38,13 @@ func progression_state(
 		if purple_next_level <= PURPLE_CAP
 		else -1
 	)
+	var available_exp: int = player.get_exp_material_count(definition.equipment_type)
 	var gold_code: StringName = &"AVAILABLE"
 	if instance.gold_star_level >= GOLD_CAP:
 		gold_code = &"GOLD_MAX"
 	elif gold_cost < 0:
 		gold_code = &"COST_MISSING"
-	elif player.equipment_exp_material_count < gold_cost:
+	elif available_exp < gold_cost:
 		gold_code = &"INSUFFICIENT_EXP"
 	var purple_code: StringName = &"AVAILABLE"
 	if purple_next_level > PURPLE_CAP:
@@ -54,7 +55,7 @@ func progression_state(
 		purple_code = &"DUPLICATE_REQUIRED"
 	elif next_purple_cost < 0:
 		purple_code = &"PURPLE_COST_INVALID"
-	elif player.equipment_exp_material_count < next_purple_cost:
+	elif available_exp < next_purple_cost:
 		purple_code = &"INSUFFICIENT_EXP"
 	return {
 		"success": true,
@@ -74,53 +75,90 @@ func progression_state(
 		"purple_code": purple_code,
 		"can_upgrade_purple": purple_code == &"AVAILABLE",
 		"duplicate_instance_ids": duplicate_ids,
-		"exp_material_count": player.equipment_exp_material_count,
+		"exp_material_count": available_exp,
+		"relic_exp_material_count": player.relic_exp_material_count,
+		"stigmata_exp_material_count": player.stigmata_exp_material_count,
+		"current_stats": definition.get_total_stats(instance.gold_star_level, instance.purple_star_level),
+		"next_gold_stats": definition.get_total_stats(instance.gold_star_level + 1, instance.purple_star_level) if instance.gold_star_level < GOLD_CAP else {},
+		"next_purple_stats": definition.get_total_stats(instance.gold_star_level, purple_next_level) if purple_next_level <= PURPLE_CAP else {},
+		"skill_name": definition.skill_name,
+		"skill_level": definition.get_skill_level(instance.purple_star_level),
+		"skill_description": definition.get_skill_description(instance.purple_star_level),
+		"next_skill_description": definition.get_skill_description(purple_next_level) if purple_next_level <= PURPLE_CAP else "",
 		"is_equipped": _is_equipped(player, instance.instance_id),
 	}
 
-func upgrade_gold_one(player:PlayerPhaseState,instance:EquipmentInstance,definition:EquipmentDefinition,session:EquipmentManagementSession=null)->EquipmentActionResult:
-	if player==null or instance==null or definition==null:return EquipmentActionResult.make(false,&"INVALID_TARGET")
-	if instance.owner_player_id!=player.player_id or player.equipment_collection.find(instance)<0:return EquipmentActionResult.make(false,&"TARGET_NOT_OWNED",instance.instance_id)
-	if instance.gold_star_level>=GOLD_CAP:return EquipmentActionResult.make(false,&"GOLD_MAX",instance.instance_id)
-	var cost:int=definition.gold_cost(instance.gold_star_level)
-	if cost<0:return EquipmentActionResult.make(false,&"COST_MISSING",instance.instance_id)
-	if player.equipment_exp_material_count<cost:return EquipmentActionResult.make(false,&"INSUFFICIENT_EXP",instance.instance_id)
-	player.equipment_exp_material_count-=cost;instance.gold_star_level+=1
-	var result:=EquipmentActionResult.make(true,&"GOLD_UPGRADED",instance.instance_id);result.material_delta=-cost
-	if session!=null:session.progression_history.append({"code":String(result.code),"player_id":String(player.player_id),"instance_id":String(instance.instance_id),"gold_level":instance.gold_star_level,"material_delta":result.material_delta})
+func upgrade_gold_one(player: PlayerPhaseState, instance: EquipmentInstance, definition: EquipmentDefinition, session: EquipmentManagementSession = null) -> EquipmentActionResult:
+	if player == null or instance == null or definition == null:
+		return EquipmentActionResult.make(false, &"INVALID_TARGET")
+	if instance.owner_player_id != player.player_id or player.equipment_collection.find(instance) < 0:
+		return EquipmentActionResult.make(false, &"TARGET_NOT_OWNED", instance.instance_id)
+	if instance.gold_star_level >= GOLD_CAP:
+		return EquipmentActionResult.make(false, &"GOLD_MAX", instance.instance_id)
+	var cost: int = definition.gold_cost(instance.gold_star_level)
+	if cost < 0:
+		return EquipmentActionResult.make(false, &"COST_MISSING", instance.instance_id)
+	if player.get_exp_material_count(definition.equipment_type) < cost:
+		return EquipmentActionResult.make(false, &"INSUFFICIENT_EXP", instance.instance_id)
+	player.spend_exp_material(definition.equipment_type, cost)
+	instance.gold_star_level += 1
+	var result := EquipmentActionResult.make(true, &"GOLD_UPGRADED", instance.instance_id)
+	result.material_delta = -cost
+	if session != null:
+		session.progression_history.append({"code": String(result.code), "player_id": String(player.player_id), "instance_id": String(instance.instance_id), "gold_level": instance.gold_star_level, "material_delta": result.material_delta})
 	return result
 
-func upgrade_gold_max(player:PlayerPhaseState,instance:EquipmentInstance,definition:EquipmentDefinition,session:EquipmentManagementSession=null)->int:
-	var levels:=0
-	while instance.gold_star_level<GOLD_CAP:
-		var result:=upgrade_gold_one(player,instance,definition,session)
-		if not result.success:break
-		levels+=1
+func upgrade_gold_max(player: PlayerPhaseState, instance: EquipmentInstance, definition: EquipmentDefinition, session: EquipmentManagementSession = null) -> int:
+	var levels := 0
+	while instance.gold_star_level < GOLD_CAP:
+		var result := upgrade_gold_one(player, instance, definition, session)
+		if not result.success:
+			break
+		levels += 1
 	return levels
 
-func purple_cost(target_level:int,definition:EquipmentDefinition)->int:
-	if target_level<1 or target_level>PURPLE_CAP:return -1
-	if target_level<=5:return int(floor(float(definition.gold_cost(target_level))*0.5))
-	var p5_cost:int=int(floor(float(definition.gold_cost(5))*0.5));return int(floor(float(p5_cost)*1.5))
+func purple_cost(target_level: int, definition: EquipmentDefinition) -> int:
+	if target_level < 1 or target_level > PURPLE_CAP:
+		return -1
+	if target_level <= 5:
+		return int(floor(float(definition.gold_cost(target_level)) * 0.5))
+	var p5_cost: int = int(floor(float(definition.gold_cost(5)) * 0.5))
+	return int(floor(float(p5_cost) * 1.5))
 
-func upgrade_purple(player:PlayerPhaseState,target:EquipmentInstance,duplicate:EquipmentInstance,definition:EquipmentDefinition,session:EquipmentManagementSession=null)->EquipmentActionResult:
-	if player==null or target==null or duplicate==null or definition==null:return EquipmentActionResult.make(false,&"INVALID_TARGET")
-	var next_level:int=target.purple_star_level+1
-	if next_level>PURPLE_CAP:return EquipmentActionResult.make(false,&"PURPLE_MAX",target.instance_id)
-	if target.gold_star_level<next_level:return EquipmentActionResult.make(false,&"GOLD_PREREQUISITE",target.instance_id)
-	if target.owner_player_id!=player.player_id or player.equipment_collection.find(target)<0:return EquipmentActionResult.make(false,&"TARGET_NOT_OWNED",target.instance_id)
-	if duplicate==target or duplicate.instance_id==target.instance_id:return EquipmentActionResult.make(false,&"TARGET_IS_DUPLICATE",target.instance_id)
-	if duplicate.equipment_definition_id!=target.equipment_definition_id:return EquipmentActionResult.make(false,&"WRONG_DUPLICATE",target.instance_id)
-	if duplicate.owner_player_id!=player.player_id:return EquipmentActionResult.make(false,&"DUPLICATE_NOT_OWNED",target.instance_id)
-	if _is_equipped(player,duplicate.instance_id):return EquipmentActionResult.make(false,&"DUPLICATE_EQUIPPED",target.instance_id)
-	var duplicate_index:int=player.equipment_collection.find(duplicate)
-	if duplicate_index<0:return EquipmentActionResult.make(false,&"DUPLICATE_NOT_OWNED",target.instance_id)
-	var cost:int=purple_cost(next_level,definition)
-	if cost<0:return EquipmentActionResult.make(false,&"PURPLE_COST_INVALID",target.instance_id)
-	if player.equipment_exp_material_count<cost:return EquipmentActionResult.make(false,&"INSUFFICIENT_EXP",target.instance_id)
-	player.equipment_exp_material_count-=cost;player.equipment_collection.remove_at(duplicate_index);target.purple_star_level=next_level
-	var result:=EquipmentActionResult.make(true,&"PURPLE_SKILL_MILESTONE" if next_level%2==0 else &"PURPLE_STAT_MILESTONE",target.instance_id);result.material_delta=-cost;result.duplicate_consumed_id=duplicate.instance_id
-	if session!=null:session.progression_history.append({"code":String(result.code),"player_id":String(player.player_id),"instance_id":String(target.instance_id),"purple_level":target.purple_star_level,"duplicate_consumed_id":String(duplicate.instance_id),"material_delta":result.material_delta})
+func upgrade_purple(player: PlayerPhaseState, target: EquipmentInstance, duplicate: EquipmentInstance, definition: EquipmentDefinition, session: EquipmentManagementSession = null) -> EquipmentActionResult:
+	if player == null or target == null or duplicate == null or definition == null:
+		return EquipmentActionResult.make(false, &"INVALID_TARGET")
+	var next_level: int = target.purple_star_level + 1
+	if next_level > PURPLE_CAP:
+		return EquipmentActionResult.make(false, &"PURPLE_MAX", target.instance_id)
+	if target.gold_star_level < next_level:
+		return EquipmentActionResult.make(false, &"GOLD_PREREQUISITE", target.instance_id)
+	if target.owner_player_id != player.player_id or player.equipment_collection.find(target) < 0:
+		return EquipmentActionResult.make(false, &"TARGET_NOT_OWNED", target.instance_id)
+	if duplicate == target or duplicate.instance_id == target.instance_id:
+		return EquipmentActionResult.make(false, &"TARGET_IS_DUPLICATE", target.instance_id)
+	if duplicate.equipment_definition_id != target.equipment_definition_id:
+		return EquipmentActionResult.make(false, &"WRONG_DUPLICATE", target.instance_id)
+	if duplicate.owner_player_id != player.player_id:
+		return EquipmentActionResult.make(false, &"DUPLICATE_NOT_OWNED", target.instance_id)
+	if _is_equipped(player, duplicate.instance_id):
+		return EquipmentActionResult.make(false, &"DUPLICATE_EQUIPPED", target.instance_id)
+	var duplicate_index: int = player.equipment_collection.find(duplicate)
+	if duplicate_index < 0:
+		return EquipmentActionResult.make(false, &"DUPLICATE_NOT_OWNED", target.instance_id)
+	var cost: int = purple_cost(next_level, definition)
+	if cost < 0:
+		return EquipmentActionResult.make(false, &"PURPLE_COST_INVALID", target.instance_id)
+	if player.get_exp_material_count(definition.equipment_type) < cost:
+		return EquipmentActionResult.make(false, &"INSUFFICIENT_EXP", target.instance_id)
+	player.spend_exp_material(definition.equipment_type, cost)
+	player.equipment_collection.remove_at(duplicate_index)
+	target.purple_star_level = next_level
+	var result := EquipmentActionResult.make(true, &"PURPLE_SKILL_MILESTONE" if next_level % 2 == 0 else &"PURPLE_STAT_MILESTONE", target.instance_id)
+	result.material_delta = -cost
+	result.duplicate_consumed_id = duplicate.instance_id
+	if session != null:
+		session.progression_history.append({"code": String(result.code), "player_id": String(player.player_id), "instance_id": String(target.instance_id), "purple_level": target.purple_star_level, "duplicate_consumed_id": String(duplicate.instance_id), "material_delta": result.material_delta})
 	return result
 
 
