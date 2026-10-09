@@ -914,8 +914,9 @@ func _handle_loot_result(result: Dictionary) -> void:
 		var started: Dictionary = case_flow.begin_loot_end_confirmation()
 		if bool(started.get("success", false)):
 			if case_flow.equipment_session != null:
-				for pid: StringName in case_flow.equipment_session.remaining_confirmation_player_ids.duplicate():
-					case_flow.confirm_loot_end(pid)
+				for pid: StringName in case_flow.equipment_session.player_order.duplicate():
+					if not case_flow.equipment_session.confirmed_player_ids.has(pid):
+						case_flow.confirm_loot_end(pid)
 			setup.mark_equipment_management()
 			_show_phase(setup.phase)
 			_open_character_detail_sheet(&"", true)
