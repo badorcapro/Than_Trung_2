@@ -43,6 +43,9 @@ const PLAYER_FACING_AUTOSAVE_SERVICE := preload(
 	"res://scripts/application/player_facing/PlayerFacingAutosaveService.gd"
 )
 const MVP_MATCH_STATE := preload("res://scripts/domain/mvp/MvpMatchState.gd")
+const CHARACTER_DETAIL_SHEET := preload(
+	"res://scripts/presentation/player_facing/CharacterDetailSheet.gd"
+)
 
 var setup: SETUP_SESSION = SETUP_SESSION.new()
 var case_flow: CASE_FLOW_SESSION
@@ -57,6 +60,9 @@ var _pummel_slot_style: StyleBoxFlat
 var _hotbar_items: Array[Dictionary] = []
 var _item_tray_open: bool = false
 var _pending_replace_index: int = -1
+var _character_sheet: CharacterDetailSheet = null
+var _card_held_player_id: StringName = &""
+var _card_hold_token: int = 0
 var _autosave_service: PLAYER_FACING_AUTOSAVE_SERVICE = (
 	PLAYER_FACING_AUTOSAVE_SERVICE.new()
 )
@@ -184,6 +190,9 @@ func _ready() -> void:
 	_build_character_buttons()
 	_build_equipment_slot_options()
 	_refresh_continue_button()
+	_character_sheet = CHARACTER_DETAIL_SHEET.new()
+	_character_sheet.visible = false
+	add_child(_character_sheet)
 	_show_phase(SETUP_SESSION.Phase.MAIN_MENU)
 
 
@@ -243,9 +252,18 @@ func _input(event: InputEvent) -> void:
 		AppFlow.go_to_debug_home()
 		get_viewport().set_input_as_handled()
 		return
+	if _character_sheet != null and _character_sheet.visible:
+		if key_event.keycode == KEY_ESCAPE or key_event.keycode == KEY_C:
+			_character_sheet.visible = false
+			get_viewport().set_input_as_handled()
+			return
 	if setup.phase == SETUP_SESSION.Phase.LOOT_ACTIVE and case_flow != null and case_flow.loot_session != null:
 		var focus: Control = get_viewport().gui_get_focus_owner()
 		if focus is LineEdit or focus is TextEdit:
+			return
+		if key_event.keycode == KEY_C:
+			_toggle_character_detail_sheet()
+			get_viewport().set_input_as_handled()
 			return
 		if key_event.keycode == KEY_TAB or key_event.keycode == KEY_I:
 			_toggle_loot_detail_panel()
@@ -1446,6 +1464,7 @@ func _refresh_pummel_player_cards(session: LOOT_REWARD_SESSION) -> void:
 		card.add_theme_stylebox_override("panel", _pummel_style_active if is_active else _pummel_style_normal)
 		card.mouse_filter = Control.MOUSE_FILTER_STOP
 		card.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+		card.tooltip_text = "Đè giữ chuột để xem Hồ sơ Trạng thái (Honkai: Star Rail)\nBấm chuột trái để xem vị trí trên bản đồ"
 		card.set_meta("player_id", player_id)
 		if not card.has_meta("click_connected"):
 			card.set_meta("click_connected", true)
@@ -1502,11 +1521,57 @@ func _refresh_pummel_player_cards(session: LOOT_REWARD_SESSION) -> void:
 
 func _on_pummel_player_card_gui_input(event: InputEvent, card: Control) -> void:
 	var mouse_event := event as InputEventMouseButton
-	if mouse_event != null and mouse_event.pressed and mouse_event.button_index == MOUSE_BUTTON_LEFT:
-		var target_player_id: StringName = StringName(card.get_meta("player_id", &""))
-		if not target_player_id.is_empty() and loot_map_view != null:
-			loot_map_view.focus_player(target_player_id)
+	if mouse_event == null:
+		return
+	var target_player_id: StringName = StringName(card.get_meta("player_id", &""))
+	if target_player_id.is_empty():
+		return
+
+	if mouse_event.pressed:
+		if mouse_event.button_index == MOUSE_BUTTON_RIGHT:
+			_open_character_detail_sheet(target_player_id)
 			get_viewport().set_input_as_handled()
+			return
+		elif mouse_event.button_index == MOUSE_BUTTON_LEFT:
+			_card_held_player_id = target_player_id
+			_card_hold_token += 1
+			var current_token: int = _card_hold_token
+			get_tree().create_timer(0.32).timeout.connect(func() -> void:
+				if _card_held_player_id == target_player_id and _card_hold_token == current_token:
+					_card_held_player_id = &""
+					_open_character_detail_sheet(target_player_id)
+			)
+			get_viewport().set_input_as_handled()
+			return
+	else:
+		if mouse_event.button_index == MOUSE_BUTTON_LEFT:
+			if _card_held_player_id == target_player_id:
+				_card_held_player_id = &""
+				_card_hold_token += 1
+				if loot_map_view != null:
+					loot_map_view.focus_player(target_player_id)
+			get_viewport().set_input_as_handled()
+			return
+
+
+func _open_character_detail_sheet(player_id: StringName = &"") -> void:
+	if _character_sheet == null:
+		return
+	var target_id: StringName = player_id
+	if target_id.is_empty():
+		if case_flow != null and case_flow.loot_session != null and case_flow.loot_session.movement_session != null:
+			var curr: LootMovementPlayerState = case_flow.loot_session.movement_session.current_player()
+			if curr != null:
+				target_id = curr.player_id
+	_character_sheet.open_sheet(target_id, case_flow, setup)
+
+
+func _toggle_character_detail_sheet() -> void:
+	if _character_sheet != null and _character_sheet.visible:
+		_character_sheet.visible = false
+	else:
+		_open_character_detail_sheet(&"")
+
 
 
 func _make_children_mouse_pass(parent: Node) -> void:
@@ -2505,6 +2570,8 @@ func _show_phase(next_phase: int) -> void:
 	next_case_panel.visible = next_phase == SETUP_SESSION.Phase.NEXT_CASE_SELECTION
 	settings_panel.visible = next_phase == SETUP_SESSION.Phase.SETTINGS
 	match_results_panel.visible = next_phase == SETUP_SESSION.Phase.MATCH_RESULTS
+	if _character_sheet != null and next_phase != SETUP_SESSION.Phase.LOOT_ACTIVE:
+		_character_sheet.visible = false
 
 
 func _show_message(message: String, is_error: bool = false) -> void:
