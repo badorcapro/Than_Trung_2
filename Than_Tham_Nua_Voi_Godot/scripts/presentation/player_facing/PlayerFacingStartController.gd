@@ -82,6 +82,7 @@ const LOBBY_BG_TEXTURE: Texture2D = preload("res://assets/ui/common/lobby_bg.png
 
 @onready var background_rect: TextureRect = get_node_or_null("Background") as TextureRect
 @onready var splash_panel: Control = get_node_or_null("%SplashPanel") as Control
+@onready var splash_video: VideoStreamPlayer = get_node_or_null("%SplashVideo") as VideoStreamPlayer
 @onready var splash_click_catcher: Button = get_node_or_null("%SplashClickCatcher") as Button
 @onready var splash_prompt: Label = get_node_or_null("%SplashPrompt") as Label
 @onready var main_menu: Control = %MainMenu
@@ -354,6 +355,8 @@ func _dismiss_splash_screen() -> void:
 	if not _is_at_splash:
 		return
 	_is_at_splash = false
+	if splash_video != null:
+		splash_video.stop()
 	if splash_panel != null:
 		splash_panel.visible = false
 	_show_phase(setup.phase)
