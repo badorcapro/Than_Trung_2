@@ -85,7 +85,9 @@ const LOBBY_BG_TEXTURE: Texture2D = preload("res://assets/ui/common/lobby_bg.png
 @onready var splash_prompt: Label = get_node_or_null("%SplashPrompt") as Label
 @onready var main_menu: Control = %MainMenu
 @onready var continue_button: Button = (
-	$SafeMargin/Page/Content/MainMenu/Buttons/Continue
+	get_node_or_null("%Continue") as Button
+	if get_node_or_null("%Continue") != null
+	else find_child("Continue", true, false) as Button
 )
 @onready var match_mode: Control = %MatchMode
 @onready var match_rules_panel: Control = %MatchRulesPanel
@@ -2651,7 +2653,7 @@ func _show_phase(next_phase: int) -> void:
 		SETUP_SESSION.Phase.NEXT_CASE_SELECTION,
 	]
 	if background_rect != null:
-		background_rect.texture = SPLASH_BG_TEXTURE if _is_at_splash else LOBBY_BG_TEXTURE
+		background_rect.texture = SPLASH_BG_TEXTURE
 	if splash_panel != null:
 		splash_panel.visible = _is_at_splash and next_phase == SETUP_SESSION.Phase.MAIN_MENU
 	if safe_margin != null:
