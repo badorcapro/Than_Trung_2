@@ -76,7 +76,8 @@ var _cheat_player_lbl: Label = null
 var _cheat_target_player_index: int = 0
 var _is_at_splash: bool = true
 
-const SPLASH_BG_TEXTURE: Texture2D = preload("res://assets/ui/common/main_menu_bg.png")
+const SPLASH_BG_TEXTURE: Texture2D = preload("res://assets/ui/common/splash_bg.png")
+const MAIN_MENU_BG_TEXTURE: Texture2D = preload("res://assets/ui/common/main_menu_bg.png")
 const LOBBY_BG_TEXTURE: Texture2D = preload("res://assets/ui/common/lobby_bg.png")
 
 @onready var background_rect: TextureRect = get_node_or_null("Background") as TextureRect
@@ -2655,7 +2656,11 @@ func _show_phase(next_phase: int) -> void:
 		SETUP_SESSION.Phase.NEXT_CASE_SELECTION,
 	]
 	if background_rect != null:
-		background_rect.texture = SPLASH_BG_TEXTURE
+		background_rect.texture = (
+			SPLASH_BG_TEXTURE
+			if (_is_at_splash and next_phase == SETUP_SESSION.Phase.MAIN_MENU)
+			else MAIN_MENU_BG_TEXTURE
+		)
 	if splash_panel != null:
 		splash_panel.visible = _is_at_splash and next_phase == SETUP_SESSION.Phase.MAIN_MENU
 	var is_main_menu: bool = next_phase == SETUP_SESSION.Phase.MAIN_MENU

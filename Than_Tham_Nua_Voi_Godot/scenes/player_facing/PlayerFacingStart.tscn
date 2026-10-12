@@ -3,7 +3,8 @@
 [ext_resource type="Script" path="res://scripts/presentation/player_facing/PlayerFacingStartController.gd" id="1"]
 [ext_resource type="Theme" path="res://themes/AppTheme.tres" id="2"]
 [ext_resource type="Script" path="res://scripts/presentation/player_facing/PlayerFacingLootMapView.gd" id="3"]
-[ext_resource type="Texture2D" path="res://assets/ui/common/main_menu_bg.png" id="4_menu_bg"]
+[ext_resource type="Texture2D" path="res://assets/ui/common/splash_bg.png" id="4_splash_bg"]
+[ext_resource type="Texture2D" path="res://assets/ui/common/main_menu_bg.png" id="5_menu_bg"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dark_card"]
 content_margin_left = 20.0
@@ -241,7 +242,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-texture = ExtResource("4_menu_bg")
+texture = ExtResource("4_splash_bg")
 expand_mode = 1
 stretch_mode = 6
 
