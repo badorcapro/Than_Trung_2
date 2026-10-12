@@ -83,6 +83,7 @@ const LOBBY_BG_TEXTURE: Texture2D = preload("res://assets/ui/common/lobby_bg.png
 @onready var background_rect: TextureRect = get_node_or_null("Background") as TextureRect
 @onready var splash_panel: Control = get_node_or_null("%SplashPanel") as Control
 @onready var splash_video: VideoStreamPlayer = get_node_or_null("%SplashVideo") as VideoStreamPlayer
+@onready var splash_loop_video: VideoStreamPlayer = get_node_or_null("%SplashLoopVideo") as VideoStreamPlayer
 @onready var splash_click_catcher: Button = get_node_or_null("%SplashClickCatcher") as Button
 @onready var splash_prompt: Label = get_node_or_null("%SplashPrompt") as Label
 @onready var main_menu: Control = %MainMenu
@@ -225,6 +226,8 @@ func _ready() -> void:
 	_init_cheat_layer()
 	if splash_click_catcher != null and not splash_click_catcher.pressed.is_connected(_on_splash_click_catcher_pressed):
 		splash_click_catcher.pressed.connect(_on_splash_click_catcher_pressed)
+	if splash_video != null and not splash_video.finished.is_connected(_on_splash_intro_finished):
+		splash_video.finished.connect(_on_splash_intro_finished)
 	_start_splash_prompt_pulse()
 	_show_phase(SETUP_SESSION.Phase.MAIN_MENU)
 
@@ -351,12 +354,25 @@ func _on_splash_click_catcher_pressed() -> void:
 	_dismiss_splash_screen()
 
 
+func _on_splash_intro_finished() -> void:
+	if not _is_at_splash:
+		return
+	if splash_loop_video != null:
+		splash_loop_video.visible = true
+		splash_loop_video.play()
+	if splash_video != null:
+		splash_video.visible = false
+		splash_video.stop()
+
+
 func _dismiss_splash_screen() -> void:
 	if not _is_at_splash:
 		return
 	_is_at_splash = false
 	if splash_video != null:
 		splash_video.stop()
+	if splash_loop_video != null:
+		splash_loop_video.stop()
 	if splash_panel != null:
 		splash_panel.visible = false
 	_show_phase(setup.phase)

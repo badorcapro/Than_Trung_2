@@ -1,11 +1,12 @@
-[gd_scene load_steps=10 format=3]
+[gd_scene load_steps=11 format=3]
 
 [ext_resource type="Script" path="res://scripts/presentation/player_facing/PlayerFacingStartController.gd" id="1"]
 [ext_resource type="Theme" path="res://themes/AppTheme.tres" id="2"]
 [ext_resource type="Script" path="res://scripts/presentation/player_facing/PlayerFacingLootMapView.gd" id="3"]
-[ext_resource type="VideoStream" path="res://assets/ui/common/splash_opening.ogv" id="4_splash_video"]
+[ext_resource type="VideoStream" path="res://assets/ui/common/splash_intro.ogv" id="4_splash_intro"]
 [ext_resource type="Texture2D" path="res://assets/ui/common/splash_bg.png" id="5_splash_bg"]
 [ext_resource type="Texture2D" path="res://assets/ui/common/main_menu_bg.png" id="6_menu_bg"]
+[ext_resource type="VideoStream" path="res://assets/ui/common/splash_loop.ogv" id="7_splash_loop"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dark_card"]
 content_margin_left = 20.0
@@ -275,10 +276,25 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-stream = ExtResource("4_splash_video")
+stream = ExtResource("4_splash_intro")
 autoplay = true
 expand = true
 loop = false
+
+[node name="SplashLoopVideo" type="VideoStreamPlayer" parent="SplashPanel"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+stream = ExtResource("7_splash_loop")
+autoplay = false
+expand = true
+loop = true
 
 [node name="SplashCenter" type="VBoxContainer" parent="SplashPanel"]
 layout_mode = 1
