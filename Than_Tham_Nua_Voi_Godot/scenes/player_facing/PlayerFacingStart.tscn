@@ -131,93 +131,97 @@ shadow_size = 10
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxEmpty_content"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_honkai_attack_normal"]
-content_margin_left = 24.0
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dupery_btn_normal"]
+content_margin_left = 28.0
 content_margin_top = 16.0
-content_margin_right = 24.0
+content_margin_right = 28.0
 content_margin_bottom = 16.0
-bg_color = Color(0.08, 0.28, 0.48, 0.92)
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 3
-border_color = Color(0.25, 0.82, 0.98, 0.95)
-corner_radius_top_left = 18
-corner_radius_top_right = 6
-corner_radius_bottom_right = 18
-corner_radius_bottom_left = 6
-shadow_color = Color(0.12, 0.72, 0.95, 0.45)
-shadow_size = 14
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_honkai_attack_hover"]
-content_margin_left = 24.0
-content_margin_top = 16.0
-content_margin_right = 24.0
-content_margin_bottom = 16.0
-bg_color = Color(0.12, 0.38, 0.62, 0.98)
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 3
-border_color = Color(0.45, 0.92, 1.0, 1.0)
-corner_radius_top_left = 18
-corner_radius_top_right = 6
-corner_radius_bottom_right = 18
-corner_radius_bottom_left = 6
-shadow_color = Color(0.25, 0.85, 1.0, 0.6)
-shadow_size = 18
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_honkai_sub_normal"]
-content_margin_left = 18.0
-content_margin_top = 12.0
-content_margin_right = 18.0
-content_margin_bottom = 12.0
-bg_color = Color(0.06, 0.14, 0.24, 0.88)
+bg_color = Color(0.18, 0.20, 0.23, 0.95)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
-border_color = Color(0.2, 0.65, 0.85, 0.75)
-corner_radius_top_left = 14
-corner_radius_top_right = 4
-corner_radius_bottom_right = 14
-corner_radius_bottom_left = 4
-shadow_color = Color(0, 0, 0, 0.5)
-shadow_size = 6
+border_color = Color(0.08, 0.09, 0.10, 1.0)
+corner_radius_top_left = 6
+corner_radius_top_right = 16
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 14
+shadow_color = Color(0, 0, 0, 0.65)
+shadow_size = 8
+shadow_offset = Vector2(3, 4)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_honkai_sub_hover"]
-content_margin_left = 18.0
-content_margin_top = 12.0
-content_margin_right = 18.0
-content_margin_bottom = 12.0
-bg_color = Color(0.1, 0.22, 0.36, 0.94)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dupery_btn_hover"]
+content_margin_left = 28.0
+content_margin_top = 16.0
+content_margin_right = 28.0
+content_margin_bottom = 16.0
+bg_color = Color(0.28, 0.32, 0.36, 1.0)
+border_width_left = 3
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 3
+border_color = Color(0.9, 0.88, 0.82, 0.9)
+corner_radius_top_left = 8
+corner_radius_top_right = 18
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 16
+shadow_color = Color(0, 0, 0, 0.75)
+shadow_size = 12
+shadow_offset = Vector2(4, 5)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dupery_btn_accent_normal"]
+content_margin_left = 28.0
+content_margin_top = 16.0
+content_margin_right = 28.0
+content_margin_bottom = 16.0
+bg_color = Color(0.58, 0.20, 0.22, 0.95)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
-border_color = Color(0.35, 0.85, 1.0, 0.95)
+border_color = Color(0.12, 0.05, 0.06, 1.0)
 corner_radius_top_left = 14
-corner_radius_top_right = 4
-corner_radius_bottom_right = 14
+corner_radius_top_right = 6
+corner_radius_bottom_right = 16
 corner_radius_bottom_left = 4
-shadow_color = Color(0.2, 0.7, 0.9, 0.4)
-shadow_size = 10
+shadow_color = Color(0, 0, 0, 0.65)
+shadow_size = 8
+shadow_offset = Vector2(3, 4)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_honkai_sub_disabled"]
-content_margin_left = 18.0
-content_margin_top = 12.0
-content_margin_right = 18.0
-content_margin_bottom = 12.0
-bg_color = Color(0.04, 0.07, 0.11, 0.75)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dupery_btn_accent_hover"]
+content_margin_left = 28.0
+content_margin_top = 16.0
+content_margin_right = 28.0
+content_margin_bottom = 16.0
+bg_color = Color(0.72, 0.26, 0.28, 1.0)
+border_width_left = 3
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 3
+border_color = Color(0.98, 0.82, 0.82, 0.9)
+corner_radius_top_left = 16
+corner_radius_top_right = 8
+corner_radius_bottom_right = 18
+corner_radius_bottom_left = 4
+shadow_color = Color(0.3, 0.05, 0.08, 0.7)
+shadow_size = 12
+shadow_offset = Vector2(4, 5)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dupery_btn_disabled"]
+content_margin_left = 28.0
+content_margin_top = 16.0
+content_margin_right = 28.0
+content_margin_bottom = 16.0
+bg_color = Color(0.12, 0.13, 0.15, 0.7)
 border_width_left = 1
 border_width_top = 1
 border_width_right = 1
 border_width_bottom = 1
-border_color = Color(0.18, 0.25, 0.32, 0.4)
-corner_radius_top_left = 14
-corner_radius_top_right = 4
-corner_radius_bottom_right = 14
-corner_radius_bottom_left = 4
+border_color = Color(0.06, 0.07, 0.08, 0.5)
+corner_radius_top_left = 6
+corner_radius_top_right = 16
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 14
 
 [node name="PlayerFacingStart" type="Control"]
 layout_mode = 3
@@ -374,173 +378,83 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="TopStatusRow" type="HBoxContainer" parent="SafeMargin/Page/Content/MainMenu"]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 44.0
-grow_horizontal = 2
-theme_override_constants/separation = 16
-
-[node name="PlayerBadge" type="PanelContainer" parent="SafeMargin/Page/Content/MainMenu/TopStatusRow"]
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_honkai_sub_normal")
-
-[node name="PlayerLabel" type="Label" parent="SafeMargin/Page/Content/MainMenu/TopStatusRow/PlayerBadge"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.35, 0.88, 1, 1)
-theme_override_font_sizes/font_size = 15
-text = "LV.88  THẦN THÁM"
-
-[node name="Spacer" type="Control" parent="SafeMargin/Page/Content/MainMenu/TopStatusRow"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="EnergyBadge" type="PanelContainer" parent="SafeMargin/Page/Content/MainMenu/TopStatusRow"]
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_honkai_sub_normal")
-
-[node name="EnergyLabel" type="Label" parent="SafeMargin/Page/Content/MainMenu/TopStatusRow/EnergyBadge"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.9, 0.95, 1, 0.9)
-theme_override_font_sizes/font_size = 14
-text = "⚡ THỂ LỰC: 168/168"
-
-[node name="CurrencyBadge" type="PanelContainer" parent="SafeMargin/Page/Content/MainMenu/TopStatusRow"]
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_honkai_sub_normal")
-
-[node name="CurrencyLabel" type="Label" parent="SafeMargin/Page/Content/MainMenu/TopStatusRow/CurrencyBadge"]
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.84, 0.35, 1)
-theme_override_font_sizes/font_size = 14
-text = "🪙 12,396,468   🔮 8,466"
-
-[node name="LeftNavColumn" type="VBoxContainer" parent="SafeMargin/Page/Content/MainMenu"]
+[node name="DuperyLeftMenu" type="VBoxContainer" parent="SafeMargin/Page/Content/MainMenu"]
 layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
-offset_top = 70.0
-offset_right = 160.0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 380.0
 offset_bottom = -20.0
 grow_vertical = 2
-theme_override_constants/separation = 10
+theme_override_constants/separation = 22
 alignment = 1
 
-[node name="NavMissions" type="Button" parent="SafeMargin/Page/Content/MainMenu/LeftNavColumn"]
-custom_minimum_size = Vector2(150, 42)
+[node name="BrandTitle" type="Label" parent="SafeMargin/Page/Content/MainMenu/DuperyLeftMenu"]
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_honkai_sub_normal")
-theme_override_styles/hover = SubResource("StyleBoxFlat_honkai_sub_hover")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_honkai_attack_normal")
-text = "🎯 NHIỆM VỤ"
+theme_override_colors/font_color = Color(0.96, 0.94, 0.90, 1.0)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.9)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 4
+theme_override_font_sizes/font_size = 40
+text = "THẦN THÁM"
 
-[node name="NavEvents" type="Button" parent="SafeMargin/Page/Content/MainMenu/LeftNavColumn"]
-custom_minimum_size = Vector2(150, 42)
+[node name="Buttons" type="VBoxContainer" parent="SafeMargin/Page/Content/MainMenu/DuperyLeftMenu"]
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_honkai_sub_normal")
-theme_override_styles/hover = SubResource("StyleBoxFlat_honkai_sub_hover")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_honkai_attack_normal")
-text = "⭐ SỰ KIỆN"
+theme_override_constants/separation = 16
 
-[node name="NavMail" type="Button" parent="SafeMargin/Page/Content/MainMenu/LeftNavColumn"]
-custom_minimum_size = Vector2(150, 42)
-layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_honkai_sub_normal")
-theme_override_styles/hover = SubResource("StyleBoxFlat_honkai_sub_hover")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_honkai_attack_normal")
-text = "✉️ THƯ TÍN"
-
-[node name="NavShop" type="Button" parent="SafeMargin/Page/Content/MainMenu/LeftNavColumn"]
-custom_minimum_size = Vector2(150, 42)
-layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_honkai_sub_normal")
-theme_override_styles/hover = SubResource("StyleBoxFlat_honkai_sub_hover")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_honkai_attack_normal")
-text = "🛒 PHỦ KHỐ"
-
-[node name="Buttons" type="Control" parent="SafeMargin/Page/Content/MainMenu"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
-[node name="Welcome" type="Label" parent="SafeMargin/Page/Content/MainMenu/Buttons"]
+[node name="Welcome" type="Label" parent="SafeMargin/Page/Content/MainMenu/DuperyLeftMenu/Buttons"]
 visible = false
-layout_mode = 0
+layout_mode = 2
 text = "Bước vào hoàng cung"
 
-[node name="HonkaiRightCluster" type="VBoxContainer" parent="SafeMargin/Page/Content/MainMenu/Buttons"]
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -280.0
-offset_top = -320.0
-offset_right = -10.0
-offset_bottom = -20.0
-grow_horizontal = 0
-grow_vertical = 0
-theme_override_constants/separation = 12
-alignment = 2
-
-[node name="NewGame" type="Button" parent="SafeMargin/Page/Content/MainMenu/Buttons/HonkaiRightCluster"]
-custom_minimum_size = Vector2(260, 84)
+[node name="NewGame" type="Button" parent="SafeMargin/Page/Content/MainMenu/DuperyLeftMenu/Buttons"]
+custom_minimum_size = Vector2(340, 58)
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_hover_color = Color(0.7, 0.95, 1, 1)
-theme_override_font_sizes/font_size = 24
-theme_override_styles/normal = SubResource("StyleBoxFlat_honkai_attack_normal")
-theme_override_styles/hover = SubResource("StyleBoxFlat_honkai_attack_hover")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_honkai_attack_hover")
-text = "⚔️ XUẤT TRẬN"
+theme_override_colors/font_color = Color(0.92, 0.93, 0.95, 1.0)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1.0)
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_dupery_btn_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_dupery_btn_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_dupery_btn_hover")
+text = "Bắt đầu trận mới"
 
-[node name="SubActionGrid" type="GridContainer" parent="SafeMargin/Page/Content/MainMenu/Buttons/HonkaiRightCluster"]
-layout_mode = 2
-theme_override_constants/h_separation = 10
-theme_override_constants/v_separation = 10
-columns = 2
-
-[node name="Continue" type="Button" parent="SafeMargin/Page/Content/MainMenu/Buttons/HonkaiRightCluster/SubActionGrid"]
+[node name="Continue" type="Button" parent="SafeMargin/Page/Content/MainMenu/DuperyLeftMenu/Buttons"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(125, 48)
+custom_minimum_size = Vector2(340, 58)
 layout_mode = 2
-theme_override_font_sizes/font_size = 14
-theme_override_styles/normal = SubResource("StyleBoxFlat_honkai_sub_normal")
-theme_override_styles/hover = SubResource("StyleBoxFlat_honkai_sub_hover")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_honkai_sub_disabled")
-text = "▶ TIẾP TỤC"
+theme_override_colors/font_color = Color(1.0, 0.92, 0.92, 1.0)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1.0)
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_dupery_btn_accent_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_dupery_btn_accent_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_dupery_btn_accent_hover")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_dupery_btn_disabled")
+text = "Tiếp tục"
 disabled = true
 tooltip_text = "Chưa có trận đấu đã lưu"
 
-[node name="Settings" type="Button" parent="SafeMargin/Page/Content/MainMenu/Buttons/HonkaiRightCluster/SubActionGrid"]
-custom_minimum_size = Vector2(125, 48)
+[node name="Settings" type="Button" parent="SafeMargin/Page/Content/MainMenu/DuperyLeftMenu/Buttons"]
+custom_minimum_size = Vector2(340, 58)
 layout_mode = 2
-theme_override_font_sizes/font_size = 14
-theme_override_styles/normal = SubResource("StyleBoxFlat_honkai_sub_normal")
-theme_override_styles/hover = SubResource("StyleBoxFlat_honkai_sub_hover")
-text = "⚙ CÀI ĐẶT"
+theme_override_colors/font_color = Color(1.0, 0.92, 0.92, 1.0)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1.0)
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_dupery_btn_accent_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_dupery_btn_accent_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_dupery_btn_accent_hover")
+text = "Cài đặt"
 
-[node name="Exit" type="Button" parent="SafeMargin/Page/Content/MainMenu/Buttons/HonkaiRightCluster/SubActionGrid"]
-custom_minimum_size = Vector2(125, 48)
+[node name="Exit" type="Button" parent="SafeMargin/Page/Content/MainMenu/DuperyLeftMenu/Buttons"]
+custom_minimum_size = Vector2(340, 58)
 layout_mode = 2
-theme_override_font_sizes/font_size = 14
-theme_override_styles/normal = SubResource("StyleBoxFlat_honkai_sub_normal")
-theme_override_styles/hover = SubResource("StyleBoxFlat_honkai_sub_hover")
-text = "🚪 THOÁT"
-
-[node name="HeroButton" type="Button" parent="SafeMargin/Page/Content/MainMenu/Buttons/HonkaiRightCluster/SubActionGrid"]
-custom_minimum_size = Vector2(125, 48)
-layout_mode = 2
-theme_override_font_sizes/font_size = 14
-theme_override_styles/normal = SubResource("StyleBoxFlat_honkai_sub_normal")
-theme_override_styles/hover = SubResource("StyleBoxFlat_honkai_sub_hover")
-text = "👤 NHÂN VẬT"
+theme_override_colors/font_color = Color(0.92, 0.93, 0.95, 1.0)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1.0)
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_dupery_btn_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_dupery_btn_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_dupery_btn_hover")
+text = "Thoát"
 
 [node name="MatchMode" type="CenterContainer" parent="SafeMargin/Page/Content"]
 unique_name_in_owner = true
@@ -2052,10 +1966,10 @@ fit_content = true
 text = "[center][b][color=#f6c95c]ĐANG ĐỔ XÚC XẮC...[/color][/b][/center]"
 autowrap_mode = 2
 
-[connection signal="pressed" from="SafeMargin/Page/Content/MainMenu/Buttons/HonkaiRightCluster/NewGame" to="." method="_on_new_game_pressed"]
-[connection signal="pressed" from="SafeMargin/Page/Content/MainMenu/Buttons/HonkaiRightCluster/SubActionGrid/Continue" to="." method="_on_continue_pressed"]
-[connection signal="pressed" from="SafeMargin/Page/Content/MainMenu/Buttons/HonkaiRightCluster/SubActionGrid/Settings" to="." method="_on_settings_pressed"]
-[connection signal="pressed" from="SafeMargin/Page/Content/MainMenu/Buttons/HonkaiRightCluster/SubActionGrid/Exit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="SafeMargin/Page/Content/MainMenu/DuperyLeftMenu/Buttons/NewGame" to="." method="_on_new_game_pressed"]
+[connection signal="pressed" from="SafeMargin/Page/Content/MainMenu/DuperyLeftMenu/Buttons/Continue" to="." method="_on_continue_pressed"]
+[connection signal="pressed" from="SafeMargin/Page/Content/MainMenu/DuperyLeftMenu/Buttons/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="SafeMargin/Page/Content/MainMenu/DuperyLeftMenu/Buttons/Exit" to="." method="_on_exit_pressed"]
 [connection signal="pressed" from="SafeMargin/Page/Content/MatchMode/Column/Classic" to="." method="_on_classic_mode_pressed"]
 [connection signal="pressed" from="SafeMargin/Page/Content/MatchMode/Column/Custom" to="." method="_on_custom_mode_pressed"]
 [connection signal="pressed" from="SafeMargin/Page/Content/MatchMode/Column/ModeBack" to="." method="_on_match_mode_back_pressed"]
