@@ -76,6 +76,10 @@ var _cheat_player_lbl: Label = null
 var _cheat_target_player_index: int = 0
 var _is_at_splash: bool = true
 
+const SPLASH_BG_TEXTURE: Texture2D = preload("res://assets/ui/common/main_menu_bg.png")
+const LOBBY_BG_TEXTURE: Texture2D = preload("res://assets/ui/common/lobby_bg.png")
+
+@onready var background_rect: TextureRect = get_node_or_null("Background") as TextureRect
 @onready var splash_panel: Control = get_node_or_null("%SplashPanel") as Control
 @onready var splash_click_catcher: Button = get_node_or_null("%SplashClickCatcher") as Button
 @onready var splash_prompt: Label = get_node_or_null("%SplashPrompt") as Label
@@ -2646,6 +2650,8 @@ func _show_phase(next_phase: int) -> void:
 		SETUP_SESSION.Phase.ROUND_SUMMARY,
 		SETUP_SESSION.Phase.NEXT_CASE_SELECTION,
 	]
+	if background_rect != null:
+		background_rect.texture = SPLASH_BG_TEXTURE if _is_at_splash else LOBBY_BG_TEXTURE
 	if splash_panel != null:
 		splash_panel.visible = _is_at_splash and next_phase == SETUP_SESSION.Phase.MAIN_MENU
 	if safe_margin != null:
