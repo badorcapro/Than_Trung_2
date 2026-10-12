@@ -74,7 +74,11 @@ var _cheat_overlay: Control = null
 var _cheat_feedback_lbl: Label = null
 var _cheat_player_lbl: Label = null
 var _cheat_target_player_index: int = 0
+var _is_at_splash: bool = true
 
+@onready var splash_panel: Control = get_node_or_null("%SplashPanel") as Control
+@onready var splash_click_catcher: Button = get_node_or_null("%SplashClickCatcher") as Button
+@onready var splash_prompt: Label = get_node_or_null("%SplashPrompt") as Label
 @onready var main_menu: Control = %MainMenu
 @onready var continue_button: Button = (
 	$SafeMargin/Page/Content/MainMenu/Buttons/Continue
@@ -209,6 +213,9 @@ func _ready() -> void:
 	_character_sheet.finish_equipment_phase_requested.connect(_on_finish_equipment_phase_confirmed)
 	sheet_layer.add_child(_character_sheet)
 	_init_cheat_layer()
+	if splash_click_catcher != null and not splash_click_catcher.pressed.is_connected(_on_splash_click_catcher_pressed):
+		splash_click_catcher.pressed.connect(_on_splash_click_catcher_pressed)
+	_start_splash_prompt_pulse()
 	_show_phase(SETUP_SESSION.Phase.MAIN_MENU)
 
 
@@ -277,6 +284,11 @@ func _input(event: InputEvent) -> void:
 			_cheat_overlay.visible = false
 			get_viewport().set_input_as_handled()
 			return
+	if _is_at_splash and splash_panel != null and splash_panel.visible:
+		if key_event.keycode in [KEY_SPACE, KEY_ENTER, KEY_KP_ENTER, KEY_Z]:
+			_dismiss_splash_screen()
+			get_viewport().set_input_as_handled()
+			return
 	if _character_sheet != null and _character_sheet.visible:
 		if key_event.keycode == KEY_ESCAPE or key_event.keycode == KEY_C:
 			_character_sheet.visible = false
@@ -315,6 +327,27 @@ func _input(event: InputEvent) -> void:
 				loot_map_view.focus_active_player()
 				get_viewport().set_input_as_handled()
 				return
+
+
+func _start_splash_prompt_pulse() -> void:
+	if splash_prompt == null:
+		return
+	var tween: Tween = create_tween().set_loops()
+	tween.tween_property(splash_prompt, "modulate:a", 0.35, 0.9).set_trans(Tween.TRANS_SINE)
+	tween.tween_property(splash_prompt, "modulate:a", 1.0, 0.9).set_trans(Tween.TRANS_SINE)
+
+
+func _on_splash_click_catcher_pressed() -> void:
+	_dismiss_splash_screen()
+
+
+func _dismiss_splash_screen() -> void:
+	if not _is_at_splash:
+		return
+	_is_at_splash = false
+	if splash_panel != null:
+		splash_panel.visible = false
+	_show_phase(setup.phase)
 
 
 func _on_new_game_pressed() -> void:
@@ -2613,13 +2646,16 @@ func _show_phase(next_phase: int) -> void:
 		SETUP_SESSION.Phase.ROUND_SUMMARY,
 		SETUP_SESSION.Phase.NEXT_CASE_SELECTION,
 	]
+	if splash_panel != null:
+		splash_panel.visible = _is_at_splash and next_phase == SETUP_SESSION.Phase.MAIN_MENU
 	if safe_margin != null:
 		safe_margin.visible = (
-			next_phase != SETUP_SESSION.Phase.CASE_ACTIVE
+			(not _is_at_splash or next_phase != SETUP_SESSION.Phase.MAIN_MENU)
+			and next_phase != SETUP_SESSION.Phase.CASE_ACTIVE
 			and next_phase != SETUP_SESSION.Phase.LOOT_ACTIVE
 			and next_phase != SETUP_SESSION.Phase.EQUIPMENT_MANAGEMENT
 		)
-	main_menu.visible = next_phase == SETUP_SESSION.Phase.MAIN_MENU
+	main_menu.visible = next_phase == SETUP_SESSION.Phase.MAIN_MENU and not _is_at_splash
 	match_mode.visible = next_phase == SETUP_SESSION.Phase.MATCH_MODE
 	match_rules_panel.visible = next_phase == SETUP_SESSION.Phase.MATCH_RULES
 	player_count.visible = next_phase == SETUP_SESSION.Phase.PLAYER_COUNT

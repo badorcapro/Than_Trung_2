@@ -163,6 +163,82 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0.04, 0.035, 0.03, 0.45)
 
+[node name="SplashPanel" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SplashCenter" type="VBoxContainer" parent="SplashPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -140.0
+offset_right = 300.0
+offset_bottom = 140.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="SplashTitle" type="Label" parent="SplashPanel/SplashCenter"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.96, 0.86, 0.65, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.8)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 3
+theme_override_font_sizes/font_size = 46
+text = "Thần Thám Nửa Vời"
+horizontal_alignment = 1
+
+[node name="SplashSubtitle" type="Label" parent="SplashPanel/SplashCenter"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.76, 0.55, 0.9)
+theme_override_font_sizes/font_size = 20
+text = "Truyền Kì Kỳ Án Hoàng Cung"
+horizontal_alignment = 1
+
+[node name="SplashPrompt" type="Label" parent="SplashPanel"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -250.0
+offset_top = -110.0
+offset_right = 250.0
+offset_bottom = -70.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(1, 0.92, 0.7, 0.95)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.75)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 22
+text = "— Chạm vào màn hình để bắt đầu —"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SplashClickCatcher" type="Button" parent="SplashPanel"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+flat = true
+
 [node name="SafeMargin" type="MarginContainer" parent="."]
 unique_name_in_owner = true
 layout_mode = 1
@@ -1799,4 +1875,5 @@ autowrap_mode = 2
 [connection signal="pressed" from="SafeMargin/Page/Content/NextCasePanel/Card/Column/StartNextCase" to="." method="_on_start_next_case_pressed"]
 [connection signal="pressed" from="SafeMargin/Page/Content/MatchResultsPanel/Actions/Replay" to="." method="_on_match_replay_pressed"]
 [connection signal="pressed" from="SafeMargin/Page/Content/MatchResultsPanel/Actions/MatchResultsMainMenu" to="." method="_on_match_results_main_menu_pressed"]
+[connection signal="pressed" from="SplashPanel/SplashClickCatcher" to="." method="_on_splash_click_catcher_pressed"]
 [connection signal="pressed" from="SafeMargin/Page/Content/SettingsPanel/Column/SettingsBack" to="." method="_on_return_main_menu_pressed"]
