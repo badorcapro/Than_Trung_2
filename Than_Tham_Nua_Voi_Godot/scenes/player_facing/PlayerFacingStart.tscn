@@ -129,7 +129,7 @@ corner_radius_bottom_left = 12
 shadow_color = Color(0, 0, 0, 0.6)
 shadow_size = 10
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxEmpty_content"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_content"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dupery_btn_normal"]
 content_margin_left = 28.0
@@ -253,7 +253,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-color = Color(0.04, 0.035, 0.03, 0.45)
+color = Color(0, 0, 0, 0)
 
 [node name="SplashPanel" type="Control" parent="."]
 unique_name_in_owner = true
@@ -349,12 +349,16 @@ layout_mode = 2
 theme_override_constants/separation = 12
 
 [node name="GameTitle" type="Label" parent="SafeMargin/Page"]
+unique_name_in_owner = true
+visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Thần Thám Nửa Vời"
 horizontal_alignment = 1
 
 [node name="Subtitle" type="Label" parent="SafeMargin/Page"]
+unique_name_in_owner = true
+visible = false
 layout_mode = 2
 text = "Truyền Kì Kỳ Án Hoàng Cung"
 horizontal_alignment = 1

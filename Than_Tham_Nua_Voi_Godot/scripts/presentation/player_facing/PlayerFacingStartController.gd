@@ -105,6 +105,8 @@ const LOBBY_BG_TEXTURE: Texture2D = preload("res://assets/ui/common/lobby_bg.png
 @onready var case_selection: Control = %CaseSelection
 @onready var settings_panel: Control = %SettingsPanel
 @onready var message_label: Label = %MessageLabel
+@onready var game_title: Label = get_node_or_null("%GameTitle") as Label
+@onready var subtitle: Label = get_node_or_null("%Subtitle") as Label
 @onready var round_indicator: Label = %RoundIndicator
 @onready var character_grid: GridContainer = %CharacterGrid
 @onready var current_player_label: Label = %CurrentPlayerLabel
@@ -2656,14 +2658,19 @@ func _show_phase(next_phase: int) -> void:
 		background_rect.texture = SPLASH_BG_TEXTURE
 	if splash_panel != null:
 		splash_panel.visible = _is_at_splash and next_phase == SETUP_SESSION.Phase.MAIN_MENU
+	var is_main_menu: bool = next_phase == SETUP_SESSION.Phase.MAIN_MENU
+	if game_title != null:
+		game_title.visible = not is_main_menu
+	if subtitle != null:
+		subtitle.visible = not is_main_menu
 	if safe_margin != null:
 		safe_margin.visible = (
-			(not _is_at_splash or next_phase != SETUP_SESSION.Phase.MAIN_MENU)
+			(not _is_at_splash or not is_main_menu)
 			and next_phase != SETUP_SESSION.Phase.CASE_ACTIVE
 			and next_phase != SETUP_SESSION.Phase.LOOT_ACTIVE
 			and next_phase != SETUP_SESSION.Phase.EQUIPMENT_MANAGEMENT
 		)
-	main_menu.visible = next_phase == SETUP_SESSION.Phase.MAIN_MENU and not _is_at_splash
+	main_menu.visible = is_main_menu and not _is_at_splash
 	match_mode.visible = next_phase == SETUP_SESSION.Phase.MATCH_MODE
 	match_rules_panel.visible = next_phase == SETUP_SESSION.Phase.MATCH_RULES
 	player_count.visible = next_phase == SETUP_SESSION.Phase.PLAYER_COUNT
