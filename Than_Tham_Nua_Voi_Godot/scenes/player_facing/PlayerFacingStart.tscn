@@ -129,6 +129,8 @@ corner_radius_bottom_left = 12
 shadow_color = Color(0, 0, 0, 0.6)
 shadow_size = 10
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_content"]
+
 [node name="PlayerFacingStart" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -200,6 +202,7 @@ horizontal_alignment = 1
 [node name="Content" type="PanelContainer" parent="SafeMargin/Page"]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_content")
 
 [node name="MainMenu" type="CenterContainer" parent="SafeMargin/Page/Content"]
 unique_name_in_owner = true
