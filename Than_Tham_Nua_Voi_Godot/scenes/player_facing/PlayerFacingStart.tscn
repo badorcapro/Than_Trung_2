@@ -2683,7 +2683,7 @@ autowrap_mode = 2
 [connection signal="pressed" from="SafeMargin/Page/Content/MatchRulesPanel/Column/Actions/RulesContinue" to="." method="_on_match_rules_continue_pressed"]
 [connection signal="pressed" from="SafeMargin/Page/Content/PlayerCount/Column/ThreePlayers" to="." method="_on_three_players_pressed"]
 [connection signal="pressed" from="SafeMargin/Page/Content/PlayerCount/Column/CountBack" to="." method="_on_player_count_back_pressed"]
-[connection signal="pressed" from="SafeMargin/Page/Content/CharacterSelection/ChooseCharacterButton" to="." method="_on_choose_character_pressed"]
+[connection signal="pressed" from="SafeMargin/Page/Content/CharacterSelection/SpotlightLayout/RightCard/RightMargin/RightVBox/ChooseCharacterButton" to="." method="_on_choose_character_pressed"]
 [connection signal="pressed" from="SafeMargin/Page/Content/PassDevice/Column/PassContinue" to="." method="_on_pass_continue_pressed"]
 [connection signal="pressed" from="SafeMargin/Page/Content/LineupConfirmation/LineupActions/EditLineup" to="." method="_on_edit_lineup_pressed"]
 [connection signal="pressed" from="SafeMargin/Page/Content/LineupConfirmation/LineupActions/ConfirmLineup" to="." method="_on_confirm_lineup_pressed"]

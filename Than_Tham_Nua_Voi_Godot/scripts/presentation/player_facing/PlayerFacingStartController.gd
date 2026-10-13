@@ -235,6 +235,8 @@ func _ready() -> void:
 		cancel_replace_button.pressed.connect(_on_cancel_replace_dismissed)
 	_build_match_rule_options()
 	_build_character_buttons()
+	if choose_character_button != null and not choose_character_button.pressed.is_connected(_on_choose_character_pressed):
+		choose_character_button.pressed.connect(_on_choose_character_pressed)
 	_build_equipment_slot_options()
 	_refresh_continue_button()
 	var sheet_layer := CanvasLayer.new()
