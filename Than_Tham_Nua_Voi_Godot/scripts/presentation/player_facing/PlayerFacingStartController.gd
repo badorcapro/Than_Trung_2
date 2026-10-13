@@ -131,7 +131,9 @@ const LOBBY_BG_TEXTURE: Texture2D = preload("res://assets/ui/common/lobby_bg.png
 @onready var game_title: Label = get_node_or_null("%GameTitle") as Label
 @onready var subtitle: Label = get_node_or_null("%Subtitle") as Label
 @onready var round_indicator: Label = %RoundIndicator
-@onready var character_grid: GridContainer = %CharacterGrid
+@onready var character_grid: BoxContainer = %CharacterGrid
+@onready var spotlight_avatar: TextureRect = %SpotlightAvatar
+@onready var pedestal_label: Label = %PedestalLabel
 @onready var current_player_label: Label = %CurrentPlayerLabel
 @onready var character_details: RichTextLabel = %CharacterDetails
 @onready var choose_character_button: Button = %ChooseCharacterButton
@@ -1397,19 +1399,37 @@ func _on_exit_pressed() -> void:
 func _build_character_buttons() -> void:
 	for child: Node in character_grid.get_children():
 		child.queue_free()
+	var selected_id: StringName = setup.selected_character_id_for_seat(
+		setup.selection_session.current_seat_index
+	)
+	var locked_ids: Array[StringName] = []
+	for s_idx: int in range(setup.selection_session.player_count):
+		if s_idx != setup.selection_session.current_seat_index and setup.selection_session.locked_seats.size() > s_idx:
+			if setup.selection_session.locked_seats[s_idx]:
+				locked_ids.append(setup.selection_session.selected_character_ids[s_idx])
+
 	for character: CHARACTER_DEFINITION in setup.characters:
 		var view: Dictionary = setup.character_presentation(character)
+		var lore: Dictionary = CHARACTER_DETAIL_SHEET.CHARACTER_LORE.get(character.character_id, {})
 		var button: Button = Button.new()
-		button.custom_minimum_size = Vector2(320, 125)
+		button.custom_minimum_size = Vector2(230, 56)
+		button.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+		button.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		
 		var char_name: String = String(view.get("name", "Nhân vật"))
 		var house: String = String(view.get("house", ""))
-		var speed: int = int(view.get("speed", 0))
-		var stamina: int = int(view.get("stamina", 0))
-		var bag: int = int(view.get("bag", 0))
-		button.text = "🏛️ %s — %s\n⚡ Tốc độ %d  ·  ❤️ Thể lực %d  ·  🎒 Túi %d" % [
-			char_name, house, speed, stamina, bag
-		]
-		button.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		var elem_icon: String = String(lore.get("element_icon", "★"))
+		var is_locked_by_other: bool = locked_ids.has(character.character_id)
+		var is_current: bool = (character.character_id == selected_id)
+
+		if is_locked_by_other:
+			button.text = "🔒 %s %s\n     (%s · Đã chọn)" % [elem_icon, char_name, house]
+			button.disabled = true
+		elif is_current:
+			button.text = "▶ %s %s ✦\n     [%s]" % [elem_icon, char_name, house]
+		else:
+			button.text = "   %s %s\n     %s" % [elem_icon, char_name, house]
+			
 		button.pressed.connect(_on_character_pressed.bind(character.character_id))
 		character_grid.add_child(button)
 
@@ -1479,23 +1499,93 @@ func _select_option_by_metadata(selector: OptionButton, expected: Variant) -> vo
 func _refresh_character_selection() -> void:
 	var player_number: int = setup.selection_session.current_seat_index + 1
 	current_player_label.text = "👤 NGƯỜI CHƠI %d — CẢN PHONG CHỌN TƯỚNG" % player_number
+	_build_character_buttons()
 	var character: CHARACTER_DEFINITION = setup.selected_character_for_seat(
 		setup.selection_session.current_seat_index
 	)
 	choose_character_button.disabled = character == null
 	if character == null:
-		character_details.text = "[center][color=#8be9fd]Hãy chọn một nhân vật bên trên để xem thuộc tính chi tiết.[/color][/center]"
+		if spotlight_avatar != null:
+			spotlight_avatar.texture = null
+		if pedestal_label != null:
+			pedestal_label.text = "✦ HÃY CHỌN MỘT NHÂN VẬT BÊN TRÁI ✦"
+		character_details.text = "[center][color=#8be9fd]Chọn một nhân vật từ danh sách bên trái để xem hình ảnh, chỉ số và chiêu thức tuyệt kỹ.[/color][/center]"
 		return
+
 	var view: Dictionary = setup.character_presentation(character)
+	var lore: Dictionary = CHARACTER_DETAIL_SHEET.CHARACTER_LORE.get(character.character_id, {})
 	var char_name: String = String(view.get("name", "Nhân vật"))
 	var house: String = String(view.get("house", ""))
 	var speed: int = int(view.get("speed", 0))
 	var stamina: int = int(view.get("stamina", 0))
 	var bag: int = int(view.get("bag", 0))
-	var skill: String = String(view.get("skill", "Chưa có mô tả kỹ năng"))
-	
-	character_details.text = "[center][font_size=22][b][color=#f6c95c]%s[/color][/b][/font_size]\n[color=#bd93f9]%s[/color]\n\n⚡ [b]Tốc độ:[/b] %d  |  ❤️ [b]Thể lực:[/b] %d  |  🎒 [b]Túi:[/b] %d\n\n[i]%s[/i][/center]" % [
-		char_name, house, speed, stamina, bag, skill
+	var elem_name: String = String(lore.get("element_name", "Vô Cực"))
+	var elem_icon: String = String(lore.get("element_icon", "★"))
+	var crest_path: String = String(lore.get("house_crest", ""))
+	var bio: String = String(lore.get("bio", ""))
+	var skills: Dictionary = Dictionary(lore.get("skills", {}))
+	var passive: Dictionary = Dictionary(skills.get("passive", {}))
+	var active: Dictionary = Dictionary(skills.get("active", {}))
+	var house_perk: Dictionary = Dictionary(skills.get("house", {}))
+
+	# Update Spotlight Center
+	if spotlight_avatar != null:
+		if not crest_path.is_empty() and ResourceLoader.exists(crest_path):
+			spotlight_avatar.texture = load(crest_path) as Texture2D
+		else:
+			spotlight_avatar.texture = null
+
+	if pedestal_label != null:
+		pedestal_label.text = "✦ %s  %s · %s (%s) ✦" % [
+			elem_icon,
+			char_name.to_upper(),
+			house.to_upper(),
+			elem_name
+		]
+
+	# Build Bar graphic helper
+	var make_bars := func(val: int) -> String:
+		var fill := ""
+		for i in range(val):
+			fill += "■ "
+		for i in range(5 - val):
+			fill += "□ "
+		return fill.strip_edges()
+
+	# Update Right Panel Details
+	character_details.text = (
+		"[font_size=20][b][color=#f6c95c]%s[/color][/b][/font_size]  "
+		+ "[color=#bd93f9](%s · Hành %s %s)[/color]\n"
+		+ "[color=#8be9fd][i]%s[/i][/color]\n"
+		+ "[color=#6272a4]───────────────────────────────────[/color]\n"
+		+ "[b]📊 THUỘC TÍNH CƠ BẢN:[/b]\n"
+		+ "  ⚡ [b]Tốc độ di chuyển:[/b]  [color=#50fa7b]%s[/color] (%d)\n"
+		+ "  ❤️ [b]Thể lực tối đa:[/b]   [color=#ff5555]%s[/color] (%d)\n"
+		+ "  🎒 [b]Sức chứa túi:[/b]    [color=#f1fa8c]%s[/color] (%d)\n"
+		+ "[color=#6272a4]───────────────────────────────────[/color]\n"
+		+ "[b]⚔️ CHIÊU THỨC HOÀNG TRIỀU:[/b]\n"
+		+ "  ✦ [color=#8be9fd][b][Nội Tại][/b] %s[/color]:\n"
+		+ "     %s\n\n"
+		+ "  ✦ [color=#ff79c6][b][Chủ Động - Tốn %d Orb][/b] %s[/color]:\n"
+		+ "     %s\n\n"
+		+ "  ✦ [color=#f6c95c][b][Gia Uy][/b] %s[/color]:\n"
+		+ "     %s"
+	) % [
+		char_name,
+		house,
+		elem_name,
+		elem_icon,
+		bio,
+		make_bars.call(speed), speed,
+		make_bars.call(stamina), stamina,
+		make_bars.call(bag), bag,
+		String(passive.get("name", "Nội tại")),
+		String(passive.get("desc", "")),
+		int(active.get("orb_cost", 3)),
+		String(active.get("name", "Tuyệt Kỹ")),
+		String(active.get("desc", "")),
+		String(house_perk.get("name", "Gia Uy")),
+		String(house_perk.get("desc", ""))
 	]
 
 
