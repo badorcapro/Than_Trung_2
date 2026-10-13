@@ -1399,14 +1399,15 @@ func _on_exit_pressed() -> void:
 func _build_character_buttons() -> void:
 	for child: Node in character_grid.get_children():
 		child.queue_free()
-	var selected_id: StringName = setup.selected_character_id_for_seat(
-		setup.selection_session.current_seat_index
-	)
+	var current_seat: int = setup.selection_session.current_seat_index if setup.selection_session != null else 0
+	var current_char: CHARACTER_DEFINITION = setup.selected_character_for_seat(current_seat)
+	var selected_id: StringName = current_char.character_id if current_char != null else &""
 	var locked_ids: Array[StringName] = []
-	for s_idx: int in range(setup.selection_session.player_count):
-		if s_idx != setup.selection_session.current_seat_index and setup.selection_session.locked_seats.size() > s_idx:
-			if setup.selection_session.locked_seats[s_idx]:
-				locked_ids.append(setup.selection_session.selected_character_ids[s_idx])
+	if setup.selection_session != null:
+		for s_idx: int in range(setup.selection_session.player_count):
+			if s_idx != current_seat and setup.selection_session.locked_seats.size() > s_idx:
+				if setup.selection_session.locked_seats[s_idx] and setup.selection_session.selected_character_ids.size() > s_idx:
+					locked_ids.append(setup.selection_session.selected_character_ids[s_idx])
 
 	for character: CHARACTER_DEFINITION in setup.characters:
 		var view: Dictionary = setup.character_presentation(character)
