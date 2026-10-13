@@ -74,7 +74,8 @@ var _cheat_overlay: Control = null
 var _cheat_feedback_lbl: Label = null
 var _cheat_player_lbl: Label = null
 var _cheat_target_player_index: int = 0
-var _is_at_splash: bool = true
+var _is_at_splash: bool = false
+var _clock_timer: Timer = null
 
 const SPLASH_BG_TEXTURE: Texture2D = preload("res://assets/ui/common/splash_bg.png")
 const MAIN_MENU_BG_TEXTURE: Texture2D = preload("res://assets/ui/common/main_menu_bg.png")
@@ -87,6 +88,16 @@ const LOBBY_BG_TEXTURE: Texture2D = preload("res://assets/ui/common/lobby_bg.png
 @onready var splash_click_catcher: Button = get_node_or_null("%SplashClickCatcher") as Button
 @onready var splash_prompt: Label = get_node_or_null("%SplashPrompt") as Label
 @onready var main_menu: Control = %MainMenu
+@onready var desktop_root: Control = get_node_or_null("%DesktopRoot") as Control
+@onready var desktop_window_case_launcher: Control = get_node_or_null("%DesktopWindowCaseLauncher") as Control
+@onready var desktop_icon_case_game: Button = get_node_or_null("%DesktopIconCaseGame") as Button
+@onready var desktop_icon_continue: Button = get_node_or_null("%DesktopIconContinue") as Button
+@onready var desktop_icon_codex: Button = get_node_or_null("%DesktopIconCodex") as Button
+@onready var desktop_icon_settings: Button = get_node_or_null("%DesktopIconSettings") as Button
+@onready var desktop_icon_quit: Button = get_node_or_null("%DesktopIconQuit") as Button
+@onready var close_window_button: Button = get_node_or_null("%CloseWindowButton") as Button
+@onready var taskbar_start_button: Button = get_node_or_null("%TaskbarStartButton") as Button
+@onready var taskbar_clock: Label = get_node_or_null("%TaskbarClock") as Label
 @onready var continue_button: Button = (
 	get_node_or_null("%Continue") as Button
 	if get_node_or_null("%Continue") != null
@@ -224,6 +235,7 @@ func _ready() -> void:
 	_character_sheet.finish_equipment_phase_requested.connect(_on_finish_equipment_phase_confirmed)
 	sheet_layer.add_child(_character_sheet)
 	_init_cheat_layer()
+	_init_desktop_system()
 	if splash_click_catcher != null and not splash_click_catcher.pressed.is_connected(_on_splash_click_catcher_pressed):
 		splash_click_catcher.pressed.connect(_on_splash_click_catcher_pressed)
 	if splash_video != null and not splash_video.finished.is_connected(_on_splash_intro_finished):
@@ -297,9 +309,9 @@ func _input(event: InputEvent) -> void:
 			_cheat_overlay.visible = false
 			get_viewport().set_input_as_handled()
 			return
-	if _is_at_splash and splash_panel != null and splash_panel.visible:
-		if key_event.keycode in [KEY_SPACE, KEY_ENTER, KEY_KP_ENTER, KEY_Z]:
-			_dismiss_splash_screen()
+	if desktop_window_case_launcher != null and desktop_window_case_launcher.visible:
+		if key_event.keycode == KEY_ESCAPE:
+			desktop_window_case_launcher.visible = false
 			get_viewport().set_input_as_handled()
 			return
 	if _character_sheet != null and _character_sheet.visible:
@@ -365,17 +377,69 @@ func _on_splash_intro_finished() -> void:
 		splash_video.stop()
 
 
-func _dismiss_splash_screen() -> void:
-	if not _is_at_splash:
+func _init_desktop_system() -> void:
+	if desktop_icon_case_game != null and not desktop_icon_case_game.pressed.is_connected(_on_desktop_case_game_pressed):
+		desktop_icon_case_game.pressed.connect(_on_desktop_case_game_pressed)
+	if desktop_icon_continue != null and not desktop_icon_continue.pressed.is_connected(_on_desktop_continue_pressed):
+		desktop_icon_continue.pressed.connect(_on_desktop_continue_pressed)
+	if desktop_icon_codex != null and not desktop_icon_codex.pressed.is_connected(_on_desktop_codex_pressed):
+		desktop_icon_codex.pressed.connect(_on_desktop_codex_pressed)
+	if desktop_icon_settings != null and not desktop_icon_settings.pressed.is_connected(_on_settings_pressed):
+		desktop_icon_settings.pressed.connect(_on_settings_pressed)
+	if desktop_icon_quit != null and not desktop_icon_quit.pressed.is_connected(_on_exit_pressed):
+		desktop_icon_quit.pressed.connect(_on_exit_pressed)
+	if close_window_button != null and not close_window_button.pressed.is_connected(_on_close_launcher_window_pressed):
+		close_window_button.pressed.connect(_on_close_launcher_window_pressed)
+	if taskbar_start_button != null and not taskbar_start_button.pressed.is_connected(_on_taskbar_start_pressed):
+		taskbar_start_button.pressed.connect(_on_taskbar_start_pressed)
+
+	if desktop_window_case_launcher != null:
+		desktop_window_case_launcher.visible = false
+
+	# Đồng hồ thanh taskbar cập nhật mỗi giây
+	_update_taskbar_clock()
+	if _clock_timer == null:
+		_clock_timer = Timer.new()
+		_clock_timer.wait_time = 1.0
+		_clock_timer.timeout.connect(_update_taskbar_clock)
+		add_child(_clock_timer)
+		_clock_timer.start()
+
+
+func _update_taskbar_clock() -> void:
+	if taskbar_clock == null:
 		return
-	_is_at_splash = false
-	if splash_video != null:
-		splash_video.stop()
-	if splash_loop_video != null:
-		splash_loop_video.stop()
-	if splash_panel != null:
-		splash_panel.visible = false
-	_show_phase(setup.phase)
+	var time: Dictionary = Time.get_time_dict_from_system()
+	var hour: int = int(time.get("hour", 0))
+	var minute: int = int(time.get("minute", 0))
+	var ampm: String = "SA" if hour < 12 else "CH"
+	var hour12: int = hour % 12
+	if hour12 == 0:
+		hour12 = 12
+	taskbar_clock.text = "%02d:%02d %s" % [hour12, minute, ampm]
+
+
+func _on_desktop_case_game_pressed() -> void:
+	if desktop_window_case_launcher != null:
+		desktop_window_case_launcher.visible = true
+
+
+func _on_desktop_continue_pressed() -> void:
+	_on_continue_pressed()
+
+
+func _on_desktop_codex_pressed() -> void:
+	AppFlow.go_to_role_codex()
+
+
+func _on_close_launcher_window_pressed() -> void:
+	if desktop_window_case_launcher != null:
+		desktop_window_case_launcher.visible = false
+
+
+func _on_taskbar_start_pressed() -> void:
+	if desktop_window_case_launcher != null:
+		desktop_window_case_launcher.visible = not desktop_window_case_launcher.visible
 
 
 func _on_new_game_pressed() -> void:
@@ -2675,13 +2739,9 @@ func _show_phase(next_phase: int) -> void:
 		SETUP_SESSION.Phase.NEXT_CASE_SELECTION,
 	]
 	if background_rect != null:
-		background_rect.texture = (
-			SPLASH_BG_TEXTURE
-			if (_is_at_splash and next_phase == SETUP_SESSION.Phase.MAIN_MENU)
-			else MAIN_MENU_BG_TEXTURE
-		)
+		background_rect.texture = MAIN_MENU_BG_TEXTURE
 	if splash_panel != null:
-		splash_panel.visible = _is_at_splash and next_phase == SETUP_SESSION.Phase.MAIN_MENU
+		splash_panel.visible = false
 	var is_main_menu: bool = next_phase == SETUP_SESSION.Phase.MAIN_MENU
 	if game_title != null:
 		game_title.visible = not is_main_menu
@@ -2689,12 +2749,14 @@ func _show_phase(next_phase: int) -> void:
 		subtitle.visible = not is_main_menu
 	if safe_margin != null:
 		safe_margin.visible = (
-			(not _is_at_splash or not is_main_menu)
-			and next_phase != SETUP_SESSION.Phase.CASE_ACTIVE
+			next_phase != SETUP_SESSION.Phase.CASE_ACTIVE
 			and next_phase != SETUP_SESSION.Phase.LOOT_ACTIVE
 			and next_phase != SETUP_SESSION.Phase.EQUIPMENT_MANAGEMENT
 		)
-	main_menu.visible = is_main_menu and not _is_at_splash
+	main_menu.visible = is_main_menu
+	if is_main_menu:
+		if desktop_window_case_launcher != null:
+			desktop_window_case_launcher.visible = false
 	match_mode.visible = next_phase == SETUP_SESSION.Phase.MATCH_MODE
 	match_rules_panel.visible = next_phase == SETUP_SESSION.Phase.MATCH_RULES
 	player_count.visible = next_phase == SETUP_SESSION.Phase.PLAYER_COUNT

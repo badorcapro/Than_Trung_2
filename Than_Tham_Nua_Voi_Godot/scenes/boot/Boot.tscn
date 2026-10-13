@@ -1,8 +1,10 @@
-[gd_scene format=3 uid="uid://xgeyhj81pdu0"]
+[gd_scene load_steps=4 format=3 uid="uid://xgeyhj81pdu0"]
 
 [ext_resource type="Script" uid="uid://n42ipcqg88nk" path="res://scripts/application/BootController.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/ui/boot/studio_logo.png" id="2_studio_logo"]
+[ext_resource type="Texture2D" path="res://assets/ui/boot/godot_logo.png" id="3_godot_logo"]
 
-[node name="Boot" type="Control" unique_id=1852510119]
+[node name="Boot" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,35 +13,90 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1")
 
-[node name="Background" type="ColorRect" parent="." unique_id=2126420463]
+[node name="Background" type="ColorRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.035, 0.045, 0.07, 1)
+color = Color(0.02, 0.025, 0.04, 1)
 
-[node name="Center" type="CenterContainer" parent="." unique_id=1767779886]
+[node name="StudioLogo" type="TextureRect" parent="."]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -450.0
+offset_top = -250.0
+offset_right = 450.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_studio_logo")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="EngineLogo" type="TextureRect" parent="."]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -450.0
+offset_top = -250.0
+offset_right = 450.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("3_godot_logo")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Center" type="CenterContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
-[node name="Status" type="VBoxContainer" parent="Center" unique_id=1701863220]
+[node name="Status" type="VBoxContainer" parent="Center"]
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="LoadingLabel" type="Label" parent="Center/Status" unique_id=149178690]
-layout_mode = 2
-text = "Đang khởi tạo project…"
-horizontal_alignment = 1
-
-[node name="ErrorLabel" type="Label" parent="Center/Status" unique_id=586360975]
+[node name="ErrorLabel" type="Label" parent="Center/Status"]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.45, 0.45, 1)
 horizontal_alignment = 1
+
+[node name="SkipPrompt" type="Label" parent="."]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0.4)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -220.0
+offset_top = -40.0
+offset_right = -20.0
+offset_bottom = -15.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 14
+text = "[Space / Click để bỏ qua]"
+horizontal_alignment = 2
