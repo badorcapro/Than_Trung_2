@@ -103,7 +103,6 @@ const LOBBY_BG_TEXTURE: Texture2D = preload("res://assets/ui/common/lobby_bg.png
 @onready var start_menu_codex: Button = get_node_or_null("%StartMenuCodex") as Button
 @onready var start_menu_settings: Button = get_node_or_null("%StartMenuSettings") as Button
 @onready var start_menu_quit: Button = get_node_or_null("%StartMenuQuit") as Button
-@onready var taskbar_app_tab: Button = get_node_or_null("%TaskbarAppTab") as Button
 @onready var close_window_button: Button = get_node_or_null("%CloseWindowButton") as Button
 @onready var close_secret_window_button: Button = get_node_or_null("%CloseSecretWindowButton") as Button
 @onready var taskbar_start_button: Button = get_node_or_null("%TaskbarStartButton") as Button
@@ -410,8 +409,6 @@ func _init_desktop_system() -> void:
 		start_menu_settings.pressed.connect(_on_settings_pressed)
 	if start_menu_quit != null and not start_menu_quit.pressed.is_connected(_on_exit_pressed):
 		start_menu_quit.pressed.connect(_on_exit_pressed)
-	if taskbar_app_tab != null and not taskbar_app_tab.pressed.is_connected(_on_taskbar_app_tab_pressed):
-		taskbar_app_tab.pressed.connect(_on_taskbar_app_tab_pressed)
 	if close_window_button != null and not close_window_button.pressed.is_connected(_on_close_launcher_window_pressed):
 		close_window_button.pressed.connect(_on_close_launcher_window_pressed)
 	if close_secret_window_button != null and not close_secret_window_button.pressed.is_connected(_on_close_secret_window_pressed):
@@ -474,10 +471,6 @@ func _on_desktop_bag_pressed() -> void:
 	if desktop_window_secret_txt != null:
 		desktop_window_secret_txt.visible = true
 
-
-func _on_taskbar_app_tab_pressed() -> void:
-	if desktop_window_case_launcher != null:
-		desktop_window_case_launcher.visible = not desktop_window_case_launcher.visible
 
 
 func _on_desktop_continue_pressed() -> void:

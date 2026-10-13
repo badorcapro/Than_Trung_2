@@ -53,37 +53,6 @@ corner_radius_top_right = 6
 corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_taskbar_tab"]
-content_margin_left = 12.0
-content_margin_top = 6.0
-content_margin_right = 12.0
-content_margin_bottom = 6.0
-bg_color = Color(0.93, 0.89, 0.98, 0.95)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.75, 0.65, 0.85, 0.9)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_canh_ba_badge"]
-content_margin_left = 10.0
-content_margin_top = 4.0
-content_margin_right = 10.0
-content_margin_bottom = 4.0
-bg_color = Color(0.22, 0.14, 0.32, 0.95)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.65, 0.5, 0.85, 0.8)
-corner_radius_top_left = 6
-corner_radius_top_right = 6
-corner_radius_bottom_right = 6
-corner_radius_bottom_left = 6
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dark_card"]
 content_margin_left = 20.0
@@ -813,45 +782,17 @@ offset_bottom = 718.0
 focus_mode = 2
 flat = true
 
-[node name="TaskbarAppTab" type="Button" parent="DesktopRoot"]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 296.0
-offset_top = 666.0
-offset_right = 580.0
-offset_bottom = 712.0
-focus_mode = 0
-theme_override_colors/font_color = Color(0.25, 0.15, 0.35, 1)
-theme_override_colors/font_hover_color = Color(0.1, 0.05, 0.2, 1)
-theme_override_font_sizes/font_size = 12
-theme_override_styles/normal = SubResource("StyleBoxFlat_taskbar_tab")
-theme_override_styles/hover = SubResource("StyleBoxFlat_taskbar_tab")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_taskbar_tab")
-text = "📜 Kỳ Án Hoàng Cung v1.0"
-alignment = 0
-
 [node name="TaskbarTrayContainer" type="HBoxContainer" parent="DesktopRoot"]
 layout_mode = 0
-offset_left = 760.0
+offset_left = 900.0
 offset_top = 665.0
-offset_right = 1080.0
+offset_right = 1070.0
 offset_bottom = 713.0
-theme_override_constants/separation = 12
+theme_override_constants/separation = 10
 alignment = 2
 
-[node name="CanhBaBadge" type="PanelContainer" parent="DesktopRoot/TaskbarTrayContainer"]
-layout_mode = 2
-size_flags_vertical = 4
-theme_override_styles/panel = SubResource("StyleBoxFlat_canh_ba_badge")
-
-[node name="Label" type="Label" parent="DesktopRoot/TaskbarTrayContainer/CanhBaBadge"]
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.9, 0.55, 1)
-theme_override_font_sizes/font_size = 12
-text = "🏮 CANH BA"
-
 [node name="TrayAudio" type="TextureRect" parent="DesktopRoot/TaskbarTrayContainer"]
-custom_minimum_size = Vector2(20, 20)
+custom_minimum_size = Vector2(18, 18)
 layout_mode = 2
 size_flags_vertical = 4
 texture = ExtResource("15_tray_audio")
@@ -2642,7 +2583,6 @@ autowrap_mode = 2
 [connection signal="pressed" from="DesktopRoot/DesktopIconsColumn/DesktopIconQuit" to="." method="_on_exit_pressed"]
 [connection signal="pressed" from="DesktopRoot/DesktopIconSecretTxt" to="." method="_on_desktop_secret_txt_pressed"]
 [connection signal="pressed" from="DesktopRoot/TaskbarStartButton" to="." method="_on_taskbar_start_pressed"]
-[connection signal="pressed" from="DesktopRoot/TaskbarAppTab" to="." method="_on_taskbar_app_tab_pressed"]
 [connection signal="pressed" from="DesktopRoot/DesktopWindowCaseLauncher/CloseWindowButton" to="." method="_on_close_launcher_window_pressed"]
 [connection signal="pressed" from="DesktopRoot/DesktopWindowCaseLauncher/Content/NewGame" to="." method="_on_new_game_pressed"]
 [connection signal="pressed" from="DesktopRoot/DesktopWindowCaseLauncher/Content/Continue" to="." method="_on_continue_pressed"]
