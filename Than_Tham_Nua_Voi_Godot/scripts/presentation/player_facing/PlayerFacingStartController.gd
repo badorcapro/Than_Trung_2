@@ -90,12 +90,18 @@ const LOBBY_BG_TEXTURE: Texture2D = preload("res://assets/ui/common/lobby_bg.png
 @onready var main_menu: Control = %MainMenu
 @onready var desktop_root: Control = get_node_or_null("%DesktopRoot") as Control
 @onready var desktop_window_case_launcher: Control = get_node_or_null("%DesktopWindowCaseLauncher") as Control
+@onready var desktop_window_secret_txt: Control = get_node_or_null("%DesktopWindowSecretTxt") as Control
+@onready var desktop_icon_login: Button = get_node_or_null("%DesktopIconLogin") as Button
+@onready var desktop_icon_secret_txt: Button = get_node_or_null("%DesktopIconSecretTxt") as Button
+@onready var desktop_chat_bubble_btn: Button = get_node_or_null("%DesktopChatBubbleBtn") as Button
+@onready var desktop_start_menu: Control = get_node_or_null("%DesktopStartMenu") as Control
 @onready var desktop_icon_case_game: Button = get_node_or_null("%DesktopIconCaseGame") as Button
 @onready var desktop_icon_continue: Button = get_node_or_null("%DesktopIconContinue") as Button
 @onready var desktop_icon_codex: Button = get_node_or_null("%DesktopIconCodex") as Button
 @onready var desktop_icon_settings: Button = get_node_or_null("%DesktopIconSettings") as Button
 @onready var desktop_icon_quit: Button = get_node_or_null("%DesktopIconQuit") as Button
 @onready var close_window_button: Button = get_node_or_null("%CloseWindowButton") as Button
+@onready var close_secret_window_button: Button = get_node_or_null("%CloseSecretWindowButton") as Button
 @onready var taskbar_start_button: Button = get_node_or_null("%TaskbarStartButton") as Button
 @onready var taskbar_clock: Label = get_node_or_null("%TaskbarClock") as Label
 @onready var continue_button: Button = (
@@ -378,6 +384,8 @@ func _dismiss_splash_screen() -> void:
 
 
 func _init_desktop_system() -> void:
+	if desktop_icon_login != null and not desktop_icon_login.pressed.is_connected(_on_desktop_case_game_pressed):
+		desktop_icon_login.pressed.connect(_on_desktop_case_game_pressed)
 	if desktop_icon_case_game != null and not desktop_icon_case_game.pressed.is_connected(_on_desktop_case_game_pressed):
 		desktop_icon_case_game.pressed.connect(_on_desktop_case_game_pressed)
 	if desktop_icon_continue != null and not desktop_icon_continue.pressed.is_connected(_on_desktop_continue_pressed):
@@ -388,13 +396,23 @@ func _init_desktop_system() -> void:
 		desktop_icon_settings.pressed.connect(_on_settings_pressed)
 	if desktop_icon_quit != null and not desktop_icon_quit.pressed.is_connected(_on_exit_pressed):
 		desktop_icon_quit.pressed.connect(_on_exit_pressed)
+	if desktop_icon_secret_txt != null and not desktop_icon_secret_txt.pressed.is_connected(_on_desktop_secret_txt_pressed):
+		desktop_icon_secret_txt.pressed.connect(_on_desktop_secret_txt_pressed)
+	if desktop_chat_bubble_btn != null and not desktop_chat_bubble_btn.pressed.is_connected(_on_desktop_case_game_pressed):
+		desktop_chat_bubble_btn.pressed.connect(_on_desktop_case_game_pressed)
 	if close_window_button != null and not close_window_button.pressed.is_connected(_on_close_launcher_window_pressed):
 		close_window_button.pressed.connect(_on_close_launcher_window_pressed)
+	if close_secret_window_button != null and not close_secret_window_button.pressed.is_connected(_on_close_secret_window_pressed):
+		close_secret_window_button.pressed.connect(_on_close_secret_window_pressed)
 	if taskbar_start_button != null and not taskbar_start_button.pressed.is_connected(_on_taskbar_start_pressed):
 		taskbar_start_button.pressed.connect(_on_taskbar_start_pressed)
 
 	if desktop_window_case_launcher != null:
 		desktop_window_case_launcher.visible = false
+	if desktop_window_secret_txt != null:
+		desktop_window_secret_txt.visible = false
+	if desktop_start_menu != null:
+		desktop_start_menu.visible = false
 
 	# Đồng hồ thanh taskbar cập nhật mỗi giây
 	_update_taskbar_clock()
@@ -422,13 +440,24 @@ func _update_taskbar_clock() -> void:
 func _on_desktop_case_game_pressed() -> void:
 	if desktop_window_case_launcher != null:
 		desktop_window_case_launcher.visible = true
+	if desktop_start_menu != null:
+		desktop_start_menu.visible = false
+
+
+func _on_desktop_secret_txt_pressed() -> void:
+	if desktop_window_secret_txt != null:
+		desktop_window_secret_txt.visible = true
 
 
 func _on_desktop_continue_pressed() -> void:
+	if desktop_start_menu != null:
+		desktop_start_menu.visible = false
 	_on_continue_pressed()
 
 
 func _on_desktop_codex_pressed() -> void:
+	if desktop_start_menu != null:
+		desktop_start_menu.visible = false
 	AppFlow.go_to_role_codex()
 
 
@@ -437,8 +466,15 @@ func _on_close_launcher_window_pressed() -> void:
 		desktop_window_case_launcher.visible = false
 
 
+func _on_close_secret_window_pressed() -> void:
+	if desktop_window_secret_txt != null:
+		desktop_window_secret_txt.visible = false
+
+
 func _on_taskbar_start_pressed() -> void:
-	if desktop_window_case_launcher != null:
+	if desktop_start_menu != null:
+		desktop_start_menu.visible = not desktop_start_menu.visible
+	elif desktop_window_case_launcher != null:
 		desktop_window_case_launcher.visible = not desktop_window_case_launcher.visible
 
 
@@ -2753,10 +2789,24 @@ func _show_phase(next_phase: int) -> void:
 			and next_phase != SETUP_SESSION.Phase.LOOT_ACTIVE
 			and next_phase != SETUP_SESSION.Phase.EQUIPMENT_MANAGEMENT
 		)
+		if is_main_menu:
+			safe_margin.offset_left = 0.0
+			safe_margin.offset_top = 0.0
+			safe_margin.offset_right = 0.0
+			safe_margin.offset_bottom = 0.0
+		else:
+			safe_margin.offset_left = 24.0
+			safe_margin.offset_top = 18.0
+			safe_margin.offset_right = -24.0
+			safe_margin.offset_bottom = -18.0
 	main_menu.visible = is_main_menu
 	if is_main_menu:
 		if desktop_window_case_launcher != null:
 			desktop_window_case_launcher.visible = false
+		if desktop_window_secret_txt != null:
+			desktop_window_secret_txt.visible = false
+		if desktop_start_menu != null:
+			desktop_start_menu.visible = false
 	match_mode.visible = next_phase == SETUP_SESSION.Phase.MATCH_MODE
 	match_rules_panel.visible = next_phase == SETUP_SESSION.Phase.MATCH_RULES
 	player_count.visible = next_phase == SETUP_SESSION.Phase.PLAYER_COUNT
