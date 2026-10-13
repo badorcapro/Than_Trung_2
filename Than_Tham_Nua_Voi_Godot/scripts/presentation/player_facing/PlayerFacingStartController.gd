@@ -91,15 +91,19 @@ const LOBBY_BG_TEXTURE: Texture2D = preload("res://assets/ui/common/lobby_bg.png
 @onready var desktop_root: Control = get_node_or_null("%DesktopRoot") as Control
 @onready var desktop_window_case_launcher: Control = get_node_or_null("%DesktopWindowCaseLauncher") as Control
 @onready var desktop_window_secret_txt: Control = get_node_or_null("%DesktopWindowSecretTxt") as Control
-@onready var desktop_icon_login: Button = get_node_or_null("%DesktopIconLogin") as Button
 @onready var desktop_icon_secret_txt: Button = get_node_or_null("%DesktopIconSecretTxt") as Button
-@onready var desktop_chat_bubble_btn: Button = get_node_or_null("%DesktopChatBubbleBtn") as Button
 @onready var desktop_start_menu: Control = get_node_or_null("%DesktopStartMenu") as Control
 @onready var desktop_icon_case_game: Button = get_node_or_null("%DesktopIconCaseGame") as Button
-@onready var desktop_icon_continue: Button = get_node_or_null("%DesktopIconContinue") as Button
 @onready var desktop_icon_codex: Button = get_node_or_null("%DesktopIconCodex") as Button
+@onready var desktop_icon_loot_map: Button = get_node_or_null("%DesktopIconLootMap") as Button
+@onready var desktop_icon_bag: Button = get_node_or_null("%DesktopIconBag") as Button
 @onready var desktop_icon_settings: Button = get_node_or_null("%DesktopIconSettings") as Button
 @onready var desktop_icon_quit: Button = get_node_or_null("%DesktopIconQuit") as Button
+@onready var start_menu_case_game: Button = get_node_or_null("%StartMenuCaseGame") as Button
+@onready var start_menu_codex: Button = get_node_or_null("%StartMenuCodex") as Button
+@onready var start_menu_settings: Button = get_node_or_null("%StartMenuSettings") as Button
+@onready var start_menu_quit: Button = get_node_or_null("%StartMenuQuit") as Button
+@onready var taskbar_app_tab: Button = get_node_or_null("%TaskbarAppTab") as Button
 @onready var close_window_button: Button = get_node_or_null("%CloseWindowButton") as Button
 @onready var close_secret_window_button: Button = get_node_or_null("%CloseSecretWindowButton") as Button
 @onready var taskbar_start_button: Button = get_node_or_null("%TaskbarStartButton") as Button
@@ -384,22 +388,30 @@ func _dismiss_splash_screen() -> void:
 
 
 func _init_desktop_system() -> void:
-	if desktop_icon_login != null and not desktop_icon_login.pressed.is_connected(_on_desktop_case_game_pressed):
-		desktop_icon_login.pressed.connect(_on_desktop_case_game_pressed)
 	if desktop_icon_case_game != null and not desktop_icon_case_game.pressed.is_connected(_on_desktop_case_game_pressed):
 		desktop_icon_case_game.pressed.connect(_on_desktop_case_game_pressed)
-	if desktop_icon_continue != null and not desktop_icon_continue.pressed.is_connected(_on_desktop_continue_pressed):
-		desktop_icon_continue.pressed.connect(_on_desktop_continue_pressed)
 	if desktop_icon_codex != null and not desktop_icon_codex.pressed.is_connected(_on_desktop_codex_pressed):
 		desktop_icon_codex.pressed.connect(_on_desktop_codex_pressed)
+	if desktop_icon_loot_map != null and not desktop_icon_loot_map.pressed.is_connected(_on_desktop_loot_map_pressed):
+		desktop_icon_loot_map.pressed.connect(_on_desktop_loot_map_pressed)
+	if desktop_icon_bag != null and not desktop_icon_bag.pressed.is_connected(_on_desktop_bag_pressed):
+		desktop_icon_bag.pressed.connect(_on_desktop_bag_pressed)
 	if desktop_icon_settings != null and not desktop_icon_settings.pressed.is_connected(_on_settings_pressed):
 		desktop_icon_settings.pressed.connect(_on_settings_pressed)
 	if desktop_icon_quit != null and not desktop_icon_quit.pressed.is_connected(_on_exit_pressed):
 		desktop_icon_quit.pressed.connect(_on_exit_pressed)
 	if desktop_icon_secret_txt != null and not desktop_icon_secret_txt.pressed.is_connected(_on_desktop_secret_txt_pressed):
 		desktop_icon_secret_txt.pressed.connect(_on_desktop_secret_txt_pressed)
-	if desktop_chat_bubble_btn != null and not desktop_chat_bubble_btn.pressed.is_connected(_on_desktop_case_game_pressed):
-		desktop_chat_bubble_btn.pressed.connect(_on_desktop_case_game_pressed)
+	if start_menu_case_game != null and not start_menu_case_game.pressed.is_connected(_on_desktop_case_game_pressed):
+		start_menu_case_game.pressed.connect(_on_desktop_case_game_pressed)
+	if start_menu_codex != null and not start_menu_codex.pressed.is_connected(_on_desktop_codex_pressed):
+		start_menu_codex.pressed.connect(_on_desktop_codex_pressed)
+	if start_menu_settings != null and not start_menu_settings.pressed.is_connected(_on_settings_pressed):
+		start_menu_settings.pressed.connect(_on_settings_pressed)
+	if start_menu_quit != null and not start_menu_quit.pressed.is_connected(_on_exit_pressed):
+		start_menu_quit.pressed.connect(_on_exit_pressed)
+	if taskbar_app_tab != null and not taskbar_app_tab.pressed.is_connected(_on_taskbar_app_tab_pressed):
+		taskbar_app_tab.pressed.connect(_on_taskbar_app_tab_pressed)
 	if close_window_button != null and not close_window_button.pressed.is_connected(_on_close_launcher_window_pressed):
 		close_window_button.pressed.connect(_on_close_launcher_window_pressed)
 	if close_secret_window_button != null and not close_secret_window_button.pressed.is_connected(_on_close_secret_window_pressed):
@@ -447,6 +459,25 @@ func _on_desktop_case_game_pressed() -> void:
 func _on_desktop_secret_txt_pressed() -> void:
 	if desktop_window_secret_txt != null:
 		desktop_window_secret_txt.visible = true
+
+
+func _on_desktop_loot_map_pressed() -> void:
+	if desktop_start_menu != null:
+		desktop_start_menu.visible = false
+	if desktop_window_case_launcher != null:
+		desktop_window_case_launcher.visible = true
+
+
+func _on_desktop_bag_pressed() -> void:
+	if desktop_start_menu != null:
+		desktop_start_menu.visible = false
+	if desktop_window_secret_txt != null:
+		desktop_window_secret_txt.visible = true
+
+
+func _on_taskbar_app_tab_pressed() -> void:
+	if desktop_window_case_launcher != null:
+		desktop_window_case_launcher.visible = not desktop_window_case_launcher.visible
 
 
 func _on_desktop_continue_pressed() -> void:
