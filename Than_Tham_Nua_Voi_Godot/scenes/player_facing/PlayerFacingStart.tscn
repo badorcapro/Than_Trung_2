@@ -458,6 +458,252 @@ grow_horizontal = 2
 grow_vertical = 2
 flat = true
 
+[node name="DesktopRoot" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Wallpaper" type="TextureRect" parent="DesktopRoot"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("8_desktop_bg")
+expand_mode = 1
+
+[node name="DesktopIconLogin" type="Button" parent="DesktopRoot"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 230.0
+offset_top = 26.0
+offset_right = 290.0
+offset_bottom = 100.0
+focus_mode = 2
+flat = true
+
+[node name="DesktopIconSecretTxt" type="Button" parent="DesktopRoot"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 580.0
+offset_top = 158.0
+offset_right = 650.0
+offset_bottom = 246.0
+focus_mode = 2
+flat = true
+
+[node name="DesktopChatBubbleBtn" type="Button" parent="DesktopRoot"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 873.0
+offset_top = 560.0
+offset_right = 1083.0
+offset_bottom = 656.0
+focus_mode = 2
+flat = true
+
+[node name="TaskbarStartButton" type="Button" parent="DesktopRoot"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 193.0
+offset_top = 658.0
+offset_right = 286.0
+offset_bottom = 718.0
+focus_mode = 2
+flat = true
+
+[node name="DesktopWindowCaseLauncher" type="Control" parent="DesktopRoot"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -140.0
+offset_right = 200.0
+offset_bottom = 140.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="FrameTexture" type="TextureRect" parent="DesktopRoot/DesktopWindowCaseLauncher"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("18_needy_win_frame")
+expand_mode = 1
+
+[node name="CloseWindowButton" type="Button" parent="DesktopRoot/DesktopWindowCaseLauncher"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -28.0
+offset_top = 4.0
+offset_right = -6.0
+offset_bottom = 26.0
+grow_horizontal = 0
+focus_mode = 0
+flat = true
+
+[node name="Content" type="VBoxContainer" parent="DesktopRoot/DesktopWindowCaseLauncher"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = 36.0
+offset_right = -24.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 14
+alignment = 1
+
+[node name="WindowDesc" type="Label" parent="DesktopRoot/DesktopWindowCaseLauncher/Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.35, 0.20, 0.45, 1)
+theme_override_font_sizes/font_size = 15
+text = "Hệ Thống Trinh Thám Hoàng Cung
+Vui lòng chọn thao tác:"
+horizontal_alignment = 1
+
+[node name="NewGame" type="Button" parent="DesktopRoot/DesktopWindowCaseLauncher/Content"]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_dupery_btn_accent_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_dupery_btn_accent_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_dupery_btn_accent_hover")
+text = "▶ Bắt Đầu Kỳ Án Mới"
+
+[node name="Continue" type="Button" parent="DesktopRoot/DesktopWindowCaseLauncher/Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_dupery_btn_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_dupery_btn_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_dupery_btn_hover")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_dupery_btn_disabled")
+text = "🔄 Tiếp Tục Trận Đã Lưu"
+disabled = true
+tooltip_text = "Chưa có trận đấu đã lưu"
+
+[node name="DesktopWindowSecretTxt" type="Control" parent="DesktopRoot"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -170.0
+offset_top = -100.0
+offset_right = 170.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="DesktopRoot/DesktopWindowSecretTxt"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("17_secret_window")
+expand_mode = 1
+
+[node name="CloseSecretWindowButton" type="Button" parent="DesktopRoot/DesktopWindowSecretTxt"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -26.0
+offset_top = 4.0
+offset_right = -6.0
+offset_bottom = 24.0
+grow_horizontal = 0
+focus_mode = 0
+flat = true
+
+[node name="DesktopStartMenu" type="Panel" parent="DesktopRoot"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_left = 193.0
+offset_top = 485.0
+offset_right = 380.0
+offset_bottom = 658.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_window_bg")
+
+[node name="VBox" type="VBoxContainer" parent="DesktopRoot/DesktopStartMenu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 8
+
+[node name="DesktopIconCaseGame" type="Button" parent="DesktopRoot/DesktopStartMenu/VBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 34)
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = SubResource("StyleBoxFlat_desktop_btn_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_desktop_btn_hover")
+text = "🎮 Kỳ Án.exe"
+
+[node name="DesktopIconCodex" type="Button" parent="DesktopRoot/DesktopStartMenu/VBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 34)
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = SubResource("StyleBoxFlat_desktop_btn_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_desktop_btn_hover")
+text = "📖 Sổ Vai Trò.doc"
+
+[node name="DesktopIconSettings" type="Button" parent="DesktopRoot/DesktopStartMenu/VBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 34)
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = SubResource("StyleBoxFlat_desktop_btn_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_desktop_btn_hover")
+text = "⚙️ Thiết Lập.cfg"
+
+[node name="DesktopIconQuit" type="Button" parent="DesktopRoot/DesktopStartMenu/VBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 34)
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = SubResource("StyleBoxFlat_desktop_btn_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_desktop_btn_hover")
+text = "🛑 Tắt Máy.bat"
+
 [node name="SafeMargin" type="MarginContainer" parent="."]
 unique_name_in_owner = true
 layout_mode = 1
@@ -505,256 +751,10 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_content")
 
 [node name="MainMenu" type="Control" parent="SafeMargin/Page/Content"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-
-[node name="DesktopRoot" type="Control" parent="SafeMargin/Page/Content/MainMenu"]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Wallpaper" type="TextureRect" parent="SafeMargin/Page/Content/MainMenu/DesktopRoot"]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-texture = ExtResource("8_desktop_bg")
-expand_mode = 1
-stretch_mode = 6
-
-[node name="DesktopIconLogin" type="Button" parent="SafeMargin/Page/Content/MainMenu/DesktopRoot"]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 345.0
-offset_top = 40.0
-offset_right = 435.0
-offset_bottom = 150.0
-focus_mode = 2
-flat = true
-
-[node name="DesktopIconSecretTxt" type="Button" parent="SafeMargin/Page/Content/MainMenu/DesktopRoot"]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 870.0
-offset_top = 238.0
-offset_right = 975.0
-offset_bottom = 370.0
-focus_mode = 2
-flat = true
-
-[node name="DesktopChatBubbleBtn" type="Button" parent="SafeMargin/Page/Content/MainMenu/DesktopRoot"]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 1310.0
-offset_top = 840.0
-offset_right = 1625.0
-offset_bottom = 985.0
-focus_mode = 2
-flat = true
-
-[node name="TaskbarStartButton" type="Button" parent="SafeMargin/Page/Content/MainMenu/DesktopRoot"]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 290.0
-offset_top = 988.0
-offset_right = 430.0
-offset_bottom = 1078.0
-focus_mode = 2
-flat = true
-
-[node name="DesktopWindowCaseLauncher" type="Control" parent="SafeMargin/Page/Content/MainMenu/DesktopRoot"]
-unique_name_in_owner = true
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -220.0
-offset_top = -180.0
-offset_right = 220.0
-offset_bottom = 180.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="FrameTexture" type="TextureRect" parent="SafeMargin/Page/Content/MainMenu/DesktopRoot/DesktopWindowCaseLauncher"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("18_needy_win_frame")
-expand_mode = 1
-
-[node name="CloseWindowButton" type="Button" parent="SafeMargin/Page/Content/MainMenu/DesktopRoot/DesktopWindowCaseLauncher"]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -30.0
-offset_top = 4.0
-offset_right = -6.0
-offset_bottom = 26.0
-grow_horizontal = 0
-focus_mode = 0
-flat = true
-
-[node name="Content" type="VBoxContainer" parent="SafeMargin/Page/Content/MainMenu/DesktopRoot/DesktopWindowCaseLauncher"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 24.0
-offset_top = 46.0
-offset_right = -24.0
-offset_bottom = -24.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 18
-alignment = 1
-
-[node name="WindowDesc" type="Label" parent="SafeMargin/Page/Content/MainMenu/DesktopRoot/DesktopWindowCaseLauncher/Content"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.35, 0.20, 0.45, 1)
-theme_override_font_sizes/font_size = 16
-text = "Hệ Thống Trinh Thám Hoàng Cung
-Vui lòng chọn thao tác:"
-horizontal_alignment = 1
-
-[node name="NewGame" type="Button" parent="SafeMargin/Page/Content/MainMenu/DesktopRoot/DesktopWindowCaseLauncher/Content"]
-custom_minimum_size = Vector2(0, 56)
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 18
-theme_override_styles/normal = SubResource("StyleBoxFlat_dupery_btn_accent_normal")
-theme_override_styles/hover = SubResource("StyleBoxFlat_dupery_btn_accent_hover")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_dupery_btn_accent_hover")
-text = "▶ Bắt Đầu Kỳ Án Mới"
-
-[node name="Continue" type="Button" parent="SafeMargin/Page/Content/MainMenu/DesktopRoot/DesktopWindowCaseLauncher/Content"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 56)
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 18
-theme_override_styles/normal = SubResource("StyleBoxFlat_dupery_btn_normal")
-theme_override_styles/hover = SubResource("StyleBoxFlat_dupery_btn_hover")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_dupery_btn_hover")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_dupery_btn_disabled")
-text = "🔄 Tiếp Tục Trận Đã Lưu"
-disabled = true
-tooltip_text = "Chưa có trận đấu đã lưu"
-
-[node name="DesktopWindowSecretTxt" type="Control" parent="SafeMargin/Page/Content/MainMenu/DesktopRoot"]
-unique_name_in_owner = true
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -200.0
-offset_top = -120.0
-offset_right = 200.0
-offset_bottom = 120.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="TextureRect" type="TextureRect" parent="SafeMargin/Page/Content/MainMenu/DesktopRoot/DesktopWindowSecretTxt"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("17_secret_window")
-expand_mode = 1
-
-[node name="CloseSecretWindowButton" type="Button" parent="SafeMargin/Page/Content/MainMenu/DesktopRoot/DesktopWindowSecretTxt"]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -28.0
-offset_top = 4.0
-offset_right = -6.0
-offset_bottom = 26.0
-grow_horizontal = 0
-focus_mode = 0
-flat = true
-
-[node name="DesktopStartMenu" type="Panel" parent="SafeMargin/Page/Content/MainMenu/DesktopRoot"]
-unique_name_in_owner = true
-visible = false
-layout_mode = 0
-offset_left = 290.0
-offset_top = 740.0
-offset_right = 530.0
-offset_bottom = 985.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_window_bg")
-
-[node name="VBox" type="VBoxContainer" parent="SafeMargin/Page/Content/MainMenu/DesktopRoot/DesktopStartMenu"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 12.0
-offset_top = 12.0
-offset_right = -12.0
-offset_bottom = -12.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 10
-
-[node name="DesktopIconCaseGame" type="Button" parent="SafeMargin/Page/Content/MainMenu/DesktopRoot/DesktopStartMenu/VBox"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 42)
-layout_mode = 2
-theme_override_font_sizes/font_size = 15
-theme_override_styles/normal = SubResource("StyleBoxFlat_desktop_btn_normal")
-theme_override_styles/hover = SubResource("StyleBoxFlat_desktop_btn_hover")
-text = "🎮 Kỳ Án.exe"
-
-[node name="DesktopIconCodex" type="Button" parent="SafeMargin/Page/Content/MainMenu/DesktopRoot/DesktopStartMenu/VBox"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 42)
-layout_mode = 2
-theme_override_font_sizes/font_size = 15
-theme_override_styles/normal = SubResource("StyleBoxFlat_desktop_btn_normal")
-theme_override_styles/hover = SubResource("StyleBoxFlat_desktop_btn_hover")
-text = "📖 Sổ Vai Trò.doc"
-
-[node name="DesktopIconSettings" type="Button" parent="SafeMargin/Page/Content/MainMenu/DesktopRoot/DesktopStartMenu/VBox"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 42)
-layout_mode = 2
-theme_override_font_sizes/font_size = 15
-theme_override_styles/normal = SubResource("StyleBoxFlat_desktop_btn_normal")
-theme_override_styles/hover = SubResource("StyleBoxFlat_desktop_btn_hover")
-text = "⚙️ Thiết Lập.cfg"
-
-[node name="DesktopIconQuit" type="Button" parent="SafeMargin/Page/Content/MainMenu/DesktopRoot/DesktopStartMenu/VBox"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 42)
-layout_mode = 2
-theme_override_font_sizes/font_size = 15
-theme_override_styles/normal = SubResource("StyleBoxFlat_desktop_btn_normal")
-theme_override_styles/hover = SubResource("StyleBoxFlat_desktop_btn_hover")
-text = "🛑 Tắt Máy.bat"
 
 [node name="MatchMode" type="CenterContainer" parent="SafeMargin/Page/Content"]
 unique_name_in_owner = true
@@ -2266,18 +2266,18 @@ fit_content = true
 text = "[center][b][color=#f6c95c]ĐANG ĐỔ XÚC XẮC...[/color][/b][/center]"
 autowrap_mode = 2
 
-[connection signal="pressed" from="SafeMargin/Page/Content/MainMenu/DesktopRoot/DesktopIconLogin" to="." method="_on_desktop_case_game_pressed"]
-[connection signal="pressed" from="SafeMargin/Page/Content/MainMenu/DesktopRoot/DesktopIconSecretTxt" to="." method="_on_desktop_secret_txt_pressed"]
-[connection signal="pressed" from="SafeMargin/Page/Content/MainMenu/DesktopRoot/DesktopChatBubbleBtn" to="." method="_on_desktop_case_game_pressed"]
-[connection signal="pressed" from="SafeMargin/Page/Content/MainMenu/DesktopRoot/TaskbarStartButton" to="." method="_on_taskbar_start_pressed"]
-[connection signal="pressed" from="SafeMargin/Page/Content/MainMenu/DesktopRoot/DesktopWindowCaseLauncher/CloseWindowButton" to="." method="_on_close_launcher_window_pressed"]
-[connection signal="pressed" from="SafeMargin/Page/Content/MainMenu/DesktopRoot/DesktopWindowCaseLauncher/Content/NewGame" to="." method="_on_new_game_pressed"]
-[connection signal="pressed" from="SafeMargin/Page/Content/MainMenu/DesktopRoot/DesktopWindowCaseLauncher/Content/Continue" to="." method="_on_continue_pressed"]
-[connection signal="pressed" from="SafeMargin/Page/Content/MainMenu/DesktopRoot/DesktopWindowSecretTxt/CloseSecretWindowButton" to="." method="_on_close_secret_window_pressed"]
-[connection signal="pressed" from="SafeMargin/Page/Content/MainMenu/DesktopRoot/DesktopStartMenu/VBox/DesktopIconCaseGame" to="." method="_on_desktop_case_game_pressed"]
-[connection signal="pressed" from="SafeMargin/Page/Content/MainMenu/DesktopRoot/DesktopStartMenu/VBox/DesktopIconCodex" to="." method="_on_desktop_codex_pressed"]
-[connection signal="pressed" from="SafeMargin/Page/Content/MainMenu/DesktopRoot/DesktopStartMenu/VBox/DesktopIconSettings" to="." method="_on_settings_pressed"]
-[connection signal="pressed" from="SafeMargin/Page/Content/MainMenu/DesktopRoot/DesktopStartMenu/VBox/DesktopIconQuit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="DesktopRoot/DesktopIconLogin" to="." method="_on_desktop_case_game_pressed"]
+[connection signal="pressed" from="DesktopRoot/DesktopIconSecretTxt" to="." method="_on_desktop_secret_txt_pressed"]
+[connection signal="pressed" from="DesktopRoot/DesktopChatBubbleBtn" to="." method="_on_desktop_case_game_pressed"]
+[connection signal="pressed" from="DesktopRoot/TaskbarStartButton" to="." method="_on_taskbar_start_pressed"]
+[connection signal="pressed" from="DesktopRoot/DesktopWindowCaseLauncher/CloseWindowButton" to="." method="_on_close_launcher_window_pressed"]
+[connection signal="pressed" from="DesktopRoot/DesktopWindowCaseLauncher/Content/NewGame" to="." method="_on_new_game_pressed"]
+[connection signal="pressed" from="DesktopRoot/DesktopWindowCaseLauncher/Content/Continue" to="." method="_on_continue_pressed"]
+[connection signal="pressed" from="DesktopRoot/DesktopWindowSecretTxt/CloseSecretWindowButton" to="." method="_on_close_secret_window_pressed"]
+[connection signal="pressed" from="DesktopRoot/DesktopStartMenu/VBox/DesktopIconCaseGame" to="." method="_on_desktop_case_game_pressed"]
+[connection signal="pressed" from="DesktopRoot/DesktopStartMenu/VBox/DesktopIconCodex" to="." method="_on_desktop_codex_pressed"]
+[connection signal="pressed" from="DesktopRoot/DesktopStartMenu/VBox/DesktopIconSettings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="DesktopRoot/DesktopStartMenu/VBox/DesktopIconQuit" to="." method="_on_exit_pressed"]
 [connection signal="pressed" from="SafeMargin/Page/Content/MatchMode/Column/Classic" to="." method="_on_classic_mode_pressed"]
 [connection signal="pressed" from="SafeMargin/Page/Content/MatchMode/Column/Custom" to="." method="_on_custom_mode_pressed"]
 [connection signal="pressed" from="SafeMargin/Page/Content/MatchMode/Column/ModeBack" to="." method="_on_match_mode_back_pressed"]

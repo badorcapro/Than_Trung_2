@@ -2785,21 +2785,15 @@ func _show_phase(next_phase: int) -> void:
 		subtitle.visible = not is_main_menu
 	if safe_margin != null:
 		safe_margin.visible = (
-			next_phase != SETUP_SESSION.Phase.CASE_ACTIVE
+			not is_main_menu
+			and next_phase != SETUP_SESSION.Phase.CASE_ACTIVE
 			and next_phase != SETUP_SESSION.Phase.LOOT_ACTIVE
 			and next_phase != SETUP_SESSION.Phase.EQUIPMENT_MANAGEMENT
 		)
-		if is_main_menu:
-			safe_margin.offset_left = 0.0
-			safe_margin.offset_top = 0.0
-			safe_margin.offset_right = 0.0
-			safe_margin.offset_bottom = 0.0
-		else:
-			safe_margin.offset_left = 24.0
-			safe_margin.offset_top = 18.0
-			safe_margin.offset_right = -24.0
-			safe_margin.offset_bottom = -18.0
-	main_menu.visible = is_main_menu
+	if desktop_root != null:
+		desktop_root.visible = is_main_menu
+	if main_menu != null:
+		main_menu.visible = is_main_menu
 	if is_main_menu:
 		if desktop_window_case_launcher != null:
 			desktop_window_case_launcher.visible = false
