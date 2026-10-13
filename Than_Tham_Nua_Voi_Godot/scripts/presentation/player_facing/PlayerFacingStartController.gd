@@ -355,11 +355,7 @@ func _input(event: InputEvent) -> void:
 
 
 func _start_splash_prompt_pulse() -> void:
-	if splash_prompt == null:
-		return
-	var tween: Tween = create_tween().set_loops()
-	tween.tween_property(splash_prompt, "modulate:a", 0.35, 0.9).set_trans(Tween.TRANS_SINE)
-	tween.tween_property(splash_prompt, "modulate:a", 1.0, 0.9).set_trans(Tween.TRANS_SINE)
+	pass
 
 
 func _on_splash_click_catcher_pressed() -> void:
@@ -367,14 +363,18 @@ func _on_splash_click_catcher_pressed() -> void:
 
 
 func _on_splash_intro_finished() -> void:
-	if not _is_at_splash:
-		return
-	if splash_loop_video != null:
-		splash_loop_video.visible = true
-		splash_loop_video.play()
+	pass
+
+
+func _dismiss_splash_screen() -> void:
+	_is_at_splash = false
 	if splash_video != null:
-		splash_video.visible = false
 		splash_video.stop()
+	if splash_loop_video != null:
+		splash_loop_video.stop()
+	if splash_panel != null:
+		splash_panel.visible = false
+	_show_phase(setup.phase)
 
 
 func _init_desktop_system() -> void:
