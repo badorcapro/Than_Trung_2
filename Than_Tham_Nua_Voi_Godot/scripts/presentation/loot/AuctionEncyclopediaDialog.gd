@@ -164,10 +164,16 @@ func _build_sidebar() -> Control:
 	r_header_hbox.add_child(_rarity_name_lbl)
 
 	var r_reset_btn := Button.new()
-	r_reset_btn.text = "⊞"
 	r_reset_btn.tooltip_text = "Chọn tất cả phẩm chất"
-	r_reset_btn.custom_minimum_size = Vector2(24, 24)
+	r_reset_btn.custom_minimum_size = Vector2(28, 28)
 	r_reset_btn.focus_mode = FOCUS_NONE
+	r_reset_btn.flat = true
+	r_reset_btn.expand_icon = true
+	var sel_all_tex := _get_cached_texture("res://assets/auction_items/rarity_buttons/rarity_btn_select_all.png")
+	if sel_all_tex != null:
+		r_reset_btn.icon = sel_all_tex
+	else:
+		r_reset_btn.text = "⊞"
 	r_reset_btn.pressed.connect(func() -> void:
 		_rarity_filter_enabled = false
 		_selected_rarities.clear()
@@ -177,10 +183,16 @@ func _build_sidebar() -> Control:
 	r_header_hbox.add_child(r_reset_btn)
 
 	var r_deselect_btn := Button.new()
-	r_deselect_btn.text = "⊟"
 	r_deselect_btn.tooltip_text = "Bỏ chọn tất cả phẩm chất"
-	r_deselect_btn.custom_minimum_size = Vector2(24, 24)
+	r_deselect_btn.custom_minimum_size = Vector2(28, 28)
 	r_deselect_btn.focus_mode = FOCUS_NONE
+	r_deselect_btn.flat = true
+	r_deselect_btn.expand_icon = true
+	var desel_all_tex := _get_cached_texture("res://assets/auction_items/rarity_buttons/rarity_btn_deselect_all.png")
+	if desel_all_tex != null:
+		r_deselect_btn.icon = desel_all_tex
+	else:
+		r_deselect_btn.text = "⊟"
 	r_deselect_btn.pressed.connect(func() -> void:
 		_rarity_filter_enabled = true
 		_selected_rarities.clear()
@@ -189,9 +201,9 @@ func _build_sidebar() -> Control:
 	)
 	r_header_hbox.add_child(r_deselect_btn)
 
-	# Diamond buttons row
+	# Diamond buttons row (6 Rarities from rarity.png)
 	var diamonds_hbox := HBoxContainer.new()
-	diamonds_hbox.add_theme_constant_override("separation", 6)
+	diamonds_hbox.add_theme_constant_override("separation", 8)
 	side_vbox.add_child(diamonds_hbox)
 
 	var rarities := [
@@ -204,15 +216,21 @@ func _build_sidebar() -> Control:
 	]
 	for r in rarities:
 		var d_btn := Button.new()
-		d_btn.text = "◆"
-		var col: Color = ITEM_CLASS.rarity_color(r)
-		d_btn.add_theme_color_override("font_color", col)
-		d_btn.add_theme_font_size_override("font_size", 18)
-		d_btn.custom_minimum_size = Vector2(30, 30)
+		d_btn.custom_minimum_size = Vector2(46, 46)
 		d_btn.focus_mode = FOCUS_NONE
+		d_btn.flat = true
+		d_btn.expand_icon = true
+		d_btn.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		d_btn.tooltip_text = ITEM_CLASS.rarity_name(r)
 		var r_val: int = int(r)
 		d_btn.set_meta("rarity", r_val)
+		var init_tex := _get_cached_texture("res://assets/auction_items/rarity_buttons/rarity_btn_%d_on.png" % r_val)
+		if init_tex != null:
+			d_btn.icon = init_tex
+		else:
+			d_btn.text = "◆"
+			d_btn.add_theme_color_override("font_color", ITEM_CLASS.rarity_color(r))
+			d_btn.add_theme_font_size_override("font_size", 18)
 		d_btn.pressed.connect(func() -> void:
 			if not _rarity_filter_enabled:
 				_rarity_filter_enabled = true
@@ -448,10 +466,16 @@ func _refresh_filters_ui() -> void:
 
 	for btn in _rarity_buttons:
 		var r: int = int(btn.get_meta("rarity", -1))
-		if not _rarity_filter_enabled or _selected_rarities.has(r):
+		var is_active: bool = (not _rarity_filter_enabled or _selected_rarities.has(r))
+		var icon_state: String = "on" if is_active else "off"
+		var tex_path: String = "res://assets/auction_items/rarity_buttons/rarity_btn_%d_%s.png" % [r, icon_state]
+		var tex: Texture2D = _get_cached_texture(tex_path)
+		if tex != null:
+			btn.icon = tex
+		if is_active:
 			btn.modulate = Color(1.0, 1.0, 1.0, 1.0)
 		else:
-			btn.modulate = Color(0.65, 0.65, 0.65, 0.28)
+			btn.modulate = Color(0.85, 0.85, 0.85, 0.40)
 
 	# 2. Category label & button highlights
 	if not _category_filter_enabled:

@@ -230,8 +230,14 @@ func _catalog_white_items_contract() -> bool:
 func _encyclopedia_dialog_contract() -> bool:
 	var dialog := ENCYCLOPEDIA_CLASS.new()
 	var white_items: Array[Dictionary] = CATALOG_CLASS.filter_items(ITEM_CLASS.Rarity.WHITE)
-	var antique_items: Array[Dictionary] = CATALOG_CLASS.filter_items(-1, "antique")
+	var document_items: Array[Dictionary] = CATALOG_CLASS.filter_items(-1, "document")
 	var shape_1x1_items: Array[Dictionary] = CATALOG_CLASS.filter_items(-1, "", Vector2i(1, 1))
+
+	# Kiểm tra đồ đỏ chỉ còn duy nhất Locking Component
+	var red_items: Array[Dictionary] = CATALOG_CLASS.filter_items(ITEM_CLASS.Rarity.RED)
+	if red_items.size() != 1 or String(red_items[0].get("id", "")) != "locking_component_5":
+		dialog.free()
+		return false
 
 	# Test multi-select shape: 1x1 OR 1x2
 	var multi_shapes: Array[Dictionary] = CATALOG_CLASS.filter_items_multi(
@@ -256,7 +262,7 @@ func _encyclopedia_dialog_contract() -> bool:
 		dialog.free()
 		return false
 
-	var valid := not white_items.is_empty() and not antique_items.is_empty() and not shape_1x1_items.is_empty() and not multi_shapes.is_empty()
+	var valid := not white_items.is_empty() and not document_items.is_empty() and not shape_1x1_items.is_empty() and not multi_shapes.is_empty()
 	if dialog._dialog_panel == null:
 		valid = false
 	dialog.free()
