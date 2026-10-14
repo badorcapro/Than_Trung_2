@@ -598,6 +598,13 @@ func _create_item_card(data: Dictionary) -> Control:
 	card_style.corner_radius_bottom_left = 6
 	card_style.corner_radius_bottom_right = 6
 	card.add_theme_stylebox_override("panel", card_style)
+	card.tooltip_text = "%s\nPhẩm chất: %s\nKích thước: %dx%d ô\nGiá trị: %s Xu Bạc\nKhối lượng: %s" % [
+		d_name,
+		ITEM_CLASS.rarity_name(rarity as ITEM_CLASS.Rarity),
+		w, h,
+		_format_number(s_val),
+		weight_str
+	]
 
 	var card_vbox := VBoxContainer.new()
 	card_vbox.add_theme_constant_override("separation", 2)
@@ -635,11 +642,22 @@ func _create_item_card(data: Dictionary) -> Control:
 	h_hbox.add_theme_constant_override("separation", 6)
 	h_margin.add_child(h_hbox)
 
-	var diamond_lbl := Label.new()
-	diamond_lbl.text = "◆"
-	diamond_lbl.add_theme_font_size_override("font_size", 14)
-	diamond_lbl.add_theme_color_override("font_color", r_color)
-	h_hbox.add_child(diamond_lbl)
+	var rarity_icon := TextureRect.new()
+	rarity_icon.custom_minimum_size = Vector2(18, 18)
+	rarity_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	rarity_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	rarity_icon.tooltip_text = ITEM_CLASS.rarity_name(rarity as ITEM_CLASS.Rarity)
+	var r_svg_path := _get_rarity_svg_path(rarity, true)
+	var r_tex := _get_cached_texture(r_svg_path)
+	if r_tex != null:
+		rarity_icon.texture = r_tex
+		h_hbox.add_child(rarity_icon)
+	else:
+		var diamond_lbl := Label.new()
+		diamond_lbl.text = "◆"
+		diamond_lbl.add_theme_font_size_override("font_size", 14)
+		diamond_lbl.add_theme_color_override("font_color", r_color)
+		h_hbox.add_child(diamond_lbl)
 
 	var name_lbl := Label.new()
 	name_lbl.text = d_name
@@ -648,6 +666,7 @@ func _create_item_card(data: Dictionary) -> Control:
 	name_lbl.size_flags_horizontal = SIZE_EXPAND_FILL
 	name_lbl.clip_text = true
 	h_hbox.add_child(name_lbl)
+
 
 	# --- 2. Center Image & Footprint Area ---
 	var body_control := Control.new()
