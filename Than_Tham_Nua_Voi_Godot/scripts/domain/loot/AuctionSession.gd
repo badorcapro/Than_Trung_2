@@ -99,19 +99,92 @@ func decline_solo_offer(player_id: StringName) -> bool:
 	return true
 
 
+## Tỉ lệ áp đảo để đoạt hòm ngay lập tức theo từng vòng:
+## Vòng 1: Top 1 >= Top 2 * 2.0
+## Vòng 2: Top 1 >= Top 2 * 1.6
+## Vòng 3: Top 1 >= Top 2 * 1.4
+## Vòng 4: Top 1 >= Top 2 * 1.2
+const KNOCKOUT_RATIOS: Dictionary = {
+	1: 2.0,
+	2: 1.6,
+	3: 1.4,
+	4: 1.2,
+}
+
+
 ## Đặt giá trong đấu giá nhiều người
 func place_bid(player_id: StringName, bid_amount: int) -> bool:
 	if state != State.AUCTION_ACTIVE:
 		return false
 	if not active_bidder_ids.has(player_id):
 		return false
-	if bid_amount <= highest_bid:
+	if bid_amount <= 0:
 		return false
 
-	highest_bid = bid_amount
-	highest_bidder_id = player_id
 	round_bids[player_id] = bid_amount
+	if bid_amount > highest_bid or highest_bid == 0:
+		highest_bid = bid_amount
+		highest_bidder_id = player_id
 	return true
+
+
+## Kiểm tra xem vòng hiện tại có người chơi nào kích hoạt luật áp đảo (knockout buyout) không
+func check_knockout_winner() -> Dictionary:
+	if state != State.AUCTION_ACTIVE:
+		return {}
+	if not KNOCKOUT_RATIOS.has(current_round):
+		return {}
+	if active_bidder_ids.size() < 2:
+		return {}
+
+	# Lấy danh sách người chơi và giá vòng này
+	var active_bids: Array[Dictionary] = []
+	for pid in active_bidder_ids:
+		var b: int = int(round_bids.get(pid, 0))
+		active_bids.append({"pid": pid, "bid": b})
+
+	active_bids.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
+		return int(a.get("bid", 0)) > int(b.get("bid", 0))
+	)
+
+	var top1_pid: StringName = active_bids[0].get("pid")
+	var top1_bid: int = int(active_bids[0].get("bid", 0))
+	var top2_pid: StringName = active_bids[1].get("pid")
+	var top2_bid: int = int(active_bids[1].get("bid", 0))
+
+	# Nếu không có ai ra giá (>0) thì không kích hoạt
+	if top1_bid <= 0:
+		return {}
+
+	var req_ratio: float = float(KNOCKOUT_RATIOS[current_round])
+	var is_knockout: bool = false
+	var actual_ratio: float = 0.0
+
+	if top2_bid > 0:
+		actual_ratio = float(top1_bid) / float(top2_bid)
+		is_knockout = (actual_ratio >= req_ratio)
+	else:
+		actual_ratio = 999.0
+		is_knockout = true
+
+	if is_knockout:
+		winner_player_id = top1_pid
+		final_price_paid = top1_bid
+		highest_bid = top1_bid
+		highest_bidder_id = top1_pid
+		_settle_auction()
+		state = State.COMPLETED
+		return {
+			"winner_id": top1_pid,
+			"top1_bid": top1_bid,
+			"top2_id": top2_pid,
+			"top2_bid": top2_bid,
+			"round": current_round,
+			"req_ratio": req_ratio,
+			"actual_ratio": actual_ratio,
+		}
+
+	return {}
 
 
 ## Bỏ cuộc / dừng theo giá

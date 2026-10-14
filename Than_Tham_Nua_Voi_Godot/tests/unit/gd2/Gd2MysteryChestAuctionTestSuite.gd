@@ -26,6 +26,7 @@ func run() -> Array[Dictionary]:
 	rows.append(_row("Bách khoa toàn thư: Danh mục vật phẩm trắng đăng ký đúng tên, size, giá và asset", _catalog_white_items_contract()))
 	rows.append(_row("Bách khoa toàn thư: Dialog thông tin thời gian thực khởi tạo và lọc danh mục thành công", _encyclopedia_dialog_contract()))
 	rows.append(_row("Đấu giá Nhiều Người: Lần lượt từng người chơi ra giá và hỗ trợ nhập số tùy ý", _auction_screen_turn_and_input_contract()))
+	rows.append(_row("Đoạt hòm áp đảo: Vòng 1 Top 1 > Top 2 gấp 2x, V2 1.6x, V3 1.4x, V4 1.2x thắng ngay lập tức", _knockout_buyout_contract()))
 	return rows
 
 
@@ -274,12 +275,12 @@ func _auction_screen_turn_and_input_contract() -> bool:
 		screen.free()
 		return false
 
-	# 2. Arbitrary number input by p1
-	screen._bid_input.text = "75"
+	# 2. Arbitrary number input by p1: 30 Xu
+	screen._bid_input.text = "30"
 	screen._on_confirm_bid_pressed()
 
-	# p1 placed 75, highest_bid is now 75
-	if session.highest_bid != 75 or session.highest_bidder_id != &"p1":
+	# p1 placed 30, highest_bid is now 30
+	if session.highest_bid != 30 or session.highest_bidder_id != &"p1":
 		screen.free()
 		return false
 
@@ -288,8 +289,9 @@ func _auction_screen_turn_and_input_contract() -> bool:
 		screen.free()
 		return false
 
-	# 4. p2 passes their turn
-	screen._on_pass_bid_pressed()
+	# 4. p2 places 20 Xu (30 / 20 = 1.5x, does not trigger 2.0x knockout in Round 1)
+	screen._bid_input.text = "20"
+	screen._on_confirm_bid_pressed()
 
 	# 5. Round is now completed because both p1 and p2 have acted
 	if not screen._round_completed:
@@ -308,4 +310,61 @@ func _auction_screen_turn_and_input_contract() -> bool:
 		return false
 
 	screen.free()
+	return true
+
+
+func _knockout_buyout_contract() -> bool:
+	var chest := CHEST_CLASS.new()
+	chest.roll_vault_deposit(4)
+
+	# Test Round 1: Top 1 >= 2.0 * Top 2 (50 vs 20 -> 2.5x >= 2.0x)
+	var s1 := AUCTION_CLASS.new()
+	s1.initialize([&"p1", &"p2"], chest)
+	s1.place_bid(&"p1", 50)
+	s1.place_bid(&"p2", 20)
+	var ko1: Dictionary = s1.check_knockout_winner()
+	if ko1.is_empty() or ko1.get("winner_id") != &"p1" or s1.state != AUCTION_CLASS.State.COMPLETED:
+		return false
+
+	# Test Round 1 failed knockout: 30 vs 20 (1.5x < 2.0x)
+	var s1_fail := AUCTION_CLASS.new()
+	s1_fail.initialize([&"p1", &"p2"], chest)
+	s1_fail.place_bid(&"p1", 30)
+	s1_fail.place_bid(&"p2", 20)
+	if not s1_fail.check_knockout_winner().is_empty() or s1_fail.state == AUCTION_CLASS.State.COMPLETED:
+		return false
+
+	# Test Round 2: Top 1 >= 1.6 * Top 2 (40 vs 25 -> 1.6x >= 1.6x)
+	var s2 := AUCTION_CLASS.new()
+	s2.initialize([&"p1", &"p2"], chest)
+	s2.advance_round() # V2
+	s2.place_bid(&"p1", 40)
+	s2.place_bid(&"p2", 25)
+	var ko2: Dictionary = s2.check_knockout_winner()
+	if ko2.is_empty() or ko2.get("winner_id") != &"p1":
+		return false
+
+	# Test Round 3: Top 1 >= 1.4 * Top 2 (70 vs 50 -> 1.4x >= 1.4x)
+	var s3 := AUCTION_CLASS.new()
+	s3.initialize([&"p1", &"p2"], chest)
+	s3.advance_round() # V2
+	s3.advance_round() # V3
+	s3.place_bid(&"p1", 70)
+	s3.place_bid(&"p2", 50)
+	var ko3: Dictionary = s3.check_knockout_winner()
+	if ko3.is_empty() or ko3.get("winner_id") != &"p1":
+		return false
+
+	# Test Round 4: Top 1 >= 1.2 * Top 2 (60 vs 50 -> 1.2x >= 1.2x)
+	var s4 := AUCTION_CLASS.new()
+	s4.initialize([&"p1", &"p2"], chest)
+	s4.advance_round() # V2
+	s4.advance_round() # V3
+	s4.advance_round() # V4
+	s4.place_bid(&"p1", 60)
+	s4.place_bid(&"p2", 50)
+	var ko4: Dictionary = s4.check_knockout_winner()
+	if ko4.is_empty() or ko4.get("winner_id") != &"p1":
+		return false
+
 	return true

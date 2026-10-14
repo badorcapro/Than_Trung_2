@@ -818,7 +818,14 @@ func refresh_ui() -> void:
 	if auction_session == null:
 		return
 
-	_round_label.text = "VÒNG %d / %d" % [auction_session.current_round, AUCTION_SESSION_CLASS.MAX_ROUNDS]
+	var ko_hint := ""
+	if AUCTION_SESSION_CLASS.KNOCKOUT_RATIOS.has(auction_session.current_round):
+		var r_ratio: float = float(AUCTION_SESSION_CLASS.KNOCKOUT_RATIOS[auction_session.current_round])
+		ko_hint = " • ÁP ĐẢO: TOP 1 ≥ %.1fx TOP 2" % r_ratio
+	else:
+		ko_hint = " • VÒNG CHỐT HẠ"
+
+	_round_label.text = "VÒNG %d / %d%s" % [auction_session.current_round, AUCTION_SESSION_CLASS.MAX_ROUNDS, ko_hint]
 
 	_render_bidders()
 	_render_clues()
@@ -1287,9 +1294,50 @@ func _advance_to_next_bidder_turn() -> void:
 	_current_turn_bidder_index += 1
 	if _current_turn_bidder_index >= auction_session.active_bidder_ids.size():
 		_round_completed = true
+		# Kiểm tra luật đoạt hòm áp đảo (Knockout Buyout) ngay lập tức
+		var ko_data: Dictionary = auction_session.check_knockout_winner()
+		if not ko_data.is_empty():
+			_handle_knockout_victory(ko_data)
+			return
 	else:
 		_setup_initial_bid_for_current_player()
 	refresh_ui()
+
+
+func _handle_knockout_victory(ko_data: Dictionary) -> void:
+	var w_pid: StringName = ko_data.get("winner_id", &"")
+	var w_bid: int = int(ko_data.get("top1_bid", 0))
+	var t2_pid: StringName = ko_data.get("top2_id", &"")
+	var t2_bid: int = int(ko_data.get("top2_bid", 0))
+	var r: int = int(ko_data.get("round", 1))
+	var req_r: float = float(ko_data.get("req_ratio", 2.0))
+	var act_r: float = float(ko_data.get("actual_ratio", 2.0))
+
+	var msg := ""
+	if t2_bid > 0:
+		msg = "💥 ĐOẠT HÒM ÁP ĐẢO (VÒNG %d)! %s ra giá %s Xu (gấp %.2fx so với %s: %s Xu, mốc yêu cầu %.1fx) — Ngay lập tức sở hữu hòm!" % [
+			r, String(w_pid), _format_number(w_bid), act_r, String(t2_pid), _format_number(t2_bid), req_r
+		]
+	else:
+		msg = "💥 ĐOẠT HÒM ÁP ĐẢO (VÒNG %d)! %s ra giá %s Xu trong khi đối thủ không theo giá — Ngay lập tức sở hữu hòm!" % [
+			r, String(w_pid), _format_number(w_bid)
+		]
+
+	_show_bid_feedback(msg)
+	if _turn_info_label != null:
+		_turn_info_label.text = msg
+		_turn_info_label.add_theme_color_override("font_color", Color("#50fa7b"))
+
+	if _confirm_bid_btn != null: _confirm_bid_btn.disabled = true
+	if _pass_btn != null: _pass_btn.disabled = true
+	if _fold_btn != null: _fold_btn.disabled = true
+	if _bid_input != null: _bid_input.editable = false
+	if _next_round_btn != null: _next_round_btn.visible = false
+
+	var timer := get_tree().create_timer(1.6)
+	timer.timeout.connect(func() -> void:
+		_show_settlement_dialog()
+	)
 
 
 func _on_next_round_pressed() -> void:
