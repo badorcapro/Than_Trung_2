@@ -58,6 +58,9 @@ const AUCTION_SESSION := preload(
 const MYSTERY_CHEST_STATE := preload(
 	"res://scripts/domain/loot/MysteryChestState.gd"
 )
+const AUCTION_ENCYCLOPEDIA := preload(
+	"res://scripts/presentation/loot/AuctionEncyclopediaDialog.gd"
+)
 
 var setup: SETUP_SESSION = SETUP_SESSION.new()
 var case_flow: CASE_FLOW_SESSION
@@ -66,6 +69,7 @@ var _mystery_chest: MysteryChestState = MysteryChestState.new()
 var _vault_reach_player_ids: Array[StringName] = []
 var _auction_session: AuctionSession = null
 var _auction_screen: AuctionScreen = null
+var _auction_encyclopedia: AuctionEncyclopediaDialog = null
 var _loot_activity_lines: Array[String] = []
 var _logged_reward_count := 0
 var _selected_branch_id: StringName = &""
@@ -268,6 +272,13 @@ func _ready() -> void:
 	_auction_screen.visible = false
 	_auction_screen.auction_finished.connect(_on_auction_finished)
 	auction_layer.add_child(_auction_screen)
+	var enc_layer := CanvasLayer.new()
+	enc_layer.name = "AuctionEncyclopediaLayer"
+	enc_layer.layer = 125
+	add_child(enc_layer)
+	_auction_encyclopedia = AUCTION_ENCYCLOPEDIA.new()
+	_auction_encyclopedia.visible = false
+	enc_layer.add_child(_auction_encyclopedia)
 	_init_cheat_layer()
 	_init_desktop_system()
 	if splash_click_catcher != null and not splash_click_catcher.pressed.is_connected(_on_splash_click_catcher_pressed):
@@ -3286,6 +3297,9 @@ func _init_cheat_layer() -> void:
 	_add_cheat_btn(grid, "🎲 Đổi Pattern Đấu Giá", func() -> void:
 		_cheat_reroll_auction_pattern()
 	)
+	_add_cheat_btn(grid, "🔍 Bách Khoa Toàn Thư Đấu Giá", func() -> void:
+		_cheat_open_auction_encyclopedia()
+	)
 
 
 func _toggle_cheat_menu() -> void:
@@ -3588,6 +3602,12 @@ func _cheat_reroll_auction_pattern() -> void:
 		_auction_screen.setup(_auction_session, player_silvers)
 		_auction_screen.visible = true
 	_notify_cheat("Đã đổi pattern hòm bí ẩn & mở lại phiên Đấu Giá!")
+
+
+func _cheat_open_auction_encyclopedia() -> void:
+	if _auction_encyclopedia != null:
+		_auction_encyclopedia.open_dialog()
+		_notify_cheat("Đã mở Bách Khoa Toàn Thư / Thông tin thời gian thực!")
 
 
 func _add_cheat_btn(parent: Node, label_text: String, callback: Callable) -> Button:

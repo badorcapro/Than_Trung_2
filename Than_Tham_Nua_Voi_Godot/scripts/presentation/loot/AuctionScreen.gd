@@ -6,6 +6,7 @@ signal auction_finished(settlement_data: Dictionary)
 const AUCTION_SESSION_CLASS := preload("res://scripts/domain/loot/AuctionSession.gd")
 const CHEST_STATE_CLASS := preload("res://scripts/domain/loot/MysteryChestState.gd")
 const ITEM_CLASS := preload("res://scripts/domain/loot/MysteryChestItem.gd")
+const ENCYCLOPEDIA_DIALOG_CLASS := preload("res://scripts/presentation/loot/AuctionEncyclopediaDialog.gd")
 
 const CELL_SIZE: int = 46
 const SETTLEMENT_CELL_SIZE: int = 54
@@ -14,6 +15,7 @@ const GRID_ROWS: int = 8
 
 var auction_session: AuctionSession
 var player_silver_balances: Dictionary = {} # player_id -> int
+var encyclopedia_dialog: AuctionEncyclopediaDialog = null
 
 # Item placements in the 10x8 grid
 # Dictionary: item_id -> { "pos": Vector2i, "w": int, "h": int, "item": MysteryChestItem }
@@ -118,6 +120,18 @@ func _build_ui() -> void:
 	currency_lbl.add_theme_font_size_override("font_size", 15)
 	currency_lbl.add_theme_color_override("font_color", Color("#8be9fd"))
 	top_bar.add_child(currency_lbl)
+
+	var encyclopedia_btn := Button.new()
+	encyclopedia_btn.text = "🔍 Thông Tin Thời Gian Thực"
+	encyclopedia_btn.tooltip_text = "Tra cứu Bách Khoa Toàn Thư / Xem danh mục đồ đấu giá (Phím B)"
+	encyclopedia_btn.custom_minimum_size = Vector2(210, 34)
+	encyclopedia_btn.focus_mode = FOCUS_NONE
+	encyclopedia_btn.add_theme_font_size_override("font_size", 13)
+	encyclopedia_btn.pressed.connect(func() -> void:
+		if encyclopedia_dialog != null:
+			encyclopedia_dialog.open_dialog()
+	)
+	top_bar.add_child(encyclopedia_btn)
 
 	# --- 3 Columns Body ---
 	var body_hbox := HBoxContainer.new()
@@ -339,6 +353,10 @@ func _build_ui() -> void:
 	btm_hbox.add_child(_next_round_btn)
 
 	_build_settlement_dialog()
+
+	encyclopedia_dialog = ENCYCLOPEDIA_DIALOG_CLASS.new()
+	encyclopedia_dialog.visible = false
+	add_child(encyclopedia_dialog)
 
 
 func _build_settlement_dialog() -> void:
@@ -1293,6 +1311,18 @@ func _on_skip_pressed() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if not visible:
+		return
+	if event is InputEventKey and event.pressed and not event.echo:
+		if event.keycode == KEY_B:
+			if encyclopedia_dialog != null:
+				if encyclopedia_dialog.visible:
+					encyclopedia_dialog.close_dialog()
+				else:
+					encyclopedia_dialog.open_dialog()
+			get_viewport().set_input_as_handled()
+			return
+
 	if _settlement_overlay != null and _settlement_overlay.visible:
 		if event is InputEventKey and event.pressed and not event.echo:
 			if event.keycode == KEY_SPACE or event.keycode == KEY_ENTER:

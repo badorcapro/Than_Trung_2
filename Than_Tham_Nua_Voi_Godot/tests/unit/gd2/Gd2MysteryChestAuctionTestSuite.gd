@@ -4,6 +4,8 @@ extends RefCounted
 const ITEM_CLASS := preload("res://scripts/domain/loot/MysteryChestItem.gd")
 const CHEST_CLASS := preload("res://scripts/domain/loot/MysteryChestState.gd")
 const AUCTION_CLASS := preload("res://scripts/domain/loot/AuctionSession.gd")
+const CATALOG_CLASS := preload("res://scripts/domain/loot/AuctionCatalog.gd")
+const ENCYCLOPEDIA_CLASS := preload("res://scripts/presentation/loot/AuctionEncyclopediaDialog.gd")
 
 
 func run() -> Array[Dictionary]:
@@ -19,7 +21,9 @@ func run() -> Array[Dictionary]:
 	rows.append(_row("Đấu giá Nhiều Người: Người trả giá cao nhất thắng cuộc", _multiplayer_highest_bid_wins_contract()))
 	rows.append(_row("Tổng kết phiên: Quy đổi xu chính xác và giữ lại đúng đồ đỏ", _settlement_accounting_contract()))
 	rows.append(_row("Đấu giá Solo: Tiết lộ ngẫu nhiên 3 hoặc 4 manh mối ngay từ đầu", _solo_3_or_4_hints_contract()))
-	rows.append(_row("Các dải Xu Bạc 100-300, 300-500, 500-700 thiết lập đúng dải ngẫu nhiên", _silver_ranges_contract()))
+	rows.append(_row("Các dải Xu Bạc 25-100, 100-175, 175-250 thiết lập đúng dải ngẫu nhiên", _silver_ranges_contract()))
+	rows.append(_row("Bách khoa toàn thư: Danh mục vật phẩm trắng đăng ký đúng tên, size, giá và asset", _catalog_white_items_contract()))
+	rows.append(_row("Bách khoa toàn thư: Dialog thông tin thời gian thực khởi tạo và lọc danh mục thành công", _encyclopedia_dialog_contract()))
 	return rows
 
 
@@ -182,9 +186,9 @@ func _silver_ranges_contract() -> bool:
 	if small == null or large == null or grand == null:
 		return false
 	return (
-		small.amount == 100 and small.amount_max == 300
-		and large.amount == 300 and large.amount_max == 500
-		and grand.amount == 500 and grand.amount_max == 700
+		small.amount == 25 and small.amount_max == 100
+		and large.amount == 100 and large.amount_max == 175
+		and grand.amount == 175 and grand.amount_max == 250
 	)
 
 
@@ -195,3 +199,37 @@ func _solo_3_or_4_hints_contract() -> bool:
 	auction.initialize([&"player_solo"], chest)
 	var count: int = auction.hints_history.size()
 	return count >= 3 and count <= 4
+
+
+func _catalog_white_items_contract() -> bool:
+	var items: Array[Dictionary] = CATALOG_CLASS.get_all_items()
+	if items.is_empty():
+		return false
+	var sheet := CATALOG_CLASS.get_item_by_id("transaction_sheet")
+	var newspaper := CATALOG_CLASS.get_item_by_id("local_newspaper")
+	var tube := CATALOG_CLASS.get_item_by_id("sample_test_tube")
+	var queen := CATALOG_CLASS.get_item_by_id("card_queen")
+	var king := CATALOG_CLASS.get_item_by_id("card_king")
+
+	if sheet.is_empty() or sheet.get("display_name") != "Transaction Sheet" or sheet.get("grid_width") != 1 or sheet.get("grid_height") != 1:
+		return false
+	if newspaper.is_empty() or newspaper.get("display_name") != "Local Newspaper" or newspaper.get("grid_width") != 1 or newspaper.get("grid_height") != 2:
+		return false
+	if tube.is_empty() or tube.get("display_name") != "Sample Test Tube" or tube.get("grid_width") != 2 or tube.get("grid_height") != 1:
+		return false
+	if queen.is_empty() or queen.get("silver_value") != 11:
+		return false
+	if king.is_empty() or king.get("silver_value") != 12:
+		return false
+	return true
+
+
+func _encyclopedia_dialog_contract() -> bool:
+	var dialog := ENCYCLOPEDIA_CLASS.new()
+	var white_items: Array[Dictionary] = CATALOG_CLASS.filter_items(ITEM_CLASS.Rarity.WHITE)
+	var antique_items: Array[Dictionary] = CATALOG_CLASS.filter_items(-1, "antique")
+	var shape_1x1_items: Array[Dictionary] = CATALOG_CLASS.filter_items(-1, "", Vector2i(1, 1))
+
+	var valid := not white_items.is_empty() and not antique_items.is_empty() and not shape_1x1_items.is_empty()
+	dialog.free()
+	return valid

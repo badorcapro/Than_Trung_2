@@ -1,0 +1,641 @@
+class_name AuctionEncyclopediaDialog
+extends Control
+
+signal closed
+
+const CATALOG_CLASS := preload("res://scripts/domain/loot/AuctionCatalog.gd")
+const ITEM_CLASS := preload("res://scripts/domain/loot/MysteryChestItem.gd")
+
+# Filters state
+var _selected_rarity: int = -1 # -1 means All
+var _selected_category: String = "" # "" means All
+var _selected_shape: Vector2i = Vector2i.ZERO # ZERO means All
+
+# UI References
+var _dialog_panel: PanelContainer
+var _rarity_name_lbl: Label
+var _category_name_lbl: Label
+var _price_range_lbl: Label
+var _item_count_lbl: Label
+var _cards_grid: GridContainer
+
+var _rarity_buttons: Array[Button] = []
+var _category_buttons: Array[Button] = []
+var _shape_buttons: Array[Button] = []
+
+# Cache textures to avoid disk thrashing
+var _texture_cache: Dictionary = {}
+
+
+func _init() -> void:
+	name = "AuctionEncyclopediaDialog"
+	set_anchors_preset(PRESET_FULL_RECT)
+	mouse_filter = MOUSE_FILTER_STOP
+	_build_ui()
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if not visible:
+		return
+	if event is InputEventKey and event.pressed and not event.echo:
+		if event.keycode == KEY_ESCAPE:
+			close_dialog()
+			get_viewport().set_input_as_handled()
+
+
+func open_dialog() -> void:
+	visible = true
+	_selected_rarity = -1
+	_selected_category = ""
+	_selected_shape = Vector2i.ZERO
+	_refresh_filters_ui()
+	_refresh_items_grid()
+
+
+func close_dialog() -> void:
+	visible = false
+	closed.emit()
+
+
+func _build_ui() -> void:
+	# 1. Dark semi-transparent modal backdrop
+	var bg_overlay := ColorRect.new()
+	bg_overlay.set_anchors_preset(PRESET_FULL_RECT)
+	bg_overlay.color = Color(0.03, 0.05, 0.08, 0.82)
+	add_child(bg_overlay)
+	bg_overlay.gui_input.connect(func(ev: InputEvent) -> void:
+		if ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT:
+			close_dialog()
+	)
+
+	# 2. Centered Main Modal Window (1040 x 640)
+	var center := CenterContainer.new()
+	center.set_anchors_preset(PRESET_FULL_RECT)
+	add_child(center)
+
+	_dialog_panel = PanelContainer.new()
+	_dialog_panel.custom_minimum_size = Vector2(1040, 640)
+	var panel_style := StyleBoxFlat.new()
+	panel_style.bg_color = Color(0.07, 0.09, 0.13, 0.98)
+	panel_style.border_color = Color(0.28, 0.38, 0.52, 0.8)
+	panel_style.border_width_left = 2
+	panel_style.border_width_top = 2
+	panel_style.border_width_right = 2
+	panel_style.border_width_bottom = 2
+	panel_style.corner_radius_top_left = 8
+	panel_style.corner_radius_top_right = 8
+	panel_style.corner_radius_bottom_left = 8
+	panel_style.corner_radius_bottom_right = 8
+	panel_style.shadow_color = Color(0, 0, 0, 0.6)
+	panel_style.shadow_size = 16
+	_dialog_panel.add_theme_stylebox_override("panel", panel_style)
+	center.add_child(_dialog_panel)
+
+	var win_vbox := VBoxContainer.new()
+	win_vbox.add_theme_constant_override("separation", 0)
+	_dialog_panel.add_child(win_vbox)
+
+	# --- Title Bar ---
+	var title_bar := PanelContainer.new()
+	var tb_style := StyleBoxFlat.new()
+	tb_style.bg_color = Color(0.11, 0.15, 0.22, 0.95)
+	tb_style.border_color = Color(0.25, 0.35, 0.48, 0.6)
+	tb_style.border_width_bottom = 1
+	tb_style.corner_radius_top_left = 8
+	tb_style.corner_radius_top_right = 8
+	title_bar.add_theme_stylebox_override("panel", tb_style)
+	win_vbox.add_child(title_bar)
+
+	var tb_margin := MarginContainer.new()
+	tb_margin.add_theme_constant_override("margin_left", 14)
+	tb_margin.add_theme_constant_override("margin_right", 12)
+	tb_margin.add_theme_constant_override("margin_top", 8)
+	tb_margin.add_theme_constant_override("margin_bottom", 8)
+	title_bar.add_child(tb_margin)
+
+	var tb_hbox := HBoxContainer.new()
+	tb_margin.add_child(tb_hbox)
+
+	var search_icon_lbl := Label.new()
+	search_icon_lbl.text = "🔍"
+	search_icon_lbl.add_theme_font_size_override("font_size", 17)
+	tb_hbox.add_child(search_icon_lbl)
+
+	var title_lbl := Label.new()
+	title_lbl.text = "Thông tin thời gian thực"
+	title_lbl.add_theme_font_size_override("font_size", 16)
+	title_lbl.add_theme_color_override("font_color", Color("#e2e8f0"))
+	tb_hbox.add_child(title_lbl)
+
+	var spacer := Control.new()
+	spacer.size_flags_horizontal = SIZE_EXPAND_FILL
+	tb_hbox.add_child(spacer)
+
+	var close_btn := Button.new()
+	close_btn.text = "✕"
+	close_btn.custom_minimum_size = Vector2(30, 28)
+	close_btn.focus_mode = FOCUS_NONE
+	close_btn.pressed.connect(close_dialog)
+	tb_hbox.add_child(close_btn)
+
+	# --- Body (Left Filters + Right Grid) ---
+	var body_hbox := HBoxContainer.new()
+	body_hbox.size_flags_vertical = SIZE_EXPAND_FILL
+	body_hbox.add_theme_constant_override("separation", 12)
+	win_vbox.add_child(body_hbox)
+
+	# 1. Left Sidebar (Filters)
+	var sidebar := _build_sidebar()
+	body_hbox.add_child(sidebar)
+
+	# 2. Right Content Area (Cards Grid)
+	var content_area := _build_content_area()
+	body_hbox.add_child(content_area)
+
+
+func _build_sidebar() -> Control:
+	var side_panel := PanelContainer.new()
+	side_panel.custom_minimum_size = Vector2(230, 0)
+	var s_style := StyleBoxFlat.new()
+	s_style.bg_color = Color(0.06, 0.08, 0.12, 0.9)
+	s_style.border_color = Color(0.2, 0.28, 0.38, 0.5)
+	s_style.border_width_right = 1
+	side_panel.add_theme_stylebox_override("panel", s_style)
+
+	var scroll := ScrollContainer.new()
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	side_panel.add_child(scroll)
+
+	var side_vbox := VBoxContainer.new()
+	side_vbox.size_flags_horizontal = SIZE_EXPAND_FILL
+	side_vbox.add_theme_constant_override("separation", 12)
+	side_vbox.offset_left = 10
+	side_vbox.offset_right = -10
+	side_vbox.offset_top = 10
+	side_vbox.offset_bottom = -10
+	scroll.add_child(side_vbox)
+
+	# --- Section 1: Phẩm chất (Rarity) ---
+	var r_header_hbox := HBoxContainer.new()
+	side_vbox.add_child(r_header_hbox)
+
+	_rarity_name_lbl = Label.new()
+	_rarity_name_lbl.text = "Phẩm chất: Tất cả"
+	_rarity_name_lbl.add_theme_font_size_override("font_size", 14)
+	_rarity_name_lbl.add_theme_color_override("font_color", Color("#cbd5e1"))
+	_rarity_name_lbl.size_flags_horizontal = SIZE_EXPAND_FILL
+	r_header_hbox.add_child(_rarity_name_lbl)
+
+	var r_reset_btn := Button.new()
+	r_reset_btn.text = "⊞"
+	r_reset_btn.tooltip_text = "Xem tất cả phẩm chất"
+	r_reset_btn.custom_minimum_size = Vector2(24, 24)
+	r_reset_btn.focus_mode = FOCUS_NONE
+	r_reset_btn.pressed.connect(func() -> void:
+		_selected_rarity = -1
+		_refresh_filters_ui()
+		_refresh_items_grid()
+	)
+	r_header_hbox.add_child(r_reset_btn)
+
+	# Diamond buttons row
+	var diamonds_hbox := HBoxContainer.new()
+	diamonds_hbox.add_theme_constant_override("separation", 6)
+	side_vbox.add_child(diamonds_hbox)
+
+	var rarities := [
+		ITEM_CLASS.Rarity.WHITE,
+		ITEM_CLASS.Rarity.GREEN,
+		ITEM_CLASS.Rarity.BLUE,
+		ITEM_CLASS.Rarity.PURPLE,
+		ITEM_CLASS.Rarity.GOLD,
+		ITEM_CLASS.Rarity.RED
+	]
+	for r in rarities:
+		var d_btn := Button.new()
+		d_btn.text = "◆"
+		var col: Color = ITEM_CLASS.rarity_color(r)
+		d_btn.add_theme_color_override("font_color", col)
+		d_btn.add_theme_font_size_override("font_size", 18)
+		d_btn.custom_minimum_size = Vector2(30, 30)
+		d_btn.focus_mode = FOCUS_NONE
+		d_btn.tooltip_text = ITEM_CLASS.rarity_name(r)
+		var r_val: int = int(r)
+		d_btn.pressed.connect(func() -> void:
+			if _selected_rarity == r_val:
+				_selected_rarity = -1
+			else:
+				_selected_rarity = r_val
+			_refresh_filters_ui()
+			_refresh_items_grid()
+		)
+		diamonds_hbox.add_child(d_btn)
+		_rarity_buttons.append(d_btn)
+
+	# Divider
+	var div1 := HSeparator.new()
+	side_vbox.add_child(div1)
+
+	# --- Section 2: Loại (Category) ---
+	var c_header_hbox := HBoxContainer.new()
+	side_vbox.add_child(c_header_hbox)
+
+	_category_name_lbl = Label.new()
+	_category_name_lbl.text = "Loại: (Tất cả)"
+	_category_name_lbl.add_theme_font_size_override("font_size", 14)
+	_category_name_lbl.add_theme_color_override("font_color", Color("#cbd5e1"))
+	_category_name_lbl.size_flags_horizontal = SIZE_EXPAND_FILL
+	c_header_hbox.add_child(_category_name_lbl)
+
+	var c_reset_btn := Button.new()
+	c_reset_btn.text = "⊞"
+	c_reset_btn.tooltip_text = "Xem tất cả chủng loại"
+	c_reset_btn.custom_minimum_size = Vector2(24, 24)
+	c_reset_btn.focus_mode = FOCUS_NONE
+	c_reset_btn.pressed.connect(func() -> void:
+		_selected_category = ""
+		_refresh_filters_ui()
+		_refresh_items_grid()
+	)
+	c_header_hbox.add_child(c_reset_btn)
+
+	var cat_grid := GridContainer.new()
+	cat_grid.columns = 3
+	cat_grid.add_theme_constant_override("h_separation", 6)
+	cat_grid.add_theme_constant_override("v_separation", 6)
+	side_vbox.add_child(cat_grid)
+
+	for cat_entry in CATALOG_CLASS.CATEGORIES:
+		var c_id: String = String(cat_entry.get("id", ""))
+		var c_lbl: String = String(cat_entry.get("label", ""))
+		var c_icon: String = String(cat_entry.get("icon", "📦"))
+
+		var c_btn := Button.new()
+		c_btn.text = "%s" % c_icon
+		c_btn.tooltip_text = c_lbl
+		c_btn.custom_minimum_size = Vector2(62, 36)
+		c_btn.add_theme_font_size_override("font_size", 16)
+		c_btn.focus_mode = FOCUS_NONE
+		c_btn.pressed.connect(func() -> void:
+			if _selected_category == c_id and not c_id.is_empty():
+				_selected_category = ""
+			else:
+				_selected_category = c_id
+			_refresh_filters_ui()
+			_refresh_items_grid()
+		)
+		cat_grid.add_child(c_btn)
+		_category_buttons.append(c_btn)
+
+	# Divider
+	var div2 := HSeparator.new()
+	side_vbox.add_child(div2)
+
+	# --- Section 3: Hình dáng (Shape Footprint) ---
+	var s_header_hbox := HBoxContainer.new()
+	side_vbox.add_child(s_header_hbox)
+
+	var s_title_lbl := Label.new()
+	s_title_lbl.text = "Hình dáng:"
+	s_title_lbl.add_theme_font_size_override("font_size", 14)
+	s_title_lbl.add_theme_color_override("font_color", Color("#cbd5e1"))
+	s_title_lbl.size_flags_horizontal = SIZE_EXPAND_FILL
+	s_header_hbox.add_child(s_title_lbl)
+
+	var s_reset_btn := Button.new()
+	s_reset_btn.text = "⊞"
+	s_reset_btn.tooltip_text = "Xem tất cả hình dáng"
+	s_reset_btn.custom_minimum_size = Vector2(24, 24)
+	s_reset_btn.focus_mode = FOCUS_NONE
+	s_reset_btn.pressed.connect(func() -> void:
+		_selected_shape = Vector2i.ZERO
+		_refresh_filters_ui()
+		_refresh_items_grid()
+	)
+	s_header_hbox.add_child(s_reset_btn)
+
+	var shape_grid := GridContainer.new()
+	shape_grid.columns = 3
+	shape_grid.add_theme_constant_override("h_separation", 6)
+	shape_grid.add_theme_constant_override("v_separation", 6)
+	side_vbox.add_child(shape_grid)
+
+	var shapes: Array[Vector2i] = [
+		Vector2i(1, 1), Vector2i(1, 2), Vector2i(2, 1),
+		Vector2i(2, 2), Vector2i(1, 3), Vector2i(2, 3),
+		Vector2i(3, 3), Vector2i(1, 4), Vector2i(4, 1)
+	]
+	for sh in shapes:
+		var sh_btn := Button.new()
+		sh_btn.text = "%dx%d" % [sh.x, sh.y]
+		sh_btn.tooltip_text = "Kích thước ô: %dx%d" % [sh.x, sh.y]
+		sh_btn.custom_minimum_size = Vector2(62, 32)
+		sh_btn.add_theme_font_size_override("font_size", 12)
+		sh_btn.focus_mode = FOCUS_NONE
+		sh_btn.pressed.connect(func() -> void:
+			if _selected_shape == sh:
+				_selected_shape = Vector2i.ZERO
+			else:
+				_selected_shape = sh
+			_refresh_filters_ui()
+			_refresh_items_grid()
+		)
+		shape_grid.add_child(sh_btn)
+		_shape_buttons.append(sh_btn)
+
+	return side_panel
+
+
+func _build_content_area() -> Control:
+	var content_vbox := VBoxContainer.new()
+	content_vbox.size_flags_horizontal = SIZE_EXPAND_FILL
+	content_vbox.size_flags_vertical = SIZE_EXPAND_FILL
+	content_vbox.add_theme_constant_override("separation", 8)
+	content_vbox.offset_right = -12
+	content_vbox.offset_top = 8
+	content_vbox.offset_bottom = -8
+
+	# Header Bar (Price range & items count)
+	var header_bar := HBoxContainer.new()
+	header_bar.custom_minimum_size = Vector2(0, 36)
+	content_vbox.add_child(header_bar)
+
+	_item_count_lbl = Label.new()
+	_item_count_lbl.text = "0 Vật Phẩm"
+	_item_count_lbl.add_theme_font_size_override("font_size", 14)
+	_item_count_lbl.add_theme_color_override("font_color", Color("#94a3b8"))
+	header_bar.add_child(_item_count_lbl)
+
+	var sp := Control.new()
+	sp.size_flags_horizontal = SIZE_EXPAND_FILL
+	header_bar.add_child(sp)
+
+	_price_range_lbl = Label.new()
+	_price_range_lbl.text = "0 - 0 Xu Bạc"
+	_price_range_lbl.add_theme_font_size_override("font_size", 15)
+	_price_range_lbl.add_theme_color_override("font_color", Color("#f6c95c"))
+	header_bar.add_child(_price_range_lbl)
+
+	# Scrollable grid of items
+	var scroll := ScrollContainer.new()
+	scroll.size_flags_horizontal = SIZE_EXPAND_FILL
+	scroll.size_flags_vertical = SIZE_EXPAND_FILL
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	content_vbox.add_child(scroll)
+
+	_cards_grid = GridContainer.new()
+	_cards_grid.columns = 3
+	_cards_grid.size_flags_horizontal = SIZE_EXPAND_FILL
+	_cards_grid.add_theme_constant_override("h_separation", 14)
+	_cards_grid.add_theme_constant_override("v_separation", 14)
+	scroll.add_child(_cards_grid)
+
+	return content_vbox
+
+
+func _refresh_filters_ui() -> void:
+	# 1. Rarity label & button highlights
+	if _selected_rarity >= 0:
+		_rarity_name_lbl.text = "Phẩm chất: %s" % ITEM_CLASS.rarity_name(_selected_rarity as ITEM_CLASS.Rarity)
+	else:
+		_rarity_name_lbl.text = "Phẩm chất: Tất cả"
+
+	# 2. Category label
+	if not _selected_category.is_empty():
+		var found_name := _selected_category
+		for c in CATALOG_CLASS.CATEGORIES:
+			if c.get("id") == _selected_category:
+				found_name = String(c.get("label", ""))
+				break
+		_category_name_lbl.text = "Loại: (%s)" % found_name
+	else:
+		_category_name_lbl.text = "Loại: (Tất cả)"
+
+
+func _refresh_items_grid() -> void:
+	for child in _cards_grid.get_children():
+		child.queue_free()
+
+	var items: Array[Dictionary] = CATALOG_CLASS.filter_items(
+		_selected_rarity,
+		_selected_category,
+		_selected_shape
+	)
+
+	_item_count_lbl.text = "%d Vật Phẩm" % items.size()
+
+	if items.is_empty():
+		_price_range_lbl.text = "Không có vật phẩm"
+		return
+
+	# Calculate price range
+	var min_val: int = 99999999
+	var max_val: int = 0
+	for it in items:
+		var v := int(it.get("silver_value", 0))
+		if v < min_val: min_val = v
+		if v > max_val: max_val = v
+	if min_val == 99999999: min_val = 0
+	_price_range_lbl.text = "🪙 %s - %s Xu Bạc" % [_format_number(min_val), _format_number(max_val)]
+
+	# Create Cards
+	for it in items:
+		var card := _create_item_card(it)
+		_cards_grid.add_child(card)
+
+
+func _create_item_card(data: Dictionary) -> Control:
+	var rarity: int = int(data.get("rarity", ITEM_CLASS.Rarity.WHITE))
+	var r_color: Color = ITEM_CLASS.rarity_color(rarity as ITEM_CLASS.Rarity)
+	var d_name: String = String(data.get("display_name", "Vật Phẩm"))
+	var s_val: int = int(data.get("silver_value", 0))
+	var w: int = int(data.get("grid_width", 1))
+	var h: int = int(data.get("grid_height", 1))
+	var weight_str: String = String(data.get("weight_str", "<0.10KG"))
+	var asset_path: String = String(data.get("asset_path", ""))
+	var is_res: bool = bool(data.get("is_resource", false))
+
+	var card := PanelContainer.new()
+	card.custom_minimum_size = Vector2(236, 172)
+	var card_style := StyleBoxFlat.new()
+	card_style.bg_color = Color(0.10, 0.13, 0.18, 0.96)
+	card_style.border_color = Color(0.24, 0.32, 0.44, 0.6)
+	card_style.border_width_left = 1
+	card_style.border_width_top = 1
+	card_style.border_width_right = 1
+	card_style.border_width_bottom = 1
+	card_style.corner_radius_top_left = 6
+	card_style.corner_radius_top_right = 6
+	card_style.corner_radius_bottom_left = 6
+	card_style.corner_radius_bottom_right = 6
+	card.add_theme_stylebox_override("panel", card_style)
+
+	var card_vbox := VBoxContainer.new()
+	card_vbox.add_theme_constant_override("separation", 2)
+	card.add_child(card_vbox)
+
+	# --- 1. Card Header Band (Matching Bidking Image 2 & Image 1) ---
+	var header_panel := PanelContainer.new()
+	header_panel.custom_minimum_size = Vector2(0, 30)
+	var hp_style := StyleBoxFlat.new()
+	# Header colored according to rarity (Red gets red banner, White gets slate-white banner)
+	if rarity == ITEM_CLASS.Rarity.RED:
+		hp_style.bg_color = Color(0.75, 0.15, 0.18, 0.95)
+	elif rarity == ITEM_CLASS.Rarity.GOLD:
+		hp_style.bg_color = Color(0.78, 0.52, 0.12, 0.95)
+	elif rarity == ITEM_CLASS.Rarity.PURPLE:
+		hp_style.bg_color = Color(0.55, 0.22, 0.72, 0.95)
+	elif rarity == ITEM_CLASS.Rarity.BLUE:
+		hp_style.bg_color = Color(0.18, 0.45, 0.75, 0.95)
+	elif rarity == ITEM_CLASS.Rarity.GREEN:
+		hp_style.bg_color = Color(0.20, 0.58, 0.30, 0.95)
+	else:
+		hp_style.bg_color = Color(0.16, 0.22, 0.30, 0.95)
+
+	hp_style.corner_radius_top_left = 5
+	hp_style.corner_radius_top_right = 5
+	header_panel.add_theme_stylebox_override("panel", hp_style)
+	card_vbox.add_child(header_panel)
+
+	var h_margin := MarginContainer.new()
+	h_margin.add_theme_constant_override("margin_left", 8)
+	h_margin.add_theme_constant_override("margin_right", 8)
+	header_panel.add_child(h_margin)
+
+	var h_hbox := HBoxContainer.new()
+	h_hbox.add_theme_constant_override("separation", 6)
+	h_margin.add_child(h_hbox)
+
+	var diamond_lbl := Label.new()
+	diamond_lbl.text = "◆"
+	diamond_lbl.add_theme_font_size_override("font_size", 14)
+	diamond_lbl.add_theme_color_override("font_color", r_color)
+	h_hbox.add_child(diamond_lbl)
+
+	var name_lbl := Label.new()
+	name_lbl.text = d_name
+	name_lbl.add_theme_font_size_override("font_size", 13)
+	name_lbl.add_theme_color_override("font_color", Color.WHITE)
+	name_lbl.size_flags_horizontal = SIZE_EXPAND_FILL
+	name_lbl.clip_text = true
+	h_hbox.add_child(name_lbl)
+
+	# --- 2. Center Image & Footprint Area ---
+	var body_control := Control.new()
+	body_control.size_flags_vertical = SIZE_EXPAND_FILL
+	body_control.clip_contents = true
+	card_vbox.add_child(body_control)
+
+	# Subtle grid background behind item
+	var body_bg := ColorRect.new()
+	body_bg.set_anchors_preset(PRESET_FULL_RECT)
+	body_bg.color = Color(0.06, 0.08, 0.11, 0.6)
+	body_control.add_child(body_bg)
+
+	# Item Texture
+	var texture_rect := TextureRect.new()
+	texture_rect.set_anchors_preset(PRESET_FULL_RECT)
+	texture_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	texture_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	texture_rect.offset_left = 10
+	texture_rect.offset_top = 6
+	texture_rect.offset_right = -10
+	texture_rect.offset_bottom = -6
+	body_control.add_child(texture_rect)
+
+	if not asset_path.is_empty():
+		var tex: Texture2D = _get_cached_texture(asset_path)
+		if tex != null:
+			texture_rect.texture = tex
+
+	# 16-Cell (4x4) Footprint Matrix in Bottom-Right Corner (Exact match to Bidking!)
+	var footprint_control := _create_footprint_matrix(w, h)
+	footprint_control.set_anchors_preset(PRESET_BOTTOM_RIGHT)
+	footprint_control.offset_left = -38
+	footprint_control.offset_top = -38
+	footprint_control.offset_right = -6
+	footprint_control.offset_bottom = -6
+	body_control.add_child(footprint_control)
+
+	# --- 3. Card Footer (Weight & Price) ---
+	var footer_panel := MarginContainer.new()
+	footer_panel.add_theme_constant_override("margin_left", 8)
+	footer_panel.add_theme_constant_override("margin_right", 8)
+	footer_panel.add_theme_constant_override("margin_bottom", 6)
+	card_vbox.add_child(footer_panel)
+
+	var f_hbox := HBoxContainer.new()
+	footer_panel.add_child(f_hbox)
+
+	var w_lbl := Label.new()
+	w_lbl.text = weight_str
+	w_lbl.add_theme_font_size_override("font_size", 11)
+	w_lbl.add_theme_color_override("font_color", Color("#94a3b8"))
+	f_hbox.add_child(w_lbl)
+
+	var f_sp := Control.new()
+	f_sp.size_flags_horizontal = SIZE_EXPAND_FILL
+	f_hbox.add_child(f_sp)
+
+	var price_lbl := Label.new()
+	if is_res and s_val == 0:
+		price_lbl.text = "Tài nguyên 💾"
+		price_lbl.add_theme_color_override("font_color", Color("#8be9fd"))
+	else:
+		price_lbl.text = "🪙 %s Xu" % _format_number(s_val)
+		price_lbl.add_theme_color_override("font_color", Color("#f6c95c"))
+	price_lbl.add_theme_font_size_override("font_size", 12)
+	f_hbox.add_child(price_lbl)
+
+	return card
+
+
+## Vẽ ma trận 16 ô (4x4) thể hiện diện tích chiếm chỗ của vật phẩm
+func _create_footprint_matrix(item_w: int, item_h: int) -> Control:
+	var ctrl := Control.new()
+	ctrl.custom_minimum_size = Vector2(32, 32)
+	ctrl.draw.connect(func() -> void:
+		var cell_sz := 5.5
+		var gap := 1.5
+		var empty_col := Color(1.0, 1.0, 1.0, 0.15)
+		var filled_col := Color(1.0, 1.0, 1.0, 0.95)
+
+		# 4 columns x 4 rows
+		for row in range(4):
+			for col in range(4):
+				var r := Rect2(
+					col * (cell_sz + gap),
+					row * (cell_sz + gap),
+					cell_sz,
+					cell_sz
+				)
+				# If within item width & height, draw white filled
+				if col < item_w and row < item_h:
+					ctrl.draw_rect(r, filled_col, true)
+				else:
+					ctrl.draw_rect(r, empty_col, true)
+	)
+	return ctrl
+
+
+func _get_cached_texture(path: String) -> Texture2D:
+	if _texture_cache.has(path):
+		return _texture_cache[path]
+	if ResourceLoader.exists(path):
+		var res := load(path)
+		if res is Texture2D:
+			_texture_cache[path] = res
+			return res
+	return null
+
+
+func _format_number(val: int) -> String:
+	var s := str(absi(val))
+	var res := ""
+	var cnt := 0
+	for i in range(s.length() - 1, -1, -1):
+		res = s[i] + res
+		cnt += 1
+		if cnt % 3 == 0 and i > 0:
+			res = "," + res
+	return ("-" if val < 0 else "") + res

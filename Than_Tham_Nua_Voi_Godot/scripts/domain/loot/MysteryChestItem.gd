@@ -22,6 +22,9 @@ var quantity: int = 1
 var is_resource: bool = false
 var can_sell: bool = true
 var reward_type: String = "" # "silver", "black_ticket", "refinement_chips", "lab_material"
+var asset_path: String = ""
+var weight_str: String = "<0.10KG"
+var category: String = "general"
 
 
 static func rarity_name(r: Rarity) -> String:
@@ -64,6 +67,9 @@ func to_dict() -> Dictionary:
 		"is_resource": is_resource,
 		"can_sell": can_sell,
 		"reward_type": reward_type,
+		"asset_path": asset_path,
+		"weight_str": weight_str,
+		"category": category,
 	}
 
 
@@ -81,4 +87,7 @@ static func from_dict(data: Dictionary) -> MysteryChestItem:
 	item.is_resource = bool(data.get("is_resource", false))
 	item.can_sell = bool(data.get("can_sell", true))
 	item.reward_type = String(data.get("reward_type", ""))
+	item.asset_path = String(data.get("asset_path", ""))
+	item.weight_str = String(data.get("weight_str", "<0.10KG"))
+	item.category = String(data.get("category", "general"))
 	return item

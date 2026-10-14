@@ -2,6 +2,7 @@ class_name MysteryChestState
 extends RefCounted
 
 const ITEM_CLASS := preload("res://scripts/domain/loot/MysteryChestItem.gd")
+const CATALOG_CLASS := preload("res://scripts/domain/loot/AuctionCatalog.gd")
 
 enum HintType {
 	EXACT_COUNT = 0,
@@ -100,85 +101,29 @@ func _generate_random_item() -> MysteryChestItem:
 
 
 func _apply_item_profile(item: MysteryChestItem) -> void:
-	match item.rarity:
-		MysteryChestItem.Rarity.WHITE:
-			# White: Refinement Chips (2)
-			var chosen := {"name": "Refinement Chips (2)", "val": 0, "w": 1, "h": 1, "icon": "💾", "desc": "Mảnh tinh chế (x2). Vật phẩm tài nguyên nâng cấp.", "res": true, "qty": 2, "can_sell": false}
-			item.display_name = chosen.get("name", "")
-			item.silver_value = int(chosen.get("val", 0))
-			item.grid_width = int(chosen.get("w", 1))
-			item.grid_height = int(chosen.get("h", 1))
-			item.icon = String(chosen.get("icon", "💾"))
-			item.description = String(chosen.get("desc", ""))
-			item.is_resource = bool(chosen.get("res", false))
-			item.quantity = int(chosen.get("qty", 1))
-			item.can_sell = bool(chosen.get("can_sell", false))
+	var catalog_candidates: Array[Dictionary] = CATALOG_CLASS.filter_items(item.rarity)
+	if not catalog_candidates.is_empty():
+		var chosen: Dictionary = catalog_candidates.pick_random()
+		item.display_name = String(chosen.get("display_name", "Vật Phẩm"))
+		item.silver_value = int(chosen.get("silver_value", 0))
+		item.grid_width = int(chosen.get("grid_width", 1))
+		item.grid_height = int(chosen.get("grid_height", 1))
+		item.icon = String(chosen.get("icon", "📦"))
+		item.description = String(chosen.get("description", ""))
+		item.is_resource = bool(chosen.get("is_resource", false))
+		item.quantity = int(chosen.get("quantity", 1))
+		item.can_sell = bool(chosen.get("can_sell", true))
+		item.asset_path = String(chosen.get("asset_path", ""))
+		item.weight_str = String(chosen.get("weight_str", "<0.10KG"))
+		item.category = String(chosen.get("category", "general"))
+		item.item_id = StringName("%s_%d" % [String(chosen.get("id", "item")), randi() % 10000])
+		return
 
-		MysteryChestItem.Rarity.GREEN:
-			# Green: Refinement Chips (4)
-			var chosen := {"name": "Refinement Chips (4)", "val": 0, "w": 1, "h": 1, "icon": "💾", "desc": "Mảnh tinh chế (x4). Vật phẩm tài nguyên nâng cấp.", "res": true, "qty": 4, "can_sell": false}
-			item.display_name = chosen.get("name", "")
-			item.silver_value = int(chosen.get("val", 0))
-			item.grid_width = int(chosen.get("w", 1))
-			item.grid_height = int(chosen.get("h", 1))
-			item.icon = String(chosen.get("icon", "💾"))
-			item.description = String(chosen.get("desc", ""))
-			item.is_resource = bool(chosen.get("res", false))
-			item.quantity = int(chosen.get("qty", 1))
-			item.can_sell = bool(chosen.get("can_sell", false))
-
-		MysteryChestItem.Rarity.BLUE:
-			# Blue: Refinement Chips (8)
-			var chosen := {"name": "Refinement Chips (8)", "val": 0, "w": 1, "h": 1, "icon": "💾", "desc": "Mảnh tinh chế (x8). Vật phẩm tài nguyên nâng cấp.", "res": true, "qty": 8, "can_sell": false}
-			item.display_name = chosen.get("name", "")
-			item.silver_value = int(chosen.get("val", 0))
-			item.grid_width = int(chosen.get("w", 1))
-			item.grid_height = int(chosen.get("h", 1))
-			item.icon = String(chosen.get("icon", "💾"))
-			item.description = String(chosen.get("desc", ""))
-			item.is_resource = bool(chosen.get("res", false))
-			item.quantity = int(chosen.get("qty", 1))
-			item.can_sell = bool(chosen.get("can_sell", false))
-
-		MysteryChestItem.Rarity.PURPLE:
-			# Purple: Refinement Chips (16)
-			var chosen := {"name": "Refinement Chips (16)", "val": 0, "w": 1, "h": 1, "icon": "💾", "desc": "Mảnh tinh chế (x16). Vật phẩm tài nguyên nâng cấp.", "res": true, "qty": 16, "can_sell": false}
-			item.display_name = chosen.get("name", "")
-			item.silver_value = int(chosen.get("val", 0))
-			item.grid_width = int(chosen.get("w", 1))
-			item.grid_height = int(chosen.get("h", 1))
-			item.icon = String(chosen.get("icon", "💾"))
-			item.description = String(chosen.get("desc", ""))
-			item.is_resource = bool(chosen.get("res", false))
-			item.quantity = int(chosen.get("qty", 1))
-			item.can_sell = bool(chosen.get("can_sell", false))
-
-		MysteryChestItem.Rarity.GOLD:
-			# Gold: Refinement Chips (32)
-			var chosen := {"name": "Refinement Chips (32)", "val": 0, "w": 1, "h": 1, "icon": "💾", "desc": "Mảnh tinh chế (x32). Vật phẩm tài nguyên nâng cấp.", "res": true, "qty": 32, "can_sell": false}
-			item.display_name = chosen.get("name", "")
-			item.silver_value = int(chosen.get("val", 0))
-			item.grid_width = int(chosen.get("w", 1))
-			item.grid_height = int(chosen.get("h", 1))
-			item.icon = String(chosen.get("icon", "💾"))
-			item.description = String(chosen.get("desc", ""))
-			item.is_resource = bool(chosen.get("res", false))
-			item.quantity = int(chosen.get("qty", 1))
-			item.can_sell = bool(chosen.get("can_sell", false))
-
-		MysteryChestItem.Rarity.RED:
-			# Red: Locking Component (5)
-			var chosen := {"name": "Locking Component (5)", "val": 0, "w": 1, "h": 1, "icon": "🔒", "desc": "Linh kiện khóa (x5) 1x1. Vật phẩm phòng thí nghiệm, không bán được.", "res": true, "qty": 5, "can_sell": false}
-			item.display_name = chosen.get("name", "")
-			item.silver_value = int(chosen.get("val", 0))
-			item.grid_width = int(chosen.get("w", 1))
-			item.grid_height = int(chosen.get("h", 1))
-			item.icon = String(chosen.get("icon", "🔒"))
-			item.description = String(chosen.get("desc", ""))
-			item.is_resource = bool(chosen.get("res", true))
-			item.quantity = int(chosen.get("qty", 1))
-			item.can_sell = bool(chosen.get("can_sell", false))
-
+	# Fallback if catalog has no item of this rarity
+	item.display_name = "Bảo Vật %s" % MysteryChestItem.rarity_name(item.rarity)
+	item.silver_value = 10
+	item.grid_width = 1
+	item.grid_height = 1
 	item.item_id = StringName("vault_item_%s_%d" % [MysteryChestItem.rarity_name(item.rarity).to_lower(), randi() % 10000])
 
 
