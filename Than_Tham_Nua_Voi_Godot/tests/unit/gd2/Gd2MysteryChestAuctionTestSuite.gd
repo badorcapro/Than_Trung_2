@@ -230,6 +230,29 @@ func _encyclopedia_dialog_contract() -> bool:
 	var antique_items: Array[Dictionary] = CATALOG_CLASS.filter_items(-1, "antique")
 	var shape_1x1_items: Array[Dictionary] = CATALOG_CLASS.filter_items(-1, "", Vector2i(1, 1))
 
-	var valid := not white_items.is_empty() and not antique_items.is_empty() and not shape_1x1_items.is_empty()
+	# Test multi-select shape: 1x1 OR 1x2
+	var multi_shapes: Array[Dictionary] = CATALOG_CLASS.filter_items_multi(
+		{}, false,
+		{}, false,
+		{Vector2i(1, 1): true, Vector2i(1, 2): true}, true
+	)
+	for it in multi_shapes:
+		var w: int = int(it.get("grid_width", 1))
+		var h: int = int(it.get("grid_height", 1))
+		if not ((w == 1 and h == 1) or (w == 1 and h == 2)):
+			dialog.free()
+			return false
+
+	# Test deselect-all (filter active but empty set -> 0 results)
+	var empty_results: Array[Dictionary] = CATALOG_CLASS.filter_items_multi(
+		{}, false,
+		{}, false,
+		{}, true
+	)
+	if not empty_results.is_empty():
+		dialog.free()
+		return false
+
+	var valid := not white_items.is_empty() and not antique_items.is_empty() and not shape_1x1_items.is_empty() and not multi_shapes.is_empty()
 	dialog.free()
 	return valid

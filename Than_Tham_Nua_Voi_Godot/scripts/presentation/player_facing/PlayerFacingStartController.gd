@@ -1171,9 +1171,29 @@ func _handle_loot_result(result: Dictionary) -> void:
 		if action.start_node_id == &"royal_vault_hub" or action.end_node_id == &"royal_vault_hub":
 			if not _vault_reach_player_ids.has(action.player_id):
 				_vault_reach_player_ids.append(action.player_id)
-			var added: Array = _mystery_chest.roll_vault_deposit()
-			if not added.is_empty():
-				_loot_activity_lines.append("🎁 [Hòm Bí Ẩn] Đã thêm %d món đồ vào Hòm Đấu Giá!" % added.size())
+
+			var vault_steps := 0
+			if action.start_node_id == &"royal_vault_hub":
+				# Đã ở sẵn ô Kho Báu: Toàn bộ xúc xắc đổ ra đều tính là bước cộng đồ
+				vault_steps = action.roll_distance
+			else:
+				# Vừa tới Kho Báu: Các bước thặng dư sau khi tới ô đích sẽ cộng đồ
+				var steps_to_vault: int = action.traversed_node_ids.size()
+				vault_steps = maxi(0, action.roll_distance - steps_to_vault)
+
+			var total_deposited := 0
+			for s in range(vault_steps):
+				var count: int = randi_range(0, 2)
+				if count > 0:
+					var added: Array = _mystery_chest.roll_vault_deposit(count)
+					total_deposited += added.size()
+
+			if vault_steps > 0:
+				_loot_activity_lines.append(
+					"🎁 [Kho Báu] Thực hiện %d bước tích lũy (0-2 món/bước): Đã thêm %d món đồ vào Hòm Đấu Giá!" % [vault_steps, total_deposited]
+				)
+			elif action.end_node_id == &"royal_vault_hub":
+				_loot_activity_lines.append("🏛️ Đã đặt chân đến Kho Báu Hoàng Gia! Các bước tiếp theo sẽ sinh chiến lợi phẩm vào hòm.")
 		for node_id: StringName in action.traversed_node_ids:
 			_loot_activity_lines.append("  ➜ Di chuyển qua: [b]%s[/b]" % _node_display_name(node_id))
 		_show_message("Token đã di chuyển theo đường vừa roll.")

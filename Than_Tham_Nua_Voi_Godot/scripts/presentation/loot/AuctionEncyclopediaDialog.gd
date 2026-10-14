@@ -7,14 +7,20 @@ const CATALOG_CLASS := preload("res://scripts/domain/loot/AuctionCatalog.gd")
 const ITEM_CLASS := preload("res://scripts/domain/loot/MysteryChestItem.gd")
 
 # Filters state
-var _selected_rarity: int = -1 # -1 means All
-var _selected_category: String = "" # "" means All
-var _selected_shape: Vector2i = Vector2i.ZERO # ZERO means All
+var _rarity_filter_enabled: bool = false
+var _selected_rarities: Dictionary = {}
+
+var _category_filter_enabled: bool = false
+var _selected_categories: Dictionary = {}
+
+var _shape_filter_enabled: bool = false
+var _selected_shapes: Dictionary = {}
 
 # UI References
 var _dialog_panel: PanelContainer
 var _rarity_name_lbl: Label
 var _category_name_lbl: Label
+var _shape_name_lbl: Label
 var _price_range_lbl: Label
 var _item_count_lbl: Label
 var _cards_grid: GridContainer
@@ -45,9 +51,12 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func open_dialog() -> void:
 	visible = true
-	_selected_rarity = -1
-	_selected_category = ""
-	_selected_shape = Vector2i.ZERO
+	_rarity_filter_enabled = false
+	_selected_rarities.clear()
+	_category_filter_enabled = false
+	_selected_categories.clear()
+	_shape_filter_enabled = false
+	_selected_shapes.clear()
 	_refresh_filters_ui()
 	_refresh_items_grid()
 
@@ -188,15 +197,29 @@ func _build_sidebar() -> Control:
 
 	var r_reset_btn := Button.new()
 	r_reset_btn.text = "⊞"
-	r_reset_btn.tooltip_text = "Xem tất cả phẩm chất"
+	r_reset_btn.tooltip_text = "Chọn tất cả phẩm chất"
 	r_reset_btn.custom_minimum_size = Vector2(24, 24)
 	r_reset_btn.focus_mode = FOCUS_NONE
 	r_reset_btn.pressed.connect(func() -> void:
-		_selected_rarity = -1
+		_rarity_filter_enabled = false
+		_selected_rarities.clear()
 		_refresh_filters_ui()
 		_refresh_items_grid()
 	)
 	r_header_hbox.add_child(r_reset_btn)
+
+	var r_deselect_btn := Button.new()
+	r_deselect_btn.text = "⊟"
+	r_deselect_btn.tooltip_text = "Bỏ chọn tất cả phẩm chất"
+	r_deselect_btn.custom_minimum_size = Vector2(24, 24)
+	r_deselect_btn.focus_mode = FOCUS_NONE
+	r_deselect_btn.pressed.connect(func() -> void:
+		_rarity_filter_enabled = true
+		_selected_rarities.clear()
+		_refresh_filters_ui()
+		_refresh_items_grid()
+	)
+	r_header_hbox.add_child(r_deselect_btn)
 
 	# Diamond buttons row
 	var diamonds_hbox := HBoxContainer.new()
@@ -221,11 +244,17 @@ func _build_sidebar() -> Control:
 		d_btn.focus_mode = FOCUS_NONE
 		d_btn.tooltip_text = ITEM_CLASS.rarity_name(r)
 		var r_val: int = int(r)
+		d_btn.set_meta("rarity", r_val)
 		d_btn.pressed.connect(func() -> void:
-			if _selected_rarity == r_val:
-				_selected_rarity = -1
+			if not _rarity_filter_enabled:
+				_rarity_filter_enabled = true
+				_selected_rarities.clear()
+				_selected_rarities[r_val] = true
 			else:
-				_selected_rarity = r_val
+				if _selected_rarities.has(r_val):
+					_selected_rarities.erase(r_val)
+				else:
+					_selected_rarities[r_val] = true
 			_refresh_filters_ui()
 			_refresh_items_grid()
 		)
@@ -249,15 +278,29 @@ func _build_sidebar() -> Control:
 
 	var c_reset_btn := Button.new()
 	c_reset_btn.text = "⊞"
-	c_reset_btn.tooltip_text = "Xem tất cả chủng loại"
+	c_reset_btn.tooltip_text = "Chọn tất cả chủng loại"
 	c_reset_btn.custom_minimum_size = Vector2(24, 24)
 	c_reset_btn.focus_mode = FOCUS_NONE
 	c_reset_btn.pressed.connect(func() -> void:
-		_selected_category = ""
+		_category_filter_enabled = false
+		_selected_categories.clear()
 		_refresh_filters_ui()
 		_refresh_items_grid()
 	)
 	c_header_hbox.add_child(c_reset_btn)
+
+	var c_deselect_btn := Button.new()
+	c_deselect_btn.text = "⊟"
+	c_deselect_btn.tooltip_text = "Bỏ chọn tất cả chủng loại"
+	c_deselect_btn.custom_minimum_size = Vector2(24, 24)
+	c_deselect_btn.focus_mode = FOCUS_NONE
+	c_deselect_btn.pressed.connect(func() -> void:
+		_category_filter_enabled = true
+		_selected_categories.clear()
+		_refresh_filters_ui()
+		_refresh_items_grid()
+	)
+	c_header_hbox.add_child(c_deselect_btn)
 
 	var cat_grid := GridContainer.new()
 	cat_grid.columns = 3
@@ -276,11 +319,21 @@ func _build_sidebar() -> Control:
 		c_btn.custom_minimum_size = Vector2(62, 36)
 		c_btn.add_theme_font_size_override("font_size", 16)
 		c_btn.focus_mode = FOCUS_NONE
+		c_btn.set_meta("cat_id", c_id)
 		c_btn.pressed.connect(func() -> void:
-			if _selected_category == c_id and not c_id.is_empty():
-				_selected_category = ""
+			if c_id.is_empty():
+				_category_filter_enabled = false
+				_selected_categories.clear()
 			else:
-				_selected_category = c_id
+				if not _category_filter_enabled:
+					_category_filter_enabled = true
+					_selected_categories.clear()
+					_selected_categories[c_id] = true
+				else:
+					if _selected_categories.has(c_id):
+						_selected_categories.erase(c_id)
+					else:
+						_selected_categories[c_id] = true
 			_refresh_filters_ui()
 			_refresh_items_grid()
 		)
@@ -295,24 +348,38 @@ func _build_sidebar() -> Control:
 	var s_header_hbox := HBoxContainer.new()
 	side_vbox.add_child(s_header_hbox)
 
-	var s_title_lbl := Label.new()
-	s_title_lbl.text = "Hình dáng:"
-	s_title_lbl.add_theme_font_size_override("font_size", 14)
-	s_title_lbl.add_theme_color_override("font_color", Color("#cbd5e1"))
-	s_title_lbl.size_flags_horizontal = SIZE_EXPAND_FILL
-	s_header_hbox.add_child(s_title_lbl)
+	_shape_name_lbl = Label.new()
+	_shape_name_lbl.text = "Hình dáng: Tất cả"
+	_shape_name_lbl.add_theme_font_size_override("font_size", 14)
+	_shape_name_lbl.add_theme_color_override("font_color", Color("#cbd5e1"))
+	_shape_name_lbl.size_flags_horizontal = SIZE_EXPAND_FILL
+	s_header_hbox.add_child(_shape_name_lbl)
 
 	var s_reset_btn := Button.new()
 	s_reset_btn.text = "⊞"
-	s_reset_btn.tooltip_text = "Xem tất cả hình dáng"
+	s_reset_btn.tooltip_text = "Chọn tất cả hình dáng"
 	s_reset_btn.custom_minimum_size = Vector2(24, 24)
 	s_reset_btn.focus_mode = FOCUS_NONE
 	s_reset_btn.pressed.connect(func() -> void:
-		_selected_shape = Vector2i.ZERO
+		_shape_filter_enabled = false
+		_selected_shapes.clear()
 		_refresh_filters_ui()
 		_refresh_items_grid()
 	)
 	s_header_hbox.add_child(s_reset_btn)
+
+	var s_deselect_btn := Button.new()
+	s_deselect_btn.text = "⊟"
+	s_deselect_btn.tooltip_text = "Bỏ chọn tất cả hình dáng"
+	s_deselect_btn.custom_minimum_size = Vector2(24, 24)
+	s_deselect_btn.focus_mode = FOCUS_NONE
+	s_deselect_btn.pressed.connect(func() -> void:
+		_shape_filter_enabled = true
+		_selected_shapes.clear()
+		_refresh_filters_ui()
+		_refresh_items_grid()
+	)
+	s_header_hbox.add_child(s_deselect_btn)
 
 	var shape_grid := GridContainer.new()
 	shape_grid.columns = 3
@@ -332,11 +399,17 @@ func _build_sidebar() -> Control:
 		sh_btn.custom_minimum_size = Vector2(62, 32)
 		sh_btn.add_theme_font_size_override("font_size", 12)
 		sh_btn.focus_mode = FOCUS_NONE
+		sh_btn.set_meta("shape", sh)
 		sh_btn.pressed.connect(func() -> void:
-			if _selected_shape == sh:
-				_selected_shape = Vector2i.ZERO
+			if not _shape_filter_enabled:
+				_shape_filter_enabled = true
+				_selected_shapes.clear()
+				_selected_shapes[sh] = true
 			else:
-				_selected_shape = sh
+				if _selected_shapes.has(sh):
+					_selected_shapes.erase(sh)
+				else:
+					_selected_shapes[sh] = true
 			_refresh_filters_ui()
 			_refresh_items_grid()
 		)
@@ -395,31 +468,81 @@ func _build_content_area() -> Control:
 
 func _refresh_filters_ui() -> void:
 	# 1. Rarity label & button highlights
-	if _selected_rarity >= 0:
-		_rarity_name_lbl.text = "Phẩm chất: %s" % ITEM_CLASS.rarity_name(_selected_rarity as ITEM_CLASS.Rarity)
-	else:
+	if not _rarity_filter_enabled:
 		_rarity_name_lbl.text = "Phẩm chất: Tất cả"
+	elif _selected_rarities.is_empty():
+		_rarity_name_lbl.text = "Phẩm chất: (0 đã chọn)"
+	elif _selected_rarities.size() == 1:
+		var r_only: int = int(_selected_rarities.keys()[0])
+		_rarity_name_lbl.text = "Phẩm chất: %s" % ITEM_CLASS.rarity_name(r_only as ITEM_CLASS.Rarity)
+	else:
+		_rarity_name_lbl.text = "Phẩm chất: %d loại" % _selected_rarities.size()
 
-	# 2. Category label
-	if not _selected_category.is_empty():
-		var found_name := _selected_category
+	for btn in _rarity_buttons:
+		var r: int = int(btn.get_meta("rarity", -1))
+		if not _rarity_filter_enabled or _selected_rarities.has(r):
+			btn.modulate = Color(1.0, 1.0, 1.0, 1.0)
+		else:
+			btn.modulate = Color(0.65, 0.65, 0.65, 0.28)
+
+	# 2. Category label & button highlights
+	if not _category_filter_enabled:
+		_category_name_lbl.text = "Loại: (Tất cả)"
+	elif _selected_categories.is_empty():
+		_category_name_lbl.text = "Loại: (0 đã chọn)"
+	elif _selected_categories.size() == 1:
+		var cat_only: String = String(_selected_categories.keys()[0])
+		var found_name := cat_only
 		for c in CATALOG_CLASS.CATEGORIES:
-			if c.get("id") == _selected_category:
+			if c.get("id") == cat_only:
 				found_name = String(c.get("label", ""))
 				break
 		_category_name_lbl.text = "Loại: (%s)" % found_name
 	else:
-		_category_name_lbl.text = "Loại: (Tất cả)"
+		_category_name_lbl.text = "Loại: %d loại" % _selected_categories.size()
+
+	for btn in _category_buttons:
+		var cat_id: String = String(btn.get_meta("cat_id", ""))
+		if not _category_filter_enabled:
+			btn.modulate = Color(1.0, 1.0, 1.0, 1.0)
+		elif cat_id.is_empty():
+			btn.modulate = Color(0.65, 0.65, 0.65, 0.28)
+		elif _selected_categories.has(cat_id):
+			btn.modulate = Color(1.0, 1.0, 1.0, 1.0)
+		else:
+			btn.modulate = Color(0.65, 0.65, 0.65, 0.28)
+
+	# 3. Shape label & button highlights
+	if _shape_name_lbl != null:
+		if not _shape_filter_enabled:
+			_shape_name_lbl.text = "Hình dáng: Tất cả"
+		elif _selected_shapes.is_empty():
+			_shape_name_lbl.text = "Hình dáng: (0 đã chọn)"
+		elif _selected_shapes.size() == 1:
+			var sh_only: Vector2i = _selected_shapes.keys()[0]
+			_shape_name_lbl.text = "Hình dáng: %dx%d" % [sh_only.x, sh_only.y]
+		else:
+			_shape_name_lbl.text = "Hình dáng: %d loại" % _selected_shapes.size()
+
+	for btn in _shape_buttons:
+		var sh: Vector2i = btn.get_meta("shape", Vector2i.ZERO)
+		if not _shape_filter_enabled or _selected_shapes.has(sh):
+			btn.modulate = Color(1.0, 1.0, 1.0, 1.0)
+		else:
+			btn.modulate = Color(0.65, 0.65, 0.65, 0.28)
 
 
 func _refresh_items_grid() -> void:
 	for child in _cards_grid.get_children():
 		child.queue_free()
 
-	var items: Array[Dictionary] = CATALOG_CLASS.filter_items(
-		_selected_rarity,
-		_selected_category,
-		_selected_shape
+	var items: Array[Dictionary] = CATALOG_CLASS.filter_items_multi(
+		_selected_rarities,
+		_rarity_filter_enabled,
+		_selected_categories,
+		_category_filter_enabled,
+		_selected_shapes,
+		_shape_filter_enabled
 	)
 
 	_item_count_lbl.text = "%d Vật Phẩm" % items.size()

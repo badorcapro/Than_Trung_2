@@ -115,24 +115,6 @@ func _build_ui() -> void:
 	spacer_top.size_flags_horizontal = SIZE_EXPAND_FILL
 	top_bar.add_child(spacer_top)
 
-	var currency_lbl := Label.new()
-	currency_lbl.text = "🪙 Xu Bạc: Sẵn sàng  |  💎 Vé Đấu Giá: 5"
-	currency_lbl.add_theme_font_size_override("font_size", 15)
-	currency_lbl.add_theme_color_override("font_color", Color("#8be9fd"))
-	top_bar.add_child(currency_lbl)
-
-	var encyclopedia_btn := Button.new()
-	encyclopedia_btn.text = "🔍 Thông Tin Thời Gian Thực"
-	encyclopedia_btn.tooltip_text = "Tra cứu Bách Khoa Toàn Thư / Xem danh mục đồ đấu giá (Phím B)"
-	encyclopedia_btn.custom_minimum_size = Vector2(210, 34)
-	encyclopedia_btn.focus_mode = FOCUS_NONE
-	encyclopedia_btn.add_theme_font_size_override("font_size", 13)
-	encyclopedia_btn.pressed.connect(func() -> void:
-		if encyclopedia_dialog != null:
-			encyclopedia_dialog.open_dialog()
-	)
-	top_bar.add_child(encyclopedia_btn)
-
 	# --- 3 Columns Body ---
 	var body_hbox := HBoxContainer.new()
 	body_hbox.size_flags_vertical = SIZE_EXPAND_FILL
@@ -232,7 +214,14 @@ func _build_ui() -> void:
 	var enc_btn := Button.new()
 	enc_btn.text = "📖 Bách Khoa Vật Phẩm"
 	enc_btn.flat = true
+	enc_btn.focus_mode = FOCUS_NONE
+	enc_btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	enc_btn.tooltip_text = "Tra cứu Bách Khoa Toàn Thư / Xem danh mục đồ đấu giá (Phím B)"
 	enc_btn.add_theme_color_override("font_color", Color("#8be9fd"))
+	enc_btn.pressed.connect(func() -> void:
+		if encyclopedia_dialog != null:
+			encyclopedia_dialog.open_dialog()
+	)
 	grid_top.add_child(enc_btn)
 
 	var crate_panel := PanelContainer.new()
@@ -789,6 +778,9 @@ func _render_bidders() -> void:
 		card_style.corner_radius_bottom_left = 6
 		card_style.corner_radius_bottom_right = 6
 		card.add_theme_stylebox_override("panel", card_style)
+		var s_bal: int = int(player_silver_balances.get(pid, 0))
+		card.tooltip_text = "👤 Người chơi: %s\n🪙 Xu Bạc hiện có: %s Xu" % [String(pid), _format_number(s_bal)]
+		card.mouse_filter = MOUSE_FILTER_STOP
 		_bidders_container.add_child(card)
 
 		var hbox := HBoxContainer.new()
@@ -1042,19 +1034,18 @@ func _run_settlement_reveal() -> void:
 		if _settlement_grid_draw_control != null:
 			_settlement_grid_draw_control.queue_redraw()
 
-		# Determine wait duration according to user specification:
-		# "Vật phẩm vàng và đỏ sẽ có thời gian load lâu hơn ngẫu nhiên bất kể giá trị (0.1 tới 2s, tuy nhiên giá trị càng cao thì tỉ lệ load lâu càng cao, không 100% nhưng tỉ lệ sẽ cao hơn)"
-		var wait_time: float = 0.2
+		# Determine wait duration according to user specification (doubled for suspenseful reveal):
+		var wait_time: float = 0.4
 		if item.rarity == ITEM_CLASS.Rarity.GOLD or item.rarity == ITEM_CLASS.Rarity.RED:
 			var val_ratio: float = clampf(float(item.silver_value) / 450.0, 0.0, 1.0)
 			var prob_long: float = lerpf(0.35, 0.85, val_ratio)
 			if randf() < prob_long:
-				wait_time = randf_range(0.8, 2.0)
+				wait_time = randf_range(1.6, 4.0)
 			else:
-				wait_time = randf_range(0.1, 0.6)
+				wait_time = randf_range(0.3, 1.2)
 		else:
 			# "khoảng load nhẹ ở giữa ô đồ trước khi xuất hiện"
-			wait_time = randf_range(0.12, 0.28)
+			wait_time = randf_range(0.25, 0.55)
 
 		var start_ticks: int = Time.get_ticks_msec()
 		var last_ticks: int = start_ticks

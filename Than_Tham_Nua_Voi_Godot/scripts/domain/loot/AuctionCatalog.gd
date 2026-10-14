@@ -363,6 +363,34 @@ static func filter_items(
 	return results
 
 
+static func filter_items_multi(
+	allowed_rarities: Dictionary = {},
+	filter_rarity: bool = false,
+	allowed_categories: Dictionary = {},
+	filter_category: bool = false,
+	allowed_shapes: Dictionary = {},
+	filter_shape: bool = false
+) -> Array[Dictionary]:
+	var results: Array[Dictionary] = []
+	for it in _CATALOG_ITEMS:
+		if filter_rarity:
+			var r: int = int(it.get("rarity", -1))
+			if not allowed_rarities.has(r):
+				continue
+		if filter_category:
+			var cat: String = String(it.get("category", ""))
+			if not allowed_categories.has(cat):
+				continue
+		if filter_shape:
+			var w := int(it.get("grid_width", 1))
+			var h := int(it.get("grid_height", 1))
+			var sh := Vector2i(w, h)
+			if not allowed_shapes.has(sh):
+				continue
+		results.append(it.duplicate(true))
+	return results
+
+
 static func create_item_instance(data: Dictionary) -> MysteryChestItem:
 	var it := MysteryChestItem.new()
 	it.item_id = StringName(data.get("id", "item"))
