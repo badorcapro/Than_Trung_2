@@ -94,6 +94,10 @@ var _cheat_player_lbl: Label = null
 var _cheat_target_player_index: int = 0
 var _is_at_splash: bool = false
 var _clock_timer: Timer = null
+var _toast_layer: CanvasLayer = null
+var _toast_panel: PanelContainer = null
+var _toast_label: RichTextLabel = null
+var _toast_tween: Tween = null
 
 const SPLASH_BG_TEXTURE: Texture2D = preload("res://assets/ui/common/splash_bg.png")
 const MAIN_MENU_BG_TEXTURE: Texture2D = preload("res://assets/ui/common/main_menu_bg.png")
@@ -281,6 +285,7 @@ func _ready() -> void:
 	_auction_encyclopedia.visible = false
 	enc_layer.add_child(_auction_encyclopedia)
 	_init_cheat_layer()
+	_init_toast_layer()
 	_init_desktop_system()
 	if splash_click_catcher != null and not splash_click_catcher.pressed.is_connected(_on_splash_click_catcher_pressed):
 		splash_click_catcher.pressed.connect(_on_splash_click_catcher_pressed)
@@ -350,7 +355,7 @@ func _input(event: InputEvent) -> void:
 		_toggle_cheat_menu()
 		get_viewport().set_input_as_handled()
 		return
-	if key_event.keycode == KEY_F9:
+	if key_event.keycode == KEY_F9 or key_event.physical_keycode == KEY_F9:
 		_save_game_manual()
 		get_viewport().set_input_as_handled()
 		return
@@ -556,21 +561,43 @@ func _on_continue_pressed() -> void:
 	var loaded: Dictionary = _autosave_service.load_match()
 	if not bool(loaded.get("success", false)):
 		_refresh_continue_button()
-		_show_message("Không có trận đấu đã lưu hợp lệ.", true)
+		_show_toast("Không có trận đấu đã lưu hợp lệ.", true)
 		return
 	var saved_match: MVP_MATCH_STATE = loaded.get("match_state") as MVP_MATCH_STATE
+
+	if FileAccess.file_exists("user://player_facing_runtime_save.json"):
+		var rf := FileAccess.open("user://player_facing_runtime_save.json", FileAccess.READ)
+		if rf != null:
+			var rtext: String = rf.get_as_text()
+			rf.close()
+			var rparsed: Variant = JSON.parse_string(rtext)
+			if rparsed is Dictionary:
+				var rdict: Dictionary = rparsed as Dictionary
+				var saved_phase: int = int(rdict.get("saved_phase", -1))
+				var match_dict: Dictionary = rdict.get("match_state", {})
+				var restored_match: MVP_MATCH_STATE = (
+					MVP_MATCH_STATE.from_dict(match_dict)
+					if not match_dict.is_empty()
+					else saved_match
+				)
+				if saved_phase == SETUP_SESSION.Phase.LOOT_ACTIVE:
+					var loot_dict: Dictionary = rdict.get("loot_session", {})
+					if not loot_dict.is_empty():
+						_restore_loot_from_runtime_save(restored_match, rdict)
+						return
+
 	if saved_match.match_completion_state == &"MATCH_COMPLETE":
 		var completed_setup: SETUP_SESSION = SETUP_SESSION.new()
 		var completed: Dictionary = completed_setup.restore_completed_match(saved_match)
 		if not bool(completed.get("success", false)):
 			_refresh_continue_button()
-			_show_message("Không thể khôi phục kết quả Trận.", true)
+			_show_toast("Không thể khôi phục kết quả Trận.", true)
 			return
 		_clear_active_match()
 		setup = completed_setup
 		_render_match_results()
 		_show_phase(setup.phase)
-		_show_message("Trận đã hoàn tất được khôi phục.")
+		_show_toast("Trận đã hoàn tất được khôi phục.")
 		return
 
 	var restored_flow: CASE_FLOW_SESSION = CASE_FLOW_SESSION.new()
@@ -579,25 +606,66 @@ func _on_continue_pressed() -> void:
 	)
 	if not bool(restored.get("success", false)):
 		_refresh_continue_button()
-		_show_message("Không thể khôi phục Trận giữa các Round.", true)
+		_show_toast("Không thể khôi phục Trận giữa các Round.", true)
 		return
 	var prepared: Dictionary = restored_flow.prepare_default_next_case_options()
 	if not bool(prepared.get("success", false)):
-		_show_message("Chưa thể chuẩn bị ba Kỳ Án tiếp theo.", true)
+		_show_toast("Chưa thể chuẩn bị ba Kỳ Án tiếp theo.", true)
 		return
 	var restored_setup: SETUP_SESSION = SETUP_SESSION.new()
 	var presented: Dictionary = restored_setup.restore_between_rounds(
 		restored_flow.match_state
 	)
 	if not bool(presented.get("success", false)):
-		_show_message("Không thể mở lựa chọn Kỳ Án tiếp theo.", true)
+		_show_toast("Không thể mở lựa chọn Kỳ Án tiếp theo.", true)
 		return
 	_clear_active_match()
 	setup = restored_setup
 	case_flow = restored_flow
 	_refresh_next_case()
 	_show_phase(setup.phase)
-	_show_message("Trận đã được khôi phục. Hãy chọn Kỳ Án tiếp theo.")
+	_show_toast("Trận đã được khôi phục. Hãy chọn Kỳ Án tiếp theo.")
+
+
+func _restore_loot_from_runtime_save(restored_match: MVP_MATCH_STATE, rdict: Dictionary) -> void:
+	var loot_dict: Dictionary = rdict.get("loot_session", {})
+	var saved_round: int = int(rdict.get("round_number", 1))
+
+	_clear_active_match()
+
+	var restored_setup: SETUP_SESSION = SETUP_SESSION.new()
+	restored_setup.match_state = restored_match
+	restored_setup.phase = SETUP_SESSION.Phase.LOOT_ACTIVE
+	setup = restored_setup
+
+	var restored_flow: CASE_FLOW_SESSION = CASE_FLOW_SESSION.new()
+	var res: Dictionary = restored_flow.restore_loot_runtime(restored_match, loot_dict, saved_round)
+	if not bool(res.get("success", false)):
+		_show_toast("Không thể khôi phục trạng thái Loot!", true)
+		return
+	case_flow = restored_flow
+
+	var chest_dict: Dictionary = rdict.get("mystery_chest", {})
+	if not chest_dict.is_empty():
+		_mystery_chest = MYSTERY_CHEST_STATE.from_dict(chest_dict)
+	else:
+		_mystery_chest = MYSTERY_CHEST_STATE.new()
+
+	_vault_reach_player_ids.clear()
+	var raw_vault: Array = rdict.get("vault_reach_player_ids", [])
+	for pid_val in raw_vault:
+		_vault_reach_player_ids.append(StringName(String(pid_val)))
+
+	_loot_activity_lines.clear()
+	var raw_lines: Array = rdict.get("loot_activity_lines", [])
+	for l in raw_lines:
+		_loot_activity_lines.append(String(l))
+	_logged_reward_count = int(rdict.get("logged_reward_count", 0))
+
+	_show_round_indicator(saved_round)
+	_show_phase(setup.phase)
+	_refresh_loot()
+	_show_toast("Đã tiếp tục hành trình Loot tại Vòng %d!" % saved_round, false)
 
 
 func _on_classic_mode_pressed() -> void:
@@ -1538,8 +1606,39 @@ func _save_game_manual() -> void:
 		active_match = setup.match_state
 
 	if active_match == null or not active_match.character_selection_complete or active_match.players.size() != 3:
-		_show_message("Chưa vào trận đấu để lưu (F9).", true)
+		_show_toast("Chưa vào trận đấu để lưu (F9).", true)
 		return
+
+	var current_round: int = (
+		case_flow.active_round_number()
+		if case_flow != null and case_flow.has_method("active_round_number")
+		else (active_match.current_round_number if active_match != null else 1)
+	)
+
+	var runtime_data: Dictionary = {
+		"version": 1,
+		"saved_phase": int(setup.phase),
+		"round_number": current_round,
+		"match_state": active_match.to_dict(),
+		"loot_session": (
+			case_flow.loot_session.to_dict()
+			if case_flow != null and case_flow.loot_session != null
+			else {}
+		),
+		"mystery_chest": (
+			_mystery_chest.to_dict() if _mystery_chest != null else {}
+		),
+		"vault_reach_player_ids": _vault_reach_player_ids.map(
+			func(id: StringName) -> String: return String(id)
+		),
+		"loot_activity_lines": _loot_activity_lines,
+		"logged_reward_count": _logged_reward_count,
+	}
+
+	var rf := FileAccess.open("user://player_facing_runtime_save.json", FileAccess.WRITE)
+	if rf != null:
+		rf.store_string(JSON.stringify(runtime_data))
+		rf.close()
 
 	var save_state: MVP_MATCH_STATE = MVP_MATCH_STATE.from_dict(active_match.to_dict())
 	if save_state.match_completion_state != &"MATCH_COMPLETE":
@@ -1552,10 +1651,11 @@ func _save_game_manual() -> void:
 
 	var save_res: Dictionary = _autosave_service.save_match(save_state)
 	if bool(save_res.get("success", false)):
-		_show_message("💾 Đã lưu game thành công (F9)! Bạn có thể bấm [Tiếp tục] ở Menu chính bất kỳ lúc nào.", false)
+		var phase_name: String = _phase_display_name(setup.phase)
+		_show_toast("Đã lưu game thành công (F9) tại [%s]! Bạn có thể bấm [Tiếp tục] bất kỳ lúc nào." % phase_name, false)
 		_refresh_continue_button()
 	else:
-		_show_message("Không thể lưu game: %s" % String(save_res.get("code", "UNKNOWN")), true)
+		_show_toast("Không thể lưu game: %s" % String(save_res.get("code", "UNKNOWN")), true)
 
 
 func _on_exit_pressed() -> void:
@@ -3139,6 +3239,99 @@ func _show_phase(next_phase: int) -> void:
 func _show_message(message: String, is_error: bool = false) -> void:
 	message_label.text = message
 	message_label.modulate = Color(1.0, 0.45, 0.45) if is_error else Color(0.5, 0.9, 1.0)
+
+
+func _init_toast_layer() -> void:
+	_toast_layer = CanvasLayer.new()
+	_toast_layer.name = "ToastNotificationLayer"
+	_toast_layer.layer = 250
+	add_child(_toast_layer)
+
+	_toast_panel = PanelContainer.new()
+	_toast_panel.name = "ToastPanel"
+	_toast_panel.visible = false
+	_toast_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_toast_panel.custom_minimum_size = Vector2(620, 56)
+	_toast_panel.set_anchors_preset(Control.PRESET_CENTER_TOP)
+	_toast_panel.position = Vector2(330, 24)
+	_toast_panel.size = Vector2(620, 56)
+
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color(0.08, 0.10, 0.14, 0.95)
+	style.border_width_left = 2
+	style.border_width_top = 2
+	style.border_width_right = 2
+	style.border_width_bottom = 2
+	style.border_color = Color(0.96, 0.79, 0.36, 1.0)
+	style.corner_radius_top_left = 10
+	style.corner_radius_top_right = 10
+	style.corner_radius_bottom_left = 10
+	style.corner_radius_bottom_right = 10
+	style.shadow_color = Color(0.0, 0.0, 0.0, 0.6)
+	style.shadow_size = 8
+	style.content_margin_left = 16
+	style.content_margin_right = 16
+	style.content_margin_top = 8
+	style.content_margin_bottom = 8
+	_toast_panel.add_theme_stylebox_override("panel", style)
+
+	_toast_label = RichTextLabel.new()
+	_toast_label.name = "ToastLabel"
+	_toast_label.bbcode_enabled = true
+	_toast_label.fit_content = true
+	_toast_label.scroll_active = false
+	_toast_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_toast_label.add_theme_font_size_override("normal_font_size", 16)
+	_toast_label.add_theme_font_size_override("bold_font_size", 16)
+	_toast_panel.add_child(_toast_label)
+	_toast_layer.add_child(_toast_panel)
+
+
+func _show_toast(text: String, is_error: bool = false) -> void:
+	_show_message(text, is_error)
+	if _toast_panel == null or _toast_label == null:
+		return
+	var style: StyleBoxFlat = _toast_panel.get_theme_stylebox("panel") as StyleBoxFlat
+	if style != null:
+		if is_error:
+			style.border_color = Color(0.95, 0.3, 0.3, 1.0)
+		else:
+			style.border_color = Color(0.96, 0.79, 0.36, 1.0)
+
+	var prefix: String = "[color=#ff6666][b]❌ CẢNH BÁO:[/b][/color] " if is_error else "[color=#f6c95c][b]💾 HỆ THỐNG:[/b][/color] "
+	_toast_label.text = "[center]%s%s[/center]" % [prefix, text]
+
+	if _toast_tween != null and _toast_tween.is_valid():
+		_toast_tween.kill()
+
+	_toast_panel.visible = true
+	_toast_panel.modulate.a = 1.0
+
+	_toast_tween = create_tween()
+	_toast_tween.tween_interval(2.5)
+	_toast_tween.tween_property(_toast_panel, "modulate:a", 0.0, 0.6)
+	_toast_tween.tween_callback(func() -> void:
+		if _toast_panel != null:
+			_toast_panel.visible = false
+	)
+
+
+func _phase_display_name(p: int) -> String:
+	match p:
+		SETUP_SESSION.Phase.LOOT_ACTIVE:
+			return "Bản đồ Loot Hoàng Cung"
+		SETUP_SESSION.Phase.CASE_ACTIVE:
+			return "Kỳ Án Đang Diễn Ra"
+		SETUP_SESSION.Phase.EQUIPMENT_MANAGEMENT:
+			return "Quản Lý Trang Bị"
+		SETUP_SESSION.Phase.NEXT_CASE_SELECTION:
+			return "Lựa Chọn Kỳ Án Tiếp Theo"
+		SETUP_SESSION.Phase.ROUND_SUMMARY:
+			return "Tổng Kết Round"
+		SETUP_SESSION.Phase.MATCH_RESULTS:
+			return "Kết Quả Trận Đấu"
+		_:
+			return "Trận Đấu"
 
 
 func _init_cheat_layer() -> void:

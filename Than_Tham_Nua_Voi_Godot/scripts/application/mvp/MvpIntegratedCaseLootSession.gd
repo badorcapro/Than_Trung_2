@@ -234,6 +234,40 @@ func begin_loot() -> Dictionary:
 	return _success(&"LOOT_INITIALIZED", "Spawn, movement and reward runtime are active")
 
 
+func restore_loot_runtime(
+	restored_match: MVP_MATCH_STATE,
+	loot_dict: Dictionary,
+	saved_round_number: int = 1
+) -> Dictionary:
+	if restored_match == null:
+		return _failure(&"RESTORE_MATCH_MISSING", "Match state is required")
+	match_state = restored_match
+	_map_definition = GD2_FIXTURES.load_m3_map()
+	_characters = GD2_FIXTURES.load_characters()
+	_rewards = PRODUCTION_REWARD_REPOSITORY.load_rewards()
+	_items = PRODUCTION_CONSUMABLE_REPOSITORY.load_all()
+
+	round_state = MVP_ROUND_STATE.new()
+	round_state.round_number = saved_round_number
+	round_state.round_id = StringName(loot_dict.get("round_id", "round_%d" % saved_round_number))
+	round_state.phase = MVP_ENUMS.Phase.LOOT
+	if _map_definition != null:
+		round_state.loot_map_id = _map_definition.map_id
+	round_state.settlement_applied = true
+
+	_orchestrator.initialize(match_state)
+	_orchestrator.attach_round(round_state)
+	_orchestrator.transition(MVP_ENUMS.Phase.CASE)
+	_orchestrator.transition(MVP_ENUMS.Phase.CASE_SETTLEMENT)
+	_orchestrator.transition(MVP_ENUMS.Phase.LOOT)
+
+	loot_session = LootRewardSession.from_dict(loot_dict)
+	_loot_started = true
+	_completion_handled = true
+	_record_phase("loot_session_restored_from_runtime_save")
+	return _success(&"LOOT_RESTORED", "Loot runtime state successfully restored")
+
+
 func _build_loot_reward_session(
 	loot_players: Array[PlayerPhaseState], fixture_sequence: Array[int]
 ) -> LootRewardSession:
