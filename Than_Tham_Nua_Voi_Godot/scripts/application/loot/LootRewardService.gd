@@ -40,7 +40,6 @@ func continue_without_item(session: LootRewardSession) -> bool:
 	if movement_player.remaining_moves > 0:
 		session.phase = LootRewardSession.Phase.MOVEMENT
 	else:
-		movement_service.advance_without_movement(session.movement_session)
 		_finish_personal_turn(session)
 	return true
 
@@ -71,6 +70,7 @@ func perform_movement(
 	var before_player: LootMovementPlayerState = session.movement_session.current_player()
 	if before_player == null:
 		return null
+	var moving_turn_index: int = session.movement_session.current_turn_index
 	var action: MovementActionResult = movement_service.roll_move(
 		session.movement_session,
 		map_definition,
@@ -84,6 +84,7 @@ func perform_movement(
 		return null
 	if action == null:
 		return null
+	session.movement_session.current_turn_index = moving_turn_index
 	session.pending_trace = action.traversed_node_ids.duplicate()
 	session.pending_trace_index = 0
 	session.phase = LootRewardSession.Phase.REWARD_RESOLUTION
@@ -108,6 +109,7 @@ func choose_branch(
 	var player: LootMovementPlayerState = session.movement_session.current_player()
 	if player == null:
 		return null
+	var moving_turn_index: int = session.movement_session.current_turn_index
 	var action: MovementActionResult = movement_service.continue_branch_move(
 		session.movement_session,
 		map_definition,
@@ -116,6 +118,7 @@ func choose_branch(
 	)
 	if action == null:
 		return null
+	session.movement_session.current_turn_index = moving_turn_index
 	session.pending_trace = action.traversed_node_ids.duplicate()
 	session.pending_trace_index = 0
 	session.phase = LootRewardSession.Phase.REWARD_RESOLUTION
@@ -126,6 +129,11 @@ func resolve_trace(session: LootRewardSession, player_id: StringName, trace: Arr
 	if session == null or session.phase == LootRewardSession.Phase.BAG_OVERFLOW_PENDING: return false
 	var marker := MovementActionResult.new(); marker.player_id = player_id
 	session.movement_session.movement_history.append(marker)
+	if session.movement_session != null:
+		for idx: int in range(session.movement_session.player_states.size()):
+			if session.movement_session.player_states[idx].player_id == player_id:
+				session.movement_session.current_turn_index = idx
+				break
 	session.pending_trace = trace.duplicate(); session.pending_trace_index = 0; session.phase = LootRewardSession.Phase.REWARD_RESOLUTION
 	_resolve_pending(session, rewards)
 	return true
@@ -229,9 +237,12 @@ func _resolve_pending(session: LootRewardSession, rewards: Array[RewardDefinitio
 func _finish_personal_turn(session: LootRewardSession) -> void:
 	item_service.expire_duration(session.movement_session.player_states, TemporaryEffectState.Duration.THIS_TURN)
 	session.item_used_this_turn = false
-	if session.movement_session.completed:
-		item_service.expire_duration(session.movement_session.player_states, TemporaryEffectState.Duration.THIS_ROUND); session.phase=LootRewardSession.Phase.LOOT_END_CONFIRMATION_READY
-	else: session.phase=LootRewardSession.Phase.ITEM_WINDOW
+	if session.movement_session.all_exhausted():
+		item_service.expire_duration(session.movement_session.player_states, TemporaryEffectState.Duration.THIS_ROUND)
+		session.phase = LootRewardSession.Phase.LOOT_END_CONFIRMATION_READY
+	else:
+		movement_service.advance_without_movement(session.movement_session)
+		session.phase = LootRewardSession.Phase.ITEM_WINDOW
 
 func _finalize_pending_overflow_result(session: LootRewardSession, accepted: bool) -> void:
 	var result: RewardResolutionResult = session.reward_history[-1]

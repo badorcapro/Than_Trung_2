@@ -1763,13 +1763,16 @@ func _current_loot_player() -> PLAYER_PHASE_STATE:
 func _refresh_loot() -> void:
 	var session: LOOT_REWARD_SESSION = case_flow.loot_session
 	var movement_player: LOOT_MOVEMENT_PLAYER_STATE = session.movement_session.current_player()
-	if movement_player == null:
+	if movement_player == null and not session.overflow.active:
 		return
-	var player: PLAYER_PHASE_STATE = session.find_player(movement_player.player_id)
-	var display_name: String = _player_name(movement_player.player_id)
-	var round_loot: RoundLootInventoryState = session.find_round_loot_state(
-		movement_player.player_id
+	var active_player_id: StringName = (
+		session.overflow.player_id
+		if session.overflow.active
+		else (movement_player.player_id if movement_player != null else &"")
 	)
+	var player: PLAYER_PHASE_STATE = session.find_player(active_player_id)
+	var display_name: String = _player_name(active_player_id)
+	var round_loot: RoundLootInventoryState = session.find_round_loot_state(active_player_id)
 	var bag_count: int = round_loot.carried_items.size() if round_loot != null else 0
 	var bag_capacity: int = round_loot.capacity if round_loot != null else 0
 	var persistent_item_count: int = player.consumable_inventory.size() if player != null else 0
@@ -1853,11 +1856,12 @@ func _refresh_loot() -> void:
 	if not session.overflow.active and replace_confirm_modal != null:
 		replace_confirm_modal.visible = false
 	if session.overflow.active:
+		_item_tray_open = true
 		overflow_text.text = (
 			"⚠️ TÚI ĐÃ ĐẦY!\nVật phẩm mới: %s\n"
 			+ "Chọn một vật phẩm đang mang để thay thế, hoặc bỏ vật phẩm mới."
 		) % _item_display_name(session.overflow.incoming_item_id)
-	_refresh_overflow_choice(session, movement_player.player_id)
+	_refresh_overflow_choice(session, active_player_id)
 	_refresh_pummel_player_cards(session)
 	if _item_tray_open:
 		_refresh_pummel_item_hotbar(session)
@@ -1868,9 +1872,13 @@ func _refresh_pummel_player_cards(session: LOOT_REWARD_SESSION) -> void:
 		return
 	var player_order: Array[StringName] = session.movement_session.ordered_player_ids
 	var active_id: StringName = (
-		session.movement_session.current_player().player_id
-		if session.movement_session.current_player() != null
-		else &""
+		session.overflow.player_id
+		if session.overflow.active
+		else (
+			session.movement_session.current_player().player_id
+			if session.movement_session.current_player() != null
+			else &""
+		)
 	)
 	var badges: Array[String] = ["🔵 P1", "🔴 P2", "🟢 P3", "🟣 P4"]
 	var badge_colors: Array[Color] = [
@@ -2035,10 +2043,15 @@ func _refresh_pummel_item_hotbar(session: LOOT_REWARD_SESSION) -> void:
 
 	_hotbar_items.clear()
 	var movement_player: LOOT_MOVEMENT_PLAYER_STATE = session.movement_session.current_player()
-	if movement_player == null:
+	if movement_player == null and not session.overflow.active:
 		return
-	var player_state: PLAYER_PHASE_STATE = session.find_player(movement_player.player_id)
-	var round_loot: RoundLootInventoryState = session.find_round_loot_state(movement_player.player_id)
+	var active_pid: StringName = (
+		session.overflow.player_id
+		if session.overflow.active
+		else (movement_player.player_id if movement_player != null else &"")
+	)
+	var player_state: PLAYER_PHASE_STATE = session.find_player(active_pid)
+	var round_loot: RoundLootInventoryState = session.find_round_loot_state(active_pid)
 	var is_item_window: bool = (session.phase == LOOT_REWARD_SESSION.Phase.ITEM_WINDOW)
 	var can_use: bool = is_item_window and not session.item_used_this_turn
 
