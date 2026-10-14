@@ -2843,7 +2843,7 @@ func _append_latest_reward_feedback() -> void:
 		var reward: REWARD_RESOLUTION_RESULT = session.reward_history[_logged_reward_count]
 		var name_str: String = ""
 		if reward.reward_type == 5 and reward.item_id != &"":
-			name_str = _consumable_item_name(reward.item_id)
+			name_str = _item_display_name(reward.item_id)
 		else:
 			name_str = _reward_type_name(reward.reward_type)
 		var line: String = "🎁 Nhận: [b]%s[/b]" % name_str
