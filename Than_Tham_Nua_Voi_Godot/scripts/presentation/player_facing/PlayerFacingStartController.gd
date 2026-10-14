@@ -46,6 +46,7 @@ const PLAYER_FACING_AUTOSAVE_SERVICE := preload(
 	"res://scripts/application/player_facing/PlayerFacingAutosaveService.gd"
 )
 const MVP_MATCH_STATE := preload("res://scripts/domain/mvp/MvpMatchState.gd")
+const MVP_ENUMS := preload("res://scripts/domain/mvp/MvpEnums.gd")
 const CHARACTER_DETAIL_SHEET := preload(
 	"res://scripts/presentation/player_facing/CharacterDetailSheet.gd"
 )
