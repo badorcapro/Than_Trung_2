@@ -3064,7 +3064,7 @@ func _init_cheat_layer() -> void:
 	_cheat_overlay.add_child(center_box)
 
 	var panel := PanelContainer.new()
-	panel.custom_minimum_size = Vector2(760, 560)
+	panel.custom_minimum_size = Vector2(860, 640)
 	var style := StyleBoxFlat.new()
 	style.bg_color = Color(0.09, 0.11, 0.15, 0.98)
 	style.border_color = Color(0.3, 0.75, 1.0, 0.9)
@@ -3103,7 +3103,7 @@ func _init_cheat_layer() -> void:
 	main_vbox.add_child(header_hbox)
 
 	var desc_lbl := Label.new()
-	desc_lbl.text = "Bảng cheat tạm phục vụ thử nghiệm nâng cấp Kỷ Vật, Vết Thánh, EXP và vật phẩm."
+	desc_lbl.text = "Bảng cheat phục vụ thử nghiệm Di chuyển (Thể lực, Tốc độ, Túi đồ), Kỷ Vật, Vết Thánh, EXP và vật phẩm."
 	desc_lbl.add_theme_font_size_override("font_size", 12)
 	desc_lbl.add_theme_color_override("font_color", Color(0.68, 0.72, 0.78))
 	main_vbox.add_child(desc_lbl)
@@ -3119,7 +3119,7 @@ func _init_cheat_layer() -> void:
 	_cheat_player_lbl = Label.new()
 	_cheat_player_lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_cheat_player_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_cheat_player_lbl.add_theme_font_size_override("font_size", 14)
+	_cheat_player_lbl.add_theme_font_size_override("font_size", 13)
 	_cheat_player_lbl.add_theme_color_override("font_color", Color(1.0, 0.85, 0.25))
 	player_box.add_child(_cheat_player_lbl)
 
@@ -3137,11 +3137,50 @@ func _init_cheat_layer() -> void:
 	_cheat_feedback_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	main_vbox.add_child(_cheat_feedback_lbl)
 
+	var scroll := ScrollContainer.new()
+	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	scroll.custom_minimum_size = Vector2(0, 390)
+	main_vbox.add_child(scroll)
+
 	var grid := GridContainer.new()
 	grid.columns = 3
+	grid.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	grid.add_theme_constant_override("h_separation", 10)
 	grid.add_theme_constant_override("v_separation", 10)
-	main_vbox.add_child(grid)
+	scroll.add_child(grid)
+
+	# --- Nhóm 1: Thể Lực & Lượt Di Chuyển ---
+	_add_cheat_btn(grid, "⚡ +1 Thể Lực (+1 Lượt)", func() -> void:
+		_cheat_adjust_stamina(1)
+	)
+	_add_cheat_btn(grid, "⚡ +5 Thể Lực (+5 Lượt)", func() -> void:
+		_cheat_adjust_stamina(5)
+	)
+	_add_cheat_btn(grid, "⚡ Set 20 Lượt Đi (Test Map)", func() -> void:
+		_cheat_set_moves(20)
+	)
+
+	# --- Nhóm 2: Tốc Độ ---
+	_add_cheat_btn(grid, "🏃 +1 Tốc Độ (Xúc Xắc)", func() -> void:
+		_cheat_adjust_speed(1)
+	)
+	_add_cheat_btn(grid, "🏃 -1 Tốc Độ", func() -> void:
+		_cheat_adjust_speed(-1)
+	)
+	_add_cheat_btn(grid, "🏃 Set Tốc Độ = 10 (Max Test)", func() -> void:
+		_cheat_set_speed(10)
+	)
+
+	# --- Nhóm 3: Túi Đồ ---
+	_add_cheat_btn(grid, "🎒 +1 Sức Chứa Túi", func() -> void:
+		_cheat_adjust_bag(1)
+	)
+	_add_cheat_btn(grid, "🎒 -1 Sức Chứa Túi", func() -> void:
+		_cheat_adjust_bag(-1)
+	)
+	_add_cheat_btn(grid, "🎒 Set Túi = 10 Ô (Max Test)", func() -> void:
+		_cheat_set_bag(10)
+	)
 
 	_add_cheat_btn(grid, "💎 +100 EXP Kỷ Vật", func() -> void:
 		var p := _get_cheat_target_player()
@@ -3230,15 +3269,48 @@ func _refresh_cheat_player_display() -> void:
 		return
 	var char_def: CHARACTER_DEFINITION = setup.find_character(player.character_id) if setup != null else null
 	var name_str: String = char_def.display_name if char_def != null else String(player.player_id)
+
+	var cur_speed: int = char_def.base_speed if char_def != null else 1
+	var cur_stamina: int = char_def.base_stamina if char_def != null else 0
+	var cur_bag: int = char_def.base_bag_level if char_def != null else 0
+	var rem_moves: int = -1
+	var bag_used: int = 0
+	var bag_cap: int = cur_bag
+
+	var m_state := _get_movement_player_state(player.player_id)
+	if m_state != null:
+		cur_speed = m_state.speed_snapshot
+		rem_moves = m_state.remaining_moves
+	if case_flow != null and case_flow.loot_session != null:
+		var round_loot := case_flow.loot_session.find_round_loot_state(player.player_id)
+		if round_loot != null:
+			bag_cap = round_loot.capacity
+			bag_used = round_loot.carried_items.size()
+
+	var moves_str := "Lượt: %d" % rem_moves if rem_moves >= 0 else "Lượt: -"
+
 	if _cheat_player_lbl != null:
-		_cheat_player_lbl.text = "🎯 Đang chọn: P%d - %s  (Relic EXP: %d | Stig EXP: %d | Vé: %d | Xu: %d)" % [
+		_cheat_player_lbl.text = "🎯 P%d - %s | 🏃 Tốc độ: %d | ⚡ Thể lực: %d (%s) | 🎒 Túi: %d/%d\n💎 Relic: %d | 🔮 Stig: %d | 🎟️ Vé: %d | 🪙 Xu: %d" % [
 			player.seat_index + 1,
 			name_str,
+			cur_speed,
+			cur_stamina,
+			moves_str,
+			bag_used,
+			bag_cap,
 			player.relic_exp_material_count,
 			player.stigmata_exp_material_count,
 			player.gacha_ticket_count,
 			player.silver_coin_count,
 		]
+
+
+func _get_movement_player_state(player_id: StringName) -> LOOT_MOVEMENT_PLAYER_STATE:
+	if case_flow != null and case_flow.loot_session != null and case_flow.loot_session.movement_session != null:
+		for m_state: LOOT_MOVEMENT_PLAYER_STATE in case_flow.loot_session.movement_session.player_states:
+			if m_state.player_id == player_id:
+				return m_state
+	return null
 
 
 func _get_all_active_players() -> Array:
@@ -3283,6 +3355,110 @@ func _refresh_after_cheat() -> void:
 		_character_sheet.refresh()
 	if case_flow != null and case_flow.loot_session != null and loot_panel != null and loot_panel.visible:
 		_refresh_pummel_player_cards(case_flow.loot_session)
+		_refresh_loot()
+
+
+func _cheat_adjust_stamina(delta: int) -> void:
+	var player := _get_cheat_target_player()
+	if player == null:
+		_notify_cheat("Không tìm thấy người chơi mục tiêu!", true)
+		return
+	var char_def: CHARACTER_DEFINITION = setup.find_character(player.character_id) if setup != null else null
+	if char_def != null:
+		char_def.base_stamina = maxi(0, char_def.base_stamina + delta)
+	var m_state := _get_movement_player_state(player.player_id)
+	if m_state != null:
+		m_state.stamina_snapshot = maxi(0, m_state.stamina_snapshot + delta)
+		m_state.remaining_moves = maxi(0, m_state.remaining_moves + delta)
+	var rem: int = m_state.remaining_moves if m_state != null else (char_def.base_stamina if char_def != null else 0)
+	_notify_cheat("Đã chỉnh Thể Lực %s%d (Còn lại: %d lượt)!" % ["+" if delta > 0 else "", delta, rem])
+	_refresh_after_cheat()
+
+
+func _cheat_set_moves(moves: int) -> void:
+	var player := _get_cheat_target_player()
+	if player == null:
+		_notify_cheat("Không tìm thấy người chơi mục tiêu!", true)
+		return
+	var char_def: CHARACTER_DEFINITION = setup.find_character(player.character_id) if setup != null else null
+	if char_def != null:
+		char_def.base_stamina = moves
+	var m_state := _get_movement_player_state(player.player_id)
+	if m_state != null:
+		m_state.stamina_snapshot = moves
+		m_state.remaining_moves = moves
+	_notify_cheat("Đã đặt số lượt đi = %d!" % moves)
+	_refresh_after_cheat()
+
+
+func _cheat_adjust_speed(delta: int) -> void:
+	var player := _get_cheat_target_player()
+	if player == null:
+		_notify_cheat("Không tìm thấy người chơi mục tiêu!", true)
+		return
+	var char_def: CHARACTER_DEFINITION = setup.find_character(player.character_id) if setup != null else null
+	if char_def != null:
+		char_def.base_speed = clampi(char_def.base_speed + delta, 1, 99)
+	var m_state := _get_movement_player_state(player.player_id)
+	if m_state != null:
+		m_state.speed_snapshot = clampi(m_state.speed_snapshot + delta, 1, 99)
+	var spd: int = m_state.speed_snapshot if m_state != null else (char_def.base_speed if char_def != null else 1)
+	_notify_cheat("Đã chỉnh Tốc Độ %s%d (Hiện tại: %d)!" % ["+" if delta > 0 else "", delta, spd])
+	_refresh_after_cheat()
+
+
+func _cheat_set_speed(speed: int) -> void:
+	var player := _get_cheat_target_player()
+	if player == null:
+		_notify_cheat("Không tìm thấy người chơi mục tiêu!", true)
+		return
+	var char_def: CHARACTER_DEFINITION = setup.find_character(player.character_id) if setup != null else null
+	if char_def != null:
+		char_def.base_speed = clampi(speed, 1, 99)
+	var m_state := _get_movement_player_state(player.player_id)
+	if m_state != null:
+		m_state.speed_snapshot = clampi(speed, 1, 99)
+	var spd: int = m_state.speed_snapshot if m_state != null else (char_def.base_speed if char_def != null else speed)
+	_notify_cheat("Đã đặt Tốc Độ = %d!" % spd)
+	_refresh_after_cheat()
+
+
+func _cheat_adjust_bag(delta: int) -> void:
+	var player := _get_cheat_target_player()
+	if player == null:
+		_notify_cheat("Không tìm thấy người chơi mục tiêu!", true)
+		return
+	var char_def: CHARACTER_DEFINITION = setup.find_character(player.character_id) if setup != null else null
+	if char_def != null:
+		char_def.base_bag_level = maxi(0, char_def.base_bag_level + delta)
+	var cap: int = char_def.base_bag_level if char_def != null else 0
+	if case_flow != null and case_flow.loot_session != null:
+		var round_loot := case_flow.loot_session.find_round_loot_state(player.player_id)
+		if round_loot != null:
+			round_loot.capacity = maxi(0, round_loot.capacity + delta)
+			cap = round_loot.capacity
+		case_flow.loot_session.bag_capacity_by_player[String(player.player_id)] = cap
+	_notify_cheat("Đã chỉnh Túi Đồ %s%d (Sức chứa: %d)!" % ["+" if delta > 0 else "", delta, cap])
+	_refresh_after_cheat()
+
+
+func _cheat_set_bag(capacity: int) -> void:
+	var player := _get_cheat_target_player()
+	if player == null:
+		_notify_cheat("Không tìm thấy người chơi mục tiêu!", true)
+		return
+	var char_def: CHARACTER_DEFINITION = setup.find_character(player.character_id) if setup != null else null
+	if char_def != null:
+		char_def.base_bag_level = maxi(0, capacity)
+	var cap: int = capacity
+	if case_flow != null and case_flow.loot_session != null:
+		var round_loot := case_flow.loot_session.find_round_loot_state(player.player_id)
+		if round_loot != null:
+			round_loot.capacity = maxi(0, capacity)
+			cap = round_loot.capacity
+		case_flow.loot_session.bag_capacity_by_player[String(player.player_id)] = cap
+	_notify_cheat("Đã đặt Sức Chứa Túi = %d!" % cap)
+	_refresh_after_cheat()
 
 
 func _cheat_grant_duplicate_equipped(slot_id: StringName) -> void:
