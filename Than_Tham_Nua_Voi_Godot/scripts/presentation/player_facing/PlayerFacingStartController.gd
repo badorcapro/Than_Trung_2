@@ -3772,16 +3772,23 @@ func _cheat_ensure_match_running() -> bool:
 		setup = SETUP_SESSION.new()
 	if setup.match_state == null or setup.match_state.players.size() != 3 or not setup.match_state.character_selection_complete:
 		setup.begin_new_game()
-		setup.select_mode(SETUP_SESSION.MatchMode.CLASSIC)
-		setup.apply_default_classic_rules()
-		setup.apply_supported_player_count()
+		setup.choose_match_mode(MATCH_RULES.Mode.CLASSIC)
+		setup.confirm_match_rules()
+		setup.choose_player_count(3)
 		setup.proceed_to_character_selection()
-		var pids: Array[StringName] = [&"player_01", &"player_02", &"player_03"]
 		var cids: Array[StringName] = [&"char_01_hoang_linh_lam", &"char_02_chu_tue_nguyet", &"char_03_kim_thanh_giai"]
 		for i in range(3):
-			setup.select_character(pids[i], cids[i])
-		setup.proceed_to_lineup_confirmation()
-		setup.proceed_to_case_selection_ready()
+			setup.select_character(cids[i])
+			setup.lock_current_character()
+			if setup.phase == SETUP_SESSION.Phase.PASS_DEVICE:
+				setup.continue_after_pass_device()
+		setup.confirm_lineup()
+		if case_flow == null:
+			var candidate_flow: CASE_FLOW_SESSION = CASE_FLOW_SESSION.new()
+			candidate_flow.initialize_player_facing_case_options(setup.match_state)
+			candidate_flow.prepare_default_next_case_options()
+			setup.mark_first_case_selection_required()
+			case_flow = candidate_flow
 	return true
 
 
@@ -3892,4 +3899,3 @@ func _cheat_jump_to_match_results() -> void:
 		_show_phase(SETUP_SESSION.Phase.MATCH_RESULTS)
 	_cheat_overlay.visible = false
 	_notify_cheat("Đã nhảy tới Kết Quả Chung Cuộc Trận Đấu!")
-
