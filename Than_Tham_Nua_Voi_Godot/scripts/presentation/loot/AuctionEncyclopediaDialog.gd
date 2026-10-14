@@ -17,7 +17,7 @@ var _shape_filter_enabled: bool = false
 var _selected_shapes: Dictionary = {}
 
 # UI References
-var _dialog_panel: PanelContainer
+var _dialog_panel: Control
 var _rarity_name_lbl: Label
 var _category_name_lbl: Label
 var _shape_name_lbl: Label
@@ -70,118 +70,86 @@ func _build_ui() -> void:
 	# 1. Dark semi-transparent modal backdrop
 	var bg_overlay := ColorRect.new()
 	bg_overlay.set_anchors_preset(PRESET_FULL_RECT)
-	bg_overlay.color = Color(0.03, 0.05, 0.08, 0.82)
+	bg_overlay.color = Color(0.02, 0.03, 0.05, 0.85)
 	add_child(bg_overlay)
 	bg_overlay.gui_input.connect(func(ev: InputEvent) -> void:
 		if ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT:
 			close_dialog()
 	)
 
-	# 2. Centered Main Modal Window (1040 x 640)
+	# 2. Centered Main Modal Window with khung.png background
+	# Resolution: 1200 x 670 matches khung.png (2752 x 1536, aspect ~ 1.7916)
 	var center := CenterContainer.new()
 	center.set_anchors_preset(PRESET_FULL_RECT)
 	add_child(center)
 
-	_dialog_panel = PanelContainer.new()
-	_dialog_panel.custom_minimum_size = Vector2(1040, 640)
-	var panel_style := StyleBoxFlat.new()
-	panel_style.bg_color = Color(0.07, 0.09, 0.13, 0.98)
-	panel_style.border_color = Color(0.28, 0.38, 0.52, 0.8)
-	panel_style.border_width_left = 2
-	panel_style.border_width_top = 2
-	panel_style.border_width_right = 2
-	panel_style.border_width_bottom = 2
-	panel_style.corner_radius_top_left = 8
-	panel_style.corner_radius_top_right = 8
-	panel_style.corner_radius_bottom_left = 8
-	panel_style.corner_radius_bottom_right = 8
-	panel_style.shadow_color = Color(0, 0, 0, 0.6)
-	panel_style.shadow_size = 16
-	_dialog_panel.add_theme_stylebox_override("panel", panel_style)
+	_dialog_panel = Control.new()
+	_dialog_panel.custom_minimum_size = Vector2(1200, 670)
 	center.add_child(_dialog_panel)
 
-	var win_vbox := VBoxContainer.new()
-	win_vbox.add_theme_constant_override("separation", 0)
-	_dialog_panel.add_child(win_vbox)
+	# Frame Art Background (khung.png)
+	var frame_rect := TextureRect.new()
+	frame_rect.set_anchors_preset(PRESET_FULL_RECT)
+	frame_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	frame_rect.stretch_mode = TextureRect.STRETCH_SCALE
+	frame_rect.mouse_filter = MOUSE_FILTER_IGNORE
+	frame_rect.texture = _get_cached_texture("res://assets/auction_items/khung.png")
+	_dialog_panel.add_child(frame_rect)
 
 	# --- Title Bar ---
-	var title_bar := PanelContainer.new()
-	var tb_style := StyleBoxFlat.new()
-	tb_style.bg_color = Color(0.11, 0.15, 0.22, 0.95)
-	tb_style.border_color = Color(0.25, 0.35, 0.48, 0.6)
-	tb_style.border_width_bottom = 1
-	tb_style.corner_radius_top_left = 8
-	tb_style.corner_radius_top_right = 8
-	title_bar.add_theme_stylebox_override("panel", tb_style)
-	win_vbox.add_child(title_bar)
-
-	var tb_margin := MarginContainer.new()
-	tb_margin.add_theme_constant_override("margin_left", 14)
-	tb_margin.add_theme_constant_override("margin_right", 12)
-	tb_margin.add_theme_constant_override("margin_top", 8)
-	tb_margin.add_theme_constant_override("margin_bottom", 8)
-	title_bar.add_child(tb_margin)
-
-	var tb_hbox := HBoxContainer.new()
-	tb_margin.add_child(tb_hbox)
-
-	var search_icon_lbl := Label.new()
-	search_icon_lbl.text = "🔍"
-	search_icon_lbl.add_theme_font_size_override("font_size", 17)
-	tb_hbox.add_child(search_icon_lbl)
-
 	var title_lbl := Label.new()
-	title_lbl.text = "Thông tin thời gian thực"
+	title_lbl.text = "📖 BÁCH KHOA TOÀN THƯ VẬT PHẨM"
+	title_lbl.position = Vector2(36, 18)
 	title_lbl.add_theme_font_size_override("font_size", 16)
 	title_lbl.add_theme_color_override("font_color", Color("#e2e8f0"))
-	tb_hbox.add_child(title_lbl)
+	_dialog_panel.add_child(title_lbl)
 
-	var spacer := Control.new()
-	spacer.size_flags_horizontal = SIZE_EXPAND_FILL
-	tb_hbox.add_child(spacer)
-
+	# Close Button positioned over 'X' box in khung.png
 	var close_btn := Button.new()
-	close_btn.text = "✕"
-	close_btn.custom_minimum_size = Vector2(30, 28)
+	close_btn.position = Vector2(1130, 13)
+	close_btn.size = Vector2(44, 43)
 	close_btn.focus_mode = FOCUS_NONE
+	close_btn.flat = true
+	close_btn.tooltip_text = "Đóng Bách Khoa (ESC)"
+	var close_hover := StyleBoxFlat.new()
+	close_hover.bg_color = Color(1.0, 1.0, 1.0, 0.15)
+	close_hover.corner_radius_top_left = 6
+	close_hover.corner_radius_top_right = 6
+	close_hover.corner_radius_bottom_left = 6
+	close_hover.corner_radius_bottom_right = 6
+	close_btn.add_theme_stylebox_override("hover", close_hover)
+	var close_normal := StyleBoxEmpty.new()
+	close_btn.add_theme_stylebox_override("normal", close_normal)
 	close_btn.pressed.connect(close_dialog)
-	tb_hbox.add_child(close_btn)
+	_dialog_panel.add_child(close_btn)
 
-	# --- Body (Left Filters + Right Grid) ---
-	var body_hbox := HBoxContainer.new()
-	body_hbox.size_flags_vertical = SIZE_EXPAND_FILL
-	body_hbox.add_theme_constant_override("separation", 12)
-	win_vbox.add_child(body_hbox)
-
-	# 1. Left Sidebar (Filters)
+	# --- Left Sidebar (Filters) ---
 	var sidebar := _build_sidebar()
-	body_hbox.add_child(sidebar)
+	sidebar.position = Vector2(28, 70)
+	sidebar.size = Vector2(345, 580)
+	_dialog_panel.add_child(sidebar)
 
-	# 2. Right Content Area (Cards Grid)
+	# --- Right Content Area ---
 	var content_area := _build_content_area()
-	body_hbox.add_child(content_area)
+	content_area.position = Vector2(390, 84)
+	content_area.size = Vector2(782, 566)
+	_dialog_panel.add_child(content_area)
 
 
 func _build_sidebar() -> Control:
-	var side_panel := PanelContainer.new()
-	side_panel.custom_minimum_size = Vector2(230, 0)
-	var s_style := StyleBoxFlat.new()
-	s_style.bg_color = Color(0.06, 0.08, 0.12, 0.9)
-	s_style.border_color = Color(0.2, 0.28, 0.38, 0.5)
-	s_style.border_width_right = 1
-	side_panel.add_theme_stylebox_override("panel", s_style)
+	var side_panel := Control.new()
+	side_panel.custom_minimum_size = Vector2(345, 580)
+	side_panel.size = Vector2(345, 580)
+	side_panel.mouse_filter = MOUSE_FILTER_PASS
 
 	var scroll := ScrollContainer.new()
+	scroll.set_anchors_preset(PRESET_FULL_RECT)
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	side_panel.add_child(scroll)
 
 	var side_vbox := VBoxContainer.new()
 	side_vbox.size_flags_horizontal = SIZE_EXPAND_FILL
-	side_vbox.add_theme_constant_override("separation", 12)
-	side_vbox.offset_left = 10
-	side_vbox.offset_right = -10
-	side_vbox.offset_top = 10
-	side_vbox.offset_bottom = -10
+	side_vbox.add_theme_constant_override("separation", 14)
 	scroll.add_child(side_vbox)
 
 	# --- Section 1: Phẩm chất (Rarity) ---
@@ -749,6 +717,15 @@ func _get_cached_texture(path: String) -> Texture2D:
 		if res is Texture2D:
 			_texture_cache[path] = res
 			return res
+	# Fallback nạp trực tiếp từ file trên ổ đĩa nếu file chưa kịp được Godot tạo .import
+	var global_path := ProjectSettings.globalize_path(path)
+	if FileAccess.file_exists(global_path):
+		var img := Image.load_from_file(global_path)
+		if img != null and not img.is_empty():
+			var tex := ImageTexture.create_from_image(img)
+			if tex != null:
+				_texture_cache[path] = tex
+				return tex
 	return null
 
 

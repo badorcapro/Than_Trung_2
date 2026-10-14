@@ -257,6 +257,8 @@ func _encyclopedia_dialog_contract() -> bool:
 		return false
 
 	var valid := not white_items.is_empty() and not antique_items.is_empty() and not shape_1x1_items.is_empty() and not multi_shapes.is_empty()
+	if dialog._dialog_panel == null:
+		valid = false
 	dialog.free()
 	return valid
 
