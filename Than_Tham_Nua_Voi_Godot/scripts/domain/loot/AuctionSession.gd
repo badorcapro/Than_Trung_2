@@ -58,6 +58,7 @@ func initialize(vault_reach_player_ids: Array[StringName], chest: MysteryChestSt
 		# Giá máy tự ra: 50% - 150% tổng giá trị hòm
 		var ratio: float = randf_range(0.5, 1.5)
 		solo_offer_price = maxi(5, int(round(float(total_val) * ratio)))
+		_publish_next_hint("Ưu Đãi Độc Quyền Solo")
 	else:
 		state = State.AUCTION_ACTIVE
 		current_round = 1

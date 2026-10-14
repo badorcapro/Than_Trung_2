@@ -275,12 +275,15 @@ func _create_hint(type: HintType) -> Dictionary:
 			var shuffled := items.duplicate()
 			shuffled.shuffle()
 			var revealed_list: Array[Dictionary] = []
+			var revealed_ids: Array[String] = []
 			for idx in range(reveal_count):
 				var it: MysteryChestItem = shuffled[idx]
 				revealed_list.append(it.to_dict())
+				revealed_ids.append(String(it.item_id))
 			result["title"] = "Phơi Bày %d Vật Phẩm" % reveal_count
 			result["description"] = "Đã lộ diện %d món đồ ngẫu nhiên từ trong Hòm Bí Ẩn!" % reveal_count
 			result["revealed_items"] = revealed_list
+			result["revealed_item_ids"] = revealed_ids
 
 		HintType.REVEAL_OUTLINES:
 			var reveal_count: int = mini(items.size(), randi_range(1, 10))
@@ -289,7 +292,11 @@ func _create_hint(type: HintType) -> Dictionary:
 			var outlines: Array[Dictionary] = []
 			for idx in range(reveal_count):
 				var it: MysteryChestItem = shuffled[idx]
-				outlines.append({"width": it.grid_width, "height": it.grid_height})
+				outlines.append({
+					"item_id": String(it.item_id),
+					"width": it.grid_width,
+					"height": it.grid_height
+				})
 			result["title"] = "Lộ Viền Kích Thước %d Món" % reveal_count
 			result["description"] = "Biết được hình dạng kích cỡ (%d món) đang chiếm vị trí trong hòm." % reveal_count
 			result["revealed_outlines"] = outlines
@@ -298,10 +305,13 @@ func _create_hint(type: HintType) -> Dictionary:
 			var reveal_count: int = mini(items.size(), randi_range(1, 8))
 			var shuffled := items.duplicate()
 			shuffled.shuffle()
-			var qualities: Array[int] = []
+			var qualities: Array[Dictionary] = []
 			for idx in range(reveal_count):
 				var it: MysteryChestItem = shuffled[idx]
-				qualities.append(int(it.rarity))
+				qualities.append({
+					"item_id": String(it.item_id),
+					"rarity": int(it.rarity)
+				})
 			result["title"] = "Lộ Phẩm Cấp %d Ô (1x1)" % reveal_count
 			result["description"] = "Nhìn thấy màu sắc phẩm cấp của %d món đồ (thu gọn ô 1x1)." % reveal_count
 			result["revealed_qualities"] = qualities

@@ -399,22 +399,58 @@ func _sync_reveals_from_hints() -> void:
 	if auction_session == null:
 		return
 
-	for hint in auction_session.hints_history:
-		var items_rev: Array = hint.get("revealed_item_ids", [])
-		for i_id in items_rev:
-			_revealed_items[String(i_id)] = true
+	for hint: Variant in auction_session.hints_history:
+		if not (hint is Dictionary):
+			continue
 
-		var outlines_rev: Array = hint.get("revealed_outlines", [])
-		for out in outlines_rev:
-			var i_id: String = String(out.get("item_id", ""))
-			if not i_id.is_empty():
-				_revealed_outlines[i_id] = true
+		# 1. Vật phẩm lộ diện hoàn toàn (tên, sprite, giá trị)
+		var items_rev: Variant = hint.get("revealed_item_ids", [])
+		if not (items_rev is Array) or items_rev.is_empty():
+			items_rev = hint.get("revealed_items", [])
+		if items_rev is Array:
+			for entry: Variant in items_rev:
+				if entry is Dictionary:
+					var i_id: String = String(entry.get("item_id", ""))
+					if not i_id.is_empty():
+						_revealed_items[i_id] = true
+				elif entry != null:
+					var i_id: String = String(entry)
+					if not i_id.is_empty():
+						_revealed_items[i_id] = true
 
-		var quals_rev: Array = hint.get("revealed_qualities", [])
-		for q in quals_rev:
-			var i_id: String = String(q.get("item_id", ""))
-			if not i_id.is_empty():
-				_revealed_qualities[i_id] = true
+		# 2. Lộ viền kích thước
+		var outlines_rev: Variant = hint.get("revealed_outlines", [])
+		if outlines_rev is Array:
+			for out: Variant in outlines_rev:
+				if out is Dictionary:
+					var i_id: String = String(out.get("item_id", ""))
+					if not i_id.is_empty():
+						_revealed_outlines[i_id] = true
+				elif out != null:
+					var i_id: String = String(out)
+					if not i_id.is_empty():
+						_revealed_outlines[i_id] = true
+
+		# 3. Lộ phẩm cấp màu sắc 1x1
+		var quals_rev: Variant = hint.get("revealed_qualities", [])
+		if quals_rev is Array:
+			for q: Variant in quals_rev:
+				if q is Dictionary:
+					var i_id: String = String(q.get("item_id", ""))
+					if not i_id.is_empty():
+						_revealed_qualities[i_id] = true
+				elif q is int:
+					# Nếu là mảng int rarity, tìm món chưa lộ có phẩm cấp tương ứng
+					if auction_session.mystery_chest != null:
+						for it in auction_session.mystery_chest.items:
+							var it_id := String(it.item_id)
+							if int(it.rarity) == q and not _revealed_qualities.has(it_id) and not _revealed_items.has(it_id):
+								_revealed_qualities[it_id] = true
+								break
+				elif q != null:
+					var i_id: String = String(q)
+					if not i_id.is_empty():
+						_revealed_qualities[i_id] = true
 
 
 func refresh_ui() -> void:
