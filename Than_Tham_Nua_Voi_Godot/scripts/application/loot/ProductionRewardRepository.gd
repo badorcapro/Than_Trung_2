@@ -2,16 +2,30 @@ class_name ProductionRewardRepository
 extends RefCounted
 
 const REWARD_PATHS: Array[String] = [
+	# Quà cấp thấp (Tier.LOW - Nền Xanh Dương)
 	"res://content/rewards/production/prod_silver_small.tres",
-	"res://content/rewards/production/prod_equipment_exp_small.tres",
-	"res://content/rewards/production/prod_orb_1.tres",
-	"res://content/rewards/production/prod_silver_large.tres",
-	"res://content/rewards/production/prod_equipment_exp_large.tres",
+	"res://content/rewards/production/prod_stigmata_exp_small.tres",
+	"res://content/rewards/production/prod_relic_exp_small.tres",
 	"res://content/rewards/production/prod_exchange_material_1.tres",
-	"res://content/rewards/production/prod_gacha_ticket_1.tres",
 	"res://content/rewards/production/prod_consumable_hanh_lo_phu.tres",
+	# Quà cấp trung (Tier.MID - Nền Màu Tím)
+	"res://content/rewards/production/prod_silver_large.tres",
+	"res://content/rewards/production/prod_stigmata_exp_large.tres",
+	"res://content/rewards/production/prod_relic_exp_large.tres",
+	"res://content/rewards/production/prod_exchange_material_2.tres",
 	"res://content/rewards/production/prod_consumable_lenh_bai_thong_hanh.tres",
 	"res://content/rewards/production/prod_consumable_ngu_ma_lenh.tres",
+	"res://content/rewards/production/prod_gacha_ticket_1.tres",
+	# Quà cấp cao (Tier.HIGH - Nền Màu Vàng)
+	"res://content/rewards/production/prod_silver_grand.tres",
+	"res://content/rewards/production/prod_stigmata_exp_grand.tres",
+	"res://content/rewards/production/prod_relic_exp_grand.tres",
+	"res://content/rewards/production/prod_exchange_material_3.tres",
+	"res://content/rewards/production/prod_gacha_ticket_grand.tres",
+	# Legacy compatibility resources
+	"res://content/rewards/production/prod_equipment_exp_small.tres",
+	"res://content/rewards/production/prod_equipment_exp_large.tres",
+	"res://content/rewards/production/prod_orb_1.tres",
 ]
 const TABLE_PATHS: Array[String] = [
 	"res://content/rewards/production/house_reward_table_v1.tres",

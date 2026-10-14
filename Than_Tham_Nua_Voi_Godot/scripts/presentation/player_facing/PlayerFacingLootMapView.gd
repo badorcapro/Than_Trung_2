@@ -808,14 +808,16 @@ func _update_hovered_tooltip_text() -> void:
 		return
 	var rew: Dictionary = _get_node_reward_presentation(_hovered_node_id)
 	if rew.get("has_reward", false):
-		var amount: int = int(rew.get("amount", 1))
+		var amount_str: String = String(rew.get("amount_str", "%d" % int(rew.get("amount", 1))))
 		var r_name: String = String(rew.get("reward_name", ""))
 		var icon_str: String = String(rew.get("icon", ""))
 		var desc: String = String(rew.get("description", ""))
+		var tier_label: String = String(rew.get("tier_label", ""))
+		var prefix: String = "[%s] " % tier_label if not tier_label.is_empty() else ""
 		if desc.is_empty():
-			tooltip_text = "%s %s (+%d)" % [icon_str, r_name, amount]
+			tooltip_text = "%s%s %s (+%s)" % [prefix, icon_str, r_name, amount_str]
 		else:
-			tooltip_text = "%s %s (+%d)\n%s" % [icon_str, r_name, amount, desc]
+			tooltip_text = "%s%s %s (+%s)\n%s" % [prefix, icon_str, r_name, amount_str, desc]
 	else:
 		var node: LootNodeDefinition = map_definition.find_node(_hovered_node_id)
 		tooltip_text = _build_node_base_name(node)
@@ -849,13 +851,15 @@ func _draw_hovered_node_tooltip() -> void:
 		var r_name: String = String(rew.get("reward_name", "Vật phẩm"))
 		var amount: int = int(rew.get("amount", 1))
 		var show_count: bool = bool(rew.get("show_count", true))
+		var tier_label: String = String(rew.get("tier_label", ""))
 		theme_col = rew.get("theme_color", Color(1.0, 0.84, 0.25))
 
 		var amount_str: String = String(rew.get("amount_str", "%d" % amount))
+		var tier_badge: String = " · [%s]" % tier_label if not tier_label.is_empty() else ""
 		if show_count:
-			title_text = "%s %s (+%s)" % [icon_str, r_name, amount_str]
+			title_text = "%s %s (+%s)%s" % [icon_str, r_name, amount_str, tier_badge]
 		else:
-			title_text = "%s %s" % [icon_str, r_name]
+			title_text = "%s %s%s" % [icon_str, r_name, tier_badge]
 		desc_text = String(rew.get("description", ""))
 	elif node.node_kind == &"ORIGIN_SPAWN":
 		title_text = "Nhà họ %s · Điểm Xuất Phát" % _house_letter(node.origin_house_id)
@@ -1026,86 +1030,116 @@ func _get_node_reward_presentation(node_id: StringName) -> Dictionary:
 	var reward_name: String = "Phần Thưởng"
 	var desc: String = ""
 	var show_count: bool = (def.amount > 0)
-	var theme_color := Color(1.0, 0.85, 0.3)
-	var tile_bg := Color(0.18, 0.22, 0.26)
+
+	# Quy ước màu nền và viền hào quang bắt buộc:
+	# - Quà cấp thấp (Tier.LOW): Nền Xanh Dương
+	# - Quà cấp trung (Tier.MID): Nền Màu Tím
+	# - Quà cấp cao (Tier.HIGH): Nền Màu Vàng
+	var tile_bg: Color
+	var theme_color: Color
+	var tier_label: String
+	match def.tier:
+		RewardDefinition.Tier.LOW:
+			tile_bg = Color(0.10, 0.22, 0.45) # Nền Xanh Dương
+			theme_color = Color(0.35, 0.75, 1.0) # Viền Lam Sáng
+			tier_label = "Cấp Thấp"
+		RewardDefinition.Tier.MID:
+			tile_bg = Color(0.32, 0.12, 0.44) # Nền Màu Tím
+			theme_color = Color(0.85, 0.45, 0.98) # Viền Tím Sáng
+			tier_label = "Cấp Trung"
+		RewardDefinition.Tier.HIGH:
+			tile_bg = Color(0.42, 0.30, 0.08) # Nền Màu Vàng
+			theme_color = Color(1.0, 0.86, 0.25) # Viền Vàng Kim Rực Rỡ
+			tier_label = "Cấp Cao"
+		_:
+			tile_bg = Color(0.18, 0.22, 0.26)
+			theme_color = Color(1.0, 0.85, 0.3)
+			tier_label = "Thường"
 
 	match def.reward_type:
 		RewardDefinition.Type.SILVER_COIN:
-			if def.amount >= 50 or def.amount_max >= 70:
+			if def.tier == RewardDefinition.Tier.HIGH:
 				icon = "👑"
-				reward_name = "Rương Bạc"
-			elif def.amount >= 30 or def.amount_max >= 50:
+				reward_name = "Xu Bạc"
+			elif def.tier == RewardDefinition.Tier.MID:
 				icon = "💰"
-				reward_name = "Túi Bạc"
+				reward_name = "Xu Bạc"
 			else:
 				icon = "🪙"
 				reward_name = "Xu Bạc"
 			if def.amount_max > def.amount:
-				desc = "Nhận ngẫu nhiên từ %d đến %d Xu Bạc trong Hoàng Cung" % [def.amount, def.amount_max]
+				desc = "Nhận ngẫu nhiên từ %d đến %d Xu Bạc" % [def.amount, def.amount_max]
 			else:
-				desc = "Tiền tệ lưu thông trong Hoàng Cung"
+				desc = "Tiền tệ lưu thông trong Hoàng Cung (+%d xu)" % def.amount
 			show_count = true
-			theme_color = Color(1.0, 0.86, 0.35)
-			tile_bg = Color(0.24, 0.22, 0.16)
+
+		RewardDefinition.Type.RELIC_EXP_MATERIAL:
+			icon = "📿"
+			reward_name = "EXP Kỷ Vật"
+			desc = "Vật liệu cường hóa Sao Kỷ Vật (+%d EXP)" % def.amount
+			show_count = true
+
+		RewardDefinition.Type.STIGMATA_EXP_MATERIAL:
+			icon = "🔱"
+			reward_name = "EXP Vết Thánh"
+			desc = "Vật liệu cường hóa Sao Vết Thánh (+%d EXP)" % def.amount
+			show_count = true
+
+		RewardDefinition.Type.EQUIPMENT_EXP_MATERIAL:
+			if String(def.reward_id).contains("stigmata"):
+				icon = "🔱"
+				reward_name = "EXP Vết Thánh"
+				desc = "Vật liệu cường hóa Sao Vết Thánh (+%d EXP)" % def.amount
+			elif String(def.reward_id).contains("relic"):
+				icon = "📿"
+				reward_name = "EXP Kỷ Vật"
+				desc = "Vật liệu cường hóa Sao Kỷ Vật (+%d EXP)" % def.amount
+			elif String(def.reward_id).contains("large") or def.amount >= 5:
+				icon = "🔱"
+				reward_name = "EXP Vết Thánh"
+				desc = "Vật liệu cường hóa Sao Vết Thánh (+%d EXP)" % def.amount
+			else:
+				icon = "📿"
+				reward_name = "EXP Kỷ Vật"
+				desc = "Vật liệu cường hóa Sao Kỷ Vật (+%d EXP)" % def.amount
+			show_count = true
+
+		RewardDefinition.Type.EQUIPMENT_EXCHANGE_MATERIAL:
+			icon = "💠"
+			reward_name = "Đá Tím"
+			desc = "Đá tím quý giá dùng để đổi Kỷ Vật & Vết Thánh (x%d)" % def.amount
+			show_count = true
+
+		RewardDefinition.Type.GACHA_TICKET:
+			icon = "🎫"
+			reward_name = "Vé Gacha"
+			if def.amount_max > def.amount:
+				desc = "Vé chiêu mộ Kỷ Vật & Vết Thánh (%d~%d vé)" % [def.amount, def.amount_max]
+			else:
+				desc = "Vé chiêu mộ Kỷ Vật & Vết Thánh (x%d vé)" % def.amount
+			show_count = true
+
 		RewardDefinition.Type.ORB:
 			icon = "🔮"
 			reward_name = "Linh Ngọc"
 			desc = "Linh bảo kích hoạt năng lực thám tử"
 			show_count = true
-			theme_color = Color(0.85, 0.5, 1.0)
-			tile_bg = Color(0.25, 0.16, 0.32)
-		RewardDefinition.Type.GACHA_TICKET:
-			icon = "🎫"
-			reward_name = "Vé Gacha"
-			desc = "Dùng trong Chiêu Mộ Kỷ Vật & Vết Thánh"
-			show_count = true
-			theme_color = Color(1.0, 0.78, 0.25)
-			tile_bg = Color(0.28, 0.22, 0.12)
-		RewardDefinition.Type.EQUIPMENT_EXP_MATERIAL:
-			if String(def.reward_id).contains("large") or def.amount >= 5:
-				icon = "🔱"
-				reward_name = "EXP Vết Thánh"
-				desc = "Vật liệu cường hóa Sao Vết Thánh"
-				show_count = true
-				theme_color = Color(0.95, 0.55, 0.9)
-				tile_bg = Color(0.3, 0.16, 0.28)
-			else:
-				icon = "📿"
-				reward_name = "EXP Kỷ Vật"
-				desc = "Vật liệu cường hóa Sao Kỷ Vật"
-				show_count = true
-				theme_color = Color(0.4, 0.85, 1.0)
-				tile_bg = Color(0.14, 0.24, 0.32)
-		RewardDefinition.Type.EQUIPMENT_EXCHANGE_MATERIAL:
-			icon = "💠"
-			reward_name = "Phôi Đổi"
-			desc = "Phôi trao đổi vật phẩm quý"
-			show_count = true
-			theme_color = Color(0.35, 0.95, 0.85)
-			tile_bg = Color(0.12, 0.26, 0.28)
+
 		RewardDefinition.Type.CONSUMABLE_ITEM:
 			show_count = true
 			match def.item_id:
 				&"consumable_hanh_lo_phu":
 					icon = "📜"
 					reward_name = "Hành Lộ Phù"
-					theme_color = Color(0.95, 0.75, 0.35)
-					tile_bg = Color(0.28, 0.22, 0.15)
 				&"consumable_lenh_bai_thong_hanh":
 					icon = "🪪"
-					reward_name = "Lệnh Bài"
-					theme_color = Color(0.95, 0.6, 0.3)
-					tile_bg = Color(0.28, 0.18, 0.14)
+					reward_name = "Lệnh Bài Thông Hành"
 				&"consumable_ngu_ma_lenh":
 					icon = "🐎"
 					reward_name = "Ngự Mã Lệnh"
-					theme_color = Color(0.9, 0.5, 0.4)
-					tile_bg = Color(0.26, 0.16, 0.2)
 				_:
 					icon = "🎒"
 					reward_name = "Vật Phẩm"
-					theme_color = Color(0.85, 0.7, 0.4)
-					tile_bg = Color(0.22, 0.2, 0.18)
 			for item_def: ConsumableItemDefinition in _cached_items:
 				if item_def != null and item_def.item_id == def.item_id:
 					desc = item_def.description
@@ -1113,7 +1147,7 @@ func _get_node_reward_presentation(node_id: StringName) -> Dictionary:
 						reward_name = item_def.display_name
 					break
 			if desc.is_empty():
-				desc = "Vật phẩm hỗ trợ hành trình"
+				desc = "Vật phẩm kích hoạt hỗ trợ hành trình"
 
 	var amount_str: String = "%d" % def.amount
 	if def.amount_max > def.amount:
@@ -1123,6 +1157,8 @@ func _get_node_reward_presentation(node_id: StringName) -> Dictionary:
 		"has_reward": true,
 		"reward_id": def.reward_id,
 		"reward_type": def.reward_type,
+		"tier": def.tier,
+		"tier_label": tier_label,
 		"amount": def.amount,
 		"amount_max": def.amount_max,
 		"amount_str": amount_str,

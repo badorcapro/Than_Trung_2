@@ -6,6 +6,7 @@
 script = ExtResource("1")
 reward_id = &"prod_silver_grand"
 reward_type = 0
+tier = 2
 amount = 50
 amount_max = 70
 repeat_policy = 0

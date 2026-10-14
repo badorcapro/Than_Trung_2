@@ -44,9 +44,9 @@ func run() -> Array[Dictionary]:
 	rows.append(_row("GĐ2 production reward IDs and values are canonical", _reward_contract()))
 	rows.append(_row("GĐ2 production rewards are repeatable non-test resources", _reward_flags()))
 	rows.append(_row("GĐ2 production reward tables cover three canonical zones", _table_zones()))
-	rows.append(_row("GĐ2 HOUSE reward weights are canonical", _weights_match(&"HOUSE", [30, 25, 1, 8, 6, 5, 1, 15, 5, 4])))
-	rows.append(_row("GĐ2 MIDDLE reward weights are canonical", _weights_match(&"MIDDLE", [20, 16, 3, 14, 12, 8, 5, 10, 6, 6])))
-	rows.append(_row("GĐ2 POST_MAUSOLEUM reward weights are canonical", _weights_match(&"POST_MAUSOLEUM", [15, 12, 5, 16, 14, 10, 10, 8, 5, 5])))
+	rows.append(_row("GĐ2 HOUSE reward weights are canonical", _house_weights_match()))
+	rows.append(_row("GĐ2 MIDDLE reward weights are canonical", _middle_weights_match()))
+	rows.append(_row("GĐ2 POST_MAUSOLEUM reward weights are canonical", _post_weights_match()))
 	rows.append(_row("GĐ2 production zone weights total 100", _all_weight_totals_are_100()))
 	rows.append(_row("GĐ2 production reward density is 75 percent in every zone", _all_density_is_75()))
 	rows.append(_row("GĐ2 production reward content passes scoped validation", VALIDATOR.new().validate(rewards, tables, map_definition, items).is_empty()))
@@ -78,16 +78,30 @@ func _row(name: String, passed: bool) -> Dictionary:
 
 func _reward_contract() -> bool:
 	var expected: Dictionary = {
+		# Low
 		"prod_silver_small": [RewardDefinition.Type.SILVER_COIN, 10],
-		"prod_silver_large": [RewardDefinition.Type.SILVER_COIN, 30],
-		"prod_orb_1": [RewardDefinition.Type.ORB, 1],
-		"prod_gacha_ticket_1": [RewardDefinition.Type.GACHA_TICKET, 1],
-		"prod_equipment_exp_small": [RewardDefinition.Type.EQUIPMENT_EXP_MATERIAL, 3],
-		"prod_equipment_exp_large": [RewardDefinition.Type.EQUIPMENT_EXP_MATERIAL, 6],
+		"prod_stigmata_exp_small": [RewardDefinition.Type.STIGMATA_EXP_MATERIAL, 3],
+		"prod_relic_exp_small": [RewardDefinition.Type.RELIC_EXP_MATERIAL, 3],
 		"prod_exchange_material_1": [RewardDefinition.Type.EQUIPMENT_EXCHANGE_MATERIAL, 1],
 		"prod_consumable_hanh_lo_phu": [RewardDefinition.Type.CONSUMABLE_ITEM, 1],
+		# Mid
+		"prod_silver_large": [RewardDefinition.Type.SILVER_COIN, 30],
+		"prod_stigmata_exp_large": [RewardDefinition.Type.STIGMATA_EXP_MATERIAL, 6],
+		"prod_relic_exp_large": [RewardDefinition.Type.RELIC_EXP_MATERIAL, 6],
+		"prod_exchange_material_2": [RewardDefinition.Type.EQUIPMENT_EXCHANGE_MATERIAL, 2],
 		"prod_consumable_lenh_bai_thong_hanh": [RewardDefinition.Type.CONSUMABLE_ITEM, 1],
 		"prod_consumable_ngu_ma_lenh": [RewardDefinition.Type.CONSUMABLE_ITEM, 1],
+		"prod_gacha_ticket_1": [RewardDefinition.Type.GACHA_TICKET, 1],
+		# High
+		"prod_silver_grand": [RewardDefinition.Type.SILVER_COIN, 50],
+		"prod_stigmata_exp_grand": [RewardDefinition.Type.STIGMATA_EXP_MATERIAL, 9],
+		"prod_relic_exp_grand": [RewardDefinition.Type.RELIC_EXP_MATERIAL, 9],
+		"prod_exchange_material_3": [RewardDefinition.Type.EQUIPMENT_EXCHANGE_MATERIAL, 3],
+		"prod_gacha_ticket_grand": [RewardDefinition.Type.GACHA_TICKET, 1],
+		# Legacy
+		"prod_equipment_exp_small": [RewardDefinition.Type.EQUIPMENT_EXP_MATERIAL, 3],
+		"prod_equipment_exp_large": [RewardDefinition.Type.EQUIPMENT_EXP_MATERIAL, 6],
+		"prod_orb_1": [RewardDefinition.Type.ORB, 1],
 	}
 	if rewards.size() != expected.size():
 		return false
@@ -121,27 +135,82 @@ func _table_zones() -> bool:
 	return zones == [&"HOUSE", &"MIDDLE", &"POST_MAUSOLEUM"]
 
 
-func _weights_match(zone_id: StringName, expected_weights: Array) -> bool:
-	var expected_ids: Array[StringName] = [
-		&"prod_silver_small",
-		&"prod_equipment_exp_small",
-		&"prod_orb_1",
-		&"prod_silver_large",
-		&"prod_equipment_exp_large",
-		&"prod_exchange_material_1",
-		&"prod_gacha_ticket_1",
-		&"prod_consumable_hanh_lo_phu",
-		&"prod_consumable_lenh_bai_thong_hanh",
-		&"prod_consumable_ngu_ma_lenh",
-	]
+func _weights_match(zone_id: StringName, expected_pairs: Array) -> bool:
 	var table: RewardZoneTableDefinition = REPOSITORY.find_table(tables, zone_id)
-	if table == null or table.entries.size() != expected_ids.size():
+	if table == null or table.entries.size() != expected_pairs.size():
 		return false
-	for index: int in range(expected_ids.size()):
+	for index: int in range(expected_pairs.size()):
 		var entry: WeightedRewardEntry = table.entries[index]
-		if entry.reward_id != expected_ids[index] or entry.weight != int(expected_weights[index]):
+		var pair: Array = expected_pairs[index]
+		if entry.reward_id != pair[0] or entry.weight != int(pair[1]):
 			return false
 	return true
+
+
+func _house_weights_match() -> bool:
+	var expected: Array = [
+		[&"prod_silver_small", 20],
+		[&"prod_stigmata_exp_small", 15],
+		[&"prod_relic_exp_small", 15],
+		[&"prod_exchange_material_1", 10],
+		[&"prod_consumable_hanh_lo_phu", 10],
+		[&"prod_silver_large", 6],
+		[&"prod_stigmata_exp_large", 5],
+		[&"prod_relic_exp_large", 5],
+		[&"prod_exchange_material_2", 4],
+		[&"prod_consumable_lenh_bai_thong_hanh", 3],
+		[&"prod_consumable_ngu_ma_lenh", 3],
+		[&"prod_gacha_ticket_1", 2],
+		[&"prod_silver_grand", 1],
+		[&"prod_gacha_ticket_grand", 1],
+	]
+	return _weights_match(&"HOUSE", expected)
+
+
+func _middle_weights_match() -> bool:
+	var expected: Array = [
+		[&"prod_silver_small", 14],
+		[&"prod_stigmata_exp_small", 10],
+		[&"prod_relic_exp_small", 10],
+		[&"prod_exchange_material_1", 6],
+		[&"prod_consumable_hanh_lo_phu", 6],
+		[&"prod_silver_large", 12],
+		[&"prod_stigmata_exp_large", 8],
+		[&"prod_relic_exp_large", 8],
+		[&"prod_exchange_material_2", 6],
+		[&"prod_consumable_lenh_bai_thong_hanh", 4],
+		[&"prod_consumable_ngu_ma_lenh", 4],
+		[&"prod_gacha_ticket_1", 4],
+		[&"prod_silver_grand", 2],
+		[&"prod_stigmata_exp_grand", 2],
+		[&"prod_relic_exp_grand", 2],
+		[&"prod_exchange_material_3", 1],
+		[&"prod_gacha_ticket_grand", 1],
+	]
+	return _weights_match(&"MIDDLE", expected)
+
+
+func _post_weights_match() -> bool:
+	var expected: Array = [
+		[&"prod_silver_small", 10],
+		[&"prod_stigmata_exp_small", 8],
+		[&"prod_relic_exp_small", 8],
+		[&"prod_exchange_material_1", 5],
+		[&"prod_consumable_hanh_lo_phu", 4],
+		[&"prod_silver_large", 12],
+		[&"prod_stigmata_exp_large", 9],
+		[&"prod_relic_exp_large", 9],
+		[&"prod_exchange_material_2", 6],
+		[&"prod_consumable_lenh_bai_thong_hanh", 5],
+		[&"prod_consumable_ngu_ma_lenh", 5],
+		[&"prod_gacha_ticket_1", 4],
+		[&"prod_silver_grand", 4],
+		[&"prod_stigmata_exp_grand", 3],
+		[&"prod_relic_exp_grand", 3],
+		[&"prod_exchange_material_3", 2],
+		[&"prod_gacha_ticket_grand", 3],
+	]
+	return _weights_match(&"POST_MAUSOLEUM", expected)
 
 
 func _all_weight_totals_are_100() -> bool:
@@ -288,7 +357,7 @@ func _player_flow_uses_production_content() -> bool:
 	if (
 		first == null
 		or second == null
-		or flow._rewards.size() != 10
+		or flow._rewards.size() != 20
 		or flow.consumable_item_definitions().size() != 3
 		or first.reward_snapshots.is_empty()
 	):

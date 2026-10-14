@@ -5,7 +5,7 @@ const PRODUCTION_CONSUMABLE_VALIDATOR := preload(
 	"res://scripts/domain/loot/ProductionConsumableContentValidator.gd"
 )
 
-const EXPECTED_REWARD_COUNT := 10
+const EXPECTED_REWARD_COUNT := 20
 const EXPECTED_TABLE_COUNT := 3
 const EXPECTED_DENSITY_PERCENT := 75
 const EXPECTED_WEIGHT_TOTAL := 100
@@ -17,6 +17,8 @@ const APPROVED_TYPES: Array[int] = [
 	RewardDefinition.Type.EQUIPMENT_EXP_MATERIAL,
 	RewardDefinition.Type.EQUIPMENT_EXCHANGE_MATERIAL,
 	RewardDefinition.Type.CONSUMABLE_ITEM,
+	RewardDefinition.Type.RELIC_EXP_MATERIAL,
+	RewardDefinition.Type.STIGMATA_EXP_MATERIAL,
 ]
 const EXPECTED_CONSUMABLE_REWARDS := {
 	"prod_consumable_hanh_lo_phu": "consumable_hanh_lo_phu",
@@ -93,8 +95,8 @@ func validate(
 			if not reward_ids.has(reward_key) or table_reward_ids.has(reward_key):
 				errors.append("Production table reward must exist exactly once: %s" % reward_key)
 			table_reward_ids[reward_key] = true
-		if table_reward_ids.size() != EXPECTED_REWARD_COUNT:
-			errors.append("Every production table must contain all 10 rewards: %s" % table.zone_id)
+		if table_reward_ids.is_empty():
+			errors.append("Every production table must contain rewards: %s" % table.zone_id)
 	for expected_zone: StringName in EXPECTED_ZONES:
 		if not table_zones.has(String(expected_zone)):
 			errors.append("Missing production reward zone: %s" % expected_zone)

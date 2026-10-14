@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="RewardZoneTableDefinition" load_steps=13 format=3]
+[gd_resource type="Resource" script_class="RewardZoneTableDefinition" load_steps=20 format=3]
 
 [ext_resource type="Script" path="res://scripts/domain/loot/RewardZoneTableDefinition.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/domain/loot/WeightedRewardEntry.gd" id="2"]
@@ -6,42 +6,47 @@
 [sub_resource type="Resource" id="SilverSmall"]
 script = ExtResource("2")
 reward_id = &"prod_silver_small"
-weight = 15
+weight = 10
 
-[sub_resource type="Resource" id="ExpSmall"]
+[sub_resource type="Resource" id="StigmataExpSmall"]
 script = ExtResource("2")
-reward_id = &"prod_equipment_exp_small"
-weight = 12
+reward_id = &"prod_stigmata_exp_small"
+weight = 8
 
-[sub_resource type="Resource" id="Orb"]
+[sub_resource type="Resource" id="RelicExpSmall"]
 script = ExtResource("2")
-reward_id = &"prod_orb_1"
-weight = 5
+reward_id = &"prod_relic_exp_small"
+weight = 8
 
-[sub_resource type="Resource" id="SilverLarge"]
-script = ExtResource("2")
-reward_id = &"prod_silver_large"
-weight = 16
-
-[sub_resource type="Resource" id="ExpLarge"]
-script = ExtResource("2")
-reward_id = &"prod_equipment_exp_large"
-weight = 14
-
-[sub_resource type="Resource" id="Exchange"]
+[sub_resource type="Resource" id="Exchange1"]
 script = ExtResource("2")
 reward_id = &"prod_exchange_material_1"
-weight = 10
-
-[sub_resource type="Resource" id="Ticket"]
-script = ExtResource("2")
-reward_id = &"prod_gacha_ticket_1"
-weight = 10
+weight = 5
 
 [sub_resource type="Resource" id="HanhLoPhu"]
 script = ExtResource("2")
 reward_id = &"prod_consumable_hanh_lo_phu"
-weight = 8
+weight = 4
+
+[sub_resource type="Resource" id="SilverLarge"]
+script = ExtResource("2")
+reward_id = &"prod_silver_large"
+weight = 12
+
+[sub_resource type="Resource" id="StigmataExpLarge"]
+script = ExtResource("2")
+reward_id = &"prod_stigmata_exp_large"
+weight = 9
+
+[sub_resource type="Resource" id="RelicExpLarge"]
+script = ExtResource("2")
+reward_id = &"prod_relic_exp_large"
+weight = 9
+
+[sub_resource type="Resource" id="Exchange2"]
+script = ExtResource("2")
+reward_id = &"prod_exchange_material_2"
+weight = 6
 
 [sub_resource type="Resource" id="LenhBai"]
 script = ExtResource("2")
@@ -53,8 +58,38 @@ script = ExtResource("2")
 reward_id = &"prod_consumable_ngu_ma_lenh"
 weight = 5
 
+[sub_resource type="Resource" id="Ticket1"]
+script = ExtResource("2")
+reward_id = &"prod_gacha_ticket_1"
+weight = 4
+
+[sub_resource type="Resource" id="SilverGrand"]
+script = ExtResource("2")
+reward_id = &"prod_silver_grand"
+weight = 4
+
+[sub_resource type="Resource" id="StigmataExpGrand"]
+script = ExtResource("2")
+reward_id = &"prod_stigmata_exp_grand"
+weight = 3
+
+[sub_resource type="Resource" id="RelicExpGrand"]
+script = ExtResource("2")
+reward_id = &"prod_relic_exp_grand"
+weight = 3
+
+[sub_resource type="Resource" id="Exchange3"]
+script = ExtResource("2")
+reward_id = &"prod_exchange_material_3"
+weight = 2
+
+[sub_resource type="Resource" id="TicketGrand"]
+script = ExtResource("2")
+reward_id = &"prod_gacha_ticket_grand"
+weight = 3
+
 [resource]
 script = ExtResource("1")
 zone_id = &"POST_MAUSOLEUM"
 density_percent = 75
-entries = [SubResource("SilverSmall"), SubResource("ExpSmall"), SubResource("Orb"), SubResource("SilverLarge"), SubResource("ExpLarge"), SubResource("Exchange"), SubResource("Ticket"), SubResource("HanhLoPhu"), SubResource("LenhBai"), SubResource("NguMaLenh")]
+entries = [SubResource("SilverSmall"), SubResource("StigmataExpSmall"), SubResource("RelicExpSmall"), SubResource("Exchange1"), SubResource("HanhLoPhu"), SubResource("SilverLarge"), SubResource("StigmataExpLarge"), SubResource("RelicExpLarge"), SubResource("Exchange2"), SubResource("LenhBai"), SubResource("NguMaLenh"), SubResource("Ticket1"), SubResource("SilverGrand"), SubResource("StigmataExpGrand"), SubResource("RelicExpGrand"), SubResource("Exchange3"), SubResource("TicketGrand")]

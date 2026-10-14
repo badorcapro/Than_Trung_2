@@ -244,6 +244,12 @@ func _grant_resource(player: PlayerPhaseState, reward: RewardDefinition, result:
 			player.relic_exp_material_count += actual_amount
 			player.stigmata_exp_material_count += actual_amount
 			result.resource_delta={"equipment_exp_material":actual_amount}
+		RewardDefinition.Type.RELIC_EXP_MATERIAL:
+			player.relic_exp_material_count += actual_amount
+			result.resource_delta={"relic_exp_material":actual_amount}
+		RewardDefinition.Type.STIGMATA_EXP_MATERIAL:
+			player.stigmata_exp_material_count += actual_amount
+			result.resource_delta={"stigmata_exp_material":actual_amount}
 		RewardDefinition.Type.EQUIPMENT_EXCHANGE_MATERIAL: player.equipment_exchange_material_count += actual_amount; result.resource_delta={"equipment_exchange_material":actual_amount}
 
 func _find_character(characters: Array[CharacterDefinition], character_id: StringName) -> CharacterDefinition:

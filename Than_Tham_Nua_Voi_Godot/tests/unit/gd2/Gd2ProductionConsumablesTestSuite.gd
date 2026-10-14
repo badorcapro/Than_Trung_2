@@ -48,7 +48,7 @@ func run() -> Array[Dictionary]:
 	_add(rows, "GĐ2 production consumable scopes are SELF", _all_scopes_are_self())
 	_add(rows, "GĐ2 production consumable durations are canonical", _canonical_durations())
 	_add(rows, "GĐ2 production consumable flags are non-test", _all_production_flags())
-	_add(rows, "GĐ2 production reward catalog contains ten definitions", rewards.size() == 10)
+	_add(rows, "GĐ2 production reward catalog contains canonical definitions", rewards.size() == 20)
 	_add(rows, "GĐ2 production consumable reward IDs resolve", _consumable_rewards_resolve())
 	_add(rows, "GĐ2 production consumable rewards have amount one", _consumable_reward_amounts())
 	_add(rows, "GĐ2 production consumable rewards are repeatable", _consumable_rewards_repeatable())
@@ -181,9 +181,9 @@ func _consumable_rewards_repeatable() -> bool:
 
 func _exact_zone_weights() -> bool:
 	return (
-		_weights(&"HOUSE") == [26, 22, 13, 9, 7, 6, 5, 6, 3, 3]
-		and _weights(&"MIDDLE") == [15, 15, 15, 12, 10, 9, 9, 7, 4, 4]
-		and _weights(&"POST_MAUSOLEUM") == [8, 8, 16, 13, 13, 11, 13, 8, 5, 5]
+		_weights(&"HOUSE") == [20, 15, 15, 10, 10, 6, 5, 5, 4, 3, 3, 2, 1, 1]
+		and _weights(&"MIDDLE") == [14, 10, 10, 6, 6, 12, 8, 8, 6, 4, 4, 4, 2, 2, 2, 1, 1]
+		and _weights(&"POST_MAUSOLEUM") == [10, 8, 8, 5, 4, 12, 9, 9, 6, 5, 5, 4, 4, 3, 3, 2, 3]
 	)
 
 

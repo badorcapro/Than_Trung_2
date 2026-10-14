@@ -2841,8 +2841,13 @@ func _append_latest_reward_feedback() -> void:
 	var session: LOOT_REWARD_SESSION = case_flow.loot_session
 	while _logged_reward_count < session.reward_history.size():
 		var reward: REWARD_RESOLUTION_RESULT = session.reward_history[_logged_reward_count]
-		var line: String = "🎁 Nhận: [b]%s[/b]" % _reward_type_name(reward.reward_type)
-		if reward.reward_amount > 0:
+		var name_str: String = ""
+		if reward.reward_type == 5 and reward.item_id != &"":
+			name_str = _consumable_item_name(reward.item_id)
+		else:
+			name_str = _reward_type_name(reward.reward_type)
+		var line: String = "🎁 Nhận: [b]%s[/b]" % name_str
+		if reward.reward_amount > 0 and reward.reward_type != 5:
 			line += " +%d" % reward.reward_amount
 		if reward.overflow_required:
 			line += " [color=#ff5555](Túi đầy!)[/color]"
@@ -2869,11 +2874,19 @@ func _reward_type_name(reward_type: int) -> String:
 		0:
 			return "Xu Bạc"
 		1:
-			return "Orb"
+			return "Linh Ngọc"
 		2:
-			return "Vé"
+			return "Vé Gacha"
 		3:
-			return "Vật phẩm"
+			return "EXP Kỷ Vật / Vết Thánh"
+		4:
+			return "Đá Tím"
+		5:
+			return "Vật Phẩm Tiêu Hao"
+		6:
+			return "EXP Kỷ Vật"
+		7:
+			return "EXP Vết Thánh"
 		_:
 			return "Phần thưởng hành trình"
 

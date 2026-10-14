@@ -6,6 +6,7 @@
 script = ExtResource("1")
 reward_id = &"prod_consumable_hanh_lo_phu"
 reward_type = 5
+tier = 0
 amount = 1
 item_id = &"consumable_hanh_lo_phu"
 repeat_policy = 0
