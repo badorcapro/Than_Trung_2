@@ -27,6 +27,7 @@ func run() -> Array[Dictionary]:
 	rows.append(_row("Bách khoa toàn thư: Dialog thông tin thời gian thực khởi tạo và lọc danh mục thành công", _encyclopedia_dialog_contract()))
 	rows.append(_row("Đấu giá Nhiều Người: Lần lượt từng người chơi ra giá và hỗ trợ nhập số tùy ý", _auction_screen_turn_and_input_contract()))
 	rows.append(_row("Đoạt hòm áp đảo: Vòng 1 Top 1 > Top 2 gấp 2x, V2 1.6x, V3 1.4x, V4 1.2x thắng ngay lập tức", _knockout_buyout_contract()))
+	rows.append(_row("Đấu giá ẩn: Cho phép đặt giá thấp hơn vòng trước và chỉ nút bấm mới skip/kết thúc lật hòm", _blind_bidding_and_chest_settlement_contract()))
 	return rows
 
 
@@ -375,4 +376,71 @@ func _knockout_buyout_contract() -> bool:
 	if ko4.is_empty() or ko4.get("winner_id") != &"p1":
 		return false
 
+	return true
+
+
+func _blind_bidding_and_chest_settlement_contract() -> bool:
+	var chest := CHEST_CLASS.new()
+	chest.roll_vault_deposit(4)
+	var session := AUCTION_CLASS.new()
+	session.initialize([&"p1", &"p2"], chest)
+
+	var screen := AUCTION_SCREEN_CLASS.new()
+	screen.setup(session, {&"p1": 1000, &"p2": 1000})
+
+	# 1. Round 1: p1 places 500 xu
+	screen._bid_input.text = "500"
+	screen._on_confirm_bid_pressed()
+	if screen._get_current_turn_player_id() != &"p2":
+		screen.free()
+		return false
+
+	# 2. Round 1: p2 places 20 xu (lower than p1's 500 is completely valid under blind auction)
+	screen._bid_input.text = "20"
+	screen._on_confirm_bid_pressed()
+	if not screen._round_completed:
+		screen.free()
+		return false
+
+	# 3. Advance to Round 2
+	screen._on_next_round_pressed()
+	if session.current_round != 2:
+		screen.free()
+		return false
+
+	# 4. In Round 2, p1 can place 1 xu (even though they placed 500 in Round 1)
+	screen._bid_input.text = "1"
+	screen._on_confirm_bid_pressed()
+	if screen._get_current_turn_player_id() != &"p2":
+		screen.free()
+		return false
+
+	# 5. Settlement reveal skip/finish button behavior:
+	screen._is_settlement_revealing = true
+	screen._settlement_skip_requested = false
+
+	# Clicking overlay background does nothing
+	var dummy_click := InputEventMouseButton.new()
+	dummy_click.pressed = true
+	dummy_click.button_index = MOUSE_BUTTON_LEFT
+	screen._on_settlement_overlay_gui_input(dummy_click)
+	if screen._settlement_skip_requested:
+		screen.free()
+		return false
+
+	# First click on skip button sets skip requested
+	screen._on_skip_pressed()
+	if not screen._settlement_skip_requested:
+		screen.free()
+		return false
+
+	# When revealing is finished, next click on skip button finishes settlement
+	screen._is_settlement_revealing = false
+	screen._settlement_overlay.visible = true
+	screen._on_skip_pressed()
+	if screen._settlement_overlay.visible:
+		screen.free()
+		return false
+
+	screen.free()
 	return true

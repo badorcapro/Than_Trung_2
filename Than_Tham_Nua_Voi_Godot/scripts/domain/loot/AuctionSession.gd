@@ -211,7 +211,34 @@ func advance_round() -> void:
 
 	current_round += 1
 	round_bids.clear()
+	highest_bid = 0
+	highest_bidder_id = &""
 	_publish_next_hint("Vòng Đấu Giá %d" % current_round)
+
+
+## Giải quyết kết quả vòng sau khi tất cả người chơi đã nộp giá ẩn
+func resolve_round_bids() -> Dictionary:
+	if state != State.AUCTION_ACTIVE:
+		return {}
+
+	var max_bid: int = 0
+	var max_bidder: StringName = &""
+
+	for pid: StringName in active_bidder_ids:
+		var b: int = int(round_bids.get(pid, 0))
+		if b > max_bid:
+			max_bid = b
+			max_bidder = pid
+
+	highest_bid = max_bid
+	highest_bidder_id = max_bidder
+
+	var ko_result: Dictionary = check_knockout_winner()
+	return {
+		"highest_bid": highest_bid,
+		"highest_bidder_id": highest_bidder_id,
+		"knockout": ko_result
+	}
 
 
 func _publish_next_hint(phase_title: String) -> void:

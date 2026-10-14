@@ -349,7 +349,18 @@ func _build_ui() -> void:
 	_bid_input.add_theme_color_override("font_color", Color("#f6c95c"))
 	_bid_input.text_changed.connect(_on_bid_input_changed)
 	_bid_input.text_submitted.connect(func(_t: String) -> void: _on_confirm_bid_pressed())
+	_bid_input.secret = true
 	_bid_box.add_child(_bid_input)
+
+	var eye_btn := Button.new()
+	eye_btn.text = "👁️"
+	eye_btn.tooltip_text = "Ẩn / Hiện số tiền đang gõ"
+	eye_btn.custom_minimum_size = Vector2(36, 34)
+	eye_btn.focus_mode = FOCUS_NONE
+	eye_btn.pressed.connect(func() -> void:
+		_bid_input.secret = not _bid_input.secret
+	)
+	_bid_box.add_child(eye_btn)
 
 	var plus_btn := Button.new()
 	plus_btn.text = "+ 20"
@@ -620,7 +631,7 @@ func _build_settlement_dialog() -> void:
 	btm_cont_vbox.add_child(_settlement_continue_btn)
 
 	var hint_cont_lbl := Label.new()
-	hint_cont_lbl.text = "(Nhấp chuột bất kỳ để hoàn tất)"
+	hint_cont_lbl.text = "(Bấm nút Tiếp tục để hoàn tất)"
 	hint_cont_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	hint_cont_lbl.add_theme_font_size_override("font_size", 12)
 	hint_cont_lbl.add_theme_color_override("font_color", Color("#64748b"))
@@ -883,23 +894,10 @@ func refresh_ui() -> void:
 			if _bid_input != null: _bid_input.editable = true
 			if _next_round_btn != null: _next_round_btn.visible = false
 
-			var lead_status := ""
-			if auction_session.highest_bid > 0:
-				if auction_session.highest_bidder_id == curr_pid:
-					lead_status = " (👑 Bạn đang dẫn đầu)"
-				else:
-					lead_status = " (👑 Dẫn đầu: %s - %s Xu)" % [
-						String(auction_session.highest_bidder_id),
-						_format_number(auction_session.highest_bid)
-					]
-			else:
-				lead_status = " (Chưa có ai đặt giá)"
-
 			if _turn_info_label != null:
-				_turn_info_label.text = "🎯 LƯỢT: %s [🪙 %s Xu]%s" % [
+				_turn_info_label.text = "🎯 LƯỢT ĐẤU GIÁ ẨN: %s [🪙 %s Xu] (Gõ số tiền bí mật)" % [
 					String(curr_pid),
-					_format_number(bal),
-					lead_status
+					_format_number(bal)
 				]
 				_turn_info_label.add_theme_color_override("font_color", Color("#f1fa8c"))
 
@@ -914,7 +912,11 @@ func _render_bidders() -> void:
 		var pid: StringName = auction_session.eligible_player_ids[i]
 		var is_active: bool = auction_session.active_bidder_ids.has(pid)
 		var is_current_turn: bool = (not _round_completed and pid == curr_pid)
-		var is_leader: bool = (auction_session.highest_bidder_id == pid and auction_session.highest_bid > 0)
+		var is_leader: bool = (
+			_round_completed
+			and auction_session.highest_bidder_id == pid
+			and auction_session.highest_bid > 0
+		)
 
 		var card := PanelContainer.new()
 		var card_style := StyleBoxFlat.new()
@@ -1024,15 +1026,28 @@ func _render_bidders() -> void:
 		if not is_active:
 			bid_lbl.text = "Bỏ cuộc"
 			bid_lbl.add_theme_color_override("font_color", Color("#6272a4"))
-		elif b_val > 0:
-			bid_lbl.text = "💰 %s" % _format_number(b_val)
-			bid_lbl.add_theme_color_override("font_color", Color("#50fa7b"))
-		elif is_leader:
-			bid_lbl.text = "👑 %s" % _format_number(auction_session.highest_bid)
-			bid_lbl.add_theme_color_override("font_color", Color("#f1fa8c"))
+		elif _round_completed:
+			# ĐÃ XONG VÒNG: Hiện giá đã đấu của tất cả người chơi
+			if b_val > 0:
+				bid_lbl.text = "💰 %s Xu" % _format_number(b_val)
+				if is_leader:
+					bid_lbl.add_theme_color_override("font_color", Color("#f1fa8c"))
+				else:
+					bid_lbl.add_theme_color_override("font_color", Color("#50fa7b"))
+			else:
+				bid_lbl.text = "Bỏ qua"
+				bid_lbl.add_theme_color_override("font_color", Color("#888888"))
 		else:
-			bid_lbl.text = "Chưa ra giá"
-			bid_lbl.add_theme_color_override("font_color", Color("#888888"))
+			# ĐANG ĐẤU GIÁ ẨN: Không được nhìn giá của nhau
+			if auction_session.round_bids.has(pid):
+				bid_lbl.text = "🔒 Đã ra giá"
+				bid_lbl.add_theme_color_override("font_color", Color("#8be9fd"))
+			elif is_current_turn:
+				bid_lbl.text = "👉 Đang gõ..."
+				bid_lbl.add_theme_color_override("font_color", Color("#f1fa8c"))
+			else:
+				bid_lbl.text = "Chờ lượt"
+				bid_lbl.add_theme_color_override("font_color", Color("#6272a4"))
 
 		bid_lbl.add_theme_font_size_override("font_size", 13)
 		hbox.add_child(bid_lbl)
@@ -1171,16 +1186,12 @@ func _setup_initial_bid_for_current_player() -> void:
 	if curr_pid.is_empty():
 		return
 
-	if auction_session.highest_bid > 0:
-		if auction_session.highest_bidder_id == curr_pid:
-			_current_bid_value = auction_session.highest_bid
-		else:
-			_current_bid_value = auction_session.highest_bid + 5
-	else:
-		_current_bid_value = 10
-
+	_current_bid_value = 0
 	if _bid_input != null:
-		_bid_input.text = str(_current_bid_value)
+		_bid_input.text = ""
+		_bid_input.secret = true
+		_bid_input.placeholder_text = "Nhập giá ẩn..."
+		_bid_input.grab_focus()
 
 
 func _show_bid_feedback(msg: String) -> void:
@@ -1234,10 +1245,6 @@ func _on_confirm_bid_pressed() -> void:
 		_show_bid_feedback("⚠️ Số tiền ra giá phải lớn hơn 0 Xu!")
 		return
 
-	if auction_session.highest_bid > 0 and bid_val <= auction_session.highest_bid:
-		_show_bid_feedback("⚠️ Phải đặt giá cao hơn giá dẫn đầu (%d Xu)!" % auction_session.highest_bid)
-		return
-
 	var bal: int = int(player_silver_balances.get(curr_pid, 999999))
 	if bid_val > bal:
 		_show_bid_feedback("⚠️ Không đủ Xu Bạc! %s chỉ có %s Xu." % [String(curr_pid), _format_number(bal)])
@@ -1248,7 +1255,7 @@ func _on_confirm_bid_pressed() -> void:
 		_show_bid_feedback("⚠️ Không thể ra giá này!")
 		return
 
-	_show_bid_feedback("✅ %s đã ra giá %s Xu!" % [String(curr_pid), _format_number(bid_val)])
+	_show_bid_feedback("🔒 %s đã ra giá ẩn thành công!" % String(curr_pid))
 	_advance_to_next_bidder_turn()
 
 
@@ -1294,11 +1301,21 @@ func _advance_to_next_bidder_turn() -> void:
 	_current_turn_bidder_index += 1
 	if _current_turn_bidder_index >= auction_session.active_bidder_ids.size():
 		_round_completed = true
-		# Kiểm tra luật đoạt hòm áp đảo (Knockout Buyout) ngay lập tức
-		var ko_data: Dictionary = auction_session.check_knockout_winner()
+		# Tất cả người chơi trong vòng đã ra giá xong! Lật mở giá và xác định người dẫn đầu
+		var round_res: Dictionary = auction_session.resolve_round_bids()
+		var ko_data: Dictionary = round_res.get("knockout", {})
 		if not ko_data.is_empty():
 			_handle_knockout_victory(ko_data)
 			return
+		else:
+			var h_pid: StringName = auction_session.highest_bidder_id
+			var h_bid: int = auction_session.highest_bid
+			if h_bid > 0:
+				_show_bid_feedback("📢 TẤT CẢ ĐÃ RA GIÁ XONG! %s đang dẫn đầu Vòng %d với %s Xu." % [
+					String(h_pid), auction_session.current_round, _format_number(h_bid)
+				])
+			else:
+				_show_bid_feedback("📢 TẤT CẢ ĐÃ RA GIÁ XONG! Chưa ai ra giá ở Vòng %d." % auction_session.current_round)
 	else:
 		_setup_initial_bid_for_current_player()
 	refresh_ui()
@@ -1475,7 +1492,9 @@ func _finish_settlement_reveal() -> void:
 		_settlement_grid_draw_control.queue_redraw()
 
 	if _settlement_skip_btn != null:
-		_settlement_skip_btn.visible = false
+		_settlement_skip_btn.visible = true
+		_settlement_skip_btn.text = "Tiếp tục ➔"
+		_settlement_skip_btn.custom_minimum_size = Vector2(150, 36)
 	if _settlement_continue_btn != null:
 		_settlement_continue_btn.visible = true
 
@@ -1672,17 +1691,16 @@ func _process(delta: float) -> void:
 			_settlement_grid_draw_control.queue_redraw()
 
 
-func _on_settlement_overlay_gui_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		if _is_settlement_revealing:
-			_settlement_skip_requested = true
-		else:
-			_on_finish_settlement_pressed()
+func _on_settlement_overlay_gui_input(_event: InputEvent) -> void:
+	# Bấm vô màn hình sẽ không qua phase hay skip gì hết theo yêu cầu người dùng
+	pass
 
 
 func _on_skip_pressed() -> void:
 	if _is_settlement_revealing:
 		_settlement_skip_requested = true
+	else:
+		_on_finish_settlement_pressed()
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -1697,15 +1715,6 @@ func _unhandled_input(event: InputEvent) -> void:
 					encyclopedia_dialog.open_dialog()
 			get_viewport().set_input_as_handled()
 			return
-
-	if _settlement_overlay != null and _settlement_overlay.visible:
-		if event is InputEventKey and event.pressed and not event.echo:
-			if event.keycode == KEY_SPACE or event.keycode == KEY_ENTER:
-				if _is_settlement_revealing:
-					_settlement_skip_requested = true
-				else:
-					_on_finish_settlement_pressed()
-				get_viewport().set_input_as_handled()
 
 
 func _on_finish_settlement_pressed() -> void:
