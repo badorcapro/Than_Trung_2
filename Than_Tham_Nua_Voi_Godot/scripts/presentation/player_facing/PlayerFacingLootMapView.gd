@@ -476,21 +476,27 @@ func _draw() -> void:
 
 				# Bottom-right quantity badge (ở góc phải item có số)
 				if show_count and not is_consumed:
+					var num_str: String = String(rew.get("amount_str", "%d" % amount))
+					var badge_font_size: int = maxi(int(9.0 * visual_scale), 7)
+					var text_w: float = ThemeDB.fallback_font.get_string_size(
+						num_str, HORIZONTAL_ALIGNMENT_CENTER, -1, badge_font_size
+					).x
+					var badge_w: float = maxf(text_w + 6.0 * visual_scale, 17.0 * visual_scale)
+					var badge_h: float = 14.0 * visual_scale
 					var badge_center: Vector2 = center + Vector2(radius * 0.62, radius * 0.62)
-					var badge_r: float = 8.5 * visual_scale
+					var badge_rect := Rect2(badge_center - Vector2(badge_w * 0.5, badge_h * 0.5), Vector2(badge_w, badge_h))
+
 					# Badge drop shadow
-					draw_circle(badge_center + Vector2(1.0, 1.5) * visual_scale, badge_r + 1.2 * visual_scale, Color(0.02, 0.02, 0.03, 0.75))
+					draw_rect(badge_rect.grow(1.2 * visual_scale), Color(0.02, 0.02, 0.03, 0.75), true)
 					# Badge golden-amber border
-					draw_circle(badge_center, badge_r + 1.2 * visual_scale, Color(1.0, 0.84, 0.25, 0.98))
+					draw_rect(badge_rect, Color(1.0, 0.84, 0.25, 0.98), false, 1.2 * visual_scale)
 					# Badge dark background
-					draw_circle(badge_center, badge_r, Color(0.08, 0.1, 0.14, 0.98))
-					# Badge quantity number
-					var num_str: String = "%d" % amount
-					var badge_font_size: int = maxi(int(10.0 * visual_scale), 8)
-					var badge_pos: Vector2 = badge_center + Vector2(-badge_r, float(badge_font_size) * 0.38)
+					draw_rect(badge_rect, Color(0.08, 0.1, 0.14, 0.98), true)
+					# Badge quantity text
+					var badge_pos: Vector2 = badge_rect.position + Vector2(0.0, float(badge_font_size) * 1.05)
 					draw_string(
 						ThemeDB.fallback_font, badge_pos, num_str,
-						HORIZONTAL_ALIGNMENT_CENTER, badge_r * 2.0, badge_font_size,
+						HORIZONTAL_ALIGNMENT_CENTER, badge_w, badge_font_size,
 						Color(1.0, 0.94, 0.6)
 					)
 
@@ -845,8 +851,9 @@ func _draw_hovered_node_tooltip() -> void:
 		var show_count: bool = bool(rew.get("show_count", true))
 		theme_col = rew.get("theme_color", Color(1.0, 0.84, 0.25))
 
+		var amount_str: String = String(rew.get("amount_str", "%d" % amount))
 		if show_count:
-			title_text = "%s %s (+%d)" % [icon_str, r_name, amount]
+			title_text = "%s %s (+%s)" % [icon_str, r_name, amount_str]
 		else:
 			title_text = "%s %s" % [icon_str, r_name]
 		desc_text = String(rew.get("description", ""))
@@ -1024,13 +1031,19 @@ func _get_node_reward_presentation(node_id: StringName) -> Dictionary:
 
 	match def.reward_type:
 		RewardDefinition.Type.SILVER_COIN:
-			if def.amount >= 4:
+			if def.amount >= 50 or def.amount_max >= 70:
+				icon = "👑"
+				reward_name = "Rương Bạc"
+			elif def.amount >= 30 or def.amount_max >= 50:
 				icon = "💰"
 				reward_name = "Túi Bạc"
 			else:
 				icon = "🪙"
 				reward_name = "Xu Bạc"
-			desc = "Tiền tệ lưu thông trong Hoàng Cung"
+			if def.amount_max > def.amount:
+				desc = "Nhận ngẫu nhiên từ %d đến %d Xu Bạc trong Hoàng Cung" % [def.amount, def.amount_max]
+			else:
+				desc = "Tiền tệ lưu thông trong Hoàng Cung"
 			show_count = true
 			theme_color = Color(1.0, 0.86, 0.35)
 			tile_bg = Color(0.24, 0.22, 0.16)
@@ -1102,11 +1115,17 @@ func _get_node_reward_presentation(node_id: StringName) -> Dictionary:
 			if desc.is_empty():
 				desc = "Vật phẩm hỗ trợ hành trình"
 
+	var amount_str: String = "%d" % def.amount
+	if def.amount_max > def.amount:
+		amount_str = "%d~%d" % [def.amount, def.amount_max]
+
 	return {
 		"has_reward": true,
 		"reward_id": def.reward_id,
 		"reward_type": def.reward_type,
 		"amount": def.amount,
+		"amount_max": def.amount_max,
+		"amount_str": amount_str,
 		"icon": icon,
 		"reward_name": reward_name,
 		"description": desc,
