@@ -120,7 +120,8 @@ func continue_branch_move(
 	session: LootMovementSession,
 	map_definition: LootMapDefinition,
 	chosen_branch_id: StringName,
-	temporary_effects: Array[TemporaryEffectState] = []
+	temporary_effects: Array[TemporaryEffectState] = [],
+	interactive: bool = true
 ) -> MovementActionResult:
 	if (
 		session == null
@@ -143,7 +144,7 @@ func continue_branch_move(
 	var current_id := chosen_branch_id
 	result.traversed_node_ids.append(current_id)
 	var remaining: int = session.pending_branch.remaining_steps - 1
-	for _step: int in range(remaining):
+	for step_idx: int in range(remaining):
 		var node: LootNodeDefinition = map_definition.find_node(current_id)
 		if node == null or node.outgoing_neighbor_ids.is_empty():
 			result.truncated_by_end_of_path = true
@@ -152,8 +153,20 @@ func continue_branch_move(
 			current_id = node.outgoing_neighbor_ids[0]
 			result.traversed_node_ids.append(current_id)
 		else:
-			current_id = node.outgoing_neighbor_ids[0]
-			result.traversed_node_ids.append(current_id)
+			if interactive:
+				var steps_left: int = remaining - step_idx
+				session.pending_branch.active = true
+				session.pending_branch.player_id = player.player_id
+				session.pending_branch.fork_node_id = current_id
+				session.pending_branch.available_branch_ids = node.outgoing_neighbor_ids.duplicate()
+				session.pending_branch.remaining_steps = steps_left
+				session.pending_branch.traversed_node_ids = result.traversed_node_ids.duplicate()
+				session.pending_branch.roll_distance = result.roll_distance
+				session.pending_branch.start_node_id = result.start_node_id
+				return null
+			else:
+				current_id = node.outgoing_neighbor_ids[0]
+				result.traversed_node_ids.append(current_id)
 	session.pending_branch = PendingBranchState.new()
 	_finalize_movement_success(session, player, current_id, result, temporary_effects)
 	return result

@@ -349,6 +349,10 @@ func _input(event: InputEvent) -> void:
 		_toggle_cheat_menu()
 		get_viewport().set_input_as_handled()
 		return
+	if key_event.keycode == KEY_F9:
+		_save_game_manual()
+		get_viewport().set_input_as_handled()
+		return
 	if _cheat_overlay != null and _cheat_overlay.visible:
 		if key_event.keycode == KEY_ESCAPE:
 			_cheat_overlay.visible = false
@@ -923,7 +927,10 @@ func _on_branch_chosen(chosen_branch_id: StringName) -> void:
 	if dice_roll_overlay != null and dice_roll_overlay.visible:
 		dice_roll_overlay.visible = false
 		dice_roll_overlay.modulate.a = 1.0
-	_handle_loot_result(case_flow.choose_branch(chosen_branch_id))
+	var branch_res: Dictionary = case_flow.choose_branch(chosen_branch_id)
+	_handle_loot_result(branch_res)
+	if String(branch_res.get("code", "")) == "BRANCH_SELECTION_REQUIRED":
+		_show_message("⚡ Đã đến ngã rẽ tiếp theo! Hãy bấm chọn ô cờ vàng trên bản đồ.", false)
 
 
 func _on_toggle_detail_button_pressed() -> void:
@@ -1520,6 +1527,34 @@ func _refresh_continue_button() -> void:
 		if available
 		else "Chưa có trận đấu đã lưu"
 	)
+
+
+func _save_game_manual() -> void:
+	var active_match: MVP_MATCH_STATE = null
+	if case_flow != null and case_flow.match_state != null:
+		active_match = case_flow.match_state
+	elif setup != null and setup.match_state != null:
+		active_match = setup.match_state
+
+	if active_match == null or not active_match.character_selection_complete or active_match.players.size() != 3:
+		_show_message("Chưa vào trận đấu để lưu (F9).", true)
+		return
+
+	var save_state: MVP_MATCH_STATE = MVP_MATCH_STATE.from_dict(active_match.to_dict())
+	if save_state.match_completion_state != &"MATCH_COMPLETE":
+		save_state.current_phase = MVP_ENUMS.Phase.ROUND_START
+		save_state.match_completion_state = &"NEXT_CASE_REQUIRED"
+		save_state.completed_round_count = maxi(1, active_match.completed_round_count)
+		save_state.current_round_number = save_state.completed_round_count + 1
+		if save_state.applied_commit_ids.is_empty():
+			save_state.applied_commit_ids.append(&"manual_f9_save_commit")
+
+	var save_res: Dictionary = _autosave_service.save_match(save_state)
+	if bool(save_res.get("success", false)):
+		_show_message("💾 Đã lưu game thành công (F9)! Bạn có thể bấm [Tiếp tục] ở Menu chính bất kỳ lúc nào.", false)
+		_refresh_continue_button()
+	else:
+		_show_message("Không thể lưu game: %s" % String(save_res.get("code", "UNKNOWN")), true)
 
 
 func _on_exit_pressed() -> void:

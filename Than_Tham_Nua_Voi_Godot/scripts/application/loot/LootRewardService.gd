@@ -116,6 +116,9 @@ func choose_branch(
 		chosen_branch_id,
 		player.temporary_effects
 	)
+	if session.movement_session.pending_branch != null and session.movement_session.pending_branch.active:
+		session.phase = LootRewardSession.Phase.BRANCH_SELECTION
+		return null
 	if action == null:
 		return null
 	session.movement_session.current_turn_index = moving_turn_index

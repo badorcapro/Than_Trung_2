@@ -75,6 +75,7 @@ func run() -> Array[Dictionary]:
 	rows.append(_row("GĐ2-M0A get_available_branches returns correct fork branches", _available_branches_match(map_definition)))
 	rows.append(_row("GĐ2-M0A movement can choose branch A or branch B at House spawn", _movement_can_choose_branch(houses, map_definition)))
 	rows.append(_row("GĐ2-M0A interactive movement pauses at fork and resumes along chosen branch", _interactive_branch_pauses_and_resumes(houses, map_definition)))
+	rows.append(_row("GĐ2-M0A multi-step move from spawn pauses at subsequent fork without auto-picking", _multi_step_fork_pauses_and_resumes(houses, map_definition)))
 	rows.append(_row("GĐ2-M0A map view highlights selectable branches without mutating state", _map_view_selectable_branches(view)))
 	rows.append(_row("GĐ2-M0A map view detects clicked node on screen position", _map_view_finds_node_at_screen_pos(view)))
 	return rows
@@ -990,6 +991,51 @@ func _interactive_branch_pauses_and_resumes(
 		resumed != null
 		and resumed.end_node_id == &"middle_lane_2_1"
 		and resumed.traversed_node_ids == [&"central_hub", &"middle_lane_2_1"]
+		and not session.pending_branch.active
+	)
+
+
+func _multi_step_fork_pauses_and_resumes(
+	houses: Array[HouseDefinition], map_definition: LootMapDefinition
+) -> bool:
+	var service := LootMovementService.new()
+	var session: LootMovementSession = _service_session(houses, map_definition)
+	var player: LootMovementPlayerState = session.current_player()
+	player.current_node_id = &"hoang_spawn"
+	var action: MovementActionResult = service.roll_move(
+		session, map_definition, SequenceMovementRollSource.new([6]), [], &"", true
+	)
+	if action != null:
+		return false
+	if not session.pending_branch.active or session.pending_branch.fork_node_id != &"hoang_spawn":
+		return false
+	if session.pending_branch.remaining_steps != 6:
+		return false
+	var mid: MovementActionResult = service.continue_branch_move(
+		session, map_definition, &"hoang_lane_a_1"
+	)
+	if mid != null:
+		return false
+	if not session.pending_branch.active or session.pending_branch.fork_node_id != &"central_hub":
+		return false
+	if session.pending_branch.remaining_steps != 1:
+		return false
+	if not session.pending_branch.available_branch_ids.has(&"middle_lane_2_1"):
+		return false
+	var finish: MovementActionResult = service.continue_branch_move(
+		session, map_definition, &"middle_lane_2_1"
+	)
+	return (
+		finish != null
+		and finish.end_node_id == &"middle_lane_2_1"
+		and finish.traversed_node_ids == [
+			&"hoang_lane_a_1",
+			&"hoang_lane_a_2",
+			&"hoang_lane_a_3",
+			&"hoang_lane_a_4",
+			&"central_hub",
+			&"middle_lane_2_1"
+		]
 		and not session.pending_branch.active
 	)
 

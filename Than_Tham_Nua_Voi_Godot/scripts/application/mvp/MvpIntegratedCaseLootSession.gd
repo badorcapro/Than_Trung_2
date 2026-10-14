@@ -345,6 +345,18 @@ func choose_branch(chosen_branch_id: StringName) -> Dictionary:
 	var action: MovementActionResult = _loot_service.choose_branch(
 		loot_session, _map_definition, chosen_branch_id, _rewards
 	)
+	if loot_session.phase == LootRewardSession.Phase.BRANCH_SELECTION:
+		var fork_id: StringName = (
+			loot_session.movement_session.pending_branch.fork_node_id
+			if loot_session.movement_session != null and loot_session.movement_session.pending_branch != null
+			else &""
+		)
+		var pending_res: Dictionary = _after_loot_action(
+			&"BRANCH_SELECTION_REQUIRED",
+			"Đã đến ngã rẽ. Hãy chọn nhánh để tiếp tục di chuyển."
+		)
+		pending_res["fork_node_id"] = fork_id
+		return pending_res
 	if action == null:
 		return _failure(&"BRANCH_CHOICE_REJECTED", "Không thể chọn nhánh này")
 	var result: Dictionary = _after_loot_action(
