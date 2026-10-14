@@ -102,65 +102,135 @@ func _generate_random_item() -> MysteryChestItem:
 func _apply_item_profile(item: MysteryChestItem) -> void:
 	match item.rarity:
 		MysteryChestItem.Rarity.WHITE:
-			var names: Array[String] = ["Mảnh Vỡ Đồ Gốm", "Thẻ Gỗ Niêm Phong", "Đồng Tiền Hoen Rỉ", "Khăn Thêu Cũ", "Đinh Đồng Cổ"]
-			var icons: Array[String] = ["🏺", "🪵", "🪙", "🧣", "🪡"]
-			var idx: int = randi() % names.size()
-			item.display_name = names[idx]
-			item.icon = icons[idx]
-			item.silver_value = randi_range(10, 20)
-			item.grid_width = 1
-			item.grid_height = 1
-			item.description = "Vật phẩm cấp Trắng bình thường, có thể quy đổi ra Xu Bạc."
+			var pool: Array[Dictionary] = [
+				{"name": "Card - Ace", "val": 1, "w": 1, "h": 1, "icon": "🂡", "desc": "Thẻ bài Át thông thường."},
+				{"name": "Card - 1", "val": 1, "w": 1, "h": 1, "icon": "🎴", "desc": "Thẻ bài 1 thông thường."},
+				{"name": "Card - 2", "val": 1, "w": 1, "h": 1, "icon": "🎴", "desc": "Thẻ bài 2 thông thường."},
+				{"name": "Card - 3", "val": 1, "w": 1, "h": 1, "icon": "🎴", "desc": "Thẻ bài 3 thông thường."},
+				{"name": "Card - 4", "val": 1, "w": 1, "h": 1, "icon": "🎴", "desc": "Thẻ bài 4 thông thường."},
+				{"name": "Card - 5", "val": 1, "w": 1, "h": 1, "icon": "🎴", "desc": "Thẻ bài 5 thông thường."},
+				{"name": "Card - 6", "val": 1, "w": 1, "h": 1, "icon": "🎴", "desc": "Thẻ bài 6 thông thường."},
+				{"name": "Card - 7", "val": 1, "w": 1, "h": 1, "icon": "🎴", "desc": "Thẻ bài 7 thông thường."},
+				{"name": "Card - 8", "val": 1, "w": 1, "h": 1, "icon": "🎴", "desc": "Thẻ bài 8 thông thường."},
+				{"name": "Card - 9", "val": 1, "w": 1, "h": 1, "icon": "🎴", "desc": "Thẻ bài 9 thông thường."},
+				{"name": "Card - 10", "val": 1, "w": 1, "h": 1, "icon": "🎴", "desc": "Thẻ bài 10 thông thường."},
+				{"name": "Card - J", "val": 1, "w": 1, "h": 1, "icon": "🂫", "desc": "Thẻ bài J thông thường."},
+				{"name": "Card - Q", "val": 1, "w": 1, "h": 1, "icon": "🂭", "desc": "Thẻ bài Q thông thường."},
+				{"name": "Card - K", "val": 1, "w": 1, "h": 1, "icon": "🂮", "desc": "Thẻ bài K thông thường."},
+				{"name": "Card - Joker", "val": 5, "w": 1, "h": 1, "icon": "🃏", "desc": "Thẻ bài Joker đặc biệt."},
+				{"name": "Refinement Chips (2)", "val": 0, "w": 1, "h": 1, "icon": "💾", "desc": "Mảnh tinh chế (x2). Vật phẩm tài nguyên không bán.", "res": true, "qty": 2, "can_sell": false},
+			]
+			var chosen: Dictionary = pool[randi() % pool.size()]
+			item.display_name = chosen.get("name", "")
+			item.silver_value = int(chosen.get("val", 1))
+			item.grid_width = int(chosen.get("w", 1))
+			item.grid_height = int(chosen.get("h", 1))
+			item.icon = String(chosen.get("icon", "📦"))
+			item.description = String(chosen.get("desc", ""))
+			item.is_resource = bool(chosen.get("res", false))
+			item.quantity = int(chosen.get("qty", 1))
+			item.can_sell = bool(chosen.get("can_sell", true))
+
 		MysteryChestItem.Rarity.GREEN:
-			var names: Array[String] = ["Lư Cương Điêu Khắc", "Ấm Trà Tử Sa", "Trâm Cài Tóc Đồng", "Đoản Kiếm Rỉ Sét", "Cuộn Giấy Mực Tàu"]
-			var icons: Array[String] = ["🫖", "🍵", "🥢", "🗡️", "📜"]
-			var idx: int = randi() % names.size()
-			item.display_name = names[idx]
-			item.icon = icons[idx]
-			item.silver_value = randi_range(25, 45)
-			item.grid_width = 1 if randi() % 2 == 0 else 2
-			item.grid_height = 1
-			item.description = "Vật phẩm cấp Xanh lá tinh tế, quy đổi ra lượng Xu Bạc khá."
+			var pool: Array[Dictionary] = [
+				{"name": "Keyboard", "val": 2, "w": 2, "h": 1, "icon": "⌨️", "desc": "Bàn phím cơ tinh xảo."},
+				{"name": "Mouse", "val": 2, "w": 1, "h": 1, "icon": "🖱️", "desc": "Chuột quang học nhanh nhạy."},
+				{"name": "Socket", "val": 2, "w": 1, "h": 1, "icon": "🔌", "desc": "Ổ cắm điện an toàn."},
+				{"name": "9V Battery", "val": 2, "w": 1, "h": 1, "icon": "🔋", "desc": "Pin 9V chuẩn công nghiệp."},
+				{"name": "Rechargeable Battery", "val": 2, "w": 1, "h": 1, "icon": "🔋", "desc": "Pin sạc dung lượng cao."},
+				{"name": "Refinement Chips (4)", "val": 0, "w": 1, "h": 1, "icon": "💾", "desc": "Mảnh tinh chế (x4). Vật phẩm tài nguyên không bán.", "res": true, "qty": 4, "can_sell": false},
+			]
+			var chosen: Dictionary = pool[randi() % pool.size()]
+			item.display_name = chosen.get("name", "")
+			item.silver_value = int(chosen.get("val", 2))
+			item.grid_width = int(chosen.get("w", 1))
+			item.grid_height = int(chosen.get("h", 1))
+			item.icon = String(chosen.get("icon", "📦"))
+			item.description = String(chosen.get("desc", ""))
+			item.is_resource = bool(chosen.get("res", false))
+			item.quantity = int(chosen.get("qty", 1))
+			item.can_sell = bool(chosen.get("can_sell", true))
+
 		MysteryChestItem.Rarity.BLUE:
-			var names: Array[String] = ["Tượng Phật Lưu Ly", "Ngọc Bội Thanh Long", "Hộp Gỗ Trầm Hương", "Gương Đồng Cổ Trấn", "Kỳ Lân Ngọc Lam"]
-			var icons: Array[String] = ["🗿", "🧿", "🧰", "🪞", "🦄"]
-			var idx: int = randi() % names.size()
-			item.display_name = names[idx]
-			item.icon = icons[idx]
-			item.silver_value = randi_range(50, 90)
-			item.grid_width = 1 if randi() % 2 == 0 else 2
-			item.grid_height = 2
-			item.description = "Vật phẩm cấp Xanh dương quý giá của hoàng gia."
+			var pool: Array[Dictionary] = [
+				{"name": "Encrypted Router", "val": 3, "w": 2, "h": 1, "icon": "📡", "desc": "Bộ định tuyến mã hóa an toàn."},
+				{"name": "SSD", "val": 3, "w": 1, "h": 1, "icon": "💾", "desc": "Ổ cứng thể rắn tốc độ cao."},
+				{"name": "Radio", "val": 3, "w": 2, "h": 1, "icon": "📻", "desc": "Máy thu thanh cổ điển."},
+				{"name": "Robin: If I Can Stop One Heart From Breaking - Chevy", "val": 4, "w": 2, "h": 2, "icon": "🎵", "desc": "Đĩa nhạc Robin: If I Can Stop One Heart From Breaking."},
+				{"name": "Robin: Had I Not Seen the Sun - Chevy", "val": 4, "w": 2, "h": 2, "icon": "🎵", "desc": "Đĩa nhạc Robin: Had I Not Seen the Sun."},
+				{"name": "Robin:  Hope Is the Thing With Feathers - Chevy", "val": 4, "w": 2, "h": 2, "icon": "🎵", "desc": "Đĩa nhạc Robin: Hope Is the Thing With Feathers."},
+				{"name": "Refinement Chips (8)", "val": 0, "w": 1, "h": 1, "icon": "💾", "desc": "Mảnh tinh chế (x8). Vật phẩm tài nguyên không bán.", "res": true, "qty": 8, "can_sell": false},
+			]
+			var chosen: Dictionary = pool[randi() % pool.size()]
+			item.display_name = chosen.get("name", "")
+			item.silver_value = int(chosen.get("val", 3))
+			item.grid_width = int(chosen.get("w", 1))
+			item.grid_height = int(chosen.get("h", 1))
+			item.icon = String(chosen.get("icon", "📦"))
+			item.description = String(chosen.get("desc", ""))
+			item.is_resource = bool(chosen.get("res", false))
+			item.quantity = int(chosen.get("qty", 1))
+			item.can_sell = bool(chosen.get("can_sell", true))
+
 		MysteryChestItem.Rarity.PURPLE:
-			var names: Array[String] = ["Phượng Hoàng Trâm Vàng", "Bình Rượu Ngự Thiềm", "Trường Kiếm Quý Tộc", "Áo Bào Gấm Thêu Rồng"]
-			var icons: Array[String] = ["🪶", "🏺", "⚔️", "👘"]
-			var idx: int = randi() % names.size()
-			item.display_name = names[idx]
-			item.icon = icons[idx]
-			item.silver_value = randi_range(110, 180)
-			item.grid_width = 2
-			item.grid_height = 2
-			item.description = "Bảo vật Sử thi lưu giữ trong kho nội phủ triều đình."
-		MysteryChestItem.Rarity.GOLD:
-			var names: Array[String] = ["Ấn Triện Hoàng Đế Cũ", "Vương Miện Ngọc Trai", "Thanh Long Đao Cẩn Vàng", "Bàn Cờ Ngọc Bích"]
-			var icons: Array[String] = ["👑", "💎", "🔱", "♟️"]
-			var idx: int = randi() % names.size()
-			item.display_name = names[idx]
-			item.icon = icons[idx]
-			item.silver_value = randi_range(220, 360)
-			item.grid_width = 2 if randi() % 2 == 0 else 3
-			item.grid_height = 2
-			item.description = "Kỳ trân dị bảo Huyền thoại vô giá của hoàng cung."
-		MysteryChestItem.Rarity.RED:
-			var names: Array[String] = ["Huyết Thạch Tế Đàn", "Lõi Cơ Quan Cổ Đại", "Cửu Long Thần Châm", "Bí Điển Luyện Kim Thuật"]
-			var icons: Array[String] = ["🔮", "⚙️", "💉", "📕"]
-			var idx: int = randi() % names.size()
-			item.display_name = names[idx]
-			item.icon = icons[idx]
-			item.silver_value = 500
-			item.grid_width = 2
-			item.grid_height = 2
-			item.description = "VẬT PHẨM ĐẶC BIỆT CẤP ĐỎ: Người chơi được GIỮ LẠI vĩnh viễn để nâng cấp Phòng Thí Nghiệm!"
+			var pool: Array[Dictionary] = [
+				{"name": "Oximeter", "val": 8, "w": 1, "h": 1, "icon": "📟", "desc": "Máy đo nồng độ oxy chính xác."},
+				{"name": "Merit Medal", "val": 8, "w": 1, "h": 1, "icon": "🏅", "desc": "Huy chương công trạng hoàng gia."},
+				{"name": "GS5 Controller", "val": 8, "w": 2, "h": 1, "icon": "🎮", "desc": "Tay cầm điều khiển GS5 hiện đại."},
+				{"name": "Spy Pen", "val": 8, "w": 1, "h": 1, "icon": "🖊️", "desc": "Bút điệp viên gắn vi mạch ngầm."},
+				{"name": "Robin: Sway to My Beat in Cosmos - Chevy", "val": 0, "w": 2, "h": 2, "icon": "💿", "desc": "Đĩa nhạc Robin: Sway to My Beat in Cosmos (1 gói random vé đen).", "rtype": "black_ticket"},
+				{"name": "Himeko Coffee Machine Set", "val": 0, "w": 2, "h": 2, "icon": "☕", "desc": "Bộ máy pha cà phê Himeko đặc biệt (1 gói random vé đen).", "rtype": "black_ticket"},
+				{"name": "Himeko Broken Sword", "val": 0, "w": 2, "h": 1, "icon": "🗡️", "desc": "Thanh kiếm gãy Himeko huyền thoại (1 gói random vé đen).", "rtype": "black_ticket"},
+				{"name": "Refinement Chips (16)", "val": 0, "w": 1, "h": 1, "icon": "💾", "desc": "Mảnh tinh chế (x16). Vật phẩm tài nguyên không bán.", "res": true, "qty": 16, "can_sell": false},
+			]
+			var chosen: Dictionary = pool[randi() % pool.size()]
+			item.display_name = chosen.get("name", "")
+			item.silver_value = int(chosen.get("val", 8))
+			item.grid_width = int(chosen.get("w", 1))
+			item.grid_height = int(chosen.get("h", 1))
+			item.icon = String(chosen.get("icon", "📦"))
+			item.description = String(chosen.get("desc", ""))
+			item.reward_type = String(chosen.get("rtype", ""))
+			item.is_resource = bool(chosen.get("res", false))
+			item.quantity = int(chosen.get("qty", 1))
+			item.can_sell = bool(chosen.get("can_sell", true))
+
+		MysteryChestItem.Rarity.GOLD: # Cam / Vàng (Legendary)
+			var pool: Array[Dictionary] = [
+				{"name": "Array Server", "val": 16, "w": 2, "h": 2, "icon": "🖥️", "desc": "Máy chủ mảng dung lượng cực lớn."},
+				{"name": "Military Satellite Communications Device", "val": 16, "w": 2, "h": 2, "icon": "🛰️", "desc": "Thiết bị truyền thông vệ tinh quân sự."},
+				{"name": "Digital Camera", "val": 16, "w": 2, "h": 1, "icon": "📷", "desc": "Máy ảnh kỹ thuật số chuyên nghiệp."},
+				{"name": "ASOS Motherboard", "val": 16, "w": 2, "h": 2, "icon": "🖲️", "desc": "Bo mạch chủ ASOS hiệu năng đỉnh cao."},
+				{"name": "Refinement Chips (32)", "val": 0, "w": 1, "h": 1, "icon": "💾", "desc": "Mảnh tinh chế (x32). Vật phẩm tài nguyên không bán.", "res": true, "qty": 32, "can_sell": false},
+			]
+			var chosen: Dictionary = pool[randi() % pool.size()]
+			item.display_name = chosen.get("name", "")
+			item.silver_value = int(chosen.get("val", 16))
+			item.grid_width = int(chosen.get("w", 1))
+			item.grid_height = int(chosen.get("h", 1))
+			item.icon = String(chosen.get("icon", "📦"))
+			item.description = String(chosen.get("desc", ""))
+			item.is_resource = bool(chosen.get("res", false))
+			item.quantity = int(chosen.get("qty", 1))
+			item.can_sell = bool(chosen.get("can_sell", true))
+
+		MysteryChestItem.Rarity.RED: # Đỏ (Mythical)
+			var pool: Array[Dictionary] = [
+				{"name": "Rocket Fuel", "val": 45, "w": 1, "h": 2, "icon": "🚀", "desc": "Nhiên liệu tên lửa. Vật phẩm tài nguyên, có thể chọn bán lấy 45 Xu Bạc.", "res": true, "can_sell": true},
+				{"name": "Quantum Storage", "val": 45, "w": 2, "h": 2, "icon": "🔮", "desc": "Kho lưu trữ lượng tử. Vật phẩm tài nguyên, có thể chọn bán lấy 45 Xu Bạc.", "res": true, "can_sell": true},
+				{"name": "Locking Component (5)", "val": 0, "w": 1, "h": 1, "icon": "🔒", "desc": "Linh kiện khóa (x5). Vật phẩm tài nguyên, không bán được.", "res": true, "qty": 5, "can_sell": false},
+			]
+			var chosen: Dictionary = pool[randi() % pool.size()]
+			item.display_name = chosen.get("name", "")
+			item.silver_value = int(chosen.get("val", 45))
+			item.grid_width = int(chosen.get("w", 1))
+			item.grid_height = int(chosen.get("h", 1))
+			item.icon = String(chosen.get("icon", "📦"))
+			item.description = String(chosen.get("desc", ""))
+			item.is_resource = bool(chosen.get("res", true))
+			item.quantity = int(chosen.get("qty", 1))
+			item.can_sell = bool(chosen.get("can_sell", false))
+
 	item.item_id = StringName("vault_item_%s_%d" % [MysteryChestItem.rarity_name(item.rarity).to_lower(), randi() % 10000])
 
 

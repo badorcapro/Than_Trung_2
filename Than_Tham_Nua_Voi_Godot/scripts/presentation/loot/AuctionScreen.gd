@@ -36,7 +36,7 @@ var _bottom_bar: PanelContainer
 var _timer_label: Label
 var _bid_box: HBoxContainer
 var _bid_label: Label
-var _current_bid_value: int = 1000
+var _current_bid_value: int = 10
 var _confirm_bid_btn: Button
 var _next_round_btn: Button
 var _solo_box: HBoxContainer
@@ -57,7 +57,7 @@ func _init() -> void:
 func setup(session: AuctionSession, player_silvers: Dictionary = {}) -> void:
 	auction_session = session
 	player_silver_balances = player_silvers.duplicate()
-	_current_bid_value = maxi(500, int(session.mystery_chest.total_silver_value() * 0.3))
+	_current_bid_value = maxi(1, int(session.mystery_chest.total_silver_value() * 0.3))
 	_generate_grid_placements()
 	_sync_reveals_from_hints()
 	refresh_ui()
@@ -265,25 +265,25 @@ func _build_ui() -> void:
 	btm_hbox.add_child(_bid_box)
 
 	var minus_btn := Button.new()
-	minus_btn.text = "- 500"
-	minus_btn.pressed.connect(func() -> void: _adjust_bid(-500))
+	minus_btn.text = "- 10"
+	minus_btn.pressed.connect(func() -> void: _adjust_bid(-10))
 	_bid_box.add_child(minus_btn)
 
 	_bid_label = Label.new()
-	_bid_label.text = "Đã ra giá: 1,000 Xu"
+	_bid_label.text = "Đã ra giá: 10 Xu"
 	_bid_label.add_theme_font_size_override("font_size", 18)
 	_bid_label.add_theme_color_override("font_color", Color("#f6c95c"))
 	_bid_box.add_child(_bid_label)
 
 	var plus_btn := Button.new()
-	plus_btn.text = "+ 500"
-	plus_btn.pressed.connect(func() -> void: _adjust_bid(500))
+	plus_btn.text = "+ 10"
+	plus_btn.pressed.connect(func() -> void: _adjust_bid(10))
 	_bid_box.add_child(plus_btn)
 
-	var plus_5k_btn := Button.new()
-	plus_5k_btn.text = "+ 5,000"
-	plus_5k_btn.pressed.connect(func() -> void: _adjust_bid(5000))
-	_bid_box.add_child(plus_5k_btn)
+	var plus_50_btn := Button.new()
+	plus_50_btn.text = "+ 50"
+	plus_50_btn.pressed.connect(func() -> void: _adjust_bid(50))
+	_bid_box.add_child(plus_50_btn)
 
 	_confirm_bid_btn = Button.new()
 	_confirm_bid_btn.text = "✅ Xác Nhận Ra Giá"
@@ -616,12 +616,16 @@ func _on_grid_draw() -> void:
 			_grid_draw_control.draw_rect(rect, r_color, false, 2.5)
 
 			var font := ThemeDB.fallback_font
-			var t_pos := Vector2(pos.x * CELL_SIZE + 4, pos.y * CELL_SIZE + 14)
-			_grid_draw_control.draw_string(font, t_pos, item.display_name, HORIZONTAL_ALIGNMENT_LEFT, w * CELL_SIZE - 8, 11, Color.WHITE)
+			var t_pos := Vector2(pos.x * CELL_SIZE + 4, pos.y * CELL_SIZE + 13)
+			_grid_draw_control.draw_string(font, t_pos, item.display_name, HORIZONTAL_ALIGNMENT_LEFT, w * CELL_SIZE - 8, 10, Color.WHITE)
 
 			var v_text := "%s Xu" % _format_number(item.silver_value)
-			var v_pos := Vector2(pos.x * CELL_SIZE + 4, (pos.y + h) * CELL_SIZE - 6)
-			_grid_draw_control.draw_string(font, v_pos, v_text, HORIZONTAL_ALIGNMENT_LEFT, w * CELL_SIZE - 8, 10, r_color)
+			if item.reward_type == "black_ticket":
+				v_text = "Vé đen 🎟️"
+			elif item.is_resource and item.silver_value == 0:
+				v_text = "Tài nguyên 💾"
+			var v_pos := Vector2(pos.x * CELL_SIZE + 4, (pos.y + h) * CELL_SIZE - 5)
+			_grid_draw_control.draw_string(font, v_pos, v_text, HORIZONTAL_ALIGNMENT_LEFT, w * CELL_SIZE - 8, 9, r_color)
 		elif is_quality_reveal:
 			var q_rect := Rect2(pos.x * CELL_SIZE + 2, pos.y * CELL_SIZE + 2, CELL_SIZE - 4, CELL_SIZE - 4)
 			_grid_draw_control.draw_rect(q_rect, Color(r_color.r, r_color.g, r_color.b, 0.7), true)
@@ -641,17 +645,17 @@ func _calculate_minimum_estimated_value() -> int:
 			total += item.silver_value
 		elif _revealed_qualities.has(i_id):
 			match item.rarity:
-				ITEM_CLASS.Rarity.WHITE: total += 10
-				ITEM_CLASS.Rarity.GREEN: total += 25
-				ITEM_CLASS.Rarity.BLUE: total += 50
-				ITEM_CLASS.Rarity.PURPLE: total += 110
-				ITEM_CLASS.Rarity.GOLD: total += 220
-				ITEM_CLASS.Rarity.RED: total += 500
+				ITEM_CLASS.Rarity.WHITE: total += 1
+				ITEM_CLASS.Rarity.GREEN: total += 2
+				ITEM_CLASS.Rarity.BLUE: total += 3
+				ITEM_CLASS.Rarity.PURPLE: total += 8
+				ITEM_CLASS.Rarity.GOLD: total += 16
+				ITEM_CLASS.Rarity.RED: total += 45
 	return total
 
 
 func _adjust_bid(delta: int) -> void:
-	_current_bid_value = maxi(500, _current_bid_value + delta)
+	_current_bid_value = maxi(1, _current_bid_value + delta)
 	_bid_label.text = "Đã ra giá: %s Xu" % _format_number(_current_bid_value)
 
 
@@ -663,8 +667,8 @@ func _on_confirm_bid_pressed() -> void:
 		auction_session.place_bid(curr_pid, _current_bid_value)
 		for i in range(1, auction_session.active_bidder_ids.size()):
 			var ai_pid: StringName = auction_session.active_bidder_ids[i]
-			var ai_bid: int = _current_bid_value + randi_range(-200, 1500)
-			auction_session.place_bid(ai_pid, maxi(500, ai_bid))
+			var ai_bid: int = _current_bid_value + randi_range(-2, 10)
+			auction_session.place_bid(ai_pid, maxi(1, ai_bid))
 	refresh_ui()
 
 

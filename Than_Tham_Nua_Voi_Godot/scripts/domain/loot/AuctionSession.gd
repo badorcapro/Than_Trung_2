@@ -156,17 +156,23 @@ func _conclude_auction() -> void:
 	state = State.COMPLETED
 
 
+var granted_tickets: int = 0
+
+
 func _settle_auction() -> void:
 	retained_red_items.clear()
 	converted_silver_received = 0
+	granted_tickets = 0
 
 	for item: MysteryChestItem in mystery_chest.items:
 		if item == null:
 			continue
-		if item.is_lab_upgrade_material():
+		if item.is_lab_upgrade_material() or item.rarity == MysteryChestItem.Rarity.RED:
 			retained_red_items.append(item)
 		else:
 			converted_silver_received += item.silver_value
+			if item.reward_type == "black_ticket":
+				granted_tickets += 1
 
 	net_silver_profit = converted_silver_received - final_price_paid
 
@@ -184,4 +190,5 @@ func settlement_summary() -> Dictionary:
 		"red_items_count": retained_red_items.size(),
 		"red_item_names": red_names,
 		"total_items_in_chest": mystery_chest.items.size(),
+		"granted_tickets": granted_tickets,
 	}

@@ -13,11 +13,15 @@ enum Rarity {
 var item_id: StringName = &""
 var display_name: String = ""
 var rarity: Rarity = Rarity.WHITE
-var silver_value: int = 10
+var silver_value: int = 1
 var grid_width: int = 1
 var grid_height: int = 1
 var icon: String = "📦"
 var description: String = ""
+var quantity: int = 1
+var is_resource: bool = false
+var can_sell: bool = true
+var reward_type: String = "" # "silver", "black_ticket", "refinement_chips", "lab_material"
 
 
 static func rarity_name(r: Rarity) -> String:
@@ -37,13 +41,13 @@ static func rarity_color(r: Rarity) -> Color:
 		Rarity.GREEN: return Color(0.32, 0.86, 0.44)
 		Rarity.BLUE: return Color(0.28, 0.68, 1.0)
 		Rarity.PURPLE: return Color(0.78, 0.38, 0.98)
-		Rarity.GOLD: return Color(1.0, 0.84, 0.22)
+		Rarity.GOLD: return Color(1.0, 0.6, 0.1) # Cam / Vàng
 		Rarity.RED: return Color(0.96, 0.22, 0.28)
 		_: return Color.WHITE
 
 
 func is_lab_upgrade_material() -> bool:
-	return rarity == Rarity.RED
+	return rarity == Rarity.RED or (is_resource and not can_sell)
 
 
 func to_dict() -> Dictionary:
@@ -56,6 +60,10 @@ func to_dict() -> Dictionary:
 		"grid_height": grid_height,
 		"icon": icon,
 		"description": description,
+		"quantity": quantity,
+		"is_resource": is_resource,
+		"can_sell": can_sell,
+		"reward_type": reward_type,
 	}
 
 
@@ -64,9 +72,13 @@ static func from_dict(data: Dictionary) -> MysteryChestItem:
 	item.item_id = StringName(data.get("item_id", ""))
 	item.display_name = String(data.get("display_name", ""))
 	item.rarity = int(data.get("rarity", Rarity.WHITE)) as Rarity
-	item.silver_value = int(data.get("silver_value", 10))
+	item.silver_value = int(data.get("silver_value", 1))
 	item.grid_width = int(data.get("grid_width", 1))
 	item.grid_height = int(data.get("grid_height", 1))
 	item.icon = String(data.get("icon", "📦"))
 	item.description = String(data.get("description", ""))
+	item.quantity = int(data.get("quantity", 1))
+	item.is_resource = bool(data.get("is_resource", false))
+	item.can_sell = bool(data.get("can_sell", true))
+	item.reward_type = String(data.get("reward_type", ""))
 	return item

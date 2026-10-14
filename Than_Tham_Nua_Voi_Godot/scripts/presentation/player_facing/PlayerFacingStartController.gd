@@ -366,6 +366,9 @@ func _input(event: InputEvent) -> void:
 			get_viewport().set_input_as_handled()
 			return
 		if key_event.keycode == KEY_Z:
+			if _auction_screen != null and _auction_screen.visible:
+				get_viewport().set_input_as_handled()
+				return
 			_handle_loot_z_press()
 			get_viewport().set_input_as_handled()
 			return
@@ -931,6 +934,8 @@ func _toggle_loot_detail_panel() -> void:
 func _handle_loot_z_press() -> void:
 	if case_flow == null or case_flow.loot_session == null:
 		return
+	if _auction_screen != null and _auction_screen.visible:
+		return
 	if _is_rolling_dice:
 		return
 	var session: LOOT_REWARD_SESSION = case_flow.loot_session
@@ -950,6 +955,8 @@ func _handle_loot_z_press() -> void:
 		_refresh_loot()
 
 	if session.phase == LOOT_REWARD_SESSION.Phase.LOOT_END_CONFIRMATION_READY:
+		if _auction_session != null and _auction_session.state != AUCTION_SESSION.State.IDLE:
+			return
 		if not _vault_reach_player_ids.is_empty():
 			_open_auction_screen()
 			return
@@ -1182,6 +1189,8 @@ func _open_auction_screen() -> void:
 	if _auction_screen == null or _vault_reach_player_ids.is_empty():
 		_proceed_to_equipment_management()
 		return
+	if _auction_screen.visible:
+		return
 	var player_silvers: Dictionary = {}
 	if case_flow != null and case_flow.match_state != null:
 		for pl: PlayerMatchState in case_flow.match_state.players:
@@ -1198,12 +1207,22 @@ func _on_auction_finished(result: Dictionary) -> void:
 	var winner_id: StringName = StringName(result.get("winner_id", ""))
 	var silver: int = int(result.get("converted_silver", 0))
 	var price_paid: int = int(result.get("final_price_paid", 0))
+	var granted_tickets: int = int(result.get("granted_tickets", 0))
+	var red_count: int = int(result.get("red_items_count", 0))
 	if not winner_id.is_empty():
 		if case_flow != null and case_flow.match_state != null:
 			var player_state: PlayerMatchState = case_flow.match_state.find_player(winner_id)
 			if player_state != null:
 				player_state.silver_coin_count = maxi(0, player_state.silver_coin_count - price_paid + silver)
-		_show_message("Đấu giá kết thúc! %s trúng đấu giá hòm bí ẩn (Nhận +%d Xu Bạc)!" % [winner_id, silver])
+				if granted_tickets > 0:
+					player_state.gacha_ticket_count += granted_tickets
+		var feedback := "Đấu giá kết thúc! %s trúng đấu giá (+%d Xu Bạc" % [winner_id, silver]
+		if granted_tickets > 0:
+			feedback += ", +%d Vé Đen" % granted_tickets
+		if red_count > 0:
+			feedback += ", giữ lại %d vật phẩm tài nguyên/đỏ" % red_count
+		feedback += ")!"
+		_show_message(feedback)
 	_proceed_to_equipment_management()
 
 
@@ -3251,6 +3270,9 @@ func _init_cheat_layer() -> void:
 	_add_cheat_btn(grid, "🔄 Reset 0★ (Vết Thánh A)", func() -> void:
 		_cheat_set_stigmata_stars(&"stigmata_a", 0, 0)
 	)
+	_add_cheat_btn(grid, "🎲 Đổi Pattern Đấu Giá", func() -> void:
+		_cheat_reroll_auction_pattern()
+	)
 
 
 func _toggle_cheat_menu() -> void:
@@ -3532,6 +3554,27 @@ func _cheat_set_stigmata_stars(slot_id: StringName, gold: int, purple: int) -> v
 			_refresh_after_cheat()
 			return
 	_notify_cheat("Không tìm thấy Vết Thánh!", true)
+
+
+func _cheat_reroll_auction_pattern() -> void:
+	var player := _get_cheat_target_player()
+	var pid: StringName = player.player_id if player != null else &"player_1"
+	if _vault_reach_player_ids.is_empty():
+		_vault_reach_player_ids = [pid]
+	_mystery_chest = MYSTERY_CHEST_STATE.new()
+	_mystery_chest.roll_vault_deposit(randi_range(6, 12))
+	var player_silvers: Dictionary = {}
+	if case_flow != null and case_flow.match_state != null:
+		for pl: PlayerMatchState in case_flow.match_state.players:
+			player_silvers[pl.player_id] = pl.silver_coin_count
+	if player_silvers.is_empty() and player != null:
+		player_silvers[player.player_id] = player.silver_coin_count
+	_auction_session = AUCTION_SESSION.new()
+	_auction_session.initialize(_vault_reach_player_ids, _mystery_chest)
+	if _auction_screen != null:
+		_auction_screen.setup(_auction_session, player_silvers)
+		_auction_screen.visible = true
+	_notify_cheat("Đã đổi pattern hòm bí ẩn & mở lại phiên Đấu Giá!")
 
 
 func _add_cheat_btn(parent: Node, label_text: String, callback: Callable) -> Button:
