@@ -3802,7 +3802,7 @@ func _cheat_jump_to_case() -> void:
 		_notify_cheat("Đang ở trong Kỳ Án.")
 		return
 	if case_flow == null:
-		_launch_case()
+		_on_start_case_pressed()
 	elif setup.phase == SETUP_SESSION.Phase.NEXT_CASE_SELECTION:
 		_start_next_case_from_option(0)
 	else:
@@ -3822,7 +3822,7 @@ func _cheat_jump_to_loot() -> void:
 		_notify_cheat("Đang ở trong Bản đồ Loot.")
 		return
 	if case_flow == null:
-		_launch_case()
+		_on_start_case_pressed()
 	if setup.phase == SETUP_SESSION.Phase.NEXT_CASE_SELECTION:
 		_start_next_case_from_option(0)
 	if setup.phase == SETUP_SESSION.Phase.CASE_ACTIVE and case_flow != null:
@@ -3859,10 +3859,12 @@ func _cheat_jump_to_equipment() -> void:
 					case_flow.move()
 				LOOT_REWARD_SESSION.Phase.BAG_OVERFLOW_PENDING:
 					case_flow.resolve_overflow_skip()
-		if case_flow.loot_session.phase == LOOT_REWARD_SESSION.Phase.LOOT_END_CONFIRMATION_READY:
-			_on_loot_end_confirmed()
+		if case_flow.equipment_session != null:
+			for pid: StringName in case_flow.equipment_session.player_order:
+				case_flow.confirm_loot_end(pid)
+			setup.mark_equipment_management()
 	_show_phase(SETUP_SESSION.Phase.EQUIPMENT_MANAGEMENT)
-	_refresh_equipment_management()
+	_refresh_equipment()
 	_cheat_overlay.visible = false
 	_notify_cheat("Đã nhảy tới Quản Lý Trang Bị / Gacha!")
 
@@ -3891,7 +3893,7 @@ func _cheat_jump_to_match_results() -> void:
 		_notify_cheat("Không thể khởi động trận đấu.")
 		return
 	if case_flow == null:
-		_launch_case()
+		_on_start_case_pressed()
 	if case_flow != null and case_flow.match_state != null:
 		case_flow.match_state.match_completion_state = &"MATCH_COMPLETE"
 		setup.mark_match_complete(case_flow.match_state)
