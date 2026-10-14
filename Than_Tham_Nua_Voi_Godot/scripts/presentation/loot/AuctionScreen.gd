@@ -848,7 +848,11 @@ func _render_clues() -> void:
 		hbox.add_child(vbox)
 
 		var t_lbl := Label.new()
-		t_lbl.text = String(hint.get("title", "Manh Mối"))
+		var phase_tag: String = String(hint.get("phase", ""))
+		if not phase_tag.is_empty():
+			t_lbl.text = "[%s] %s" % [phase_tag, String(hint.get("title", "Manh Mối"))]
+		else:
+			t_lbl.text = String(hint.get("title", "Manh Mối"))
 		t_lbl.add_theme_font_size_override("font_size", 14)
 		t_lbl.add_theme_color_override("font_color", Color("#8be9fd"))
 		vbox.add_child(t_lbl)
@@ -1034,12 +1038,19 @@ func _run_settlement_reveal() -> void:
 			# "khoảng load nhẹ ở giữa ô đồ trước khi xuất hiện"
 			wait_time = randf_range(0.12, 0.28)
 
-		var elapsed := 0.0
-		while elapsed < wait_time and not _settlement_skip_requested:
+		var start_ticks: int = Time.get_ticks_msec()
+		var last_ticks: int = start_ticks
+		var wait_msec: int = int(wait_time * 1000.0)
+		while (Time.get_ticks_msec() - start_ticks) < wait_msec and not _settlement_skip_requested:
 			if not is_inside_tree() or not _settlement_overlay.visible:
 				break
-			var dt: float = await get_tree().process_frame
-			elapsed += dt
+			await get_tree().process_frame
+			var now_ticks: int = Time.get_ticks_msec()
+			var frame_delta: float = float(now_ticks - last_ticks) / 1000.0
+			last_ticks = now_ticks
+			_settlement_spinner_angle += frame_delta * 8.0
+			if _settlement_grid_draw_control != null:
+				_settlement_grid_draw_control.queue_redraw()
 
 		if _settlement_skip_requested:
 			break

@@ -46,7 +46,7 @@ func initialize(vault_reach_player_ids: Array[StringName], chest: MysteryChestSt
 	eligible_player_ids = vault_reach_player_ids.duplicate()
 	active_bidder_ids = vault_reach_player_ids.duplicate()
 	mystery_chest = chest if chest != null else MysteryChestState.new()
-	mystery_chest.generate_hint_pack(6)
+	mystery_chest.generate_hint_pack(8)
 
 	if eligible_player_ids.is_empty():
 		state = State.CANCELLED
@@ -58,7 +58,9 @@ func initialize(vault_reach_player_ids: Array[StringName], chest: MysteryChestSt
 		# Giá máy tự ra: 50% - 150% tổng giá trị hòm
 		var ratio: float = randf_range(0.5, 1.5)
 		solo_offer_price = maxi(5, int(round(float(total_val) * ratio)))
-		_publish_next_hint("Ưu Đãi Độc Quyền Solo")
+		var solo_clue_count: int = randi_range(3, 4)
+		for idx in range(solo_clue_count):
+			_publish_next_hint("Ưu Đãi Solo (%d/%d)" % [idx + 1, solo_clue_count])
 	else:
 		state = State.AUCTION_ACTIVE
 		current_round = 1

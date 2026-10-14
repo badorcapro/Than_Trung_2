@@ -18,6 +18,7 @@ func run() -> Array[Dictionary]:
 	rows.append(_row("Đấu giá Nhiều Người: Có 5 vòng và công bố manh mối từng vòng", _multiplayer_5_rounds_contract()))
 	rows.append(_row("Đấu giá Nhiều Người: Người trả giá cao nhất thắng cuộc", _multiplayer_highest_bid_wins_contract()))
 	rows.append(_row("Tổng kết phiên: Quy đổi xu chính xác và giữ lại đúng đồ đỏ", _settlement_accounting_contract()))
+	rows.append(_row("Đấu giá Solo: Tiết lộ ngẫu nhiên 3 hoặc 4 manh mối ngay từ đầu", _solo_3_or_4_hints_contract()))
 	rows.append(_row("Các dải Xu Bạc 100-300, 300-500, 500-700 thiết lập đúng dải ngẫu nhiên", _silver_ranges_contract()))
 	return rows
 
@@ -185,3 +186,12 @@ func _silver_ranges_contract() -> bool:
 		and large.amount == 300 and large.amount_max == 500
 		and grand.amount == 500 and grand.amount_max == 700
 	)
+
+
+func _solo_3_or_4_hints_contract() -> bool:
+	var chest := CHEST_CLASS.new()
+	chest.roll_vault_deposit(6)
+	var auction := AUCTION_CLASS.new()
+	auction.initialize([&"player_solo"], chest)
+	var count: int = auction.hints_history.size()
+	return count >= 3 and count <= 4
