@@ -925,6 +925,22 @@ func _handle_loot_z_press() -> void:
 			return
 		_refresh_loot()
 
+	if session.phase == LOOT_REWARD_SESSION.Phase.LOOT_END_CONFIRMATION_READY:
+		var started: Dictionary = case_flow.begin_loot_end_confirmation()
+		if bool(started.get("success", false)) or case_flow.equipment_session != null:
+			setup.mark_loot_confirmation()
+			if case_flow.equipment_session != null:
+				for pid: StringName in case_flow.equipment_session.player_order.duplicate():
+					if not case_flow.equipment_session.confirmed_player_ids.has(pid):
+						case_flow.confirm_loot_end(pid)
+			setup.mark_equipment_management()
+			_show_phase(setup.phase)
+			_open_character_detail_sheet(&"", true)
+			return
+		else:
+			_on_finish_equipment_phase_confirmed()
+			return
+
 	if session.phase != LOOT_REWARD_SESSION.Phase.MOVEMENT:
 		return
 
@@ -1134,7 +1150,8 @@ func _handle_loot_result(result: Dictionary) -> void:
 	_trim_loot_log()
 	if case_flow.loot_session.phase == 4:
 		var started: Dictionary = case_flow.begin_loot_end_confirmation()
-		if bool(started.get("success", false)):
+		if bool(started.get("success", false)) or case_flow.equipment_session != null:
+			setup.mark_loot_confirmation()
 			if case_flow.equipment_session != null:
 				for pid: StringName in case_flow.equipment_session.player_order.duplicate():
 					if not case_flow.equipment_session.confirmed_player_ids.has(pid):
@@ -1246,8 +1263,10 @@ func _on_finish_equipment_phase_confirmed() -> void:
 
 
 func _on_round_summary_pressed() -> void:
+	if setup.phase != SETUP_SESSION.Phase.ROUND_SUMMARY_READY and setup.phase != SETUP_SESSION.Phase.ROUND_SUMMARY:
+		setup.mark_round_summary_ready()
 	var result: Dictionary = setup.open_round_summary()
-	if not bool(result.get("success", false)):
+	if not bool(result.get("success", false)) and not bool(result.get("duplicate_noop", false)):
 		_show_message("Tổng kết Round chưa sẵn sàng.", true)
 		return
 	_render_round_summary()

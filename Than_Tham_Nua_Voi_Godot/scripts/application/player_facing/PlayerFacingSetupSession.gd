@@ -457,7 +457,7 @@ func mark_loot_confirmation() -> Dictionary:
 
 
 func mark_equipment_management() -> Dictionary:
-	if phase != Phase.LOOT_END_CONFIRMATION:
+	if phase != Phase.LOOT_END_CONFIRMATION and phase != Phase.LOOT_ACTIVE:
 		return _failure(&"LOOT_CONFIRMATION_REQUIRED")
 	phase = Phase.EQUIPMENT_MANAGEMENT
 	return _success(&"EQUIPMENT_MANAGEMENT")
@@ -466,7 +466,7 @@ func mark_equipment_management() -> Dictionary:
 func mark_round_summary_ready() -> Dictionary:
 	if phase == Phase.ROUND_SUMMARY_READY:
 		return _failure(&"ROUND_SUMMARY_ALREADY_READY", true)
-	if phase != Phase.EQUIPMENT_MANAGEMENT:
+	if phase != Phase.EQUIPMENT_MANAGEMENT and phase != Phase.LOOT_ACTIVE and phase != Phase.LOOT_END_CONFIRMATION:
 		return _failure(&"MANAGEMENT_REQUIRED")
 	phase = Phase.ROUND_SUMMARY_READY
 	return _success(&"ROUND_SUMMARY_READY")
@@ -474,8 +474,8 @@ func mark_round_summary_ready() -> Dictionary:
 
 func open_round_summary() -> Dictionary:
 	if phase == Phase.ROUND_SUMMARY:
-		return _failure(&"ROUND_SUMMARY_ALREADY_OPEN", true)
-	if phase != Phase.ROUND_SUMMARY_READY:
+		return _success(&"ROUND_SUMMARY_ALREADY_OPEN")
+	if phase != Phase.ROUND_SUMMARY_READY and phase != Phase.EQUIPMENT_MANAGEMENT and phase != Phase.LOOT_ACTIVE and phase != Phase.LOOT_END_CONFIRMATION:
 		return _failure(&"ROUND_SUMMARY_NOT_READY")
 	phase = Phase.ROUND_SUMMARY
 	return _success(&"ROUND_SUMMARY")
