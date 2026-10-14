@@ -169,6 +169,7 @@ func _build_sidebar() -> Control:
 
 	# --- Section 1: Phẩm chất (Rarity) ---
 	var r_header_hbox := HBoxContainer.new()
+	r_header_hbox.custom_minimum_size = Vector2(0, 30)
 	side_vbox.add_child(r_header_hbox)
 
 	_rarity_name_lbl = Label.new()
@@ -176,15 +177,16 @@ func _build_sidebar() -> Control:
 	_rarity_name_lbl.add_theme_font_size_override("font_size", 14)
 	_rarity_name_lbl.add_theme_color_override("font_color", Color("#cbd5e1"))
 	_rarity_name_lbl.size_flags_horizontal = SIZE_EXPAND_FILL
+	_rarity_name_lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	r_header_hbox.add_child(_rarity_name_lbl)
 
 	var r_reset_btn := Button.new()
 	r_reset_btn.tooltip_text = "Chọn tất cả phẩm chất"
-	r_reset_btn.custom_minimum_size = Vector2(28, 28)
+	r_reset_btn.custom_minimum_size = Vector2(26, 26)
 	r_reset_btn.focus_mode = FOCUS_NONE
-	r_reset_btn.flat = true
 	r_reset_btn.expand_icon = true
-	var sel_all_tex := _get_cached_texture("res://assets/ui/rarity/rarity_select_all.svg")
+	r_reset_btn.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	var sel_all_tex := _get_cached_texture("res://assets/ui/rarity/rarity_btn_select_all.png")
 	if sel_all_tex != null:
 		r_reset_btn.icon = sel_all_tex
 	else:
@@ -199,11 +201,11 @@ func _build_sidebar() -> Control:
 
 	var r_deselect_btn := Button.new()
 	r_deselect_btn.tooltip_text = "Bỏ chọn tất cả phẩm chất"
-	r_deselect_btn.custom_minimum_size = Vector2(28, 28)
+	r_deselect_btn.custom_minimum_size = Vector2(26, 26)
 	r_deselect_btn.focus_mode = FOCUS_NONE
-	r_deselect_btn.flat = true
 	r_deselect_btn.expand_icon = true
-	var desel_all_tex := _get_cached_texture("res://assets/ui/rarity/rarity_deselect_all.svg")
+	r_deselect_btn.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	var desel_all_tex := _get_cached_texture("res://assets/ui/rarity/rarity_btn_deselect_all.png")
 	if desel_all_tex != null:
 		r_deselect_btn.icon = desel_all_tex
 	else:
@@ -216,7 +218,7 @@ func _build_sidebar() -> Control:
 	)
 	r_header_hbox.add_child(r_deselect_btn)
 
-	# Diamond buttons row (6 Rarities from SVG vector icons)
+	# Diamond buttons row (6 Rarities from SVG vector icons - enlarged and crisp)
 	var diamonds_hbox := HBoxContainer.new()
 	diamonds_hbox.add_theme_constant_override("separation", 8)
 	side_vbox.add_child(diamonds_hbox)
@@ -231,21 +233,45 @@ func _build_sidebar() -> Control:
 	]
 	for r in rarities:
 		var d_btn := Button.new()
-		d_btn.custom_minimum_size = Vector2(46, 46)
+		d_btn.custom_minimum_size = Vector2(48, 48)
 		d_btn.focus_mode = FOCUS_NONE
-		d_btn.flat = true
-		d_btn.expand_icon = true
-		d_btn.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		d_btn.tooltip_text = ITEM_CLASS.rarity_name(r)
 		var r_val: int = int(r)
 		d_btn.set_meta("rarity", r_val)
+
+		var norm_sb := StyleBoxFlat.new()
+		norm_sb.bg_color = Color(0.10, 0.13, 0.18, 0.85)
+		norm_sb.border_color = Color(0.24, 0.32, 0.44, 0.5)
+		norm_sb.border_width_left = 1
+		norm_sb.border_width_top = 1
+		norm_sb.border_width_right = 1
+		norm_sb.border_width_bottom = 1
+		norm_sb.corner_radius_top_left = 6
+		norm_sb.corner_radius_top_right = 6
+		norm_sb.corner_radius_bottom_left = 6
+		norm_sb.corner_radius_bottom_right = 6
+		d_btn.add_theme_stylebox_override("normal", norm_sb)
+
+		var hover_sb := norm_sb.duplicate() as StyleBoxFlat
+		hover_sb.bg_color = Color(0.18, 0.22, 0.30, 0.95)
+		hover_sb.border_color = Color(0.5, 0.6, 0.75, 0.8)
+		d_btn.add_theme_stylebox_override("hover", hover_sb)
+
+		var icon_rect := TextureRect.new()
+		icon_rect.name = "RarityIcon"
+		icon_rect.set_anchors_preset(PRESET_FULL_RECT)
+		icon_rect.offset_left = 4
+		icon_rect.offset_top = 4
+		icon_rect.offset_right = -4
+		icon_rect.offset_bottom = -4
+		icon_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		icon_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		icon_rect.mouse_filter = MOUSE_FILTER_IGNORE
 		var init_tex := _get_cached_texture(_get_rarity_svg_path(r_val, true))
 		if init_tex != null:
-			d_btn.icon = init_tex
-		else:
-			d_btn.text = "◆"
-			d_btn.add_theme_color_override("font_color", ITEM_CLASS.rarity_color(r))
-			d_btn.add_theme_font_size_override("font_size", 18)
+			icon_rect.texture = init_tex
+		d_btn.add_child(icon_rect)
+
 		d_btn.pressed.connect(func() -> void:
 			if not _rarity_filter_enabled:
 				_rarity_filter_enabled = true
@@ -278,10 +304,16 @@ func _build_sidebar() -> Control:
 	c_header_hbox.add_child(_category_name_lbl)
 
 	var c_reset_btn := Button.new()
-	c_reset_btn.text = "⊞"
 	c_reset_btn.tooltip_text = "Chọn tất cả chủng loại"
 	c_reset_btn.custom_minimum_size = Vector2(24, 24)
 	c_reset_btn.focus_mode = FOCUS_NONE
+	c_reset_btn.expand_icon = true
+	c_reset_btn.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	var c_sel_tex := _get_cached_texture("res://assets/ui/rarity/rarity_btn_select_all.png")
+	if c_sel_tex != null:
+		c_reset_btn.icon = c_sel_tex
+	else:
+		c_reset_btn.text = "⊞"
 	c_reset_btn.pressed.connect(func() -> void:
 		_category_filter_enabled = false
 		_selected_categories.clear()
@@ -291,10 +323,16 @@ func _build_sidebar() -> Control:
 	c_header_hbox.add_child(c_reset_btn)
 
 	var c_deselect_btn := Button.new()
-	c_deselect_btn.text = "⊟"
 	c_deselect_btn.tooltip_text = "Bỏ chọn tất cả chủng loại"
 	c_deselect_btn.custom_minimum_size = Vector2(24, 24)
 	c_deselect_btn.focus_mode = FOCUS_NONE
+	c_deselect_btn.expand_icon = true
+	c_deselect_btn.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	var c_desel_tex := _get_cached_texture("res://assets/ui/rarity/rarity_btn_deselect_all.png")
+	if c_desel_tex != null:
+		c_deselect_btn.icon = c_desel_tex
+	else:
+		c_deselect_btn.text = "⊟"
 	c_deselect_btn.pressed.connect(func() -> void:
 		_category_filter_enabled = true
 		_selected_categories.clear()
@@ -357,10 +395,16 @@ func _build_sidebar() -> Control:
 	s_header_hbox.add_child(_shape_name_lbl)
 
 	var s_reset_btn := Button.new()
-	s_reset_btn.text = "⊞"
 	s_reset_btn.tooltip_text = "Chọn tất cả hình dáng"
 	s_reset_btn.custom_minimum_size = Vector2(24, 24)
 	s_reset_btn.focus_mode = FOCUS_NONE
+	s_reset_btn.expand_icon = true
+	s_reset_btn.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	var s_sel_tex := _get_cached_texture("res://assets/ui/rarity/rarity_btn_select_all.png")
+	if s_sel_tex != null:
+		s_reset_btn.icon = s_sel_tex
+	else:
+		s_reset_btn.text = "⊞"
 	s_reset_btn.pressed.connect(func() -> void:
 		_shape_filter_enabled = false
 		_selected_shapes.clear()
@@ -370,10 +414,16 @@ func _build_sidebar() -> Control:
 	s_header_hbox.add_child(s_reset_btn)
 
 	var s_deselect_btn := Button.new()
-	s_deselect_btn.text = "⊟"
 	s_deselect_btn.tooltip_text = "Bỏ chọn tất cả hình dáng"
 	s_deselect_btn.custom_minimum_size = Vector2(24, 24)
 	s_deselect_btn.focus_mode = FOCUS_NONE
+	s_deselect_btn.expand_icon = true
+	s_deselect_btn.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	var s_desel_tex := _get_cached_texture("res://assets/ui/rarity/rarity_btn_deselect_all.png")
+	if s_desel_tex != null:
+		s_deselect_btn.icon = s_desel_tex
+	else:
+		s_deselect_btn.text = "⊟"
 	s_deselect_btn.pressed.connect(func() -> void:
 		_shape_filter_enabled = true
 		_selected_shapes.clear()
@@ -484,12 +534,15 @@ func _refresh_filters_ui() -> void:
 		var is_active: bool = (not _rarity_filter_enabled or _selected_rarities.has(r))
 		var tex_path: String = _get_rarity_svg_path(r, is_active)
 		var tex: Texture2D = _get_cached_texture(tex_path)
-		if tex != null:
+		var icon_rect: TextureRect = btn.get_node_or_null("RarityIcon")
+		if icon_rect != null and tex != null:
+			icon_rect.texture = tex
+		elif tex != null:
 			btn.icon = tex
 		if is_active:
 			btn.modulate = Color(1.0, 1.0, 1.0, 1.0)
 		else:
-			btn.modulate = Color(1.0, 1.0, 1.0, 0.75)
+			btn.modulate = Color(1.0, 1.0, 1.0, 0.70)
 
 	# 2. Category label & button highlights
 	if not _category_filter_enabled:
