@@ -6,6 +6,7 @@ const CHEST_CLASS := preload("res://scripts/domain/loot/MysteryChestState.gd")
 const AUCTION_CLASS := preload("res://scripts/domain/loot/AuctionSession.gd")
 const CATALOG_CLASS := preload("res://scripts/domain/loot/AuctionCatalog.gd")
 const ENCYCLOPEDIA_CLASS := preload("res://scripts/presentation/loot/AuctionEncyclopediaDialog.gd")
+const AUCTION_SCREEN_CLASS := preload("res://scripts/presentation/loot/AuctionScreen.gd")
 
 
 func run() -> Array[Dictionary]:
@@ -24,6 +25,7 @@ func run() -> Array[Dictionary]:
 	rows.append(_row("Các dải Xu Bạc 25-100, 100-175, 175-250 thiết lập đúng dải ngẫu nhiên", _silver_ranges_contract()))
 	rows.append(_row("Bách khoa toàn thư: Danh mục vật phẩm trắng đăng ký đúng tên, size, giá và asset", _catalog_white_items_contract()))
 	rows.append(_row("Bách khoa toàn thư: Dialog thông tin thời gian thực khởi tạo và lọc danh mục thành công", _encyclopedia_dialog_contract()))
+	rows.append(_row("Đấu giá Nhiều Người: Lần lượt từng người chơi ra giá và hỗ trợ nhập số tùy ý", _auction_screen_turn_and_input_contract()))
 	return rows
 
 
@@ -256,3 +258,54 @@ func _encyclopedia_dialog_contract() -> bool:
 	var valid := not white_items.is_empty() and not antique_items.is_empty() and not shape_1x1_items.is_empty() and not multi_shapes.is_empty()
 	dialog.free()
 	return valid
+
+
+func _auction_screen_turn_and_input_contract() -> bool:
+	var chest := CHEST_CLASS.new()
+	chest.roll_vault_deposit(4)
+	var session := AUCTION_CLASS.new()
+	session.initialize([&"p1", &"p2"], chest)
+
+	var screen := AUCTION_SCREEN_CLASS.new()
+	screen.setup(session, {&"p1": 500, &"p2": 500})
+
+	# 1. Turn starts with p1
+	if screen._get_current_turn_player_id() != &"p1":
+		screen.free()
+		return false
+
+	# 2. Arbitrary number input by p1
+	screen._bid_input.text = "75"
+	screen._on_confirm_bid_pressed()
+
+	# p1 placed 75, highest_bid is now 75
+	if session.highest_bid != 75 or session.highest_bidder_id != &"p1":
+		screen.free()
+		return false
+
+	# 3. Turn advances to p2
+	if screen._get_current_turn_player_id() != &"p2":
+		screen.free()
+		return false
+
+	# 4. p2 passes their turn
+	screen._on_pass_bid_pressed()
+
+	# 5. Round is now completed because both p1 and p2 have acted
+	if not screen._round_completed:
+		screen.free()
+		return false
+
+	# 6. Next round button becomes visible
+	if not screen._next_round_btn.visible:
+		screen.free()
+		return false
+
+	# 7. Advance round resets turns for Round 2, starting again with p1
+	screen._on_next_round_pressed()
+	if session.current_round != 2 or screen._get_current_turn_player_id() != &"p1" or screen._round_completed:
+		screen.free()
+		return false
+
+	screen.free()
+	return true

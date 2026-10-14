@@ -38,13 +38,21 @@ var _min_value_label: Label
 var _bottom_bar: PanelContainer
 var _timer_label: Label
 var _bid_box: HBoxContainer
-var _bid_label: Label
-var _current_bid_value: int = 50
+var _turn_info_label: Label
+var _bid_feedback_lbl: Label
+var _bid_input: LineEdit
 var _confirm_bid_btn: Button
+var _pass_btn: Button
+var _fold_btn: Button
 var _next_round_btn: Button
 var _solo_box: HBoxContainer
 var _solo_buy_btn: Button
 var _solo_pass_btn: Button
+
+# Turn State for Multi-player Bidding
+var _current_turn_bidder_index: int = 0
+var _round_completed: bool = false
+var _current_bid_value: int = 10
 
 # Settlement UI Nodes (BidKing End-Match Style)
 var _settlement_overlay: ColorRect
@@ -78,9 +86,11 @@ func _init() -> void:
 func setup(session: AuctionSession, player_silvers: Dictionary = {}) -> void:
 	auction_session = session
 	player_silver_balances = player_silvers.duplicate()
-	_current_bid_value = maxi(50, int(session.mystery_chest.total_silver_value() * 0.3))
+	_current_turn_bidder_index = 0
+	_round_completed = false
 	_generate_grid_placements()
 	_sync_reveals_from_hints()
+	_setup_initial_bid_for_current_player()
 	refresh_ui()
 
 
@@ -260,7 +270,7 @@ func _build_ui() -> void:
 
 	# --- BOTTOM ACTION BAR ---
 	_bottom_bar = PanelContainer.new()
-	_bottom_bar.custom_minimum_size = Vector2(0, 65)
+	_bottom_bar.custom_minimum_size = Vector2(0, 80)
 	var btm_style := StyleBoxFlat.new()
 	btm_style.bg_color = Color(0.08, 0.13, 0.19, 0.96)
 	btm_style.border_color = Color(0.3, 0.5, 0.7, 0.7)
@@ -270,53 +280,120 @@ func _build_ui() -> void:
 	_bottom_bar.add_theme_stylebox_override("panel", btm_style)
 	main_vbox.add_child(_bottom_bar)
 
+	var btm_vbox := VBoxContainer.new()
+	btm_vbox.add_theme_constant_override("separation", 6)
+	_bottom_bar.add_child(btm_vbox)
+
+	# Row 1: Turn & Feedback info banner
+	var status_margin := MarginContainer.new()
+	status_margin.add_theme_constant_override("margin_left", 14)
+	status_margin.add_theme_constant_override("margin_right", 14)
+	status_margin.add_theme_constant_override("margin_top", 4)
+	btm_vbox.add_child(status_margin)
+
+	var status_hbox := HBoxContainer.new()
+	status_hbox.add_theme_constant_override("separation", 16)
+	status_margin.add_child(status_hbox)
+
+	_turn_info_label = Label.new()
+	_turn_info_label.text = "🎯 LƯỢT ĐẤU GIÁ"
+	_turn_info_label.add_theme_font_size_override("font_size", 14)
+	_turn_info_label.add_theme_color_override("font_color", Color("#f1fa8c"))
+	status_hbox.add_child(_turn_info_label)
+
+	var sp_status := Control.new()
+	sp_status.size_flags_horizontal = SIZE_EXPAND_FILL
+	status_hbox.add_child(sp_status)
+
+	_bid_feedback_lbl = Label.new()
+	_bid_feedback_lbl.text = ""
+	_bid_feedback_lbl.add_theme_font_size_override("font_size", 13)
+	_bid_feedback_lbl.add_theme_color_override("font_color", Color("#50fa7b"))
+	status_hbox.add_child(_bid_feedback_lbl)
+
+	# Row 2: Controls (Bidding LineEdit + delta buttons + confirm/pass/fold, or Solo)
+	var ctrl_margin := MarginContainer.new()
+	ctrl_margin.add_theme_constant_override("margin_left", 14)
+	ctrl_margin.add_theme_constant_override("margin_right", 14)
+	ctrl_margin.add_theme_constant_override("margin_bottom", 6)
+	btm_vbox.add_child(ctrl_margin)
+
 	var btm_hbox := HBoxContainer.new()
-	btm_hbox.add_theme_constant_override("separation", 20)
+	btm_hbox.add_theme_constant_override("separation", 12)
 	btm_hbox.alignment = BoxContainer.ALIGNMENT_CENTER
-	_bottom_bar.add_child(btm_hbox)
+	ctrl_margin.add_child(btm_hbox)
 
 	_timer_label = Label.new()
 	_timer_label.text = "⏱️ 30s"
-	_timer_label.add_theme_font_size_override("font_size", 22)
+	_timer_label.add_theme_font_size_override("font_size", 18)
 	_timer_label.add_theme_color_override("font_color", Color("#ff5555"))
 	btm_hbox.add_child(_timer_label)
 
 	# Multi-player Bidding Controls
 	_bid_box = HBoxContainer.new()
-	_bid_box.add_theme_constant_override("separation", 10)
+	_bid_box.add_theme_constant_override("separation", 8)
 	btm_hbox.add_child(_bid_box)
 
 	var minus_btn := Button.new()
 	minus_btn.text = "- 20"
+	minus_btn.custom_minimum_size = Vector2(48, 34)
+	minus_btn.focus_mode = FOCUS_NONE
 	minus_btn.pressed.connect(func() -> void: _adjust_bid(-20))
 	_bid_box.add_child(minus_btn)
 
-	_bid_label = Label.new()
-	_bid_label.text = "Đã ra giá: 50 Xu"
-	_bid_label.add_theme_font_size_override("font_size", 18)
-	_bid_label.add_theme_color_override("font_color", Color("#f6c95c"))
-	_bid_box.add_child(_bid_label)
+	_bid_input = LineEdit.new()
+	_bid_input.placeholder_text = "Nhập Xu..."
+	_bid_input.alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_bid_input.custom_minimum_size = Vector2(110, 34)
+	_bid_input.add_theme_font_size_override("font_size", 15)
+	_bid_input.add_theme_color_override("font_color", Color("#f6c95c"))
+	_bid_input.text_changed.connect(_on_bid_input_changed)
+	_bid_input.text_submitted.connect(func(_t: String) -> void: _on_confirm_bid_pressed())
+	_bid_box.add_child(_bid_input)
 
 	var plus_btn := Button.new()
 	plus_btn.text = "+ 20"
+	plus_btn.custom_minimum_size = Vector2(48, 34)
+	plus_btn.focus_mode = FOCUS_NONE
 	plus_btn.pressed.connect(func() -> void: _adjust_bid(20))
 	_bid_box.add_child(plus_btn)
 
 	var plus_100_btn := Button.new()
 	plus_100_btn.text = "+ 100"
+	plus_100_btn.custom_minimum_size = Vector2(56, 34)
+	plus_100_btn.focus_mode = FOCUS_NONE
 	plus_100_btn.pressed.connect(func() -> void: _adjust_bid(100))
 	_bid_box.add_child(plus_100_btn)
 
 	var plus_500_btn := Button.new()
 	plus_500_btn.text = "+ 500"
+	plus_500_btn.custom_minimum_size = Vector2(56, 34)
+	plus_500_btn.focus_mode = FOCUS_NONE
 	plus_500_btn.pressed.connect(func() -> void: _adjust_bid(500))
 	_bid_box.add_child(plus_500_btn)
 
 	_confirm_bid_btn = Button.new()
 	_confirm_bid_btn.text = "✅ Xác Nhận Ra Giá"
-	_confirm_bid_btn.custom_minimum_size = Vector2(160, 40)
+	_confirm_bid_btn.custom_minimum_size = Vector2(150, 36)
+	_confirm_bid_btn.focus_mode = FOCUS_NONE
 	_confirm_bid_btn.pressed.connect(_on_confirm_bid_pressed)
 	_bid_box.add_child(_confirm_bid_btn)
+
+	_pass_btn = Button.new()
+	_pass_btn.text = "⏭️ Bỏ Qua Lượt"
+	_pass_btn.tooltip_text = "Không nâng giá ở lượt này, giữ nguyên giá hiện tại"
+	_pass_btn.custom_minimum_size = Vector2(120, 36)
+	_pass_btn.focus_mode = FOCUS_NONE
+	_pass_btn.pressed.connect(_on_pass_bid_pressed)
+	_bid_box.add_child(_pass_btn)
+
+	_fold_btn = Button.new()
+	_fold_btn.text = "🏳️ Bỏ Cuộc"
+	_fold_btn.tooltip_text = "Rút lui hoàn toàn khỏi phiên đấu giá hòm này"
+	_fold_btn.custom_minimum_size = Vector2(95, 36)
+	_fold_btn.focus_mode = FOCUS_NONE
+	_fold_btn.pressed.connect(_on_fold_bid_pressed)
+	_bid_box.add_child(_fold_btn)
 
 	# Solo Controls
 	_solo_box = HBoxContainer.new()
@@ -325,19 +402,22 @@ func _build_ui() -> void:
 
 	_solo_buy_btn = Button.new()
 	_solo_buy_btn.text = "🛒 Mua Hòm (0 Xu)"
-	_solo_buy_btn.custom_minimum_size = Vector2(180, 40)
+	_solo_buy_btn.custom_minimum_size = Vector2(180, 36)
+	_solo_buy_btn.focus_mode = FOCUS_NONE
 	_solo_buy_btn.pressed.connect(func() -> void: _on_solo_decide(true))
 	_solo_box.add_child(_solo_buy_btn)
 
 	_solo_pass_btn = Button.new()
 	_solo_pass_btn.text = "❌ Bỏ Qua (Không Mua)"
-	_solo_pass_btn.custom_minimum_size = Vector2(180, 40)
+	_solo_pass_btn.custom_minimum_size = Vector2(180, 36)
+	_solo_pass_btn.focus_mode = FOCUS_NONE
 	_solo_pass_btn.pressed.connect(func() -> void: _on_solo_decide(false))
 	_solo_box.add_child(_solo_pass_btn)
 
 	_next_round_btn = Button.new()
 	_next_round_btn.text = "⏭️ Vòng Tiếp Theo"
-	_next_round_btn.custom_minimum_size = Vector2(160, 40)
+	_next_round_btn.custom_minimum_size = Vector2(160, 36)
+	_next_round_btn.focus_mode = FOCUS_NONE
 	_next_round_btn.pressed.connect(_on_next_round_pressed)
 	btm_hbox.add_child(_next_round_btn)
 
@@ -752,32 +832,121 @@ func refresh_ui() -> void:
 		_solo_box.visible = true
 		_solo_buy_btn.text = "🛒 Mua Hòm (%s Xu)" % _format_number(auction_session.solo_offer_price)
 		_next_round_btn.visible = false
+		if _turn_info_label != null:
+			_turn_info_label.text = "🛒 Ưu Đãi Mua Một Mình"
+			_turn_info_label.add_theme_color_override("font_color", Color("#8be9fd"))
 	else:
 		_bid_box.visible = true
 		_solo_box.visible = false
-		_bid_label.text = "Đã ra giá: %s Xu" % _format_number(_current_bid_value)
-		_next_round_btn.visible = (auction_session.current_round < AUCTION_SESSION_CLASS.MAX_ROUNDS)
+
+		var curr_pid := _get_current_turn_player_id()
+		var bal: int = int(player_silver_balances.get(curr_pid, 0))
+
+		if _round_completed:
+			var lead_text := ""
+			if not auction_session.highest_bidder_id.is_empty():
+				lead_text = " | 👑 Đang dẫn đầu: %s (%s Xu)" % [
+					String(auction_session.highest_bidder_id),
+					_format_number(auction_session.highest_bid)
+				]
+			else:
+				lead_text = " | Chưa ai ra giá"
+
+			if _turn_info_label != null:
+				_turn_info_label.text = "✅ Hoàn tất ra giá Vòng %d%s" % [auction_session.current_round, lead_text]
+				_turn_info_label.add_theme_color_override("font_color", Color("#50fa7b"))
+			if _confirm_bid_btn != null: _confirm_bid_btn.disabled = true
+			if _pass_btn != null: _pass_btn.disabled = true
+			if _fold_btn != null: _fold_btn.disabled = true
+			if _bid_input != null: _bid_input.editable = false
+			if _next_round_btn != null:
+				_next_round_btn.visible = true
+				_next_round_btn.disabled = false
+				if auction_session.current_round >= AUCTION_SESSION_CLASS.MAX_ROUNDS:
+					_next_round_btn.text = "🏆 Chốt Đấu Giá & Tổng Kết"
+				else:
+					_next_round_btn.text = "⏭️ Sang Vòng %d / %d" % [
+						auction_session.current_round + 1,
+						AUCTION_SESSION_CLASS.MAX_ROUNDS
+					]
+		else:
+			if _confirm_bid_btn != null: _confirm_bid_btn.disabled = false
+			if _pass_btn != null: _pass_btn.disabled = false
+			if _fold_btn != null: _fold_btn.disabled = false
+			if _bid_input != null: _bid_input.editable = true
+			if _next_round_btn != null: _next_round_btn.visible = false
+
+			var lead_status := ""
+			if auction_session.highest_bid > 0:
+				if auction_session.highest_bidder_id == curr_pid:
+					lead_status = " (👑 Bạn đang dẫn đầu)"
+				else:
+					lead_status = " (👑 Dẫn đầu: %s - %s Xu)" % [
+						String(auction_session.highest_bidder_id),
+						_format_number(auction_session.highest_bid)
+					]
+			else:
+				lead_status = " (Chưa có ai đặt giá)"
+
+			if _turn_info_label != null:
+				_turn_info_label.text = "🎯 LƯỢT: %s [🪙 %s Xu]%s" % [
+					String(curr_pid),
+					_format_number(bal),
+					lead_status
+				]
+				_turn_info_label.add_theme_color_override("font_color", Color("#f1fa8c"))
 
 
 func _render_bidders() -> void:
 	for child in _bidders_container.get_children():
 		child.queue_free()
 
+	var curr_pid := _get_current_turn_player_id()
+
 	for i in range(auction_session.eligible_player_ids.size()):
 		var pid: StringName = auction_session.eligible_player_ids[i]
+		var is_active: bool = auction_session.active_bidder_ids.has(pid)
+		var is_current_turn: bool = (not _round_completed and pid == curr_pid)
+		var is_leader: bool = (auction_session.highest_bidder_id == pid and auction_session.highest_bid > 0)
+
 		var card := PanelContainer.new()
 		var card_style := StyleBoxFlat.new()
-		card_style.bg_color = Color(0.12, 0.16, 0.22, 0.8)
-		card_style.border_color = Color(0.3, 0.45, 0.6, 0.5)
-		card_style.border_width_left = 1
-		card_style.border_width_top = 1
-		card_style.border_width_right = 1
-		card_style.border_width_bottom = 1
+
+		if is_current_turn:
+			card_style.bg_color = Color(0.18, 0.28, 0.42, 0.98)
+			card_style.border_color = Color("#50fa7b")
+			card_style.border_width_left = 3
+			card_style.border_width_top = 3
+			card_style.border_width_right = 3
+			card_style.border_width_bottom = 3
+		elif is_leader:
+			card_style.bg_color = Color(0.15, 0.20, 0.30, 0.9)
+			card_style.border_color = Color("#f1fa8c")
+			card_style.border_width_left = 2
+			card_style.border_width_top = 2
+			card_style.border_width_right = 2
+			card_style.border_width_bottom = 2
+		elif not is_active:
+			card_style.bg_color = Color(0.08, 0.10, 0.12, 0.6)
+			card_style.border_color = Color(0.25, 0.25, 0.3, 0.4)
+			card_style.border_width_left = 1
+			card_style.border_width_top = 1
+			card_style.border_width_right = 1
+			card_style.border_width_bottom = 1
+		else:
+			card_style.bg_color = Color(0.12, 0.16, 0.22, 0.8)
+			card_style.border_color = Color(0.3, 0.45, 0.6, 0.5)
+			card_style.border_width_left = 1
+			card_style.border_width_top = 1
+			card_style.border_width_right = 1
+			card_style.border_width_bottom = 1
+
 		card_style.corner_radius_top_left = 6
 		card_style.corner_radius_top_right = 6
 		card_style.corner_radius_bottom_left = 6
 		card_style.corner_radius_bottom_right = 6
 		card.add_theme_stylebox_override("panel", card_style)
+
 		var s_bal: int = int(player_silver_balances.get(pid, 0))
 		card.tooltip_text = "👤 Người chơi: %s\n🪙 Xu Bạc hiện có: %s Xu" % [String(pid), _format_number(s_bal)]
 		card.mouse_filter = MOUSE_FILTER_STOP
@@ -787,18 +956,44 @@ func _render_bidders() -> void:
 		hbox.add_theme_constant_override("separation", 10)
 		card.add_child(hbox)
 
+		# Left column of card: Title, Name, Balance
 		var vbox := VBoxContainer.new()
+		vbox.size_flags_horizontal = SIZE_EXPAND_FILL
+
+		var title_hbox := HBoxContainer.new()
 		var title_lbl := Label.new()
-		title_lbl.text = "%d Nhà Sưu Tầm Đỉnh" % (i + 1)
+		title_lbl.text = "%d Nhà Sưu Tầm" % (i + 1)
 		title_lbl.add_theme_font_size_override("font_size", 12)
-		title_lbl.add_theme_color_override("font_color", Color("#50fa7b"))
-		vbox.add_child(title_lbl)
+		title_lbl.add_theme_color_override("font_color", Color("#8be9fd"))
+		title_hbox.add_child(title_lbl)
+
+		if is_current_turn:
+			var turn_badge := Label.new()
+			turn_badge.text = " ▶ LƯỢT ĐẤU"
+			turn_badge.add_theme_font_size_override("font_size", 12)
+			turn_badge.add_theme_color_override("font_color", Color("#50fa7b"))
+			title_hbox.add_child(turn_badge)
+		elif is_leader:
+			var lead_badge := Label.new()
+			lead_badge.text = " 👑 DẪN ĐẦU"
+			lead_badge.add_theme_font_size_override("font_size", 12)
+			lead_badge.add_theme_color_override("font_color", Color("#f1fa8c"))
+			title_hbox.add_child(lead_badge)
+
+		vbox.add_child(title_hbox)
 
 		var name_lbl := Label.new()
 		name_lbl.text = String(pid)
 		name_lbl.add_theme_font_size_override("font_size", 14)
-		name_lbl.add_theme_color_override("font_color", Color.WHITE)
+		name_lbl.add_theme_color_override("font_color", Color.WHITE if is_active else Color("#6272a4"))
 		vbox.add_child(name_lbl)
+
+		var bal_lbl := Label.new()
+		bal_lbl.text = "🪙 %s Xu" % _format_number(s_bal)
+		bal_lbl.add_theme_font_size_override("font_size", 11)
+		bal_lbl.add_theme_color_override("font_color", Color("#f6c95c"))
+		vbox.add_child(bal_lbl)
+
 		hbox.add_child(vbox)
 
 		# 5 rounds dots
@@ -816,11 +1011,23 @@ func _render_bidders() -> void:
 			dots_hbox.add_child(dot)
 		hbox.add_child(dots_hbox)
 
+		# Right column of card: Current bid status
 		var b_val: int = int(auction_session.round_bids.get(pid, 0))
 		var bid_lbl := Label.new()
-		bid_lbl.text = "💰 %s" % _format_number(b_val) if b_val > 0 else "Chưa ra giá"
+		if not is_active:
+			bid_lbl.text = "Bỏ cuộc"
+			bid_lbl.add_theme_color_override("font_color", Color("#6272a4"))
+		elif b_val > 0:
+			bid_lbl.text = "💰 %s" % _format_number(b_val)
+			bid_lbl.add_theme_color_override("font_color", Color("#50fa7b"))
+		elif is_leader:
+			bid_lbl.text = "👑 %s" % _format_number(auction_session.highest_bid)
+			bid_lbl.add_theme_color_override("font_color", Color("#f1fa8c"))
+		else:
+			bid_lbl.text = "Chưa ra giá"
+			bid_lbl.add_theme_color_override("font_color", Color("#888888"))
+
 		bid_lbl.add_theme_font_size_override("font_size", 13)
-		bid_lbl.add_theme_color_override("font_color", Color("#f6c95c") if b_val > 0 else Color("#888888"))
 		hbox.add_child(bid_lbl)
 
 
@@ -942,21 +1149,146 @@ func _calculate_minimum_estimated_value() -> int:
 	return total
 
 
+func _get_current_turn_player_id() -> StringName:
+	if auction_session == null or auction_session.active_bidder_ids.is_empty():
+		return &""
+	if _current_turn_bidder_index < auction_session.active_bidder_ids.size():
+		return auction_session.active_bidder_ids[_current_turn_bidder_index]
+	return &""
+
+
+func _setup_initial_bid_for_current_player() -> void:
+	if auction_session == null:
+		return
+	var curr_pid := _get_current_turn_player_id()
+	if curr_pid.is_empty():
+		return
+
+	if auction_session.highest_bid > 0:
+		if auction_session.highest_bidder_id == curr_pid:
+			_current_bid_value = auction_session.highest_bid
+		else:
+			_current_bid_value = auction_session.highest_bid + 5
+	else:
+		_current_bid_value = 10
+
+	if _bid_input != null:
+		_bid_input.text = str(_current_bid_value)
+
+
+func _show_bid_feedback(msg: String) -> void:
+	if _bid_feedback_lbl != null:
+		_bid_feedback_lbl.text = msg
+		if msg.begins_with("⚠️"):
+			_bid_feedback_lbl.add_theme_color_override("font_color", Color("#ff5555"))
+		elif msg.begins_with("✅"):
+			_bid_feedback_lbl.add_theme_color_override("font_color", Color("#50fa7b"))
+		elif msg.begins_with("⏭️") or msg.begins_with("🏳️"):
+			_bid_feedback_lbl.add_theme_color_override("font_color", Color("#f1fa8c"))
+		else:
+			_bid_feedback_lbl.add_theme_color_override("font_color", Color("#8be9fd"))
+
+
+func _on_bid_input_changed(new_text: String) -> void:
+	var clean := ""
+	for c in new_text:
+		if c >= "0" and c <= "9":
+			clean += c
+	if clean != new_text:
+		_bid_input.text = clean
+		_bid_input.caret_column = clean.length()
+	if not clean.is_empty():
+		_current_bid_value = clean.to_int()
+
+
 func _adjust_bid(delta: int) -> void:
-	_current_bid_value = maxi(1, _current_bid_value + delta)
-	_bid_label.text = "Đã ra giá: %s Xu" % _format_number(_current_bid_value)
+	var curr_val: int = _current_bid_value
+	if _bid_input != null and not _bid_input.text.is_empty():
+		curr_val = _bid_input.text.to_int()
+	curr_val = maxi(1, curr_val + delta)
+	_current_bid_value = curr_val
+	if _bid_input != null:
+		_bid_input.text = str(_current_bid_value)
 
 
 func _on_confirm_bid_pressed() -> void:
 	if auction_session == null or auction_session.state != AUCTION_SESSION_CLASS.State.AUCTION_ACTIVE:
 		return
-	if not auction_session.active_bidder_ids.is_empty():
-		var curr_pid: StringName = auction_session.active_bidder_ids[0]
-		auction_session.place_bid(curr_pid, _current_bid_value)
-		for i in range(1, auction_session.active_bidder_ids.size()):
-			var ai_pid: StringName = auction_session.active_bidder_ids[i]
-			var ai_bid: int = _current_bid_value + randi_range(-10, 50)
-			auction_session.place_bid(ai_pid, maxi(1, ai_bid))
+	if _round_completed:
+		_show_bid_feedback("⚠️ Vòng đấu này đã kết thúc lượt. Vui lòng bấm 'Vòng Tiếp Theo'!")
+		return
+
+	var curr_pid := _get_current_turn_player_id()
+	if curr_pid.is_empty():
+		return
+
+	var bid_val: int = _bid_input.text.to_int() if _bid_input != null and not _bid_input.text.is_empty() else _current_bid_value
+	if bid_val <= 0:
+		_show_bid_feedback("⚠️ Số tiền ra giá phải lớn hơn 0 Xu!")
+		return
+
+	if auction_session.highest_bid > 0 and bid_val <= auction_session.highest_bid:
+		_show_bid_feedback("⚠️ Phải đặt giá cao hơn giá dẫn đầu (%d Xu)!" % auction_session.highest_bid)
+		return
+
+	var bal: int = int(player_silver_balances.get(curr_pid, 999999))
+	if bid_val > bal:
+		_show_bid_feedback("⚠️ Không đủ Xu Bạc! %s chỉ có %s Xu." % [String(curr_pid), _format_number(bal)])
+		return
+
+	var ok: bool = auction_session.place_bid(curr_pid, bid_val)
+	if not ok:
+		_show_bid_feedback("⚠️ Không thể ra giá này!")
+		return
+
+	_show_bid_feedback("✅ %s đã ra giá %s Xu!" % [String(curr_pid), _format_number(bid_val)])
+	_advance_to_next_bidder_turn()
+
+
+func _on_pass_bid_pressed() -> void:
+	if auction_session == null or auction_session.state != AUCTION_SESSION_CLASS.State.AUCTION_ACTIVE:
+		return
+	if _round_completed:
+		return
+
+	var curr_pid := _get_current_turn_player_id()
+	if curr_pid.is_empty():
+		return
+
+	_show_bid_feedback("⏭️ %s đã bỏ qua lượt ra giá." % String(curr_pid))
+	_advance_to_next_bidder_turn()
+
+
+func _on_fold_bid_pressed() -> void:
+	if auction_session == null or auction_session.state != AUCTION_SESSION_CLASS.State.AUCTION_ACTIVE:
+		return
+	if _round_completed:
+		return
+
+	var curr_pid := _get_current_turn_player_id()
+	if curr_pid.is_empty():
+		return
+
+	_show_bid_feedback("🏳️ %s đã bỏ cuộc!" % String(curr_pid))
+	auction_session.fold(curr_pid)
+
+	if auction_session.state == AUCTION_SESSION_CLASS.State.COMPLETED:
+		_show_settlement_dialog()
+		return
+
+	if _current_turn_bidder_index >= auction_session.active_bidder_ids.size():
+		_round_completed = true
+	else:
+		_setup_initial_bid_for_current_player()
+	refresh_ui()
+
+
+func _advance_to_next_bidder_turn() -> void:
+	_current_turn_bidder_index += 1
+	if _current_turn_bidder_index >= auction_session.active_bidder_ids.size():
+		_round_completed = true
+	else:
+		_setup_initial_bid_for_current_player()
 	refresh_ui()
 
 
@@ -968,6 +1300,10 @@ func _on_next_round_pressed() -> void:
 	if auction_session.state == AUCTION_SESSION_CLASS.State.COMPLETED:
 		_show_settlement_dialog()
 	else:
+		_current_turn_bidder_index = 0
+		_round_completed = false
+		_setup_initial_bid_for_current_player()
+		_show_bid_feedback("📢 Bắt đầu Vòng %d! Manh mối mới đã mở." % auction_session.current_round)
 		refresh_ui()
 
 
