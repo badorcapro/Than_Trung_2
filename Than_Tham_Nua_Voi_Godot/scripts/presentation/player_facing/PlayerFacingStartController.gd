@@ -1184,8 +1184,8 @@ func _open_auction_screen() -> void:
 		return
 	var player_silvers: Dictionary = {}
 	if case_flow != null and case_flow.match_state != null:
-		for pl in case_flow.match_state.players:
-			player_silvers[pl.player_id] = pl.silver_coins
+		for pl: PlayerMatchState in case_flow.match_state.players:
+			player_silvers[pl.player_id] = pl.silver_coin_count
 	_auction_session = AUCTION_SESSION.new()
 	_auction_session.initialize(_vault_reach_player_ids, _mystery_chest)
 	_auction_screen.setup(_auction_session, player_silvers)
@@ -1200,9 +1200,9 @@ func _on_auction_finished(result: Dictionary) -> void:
 	var price_paid: int = int(result.get("final_price_paid", 0))
 	if not winner_id.is_empty():
 		if case_flow != null and case_flow.match_state != null:
-			var player_state: PLAYER_PHASE_STATE = case_flow.match_state.find_player(winner_id)
+			var player_state: PlayerMatchState = case_flow.match_state.find_player(winner_id)
 			if player_state != null:
-				player_state.silver_coins = maxi(0, player_state.silver_coins - price_paid + silver)
+				player_state.silver_coin_count = maxi(0, player_state.silver_coin_count - price_paid + silver)
 		_show_message("Đấu giá kết thúc! %s trúng đấu giá hòm bí ẩn (Nhận +%d Xu Bạc)!" % [winner_id, silver])
 	_proceed_to_equipment_management()
 
