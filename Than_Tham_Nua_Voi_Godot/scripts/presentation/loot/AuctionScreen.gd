@@ -36,7 +36,7 @@ var _bottom_bar: PanelContainer
 var _timer_label: Label
 var _bid_box: HBoxContainer
 var _bid_label: Label
-var _current_bid_value: int = 10
+var _current_bid_value: int = 50
 var _confirm_bid_btn: Button
 var _next_round_btn: Button
 var _solo_box: HBoxContainer
@@ -57,7 +57,7 @@ func _init() -> void:
 func setup(session: AuctionSession, player_silvers: Dictionary = {}) -> void:
 	auction_session = session
 	player_silver_balances = player_silvers.duplicate()
-	_current_bid_value = maxi(1, int(session.mystery_chest.total_silver_value() * 0.3))
+	_current_bid_value = maxi(50, int(session.mystery_chest.total_silver_value() * 0.3))
 	_generate_grid_placements()
 	_sync_reveals_from_hints()
 	refresh_ui()
@@ -265,25 +265,30 @@ func _build_ui() -> void:
 	btm_hbox.add_child(_bid_box)
 
 	var minus_btn := Button.new()
-	minus_btn.text = "- 10"
-	minus_btn.pressed.connect(func() -> void: _adjust_bid(-10))
+	minus_btn.text = "- 20"
+	minus_btn.pressed.connect(func() -> void: _adjust_bid(-20))
 	_bid_box.add_child(minus_btn)
 
 	_bid_label = Label.new()
-	_bid_label.text = "Đã ra giá: 10 Xu"
+	_bid_label.text = "Đã ra giá: 50 Xu"
 	_bid_label.add_theme_font_size_override("font_size", 18)
 	_bid_label.add_theme_color_override("font_color", Color("#f6c95c"))
 	_bid_box.add_child(_bid_label)
 
 	var plus_btn := Button.new()
-	plus_btn.text = "+ 10"
-	plus_btn.pressed.connect(func() -> void: _adjust_bid(10))
+	plus_btn.text = "+ 20"
+	plus_btn.pressed.connect(func() -> void: _adjust_bid(20))
 	_bid_box.add_child(plus_btn)
 
-	var plus_50_btn := Button.new()
-	plus_50_btn.text = "+ 50"
-	plus_50_btn.pressed.connect(func() -> void: _adjust_bid(50))
-	_bid_box.add_child(plus_50_btn)
+	var plus_100_btn := Button.new()
+	plus_100_btn.text = "+ 100"
+	plus_100_btn.pressed.connect(func() -> void: _adjust_bid(100))
+	_bid_box.add_child(plus_100_btn)
+
+	var plus_500_btn := Button.new()
+	plus_500_btn.text = "+ 500"
+	plus_500_btn.pressed.connect(func() -> void: _adjust_bid(500))
+	_bid_box.add_child(plus_500_btn)
 
 	_confirm_bid_btn = Button.new()
 	_confirm_bid_btn.text = "✅ Xác Nhận Ra Giá"
@@ -646,11 +651,11 @@ func _calculate_minimum_estimated_value() -> int:
 		elif _revealed_qualities.has(i_id):
 			match item.rarity:
 				ITEM_CLASS.Rarity.WHITE: total += 1
-				ITEM_CLASS.Rarity.GREEN: total += 2
-				ITEM_CLASS.Rarity.BLUE: total += 3
-				ITEM_CLASS.Rarity.PURPLE: total += 8
-				ITEM_CLASS.Rarity.GOLD: total += 16
-				ITEM_CLASS.Rarity.RED: total += 45
+				ITEM_CLASS.Rarity.GREEN: total += 15
+				ITEM_CLASS.Rarity.BLUE: total += 20
+				ITEM_CLASS.Rarity.PURPLE: total += 30
+				ITEM_CLASS.Rarity.GOLD: total += 65
+				ITEM_CLASS.Rarity.RED: total += 188
 	return total
 
 
@@ -667,7 +672,7 @@ func _on_confirm_bid_pressed() -> void:
 		auction_session.place_bid(curr_pid, _current_bid_value)
 		for i in range(1, auction_session.active_bidder_ids.size()):
 			var ai_pid: StringName = auction_session.active_bidder_ids[i]
-			var ai_bid: int = _current_bid_value + randi_range(-2, 10)
+			var ai_bid: int = _current_bid_value + randi_range(-10, 50)
 			auction_session.place_bid(ai_pid, maxi(1, ai_bid))
 	refresh_ui()
 

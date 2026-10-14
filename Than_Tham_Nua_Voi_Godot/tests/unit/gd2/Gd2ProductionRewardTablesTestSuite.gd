@@ -79,13 +79,13 @@ func _row(name: String, passed: bool) -> Dictionary:
 func _reward_contract() -> bool:
 	var expected: Dictionary = {
 		# Low
-		"prod_silver_small": [RewardDefinition.Type.SILVER_COIN, 10],
+		"prod_silver_small": [RewardDefinition.Type.SILVER_COIN, 100],
 		"prod_stigmata_exp_small": [RewardDefinition.Type.STIGMATA_EXP_MATERIAL, 3],
 		"prod_relic_exp_small": [RewardDefinition.Type.RELIC_EXP_MATERIAL, 3],
 		"prod_exchange_material_1": [RewardDefinition.Type.EQUIPMENT_EXCHANGE_MATERIAL, 1],
 		"prod_consumable_hanh_lo_phu": [RewardDefinition.Type.CONSUMABLE_ITEM, 1],
 		# Mid
-		"prod_silver_large": [RewardDefinition.Type.SILVER_COIN, 30],
+		"prod_silver_large": [RewardDefinition.Type.SILVER_COIN, 300],
 		"prod_stigmata_exp_large": [RewardDefinition.Type.STIGMATA_EXP_MATERIAL, 6],
 		"prod_relic_exp_large": [RewardDefinition.Type.RELIC_EXP_MATERIAL, 6],
 		"prod_exchange_material_2": [RewardDefinition.Type.EQUIPMENT_EXCHANGE_MATERIAL, 2],
@@ -93,7 +93,7 @@ func _reward_contract() -> bool:
 		"prod_consumable_ngu_ma_lenh": [RewardDefinition.Type.CONSUMABLE_ITEM, 1],
 		"prod_gacha_ticket_1": [RewardDefinition.Type.GACHA_TICKET, 1],
 		# High
-		"prod_silver_grand": [RewardDefinition.Type.SILVER_COIN, 50],
+		"prod_silver_grand": [RewardDefinition.Type.SILVER_COIN, 500],
 		"prod_stigmata_exp_grand": [RewardDefinition.Type.STIGMATA_EXP_MATERIAL, 9],
 		"prod_relic_exp_grand": [RewardDefinition.Type.RELIC_EXP_MATERIAL, 9],
 		"prod_exchange_material_3": [RewardDefinition.Type.EQUIPMENT_EXCHANGE_MATERIAL, 3],

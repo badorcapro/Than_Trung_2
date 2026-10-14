@@ -102,22 +102,23 @@ func _generate_random_item() -> MysteryChestItem:
 func _apply_item_profile(item: MysteryChestItem) -> void:
 	match item.rarity:
 		MysteryChestItem.Rarity.WHITE:
+			# White: Card 1..5 xu (1,2=1đ, 9,10=5đ), ace=10, joker=15. Sizes: 1x1, 1x2, 2x2
 			var pool: Array[Dictionary] = [
-				{"name": "Card - Ace", "val": 1, "w": 1, "h": 1, "icon": "🂡", "desc": "Thẻ bài Át thông thường."},
 				{"name": "Card - 1", "val": 1, "w": 1, "h": 1, "icon": "🎴", "desc": "Thẻ bài 1 thông thường."},
 				{"name": "Card - 2", "val": 1, "w": 1, "h": 1, "icon": "🎴", "desc": "Thẻ bài 2 thông thường."},
-				{"name": "Card - 3", "val": 1, "w": 1, "h": 1, "icon": "🎴", "desc": "Thẻ bài 3 thông thường."},
-				{"name": "Card - 4", "val": 1, "w": 1, "h": 1, "icon": "🎴", "desc": "Thẻ bài 4 thông thường."},
-				{"name": "Card - 5", "val": 1, "w": 1, "h": 1, "icon": "🎴", "desc": "Thẻ bài 5 thông thường."},
-				{"name": "Card - 6", "val": 1, "w": 1, "h": 1, "icon": "🎴", "desc": "Thẻ bài 6 thông thường."},
-				{"name": "Card - 7", "val": 1, "w": 1, "h": 1, "icon": "🎴", "desc": "Thẻ bài 7 thông thường."},
-				{"name": "Card - 8", "val": 1, "w": 1, "h": 1, "icon": "🎴", "desc": "Thẻ bài 8 thông thường."},
-				{"name": "Card - 9", "val": 1, "w": 1, "h": 1, "icon": "🎴", "desc": "Thẻ bài 9 thông thường."},
-				{"name": "Card - 10", "val": 1, "w": 1, "h": 1, "icon": "🎴", "desc": "Thẻ bài 10 thông thường."},
-				{"name": "Card - J", "val": 1, "w": 1, "h": 1, "icon": "🂫", "desc": "Thẻ bài J thông thường."},
-				{"name": "Card - Q", "val": 1, "w": 1, "h": 1, "icon": "🂭", "desc": "Thẻ bài Q thông thường."},
-				{"name": "Card - K", "val": 1, "w": 1, "h": 1, "icon": "🂮", "desc": "Thẻ bài K thông thường."},
-				{"name": "Card - Joker", "val": 5, "w": 1, "h": 1, "icon": "🃏", "desc": "Thẻ bài Joker đặc biệt."},
+				{"name": "Card - 3", "val": 2, "w": 1, "h": 1, "icon": "🎴", "desc": "Thẻ bài 3 thông thường."},
+				{"name": "Card - 4", "val": 2, "w": 1, "h": 1, "icon": "🎴", "desc": "Thẻ bài 4 thông thường."},
+				{"name": "Card - 5", "val": 3, "w": 1, "h": 1, "icon": "🎴", "desc": "Thẻ bài 5 thông thường."},
+				{"name": "Card - 6", "val": 3, "w": 1, "h": 1, "icon": "🎴", "desc": "Thẻ bài 6 thông thường."},
+				{"name": "Card - 7", "val": 4, "w": 1, "h": 1, "icon": "🎴", "desc": "Thẻ bài 7 thông thường."},
+				{"name": "Card - 8", "val": 4, "w": 1, "h": 1, "icon": "🎴", "desc": "Thẻ bài 8 thông thường."},
+				{"name": "Card - 9", "val": 5, "w": 1, "h": 1, "icon": "🎴", "desc": "Thẻ bài 9 thông thường."},
+				{"name": "Card - 10", "val": 5, "w": 1, "h": 2, "icon": "🎴", "desc": "Thẻ bài 10 thông thường."},
+				{"name": "Card - J", "val": 6, "w": 1, "h": 2, "icon": "🂫", "desc": "Thẻ bài J thông thường."},
+				{"name": "Card - Q", "val": 7, "w": 1, "h": 2, "icon": "🂭", "desc": "Thẻ bài Q thông thường."},
+				{"name": "Card - K", "val": 8, "w": 1, "h": 2, "icon": "🂮", "desc": "Thẻ bài K thông thường."},
+				{"name": "Card - Ace", "val": 10, "w": 1, "h": 2, "icon": "🂡", "desc": "Thẻ bài Át chủ bài."},
+				{"name": "Card - Joker", "val": 15, "w": 2, "h": 2, "icon": "🃏", "desc": "Thẻ bài Joker đặc biệt cỡ lớn."},
 				{"name": "Refinement Chips (2)", "val": 0, "w": 1, "h": 1, "icon": "💾", "desc": "Mảnh tinh chế (x2). Vật phẩm tài nguyên không bán.", "res": true, "qty": 2, "can_sell": false},
 			]
 			var chosen: Dictionary = pool[randi() % pool.size()]
@@ -132,17 +133,18 @@ func _apply_item_profile(item: MysteryChestItem) -> void:
 			item.can_sell = bool(chosen.get("can_sell", true))
 
 		MysteryChestItem.Rarity.GREEN:
+			# Green: Keyboard 15, Mouse 16, Socket 17, 9V Battery 18, Rechargeable Battery 19, Chips (4)
 			var pool: Array[Dictionary] = [
-				{"name": "Keyboard", "val": 2, "w": 2, "h": 1, "icon": "⌨️", "desc": "Bàn phím cơ tinh xảo."},
-				{"name": "Mouse", "val": 2, "w": 1, "h": 1, "icon": "🖱️", "desc": "Chuột quang học nhanh nhạy."},
-				{"name": "Socket", "val": 2, "w": 1, "h": 1, "icon": "🔌", "desc": "Ổ cắm điện an toàn."},
-				{"name": "9V Battery", "val": 2, "w": 1, "h": 1, "icon": "🔋", "desc": "Pin 9V chuẩn công nghiệp."},
-				{"name": "Rechargeable Battery", "val": 2, "w": 1, "h": 1, "icon": "🔋", "desc": "Pin sạc dung lượng cao."},
+				{"name": "Keyboard", "val": 15, "w": 2, "h": 1, "icon": "⌨️", "desc": "Bàn phím cơ tinh xảo."},
+				{"name": "Mouse", "val": 16, "w": 1, "h": 1, "icon": "🖱️", "desc": "Chuột quang học nhanh nhạy."},
+				{"name": "Socket", "val": 17, "w": 1, "h": 1, "icon": "🔌", "desc": "Ổ cắm điện an toàn."},
+				{"name": "9V Battery", "val": 18, "w": 1, "h": 1, "icon": "🔋", "desc": "Pin 9V chuẩn công nghiệp."},
+				{"name": "Rechargeable Battery", "val": 19, "w": 1, "h": 2, "icon": "🔋", "desc": "Pin sạc dung lượng cao dạng đứng."},
 				{"name": "Refinement Chips (4)", "val": 0, "w": 1, "h": 1, "icon": "💾", "desc": "Mảnh tinh chế (x4). Vật phẩm tài nguyên không bán.", "res": true, "qty": 4, "can_sell": false},
 			]
 			var chosen: Dictionary = pool[randi() % pool.size()]
 			item.display_name = chosen.get("name", "")
-			item.silver_value = int(chosen.get("val", 2))
+			item.silver_value = int(chosen.get("val", 15))
 			item.grid_width = int(chosen.get("w", 1))
 			item.grid_height = int(chosen.get("h", 1))
 			item.icon = String(chosen.get("icon", "📦"))
@@ -152,18 +154,20 @@ func _apply_item_profile(item: MysteryChestItem) -> void:
 			item.can_sell = bool(chosen.get("can_sell", true))
 
 		MysteryChestItem.Rarity.BLUE:
+			# Blue: Encrypted Router 20, Radio 22, SSD 24, Robin 3 đĩa = 28
+			# Sizes: 1x1, 2x1, 2x2, 2x3
 			var pool: Array[Dictionary] = [
-				{"name": "Encrypted Router", "val": 3, "w": 2, "h": 1, "icon": "📡", "desc": "Bộ định tuyến mã hóa an toàn."},
-				{"name": "SSD", "val": 3, "w": 1, "h": 1, "icon": "💾", "desc": "Ổ cứng thể rắn tốc độ cao."},
-				{"name": "Radio", "val": 3, "w": 2, "h": 1, "icon": "📻", "desc": "Máy thu thanh cổ điển."},
-				{"name": "Robin: If I Can Stop One Heart From Breaking - Chevy", "val": 4, "w": 2, "h": 2, "icon": "🎵", "desc": "Đĩa nhạc Robin: If I Can Stop One Heart From Breaking."},
-				{"name": "Robin: Had I Not Seen the Sun - Chevy", "val": 4, "w": 2, "h": 2, "icon": "🎵", "desc": "Đĩa nhạc Robin: Had I Not Seen the Sun."},
-				{"name": "Robin:  Hope Is the Thing With Feathers - Chevy", "val": 4, "w": 2, "h": 2, "icon": "🎵", "desc": "Đĩa nhạc Robin: Hope Is the Thing With Feathers."},
+				{"name": "Encrypted Router", "val": 20, "w": 2, "h": 1, "icon": "📡", "desc": "Bộ định tuyến mã hóa an toàn."},
+				{"name": "Radio", "val": 22, "w": 2, "h": 2, "icon": "📻", "desc": "Máy thu thanh cổ điển."},
+				{"name": "SSD", "val": 24, "w": 1, "h": 1, "icon": "💾", "desc": "Ổ cứng thể rắn tốc độ cao."},
+				{"name": "Robin: If I Can Stop One Heart From Breaking - Chevy", "val": 28, "w": 2, "h": 2, "icon": "🎵", "desc": "Đĩa nhạc Robin: If I Can Stop One Heart From Breaking."},
+				{"name": "Robin: Had I Not Seen the Sun - Chevy", "val": 28, "w": 2, "h": 2, "icon": "🎵", "desc": "Đĩa nhạc Robin: Had I Not Seen the Sun."},
+				{"name": "Robin:  Hope Is the Thing With Feathers - Chevy", "val": 28, "w": 2, "h": 3, "icon": "🎵", "desc": "Đĩa nhạc Robin: Hope Is the Thing With Feathers (Hộp boxset 2x3)."},
 				{"name": "Refinement Chips (8)", "val": 0, "w": 1, "h": 1, "icon": "💾", "desc": "Mảnh tinh chế (x8). Vật phẩm tài nguyên không bán.", "res": true, "qty": 8, "can_sell": false},
 			]
 			var chosen: Dictionary = pool[randi() % pool.size()]
 			item.display_name = chosen.get("name", "")
-			item.silver_value = int(chosen.get("val", 3))
+			item.silver_value = int(chosen.get("val", 20))
 			item.grid_width = int(chosen.get("w", 1))
 			item.grid_height = int(chosen.get("h", 1))
 			item.icon = String(chosen.get("icon", "📦"))
@@ -173,19 +177,21 @@ func _apply_item_profile(item: MysteryChestItem) -> void:
 			item.can_sell = bool(chosen.get("can_sell", true))
 
 		MysteryChestItem.Rarity.PURPLE:
+			# Purple: Oximeter 30, Merit Medal 33, Spy Pen 36, GS5 Controller 39, Robin Sway 45, Himeko Coffee 46, Himeko Sword 47
+			# Sizes: 1x1, 2x1, 1x3, 2x3, 3x3
 			var pool: Array[Dictionary] = [
-				{"name": "Oximeter", "val": 8, "w": 1, "h": 1, "icon": "📟", "desc": "Máy đo nồng độ oxy chính xác."},
-				{"name": "Merit Medal", "val": 8, "w": 1, "h": 1, "icon": "🏅", "desc": "Huy chương công trạng hoàng gia."},
-				{"name": "GS5 Controller", "val": 8, "w": 2, "h": 1, "icon": "🎮", "desc": "Tay cầm điều khiển GS5 hiện đại."},
-				{"name": "Spy Pen", "val": 8, "w": 1, "h": 1, "icon": "🖊️", "desc": "Bút điệp viên gắn vi mạch ngầm."},
-				{"name": "Robin: Sway to My Beat in Cosmos - Chevy", "val": 0, "w": 2, "h": 2, "icon": "💿", "desc": "Đĩa nhạc Robin: Sway to My Beat in Cosmos (1 gói random vé đen).", "rtype": "black_ticket"},
-				{"name": "Himeko Coffee Machine Set", "val": 0, "w": 2, "h": 2, "icon": "☕", "desc": "Bộ máy pha cà phê Himeko đặc biệt (1 gói random vé đen).", "rtype": "black_ticket"},
-				{"name": "Himeko Broken Sword", "val": 0, "w": 2, "h": 1, "icon": "🗡️", "desc": "Thanh kiếm gãy Himeko huyền thoại (1 gói random vé đen).", "rtype": "black_ticket"},
+				{"name": "Oximeter", "val": 30, "w": 1, "h": 1, "icon": "📟", "desc": "Máy đo nồng độ oxy chính xác."},
+				{"name": "Merit Medal", "val": 33, "w": 1, "h": 1, "icon": "🏅", "desc": "Huy chương công trạng hoàng gia."},
+				{"name": "Spy Pen", "val": 36, "w": 1, "h": 2, "icon": "🖊️", "desc": "Bút điệp viên gắn vi mạch ngầm."},
+				{"name": "GS5 Controller", "val": 39, "w": 2, "h": 1, "icon": "🎮", "desc": "Tay cầm điều khiển GS5 hiện đại."},
+				{"name": "Robin: Sway to My Beat in Cosmos - Chevy", "val": 45, "w": 2, "h": 3, "icon": "💿", "desc": "Đĩa nhạc Robin: Sway to My Beat in Cosmos (1 gói random vé đen).", "rtype": "black_ticket"},
+				{"name": "Himeko Coffee Machine Set", "val": 46, "w": 3, "h": 3, "icon": "☕", "desc": "Bộ máy pha cà phê Himeko nguyên bộ 3x3 (1 gói random vé đen).", "rtype": "black_ticket"},
+				{"name": "Himeko Broken Sword", "val": 47, "w": 1, "h": 3, "icon": "🗡️", "desc": "Thanh kiếm gãy Himeko huyền thoại (1 gói random vé đen).", "rtype": "black_ticket"},
 				{"name": "Refinement Chips (16)", "val": 0, "w": 1, "h": 1, "icon": "💾", "desc": "Mảnh tinh chế (x16). Vật phẩm tài nguyên không bán.", "res": true, "qty": 16, "can_sell": false},
 			]
 			var chosen: Dictionary = pool[randi() % pool.size()]
 			item.display_name = chosen.get("name", "")
-			item.silver_value = int(chosen.get("val", 8))
+			item.silver_value = int(chosen.get("val", 30))
 			item.grid_width = int(chosen.get("w", 1))
 			item.grid_height = int(chosen.get("h", 1))
 			item.icon = String(chosen.get("icon", "📦"))
@@ -195,17 +201,19 @@ func _apply_item_profile(item: MysteryChestItem) -> void:
 			item.quantity = int(chosen.get("qty", 1))
 			item.can_sell = bool(chosen.get("can_sell", true))
 
-		MysteryChestItem.Rarity.GOLD: # Cam / Vàng (Legendary)
+		MysteryChestItem.Rarity.GOLD: # Cam / Vàng (Legendary):
+			# Array Server 65, Military Satellite 80, ASOS Motherboard 100, Digital Camera 120
+			# Sizes: 1x1, 2x1, 2x2, 2x3, 3x3
 			var pool: Array[Dictionary] = [
-				{"name": "Array Server", "val": 16, "w": 2, "h": 2, "icon": "🖥️", "desc": "Máy chủ mảng dung lượng cực lớn."},
-				{"name": "Military Satellite Communications Device", "val": 16, "w": 2, "h": 2, "icon": "🛰️", "desc": "Thiết bị truyền thông vệ tinh quân sự."},
-				{"name": "Digital Camera", "val": 16, "w": 2, "h": 1, "icon": "📷", "desc": "Máy ảnh kỹ thuật số chuyên nghiệp."},
-				{"name": "ASOS Motherboard", "val": 16, "w": 2, "h": 2, "icon": "🖲️", "desc": "Bo mạch chủ ASOS hiệu năng đỉnh cao."},
+				{"name": "Array Server", "val": 65, "w": 2, "h": 2, "icon": "🖥️", "desc": "Máy chủ mảng lưu trữ dung lượng lớn."},
+				{"name": "Military Satellite Communications Device", "val": 80, "w": 3, "h": 3, "icon": "🛰️", "desc": "Thiết bị truyền thông vệ tinh quân sự 3x3."},
+				{"name": "Digital Camera", "val": 120, "w": 2, "h": 1, "icon": "📷", "desc": "Máy ảnh kỹ thuật số chuyên nghiệp."},
+				{"name": "ASOS Motherboard", "val": 100, "w": 2, "h": 3, "icon": "🖲️", "desc": "Bo mạch chủ ASOS kích thước mở rộng 2x3."},
 				{"name": "Refinement Chips (32)", "val": 0, "w": 1, "h": 1, "icon": "💾", "desc": "Mảnh tinh chế (x32). Vật phẩm tài nguyên không bán.", "res": true, "qty": 32, "can_sell": false},
 			]
 			var chosen: Dictionary = pool[randi() % pool.size()]
 			item.display_name = chosen.get("name", "")
-			item.silver_value = int(chosen.get("val", 16))
+			item.silver_value = int(chosen.get("val", 65))
 			item.grid_width = int(chosen.get("w", 1))
 			item.grid_height = int(chosen.get("h", 1))
 			item.icon = String(chosen.get("icon", "📦"))
@@ -214,15 +222,21 @@ func _apply_item_profile(item: MysteryChestItem) -> void:
 			item.quantity = int(chosen.get("qty", 1))
 			item.can_sell = bool(chosen.get("can_sell", true))
 
-		MysteryChestItem.Rarity.RED: # Đỏ (Mythical)
+		MysteryChestItem.Rarity.RED: # Đỏ (Mythical):
+			# Rocket Fuel 450 (3x3), Quantum Storage 450 (1x1), Album: Completeness 404 (1x1),
+			# HIgh-power Vacuum CLeaner 333 (3x3), Medical Ventilation 222 (3x3), Olivia Champagne 188 (2x3), Locking Component (5) (1x1)
 			var pool: Array[Dictionary] = [
-				{"name": "Rocket Fuel", "val": 45, "w": 1, "h": 2, "icon": "🚀", "desc": "Nhiên liệu tên lửa. Vật phẩm tài nguyên, có thể chọn bán lấy 45 Xu Bạc.", "res": true, "can_sell": true},
-				{"name": "Quantum Storage", "val": 45, "w": 2, "h": 2, "icon": "🔮", "desc": "Kho lưu trữ lượng tử. Vật phẩm tài nguyên, có thể chọn bán lấy 45 Xu Bạc.", "res": true, "can_sell": true},
-				{"name": "Locking Component (5)", "val": 0, "w": 1, "h": 1, "icon": "🔒", "desc": "Linh kiện khóa (x5). Vật phẩm tài nguyên, không bán được.", "res": true, "qty": 5, "can_sell": false},
+				{"name": "Rocket Fuel", "val": 450, "w": 3, "h": 3, "icon": "🚀", "desc": "Nhiên liệu tên lửa 3x3. Vật phẩm tài nguyên, có thể bán lấy 450 Xu Bạc.", "res": true, "can_sell": true},
+				{"name": "Quantum Storage", "val": 450, "w": 1, "h": 1, "icon": "🔮", "desc": "Kho lưu trữ lượng tử siêu nhỏ 1x1. Có thể bán lấy 450 Xu Bạc.", "res": true, "can_sell": true},
+				{"name": "Album: Completeness", "val": 404, "w": 1, "h": 1, "icon": "💿", "desc": "Album: Completeness (Đồ đỏ 1x1). Có thể bán lấy 404 Xu Bạc.", "res": true, "can_sell": true},
+				{"name": "HIgh-power Vacuum CLeaner", "val": 333, "w": 3, "h": 3, "icon": "🧹", "desc": "Máy hút bụi công suất cao 3x3. Vật phẩm phòng thí nghiệm / 333 Xu.", "res": true, "can_sell": true},
+				{"name": "Medical Ventilation", "val": 222, "w": 3, "h": 3, "icon": "🫁", "desc": "Hệ thống thông gió y tế 3x3. Vật phẩm phòng thí nghiệm / 222 Xu.", "res": true, "can_sell": true},
+				{"name": "Olivia Champagne", "val": 188, "w": 2, "h": 3, "icon": "🍾", "desc": "Rượu Champagne thượng hạng Olivia 2x3. Có thể bán lấy 188 Xu Bạc.", "res": true, "can_sell": true},
+				{"name": "Locking Component (5)", "val": 0, "w": 1, "h": 1, "icon": "🔒", "desc": "Linh kiện khóa (x5) 1x1. Vật phẩm tài nguyên phòng lab, không bán được.", "res": true, "qty": 5, "can_sell": false},
 			]
 			var chosen: Dictionary = pool[randi() % pool.size()]
 			item.display_name = chosen.get("name", "")
-			item.silver_value = int(chosen.get("val", 45))
+			item.silver_value = int(chosen.get("val", 450))
 			item.grid_width = int(chosen.get("w", 1))
 			item.grid_height = int(chosen.get("h", 1))
 			item.icon = String(chosen.get("icon", "📦"))

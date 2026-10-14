@@ -18,7 +18,7 @@ func run() -> Array[Dictionary]:
 	rows.append(_row("Đấu giá Nhiều Người: Có 5 vòng và công bố manh mối từng vòng", _multiplayer_5_rounds_contract()))
 	rows.append(_row("Đấu giá Nhiều Người: Người trả giá cao nhất thắng cuộc", _multiplayer_highest_bid_wins_contract()))
 	rows.append(_row("Tổng kết phiên: Quy đổi xu chính xác và giữ lại đúng đồ đỏ", _settlement_accounting_contract()))
-	rows.append(_row("Các dải Xu Bạc 10-30, 30-50, 50-70 thiết lập đúng dải ngẫu nhiên", _silver_ranges_contract()))
+	rows.append(_row("Các dải Xu Bạc 100-300, 300-500, 500-700 thiết lập đúng dải ngẫu nhiên", _silver_ranges_contract()))
 	return rows
 
 
@@ -181,7 +181,7 @@ func _silver_ranges_contract() -> bool:
 	if small == null or large == null or grand == null:
 		return false
 	return (
-		small.amount == 10 and small.amount_max == 30
-		and large.amount == 30 and large.amount_max == 50
-		and grand.amount == 50 and grand.amount_max == 70
+		small.amount == 100 and small.amount_max == 300
+		and large.amount == 300 and large.amount_max == 500
+		and grand.amount == 500 and grand.amount_max == 700
 	)
