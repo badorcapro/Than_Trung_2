@@ -6,6 +6,21 @@ signal closed
 const CATALOG_CLASS := preload("res://scripts/domain/loot/AuctionCatalog.gd")
 const ITEM_CLASS := preload("res://scripts/domain/loot/MysteryChestItem.gd")
 
+const RARITY_SVG_NAMES: Array[String] = [
+	"rarity_1_white",
+	"rarity_2_green",
+	"rarity_3_blue",
+	"rarity_4_purple",
+	"rarity_5_gold",
+	"rarity_6_red",
+]
+
+static func _get_rarity_svg_path(rarity_idx: int, selected: bool) -> String:
+	if rarity_idx >= 0 and rarity_idx < RARITY_SVG_NAMES.size():
+		var state: String = "selected" if selected else "unselected"
+		return "res://assets/ui/rarity/%s_%s.svg" % [RARITY_SVG_NAMES[rarity_idx], state]
+	return ""
+
 # Filters state
 var _rarity_filter_enabled: bool = false
 var _selected_rarities: Dictionary = {}
@@ -169,7 +184,7 @@ func _build_sidebar() -> Control:
 	r_reset_btn.focus_mode = FOCUS_NONE
 	r_reset_btn.flat = true
 	r_reset_btn.expand_icon = true
-	var sel_all_tex := _get_cached_texture("res://assets/auction_items/rarity_buttons/rarity_btn_select_all.png")
+	var sel_all_tex := _get_cached_texture("res://assets/ui/rarity/rarity_select_all.svg")
 	if sel_all_tex != null:
 		r_reset_btn.icon = sel_all_tex
 	else:
@@ -188,7 +203,7 @@ func _build_sidebar() -> Control:
 	r_deselect_btn.focus_mode = FOCUS_NONE
 	r_deselect_btn.flat = true
 	r_deselect_btn.expand_icon = true
-	var desel_all_tex := _get_cached_texture("res://assets/auction_items/rarity_buttons/rarity_btn_deselect_all.png")
+	var desel_all_tex := _get_cached_texture("res://assets/ui/rarity/rarity_deselect_all.svg")
 	if desel_all_tex != null:
 		r_deselect_btn.icon = desel_all_tex
 	else:
@@ -201,7 +216,7 @@ func _build_sidebar() -> Control:
 	)
 	r_header_hbox.add_child(r_deselect_btn)
 
-	# Diamond buttons row (6 Rarities from rarity.png)
+	# Diamond buttons row (6 Rarities from SVG vector icons)
 	var diamonds_hbox := HBoxContainer.new()
 	diamonds_hbox.add_theme_constant_override("separation", 8)
 	side_vbox.add_child(diamonds_hbox)
@@ -224,7 +239,7 @@ func _build_sidebar() -> Control:
 		d_btn.tooltip_text = ITEM_CLASS.rarity_name(r)
 		var r_val: int = int(r)
 		d_btn.set_meta("rarity", r_val)
-		var init_tex := _get_cached_texture("res://assets/auction_items/rarity_buttons/rarity_btn_%d_on.png" % r_val)
+		var init_tex := _get_cached_texture(_get_rarity_svg_path(r_val, true))
 		if init_tex != null:
 			d_btn.icon = init_tex
 		else:
@@ -467,15 +482,14 @@ func _refresh_filters_ui() -> void:
 	for btn in _rarity_buttons:
 		var r: int = int(btn.get_meta("rarity", -1))
 		var is_active: bool = (not _rarity_filter_enabled or _selected_rarities.has(r))
-		var icon_state: String = "on" if is_active else "off"
-		var tex_path: String = "res://assets/auction_items/rarity_buttons/rarity_btn_%d_%s.png" % [r, icon_state]
+		var tex_path: String = _get_rarity_svg_path(r, is_active)
 		var tex: Texture2D = _get_cached_texture(tex_path)
 		if tex != null:
 			btn.icon = tex
 		if is_active:
 			btn.modulate = Color(1.0, 1.0, 1.0, 1.0)
 		else:
-			btn.modulate = Color(0.85, 0.85, 0.85, 0.40)
+			btn.modulate = Color(1.0, 1.0, 1.0, 0.75)
 
 	# 2. Category label & button highlights
 	if not _category_filter_enabled:

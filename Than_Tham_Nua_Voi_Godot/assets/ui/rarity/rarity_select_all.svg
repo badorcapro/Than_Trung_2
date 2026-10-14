@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <defs>
+    <linearGradient id="frameGradGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffcc4d"/>
+      <stop offset="50%" stop-color="#e69919"/>
+      <stop offset="100%" stop-color="#8a5a19"/>
+    </linearGradient>
+    <radialGradient id="auraGold" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffe699" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#8a5a19" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <!-- Outer soft halo -->
+  <polygon points="128,6 250,128 128,250 6,128" fill="url(#auraGold)"/>
+  <!-- Outer dark rim -->
+  <polygon points="128,12 244,128 128,244 12,128" fill="#181c20" stroke="#262c32" stroke-width="4" stroke-linejoin="round"/>
+  <!-- Metallic gold frame -->
+  <polygon points="128,20 236,128 128,236 20,128" fill="url(#frameGradGold)" stroke="#ffcc4d" stroke-width="2.5" stroke-linejoin="round"/>
+  <!-- Inner dark recessed chamber -->
+  <polygon points="128,36 220,128 128,220 36,128" fill="#14181c" fill-opacity="0.9" stroke="#8a5a19" stroke-width="3"/>
+  <!-- Filigree accents -->
+  <path d="M128,44 L136,56 L128,52 L120,56 Z M128,212 L136,200 L128,204 L120,200 Z M44,128 L56,136 L52,128 L56,120 Z M212,128 L200,136 L204,128 L200,120 Z" fill="#ffcc4d" opacity="0.8"/>
+  <polygon points="128,44 212,128 128,212 44,128" fill="none" stroke="#ffcc4d" stroke-width="1.2" stroke-opacity="0.5"/>
+  <!-- 4 Radiant Diamonds representing 'Select All' -->
+  <!-- Top Diamond -->
+  <polygon points="128,68 152,92 128,116 104,92" fill="#ffe699" stroke="#ffcc4d" stroke-width="2"/>
+  <polygon points="128,74 146,92 128,92 110,92" fill="#ffffff" opacity="0.6"/>
+  <!-- Bottom Diamond -->
+  <polygon points="128,140 152,164 128,188 104,164" fill="#ffe699" stroke="#ffcc4d" stroke-width="2"/>
+  <polygon points="128,146 146,164 128,164 110,164" fill="#ffffff" opacity="0.6"/>
+  <!-- Left Diamond -->
+  <polygon points="92,104 116,128 92,152 68,128" fill="#ffe699" stroke="#ffcc4d" stroke-width="2"/>
+  <polygon points="92,110 110,128 92,128 74,128" fill="#ffffff" opacity="0.6"/>
+  <!-- Right Diamond -->
+  <polygon points="164,104 188,128 164,152 140,128" fill="#ffe699" stroke="#ffcc4d" stroke-width="2"/>
+  <polygon points="164,110 182,128 164,128 146,128" fill="#ffffff" opacity="0.6"/>
+  <!-- Center Star Flare -->
+  <path d="M128,118 Q128,128 138,128 Q128,128 128,138 Q128,128 118,128 Q128,128 128,118 Z" fill="#ffffff"/>
+  <circle cx="128" cy="128" r="3" fill="#ffffff"/>
+</svg>

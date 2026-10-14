@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <defs>
+    <linearGradient id="frameGradSteel" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#94a3b8"/>
+      <stop offset="50%" stop-color="#64748b"/>
+      <stop offset="100%" stop-color="#334155"/>
+    </linearGradient>
+  </defs>
+  <!-- Outer dark rim -->
+  <polygon points="128,12 244,128 128,244 12,128" fill="#181c20" stroke="#262c32" stroke-width="4" stroke-linejoin="round"/>
+  <!-- Metallic steel frame -->
+  <polygon points="128,20 236,128 128,236 20,128" fill="url(#frameGradSteel)" stroke="#94a3b8" stroke-width="2" stroke-linejoin="round"/>
+  <!-- Inner dark recessed chamber -->
+  <polygon points="128,36 220,128 128,220 36,128" fill="#14181c" fill-opacity="0.9" stroke="#334155" stroke-width="3"/>
+  <!-- Filigree accents -->
+  <path d="M128,44 L136,56 L128,52 L120,56 Z M128,212 L136,200 L128,204 L120,200 Z M44,128 L56,136 L52,128 L56,120 Z M212,128 L200,136 L204,128 L200,120 Z" fill="#64748b" opacity="0.6"/>
+  <polygon points="128,44 212,128 128,212 44,128" fill="none" stroke="#64748b" stroke-width="1.2" stroke-opacity="0.3"/>
+  
+  <!-- Empty Hollow Diamonds & Clean Horizontal Bar representing 'Deselect All' -->
+  <polygon points="128,64 192,128 128,192 64,128" fill="none" stroke="#64748b" stroke-width="2.5" stroke-dasharray="8,6" opacity="0.75"/>
+  <!-- Sleek Deselect Minus Bar -->
+  <rect x="88" y="123" width="80" height="10" rx="5" fill="#e2e8f0" stroke="#475569" stroke-width="2"/>
+</svg>

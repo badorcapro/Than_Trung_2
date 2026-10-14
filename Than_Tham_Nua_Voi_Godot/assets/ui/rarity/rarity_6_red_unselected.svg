@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <defs>
+    <linearGradient id="frameGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff5c5c"/>
+      <stop offset="50%" stop-color="#e62929"/>
+      <stop offset="100%" stop-color="#8a1f1f"/>
+    </linearGradient>
+  </defs>
+  <!-- Outer dark rim -->
+  <polygon points="128,12 244,128 128,244 12,128" fill="#181c20" stroke="#262c32" stroke-width="4" stroke-linejoin="round"/>
+  <!-- Metallic beveled frame -->
+  <polygon points="128,20 236,128 128,236 20,128" fill="url(#frameGrad)" stroke="#ff5c5c" stroke-width="2" stroke-linejoin="round"/>
+  <!-- Inner dark recessed chamber -->
+  <polygon points="128,36 220,128 128,220 36,128" fill="#14181c" fill-opacity="0.88" stroke="#8a1f1f" stroke-width="3"/>
+  <!-- Ancient Chinese corner filigree accents -->
+  <path d="M128,44 L136,56 L128,52 L120,56 Z M128,212 L136,200 L128,204 L120,200 Z M44,128 L56,136 L52,128 L56,120 Z M212,128 L200,136 L204,128 L200,120 Z" fill="#ff5c5c" opacity="0.65"/>
+  <polygon points="128,44 212,128 128,212 44,128" fill="none" stroke="#ff5c5c" stroke-width="1.2" stroke-opacity="0.4"/>
+</svg>

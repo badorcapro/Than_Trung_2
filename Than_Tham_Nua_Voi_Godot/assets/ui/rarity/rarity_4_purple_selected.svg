@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <defs>
+    <linearGradient id="frameGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#c466ff"/>
+      <stop offset="50%" stop-color="#8c29e6"/>
+      <stop offset="100%" stop-color="#561f8a"/>
+    </linearGradient>
+    <linearGradient id="coreGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e0adff"/>
+      <stop offset="60%" stop-color="#8c29e6"/>
+      <stop offset="100%" stop-color="#45126a"/>
+    </linearGradient>
+    <radialGradient id="auraGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#e0adff" stop-opacity="0.55"/>
+      <stop offset="65%" stop-color="#8c29e6" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#45126a" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <!-- Outer soft energy halo -->
+  <polygon points="128,6 250,128 128,250 6,128" fill="url(#auraGrad)"/>
+  <!-- Outer dark rim -->
+  <polygon points="128,12 244,128 128,244 12,128" fill="#181c20" stroke="#262c32" stroke-width="4" stroke-linejoin="round"/>
+  <!-- Metallic beveled frame -->
+  <polygon points="128,20 236,128 128,236 20,128" fill="url(#frameGrad)" stroke="#c466ff" stroke-width="2.5" stroke-linejoin="round"/>
+  <!-- Gem chamber background -->
+  <polygon points="128,36 220,128 128,220 36,128" fill="#45126a" stroke="#c466ff" stroke-width="2"/>
+  
+  <!-- Gem facets (Brilliant cut diamond geometry) -->
+  <!-- Facet Top-Left (Bright key light) -->
+  <polygon points="128,36 128,92 78,128 36,128" fill="#e0adff" opacity="0.95"/>
+  <!-- Facet Top-Right (Mid tone) -->
+  <polygon points="128,36 220,128 178,128 128,92" fill="#8c29e6" opacity="0.9"/>
+  <!-- Facet Bottom-Left (Secondary bounce) -->
+  <polygon points="36,128 78,128 128,164 128,220" fill="#8c29e6" opacity="0.75"/>
+  <!-- Facet Bottom-Right (Deep shade) -->
+  <polygon points="178,128 220,128 128,220 128,164" fill="#45126a" opacity="0.95"/>
+
+  <!-- Central diamond table facet (Luminous gem heart) -->
+  <polygon points="128,92 178,128 128,164 78,128" fill="url(#coreGrad)" stroke="#ffffff" stroke-width="1.8" stroke-opacity="0.85"/>
+  <polygon points="128,104 152,128 128,152 104,128" fill="#e0adff" stroke="#c466ff" stroke-width="1.2" opacity="0.8"/>
+
+  <!-- Specular glint highlight on top left -->
+  <polygon points="128,40 144,80 128,70 112,80" fill="#ffffff" opacity="0.7"/>
+  <polygon points="80,128 104,112 112,128 96,134" fill="#ffffff" opacity="0.45"/>
+
+  <!-- Sparkling 4-point star burst -->
+  <path d="M102,78 Q102,94 118,94 Q102,94 102,110 Q102,94 86,94 Q102,94 102,78 Z" fill="#ffffff" opacity="0.95"/>
+  <circle cx="102" cy="94" r="2.5" fill="#ffffff"/>
+
+  <!-- Ancient Chinese corner filigree accents (Illuminated) -->
+  <path d="M128,44 L136,56 L128,52 L120,56 Z M128,212 L136,200 L128,204 L120,200 Z M44,128 L56,136 L52,128 L56,120 Z M212,128 L200,136 L204,128 L200,120 Z" fill="#ffffff" opacity="0.9"/>
+  <!-- Inner fine golden boundary -->
+  <polygon points="128,44 212,128 128,212 44,128" fill="none" stroke="#c466ff" stroke-width="1.5" stroke-opacity="0.85"/>
+</svg>
