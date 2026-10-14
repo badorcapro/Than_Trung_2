@@ -49,10 +49,23 @@ const MVP_MATCH_STATE := preload("res://scripts/domain/mvp/MvpMatchState.gd")
 const CHARACTER_DETAIL_SHEET := preload(
 	"res://scripts/presentation/player_facing/CharacterDetailSheet.gd"
 )
+const AUCTION_SCREEN := preload(
+	"res://scripts/presentation/loot/AuctionScreen.gd"
+)
+const AUCTION_SESSION := preload(
+	"res://scripts/domain/loot/AuctionSession.gd"
+)
+const MYSTERY_CHEST_STATE := preload(
+	"res://scripts/domain/loot/MysteryChestState.gd"
+)
 
 var setup: SETUP_SESSION = SETUP_SESSION.new()
 var case_flow: CASE_FLOW_SESSION
 var case_controller: CASE_CONTROLLER
+var _mystery_chest: MysteryChestState = MysteryChestState.new()
+var _vault_reach_player_ids: Array[StringName] = []
+var _auction_session: AuctionSession = null
+var _auction_screen: AuctionScreen = null
 var _loot_activity_lines: Array[String] = []
 var _logged_reward_count := 0
 var _selected_branch_id: StringName = &""
@@ -247,6 +260,14 @@ func _ready() -> void:
 	_character_sheet.visible = false
 	_character_sheet.finish_equipment_phase_requested.connect(_on_finish_equipment_phase_confirmed)
 	sheet_layer.add_child(_character_sheet)
+	var auction_layer := CanvasLayer.new()
+	auction_layer.name = "AuctionScreenLayer"
+	auction_layer.layer = 118
+	add_child(auction_layer)
+	_auction_screen = AUCTION_SCREEN.new()
+	_auction_screen.visible = false
+	_auction_screen.auction_finished.connect(_on_auction_finished)
+	auction_layer.add_child(_auction_screen)
 	_init_cheat_layer()
 	_init_desktop_system()
 	if splash_click_catcher != null and not splash_click_catcher.pressed.is_connected(_on_splash_click_catcher_pressed):
@@ -851,6 +872,9 @@ func _on_start_loot_pressed() -> void:
 		_show_message("Không thể mở hành trình Loot.", true)
 		return
 	_show_phase(setup.phase)
+	_mystery_chest = MYSTERY_CHEST_STATE.new()
+	_vault_reach_player_ids.clear()
+	_auction_session = null
 	_loot_activity_lines = ["Hành trình bắt đầu. Mỗi người xuất phát từ Nhà của nhân vật mình."]
 	_logged_reward_count = 0
 	_refresh_loot()
@@ -926,20 +950,11 @@ func _handle_loot_z_press() -> void:
 		_refresh_loot()
 
 	if session.phase == LOOT_REWARD_SESSION.Phase.LOOT_END_CONFIRMATION_READY:
-		var started: Dictionary = case_flow.begin_loot_end_confirmation()
-		if bool(started.get("success", false)) or case_flow.equipment_session != null:
-			setup.mark_loot_confirmation()
-			if case_flow.equipment_session != null:
-				for pid: StringName in case_flow.equipment_session.player_order.duplicate():
-					if not case_flow.equipment_session.confirmed_player_ids.has(pid):
-						case_flow.confirm_loot_end(pid)
-			setup.mark_equipment_management()
-			_show_phase(setup.phase)
-			_open_character_detail_sheet(&"", true)
+		if not _vault_reach_player_ids.is_empty():
+			_open_auction_screen()
 			return
-		else:
-			_on_finish_equipment_phase_confirmed()
-			return
+		_proceed_to_equipment_management()
+		return
 
 	if session.phase != LOOT_REWARD_SESSION.Phase.MOVEMENT:
 		return
@@ -1135,6 +1150,12 @@ func _handle_loot_result(result: Dictionary) -> void:
 		_loot_activity_lines.append(
 			"🎲 [b]%s[/b] đổ xí ngầu được [color=#8be9fd]%d bước[/color]." % [_player_name(action.player_id), action.roll_distance]
 		)
+		if action.start_node_id == &"royal_vault_hub" or action.end_node_id == &"royal_vault_hub":
+			if not _vault_reach_player_ids.has(action.player_id):
+				_vault_reach_player_ids.append(action.player_id)
+			var added: Array = _mystery_chest.roll_vault_deposit()
+			if not added.is_empty():
+				_loot_activity_lines.append("🎁 [Hòm Bí Ẩn] Đã thêm %d món đồ vào Hòm Đấu Giá!" % added.size())
 		for node_id: StringName in action.traversed_node_ids:
 			_loot_activity_lines.append("  ➜ Di chuyển qua: [b]%s[/b]" % _node_display_name(node_id))
 		_show_message("Token đã di chuyển theo đường vừa roll.")
@@ -1149,18 +1170,56 @@ func _handle_loot_result(result: Dictionary) -> void:
 	_append_latest_reward_feedback()
 	_trim_loot_log()
 	if case_flow.loot_session.phase == 4:
-		var started: Dictionary = case_flow.begin_loot_end_confirmation()
-		if bool(started.get("success", false)) or case_flow.equipment_session != null:
-			setup.mark_loot_confirmation()
-			if case_flow.equipment_session != null:
-				for pid: StringName in case_flow.equipment_session.player_order.duplicate():
-					if not case_flow.equipment_session.confirmed_player_ids.has(pid):
-						case_flow.confirm_loot_end(pid)
-			setup.mark_equipment_management()
-			_show_phase(setup.phase)
-			_open_character_detail_sheet(&"", true)
+		if not _vault_reach_player_ids.is_empty():
+			_open_auction_screen()
 			return
+		_proceed_to_equipment_management()
+		return
 	_refresh_loot()
+
+
+func _open_auction_screen() -> void:
+	if _auction_screen == null or _vault_reach_player_ids.is_empty():
+		_proceed_to_equipment_management()
+		return
+	var player_silvers: Dictionary = {}
+	if case_flow != null and case_flow.match_state != null:
+		for pl in case_flow.match_state.players:
+			player_silvers[pl.player_id] = pl.silver_coins
+	_auction_session = AUCTION_SESSION.new()
+	_auction_session.initialize(_vault_reach_player_ids, _mystery_chest)
+	_auction_screen.setup(_auction_session, player_silvers)
+	_auction_screen.visible = true
+
+
+func _on_auction_finished(result: Dictionary) -> void:
+	if _auction_screen != null:
+		_auction_screen.visible = false
+	var winner_id: StringName = StringName(result.get("winner_id", ""))
+	var silver: int = int(result.get("converted_silver", 0))
+	var price_paid: int = int(result.get("final_price_paid", 0))
+	if not winner_id.is_empty():
+		if case_flow != null and case_flow.match_state != null:
+			var player_state: PLAYER_PHASE_STATE = case_flow.match_state.find_player(winner_id)
+			if player_state != null:
+				player_state.silver_coins = maxi(0, player_state.silver_coins - price_paid + silver)
+		_show_message("Đấu giá kết thúc! %s trúng đấu giá hòm bí ẩn (Nhận +%d Xu Bạc)!" % [winner_id, silver])
+	_proceed_to_equipment_management()
+
+
+func _proceed_to_equipment_management() -> void:
+	var started: Dictionary = case_flow.begin_loot_end_confirmation()
+	if bool(started.get("success", false)) or case_flow.equipment_session != null:
+		setup.mark_loot_confirmation()
+		if case_flow.equipment_session != null:
+			for pid: StringName in case_flow.equipment_session.player_order.duplicate():
+				if not case_flow.equipment_session.confirmed_player_ids.has(pid):
+					case_flow.confirm_loot_end(pid)
+		setup.mark_equipment_management()
+		_show_phase(setup.phase)
+		_open_character_detail_sheet(&"", true)
+	else:
+		_on_finish_equipment_phase_confirmed()
 
 
 func _on_confirm_loot_end_pressed() -> void:
@@ -2974,6 +3033,8 @@ func _show_phase(next_phase: int) -> void:
 	match_results_panel.visible = next_phase == SETUP_SESSION.Phase.MATCH_RESULTS
 	if _character_sheet != null and next_phase != SETUP_SESSION.Phase.LOOT_ACTIVE and next_phase != SETUP_SESSION.Phase.EQUIPMENT_MANAGEMENT:
 		_character_sheet.visible = false
+	if _auction_screen != null and next_phase != SETUP_SESSION.Phase.LOOT_ACTIVE:
+		_auction_screen.visible = false
 
 
 func _show_message(message: String, is_error: bool = false) -> void:
