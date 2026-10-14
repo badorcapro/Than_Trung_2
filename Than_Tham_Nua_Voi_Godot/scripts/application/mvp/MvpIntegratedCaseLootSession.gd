@@ -242,7 +242,7 @@ func restore_loot_runtime(
 	if restored_match == null:
 		return _failure(&"RESTORE_MATCH_MISSING", "Match state is required")
 	match_state = restored_match
-	_map_definition = GD2_FIXTURES.load_m3_map()
+	_map_definition = GD2_FIXTURES.load_production_map()
 	_characters = GD2_FIXTURES.load_characters()
 	_rewards = PRODUCTION_REWARD_REPOSITORY.load_rewards()
 	_items = PRODUCTION_CONSUMABLE_REPOSITORY.load_all()

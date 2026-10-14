@@ -287,6 +287,8 @@ func _ready() -> void:
 	_init_cheat_layer()
 	_init_toast_layer()
 	_init_desktop_system()
+	if FileAccess.file_exists("user://player_facing_runtime_save.json"):
+		DirAccess.remove_absolute(ProjectSettings.globalize_path("user://player_facing_runtime_save.json"))
 	if splash_click_catcher != null and not splash_click_catcher.pressed.is_connected(_on_splash_click_catcher_pressed):
 		splash_click_catcher.pressed.connect(_on_splash_click_catcher_pressed)
 	if splash_video != null and not splash_video.finished.is_connected(_on_splash_intro_finished):
@@ -353,10 +355,6 @@ func _input(event: InputEvent) -> void:
 		return
 	if key_event.keycode == KEY_F10:
 		_toggle_cheat_menu()
-		get_viewport().set_input_as_handled()
-		return
-	if key_event.keycode == KEY_F9 or key_event.physical_keycode == KEY_F9:
-		_save_game_manual()
 		get_viewport().set_input_as_handled()
 		return
 	if _cheat_overlay != null and _cheat_overlay.visible:
@@ -565,27 +563,6 @@ func _on_continue_pressed() -> void:
 		return
 	var saved_match: MVP_MATCH_STATE = loaded.get("match_state") as MVP_MATCH_STATE
 
-	if FileAccess.file_exists("user://player_facing_runtime_save.json"):
-		var rf := FileAccess.open("user://player_facing_runtime_save.json", FileAccess.READ)
-		if rf != null:
-			var rtext: String = rf.get_as_text()
-			rf.close()
-			var rparsed: Variant = JSON.parse_string(rtext)
-			if rparsed is Dictionary:
-				var rdict: Dictionary = rparsed as Dictionary
-				var saved_phase: int = int(rdict.get("saved_phase", -1))
-				var match_dict: Dictionary = rdict.get("match_state", {})
-				var restored_match: MVP_MATCH_STATE = (
-					MVP_MATCH_STATE.from_dict(match_dict)
-					if not match_dict.is_empty()
-					else saved_match
-				)
-				if saved_phase == SETUP_SESSION.Phase.LOOT_ACTIVE:
-					var loot_dict: Dictionary = rdict.get("loot_session", {})
-					if not loot_dict.is_empty():
-						_restore_loot_from_runtime_save(restored_match, rdict)
-						return
-
 	if saved_match.match_completion_state == &"MATCH_COMPLETE":
 		var completed_setup: SETUP_SESSION = SETUP_SESSION.new()
 		var completed: Dictionary = completed_setup.restore_completed_match(saved_match)
@@ -624,48 +601,7 @@ func _on_continue_pressed() -> void:
 	case_flow = restored_flow
 	_refresh_next_case()
 	_show_phase(setup.phase)
-	_show_toast("Trận đã được khôi phục. Hãy chọn Kỳ Án tiếp theo.")
-
-
-func _restore_loot_from_runtime_save(restored_match: MVP_MATCH_STATE, rdict: Dictionary) -> void:
-	var loot_dict: Dictionary = rdict.get("loot_session", {})
-	var saved_round: int = int(rdict.get("round_number", 1))
-
-	_clear_active_match()
-
-	var restored_setup: SETUP_SESSION = SETUP_SESSION.new()
-	restored_setup.match_state = restored_match
-	restored_setup.phase = SETUP_SESSION.Phase.LOOT_ACTIVE
-	setup = restored_setup
-
-	var restored_flow: CASE_FLOW_SESSION = CASE_FLOW_SESSION.new()
-	var res: Dictionary = restored_flow.restore_loot_runtime(restored_match, loot_dict, saved_round)
-	if not bool(res.get("success", false)):
-		_show_toast("Không thể khôi phục trạng thái Loot!", true)
-		return
-	case_flow = restored_flow
-
-	var chest_dict: Dictionary = rdict.get("mystery_chest", {})
-	if not chest_dict.is_empty():
-		_mystery_chest = MYSTERY_CHEST_STATE.from_dict(chest_dict)
-	else:
-		_mystery_chest = MYSTERY_CHEST_STATE.new()
-
-	_vault_reach_player_ids.clear()
-	var raw_vault: Array = rdict.get("vault_reach_player_ids", [])
-	for pid_val in raw_vault:
-		_vault_reach_player_ids.append(StringName(String(pid_val)))
-
-	_loot_activity_lines.clear()
-	var raw_lines: Array = rdict.get("loot_activity_lines", [])
-	for l in raw_lines:
-		_loot_activity_lines.append(String(l))
-	_logged_reward_count = int(rdict.get("logged_reward_count", 0))
-
-	_show_round_indicator(saved_round)
-	_show_phase(setup.phase)
-	_refresh_loot()
-	_show_toast("Đã tiếp tục hành trình Loot tại Vòng %d!" % saved_round, false)
+	_show_toast("Trận đã được khôi phục tại Đầu Vòng %d. Hãy chọn Kỳ Án tiếp theo." % restored_flow.active_round_number())
 
 
 func _on_classic_mode_pressed() -> void:
@@ -1467,7 +1403,9 @@ func _on_round_summary_continue_pressed() -> void:
 		_show_message("Round đã được hoàn tất hoặc chưa thể kết thúc.", true)
 		return
 	var autosaved: Dictionary = _autosave_service.save_match(case_flow.match_state)
-	if not bool(autosaved.get("success", false)):
+	if bool(autosaved.get("success", false)):
+		_show_toast("💾 Đã tự động lưu trận đấu (Đầu Vòng %d)!" % case_flow.match_state.current_round_number, false)
+	else:
 		AppLogger.error(
 			"Player-facing autosave failed: %s" % String(autosaved.get("code", "UNKNOWN"))
 		)
@@ -1596,66 +1534,6 @@ func _refresh_continue_button() -> void:
 		if available
 		else "Chưa có trận đấu đã lưu"
 	)
-
-
-func _save_game_manual() -> void:
-	var active_match: MVP_MATCH_STATE = null
-	if case_flow != null and case_flow.match_state != null:
-		active_match = case_flow.match_state
-	elif setup != null and setup.match_state != null:
-		active_match = setup.match_state
-
-	if active_match == null or not active_match.character_selection_complete or active_match.players.size() != 3:
-		_show_toast("Chưa vào trận đấu để lưu (F9).", true)
-		return
-
-	var current_round: int = (
-		case_flow.active_round_number()
-		if case_flow != null and case_flow.has_method("active_round_number")
-		else (active_match.current_round_number if active_match != null else 1)
-	)
-
-	var runtime_data: Dictionary = {
-		"version": 1,
-		"saved_phase": int(setup.phase),
-		"round_number": current_round,
-		"match_state": active_match.to_dict(),
-		"loot_session": (
-			case_flow.loot_session.to_dict()
-			if case_flow != null and case_flow.loot_session != null
-			else {}
-		),
-		"mystery_chest": (
-			_mystery_chest.to_dict() if _mystery_chest != null else {}
-		),
-		"vault_reach_player_ids": _vault_reach_player_ids.map(
-			func(id: StringName) -> String: return String(id)
-		),
-		"loot_activity_lines": _loot_activity_lines,
-		"logged_reward_count": _logged_reward_count,
-	}
-
-	var rf := FileAccess.open("user://player_facing_runtime_save.json", FileAccess.WRITE)
-	if rf != null:
-		rf.store_string(JSON.stringify(runtime_data))
-		rf.close()
-
-	var save_state: MVP_MATCH_STATE = MVP_MATCH_STATE.from_dict(active_match.to_dict())
-	if save_state.match_completion_state != &"MATCH_COMPLETE":
-		save_state.current_phase = MVP_ENUMS.Phase.ROUND_START
-		save_state.match_completion_state = &"NEXT_CASE_REQUIRED"
-		save_state.completed_round_count = maxi(1, active_match.completed_round_count)
-		save_state.current_round_number = save_state.completed_round_count + 1
-		if save_state.applied_commit_ids.is_empty():
-			save_state.applied_commit_ids.append(&"manual_f9_save_commit")
-
-	var save_res: Dictionary = _autosave_service.save_match(save_state)
-	if bool(save_res.get("success", false)):
-		var phase_name: String = _phase_display_name(setup.phase)
-		_show_toast("Đã lưu game thành công (F9) tại [%s]! Bạn có thể bấm [Tiếp tục] bất kỳ lúc nào." % phase_name, false)
-		_refresh_continue_button()
-	else:
-		_show_toast("Không thể lưu game: %s" % String(save_res.get("code", "UNKNOWN")), true)
 
 
 func _on_exit_pressed() -> void:
@@ -3441,6 +3319,26 @@ func _init_cheat_layer() -> void:
 	grid.add_theme_constant_override("v_separation", 10)
 	scroll.add_child(grid)
 
+	# --- Nhóm 0: Nhảy Phase (Phase Jump) ---
+	_add_cheat_btn(grid, "⏩ [PHASE] 1. Chọn Kỳ Án", func() -> void:
+		_cheat_jump_to_next_case_selection()
+	)
+	_add_cheat_btn(grid, "⏩ [PHASE] 2. Chơi Kỳ Án", func() -> void:
+		_cheat_jump_to_case()
+	)
+	_add_cheat_btn(grid, "⏩ [PHASE] 3. Bàn Đồ Loot", func() -> void:
+		_cheat_jump_to_loot()
+	)
+	_add_cheat_btn(grid, "⏩ [PHASE] 4. Quản Lý Trang Bị", func() -> void:
+		_cheat_jump_to_equipment()
+	)
+	_add_cheat_btn(grid, "⏩ [PHASE] 5. Bảng Tổng Kết Round", func() -> void:
+		_cheat_jump_to_round_summary()
+	)
+	_add_cheat_btn(grid, "⏩ [PHASE] 6. Kết Quả Chung Cuộc", func() -> void:
+		_cheat_jump_to_match_results()
+	)
+
 	# --- Nhóm 1: Thể Lực & Lượt Di Chuyển ---
 	_add_cheat_btn(grid, "⚡ +1 Thể Lực (+1 Lượt)", func() -> void:
 		_cheat_adjust_stamina(1)
@@ -3867,3 +3765,131 @@ func _add_cheat_btn(parent: Node, label_text: String, callback: Callable) -> But
 	btn.pressed.connect(callback)
 	parent.add_child(btn)
 	return btn
+
+
+func _cheat_ensure_match_running() -> bool:
+	if setup == null:
+		setup = SETUP_SESSION.new()
+	if setup.match_state == null or setup.match_state.players.size() != 3 or not setup.match_state.character_selection_complete:
+		setup.begin_new_game()
+		setup.select_mode(SETUP_SESSION.MatchMode.CLASSIC)
+		setup.apply_default_classic_rules()
+		setup.apply_supported_player_count()
+		setup.proceed_to_character_selection()
+		var pids: Array[StringName] = [&"player_01", &"player_02", &"player_03"]
+		var cids: Array[StringName] = [&"char_01_hoang_linh_lam", &"char_02_chu_tue_nguyet", &"char_03_kim_thanh_giai"]
+		for i in range(3):
+			setup.select_character(pids[i], cids[i])
+		setup.proceed_to_lineup_confirmation()
+		setup.proceed_to_case_selection_ready()
+	return true
+
+
+func _cheat_jump_to_case() -> void:
+	if not _cheat_ensure_match_running():
+		_notify_cheat("Không thể khởi động trận đấu.")
+		return
+	if setup.phase == SETUP_SESSION.Phase.CASE_ACTIVE and case_controller != null:
+		_cheat_overlay.visible = false
+		_show_phase(SETUP_SESSION.Phase.CASE_ACTIVE)
+		_notify_cheat("Đang ở trong Kỳ Án.")
+		return
+	if case_flow == null:
+		_launch_case()
+	elif setup.phase == SETUP_SESSION.Phase.NEXT_CASE_SELECTION:
+		_start_next_case_from_option(0)
+	else:
+		_show_phase(SETUP_SESSION.Phase.CASE_ACTIVE)
+	_cheat_overlay.visible = false
+	_notify_cheat("Đã nhảy tới Kỳ Án!")
+
+
+func _cheat_jump_to_loot() -> void:
+	if not _cheat_ensure_match_running():
+		_notify_cheat("Không thể khởi động trận đấu.")
+		return
+	if setup.phase == SETUP_SESSION.Phase.LOOT_ACTIVE and case_flow != null and case_flow.loot_session != null:
+		_cheat_overlay.visible = false
+		_show_phase(SETUP_SESSION.Phase.LOOT_ACTIVE)
+		_refresh_loot()
+		_notify_cheat("Đang ở trong Bản đồ Loot.")
+		return
+	if case_flow == null:
+		_launch_case()
+	if setup.phase == SETUP_SESSION.Phase.NEXT_CASE_SELECTION:
+		_start_next_case_from_option(0)
+	if setup.phase == SETUP_SESSION.Phase.CASE_ACTIVE and case_flow != null:
+		var boundary := case_flow.build_test_only_completed_boundary()
+		if boundary != null:
+			case_flow.handle_case_completion(boundary)
+			setup.mark_case_results_ready()
+	if setup.phase == SETUP_SESSION.Phase.CASE_RESULTS:
+		setup.continue_to_loot_ready()
+	if setup.phase == SETUP_SESSION.Phase.LOOT_READY or setup.phase != SETUP_SESSION.Phase.LOOT_ACTIVE:
+		_on_start_loot_pressed()
+	_cheat_overlay.visible = false
+	_notify_cheat("Đã nhảy tới Bản Đồ Loot Hoàng Cung!")
+
+
+func _cheat_jump_to_equipment() -> void:
+	if not _cheat_ensure_match_running():
+		_notify_cheat("Không thể khởi động trận đấu.")
+		return
+	if setup.phase != SETUP_SESSION.Phase.LOOT_ACTIVE and (case_flow == null or case_flow.loot_session == null):
+		_cheat_jump_to_loot()
+	if case_flow != null and case_flow.loot_session != null:
+		var guard := 0
+		while (
+			case_flow.loot_session != null
+			and case_flow.loot_session.phase != LOOT_REWARD_SESSION.Phase.LOOT_END_CONFIRMATION_READY
+			and guard < 100
+		):
+			guard += 1
+			match case_flow.loot_session.phase:
+				LOOT_REWARD_SESSION.Phase.ITEM_WINDOW:
+					case_flow.continue_without_item()
+				LOOT_REWARD_SESSION.Phase.MOVEMENT:
+					case_flow.move()
+				LOOT_REWARD_SESSION.Phase.BAG_OVERFLOW_PENDING:
+					case_flow.resolve_overflow_skip()
+		if case_flow.loot_session.phase == LOOT_REWARD_SESSION.Phase.LOOT_END_CONFIRMATION_READY:
+			_on_loot_end_confirmed()
+	_show_phase(SETUP_SESSION.Phase.EQUIPMENT_MANAGEMENT)
+	_refresh_equipment_management()
+	_cheat_overlay.visible = false
+	_notify_cheat("Đã nhảy tới Quản Lý Trang Bị / Gacha!")
+
+
+func _cheat_jump_to_round_summary() -> void:
+	if setup.phase != SETUP_SESSION.Phase.EQUIPMENT_MANAGEMENT:
+		_cheat_jump_to_equipment()
+	if case_flow != null and case_flow.equipment_session != null:
+		for pid: StringName in case_flow.equipment_session.player_order:
+			case_flow.mark_management_done(pid)
+	_on_round_summary_pressed()
+	_cheat_overlay.visible = false
+	_notify_cheat("Đã nhảy tới Bảng Tổng Kết Round!")
+
+
+func _cheat_jump_to_next_case_selection() -> void:
+	if setup.phase != SETUP_SESSION.Phase.ROUND_SUMMARY:
+		_cheat_jump_to_round_summary()
+	_on_round_summary_continue_pressed()
+	_cheat_overlay.visible = false
+	_notify_cheat("Đã nhảy tới Chọn Kỳ Án Tiếp Theo!")
+
+
+func _cheat_jump_to_match_results() -> void:
+	if not _cheat_ensure_match_running():
+		_notify_cheat("Không thể khởi động trận đấu.")
+		return
+	if case_flow == null:
+		_launch_case()
+	if case_flow != null and case_flow.match_state != null:
+		case_flow.match_state.match_completion_state = &"MATCH_COMPLETE"
+		setup.mark_match_complete(case_flow.match_state)
+		_render_match_results()
+		_show_phase(SETUP_SESSION.Phase.MATCH_RESULTS)
+	_cheat_overlay.visible = false
+	_notify_cheat("Đã nhảy tới Kết Quả Chung Cuộc Trận Đấu!")
+
