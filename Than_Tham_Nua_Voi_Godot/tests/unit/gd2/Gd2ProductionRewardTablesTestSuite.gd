@@ -44,9 +44,9 @@ func run() -> Array[Dictionary]:
 	rows.append(_row("GĐ2 production reward IDs and values are canonical", _reward_contract()))
 	rows.append(_row("GĐ2 production rewards are repeatable non-test resources", _reward_flags()))
 	rows.append(_row("GĐ2 production reward tables cover three canonical zones", _table_zones()))
-	rows.append(_row("GĐ2 HOUSE reward weights are canonical", _weights_match(&"HOUSE", [26, 22, 13, 9, 7, 6, 5, 6, 3, 3])))
-	rows.append(_row("GĐ2 MIDDLE reward weights are canonical", _weights_match(&"MIDDLE", [15, 15, 15, 12, 10, 9, 9, 7, 4, 4])))
-	rows.append(_row("GĐ2 POST_MAUSOLEUM reward weights are canonical", _weights_match(&"POST_MAUSOLEUM", [8, 8, 16, 13, 13, 11, 13, 8, 5, 5])))
+	rows.append(_row("GĐ2 HOUSE reward weights are canonical", _weights_match(&"HOUSE", [30, 25, 1, 8, 6, 5, 1, 15, 5, 4])))
+	rows.append(_row("GĐ2 MIDDLE reward weights are canonical", _weights_match(&"MIDDLE", [20, 16, 3, 14, 12, 8, 5, 10, 6, 6])))
+	rows.append(_row("GĐ2 POST_MAUSOLEUM reward weights are canonical", _weights_match(&"POST_MAUSOLEUM", [15, 12, 5, 16, 14, 10, 10, 8, 5, 5])))
 	rows.append(_row("GĐ2 production zone weights total 100", _all_weight_totals_are_100()))
 	rows.append(_row("GĐ2 production reward density is 75 percent in every zone", _all_density_is_75()))
 	rows.append(_row("GĐ2 production reward content passes scoped validation", VALIDATOR.new().validate(rewards, tables, map_definition, items).is_empty()))
@@ -78,8 +78,8 @@ func _row(name: String, passed: bool) -> Dictionary:
 
 func _reward_contract() -> bool:
 	var expected: Dictionary = {
-		"prod_silver_small": [RewardDefinition.Type.SILVER_COIN, 2],
-		"prod_silver_large": [RewardDefinition.Type.SILVER_COIN, 5],
+		"prod_silver_small": [RewardDefinition.Type.SILVER_COIN, 10],
+		"prod_silver_large": [RewardDefinition.Type.SILVER_COIN, 30],
 		"prod_orb_1": [RewardDefinition.Type.ORB, 1],
 		"prod_gacha_ticket_1": [RewardDefinition.Type.GACHA_TICKET, 1],
 		"prod_equipment_exp_small": [RewardDefinition.Type.EQUIPMENT_EXP_MATERIAL, 3],
@@ -247,7 +247,7 @@ func _repeatable_across_players() -> bool:
 	var node_id := &"hoang_lane_a_1"
 	reward_service.resolve_trace(session, session.players[0].player_id, [node_id], rewards)
 	reward_service.resolve_trace(session, session.players[1].player_id, [node_id], rewards)
-	return session.players[0].silver_coin_count == 2 and session.players[1].silver_coin_count == 2
+	return session.players[0].silver_coin_count >= 10 and session.players[0].silver_coin_count <= 30 and session.players[1].silver_coin_count >= 10 and session.players[1].silver_coin_count <= 30
 
 
 func _snapshot_is_stable_and_serialized() -> bool:
@@ -271,7 +271,7 @@ func _direct_resource_bypasses_bag() -> bool:
 	var player: PlayerPhaseState = session.players[0]
 	var round_loot: RoundLootInventoryState = session.find_round_loot_state(player.player_id)
 	reward_service.resolve_trace(session, player.player_id, [&"hoang_lane_a_1"], rewards)
-	return player.silver_coin_count == 2 and round_loot.carried_items.is_empty()
+	return player.silver_coin_count >= 10 and player.silver_coin_count <= 30 and round_loot.carried_items.is_empty()
 
 
 func _player_flow_uses_production_content() -> bool:
@@ -318,7 +318,7 @@ func _fixture_and_map_boundaries_remain() -> bool:
 		fixture_map.test_only_not_canon_locked
 		and not fixture_snapshots.is_empty()
 		and fixture_snapshots[0].reward_definition_id == fixture_rewards[0].reward_id
-		and map_definition.nodes.size() == 77
+		and map_definition.nodes.size() == 78
 		and map_definition.find_node(&"central_hub").world_position == Vector2(1600, 1500)
 		and map_definition.find_node(&"mausoleum_hub").world_position == Vector2(1600, 2600)
 	)

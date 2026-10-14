@@ -66,6 +66,11 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "Roll & Move"
 
+[node name="AuctionButton" type="Button" parent="PlayerHud/Panel/Row"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "👑 Đấu Giá Hòm"
+
 [node name="BackButton" type="Button" parent="PlayerHud/Panel/Row"]
 layout_mode = 2
 text = "Quay lại"

@@ -6,52 +6,52 @@
 [sub_resource type="Resource" id="SilverSmall"]
 script = ExtResource("2")
 reward_id = &"prod_silver_small"
-weight = 15
+weight = 20
 
 [sub_resource type="Resource" id="ExpSmall"]
 script = ExtResource("2")
 reward_id = &"prod_equipment_exp_small"
-weight = 15
+weight = 16
 
 [sub_resource type="Resource" id="Orb"]
 script = ExtResource("2")
 reward_id = &"prod_orb_1"
-weight = 15
+weight = 3
 
 [sub_resource type="Resource" id="SilverLarge"]
 script = ExtResource("2")
 reward_id = &"prod_silver_large"
-weight = 12
+weight = 14
 
 [sub_resource type="Resource" id="ExpLarge"]
 script = ExtResource("2")
 reward_id = &"prod_equipment_exp_large"
-weight = 10
+weight = 12
 
 [sub_resource type="Resource" id="Exchange"]
 script = ExtResource("2")
 reward_id = &"prod_exchange_material_1"
-weight = 9
+weight = 8
 
 [sub_resource type="Resource" id="Ticket"]
 script = ExtResource("2")
 reward_id = &"prod_gacha_ticket_1"
-weight = 9
+weight = 5
 
 [sub_resource type="Resource" id="HanhLoPhu"]
 script = ExtResource("2")
 reward_id = &"prod_consumable_hanh_lo_phu"
-weight = 7
+weight = 10
 
 [sub_resource type="Resource" id="LenhBai"]
 script = ExtResource("2")
 reward_id = &"prod_consumable_lenh_bai_thong_hanh"
-weight = 4
+weight = 6
 
 [sub_resource type="Resource" id="NguMaLenh"]
 script = ExtResource("2")
 reward_id = &"prod_consumable_ngu_ma_lenh"
-weight = 4
+weight = 6
 
 [resource]
 script = ExtResource("1")

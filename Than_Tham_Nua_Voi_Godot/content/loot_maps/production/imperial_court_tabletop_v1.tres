@@ -666,9 +666,10 @@ test_only_not_canon_locked = false
 [sub_resource type="Resource" id="Node067"]
 script = ExtResource("2")
 node_id = &"final_lane_1_5"
-node_kind = &"END"
-tags = [&"SHARED", &"POST_MAUSOLEUM", &"END"]
-display_name = "Điểm cuối Hoàng lộ 1"
+node_kind = &"FINAL_PATH"
+tags = [&"SHARED", &"POST_MAUSOLEUM"]
+outgoing_neighbor_ids = [&"royal_vault_hub"]
+display_name = "Hoàng lộ 1"
 world_position = Vector2(1460, 3460)
 test_only_not_canon_locked = false
 
@@ -712,9 +713,10 @@ test_only_not_canon_locked = false
 [sub_resource type="Resource" id="Node072"]
 script = ExtResource("2")
 node_id = &"final_lane_2_5"
-node_kind = &"END"
-tags = [&"SHARED", &"POST_MAUSOLEUM", &"END"]
-display_name = "Điểm cuối Hoàng lộ 2"
+node_kind = &"FINAL_PATH"
+tags = [&"SHARED", &"POST_MAUSOLEUM"]
+outgoing_neighbor_ids = [&"royal_vault_hub"]
+display_name = "Hoàng lộ 2"
 world_position = Vector2(1600, 3460)
 test_only_not_canon_locked = false
 
@@ -758,17 +760,27 @@ test_only_not_canon_locked = false
 [sub_resource type="Resource" id="Node077"]
 script = ExtResource("2")
 node_id = &"final_lane_3_5"
-node_kind = &"END"
-tags = [&"SHARED", &"POST_MAUSOLEUM", &"END"]
-display_name = "Điểm cuối Hoàng lộ 3"
+node_kind = &"FINAL_PATH"
+tags = [&"SHARED", &"POST_MAUSOLEUM"]
+outgoing_neighbor_ids = [&"royal_vault_hub"]
+display_name = "Hoàng lộ 3"
 world_position = Vector2(1740, 3460)
+test_only_not_canon_locked = false
+
+[sub_resource type="Resource" id="Node078"]
+script = ExtResource("2")
+node_id = &"royal_vault_hub"
+node_kind = &"END"
+tags = [&"SHARED", &"POST_MAUSOLEUM", &"END", &"ROYAL_VAULT"]
+display_name = "Kho Báu Hoàng Gia"
+world_position = Vector2(1600, 3660)
 test_only_not_canon_locked = false
 
 [resource]
 script = ExtResource("1")
 map_id = &"imperial_court_tabletop_v1"
 data_version = 2
-nodes = [SubResource("Node001"), SubResource("Node002"), SubResource("Node003"), SubResource("Node004"), SubResource("Node005"), SubResource("Node006"), SubResource("Node007"), SubResource("Node008"), SubResource("Node009"), SubResource("Node010"), SubResource("Node011"), SubResource("Node012"), SubResource("Node013"), SubResource("Node014"), SubResource("Node015"), SubResource("Node016"), SubResource("Node017"), SubResource("Node018"), SubResource("Node019"), SubResource("Node020"), SubResource("Node021"), SubResource("Node022"), SubResource("Node023"), SubResource("Node024"), SubResource("Node025"), SubResource("Node026"), SubResource("Node027"), SubResource("Node028"), SubResource("Node029"), SubResource("Node030"), SubResource("Node031"), SubResource("Node032"), SubResource("Node033"), SubResource("Node034"), SubResource("Node035"), SubResource("Node036"), SubResource("Node037"), SubResource("Node038"), SubResource("Node039"), SubResource("Node040"), SubResource("Node041"), SubResource("Node042"), SubResource("Node043"), SubResource("Node044"), SubResource("Node045"), SubResource("Node046"), SubResource("Node047"), SubResource("Node048"), SubResource("Node049"), SubResource("Node050"), SubResource("Node051"), SubResource("Node052"), SubResource("Node053"), SubResource("Node054"), SubResource("Node055"), SubResource("Node056"), SubResource("Node057"), SubResource("Node058"), SubResource("Node059"), SubResource("Node060"), SubResource("Node061"), SubResource("Node062"), SubResource("Node063"), SubResource("Node064"), SubResource("Node065"), SubResource("Node066"), SubResource("Node067"), SubResource("Node068"), SubResource("Node069"), SubResource("Node070"), SubResource("Node071"), SubResource("Node072"), SubResource("Node073"), SubResource("Node074"), SubResource("Node075"), SubResource("Node076"), SubResource("Node077")]
+nodes = [SubResource("Node001"), SubResource("Node002"), SubResource("Node003"), SubResource("Node004"), SubResource("Node005"), SubResource("Node006"), SubResource("Node007"), SubResource("Node008"), SubResource("Node009"), SubResource("Node010"), SubResource("Node011"), SubResource("Node012"), SubResource("Node013"), SubResource("Node014"), SubResource("Node015"), SubResource("Node016"), SubResource("Node017"), SubResource("Node018"), SubResource("Node019"), SubResource("Node020"), SubResource("Node021"), SubResource("Node022"), SubResource("Node023"), SubResource("Node024"), SubResource("Node025"), SubResource("Node026"), SubResource("Node027"), SubResource("Node028"), SubResource("Node029"), SubResource("Node030"), SubResource("Node031"), SubResource("Node032"), SubResource("Node033"), SubResource("Node034"), SubResource("Node035"), SubResource("Node036"), SubResource("Node037"), SubResource("Node038"), SubResource("Node039"), SubResource("Node040"), SubResource("Node041"), SubResource("Node042"), SubResource("Node043"), SubResource("Node044"), SubResource("Node045"), SubResource("Node046"), SubResource("Node047"), SubResource("Node048"), SubResource("Node049"), SubResource("Node050"), SubResource("Node051"), SubResource("Node052"), SubResource("Node053"), SubResource("Node054"), SubResource("Node055"), SubResource("Node056"), SubResource("Node057"), SubResource("Node058"), SubResource("Node059"), SubResource("Node060"), SubResource("Node061"), SubResource("Node062"), SubResource("Node063"), SubResource("Node064"), SubResource("Node065"), SubResource("Node066"), SubResource("Node067"), SubResource("Node068"), SubResource("Node069"), SubResource("Node070"), SubResource("Node071"), SubResource("Node072"), SubResource("Node073"), SubResource("Node074"), SubResource("Node075"), SubResource("Node076"), SubResource("Node077"), SubResource("Node078")]
 origin_spawn_by_house = {&"house_hoang": &"hoang_spawn", &"house_chu": &"chu_spawn", &"house_kim": &"kim_spawn", &"house_huyen": &"huyen_spawn", &"house_lam": &"lam_spawn"}
 test_only_not_canon_locked = false
 

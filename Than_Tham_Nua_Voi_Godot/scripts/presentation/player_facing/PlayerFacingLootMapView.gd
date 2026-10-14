@@ -425,6 +425,7 @@ func _draw() -> void:
 		var fill: Color = _node_color(node)
 		var is_spawn: bool = (node != null and node.node_kind == &"ORIGIN_SPAWN")
 		var is_hub: bool = (node != null and (node.node_kind == &"CENTRAL_HUB" or node.node_kind == &"MAUSOLEUM_HUB"))
+		var is_vault: bool = (node != null and (node.node_id == &"royal_vault_hub" or node.tags.has(&"ROYAL_VAULT")))
 
 		# Tile drop shadow
 		draw_circle(center + Vector2(2.5, 4.5) * visual_scale, radius + 3.5 * visual_scale, Color(0.06, 0.05, 0.04, 0.48))
@@ -436,6 +437,8 @@ func _draw() -> void:
 			draw_arc(center, radius - 3.0 * visual_scale, -PI * 0.85, -PI * 0.15, 24, fill.lightened(0.4), 2.2 * visual_scale, true)
 			draw_circle(center + Vector2(-radius * 0.25, -radius * 0.25), radius * 0.28, Color(1.0, 1.0, 1.0, 0.22))
 			_draw_origin_seal(center, node.origin_house_id)
+		elif is_vault:
+			_draw_royal_vault_node(center, radius, visual_scale)
 		elif is_hub:
 			draw_circle(center, radius, fill)
 			draw_arc(center, radius - 3.0 * visual_scale, -PI * 0.85, -PI * 0.15, 24, fill.lightened(0.4), 2.2 * visual_scale, true)
@@ -535,6 +538,34 @@ func _draw_hub_insignia(center: Vector2, node_kind: StringName) -> void:
 	draw_string(
 		ThemeDB.fallback_font, center + Vector2(-10.0, 7.0), icon,
 		HORIZONTAL_ALIGNMENT_CENTER, 20.0, 16, Color(1.0, 0.94, 0.8)
+	)
+
+
+func _draw_royal_vault_node(center: Vector2, radius: float, visual_scale: float) -> void:
+	# 1. Outer golden aura halo
+	draw_circle(center, radius + 10.0 * visual_scale, Color(1.0, 0.82, 0.2, 0.22))
+	# 2. Dual imperial gold rim
+	draw_arc(center, radius + 4.5 * visual_scale, 0.0, TAU, 48, Color(1.0, 0.88, 0.35, 0.95), 3.0 * visual_scale, true)
+	draw_arc(center, radius + 1.5 * visual_scale, 0.0, TAU, 48, Color(0.82, 0.62, 0.18, 0.85), 2.0 * visual_scale, true)
+	# 3. Imperial crimson face
+	draw_circle(center, radius, Color(0.44, 0.09, 0.12, 0.98))
+	# 4. Specular arc
+	draw_arc(center, radius - 4.0 * visual_scale, -PI * 0.85, -PI * 0.15, 32, Color(1.0, 0.5, 0.5, 0.7), 3.0 * visual_scale, true)
+	# 5. Inner decorative gold circle
+	draw_arc(center, radius * 0.72, 0.0, TAU, 36, Color(1.0, 0.88, 0.35, 0.6), 2.0 * visual_scale, true)
+	# 6. Crown insignia
+	var crown_font_size: int = maxi(int(26.0 * visual_scale), 18)
+	var crown_w: float = float(crown_font_size) * 1.5
+	draw_string(
+		ThemeDB.fallback_font, center + Vector2(-crown_w * 0.5, -4.0 * visual_scale), "👑",
+		HORIZONTAL_ALIGNMENT_CENTER, crown_w, crown_font_size, Color(1.0, 0.95, 0.7)
+	)
+	# 7. Sub-label text
+	var label_size: int = maxi(int(9.5 * visual_scale), 8)
+	var label_w: float = radius * 1.8
+	draw_string(
+		ThemeDB.fallback_font, center + Vector2(-label_w * 0.5, float(label_size) * 1.4), "KHO BÁU",
+		HORIZONTAL_ALIGNMENT_CENTER, label_w, label_size, Color(1.0, 0.9, 0.6, 0.9)
 	)
 
 
@@ -831,6 +862,10 @@ func _draw_hovered_node_tooltip() -> void:
 		title_text = "◇ Lăng Miếu"
 		desc_text = "Ngã rẽ dẫn lối vào ba Hoàng lộ phương Nam"
 		theme_col = Color(1.0, 0.75, 0.4)
+	elif node.node_id == &"royal_vault_hub" or node.tags.has(&"ROYAL_VAULT"):
+		title_text = "👑 Kho Báu Hoàng Gia"
+		desc_text = "Điểm đích hội tụ - Đổ xúc xắc để thêm vật phẩm vào Hòm Bí Ẩn đấu giá"
+		theme_col = Color(1.0, 0.85, 0.25)
 	else:
 		title_text = _build_node_base_name(node)
 		desc_text = "Ô đá di chuyển trong Hoàng Cung"
@@ -1136,6 +1171,8 @@ func _route_color(node: LootNodeDefinition) -> Color:
 func _node_radius(node: LootNodeDefinition) -> float:
 	if node == null:
 		return NODE_RADIUS
+	if node.node_id == &"royal_vault_hub" or node.tags.has(&"ROYAL_VAULT"):
+		return 52.0
 	match node.node_kind:
 		&"CENTRAL_HUB", &"MAUSOLEUM_HUB":
 			return 36.0

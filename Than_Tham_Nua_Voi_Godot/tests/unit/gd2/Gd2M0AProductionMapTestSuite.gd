@@ -152,7 +152,7 @@ func _production_assets_load(map_definition: LootMapDefinition) -> bool:
 	return (
 		map_definition.map_id == &"imperial_court_tabletop_v1"
 		and map_definition.data_version == 2
-		and map_definition.nodes.size() == 77
+		and map_definition.nodes.size() == 78
 		and report.is_valid
 		and PREVIEW_SCENE is PackedScene
 	)
@@ -298,13 +298,15 @@ func _final_route_contract_matches(map_definition: LootMapDefinition) -> bool:
 	var lane_positions: Array = []
 	for lane_start: StringName in hub.outgoing_neighbor_ids:
 		var path: Array[StringName] = _trace_to_terminal(map_definition, lane_start)
-		if path.size() != 5:
+		if path.size() != 6:
 			return false
 		var positions: Array[Vector2] = []
 		var terminal: LootNodeDefinition = map_definition.find_node(path[path.size() - 1])
 		if terminal == null or terminal.node_kind != &"END" or not terminal.outgoing_neighbor_ids.is_empty():
 			return false
 		for node_id: StringName in path:
+			if node_id == &"royal_vault_hub":
+				continue
 			if occupied.has(node_id):
 				return false
 			occupied[node_id] = true

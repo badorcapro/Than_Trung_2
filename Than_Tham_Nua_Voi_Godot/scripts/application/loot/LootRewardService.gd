@@ -194,8 +194,11 @@ func _resolve_pending(session: LootRewardSession, rewards: Array[RewardDefinitio
 		var reward: RewardDefinition = _find_reward(rewards, snapshot.reward_definition_id)
 		if reward == null: continue
 		var player_id: StringName = session.movement_session.movement_history[-1].player_id
+		var granted_amount: int = reward.amount
+		if reward.amount_max > reward.amount:
+			granted_amount = randi_range(reward.amount, reward.amount_max)
 		var result := RewardResolutionResult.new()
-		result.player_id=player_id; result.node_id=node_id; result.reward_type=reward.reward_type; result.reward_amount=reward.amount; result.reward_id=reward.reward_id; result.item_id=reward.item_id
+		result.player_id=player_id; result.node_id=node_id; result.reward_type=reward.reward_type; result.reward_amount=granted_amount; result.reward_id=reward.reward_id; result.item_id=reward.item_id
 		if reward.repeat_policy == RewardDefinition.RepeatPolicy.ONCE_PER_ROUND_GLOBAL and session.consumed_special_node_ids.has(node_id):
 			result.status = RewardResolutionResult.Status.SKIPPED; session.reward_history.append(result); continue
 		var player: PlayerPhaseState = session.find_player(player_id)
@@ -212,7 +215,7 @@ func _resolve_pending(session: LootRewardSession, rewards: Array[RewardDefinitio
 				result.status=RewardResolutionResult.Status.PENDING_OVERFLOW; result.overflow_required=true; session.reward_history.append(result)
 				session.overflow.active=true; session.overflow.player_id=player_id; session.overflow.incoming_item_id=reward.item_id; session.overflow.node_id=node_id; session.phase=LootRewardSession.Phase.BAG_OVERFLOW_PENDING; return
 			round_loot.carried_items.append({"item_id":String(reward.item_id)})
-		else: _grant_resource(player, reward, result)
+		else: _grant_resource(player, reward, result, granted_amount)
 		if reward.repeat_policy == RewardDefinition.RepeatPolicy.ONCE_PER_ROUND_GLOBAL:
 			session.consumed_special_node_ids.append(node_id); result.consumed_special=true
 		session.reward_history.append(result)
@@ -230,13 +233,18 @@ func _finalize_pending_overflow_result(session: LootRewardSession, accepted: boo
 	result.status = RewardResolutionResult.Status.GRANTED if accepted else RewardResolutionResult.Status.SKIPPED; result.overflow_required=false
 	session.overflow = BagOverflowState.new(); session.phase = LootRewardSession.Phase.REWARD_RESOLUTION
 
-func _grant_resource(player: PlayerPhaseState, reward: RewardDefinition, result: RewardResolutionResult) -> void:
+func _grant_resource(player: PlayerPhaseState, reward: RewardDefinition, result: RewardResolutionResult, granted_amount: int = -1) -> void:
+	var actual_amount: int = granted_amount if granted_amount >= 0 else reward.amount
 	match reward.reward_type:
-		RewardDefinition.Type.SILVER_COIN: player.silver_coin_count += reward.amount; result.resource_delta={"silver_coin":reward.amount}
-		RewardDefinition.Type.ORB: player.orb_count += reward.amount; result.resource_delta={"orb":reward.amount}
-		RewardDefinition.Type.GACHA_TICKET: player.gacha_ticket_count += reward.amount; result.resource_delta={"gacha_ticket":reward.amount}
-		RewardDefinition.Type.EQUIPMENT_EXP_MATERIAL: player.equipment_exp_material_count += reward.amount; result.resource_delta={"equipment_exp_material":reward.amount}
-		RewardDefinition.Type.EQUIPMENT_EXCHANGE_MATERIAL: player.equipment_exchange_material_count += reward.amount; result.resource_delta={"equipment_exchange_material":reward.amount}
+		RewardDefinition.Type.SILVER_COIN: player.silver_coin_count += actual_amount; result.resource_delta={"silver_coin":actual_amount}
+		RewardDefinition.Type.ORB: player.orb_count += actual_amount; result.resource_delta={"orb":actual_amount}
+		RewardDefinition.Type.GACHA_TICKET: player.gacha_ticket_count += actual_amount; result.resource_delta={"gacha_ticket":actual_amount}
+		RewardDefinition.Type.EQUIPMENT_EXP_MATERIAL:
+			player.equipment_exp_material_count += actual_amount
+			player.relic_exp_material_count += actual_amount
+			player.stigmata_exp_material_count += actual_amount
+			result.resource_delta={"equipment_exp_material":actual_amount}
+		RewardDefinition.Type.EQUIPMENT_EXCHANGE_MATERIAL: player.equipment_exchange_material_count += actual_amount; result.resource_delta={"equipment_exchange_material":actual_amount}
 
 func _find_character(characters: Array[CharacterDefinition], character_id: StringName) -> CharacterDefinition:
 	for character: CharacterDefinition in characters:

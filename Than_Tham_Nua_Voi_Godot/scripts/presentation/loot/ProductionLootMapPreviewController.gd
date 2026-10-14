@@ -12,12 +12,22 @@ const REWARD_SNAPSHOT_SERVICE := preload(
 const PRODUCTION_REWARD_REPO := preload(
 	"res://scripts/application/loot/ProductionRewardRepository.gd"
 )
+const MYSTERY_CHEST_STATE := preload(
+	"res://scripts/domain/loot/MysteryChestState.gd"
+)
+const AUCTION_SESSION := preload(
+	"res://scripts/domain/loot/AuctionSession.gd"
+)
+const AUCTION_SCREEN := preload(
+	"res://scripts/presentation/loot/AuctionScreen.gd"
+)
 
 @onready var map_view: MAP_VIEW = %ProductionMapView
 @onready var active_player_label: Label = %ActivePlayerLabel
 @onready var state_label: Label = %StateLabel
 @onready var camera_label: Label = %CameraLabel
 @onready var move_button: Button = %MoveButton
+@onready var auction_button: Button = %AuctionButton
 @onready var branch_buttons: HBoxContainer = %BranchButtons
 @onready var debug_overlay: Control = %DebugOverlay
 
@@ -25,6 +35,7 @@ var map_definition: LootMapDefinition
 var session := LootMovementSession.new()
 var movement_service := LootMovementService.new()
 var roll_source: MovementRollSource = SequenceMovementRollSource.new([1, 2, 1, 2, 1])
+var mystery_chest: MysteryChestState = MYSTERY_CHEST_STATE.new()
 var _preview_snapshots: Array = []
 var _debug_visible := false
 var _selected_preview_branch: StringName = &""
@@ -45,6 +56,8 @@ func _ready() -> void:
 	)
 	if map_view != null:
 		map_view.node_clicked.connect(_on_map_node_clicked)
+	if auction_button != null:
+		auction_button.pressed.connect(_on_auction_pressed)
 	_build_preview_session()
 	_apply_debug_visibility(false)
 	_refresh()
@@ -181,12 +194,43 @@ func _build_preview_session() -> void:
 func _on_move_pressed() -> void:
 	if session.pending_branch != null and session.pending_branch.active:
 		return
+	var current: LootMovementPlayerState = session.current_player()
+	if current != null and current.current_node_id == &"royal_vault_hub":
+		# Người chơi đã ở ô to đích và đổ xúc xắc: thêm 0-2 món vào hòm bí ẩn!
+		var added: Array[MysteryChestItem] = mystery_chest.roll_vault_deposit()
+		print("ROYAL_VAULT: Rolled dice at vault! Deposited %d items into Mystery Chest (Total: %d)." % [added.size(), mystery_chest.item_count()])
 	var chosen: StringName = _selected_preview_branch
 	_selected_preview_branch = &""
 	var _action: MovementActionResult = movement_service.roll_move(
 		session, map_definition, roll_source, [], chosen, true
 	)
 	_refresh()
+
+
+func _on_auction_pressed() -> void:
+	var vault_players: Array[StringName] = []
+	for p: LootMovementPlayerState in session.player_states:
+		if p.current_node_id == &"royal_vault_hub":
+			vault_players.append(p.player_id)
+
+	# Nếu chưa ai tới, thêm người chơi hiện tại vào để test giao diện
+	if vault_players.is_empty():
+		var current: LootMovementPlayerState = session.current_player()
+		if current != null:
+			vault_players.append(current.player_id)
+
+	# Đảm bảo có một số vật phẩm trong hòm để hiển thị manh mối và đấu giá
+	if mystery_chest.item_count() == 0:
+		mystery_chest.roll_vault_deposit(4)
+
+	var auction := AUCTION_SESSION.new()
+	auction.initialize(vault_players, mystery_chest)
+	var screen: AUCTION_SCREEN = AUCTION_SCREEN.new()
+	screen.setup(auction)
+	screen.auction_finished.connect(func(_data: Dictionary):
+		_refresh()
+	)
+	add_child(screen)
 
 
 func _on_branch_chosen(chosen_branch_id: StringName) -> void:

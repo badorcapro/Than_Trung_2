@@ -66,6 +66,9 @@ const GD2_PRODUCTION_REWARD_TABLES_TEST_SUITE := preload(
 const GD2_PRODUCTION_CONSUMABLES_TEST_SUITE := preload(
 	"res://tests/unit/gd2/Gd2ProductionConsumablesTestSuite.gd"
 )
+const GD2_MYSTERY_CHEST_AUCTION_TEST_SUITE := preload(
+	"res://tests/unit/gd2/Gd2MysteryChestAuctionTestSuite.gd"
+)
 const GD2_M2_TEST_SUITE := preload("res://tests/unit/gd2/Gd2M2TestSuite.gd")
 const GD2_M3_TEST_SUITE := preload("res://tests/unit/gd2/Gd2M3TestSuite.gd")
 const GD2_M4_TEST_SUITE := preload("res://tests/unit/gd2/Gd2M4TestSuite.gd")
@@ -1677,6 +1680,8 @@ func run_all() -> Dictionary:
 		rows.append(_result(String(production_reward_row.get("name", "GĐ2 production reward unnamed")), bool(production_reward_row.get("passed", false)), String(production_reward_row.get("detail", "GĐ2 production reward-table invariant"))))
 	for production_consumable_row: Dictionary in GD2_PRODUCTION_CONSUMABLES_TEST_SUITE.new().run():
 		rows.append(_result(String(production_consumable_row.get("name", "GĐ2 production consumable unnamed")), bool(production_consumable_row.get("passed", false)), String(production_consumable_row.get("detail", "GĐ2 production Consumables V1 invariant"))))
+	for auction_row: Dictionary in GD2_MYSTERY_CHEST_AUCTION_TEST_SUITE.new().run():
+		rows.append(_result(String(auction_row.get("name", "GĐ2 auction unnamed")), bool(auction_row.get("passed", false)), String(auction_row.get("detail", "GĐ2 Mystery Chest & Auction invariant"))))
 	for gd2_row: Dictionary in Gd2M1TestSuite.new().run():
 		rows.append(_result(String(gd2_row.get("name", "GĐ2-M1 unnamed")), bool(gd2_row.get("passed", false)), String(gd2_row.get("detail", "GĐ2-M1 foundation invariant"))))
 	for gd2_m2_row: Dictionary in GD2_M2_TEST_SUITE.new().run():

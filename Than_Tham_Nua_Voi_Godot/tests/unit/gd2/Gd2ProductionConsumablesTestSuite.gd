@@ -453,13 +453,13 @@ func _direct_resource_is_unchanged() -> bool:
 	var reward_set: Array[RewardDefinition] = [reward]
 	var session: LootRewardSession = _session(reward_set)
 	reward_service.resolve_trace(session, session.players[0].player_id, [&"hoang_lane_a_1"], reward_set)
-	return session.players[0].silver_coin_count == 2 and _round_state(session).carried_items.is_empty()
+	return session.players[0].silver_coin_count >= 10 and session.players[0].silver_coin_count <= 30 and _round_state(session).carried_items.is_empty()
 
 
 func _map_and_characters_are_unchanged() -> bool:
 	return (
 		map_definition != null
-		and map_definition.nodes.size() == 77
+		and map_definition.nodes.size() == 78
 		and map_definition.find_node(&"central_hub").world_position == Vector2(1600, 1500)
 		and map_definition.find_node(&"mausoleum_hub").world_position == Vector2(1600, 2600)
 		and characters.size() == 5
