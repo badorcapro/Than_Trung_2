@@ -3514,9 +3514,17 @@ func _get_all_active_players() -> Array:
 		return case_flow.equipment_session.players
 	if case_flow != null and case_flow.loot_session != null and not case_flow.loot_session.players.is_empty():
 		return case_flow.loot_session.players
-	if setup != null and not setup.players.is_empty():
-		return setup.players
+	if setup != null:
+		if setup.selection_session != null and not setup.selection_session.committed_players.is_empty():
+			return setup.selection_session.committed_players
+		if setup.match_state != null and not setup.match_state.players.is_empty():
+			if setup.selection_session != null:
+				setup.selection_session.committed_players.clear()
+				for pm in setup.match_state.players:
+					setup.selection_session.committed_players.append(PLAYER_PHASE_STATE.from_dict(pm.to_dict()))
+				return setup.selection_session.committed_players
 	return []
+
 
 
 func _get_cheat_target_player() -> PLAYER_PHASE_STATE:
