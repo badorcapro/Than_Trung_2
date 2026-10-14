@@ -199,7 +199,12 @@ func _resolve_pending(session: LootRewardSession, rewards: Array[RewardDefinitio
 			granted_amount = randi_range(reward.amount, reward.amount_max)
 		var result := RewardResolutionResult.new()
 		result.player_id=player_id; result.node_id=node_id; result.reward_type=reward.reward_type; result.reward_amount=granted_amount; result.reward_id=reward.reward_id; result.item_id=reward.item_id
-		if reward.repeat_policy == RewardDefinition.RepeatPolicy.ONCE_PER_ROUND_GLOBAL and session.consumed_special_node_ids.has(node_id):
+		var is_once_global: bool = (
+			reward.repeat_policy == RewardDefinition.RepeatPolicy.ONCE_PER_ROUND_GLOBAL
+			or snapshot.policy_id == &"ONCE_PER_ROUND_GLOBAL"
+			or node_id == &"royal_vault_hub"
+		)
+		if is_once_global and session.consumed_special_node_ids.has(node_id):
 			result.status = RewardResolutionResult.Status.SKIPPED; session.reward_history.append(result); continue
 		var player: PlayerPhaseState = session.find_player(player_id)
 		if reward.reward_type == RewardDefinition.Type.CONSUMABLE_ITEM:
@@ -216,7 +221,7 @@ func _resolve_pending(session: LootRewardSession, rewards: Array[RewardDefinitio
 				session.overflow.active=true; session.overflow.player_id=player_id; session.overflow.incoming_item_id=reward.item_id; session.overflow.node_id=node_id; session.phase=LootRewardSession.Phase.BAG_OVERFLOW_PENDING; return
 			round_loot.carried_items.append({"item_id":String(reward.item_id)})
 		else: _grant_resource(player, reward, result, granted_amount)
-		if reward.repeat_policy == RewardDefinition.RepeatPolicy.ONCE_PER_ROUND_GLOBAL:
+		if is_once_global:
 			session.consumed_special_node_ids.append(node_id); result.consumed_special=true
 		session.reward_history.append(result)
 	_finish_personal_turn(session)

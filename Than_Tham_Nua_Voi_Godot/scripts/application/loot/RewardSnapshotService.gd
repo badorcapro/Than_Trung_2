@@ -28,6 +28,24 @@ func build_weighted_reward_snapshot(
 	if map_definition == null or rewards.is_empty() or tables.is_empty() or roll_source == null:
 		return snapshots
 	for node: LootNodeDefinition in map_definition.nodes:
+		if node == null:
+			continue
+		if node.node_id == &"royal_vault_hub" or node.tags.has(&"ROYAL_VAULT"):
+			var high_rewards: Array[RewardDefinition] = []
+			for r: RewardDefinition in rewards:
+				if r != null and r.tier == RewardDefinition.Tier.HIGH:
+					high_rewards.append(r)
+			if not high_rewards.is_empty():
+				var high_pick: int = roll_source.pick_index(high_rewards.size())
+				var selected_high: RewardDefinition = high_rewards[maxi(0, high_pick % high_rewards.size())]
+				var vault_snapshot := RewardNodeSnapshot.new()
+				vault_snapshot.node_id = node.node_id
+				vault_snapshot.reward_definition_id = selected_high.reward_id
+				vault_snapshot.round_id = round_id
+				vault_snapshot.policy_id = &"ONCE_PER_ROUND_GLOBAL"
+				vault_snapshot.remaining_hits = 1
+				snapshots.append(vault_snapshot)
+			continue
 		var zone_id: StringName = production_zone_for_node(node)
 		if zone_id == &"":
 			continue

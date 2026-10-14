@@ -803,24 +803,8 @@ func _draw_tokens() -> void:
 
 
 func _update_hovered_tooltip_text() -> void:
-	if _hovered_node_id.is_empty() or map_definition == null:
-		tooltip_text = ""
-		return
-	var rew: Dictionary = _get_node_reward_presentation(_hovered_node_id)
-	if rew.get("has_reward", false):
-		var amount_str: String = String(rew.get("amount_str", "%d" % int(rew.get("amount", 1))))
-		var r_name: String = String(rew.get("reward_name", ""))
-		var icon_str: String = String(rew.get("icon", ""))
-		var desc: String = String(rew.get("description", ""))
-		var tier_label: String = String(rew.get("tier_label", ""))
-		var prefix: String = "[%s] " % tier_label if not tier_label.is_empty() else ""
-		if desc.is_empty():
-			tooltip_text = "%s%s %s (+%s)" % [prefix, icon_str, r_name, amount_str]
-		else:
-			tooltip_text = "%s%s %s (+%s)\n%s" % [prefix, icon_str, r_name, amount_str, desc]
-	else:
-		var node: LootNodeDefinition = map_definition.find_node(_hovered_node_id)
-		tooltip_text = _build_node_base_name(node)
+	# Tắt tooltip native của Godot để không hiển thị hộp đen đè lên canvas custom tooltip đã vẽ
+	tooltip_text = ""
 
 
 func _draw_hovered_node_tooltip() -> void:
@@ -833,6 +817,10 @@ func _draw_hovered_node_tooltip() -> void:
 	if node == null:
 		return
 
+	# Theo yêu cầu: Ô kho báu ẩn thông tin khi chỉ vào, chỉ hiển thị icon kho báu trên map
+	if node.node_id == &"royal_vault_hub" or node.tags.has(&"ROYAL_VAULT"):
+		return
+
 	var visual_scale: float = _visual_scale()
 	var radius: float = _node_radius(node) * visual_scale
 
@@ -840,7 +828,7 @@ func _draw_hovered_node_tooltip() -> void:
 	draw_arc(center, radius + 4.0 * visual_scale, 0.0, TAU, 32, Color(1.0, 1.0, 1.0, 0.9), 2.2 * visual_scale, true)
 	draw_arc(center, radius + 7.5 * visual_scale, 0.0, TAU, 32, Color(1.0, 0.88, 0.35, 0.45), 1.6 * visual_scale, true)
 
-	# 2. Prepare tooltip content
+	# 2. Prepare tooltip content (chỉ hiện tên vật phẩm và mô tả, không gắn mác [Cấp ...])
 	var rew: Dictionary = _get_node_reward_presentation(_hovered_node_id)
 	var title_text: String = ""
 	var desc_text: String = ""
@@ -851,15 +839,13 @@ func _draw_hovered_node_tooltip() -> void:
 		var r_name: String = String(rew.get("reward_name", "Vật phẩm"))
 		var amount: int = int(rew.get("amount", 1))
 		var show_count: bool = bool(rew.get("show_count", true))
-		var tier_label: String = String(rew.get("tier_label", ""))
 		theme_col = rew.get("theme_color", Color(1.0, 0.84, 0.25))
 
 		var amount_str: String = String(rew.get("amount_str", "%d" % amount))
-		var tier_badge: String = " · [%s]" % tier_label if not tier_label.is_empty() else ""
 		if show_count:
-			title_text = "%s %s (+%s)%s" % [icon_str, r_name, amount_str, tier_badge]
+			title_text = "%s %s (+%s)" % [icon_str, r_name, amount_str]
 		else:
-			title_text = "%s %s%s" % [icon_str, r_name, tier_badge]
+			title_text = "%s %s" % [icon_str, r_name]
 		desc_text = String(rew.get("description", ""))
 	elif node.node_kind == &"ORIGIN_SPAWN":
 		title_text = "Nhà họ %s · Điểm Xuất Phát" % _house_letter(node.origin_house_id)
@@ -873,10 +859,6 @@ func _draw_hovered_node_tooltip() -> void:
 		title_text = "◇ Lăng Miếu"
 		desc_text = "Ngã rẽ dẫn lối vào ba Hoàng lộ phương Nam"
 		theme_col = Color(1.0, 0.75, 0.4)
-	elif node.node_id == &"royal_vault_hub" or node.tags.has(&"ROYAL_VAULT"):
-		title_text = "👑 Kho Báu Hoàng Gia"
-		desc_text = "Điểm đích hội tụ - Đổ xúc xắc để thêm vật phẩm vào Hòm Bí Ẩn đấu giá"
-		theme_col = Color(1.0, 0.85, 0.25)
 	else:
 		title_text = _build_node_base_name(node)
 		desc_text = "Ô đá di chuyển trong Hoàng Cung"
