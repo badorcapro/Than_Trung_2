@@ -2031,6 +2031,152 @@ static var _CATALOG_ITEMS: Array[Dictionary] = [
 		"description": "Đầu khò gas lửa xoáy nhiệt độ cao chuyên dụng hàn kim loại và mồi lửa dã ngoại."
 	},
 
+	# --- Đợt 14: 12 Vật phẩm phẩm Tím (Batch 14: 12 Purple, a099 -> a110) ---
+	{
+		"id": "ev_battery",
+		"display_name": "EV Battery",
+		"rarity": ITEM_CLASS.Rarity.PURPLE,
+		"grid_width": 3,
+		"grid_height": 2,
+		"silver_value": 24,
+		"weight_str": "9.23KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a099.png",
+		"description": "Bình ắc-quy xe điện công suất lớn vỏ chống rò rỉ dung tích lưu trữ cao."
+	},
+	{
+		"id": "damaged_thermal_imager",
+		"display_name": "Damaged Thermal Imager",
+		"rarity": ITEM_CLASS.Rarity.PURPLE,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 21,
+		"weight_str": "0.83KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a100.png",
+		"description": "Kính ngắm ảnh nhiệt quân sự bị nứt kính ngoài nhưng cảm biến vi mạch vẫn hoạt động."
+	},
+	{
+		"id": "blood_pressure_monitor",
+		"display_name": "Blood Pressure Monitor",
+		"rarity": ITEM_CLASS.Rarity.PURPLE,
+		"grid_width": 2,
+		"grid_height": 2,
+		"silver_value": 23,
+		"weight_str": "1.27KG",
+		"category": "medical",
+		"asset_path": "res://assets/auction_items/a101.png",
+		"description": "Máy đo huyết áp điện tử bắp tay tự động với màn hình tinh thể lỏng báo nhịp tim."
+	},
+	{
+		"id": "lemon_tea",
+		"display_name": "Lemon Tea",
+		"rarity": ITEM_CLASS.Rarity.PURPLE,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 20,
+		"weight_str": "0.27KG",
+		"category": "kitchen",
+		"asset_path": "res://assets/auction_items/a102.png",
+		"description": "Lon trà chanh SUE ướp lạnh giải khát, tăng cường thể lực và giải nhiệt tức thì."
+	},
+	{
+		"id": "orange_energy_gel",
+		"display_name": "Orange Energy Gel",
+		"rarity": ITEM_CLASS.Rarity.PURPLE,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 20,
+		"weight_str": "<0.10KG",
+		"category": "kitchen",
+		"asset_path": "res://assets/auction_items/a103.png",
+		"description": "Gói gel năng lượng hương cam DHG đậm đặc bổ sung năng lượng tức thời cho vận động viên."
+	},
+	{
+		"id": "data_military_intel",
+		"display_name": "Data: Military Intel",
+		"rarity": ITEM_CLASS.Rarity.PURPLE,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 30,
+		"weight_str": "<0.10KG",
+		"category": "document",
+		"asset_path": "res://assets/auction_items/a104.png",
+		"description": "Bo mạch lưu trữ dữ liệu bản đồ phòng thủ và tọa độ binh lực quân sự tối mật."
+	},
+	{
+		"id": "cutlass",
+		"display_name": "Cutlass",
+		"rarity": ITEM_CLASS.Rarity.PURPLE,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 27,
+		"weight_str": "1.70KG",
+		"category": "antique",
+		"asset_path": "res://assets/auction_items/a105.png",
+		"description": "Đoản đao hải tặc chuôi đúc hình chim ưng mạ vàng nạm ngọc trong vỏ bao da thuộc."
+	},
+	{
+		"id": "antler_wall_decoration",
+		"display_name": "Antler Wall Decoration",
+		"rarity": ITEM_CLASS.Rarity.PURPLE,
+		"grid_width": 2,
+		"grid_height": 1,
+		"silver_value": 22,
+		"weight_str": "0.72KG",
+		"category": "antique",
+		"asset_path": "res://assets/auction_items/a106.png",
+		"description": "Bộ gạc sừng linh dương chạm trổ hoa văn phong thủy treo tường trừ tà cầu an."
+	},
+	{
+		"id": "empress_earrings",
+		"display_name": "Empress Earrings",
+		"rarity": ITEM_CLASS.Rarity.PURPLE,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 31,
+		"weight_str": "0.18KG",
+		"category": "antique",
+		"asset_path": "res://assets/auction_items/a107.png",
+		"description": "Đôi hoa tai bạc của bậc Hoàng Hậu chế tác tinh xảo đính ngọc hồng lựu quý giá."
+	},
+	{
+		"id": "ahsarah_special_teapot",
+		"display_name": "Ahsarah Special Teapot",
+		"rarity": ITEM_CLASS.Rarity.PURPLE,
+		"grid_width": 1,
+		"grid_height": 2,
+		"silver_value": 28,
+		"weight_str": "1.27KG",
+		"category": "antique",
+		"asset_path": "res://assets/auction_items/a108.png",
+		"description": "Ấm trà sứ mạ vàng Ahsarah nạm đá quý với quai cầm uốn lượn phong cách cung đình."
+	},
+	{
+		"id": "gold_crest",
+		"display_name": "Gold Crest",
+		"rarity": ITEM_CLASS.Rarity.PURPLE,
+		"grid_width": 1,
+		"grid_height": 2,
+		"silver_value": 29,
+		"weight_str": "0.73KG",
+		"category": "antique",
+		"asset_path": "res://assets/auction_items/a109.png",
+		"description": "Huy hiệu vương quyền hình tam giác đúc bằng vàng ròng nguyên khối biểu trưng cho quyền lực."
+	},
+	{
+		"id": "intermediate_ammo_production_kit",
+		"display_name": "Intermediate Ammo Kit",
+		"rarity": ITEM_CLASS.Rarity.PURPLE,
+		"grid_width": 2,
+		"grid_height": 2,
+		"silver_value": 25,
+		"weight_str": "1.09KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a110.png",
+		"description": "Bộ khuôn đúc và máy ép đạn trung cấp kèm khay đựng đầu đạn hợp kim đồng."
+	},
+
 	# --- Tài nguyên Nâng cấp (Refinement Chips & Locking Component) ---
 	{
 		"id": "refinement_chips_2",
