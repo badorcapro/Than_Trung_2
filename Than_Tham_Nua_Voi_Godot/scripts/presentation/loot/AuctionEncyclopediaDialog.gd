@@ -657,20 +657,9 @@ func _create_item_card(data: Dictionary) -> Control:
 	var asset_path: String = String(data.get("asset_path", ""))
 	var is_res: bool = bool(data.get("is_resource", false))
 
-	var card := PanelContainer.new()
-	card.custom_minimum_size = Vector2(236, 172)
-	var card_style := StyleBoxFlat.new()
-	card_style.bg_color = Color(0.10, 0.13, 0.18, 0.96)
-	card_style.border_color = Color(0.24, 0.32, 0.44, 0.6)
-	card_style.border_width_left = 1
-	card_style.border_width_top = 1
-	card_style.border_width_right = 1
-	card_style.border_width_bottom = 1
-	card_style.corner_radius_top_left = 6
-	card_style.corner_radius_top_right = 6
-	card_style.corner_radius_bottom_left = 6
-	card_style.corner_radius_bottom_right = 6
-	card.add_theme_stylebox_override("panel", card_style)
+	var card := Control.new()
+	card.custom_minimum_size = Vector2(246, 193)
+	card.size_flags_horizontal = SIZE_EXPAND_FILL
 	card.tooltip_text = "%s\nPhẩm chất: %s\nKích thước: %dx%d ô\nGiá trị: %s Xu Bạc\nKhối lượng: %s" % [
 		d_name,
 		ITEM_CLASS.rarity_name(rarity as ITEM_CLASS.Rarity),
@@ -679,41 +668,46 @@ func _create_item_card(data: Dictionary) -> Control:
 		weight_str
 	]
 
+	# 1. Background Antique Card Frame (khung_item.png)
+	var frame_rect := TextureRect.new()
+	frame_rect.name = "FrameBG"
+	frame_rect.set_anchors_preset(PRESET_FULL_RECT)
+	frame_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	frame_rect.stretch_mode = TextureRect.STRETCH_SCALE
+	frame_rect.mouse_filter = MOUSE_FILTER_IGNORE
+	var frame_tex := _get_cached_texture("res://assets/ui/rarity/khung_item.png")
+	if frame_tex != null:
+		frame_rect.texture = frame_tex
+	card.add_child(frame_rect)
+
+	# Subtle hover highlight on card
+	card.mouse_entered.connect(func() -> void:
+		frame_rect.modulate = Color(1.18, 1.18, 1.18, 1.0)
+	)
+	card.mouse_exited.connect(func() -> void:
+		frame_rect.modulate = Color(1.0, 1.0, 1.0, 1.0)
+	)
+
+	# Card Content layout
 	var card_vbox := VBoxContainer.new()
-	card_vbox.add_theme_constant_override("separation", 2)
+	card_vbox.set_anchors_preset(PRESET_FULL_RECT)
+	card_vbox.mouse_filter = MOUSE_FILTER_PASS
+	card_vbox.add_theme_constant_override("separation", 0)
 	card.add_child(card_vbox)
 
-	# --- 1. Card Header Band (Matching Bidking Image 2 & Image 1) ---
-	var header_panel := PanelContainer.new()
-	header_panel.custom_minimum_size = Vector2(0, 30)
-	var hp_style := StyleBoxFlat.new()
-	# Header colored according to rarity (Red gets red banner, White gets slate-white banner)
-	if rarity == ITEM_CLASS.Rarity.RED:
-		hp_style.bg_color = Color(0.75, 0.15, 0.18, 0.95)
-	elif rarity == ITEM_CLASS.Rarity.GOLD:
-		hp_style.bg_color = Color(0.78, 0.52, 0.12, 0.95)
-	elif rarity == ITEM_CLASS.Rarity.PURPLE:
-		hp_style.bg_color = Color(0.55, 0.22, 0.72, 0.95)
-	elif rarity == ITEM_CLASS.Rarity.BLUE:
-		hp_style.bg_color = Color(0.18, 0.45, 0.75, 0.95)
-	elif rarity == ITEM_CLASS.Rarity.GREEN:
-		hp_style.bg_color = Color(0.20, 0.58, 0.30, 0.95)
-	else:
-		hp_style.bg_color = Color(0.16, 0.22, 0.30, 0.95)
-
-	hp_style.corner_radius_top_left = 5
-	hp_style.corner_radius_top_right = 5
-	header_panel.add_theme_stylebox_override("panel", hp_style)
+	# --- 1. Card Header Band (Inside frame's top header compartment) ---
+	var header_panel := MarginContainer.new()
+	header_panel.custom_minimum_size = Vector2(0, 32)
+	header_panel.add_theme_constant_override("margin_left", 12)
+	header_panel.add_theme_constant_override("margin_right", 12)
+	header_panel.add_theme_constant_override("margin_top", 4)
+	header_panel.add_theme_constant_override("margin_bottom", 2)
 	card_vbox.add_child(header_panel)
-
-	var h_margin := MarginContainer.new()
-	h_margin.add_theme_constant_override("margin_left", 8)
-	h_margin.add_theme_constant_override("margin_right", 8)
-	header_panel.add_child(h_margin)
 
 	var h_hbox := HBoxContainer.new()
 	h_hbox.add_theme_constant_override("separation", 6)
-	h_margin.add_child(h_hbox)
+	h_hbox.alignment = BoxContainer.ALIGNMENT_BEGIN
+	header_panel.add_child(h_hbox)
 
 	var rarity_icon := TextureRect.new()
 	rarity_icon.custom_minimum_size = Vector2(18, 18)
@@ -735,33 +729,29 @@ func _create_item_card(data: Dictionary) -> Control:
 	var name_lbl := Label.new()
 	name_lbl.text = d_name
 	name_lbl.add_theme_font_size_override("font_size", 13)
-	name_lbl.add_theme_color_override("font_color", Color.WHITE)
+	name_lbl.add_theme_color_override("font_color", r_color)
 	name_lbl.size_flags_horizontal = SIZE_EXPAND_FILL
 	name_lbl.clip_text = true
+	name_lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	h_hbox.add_child(name_lbl)
-
 
 	# --- 2. Center Image & Footprint Area ---
 	var body_control := Control.new()
 	body_control.size_flags_vertical = SIZE_EXPAND_FILL
 	body_control.clip_contents = true
+	body_control.mouse_filter = MOUSE_FILTER_PASS
 	card_vbox.add_child(body_control)
-
-	# Subtle grid background behind item
-	var body_bg := ColorRect.new()
-	body_bg.set_anchors_preset(PRESET_FULL_RECT)
-	body_bg.color = Color(0.06, 0.08, 0.11, 0.6)
-	body_control.add_child(body_bg)
 
 	# Item Texture
 	var texture_rect := TextureRect.new()
 	texture_rect.set_anchors_preset(PRESET_FULL_RECT)
 	texture_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	texture_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	texture_rect.offset_left = 10
-	texture_rect.offset_top = 6
-	texture_rect.offset_right = -10
-	texture_rect.offset_bottom = -6
+	texture_rect.offset_left = 14
+	texture_rect.offset_top = 4
+	texture_rect.offset_right = -14
+	texture_rect.offset_bottom = -4
+	texture_rect.mouse_filter = MOUSE_FILTER_IGNORE
 	body_control.add_child(texture_rect)
 
 	if not asset_path.is_empty():
@@ -769,20 +759,22 @@ func _create_item_card(data: Dictionary) -> Control:
 		if tex != null:
 			texture_rect.texture = tex
 
-	# 16-Cell (4x4) Footprint Matrix in Bottom-Right Corner (Exact match to Bidking!)
+	# 16-Cell (4x4) Footprint Matrix in Bottom-Right Corner
 	var footprint_control := _create_footprint_matrix(w, h)
 	footprint_control.set_anchors_preset(PRESET_BOTTOM_RIGHT)
-	footprint_control.offset_left = -38
-	footprint_control.offset_top = -38
-	footprint_control.offset_right = -6
-	footprint_control.offset_bottom = -6
+	footprint_control.offset_left = -44
+	footprint_control.offset_top = -42
+	footprint_control.offset_right = -12
+	footprint_control.offset_bottom = -8
+	footprint_control.mouse_filter = MOUSE_FILTER_IGNORE
 	body_control.add_child(footprint_control)
 
 	# --- 3. Card Footer (Weight & Price) ---
 	var footer_panel := MarginContainer.new()
-	footer_panel.add_theme_constant_override("margin_left", 8)
-	footer_panel.add_theme_constant_override("margin_right", 8)
-	footer_panel.add_theme_constant_override("margin_bottom", 6)
+	footer_panel.custom_minimum_size = Vector2(0, 26)
+	footer_panel.add_theme_constant_override("margin_left", 14)
+	footer_panel.add_theme_constant_override("margin_right", 14)
+	footer_panel.add_theme_constant_override("margin_bottom", 8)
 	card_vbox.add_child(footer_panel)
 
 	var f_hbox := HBoxContainer.new()
@@ -791,7 +783,7 @@ func _create_item_card(data: Dictionary) -> Control:
 	var w_lbl := Label.new()
 	w_lbl.text = weight_str
 	w_lbl.add_theme_font_size_override("font_size", 11)
-	w_lbl.add_theme_color_override("font_color", Color("#94a3b8"))
+	w_lbl.add_theme_color_override("font_color", Color("#cbd5e1"))
 	f_hbox.add_child(w_lbl)
 
 	var f_sp := Control.new()
