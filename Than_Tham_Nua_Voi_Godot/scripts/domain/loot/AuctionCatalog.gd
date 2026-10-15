@@ -2761,6 +2761,152 @@ static var _CATALOG_ITEMS: Array[Dictionary] = [
 		"description": "Đồng xu vàng hải tặc cổ đại sáng lấp lánh khắc họa phù điêu thần mặt trời huyền bí."
 	},
 
+	# --- Phẩm Đỏ (Mythic / Relic) & Phẩm Vàng (Legendary): Các vật phẩm đợt 19 ---
+	{
+		"id": "cloud_storage_array",
+		"display_name": "Cloud Storage Array",
+		"rarity": ITEM_CLASS.Rarity.RED,
+		"grid_width": 3,
+		"grid_height": 2,
+		"silver_value": 68,
+		"weight_str": "4.00KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a039.png",
+		"description": "Hệ thống khay ổ đĩa lưu trữ đám mây dã chiến bảo mật đa lớp."
+	},
+	{
+		"id": "robot_cleaner",
+		"display_name": "Robot Cleaner",
+		"rarity": ITEM_CLASS.Rarity.RED,
+		"grid_width": 3,
+		"grid_height": 3,
+		"silver_value": 62,
+		"weight_str": "5.60KG",
+		"category": "general",
+		"asset_path": "res://assets/auction_items/a040.png",
+		"description": "Robot vệ sinh tự hành cao cấp tích hợp trạm sạc và xả rác tự động."
+	},
+	{
+		"id": "high_power_vacuum_cleaner",
+		"display_name": "High-Power Vacuum Cleaner",
+		"rarity": ITEM_CLASS.Rarity.RED,
+		"grid_width": 2,
+		"grid_height": 3,
+		"silver_value": 65,
+		"weight_str": "4.80KG",
+		"category": "general",
+		"asset_path": "res://assets/auction_items/a041.png",
+		"description": "Máy hút bụi công nghiệp cầm tay công suất hút cực mạnh phục vụ phòng sạch."
+	},
+	{
+		"id": "premium_coffee_beans",
+		"display_name": "Premium Coffee Beans",
+		"rarity": ITEM_CLASS.Rarity.RED,
+		"grid_width": 1,
+		"grid_height": 2,
+		"silver_value": 75,
+		"weight_str": "0.50KG",
+		"category": "kitchen",
+		"asset_path": "res://assets/auction_items/a042.png",
+		"description": "Gói hạt cà phê cao cấp tuyển chọn đặc biệt dành riêng cho giới thượng lưu."
+	},
+	{
+		"id": "medical_ventilator",
+		"display_name": "Medical Ventilator",
+		"rarity": ITEM_CLASS.Rarity.RED,
+		"grid_width": 3,
+		"grid_height": 3,
+		"silver_value": 80,
+		"weight_str": "5.00KG",
+		"category": "medical",
+		"asset_path": "res://assets/auction_items/a043.png",
+		"description": "Máy thở hồi sức tích cực hiện đại hỗ trợ hô hấp khẩn cấp trong phòng mổ dã chiến."
+	},
+	{
+		"id": "micro_reactor",
+		"display_name": "Micro Reactor",
+		"rarity": ITEM_CLASS.Rarity.RED,
+		"grid_width": 3,
+		"grid_height": 3,
+		"silver_value": 88,
+		"weight_str": "10.00KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a044.png",
+		"description": "Lò phản ứng hạt nhân vi mô tạo nguồn năng lượng vô tận cho các căn cứ quân sự ngầm."
+	},
+	{
+		"id": "armored_vehicle_battery",
+		"display_name": "Armored Vehicle Battery",
+		"rarity": ITEM_CLASS.Rarity.RED,
+		"grid_width": 3,
+		"grid_height": 2,
+		"silver_value": 64,
+		"weight_str": "15.00KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a045.png",
+		"description": "Khối ắc quy hạng nặng cung cấp nguồn điện khởi động cho xe bọc thép tác chiến."
+	},
+	{
+		"id": "power_battery_pack",
+		"display_name": "Power Battery Pack",
+		"rarity": ITEM_CLASS.Rarity.RED,
+		"grid_width": 4,
+		"grid_height": 3,
+		"silver_value": 66,
+		"weight_str": "20.00KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a046.png",
+		"description": "Cụm pin lithium mô-đun công nghiệp cung cấp năng lượng cho khí tài hạng nặng."
+	},
+	{
+		"id": "fuel_cell",
+		"display_name": "Fuel Cell",
+		"rarity": ITEM_CLASS.Rarity.GOLD,
+		"grid_width": 2,
+		"grid_height": 3,
+		"silver_value": 42,
+		"weight_str": "8.14KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a047.png",
+		"description": "Khối pin nhiên liệu hydro di động cung cấp điện năng cho trang bị chiến thuật dã chiến."
+	},
+	{
+		"id": "camera_lens",
+		"display_name": "Lens",
+		"rarity": ITEM_CLASS.Rarity.GOLD,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 47,
+		"weight_str": "0.45KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a048.png",
+		"description": "Cụm thấu kính quang học tráng phủ nano chống lóa dùng cho ống ngắm và máy ảnh chuyên nghiệp."
+	},
+	{
+		"id": "processor_cpu",
+		"display_name": "CPU",
+		"rarity": ITEM_CLASS.Rarity.GOLD,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 54,
+		"weight_str": "<0.10KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a049.png",
+		"description": "Vi xử lý máy tính hiệu năng cao Core 29 thế hệ mới xử lý đa luồng tình báo mã hóa."
+	},
+	{
+		"id": "cell_phone",
+		"display_name": "Cell Phone",
+		"rarity": ITEM_CLASS.Rarity.GOLD,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 49,
+		"weight_str": "<0.10KG",
+		"category": "general",
+		"asset_path": "res://assets/auction_items/a050.png",
+		"description": "Điện thoại thông minh bảo mật thương hiệu Maer tích hợp thuật toán mã hóa cuộc gọi."
+	},
+
 	# --- Tài nguyên Nâng cấp (Refinement Chips & Locking Component) ---
 	{
 		"id": "refinement_chips_2",
