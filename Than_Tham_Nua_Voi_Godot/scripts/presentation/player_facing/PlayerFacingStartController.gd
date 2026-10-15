@@ -111,24 +111,25 @@ const LOBBY_BG_TEXTURE: Texture2D = preload("res://assets/ui/common/lobby_bg.png
 @onready var splash_prompt: Label = get_node_or_null("%SplashPrompt") as Label
 @onready var main_menu: Control = %MainMenu
 @onready var desktop_root: Control = get_node_or_null("%DesktopRoot") as Control
-@onready var desktop_window_case_launcher: Control = get_node_or_null("%DesktopWindowCaseLauncher") as Control
-@onready var desktop_window_secret_txt: Control = get_node_or_null("%DesktopWindowSecretTxt") as Control
-@onready var desktop_icon_secret_txt: Button = get_node_or_null("%DesktopIconSecretTxt") as Button
-@onready var desktop_start_menu: Control = get_node_or_null("%DesktopStartMenu") as Control
-@onready var desktop_icon_case_game: Button = get_node_or_null("%DesktopIconCaseGame") as Button
-@onready var desktop_icon_codex: Button = get_node_or_null("%DesktopIconCodex") as Button
-@onready var desktop_icon_loot_map: Button = get_node_or_null("%DesktopIconLootMap") as Button
-@onready var desktop_icon_bag: Button = get_node_or_null("%DesktopIconBag") as Button
-@onready var desktop_icon_settings: Button = get_node_or_null("%DesktopIconSettings") as Button
-@onready var desktop_icon_quit: Button = get_node_or_null("%DesktopIconQuit") as Button
-@onready var start_menu_case_game: Button = get_node_or_null("%StartMenuCaseGame") as Button
-@onready var start_menu_codex: Button = get_node_or_null("%StartMenuCodex") as Button
-@onready var start_menu_settings: Button = get_node_or_null("%StartMenuSettings") as Button
-@onready var start_menu_quit: Button = get_node_or_null("%StartMenuQuit") as Button
-@onready var close_window_button: Button = get_node_or_null("%CloseWindowButton") as Button
-@onready var close_secret_window_button: Button = get_node_or_null("%CloseSecretWindowButton") as Button
-@onready var taskbar_start_button: Button = get_node_or_null("%TaskbarStartButton") as Button
+@onready var taskbar_panel: Panel = get_node_or_null("%TaskbarPanel") as Panel
+@onready var taskbar_btn_window: Button = get_node_or_null("%TaskbarBtnWindow") as Button
+@onready var taskbar_btn_start: Button = get_node_or_null("%TaskbarBtnStart") as Button
+@onready var taskbar_btn_continue: Button = get_node_or_null("%TaskbarBtnContinue") as Button
+@onready var taskbar_btn_codex: Button = get_node_or_null("%TaskbarBtnCodex") as Button
+@onready var taskbar_btn_settings: Button = get_node_or_null("%TaskbarBtnSettings") as Button
 @onready var taskbar_clock: Label = get_node_or_null("%TaskbarClock") as Label
+@onready var desktop_start_menu: Panel = get_node_or_null("%DesktopStartMenu") as Panel
+@onready var start_menu_logout: Button = get_node_or_null("%StartMenuLogout") as Button
+@onready var desktop_new_sim_dialog: Control = get_node_or_null("%DesktopNewSimDialog") as Control
+@onready var new_sim_confirm_btn: Button = get_node_or_null("%NewSimConfirmBtn") as Button
+@onready var new_sim_cancel_btn: Button = get_node_or_null("%NewSimCancelBtn") as Button
+@onready var desktop_codex_dialog: Control = get_node_or_null("%DesktopCodexDialog") as Control
+@onready var codex_close_btn: Button = get_node_or_null("%CodexCloseBtn") as Button
+@onready var codex_btn_auction: Button = get_node_or_null("%CodexBtnAuction") as Button
+@onready var codex_btn_roles: Button = get_node_or_null("%CodexBtnRoles") as Button
+@onready var codex_btn_relics: Button = get_node_or_null("%CodexBtnRelics") as Button
+@onready var codex_btn_stigmata: Button = get_node_or_null("%CodexBtnStigmata") as Button
+@onready var codex_btn_loot: Button = get_node_or_null("%CodexBtnLoot") as Button
 @onready var continue_button: Button = (
 	get_node_or_null("%Continue") as Button
 	if get_node_or_null("%Continue") != null
@@ -362,9 +363,19 @@ func _input(event: InputEvent) -> void:
 			_cheat_overlay.visible = false
 			get_viewport().set_input_as_handled()
 			return
-	if desktop_window_case_launcher != null and desktop_window_case_launcher.visible:
+	if desktop_start_menu != null and desktop_start_menu.visible:
 		if key_event.keycode == KEY_ESCAPE:
-			desktop_window_case_launcher.visible = false
+			desktop_start_menu.visible = false
+			get_viewport().set_input_as_handled()
+			return
+	if desktop_codex_dialog != null and desktop_codex_dialog.visible:
+		if key_event.keycode == KEY_ESCAPE:
+			desktop_codex_dialog.visible = false
+			get_viewport().set_input_as_handled()
+			return
+	if desktop_new_sim_dialog != null and desktop_new_sim_dialog.visible:
+		if key_event.keycode == KEY_ESCAPE:
+			desktop_new_sim_dialog.visible = false
 			get_viewport().set_input_as_handled()
 			return
 	if _character_sheet != null and _character_sheet.visible:
@@ -434,41 +445,46 @@ func _dismiss_splash_screen() -> void:
 
 
 func _init_desktop_system() -> void:
-	if desktop_icon_case_game != null and not desktop_icon_case_game.pressed.is_connected(_on_desktop_case_game_pressed):
-		desktop_icon_case_game.pressed.connect(_on_desktop_case_game_pressed)
-	if desktop_icon_codex != null and not desktop_icon_codex.pressed.is_connected(_on_desktop_codex_pressed):
-		desktop_icon_codex.pressed.connect(_on_desktop_codex_pressed)
-	if desktop_icon_loot_map != null and not desktop_icon_loot_map.pressed.is_connected(_on_desktop_loot_map_pressed):
-		desktop_icon_loot_map.pressed.connect(_on_desktop_loot_map_pressed)
-	if desktop_icon_bag != null and not desktop_icon_bag.pressed.is_connected(_on_desktop_bag_pressed):
-		desktop_icon_bag.pressed.connect(_on_desktop_bag_pressed)
-	if desktop_icon_settings != null and not desktop_icon_settings.pressed.is_connected(_on_settings_pressed):
-		desktop_icon_settings.pressed.connect(_on_settings_pressed)
-	if desktop_icon_quit != null and not desktop_icon_quit.pressed.is_connected(_on_exit_pressed):
-		desktop_icon_quit.pressed.connect(_on_exit_pressed)
-	if desktop_icon_secret_txt != null and not desktop_icon_secret_txt.pressed.is_connected(_on_desktop_secret_txt_pressed):
-		desktop_icon_secret_txt.pressed.connect(_on_desktop_secret_txt_pressed)
-	if start_menu_case_game != null and not start_menu_case_game.pressed.is_connected(_on_desktop_case_game_pressed):
-		start_menu_case_game.pressed.connect(_on_desktop_case_game_pressed)
-	if start_menu_codex != null and not start_menu_codex.pressed.is_connected(_on_desktop_codex_pressed):
-		start_menu_codex.pressed.connect(_on_desktop_codex_pressed)
-	if start_menu_settings != null and not start_menu_settings.pressed.is_connected(_on_settings_pressed):
-		start_menu_settings.pressed.connect(_on_settings_pressed)
-	if start_menu_quit != null and not start_menu_quit.pressed.is_connected(_on_exit_pressed):
-		start_menu_quit.pressed.connect(_on_exit_pressed)
-	if close_window_button != null and not close_window_button.pressed.is_connected(_on_close_launcher_window_pressed):
-		close_window_button.pressed.connect(_on_close_launcher_window_pressed)
-	if close_secret_window_button != null and not close_secret_window_button.pressed.is_connected(_on_close_secret_window_pressed):
-		close_secret_window_button.pressed.connect(_on_close_secret_window_pressed)
-	if taskbar_start_button != null and not taskbar_start_button.pressed.is_connected(_on_taskbar_start_pressed):
-		taskbar_start_button.pressed.connect(_on_taskbar_start_pressed)
+	if taskbar_btn_window != null and not taskbar_btn_window.pressed.is_connected(_on_taskbar_window_pressed):
+		taskbar_btn_window.pressed.connect(_on_taskbar_window_pressed)
+	if taskbar_btn_start != null and not taskbar_btn_start.pressed.is_connected(_on_taskbar_start_pressed):
+		taskbar_btn_start.pressed.connect(_on_taskbar_start_pressed)
+	if taskbar_btn_continue != null and not taskbar_btn_continue.pressed.is_connected(_on_taskbar_continue_pressed):
+		taskbar_btn_continue.pressed.connect(_on_taskbar_continue_pressed)
+	if taskbar_btn_codex != null and not taskbar_btn_codex.pressed.is_connected(_on_taskbar_codex_pressed):
+		taskbar_btn_codex.pressed.connect(_on_taskbar_codex_pressed)
+	if taskbar_btn_settings != null and not taskbar_btn_settings.pressed.is_connected(_on_taskbar_settings_pressed):
+		taskbar_btn_settings.pressed.connect(_on_taskbar_settings_pressed)
 
-	if desktop_window_case_launcher != null:
-		desktop_window_case_launcher.visible = false
-	if desktop_window_secret_txt != null:
-		desktop_window_secret_txt.visible = false
+	if start_menu_logout != null and not start_menu_logout.pressed.is_connected(_on_exit_pressed):
+		start_menu_logout.pressed.connect(_on_exit_pressed)
+
+	if new_sim_confirm_btn != null and not new_sim_confirm_btn.pressed.is_connected(_on_new_sim_confirmed):
+		new_sim_confirm_btn.pressed.connect(_on_new_sim_confirmed)
+	if new_sim_cancel_btn != null and not new_sim_cancel_btn.pressed.is_connected(_on_new_sim_cancelled):
+		new_sim_cancel_btn.pressed.connect(_on_new_sim_cancelled)
+
+	if codex_close_btn != null and not codex_close_btn.pressed.is_connected(_on_codex_dialog_closed):
+		codex_close_btn.pressed.connect(_on_codex_dialog_closed)
+	if codex_btn_auction != null and not codex_btn_auction.pressed.is_connected(_on_codex_auction_pressed):
+		codex_btn_auction.pressed.connect(_on_codex_auction_pressed)
+	if codex_btn_roles != null and not codex_btn_roles.pressed.is_connected(_on_codex_roles_pressed):
+		codex_btn_roles.pressed.connect(_on_codex_roles_pressed)
+	if codex_btn_relics != null and not codex_btn_relics.pressed.is_connected(_on_codex_relics_pressed):
+		codex_btn_relics.pressed.connect(_on_codex_relics_pressed)
+	if codex_btn_stigmata != null and not codex_btn_stigmata.pressed.is_connected(_on_codex_stigmata_pressed):
+		codex_btn_stigmata.pressed.connect(_on_codex_stigmata_pressed)
+	if codex_btn_loot != null and not codex_btn_loot.pressed.is_connected(_on_codex_loot_pressed):
+		codex_btn_loot.pressed.connect(_on_codex_loot_pressed)
+
 	if desktop_start_menu != null:
 		desktop_start_menu.visible = false
+	if desktop_new_sim_dialog != null:
+		desktop_new_sim_dialog.visible = false
+	if desktop_codex_dialog != null:
+		desktop_codex_dialog.visible = false
+
+	_refresh_continue_button()
 
 	# Đồng hồ thanh taskbar cập nhật mỗi giây
 	_update_taskbar_clock()
@@ -493,60 +509,98 @@ func _update_taskbar_clock() -> void:
 	taskbar_clock.text = "%02d:%02d %s" % [hour12, minute, ampm]
 
 
-func _on_desktop_case_game_pressed() -> void:
-	if desktop_window_case_launcher != null:
-		desktop_window_case_launcher.visible = true
+func _on_taskbar_window_pressed() -> void:
+	if desktop_codex_dialog != null:
+		desktop_codex_dialog.visible = false
+	if desktop_new_sim_dialog != null:
+		desktop_new_sim_dialog.visible = false
 	if desktop_start_menu != null:
-		desktop_start_menu.visible = false
-
-
-func _on_desktop_secret_txt_pressed() -> void:
-	if desktop_window_secret_txt != null:
-		desktop_window_secret_txt.visible = true
-
-
-func _on_desktop_loot_map_pressed() -> void:
-	if desktop_start_menu != null:
-		desktop_start_menu.visible = false
-	if desktop_window_case_launcher != null:
-		desktop_window_case_launcher.visible = true
-
-
-func _on_desktop_bag_pressed() -> void:
-	if desktop_start_menu != null:
-		desktop_start_menu.visible = false
-	if desktop_window_secret_txt != null:
-		desktop_window_secret_txt.visible = true
-
-
-
-func _on_desktop_continue_pressed() -> void:
-	if desktop_start_menu != null:
-		desktop_start_menu.visible = false
-	_on_continue_pressed()
-
-
-func _on_desktop_codex_pressed() -> void:
-	if desktop_start_menu != null:
-		desktop_start_menu.visible = false
-	AppFlow.go_to_role_codex()
-
-
-func _on_close_launcher_window_pressed() -> void:
-	if desktop_window_case_launcher != null:
-		desktop_window_case_launcher.visible = false
-
-
-func _on_close_secret_window_pressed() -> void:
-	if desktop_window_secret_txt != null:
-		desktop_window_secret_txt.visible = false
+		desktop_start_menu.visible = not desktop_start_menu.visible
 
 
 func _on_taskbar_start_pressed() -> void:
 	if desktop_start_menu != null:
-		desktop_start_menu.visible = not desktop_start_menu.visible
-	elif desktop_window_case_launcher != null:
-		desktop_window_case_launcher.visible = not desktop_window_case_launcher.visible
+		desktop_start_menu.visible = false
+	if desktop_codex_dialog != null:
+		desktop_codex_dialog.visible = false
+	if _autosave_service != null and _autosave_service.has_valid_autosave():
+		if desktop_new_sim_dialog != null:
+			desktop_new_sim_dialog.visible = true
+	else:
+		_on_new_game_pressed()
+
+
+func _on_new_sim_confirmed() -> void:
+	if desktop_new_sim_dialog != null:
+		desktop_new_sim_dialog.visible = false
+	_on_new_game_pressed()
+
+
+func _on_new_sim_cancelled() -> void:
+	if desktop_new_sim_dialog != null:
+		desktop_new_sim_dialog.visible = false
+
+
+func _on_taskbar_continue_pressed() -> void:
+	if desktop_start_menu != null:
+		desktop_start_menu.visible = false
+	if desktop_new_sim_dialog != null:
+		desktop_new_sim_dialog.visible = false
+	if desktop_codex_dialog != null:
+		desktop_codex_dialog.visible = false
+	if _autosave_service != null and _autosave_service.has_valid_autosave():
+		_on_continue_pressed()
+	else:
+		_show_toast("Chưa có dữ liệu mô phỏng đã lưu.", true)
+
+
+func _on_taskbar_codex_pressed() -> void:
+	if desktop_start_menu != null:
+		desktop_start_menu.visible = false
+	if desktop_new_sim_dialog != null:
+		desktop_new_sim_dialog.visible = false
+	if desktop_codex_dialog != null:
+		desktop_codex_dialog.visible = not desktop_codex_dialog.visible
+
+
+func _on_codex_dialog_closed() -> void:
+	if desktop_codex_dialog != null:
+		desktop_codex_dialog.visible = false
+
+
+func _on_codex_auction_pressed() -> void:
+	if desktop_codex_dialog != null:
+		desktop_codex_dialog.visible = false
+	if _auction_encyclopedia != null:
+		_auction_encyclopedia.open_dialog()
+
+
+func _on_codex_roles_pressed() -> void:
+	if desktop_codex_dialog != null:
+		desktop_codex_dialog.visible = false
+	AppFlow.go_to_role_codex()
+
+
+func _on_codex_relics_pressed() -> void:
+	_show_toast("Bách Khoa Di Vật & Trang Bị đang được cập nhật.")
+
+
+func _on_codex_stigmata_pressed() -> void:
+	_show_toast("Bách Khoa Vết Thánh đang được cập nhật.")
+
+
+func _on_codex_loot_pressed() -> void:
+	_show_toast("Bách Khoa Vật Phẩm Rơi Trong Loot Map đang được cập nhật.")
+
+
+func _on_taskbar_settings_pressed() -> void:
+	if desktop_start_menu != null:
+		desktop_start_menu.visible = false
+	if desktop_codex_dialog != null:
+		desktop_codex_dialog.visible = false
+	if desktop_new_sim_dialog != null:
+		desktop_new_sim_dialog.visible = false
+	_on_settings_pressed()
 
 
 func _on_new_game_pressed() -> void:
@@ -1525,15 +1579,21 @@ func _clear_active_match() -> void:
 
 
 func _refresh_continue_button() -> void:
-	if continue_button == null:
-		return
-	var available: bool = _autosave_service.has_valid_autosave()
-	continue_button.disabled = not available
-	continue_button.tooltip_text = (
-		"Tiếp tục trận đấu đã lưu"
-		if available
-		else "Chưa có trận đấu đã lưu"
-	)
+	var available: bool = _autosave_service.has_valid_autosave() if _autosave_service != null else false
+	if continue_button != null:
+		continue_button.disabled = not available
+		continue_button.tooltip_text = (
+			"Tiếp tục trận đấu đã lưu"
+			if available
+			else "Chưa có trận đấu đã lưu"
+		)
+	if taskbar_btn_continue != null:
+		taskbar_btn_continue.modulate = Color(1, 1, 1, 1.0) if available else Color(1, 1, 1, 0.4)
+		taskbar_btn_continue.tooltip_text = (
+			"Tiếp Tục Mô Phỏng (Đã phát hiện file lưu)"
+			if available
+			else "Tiếp Tục Mô Phỏng (Chưa có file lưu)"
+		)
 
 
 func _on_exit_pressed() -> void:
@@ -3080,12 +3140,12 @@ func _show_phase(next_phase: int) -> void:
 	if main_menu != null:
 		main_menu.visible = is_main_menu
 	if is_main_menu:
-		if desktop_window_case_launcher != null:
-			desktop_window_case_launcher.visible = false
-		if desktop_window_secret_txt != null:
-			desktop_window_secret_txt.visible = false
 		if desktop_start_menu != null:
 			desktop_start_menu.visible = false
+		if desktop_new_sim_dialog != null:
+			desktop_new_sim_dialog.visible = false
+		if desktop_codex_dialog != null:
+			desktop_codex_dialog.visible = false
 	match_mode.visible = next_phase == SETUP_SESSION.Phase.MATCH_MODE
 	match_rules_panel.visible = next_phase == SETUP_SESSION.Phase.MATCH_RULES
 	player_count.visible = next_phase == SETUP_SESSION.Phase.PLAYER_COUNT
