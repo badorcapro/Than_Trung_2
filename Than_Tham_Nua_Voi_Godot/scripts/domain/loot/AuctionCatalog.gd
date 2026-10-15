@@ -3,9 +3,8 @@ extends RefCounted
 
 const ITEM_CLASS := preload("res://scripts/domain/loot/MysteryChestItem.gd")
 
-# Danh mục phân loại
+# Danh mục phân loại (8 chủng loại thực tế)
 const CATEGORIES: Array[Dictionary] = [
-	{"id": "", "label": "Tất cả", "icon": "⊞", "icon_path": "res://assets/ui/rarity/select.png"},
 	{"id": "antique", "label": "Đồ Cổ", "icon": "🏺", "icon_path": "res://assets/auction_items/do_co.png"},
 	{"id": "tool", "label": "Công Cụ", "icon": "🔨", "icon_path": "res://assets/auction_items/cong_cu.png"},
 	{"id": "document", "label": "Tài Liệu", "icon": "📄", "icon_path": "res://assets/auction_items/tai_lieu.png"},

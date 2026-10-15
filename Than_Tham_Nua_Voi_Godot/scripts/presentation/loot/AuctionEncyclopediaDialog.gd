@@ -333,7 +333,7 @@ func _build_sidebar() -> Control:
 	c_header_hbox.add_child(c_deselect_btn)
 
 	var cat_grid := GridContainer.new()
-	cat_grid.columns = 3
+	cat_grid.columns = 4
 	cat_grid.add_theme_constant_override("h_separation", 6)
 	cat_grid.add_theme_constant_override("v_separation", 6)
 	side_vbox.add_child(cat_grid)
@@ -346,7 +346,7 @@ func _build_sidebar() -> Control:
 
 		var c_btn := Button.new()
 		c_btn.tooltip_text = c_lbl
-		c_btn.custom_minimum_size = Vector2(72, 72)
+		c_btn.custom_minimum_size = Vector2(56, 56)
 		c_btn.focus_mode = FOCUS_NONE
 		c_btn.set_meta("cat_id", c_id)
 		_strip_button_style(c_btn)
@@ -366,19 +366,15 @@ func _build_sidebar() -> Control:
 			c_btn.add_theme_font_size_override("font_size", 16)
 
 		c_btn.pressed.connect(func() -> void:
-			if c_id.is_empty():
-				_category_filter_enabled = false
+			if not _category_filter_enabled:
+				_category_filter_enabled = true
 				_selected_categories.clear()
+				_selected_categories[c_id] = true
 			else:
-				if not _category_filter_enabled:
-					_category_filter_enabled = true
-					_selected_categories.clear()
-					_selected_categories[c_id] = true
+				if _selected_categories.has(c_id):
+					_selected_categories.erase(c_id)
 				else:
-					if _selected_categories.has(c_id):
-						_selected_categories.erase(c_id)
-					else:
-						_selected_categories[c_id] = true
+					_selected_categories[c_id] = true
 			_refresh_filters_ui()
 			_refresh_items_grid()
 		)
@@ -590,8 +586,6 @@ func _refresh_filters_ui() -> void:
 		var cat_id: String = String(btn.get_meta("cat_id", ""))
 		if not _category_filter_enabled:
 			btn.modulate = Color(1.0, 1.0, 1.0, 1.0)
-		elif cat_id.is_empty():
-			btn.modulate = Color(0.65, 0.65, 0.65, 0.28)
 		elif _selected_categories.has(cat_id):
 			btn.modulate = Color(1.0, 1.0, 1.0, 1.0)
 		else:
