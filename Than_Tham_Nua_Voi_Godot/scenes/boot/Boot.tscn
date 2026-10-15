@@ -1,8 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://xgeyhj81pdu0"]
+[gd_scene load_steps=3 format=3 uid="uid://xgeyhj81pdu0"]
 
 [ext_resource type="Script" uid="uid://n42ipcqg88nk" path="res://scripts/application/BootController.gd" id="1"]
-[ext_resource type="Texture2D" path="res://assets/ui/boot/studio_logo.png" id="2_studio_logo"]
-[ext_resource type="Texture2D" path="res://assets/ui/boot/godot_logo.png" id="3_godot_logo"]
+[ext_resource type="Texture2D" path="res://assets/ui/boot/splash_retro_os.png" id="2_splash_retro"]
 
 [node name="Boot" type="Control"]
 layout_mode = 3
@@ -11,6 +10,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 script = ExtResource("1")
 
 [node name="Background" type="ColorRect" parent="."]
@@ -20,47 +20,140 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.02, 0.025, 0.04, 1)
+mouse_filter = 2
+color = Color(0.01, 0.01, 0.02, 1)
 
-[node name="StudioLogo" type="TextureRect" parent="."]
+[node name="BiosPhase" type="Control" parent="."]
 unique_name_in_owner = true
-modulate = Color(1, 1, 1, 0)
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -450.0
-offset_top = -250.0
-offset_right = 450.0
-offset_bottom = 250.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-texture = ExtResource("2_studio_logo")
-expand_mode = 1
-stretch_mode = 5
 
-[node name="EngineLogo" type="TextureRect" parent="."]
-unique_name_in_owner = true
-modulate = Color(1, 1, 1, 0)
+[node name="BiosMargin" type="MarginContainer" parent="BiosPhase"]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -450.0
-offset_top = -250.0
-offset_right = 450.0
-offset_bottom = 250.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-texture = ExtResource("3_godot_logo")
+theme_override_constants/margin_left = 64
+theme_override_constants/margin_top = 44
+theme_override_constants/margin_right = 64
+theme_override_constants/margin_bottom = 44
+
+[node name="BiosVBox" type="VBoxContainer" parent="BiosPhase/BiosMargin"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 10
+
+[node name="BiosStaticText" type="RichTextLabel" parent="BiosPhase/BiosMargin/BiosVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+bbcode_enabled = true
+fit_content = false
+scroll_active = false
+autowrap_mode = 0
+
+[node name="BiosLastLine" type="RichTextLabel" parent="BiosPhase/BiosMargin/BiosVBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+mouse_filter = 2
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="BiosSkipPrompt" type="Label" parent="BiosPhase"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0.35)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -300.0
+offset_top = -36.0
+offset_right = -30.0
+offset_bottom = -14.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 13
+text = "[Nhấn phím bất kỳ hoặc Click để tiếp tục]"
+horizontal_alignment = 2
+
+[node name="SplashPhase" type="Control" parent="."]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="SplashBg" type="ColorRect" parent="SplashPhase"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.04, 0.02, 0.06, 1)
+
+[node name="SplashGraphic" type="TextureRect" parent="SplashPhase"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_splash_retro")
 expand_mode = 1
-stretch_mode = 5
+stretch_mode = 6
+
+[node name="SplashSkipPrompt" type="Label" parent="SplashPhase"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0.45)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -300.0
+offset_top = -36.0
+offset_right = -30.0
+offset_bottom = -14.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 13
+text = "[Click hoặc nhấn phím để vào Main Menu]"
+horizontal_alignment = 2
+
+[node name="TransitionOverlay" type="ColorRect" parent="."]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
 
 [node name="Center" type="CenterContainer" parent="."]
 layout_mode = 1
@@ -71,32 +164,9 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Status" type="VBoxContainer" parent="Center"]
-layout_mode = 2
-theme_override_constants/separation = 12
-
-[node name="ErrorLabel" type="Label" parent="Center/Status"]
+[node name="ErrorLabel" type="Label" parent="Center"]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.45, 0.45, 1)
 horizontal_alignment = 1
-
-[node name="SkipPrompt" type="Label" parent="."]
-unique_name_in_owner = true
-modulate = Color(1, 1, 1, 0.4)
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -220.0
-offset_top = -40.0
-offset_right = -20.0
-offset_bottom = -15.0
-grow_horizontal = 0
-grow_vertical = 0
-theme_override_font_sizes/font_size = 14
-text = "[Space / Click để bỏ qua]"
-horizontal_alignment = 2
