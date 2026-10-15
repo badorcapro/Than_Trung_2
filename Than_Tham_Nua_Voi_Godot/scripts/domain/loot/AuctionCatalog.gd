@@ -12,7 +12,7 @@ const CATEGORIES: Array[Dictionary] = [
 	{"id": "kitchen", "label": "Nhà Bếp", "icon": "🍴", "icon_path": "res://assets/auction_items/nha_bep.png"},
 	{"id": "cards", "label": "Bài / Giải Trí", "icon": "🃏", "icon_path": "res://assets/auction_items/bai_giai_tri.png"},
 	{"id": "general", "label": "Gia Dụng", "icon": "📦", "icon_path": "res://assets/auction_items/gia_dung.png"},
-	{"id": "resource", "label": "Tài Nguyên", "icon": "💾", "icon_path": "res://assets/auction_items/tai_nguyen.png"},
+	{"id": "resource", "label": "Tài Nguyên", "icon": "tai_nguyen", "icon_path": "res://assets/auction_items/tai_nguyen.png"},
 ]
 
 # Danh mục toàn bộ vật phẩm theo đặc tả Bidking & Hoàng Cung
@@ -1745,7 +1745,7 @@ static var _CATALOG_ITEMS: Array[Dictionary] = [
 		"display_name": "Military Camping Lantern",
 		"rarity": ITEM_CLASS.Rarity.PURPLE,
 		"grid_width": 1,
-		"grid_height": 2,
+		"grid_height": 3,
 		"silver_value": 24,
 		"weight_str": "2.20KG",
 		"category": "tool",
@@ -1769,7 +1769,7 @@ static var _CATALOG_ITEMS: Array[Dictionary] = [
 		"display_name": "Pack of Cement",
 		"rarity": ITEM_CLASS.Rarity.BLUE,
 		"grid_width": 2,
-		"grid_height": 2,
+		"grid_height": 3,
 		"silver_value": 14,
 		"weight_str": "4.52KG",
 		"category": "tool",
@@ -1852,7 +1852,7 @@ static var _CATALOG_ITEMS: Array[Dictionary] = [
 		"id": "gas_tank",
 		"display_name": "Gas Tank",
 		"rarity": ITEM_CLASS.Rarity.BLUE,
-		"grid_width": 1,
+		"grid_width": 2,
 		"grid_height": 2,
 		"silver_value": 10,
 		"weight_str": "4.73KG",
@@ -1890,11 +1890,12 @@ static var _CATALOG_ITEMS: Array[Dictionary] = [
 		"id": "refinement_chips_2",
 		"display_name": "Refinement Chips (2)",
 		"rarity": ITEM_CLASS.Rarity.WHITE,
-		"grid_width": 1,
+		"grid_width": 5,
 		"grid_height": 1,
 		"silver_value": 0,
 		"weight_str": "0.05KG",
 		"category": "resource",
+		"asset_path": "res://assets/auction_items/refinement_chips.png",
 		"is_resource": true,
 		"can_sell": false,
 		"quantity": 2,
@@ -1904,11 +1905,12 @@ static var _CATALOG_ITEMS: Array[Dictionary] = [
 		"id": "refinement_chips_4",
 		"display_name": "Refinement Chips (4)",
 		"rarity": ITEM_CLASS.Rarity.GREEN,
-		"grid_width": 1,
+		"grid_width": 5,
 		"grid_height": 1,
 		"silver_value": 0,
 		"weight_str": "0.05KG",
 		"category": "resource",
+		"asset_path": "res://assets/auction_items/refinement_chips.png",
 		"is_resource": true,
 		"can_sell": false,
 		"quantity": 4,
@@ -1918,11 +1920,12 @@ static var _CATALOG_ITEMS: Array[Dictionary] = [
 		"id": "refinement_chips_8",
 		"display_name": "Refinement Chips (8)",
 		"rarity": ITEM_CLASS.Rarity.BLUE,
-		"grid_width": 1,
+		"grid_width": 5,
 		"grid_height": 1,
 		"silver_value": 0,
 		"weight_str": "0.05KG",
 		"category": "resource",
+		"asset_path": "res://assets/auction_items/refinement_chips.png",
 		"is_resource": true,
 		"can_sell": false,
 		"quantity": 8,
@@ -1932,11 +1935,12 @@ static var _CATALOG_ITEMS: Array[Dictionary] = [
 		"id": "refinement_chips_16",
 		"display_name": "Refinement Chips (16)",
 		"rarity": ITEM_CLASS.Rarity.PURPLE,
-		"grid_width": 1,
+		"grid_width": 5,
 		"grid_height": 1,
 		"silver_value": 0,
 		"weight_str": "0.05KG",
 		"category": "resource",
+		"asset_path": "res://assets/auction_items/refinement_chips.png",
 		"is_resource": true,
 		"can_sell": false,
 		"quantity": 16,
@@ -1946,11 +1950,12 @@ static var _CATALOG_ITEMS: Array[Dictionary] = [
 		"id": "refinement_chips_32",
 		"display_name": "Refinement Chips (32)",
 		"rarity": ITEM_CLASS.Rarity.GOLD,
-		"grid_width": 1,
+		"grid_width": 5,
 		"grid_height": 1,
 		"silver_value": 0,
 		"weight_str": "0.05KG",
 		"category": "resource",
+		"asset_path": "res://assets/auction_items/refinement_chips.png",
 		"is_resource": true,
 		"can_sell": false,
 		"quantity": 32,
@@ -1960,11 +1965,12 @@ static var _CATALOG_ITEMS: Array[Dictionary] = [
 		"id": "locking_component_5",
 		"display_name": "Locking Component (5)",
 		"rarity": ITEM_CLASS.Rarity.RED,
-		"grid_width": 1,
+		"grid_width": 5,
 		"grid_height": 1,
 		"silver_value": 0,
 		"weight_str": "0.20KG",
 		"category": "resource",
+		"asset_path": "res://assets/auction_items/locking_component.png",
 		"is_resource": true,
 		"can_sell": false,
 		"quantity": 5,
@@ -1991,11 +1997,17 @@ static func filter_items(
 ) -> Array[Dictionary]:
 	var results: Array[Dictionary] = []
 	for it in _CATALOG_ITEMS:
+		var is_res: bool = bool(it.get("is_resource", false)) or String(it.get("category", "")) == "resource"
+		if is_res:
+			if category_filter != "resource":
+				continue
+		elif not category_filter.is_empty() and String(it.get("category", "")) != category_filter:
+			continue
+
 		if rarity_filter >= 0 and int(it.get("rarity", -1)) != rarity_filter:
 			continue
-		if not category_filter.is_empty() and String(it.get("category", "")) != category_filter:
-			continue
-		if shape_filter != Vector2i.ZERO:
+
+		if shape_filter != Vector2i.ZERO and not is_res:
 			var w := int(it.get("grid_width", 1))
 			var h := int(it.get("grid_height", 1))
 			if w != shape_filter.x or h != shape_filter.y:
@@ -2014,15 +2026,23 @@ static func filter_items_multi(
 ) -> Array[Dictionary]:
 	var results: Array[Dictionary] = []
 	for it in _CATALOG_ITEMS:
+		var is_res: bool = bool(it.get("is_resource", false)) or String(it.get("category", "")) == "resource"
+		if is_res:
+			# Tài nguyên chỉ xuất hiện khi bấm vào DUY NHẤT lựa chọn lọc loại tài nguyên
+			if not (filter_category and allowed_categories.size() == 1 and allowed_categories.has("resource")):
+				continue
+		elif filter_category:
+			var cat: String = String(it.get("category", ""))
+			if not allowed_categories.has(cat):
+				continue
+
 		if filter_rarity:
 			var r: int = int(it.get("rarity", -1))
 			if not allowed_rarities.has(r):
 				continue
-		if filter_category:
-			var cat: String = String(it.get("category", ""))
-			if not allowed_categories.has(cat):
-				continue
-		if filter_shape:
+
+		# Kích cỡ của tài nguyên là 5x1, không có bộ lọc kích cỡ cho chúng (chỉ có thể lọc qua tài nguyên)
+		if filter_shape and not is_res:
 			var w := int(it.get("grid_width", 1))
 			var h := int(it.get("grid_height", 1))
 			var sh := Vector2i(w, h)

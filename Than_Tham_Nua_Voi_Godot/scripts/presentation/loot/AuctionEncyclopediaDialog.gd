@@ -812,32 +812,57 @@ func _create_item_card(data: Dictionary) -> Control:
 	f_sp.size_flags_horizontal = SIZE_EXPAND_FILL
 	f_hbox.add_child(f_sp)
 
-	var price_lbl := Label.new()
 	if is_res and s_val == 0:
-		price_lbl.text = "Tài nguyên 💾"
-		price_lbl.add_theme_color_override("font_color", Color("#8be9fd"))
+		var res_tag := HBoxContainer.new()
+		res_tag.add_theme_constant_override("separation", 5)
+		res_tag.alignment = BoxContainer.ALIGNMENT_CENTER
+
+		var res_lbl := Label.new()
+		res_lbl.text = "Tài nguyên"
+		res_lbl.add_theme_color_override("font_color", Color("#8be9fd"))
+		res_lbl.add_theme_font_size_override("font_size", 11)
+		res_tag.add_child(res_lbl)
+
+		var res_icon := TextureRect.new()
+		res_icon.custom_minimum_size = Vector2(16, 16)
+		res_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		res_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		var r_icon_tex := _get_cached_texture("res://assets/auction_items/tai_nguyen.png")
+		if r_icon_tex != null:
+			res_icon.texture = r_icon_tex
+		res_tag.add_child(res_icon)
+
+		f_hbox.add_child(res_tag)
 	else:
+		var price_lbl := Label.new()
 		price_lbl.text = "🪙 %s Xu" % _format_number(s_val)
 		price_lbl.add_theme_color_override("font_color", Color("#f6c95c"))
-	price_lbl.add_theme_font_size_override("font_size", 12)
-	f_hbox.add_child(price_lbl)
+		price_lbl.add_theme_font_size_override("font_size", 12)
+		f_hbox.add_child(price_lbl)
 
 	return card
 
 
-## Vẽ ma trận 16 ô (4x4) thể hiện diện tích chiếm chỗ của vật phẩm (Đi từ góc trên bên trái đi xuống)
+## Vẽ ma trận ô thể hiện diện tích chiếm chỗ của vật phẩm (Đi từ góc trên bên trái đi xuống)
 func _create_footprint_matrix(item_w: int, item_h: int) -> Control:
 	var ctrl := Control.new()
-	ctrl.custom_minimum_size = Vector2(32, 32)
+	var cols := maxi(4, item_w)
+	var rows := maxi(4, item_h)
+	var cell_sz := 5.5
+	var gap := 1.5
+	if cols > 4:
+		cell_sz = 4.2
+		gap = 1.0
+	var total_w := cols * cell_sz + (cols - 1) * gap
+	var total_h := rows * cell_sz + (rows - 1) * gap
+	ctrl.custom_minimum_size = Vector2(total_w, total_h)
 	ctrl.draw.connect(func() -> void:
-		var cell_sz := 5.5
-		var gap := 1.5
 		var empty_col := Color(1.0, 1.0, 1.0, 0.15)
 		var filled_col := Color(1.0, 1.0, 1.0, 0.95)
 
-		# 4 columns x 4 rows, đi từ góc trên bên trái đi xuống
-		for row in range(4):
-			for col in range(4):
+		# columns x rows, đi từ góc trên bên trái đi xuống
+		for row in range(rows):
+			for col in range(cols):
 				var r := Rect2(
 					col * (cell_sz + gap),
 					row * (cell_sz + gap),

@@ -1140,7 +1140,7 @@ func _on_grid_draw() -> void:
 			if item.reward_type == "black_ticket":
 				v_text = "Vé đen 🎟️"
 			elif item.is_resource and item.silver_value == 0:
-				v_text = "Tài nguyên 💾"
+				v_text = "Tài nguyên"
 			var v_pos := Vector2(pos.x * CELL_SIZE + 4, (pos.y + h) * CELL_SIZE - 5)
 			_grid_draw_control.draw_string(font, v_pos, v_text, HORIZONTAL_ALIGNMENT_LEFT, w * CELL_SIZE - 8, 9, r_color)
 		elif is_quality_reveal:
@@ -1631,7 +1631,7 @@ func _on_settlement_grid_draw() -> void:
 			if item.reward_type == "black_ticket":
 				val_str = "Vé đen 🎟️"
 			elif item.is_resource and item.silver_value == 0:
-				val_str = "Tài nguyên 💾"
+				val_str = "Tài nguyên"
 
 			var val_pos := Vector2(rect.position.x + 5, rect.position.y + rect.size.y - 6)
 			_settlement_grid_draw_control.draw_string(
