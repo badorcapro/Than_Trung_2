@@ -1009,6 +1009,152 @@ static var _CATALOG_ITEMS: Array[Dictionary] = [
 		"description": "Hộp bộ truyền dịch vô trùng cao cấp chuyên dụng cấp cứu hồi sinh lực."
 	},
 
+	# --- Phẩm Xanh Lá (Green): Các vật phẩm trong ảnh 7 (a183 - a194) ---
+	{
+		"id": "voltage_tester",
+		"display_name": "Voltage Tester",
+		"rarity": ITEM_CLASS.Rarity.GREEN,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 4,
+		"weight_str": "0.10KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a183.png",
+		"description": "Bút thử điện điện tử hiển thị số kiểm tra an toàn mạch điện."
+	},
+	{
+		"id": "angle_grinder",
+		"display_name": "Angle Grinder",
+		"rarity": ITEM_CLASS.Rarity.GREEN,
+		"grid_width": 2,
+		"grid_height": 2,
+		"silver_value": 7,
+		"weight_str": "2.40KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a184.png",
+		"description": "Máy mài góc cầm tay lắp đĩa cắt kim loại công suất lớn."
+	},
+	{
+		"id": "corrugated_tube",
+		"display_name": "Corrugated Tube",
+		"rarity": ITEM_CLASS.Rarity.GREEN,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 4,
+		"weight_str": "0.60KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a185.png",
+		"description": "Ống ruột gà luồn dây điện chống cháy và cách điện bảo vệ đường dây."
+	},
+	{
+		"id": "analog_thermometer",
+		"display_name": "Analog Thermometer",
+		"rarity": ITEM_CLASS.Rarity.GREEN,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 4,
+		"weight_str": "0.30KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a186.png",
+		"description": "Nhiệt kế cơ kim chỉ chân kim loại đo nhiệt độ buồng máy chính xác."
+	},
+	{
+		"id": "spray_paint",
+		"display_name": "Spray Paint",
+		"rarity": ITEM_CLASS.Rarity.GREEN,
+		"grid_width": 1,
+		"grid_height": 2,
+		"silver_value": 5,
+		"weight_str": "0.40KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a187.png",
+		"description": "Bình sơn xịt áp suất cao phủ bóng bề mặt kim loại chống ăn mòn."
+	},
+	{
+		"id": "led_light",
+		"display_name": "LED Light",
+		"rarity": ITEM_CLASS.Rarity.GREEN,
+		"grid_width": 2,
+		"grid_height": 1,
+		"silver_value": 5,
+		"weight_str": "0.45KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a188.png",
+		"description": "Thanh đèn LED dài chiếu sáng công nghiệp tiết kiệm điện năng."
+	},
+	{
+		"id": "manometer",
+		"display_name": "Manometer",
+		"rarity": ITEM_CLASS.Rarity.GREEN,
+		"grid_width": 1,
+		"grid_height": 2,
+		"silver_value": 5,
+		"weight_str": "0.80KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a189.png",
+		"description": "Đồng hồ đo áp suất khí kèm van đôi điều áp hệ thống đường ống."
+	},
+	{
+		"id": "leveler",
+		"display_name": "Leveler",
+		"rarity": ITEM_CLASS.Rarity.GREEN,
+		"grid_width": 1,
+		"grid_height": 2,
+		"silver_value": 5,
+		"weight_str": "1.20KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a190.png",
+		"description": "Thước thủy nivo cân bằng bọt nước đo độ nghiêng bề mặt công trình."
+	},
+	{
+		"id": "capacitor",
+		"display_name": "Capacitor",
+		"rarity": ITEM_CLASS.Rarity.GREEN,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 4,
+		"weight_str": "0.10KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a191.png",
+		"description": "Tụ điện hóa cao áp tích trữ điện năng và ổn định điện áp mạch."
+	},
+	{
+		"id": "lithium_battery",
+		"display_name": "Lithium Battery",
+		"rarity": ITEM_CLASS.Rarity.GREEN,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 4,
+		"weight_str": "0.10KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a192.png",
+		"description": "Khối pin Lithium mỏng dung lượng cao cho thiết bị liên lạc cầm tay."
+	},
+	{
+		"id": "dvd_drive",
+		"display_name": "DVD Drive",
+		"rarity": ITEM_CLASS.Rarity.GREEN,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 4,
+		"weight_str": "0.60KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a193.png",
+		"description": "Ổ đĩa quang DVD cơ học đọc ghi đĩa quang dữ liệu lưu trữ."
+	},
+	{
+		"id": "power_supply",
+		"display_name": "Power",
+		"rarity": ITEM_CLASS.Rarity.GREEN,
+		"grid_width": 2,
+		"grid_height": 2,
+		"silver_value": 7,
+		"weight_str": "2.60KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a194.png",
+		"description": "Bộ nguồn chuyển mạch ATX quạt lưới tổ ong cung cấp điện tải nặng."
+	},
+
 	# --- Tài nguyên Nâng cấp (Refinement Chips & Locking Component) ---
 	{
 		"id": "refinement_chips_2",
