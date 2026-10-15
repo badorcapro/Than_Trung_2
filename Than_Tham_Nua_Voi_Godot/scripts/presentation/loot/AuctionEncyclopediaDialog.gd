@@ -182,14 +182,11 @@ func _build_sidebar() -> Control:
 
 	var r_reset_btn := Button.new()
 	r_reset_btn.tooltip_text = "Chọn tất cả phẩm chất"
-	r_reset_btn.custom_minimum_size = Vector2(32, 32)
+	r_reset_btn.custom_minimum_size = Vector2(30, 30)
 	r_reset_btn.focus_mode = FOCUS_NONE
+	_strip_button_style(r_reset_btn)
 	var r_sel_icon := TextureRect.new()
 	r_sel_icon.set_anchors_preset(PRESET_FULL_RECT)
-	r_sel_icon.offset_left = 3
-	r_sel_icon.offset_top = 3
-	r_sel_icon.offset_right = -3
-	r_sel_icon.offset_bottom = -3
 	r_sel_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	r_sel_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	r_sel_icon.mouse_filter = MOUSE_FILTER_IGNORE
@@ -207,14 +204,11 @@ func _build_sidebar() -> Control:
 
 	var r_deselect_btn := Button.new()
 	r_deselect_btn.tooltip_text = "Bỏ chọn tất cả phẩm chất"
-	r_deselect_btn.custom_minimum_size = Vector2(32, 32)
+	r_deselect_btn.custom_minimum_size = Vector2(30, 30)
 	r_deselect_btn.focus_mode = FOCUS_NONE
+	_strip_button_style(r_deselect_btn)
 	var r_desel_icon := TextureRect.new()
 	r_desel_icon.set_anchors_preset(PRESET_FULL_RECT)
-	r_desel_icon.offset_left = 3
-	r_desel_icon.offset_top = 3
-	r_desel_icon.offset_right = -3
-	r_desel_icon.offset_bottom = -3
 	r_desel_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	r_desel_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	r_desel_icon.mouse_filter = MOUSE_FILTER_IGNORE
@@ -230,7 +224,7 @@ func _build_sidebar() -> Control:
 	)
 	r_header_hbox.add_child(r_deselect_btn)
 
-	# Diamond buttons row (6 Rarities from SVG vector icons - enlarged and crisp)
+	# Diamond buttons row (6 Rarities from SVG vector icons - enlarged and crisp, no blue bg box)
 	var diamonds_hbox := HBoxContainer.new()
 	diamonds_hbox.add_theme_constant_override("separation", 8)
 	side_vbox.add_child(diamonds_hbox)
@@ -250,32 +244,11 @@ func _build_sidebar() -> Control:
 		d_btn.tooltip_text = ITEM_CLASS.rarity_name(r)
 		var r_val: int = int(r)
 		d_btn.set_meta("rarity", r_val)
-
-		var norm_sb := StyleBoxFlat.new()
-		norm_sb.bg_color = Color(0.10, 0.13, 0.18, 0.85)
-		norm_sb.border_color = Color(0.24, 0.32, 0.44, 0.5)
-		norm_sb.border_width_left = 1
-		norm_sb.border_width_top = 1
-		norm_sb.border_width_right = 1
-		norm_sb.border_width_bottom = 1
-		norm_sb.corner_radius_top_left = 6
-		norm_sb.corner_radius_top_right = 6
-		norm_sb.corner_radius_bottom_left = 6
-		norm_sb.corner_radius_bottom_right = 6
-		d_btn.add_theme_stylebox_override("normal", norm_sb)
-
-		var hover_sb := norm_sb.duplicate() as StyleBoxFlat
-		hover_sb.bg_color = Color(0.18, 0.22, 0.30, 0.95)
-		hover_sb.border_color = Color(0.5, 0.6, 0.75, 0.8)
-		d_btn.add_theme_stylebox_override("hover", hover_sb)
+		_strip_button_style(d_btn)
 
 		var icon_rect := TextureRect.new()
 		icon_rect.name = "RarityIcon"
 		icon_rect.set_anchors_preset(PRESET_FULL_RECT)
-		icon_rect.offset_left = 4
-		icon_rect.offset_top = 4
-		icon_rect.offset_right = -4
-		icon_rect.offset_bottom = -4
 		icon_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		icon_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		icon_rect.mouse_filter = MOUSE_FILTER_IGNORE
@@ -317,14 +290,11 @@ func _build_sidebar() -> Control:
 
 	var c_reset_btn := Button.new()
 	c_reset_btn.tooltip_text = "Chọn tất cả chủng loại"
-	c_reset_btn.custom_minimum_size = Vector2(32, 32)
+	c_reset_btn.custom_minimum_size = Vector2(30, 30)
 	c_reset_btn.focus_mode = FOCUS_NONE
+	_strip_button_style(c_reset_btn)
 	var c_sel_icon := TextureRect.new()
 	c_sel_icon.set_anchors_preset(PRESET_FULL_RECT)
-	c_sel_icon.offset_left = 3
-	c_sel_icon.offset_top = 3
-	c_sel_icon.offset_right = -3
-	c_sel_icon.offset_bottom = -3
 	c_sel_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	c_sel_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	c_sel_icon.mouse_filter = MOUSE_FILTER_IGNORE
@@ -342,14 +312,11 @@ func _build_sidebar() -> Control:
 
 	var c_deselect_btn := Button.new()
 	c_deselect_btn.tooltip_text = "Bỏ chọn tất cả chủng loại"
-	c_deselect_btn.custom_minimum_size = Vector2(32, 32)
+	c_deselect_btn.custom_minimum_size = Vector2(30, 30)
 	c_deselect_btn.focus_mode = FOCUS_NONE
+	_strip_button_style(c_deselect_btn)
 	var c_desel_icon := TextureRect.new()
 	c_desel_icon.set_anchors_preset(PRESET_FULL_RECT)
-	c_desel_icon.offset_left = 3
-	c_desel_icon.offset_top = 3
-	c_desel_icon.offset_right = -3
-	c_desel_icon.offset_bottom = -3
 	c_desel_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	c_desel_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	c_desel_icon.mouse_filter = MOUSE_FILTER_IGNORE
@@ -379,19 +346,16 @@ func _build_sidebar() -> Control:
 
 		var c_btn := Button.new()
 		c_btn.tooltip_text = c_lbl
-		c_btn.custom_minimum_size = Vector2(62, 40)
+		c_btn.custom_minimum_size = Vector2(72, 72)
 		c_btn.focus_mode = FOCUS_NONE
 		c_btn.set_meta("cat_id", c_id)
+		_strip_button_style(c_btn)
 
 		var tex: Texture2D = _get_cached_texture(c_icon_path) if not c_icon_path.is_empty() else null
 		if tex != null:
 			var icon_rect := TextureRect.new()
 			icon_rect.name = "CatIcon"
 			icon_rect.set_anchors_preset(PRESET_FULL_RECT)
-			icon_rect.offset_left = 4
-			icon_rect.offset_top = 4
-			icon_rect.offset_right = -4
-			icon_rect.offset_bottom = -4
 			icon_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 			icon_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 			icon_rect.mouse_filter = MOUSE_FILTER_IGNORE
@@ -438,14 +402,11 @@ func _build_sidebar() -> Control:
 
 	var s_reset_btn := Button.new()
 	s_reset_btn.tooltip_text = "Chọn tất cả hình dáng"
-	s_reset_btn.custom_minimum_size = Vector2(32, 32)
+	s_reset_btn.custom_minimum_size = Vector2(30, 30)
 	s_reset_btn.focus_mode = FOCUS_NONE
+	_strip_button_style(s_reset_btn)
 	var s_sel_icon := TextureRect.new()
 	s_sel_icon.set_anchors_preset(PRESET_FULL_RECT)
-	s_sel_icon.offset_left = 3
-	s_sel_icon.offset_top = 3
-	s_sel_icon.offset_right = -3
-	s_sel_icon.offset_bottom = -3
 	s_sel_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	s_sel_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	s_sel_icon.mouse_filter = MOUSE_FILTER_IGNORE
@@ -463,14 +424,11 @@ func _build_sidebar() -> Control:
 
 	var s_deselect_btn := Button.new()
 	s_deselect_btn.tooltip_text = "Bỏ chọn tất cả hình dáng"
-	s_deselect_btn.custom_minimum_size = Vector2(32, 32)
+	s_deselect_btn.custom_minimum_size = Vector2(30, 30)
 	s_deselect_btn.focus_mode = FOCUS_NONE
+	_strip_button_style(s_deselect_btn)
 	var s_desel_icon := TextureRect.new()
 	s_desel_icon.set_anchors_preset(PRESET_FULL_RECT)
-	s_desel_icon.offset_left = 3
-	s_desel_icon.offset_top = 3
-	s_desel_icon.offset_right = -3
-	s_desel_icon.offset_bottom = -3
 	s_desel_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	s_desel_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	s_desel_icon.mouse_filter = MOUSE_FILTER_IGNORE
@@ -486,25 +444,39 @@ func _build_sidebar() -> Control:
 	)
 	s_header_hbox.add_child(s_deselect_btn)
 
+	# 16 Shape Footprint buttons in 4 columns
 	var shape_grid := GridContainer.new()
-	shape_grid.columns = 3
+	shape_grid.columns = 4
 	shape_grid.add_theme_constant_override("h_separation", 6)
 	shape_grid.add_theme_constant_override("v_separation", 6)
 	side_vbox.add_child(shape_grid)
 
 	var shapes: Array[Vector2i] = [
-		Vector2i(1, 1), Vector2i(1, 2), Vector2i(2, 1),
-		Vector2i(2, 2), Vector2i(1, 3), Vector2i(2, 3),
-		Vector2i(3, 3), Vector2i(1, 4), Vector2i(4, 1)
+		Vector2i(1, 1), Vector2i(1, 2), Vector2i(1, 3), Vector2i(1, 4),
+		Vector2i(2, 1), Vector2i(2, 2), Vector2i(2, 3), Vector2i(2, 4),
+		Vector2i(3, 1), Vector2i(3, 2), Vector2i(3, 3), Vector2i(3, 4),
+		Vector2i(4, 1), Vector2i(4, 2), Vector2i(4, 3), Vector2i(4, 4),
 	]
 	for sh in shapes:
 		var sh_btn := Button.new()
-		sh_btn.text = "%dx%d" % [sh.x, sh.y]
-		sh_btn.tooltip_text = "Kích thước ô: %dx%d" % [sh.x, sh.y]
-		sh_btn.custom_minimum_size = Vector2(62, 32)
-		sh_btn.add_theme_font_size_override("font_size", 12)
+		sh_btn.tooltip_text = "Kích thước: %dx%d ô" % [sh.x, sh.y]
+		sh_btn.custom_minimum_size = Vector2(56, 56)
 		sh_btn.focus_mode = FOCUS_NONE
 		sh_btn.set_meta("shape", sh)
+		_strip_button_style(sh_btn)
+
+		var icon_rect := TextureRect.new()
+		icon_rect.name = "ShapeIcon"
+		icon_rect.set_anchors_preset(PRESET_FULL_RECT)
+		icon_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		icon_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		icon_rect.mouse_filter = MOUSE_FILTER_IGNORE
+		var sh_path := "res://assets/auction_items/%dx%d.png" % [sh.x, sh.y]
+		var tex := _get_cached_texture(sh_path)
+		if tex != null:
+			icon_rect.texture = tex
+		sh_btn.add_child(icon_rect)
+
 		sh_btn.pressed.connect(func() -> void:
 			if not _shape_filter_enabled:
 				_shape_filter_enabled = true
@@ -902,3 +874,14 @@ func _format_number(val: int) -> String:
 		if cnt % 3 == 0 and i > 0:
 			res = "," + res
 	return ("-" if val < 0 else "") + res
+
+
+## Xóa bỏ hoàn toàn StyleBox viền xanh mặc định của Button để icon hiển thị trọn vẹn
+func _strip_button_style(btn: Button) -> void:
+	var empty := StyleBoxEmpty.new()
+	btn.add_theme_stylebox_override("normal", empty)
+	btn.add_theme_stylebox_override("hover", empty)
+	btn.add_theme_stylebox_override("pressed", empty)
+	btn.add_theme_stylebox_override("focus", empty)
+	btn.add_theme_stylebox_override("disabled", empty)
+
