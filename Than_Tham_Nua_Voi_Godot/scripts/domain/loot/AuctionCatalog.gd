@@ -1301,6 +1301,152 @@ static var _CATALOG_ITEMS: Array[Dictionary] = [
 		"description": "Kìm mỏ nhọn mũi thẳng thon dài chuyên kẹp gắp dây và uốn nắn chi tiết nhỏ."
 	},
 
+	# --- Phẩm Xanh Dương (Blue): Các vật phẩm trong ảnh 9 (a159 - a170) ---
+	{
+		"id": "ahsarah_fashion_magazine",
+		"display_name": "Ahsarah Fashion Magazine",
+		"rarity": ITEM_CLASS.Rarity.BLUE,
+		"grid_width": 2,
+		"grid_height": 2,
+		"silver_value": 14,
+		"weight_str": "0.23KG",
+		"category": "document",
+		"asset_path": "res://assets/auction_items/a159.png",
+		"description": "Tạp chí thời trang cao cấp Venus số đặc biệt in hình bìa người mẫu danh tiếng."
+	},
+	{
+		"id": "basic_ammo_production_kit",
+		"display_name": "Basic Ammo Production Kit",
+		"rarity": ITEM_CLASS.Rarity.BLUE,
+		"grid_width": 1,
+		"grid_height": 2,
+		"silver_value": 10,
+		"weight_str": "0.45KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a160.png",
+		"description": "Khay chứa đạn và dụng cụ nạp thuốc súng cơ bản dùng cho huấn luyện xạ thủ."
+	},
+	{
+		"id": "delta_force_black_hawk_down",
+		"display_name": "Delta Force: Black Hawk Down",
+		"rarity": ITEM_CLASS.Rarity.BLUE,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 8,
+		"weight_str": "<0.10KG",
+		"category": "document",
+		"asset_path": "res://assets/auction_items/a161.png",
+		"description": "Đĩa cài đặt trò chơi kinh điển Delta Force: Black Hawk Down bản Team Sabre nguyên gốc."
+	},
+	{
+		"id": "delta_force_task_force_dagger",
+		"display_name": "Delta Force: Task Force Dagger",
+		"rarity": ITEM_CLASS.Rarity.BLUE,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 8,
+		"weight_str": "<0.10KG",
+		"category": "document",
+		"asset_path": "res://assets/auction_items/a162.png",
+		"description": "Đĩa quang trò chơi Task Force Dagger của hãng NovaLogic lưu giữ dữ liệu cổ xưa."
+	},
+	{
+		"id": "electronic_thermostat",
+		"display_name": "Electronic Thermostat",
+		"rarity": ITEM_CLASS.Rarity.BLUE,
+		"grid_width": 2,
+		"grid_height": 2,
+		"silver_value": 14,
+		"weight_str": "0.50KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a163.png",
+		"description": "Tủ ủ nhiệt điện tử điều khiển vi mạch duy trì nhiệt độ bảo quản mẫu sinh học."
+	},
+	{
+		"id": "bone_saw",
+		"display_name": "Bone Saw",
+		"rarity": ITEM_CLASS.Rarity.BLUE,
+		"grid_width": 3,
+		"grid_height": 1,
+		"silver_value": 13,
+		"weight_str": "2.00KG",
+		"category": "medical",
+		"asset_path": "res://assets/auction_items/a164.png",
+		"description": "Cưa xương phẫu thuật cán kim loại lưỡi răng cưa mịn chuyên dùng trong đại phẫu."
+	},
+	{
+		"id": "mocha_coffee_pot",
+		"display_name": "Mocha Coffee Pot",
+		"rarity": ITEM_CLASS.Rarity.BLUE,
+		"grid_width": 1,
+		"grid_height": 2,
+		"silver_value": 10,
+		"weight_str": "0.80KG",
+		"category": "kitchen",
+		"asset_path": "res://assets/auction_items/a165.png",
+		"description": "Ấm pha cà phê Moka áp suất hơi nước bằng nhôm đúc tráng men đen sang trọng."
+	},
+	{
+		"id": "vitamin_effervescent_tablets",
+		"display_name": "Vitamin Effervescent Tablets",
+		"rarity": ITEM_CLASS.Rarity.BLUE,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 8,
+		"weight_str": "0.10KG",
+		"category": "medical",
+		"asset_path": "res://assets/auction_items/a166.png",
+		"description": "Ống viên sủi Vitamin C 1000mg hòa tan nhanh giúp tăng cường sức đề kháng tức thì."
+	},
+	{
+		"id": "english_tea_bag",
+		"display_name": "English Tea Bag",
+		"rarity": ITEM_CLASS.Rarity.BLUE,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 8,
+		"weight_str": "0.10KG",
+		"category": "kitchen",
+		"asset_path": "res://assets/auction_items/a167.png",
+		"description": "Hộp thiếc hồng trà thượng hạng Sweet Tea ướp hương hoa sấy khô hảo hạng."
+	},
+	{
+		"id": "wooden_carved_pipe",
+		"display_name": "Wooden Carved Pipe",
+		"rarity": ITEM_CLASS.Rarity.BLUE,
+		"grid_width": 2,
+		"grid_height": 1,
+		"silver_value": 10,
+		"weight_str": "0.20KG",
+		"category": "antique",
+		"asset_path": "res://assets/auction_items/a168.png",
+		"description": "Tẩu thuốc lá chạm khắc gỗ thạch nam vân nổi tinh xảo viền kim loại quý phái."
+	},
+	{
+		"id": "sugar_bun",
+		"display_name": "Sugar Bun",
+		"rarity": ITEM_CLASS.Rarity.BLUE,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 8,
+		"weight_str": "0.20KG",
+		"category": "kitchen",
+		"asset_path": "res://assets/auction_items/a169.png",
+		"description": "Bánh ngọt kim tự tháp hương đường mật nướng giòn điểm số ấn hoàng gia."
+	},
+	{
+		"id": "intel_recorder",
+		"display_name": "Intel Recorder",
+		"rarity": ITEM_CLASS.Rarity.BLUE,
+		"grid_width": 1,
+		"grid_height": 3,
+		"silver_value": 13,
+		"weight_str": "1.00KG",
+		"category": "document",
+		"asset_path": "res://assets/auction_items/a170.png",
+		"description": "Máy ghi âm tình báo chuyên dụng đa kênh tích hợp mic định hướng bắt sóng tầm xa."
+	},
+
 	# --- Tài nguyên Nâng cấp (Refinement Chips & Locking Component) ---
 	{
 		"id": "refinement_chips_2",
