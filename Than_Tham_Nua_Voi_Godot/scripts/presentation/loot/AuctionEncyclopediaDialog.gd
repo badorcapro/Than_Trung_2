@@ -633,6 +633,19 @@ func _refresh_items_grid() -> void:
 		_shape_filter_enabled
 	)
 
+	# Thứ tự mặc định: sắp xếp từ giá cao nhất xuống giá thấp nhất
+	items.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
+		var va: int = int(a.get("silver_value", 0))
+		var vb: int = int(b.get("silver_value", 0))
+		if va != vb:
+			return va > vb
+		var ra: int = int(a.get("rarity", 0))
+		var rb: int = int(b.get("rarity", 0))
+		if ra != rb:
+			return ra > rb
+		return String(a.get("id", "")) < String(b.get("id", ""))
+	)
+
 	_item_count_lbl.text = "%d Vật Phẩm" % items.size()
 
 	if items.is_empty():

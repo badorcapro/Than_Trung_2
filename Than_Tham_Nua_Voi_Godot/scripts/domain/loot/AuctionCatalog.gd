@@ -571,6 +571,152 @@ static var _CATALOG_ITEMS: Array[Dictionary] = [
 		"description": "Dao rọc giấy đa năng cán vàng sắc bén phục vụ mở niêm phong hòm."
 	},
 
+	# --- Phẩm Xanh Lá (Green): Các vật phẩm trong ảnh 4 (a219 - a230) ---
+	{
+		"id": "african_wood_sculpture",
+		"display_name": "African Wood Sculpture",
+		"rarity": ITEM_CLASS.Rarity.GREEN,
+		"grid_width": 1,
+		"grid_height": 2,
+		"silver_value": 6,
+		"weight_str": "1.40KG",
+		"category": "antique",
+		"asset_path": "res://assets/auction_items/a219.png",
+		"description": "Tượng gỗ châu Phi điêu khắc thủ công tinh xảo, cổ vật quý hiếm từ hải ngoại."
+	},
+	{
+		"id": "rusty_pirate_copper_coin",
+		"display_name": "Rusty Pirate Copper Coin",
+		"rarity": ITEM_CLASS.Rarity.GREEN,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 5,
+		"weight_str": "0.20KG",
+		"category": "antique",
+		"asset_path": "res://assets/auction_items/a220.png",
+		"description": "Đồng xu cổ mặt trời rỉ sét thời cướp biển, đúc bằng đồng thiếc cổ xưa."
+	},
+	{
+		"id": "ahsarah_specialty_tajine_pot",
+		"display_name": "Ahsarah Specialty Tajine Pot",
+		"rarity": ITEM_CLASS.Rarity.GREEN,
+		"grid_width": 2,
+		"grid_height": 2,
+		"silver_value": 8,
+		"weight_str": "3.75KG",
+		"category": "kitchen",
+		"asset_path": "res://assets/auction_items/a221.png",
+		"description": "Nồi đất Tajine đặc sản Ahsarah nắp hình chóp đặc trưng dùng om hầm cung đình."
+	},
+	{
+		"id": "hotel_poster",
+		"display_name": "Hotel Poster",
+		"rarity": ITEM_CLASS.Rarity.GREEN,
+		"grid_width": 2,
+		"grid_height": 1,
+		"silver_value": 5,
+		"weight_str": "<0.10KG",
+		"category": "document",
+		"asset_path": "res://assets/auction_items/a222.png",
+		"description": "Áp phích quảng cáo khách sạn hoàng gia Diamond Queen viền khung kính lưu niệm."
+	},
+	{
+		"id": "ahsarah_news_weekly",
+		"display_name": "Ahsarah News Weekly",
+		"rarity": ITEM_CLASS.Rarity.GREEN,
+		"grid_width": 2,
+		"grid_height": 2,
+		"silver_value": 6,
+		"weight_str": "0.25KG",
+		"category": "document",
+		"asset_path": "res://assets/auction_items/a223.png",
+		"description": "Tuần báo thời sự tổng hợp Ahsarah in ấn các phóng sự điều tra nóng hổi."
+	},
+	{
+		"id": "ahsarah_entertainment_magazine",
+		"display_name": "Ahsarah Entertainment Magazine",
+		"rarity": ITEM_CLASS.Rarity.GREEN,
+		"grid_width": 2,
+		"grid_height": 2,
+		"silver_value": 6,
+		"weight_str": "0.25KG",
+		"category": "document",
+		"asset_path": "res://assets/auction_items/a224.png",
+		"description": "Tạp chí giải trí và thời trang kinh kỳ Ahsarah bắt mắt và thịnh hành."
+	},
+	{
+		"id": "seasoning_set",
+		"display_name": "Seasoning Set",
+		"rarity": ITEM_CLASS.Rarity.GREEN,
+		"grid_width": 2,
+		"grid_height": 2,
+		"silver_value": 7,
+		"weight_str": "0.45KG",
+		"category": "kitchen",
+		"asset_path": "res://assets/auction_items/a225.png",
+		"description": "Bộ giá xoay gia vị 6 lọ thủy tinh nắp bạc sang trọng dành cho ngự trù."
+	},
+	{
+		"id": "bagged_coffee_beans",
+		"display_name": "Bagged Coffee Beans",
+		"rarity": ITEM_CLASS.Rarity.GREEN,
+		"grid_width": 1,
+		"grid_height": 2,
+		"silver_value": 5,
+		"weight_str": "0.35KG",
+		"category": "kitchen",
+		"asset_path": "res://assets/auction_items/a226.png",
+		"description": "Túi hạt cà phê rang mộc thượng hạng nhập khẩu giữ hương thơm nồng nàn."
+	},
+	{
+		"id": "local_rebrewed_coffee",
+		"display_name": "Local Rebrewed Coffee",
+		"rarity": ITEM_CLASS.Rarity.GREEN,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 4,
+		"weight_str": "0.28KG",
+		"category": "kitchen",
+		"asset_path": "res://assets/auction_items/a227.png",
+		"description": "Hũ cà phê hòa tan pha chế thủ công bản xứ giúp tỉnh táo trong ca trực."
+	},
+	{
+		"id": "super_glue",
+		"display_name": "Super Glue",
+		"rarity": ITEM_CLASS.Rarity.GREEN,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 4,
+		"weight_str": "0.25KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a228.png",
+		"description": "Chai keo dán tức thì khô nhanh kết dính siêu bền các mảnh vỡ chứng cứ."
+	},
+	{
+		"id": "stone_hammer",
+		"display_name": "Stone Hammer",
+		"rarity": ITEM_CLASS.Rarity.GREEN,
+		"grid_width": 3,
+		"grid_height": 1,
+		"silver_value": 7,
+		"weight_str": "5.00KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a229.png",
+		"description": "Búa tạ đập đá cán dài đúc thép nặng 5kg dùng phá khóa và rào chắn kiên cố."
+	},
+	{
+		"id": "handsaw",
+		"display_name": "Handsaw",
+		"rarity": ITEM_CLASS.Rarity.GREEN,
+		"grid_width": 2,
+		"grid_height": 1,
+		"silver_value": 5,
+		"weight_str": "1.50KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a230.png",
+		"description": "Cưa tay khung kim loại răng cưa hợp kim bén ngọt cắt vật liệu cứng."
+	},
+
 	# --- Tài nguyên Nâng cấp (Refinement Chips & Locking Component) ---
 	{
 		"id": "refinement_chips_2",
