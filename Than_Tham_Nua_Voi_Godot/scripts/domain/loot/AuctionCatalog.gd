@@ -2469,6 +2469,152 @@ static var _CATALOG_ITEMS: Array[Dictionary] = [
 		"description": "Tấm đệm sợi polyethylene siêu nhẹ có khả năng phân tán xung lực đạn đạo."
 	},
 
+	# --- Phẩm Vàng (Legendary): Các vật phẩm đợt 17 ---
+	{
+		"id": "reis_music_score",
+		"display_name": "Reis's Music Score",
+		"rarity": ITEM_CLASS.Rarity.GOLD,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 45,
+		"weight_str": "0.22KG",
+		"category": "document",
+		"asset_path": "res://assets/auction_items/a063.png",
+		"description": "Quyển sổ chép các bản tổng phổ nhạc cổ điển đóng bìa da tinh xảo của thủ lĩnh Khalil Reis."
+	},
+	{
+		"id": "ahsarah_special_cup",
+		"display_name": "Ahsarah Special Cup",
+		"rarity": ITEM_CLASS.Rarity.GOLD,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 48,
+		"weight_str": "0.13KG",
+		"category": "antique",
+		"asset_path": "res://assets/auction_items/a064.png",
+		"description": "Chiếc cốc gốm mạ vàng nạm ngọc hồng lựu trứ danh vùng hoàng gia Ahsarah."
+	},
+	{
+		"id": "premium_ammo_kit",
+		"display_name": "Premium Ammo Kit",
+		"rarity": ITEM_CLASS.Rarity.GOLD,
+		"grid_width": 3,
+		"grid_height": 1,
+		"silver_value": 39,
+		"weight_str": "1.52KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a065.png",
+		"description": "Khay đựng đạn dược xuyên giáp chuyên dụng cùng dụng cụ bảo dưỡng vũ khí dã chiến."
+	},
+	{
+		"id": "military_satellite_communicator",
+		"display_name": "Military Satellite Communicator",
+		"rarity": ITEM_CLASS.Rarity.GOLD,
+		"grid_width": 2,
+		"grid_height": 1,
+		"silver_value": 46,
+		"weight_str": "1.99KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a066.png",
+		"description": "Trạm ăng-ten chảo thu phát sóng vệ tinh quân sự mã hóa dải tần cao cấp."
+	},
+	{
+		"id": "slr_camera",
+		"display_name": "SLR Camera",
+		"rarity": ITEM_CLASS.Rarity.GOLD,
+		"grid_width": 2,
+		"grid_height": 1,
+		"silver_value": 41,
+		"weight_str": "1.09KG",
+		"category": "general",
+		"asset_path": "res://assets/auction_items/a067.png",
+		"description": "Máy ảnh cơ quang học chuyên nghiệp chụp ảnh trinh sát tầm xa độ sắc nét cao."
+	},
+	{
+		"id": "military_binoculars",
+		"display_name": "Military Binoculars",
+		"rarity": ITEM_CLASS.Rarity.GOLD,
+		"grid_width": 2,
+		"grid_height": 1,
+		"silver_value": 43,
+		"weight_str": "0.46KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a068.png",
+		"description": "Ống nhòm dã chiến bọc cao su chống va đập tích hợp thước đo cự ly mục tiêu."
+	},
+	{
+		"id": "array_server",
+		"display_name": "Array Server",
+		"rarity": ITEM_CLASS.Rarity.GOLD,
+		"grid_width": 4,
+		"grid_height": 2,
+		"silver_value": 40,
+		"weight_str": "10.00KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a069.png",
+		"description": "Khung máy chủ công nghiệp đồ sộ mang bộ vi xử lý đa nhân tính toán tình báo tối mật."
+	},
+	{
+		"id": "haavk_confidential_files",
+		"display_name": "Haavk Confidential Files",
+		"rarity": ITEM_CLASS.Rarity.GOLD,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 55,
+		"weight_str": "<0.10KG",
+		"category": "document",
+		"asset_path": "res://assets/auction_items/a070.png",
+		"description": "Tài liệu tuyệt mật của tập đoàn Haavk chứa bản thiết kế trang bị thế hệ mới."
+	},
+	{
+		"id": "boxed_drip_coffee",
+		"display_name": "Boxed Drip Coffee",
+		"rarity": ITEM_CLASS.Rarity.GOLD,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 37,
+		"weight_str": "0.60KG",
+		"category": "kitchen",
+		"asset_path": "res://assets/auction_items/a071.png",
+		"description": "Hộp cà phê túi lọc Barista thượng hạng nhập khẩu dành cho sĩ quan cấp cao."
+	},
+	{
+		"id": "local_specialty_jewelry",
+		"display_name": "Local Specialty Jewelry",
+		"rarity": ITEM_CLASS.Rarity.GOLD,
+		"grid_width": 3,
+		"grid_height": 1,
+		"silver_value": 49,
+		"weight_str": "2.50KG",
+		"category": "antique",
+		"asset_path": "res://assets/auction_items/a072.png",
+		"description": "Bộ vòng trang sức bạc cổ truyền thống chạm khắc thủ công nạm đá ngọc lam quý hiếm."
+	},
+	{
+		"id": "mantel_clock",
+		"display_name": "Mantel Clock",
+		"rarity": ITEM_CLASS.Rarity.GOLD,
+		"grid_width": 2,
+		"grid_height": 1,
+		"silver_value": 44,
+		"weight_str": "3.00KG",
+		"category": "antique",
+		"asset_path": "res://assets/auction_items/a073.png",
+		"description": "Đồng hồ để bàn bằng đồng thau chạm khắc hoa văn cổ điển mang tính lịch sử."
+	},
+	{
+		"id": "large_radio_station",
+		"display_name": "Large Radio Station",
+		"rarity": ITEM_CLASS.Rarity.GOLD,
+		"grid_width": 3,
+		"grid_height": 1,
+		"silver_value": 42,
+		"weight_str": "6.50KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a074.png",
+		"description": "Trạm vô tuyến dã chiến quân sự cỡ lớn liên lạc tầm xa đa băng tần."
+	},
+
 	# --- Tài nguyên Nâng cấp (Refinement Chips & Locking Component) ---
 	{
 		"id": "refinement_chips_2",
