@@ -2177,6 +2177,152 @@ static var _CATALOG_ITEMS: Array[Dictionary] = [
 		"description": "Bộ khuôn đúc và máy ép đạn trung cấp kèm khay đựng đầu đạn hợp kim đồng."
 	},
 
+	# --- Đợt 15: 12 Vật phẩm phẩm Tím (Batch 15: 12 Purple, a087 -> a098) ---
+	{
+		"id": "ceramic_armor",
+		"display_name": "Ceramic Armor",
+		"rarity": ITEM_CLASS.Rarity.PURPLE,
+		"grid_width": 2,
+		"grid_height": 1,
+		"silver_value": 24,
+		"weight_str": "1.36KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a087.png",
+		"description": "Tấm giáp chống đạn chế tác từ gốm kỹ thuật nén áp lực cao siêu nhẹ và phân tán lực."
+	},
+	{
+		"id": "special_steel",
+		"display_name": "Special Steel",
+		"rarity": ITEM_CLASS.Rarity.PURPLE,
+		"grid_width": 2,
+		"grid_height": 1,
+		"silver_value": 22,
+		"weight_str": "2.49KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a088.png",
+		"description": "Tấm thép cường lực đặc chủng chống xuyên giáp dùng gia cố áo giáp quân sự."
+	},
+	{
+		"id": "titanium_alloy",
+		"display_name": "Titanium Alloy",
+		"rarity": ITEM_CLASS.Rarity.PURPLE,
+		"grid_width": 2,
+		"grid_height": 1,
+		"silver_value": 26,
+		"weight_str": "2.04KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a089.png",
+		"description": "Tấm hợp kim titan bề mặt phay xước sáng bóng, độ cứng vượt trội chịu nhiệt cực hạn."
+	},
+	{
+		"id": "ssd",
+		"display_name": "SSD",
+		"rarity": ITEM_CLASS.Rarity.PURPLE,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 26,
+		"weight_str": "<0.10KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a090.png",
+		"description": "Ổ cứng thể rắn KINGSDEN dung lượng 1TB chứa dữ liệu sao lưu hệ thống tốc độ cao."
+	},
+	{
+		"id": "ram",
+		"display_name": "RAM",
+		"rarity": ITEM_CLASS.Rarity.PURPLE,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 25,
+		"weight_str": "<0.10KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a091.png",
+		"description": "Thanh bộ nhớ RAM TWEAT bọc giáp tản nhiệt kim loại tối ưu tốc độ xử lý tác vụ."
+	},
+	{
+		"id": "asos_motherboard",
+		"display_name": "ASOS Motherboard",
+		"rarity": ITEM_CLASS.Rarity.PURPLE,
+		"grid_width": 2,
+		"grid_height": 2,
+		"silver_value": 27,
+		"weight_str": "2.31KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a092.png",
+		"description": "Bo mạch chủ máy tính ASOS cao cấp trang bị tụ điện rắn và dàn tản nhiệt hầm hố."
+	},
+	{
+		"id": "radio",
+		"display_name": "Radio",
+		"rarity": ITEM_CLASS.Rarity.PURPLE,
+		"grid_width": 2,
+		"grid_height": 1,
+		"silver_value": 21,
+		"weight_str": "0.27KG",
+		"category": "general",
+		"asset_path": "res://assets/auction_items/a093.png",
+		"description": "Máy thu thanh radio dã chiến vỏ kim loại có ăng-ten kéo dài bắt sóng đa băng tần."
+	},
+	{
+		"id": "ecm_jammer",
+		"display_name": "ECM Jammer",
+		"rarity": ITEM_CLASS.Rarity.PURPLE,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 30,
+		"weight_str": "0.27KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a094.png",
+		"description": "Thiết bị áp chế điện tử ECM quân sự cực mạnh phá sóng liên lạc và làm nhiễu radar."
+	},
+	{
+		"id": "hifi_sound_card",
+		"display_name": "HiFi Sound Card",
+		"rarity": ITEM_CLASS.Rarity.PURPLE,
+		"grid_width": 2,
+		"grid_height": 1,
+		"silver_value": 23,
+		"weight_str": "1.00KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a095.png",
+		"description": "Card xử lý âm thanh trung thực HiFi mạ vàng cho chất lượng tái tạo âm thanh chuẩn xác."
+	},
+	{
+		"id": "gs5_controller",
+		"display_name": "GS5 Controller",
+		"rarity": ITEM_CLASS.Rarity.PURPLE,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 24,
+		"weight_str": "0.36KG",
+		"category": "cards",
+		"asset_path": "res://assets/auction_items/a096.png",
+		"description": "Tay cầm điều khiển thực tế ảo GS5 thiết kế công thái học uốn cong công nghệ tương lai."
+	},
+	{
+		"id": "ahsarah_glamour_hookah",
+		"display_name": "Ahsarah Glamour Hookah",
+		"rarity": ITEM_CLASS.Rarity.PURPLE,
+		"grid_width": 1,
+		"grid_height": 2,
+		"silver_value": 28,
+		"weight_str": "0.72KG",
+		"category": "antique",
+		"asset_path": "res://assets/auction_items/a097.png",
+		"description": "Bình shisha quý tộc Ahsarah chạm trổ tinh mỹ mạ vàng và nạm đá quý phong cách hoàng gia."
+	},
+	{
+		"id": "spy_pen",
+		"display_name": "Spy Pen",
+		"rarity": ITEM_CLASS.Rarity.PURPLE,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 29,
+		"weight_str": "0.50KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a098.png",
+		"description": "Bút ký ngụy trang của điệp viên tích hợp vi mạch ghi âm siêu nhạy và camera siêu nhỏ."
+	},
+
 	# --- Tài nguyên Nâng cấp (Refinement Chips & Locking Component) ---
 	{
 		"id": "refinement_chips_2",
