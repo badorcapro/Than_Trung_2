@@ -1019,7 +1019,7 @@ theme_override_font_sizes/font_size = 14
 theme_override_styles/normal = SubResource("StyleBoxFlat_desktop_btn_normal")
 theme_override_styles/hover = SubResource("StyleBoxFlat_desktop_btn_hover")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_desktop_btn_hover")
-text = "🏺  Bách Khoa Vật Phẩm Đấu Giá & Hòm Báu (198 Vật Phẩm)"
+text = "🏺  Bách Khoa Vật Phẩm Đấu Giá & Hòm Báu (210 Vật Phẩm)"
 alignment = 0
 
 [node name="CodexBtnRoles" type="Button" parent="DesktopRoot/DesktopCodexDialog/CodexBox/ItemList"]

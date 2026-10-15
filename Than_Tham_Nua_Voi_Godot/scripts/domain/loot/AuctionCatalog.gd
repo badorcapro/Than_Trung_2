@@ -2323,6 +2323,152 @@ static var _CATALOG_ITEMS: Array[Dictionary] = [
 		"description": "Bút ký ngụy trang của điệp viên tích hợp vi mạch ghi âm siêu nhạy và camera siêu nhỏ."
 	},
 
+	# --- Phẩm Tím (Epic) & Phẩm Vàng (Legendary): Các vật phẩm đợt 16 ---
+	{
+		"id": "military_trajectory_computer",
+		"display_name": "Military Trajectory Computer",
+		"rarity": ITEM_CLASS.Rarity.GOLD,
+		"grid_width": 2,
+		"grid_height": 1,
+		"silver_value": 42,
+		"weight_str": "2.50KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a075.png",
+		"description": "Thiết bị vi tính chiến thuật hỗ trợ tính toán chính xác đường đạn dã chiến."
+	},
+	{
+		"id": "high_speed_ssd",
+		"display_name": "High-Speed SSD",
+		"rarity": ITEM_CLASS.Rarity.GOLD,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 48,
+		"weight_str": "0.30KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a076.png",
+		"description": "Ổ cứng thể rắn tốc độ cực cao chứa các luồng dữ liệu mật mã hóa."
+	},
+	{
+		"id": "guard_gold_ring",
+		"display_name": "Guard Gold Ring",
+		"rarity": ITEM_CLASS.Rarity.GOLD,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 50,
+		"weight_str": "<0.10KG",
+		"category": "antique",
+		"asset_path": "res://assets/auction_items/a077.png",
+		"description": "Chiếc nhẫn vàng chạm khắc hoa văn hoàng gia tinh xảo của cấm vệ quân."
+	},
+	{
+		"id": "ace_staff_trophy",
+		"display_name": "Ace Staff Trophy",
+		"rarity": ITEM_CLASS.Rarity.GOLD,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 45,
+		"weight_str": "0.20KG",
+		"category": "antique",
+		"asset_path": "res://assets/auction_items/a078.png",
+		"description": "Biểu tượng vinh danh nhân viên kiệt xuất của tập đoàn Haavk, cực kỳ hiếm gặp."
+	},
+	{
+		"id": "saeed_crossbow",
+		"display_name": "Saeed's Crossbow",
+		"rarity": ITEM_CLASS.Rarity.GOLD,
+		"grid_width": 2,
+		"grid_height": 1,
+		"silver_value": 52,
+		"weight_str": "2.00KG",
+		"category": "antique",
+		"asset_path": "res://assets/auction_items/a079.png",
+		"description": "Cây nỏ săn tinh nhuệ của thủ lĩnh Saeed, vũ khí ám sát trứ danh vùng chiến sự."
+	},
+	{
+		"id": "neural_interface_terminal",
+		"display_name": "Neural Interface Terminal",
+		"rarity": ITEM_CLASS.Rarity.GOLD,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 55,
+		"weight_str": "<0.10KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a080.png",
+		"description": "Mô-đun cấy ghép thần kinh sinh học tiên tiến kết nối trực tiếp với não bộ."
+	},
+	{
+		"id": "solid_fuel",
+		"display_name": "Solid Fuel",
+		"rarity": ITEM_CLASS.Rarity.GOLD,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 38,
+		"weight_str": "1.50KG",
+		"category": "general",
+		"asset_path": "res://assets/auction_items/a081.png",
+		"description": "Hộp nhiên liệu rắn cao cấp dùng cho động cơ đẩy và thiết bị đốt dã chiến."
+	},
+	{
+		"id": "mechanical_worker_bee_model",
+		"display_name": "Mechanical Worker Bee Model",
+		"rarity": ITEM_CLASS.Rarity.GOLD,
+		"grid_width": 3,
+		"grid_height": 2,
+		"silver_value": 40,
+		"weight_str": "2.62KG",
+		"category": "antique",
+		"asset_path": "res://assets/auction_items/a082.png",
+		"description": "Mô hình cơ khí sinh học mô phỏng ong thợ với các khớp nối kim loại tinh xảo."
+	},
+	{
+		"id": "high_power_crusher",
+		"display_name": "High-Power Crusher",
+		"rarity": ITEM_CLASS.Rarity.PURPLE,
+		"grid_width": 1,
+		"grid_height": 2,
+		"silver_value": 27,
+		"weight_str": "0.90KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a083.png",
+		"description": "Kìm kẹp thủy lực áp lực cao dùng để phá dỡ chốt khóa và vật cản kim loại."
+	},
+	{
+		"id": "premium_fuel",
+		"display_name": "Premium Fuel",
+		"rarity": ITEM_CLASS.Rarity.PURPLE,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 22,
+		"weight_str": "0.45KG",
+		"category": "general",
+		"asset_path": "res://assets/auction_items/a084.png",
+		"description": "Hộp nhiên liệu đóng lon tinh luyện đặc biệt của tập đoàn Haavk."
+	},
+	{
+		"id": "spinning_handsaw",
+		"display_name": "Spinning Handsaw",
+		"rarity": ITEM_CLASS.Rarity.PURPLE,
+		"grid_width": 2,
+		"grid_height": 2,
+		"silver_value": 25,
+		"weight_str": "3.08KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a085.png",
+		"description": "Máy cưa đĩa xoay cầm tay công nghiệp chuyên dụng cho công xưởng dã chiến."
+	},
+	{
+		"id": "polyethylene_fiber_plate",
+		"display_name": "Polyethylene Fiber Plate",
+		"rarity": ITEM_CLASS.Rarity.PURPLE,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 31,
+		"weight_str": "0.52KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a086.png",
+		"description": "Tấm đệm sợi polyethylene siêu nhẹ có khả năng phân tán xung lực đạn đạo."
+	},
+
 	# --- Tài nguyên Nâng cấp (Refinement Chips & Locking Component) ---
 	{
 		"id": "refinement_chips_2",
