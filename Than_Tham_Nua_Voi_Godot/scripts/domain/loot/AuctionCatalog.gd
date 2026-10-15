@@ -1155,6 +1155,152 @@ static var _CATALOG_ITEMS: Array[Dictionary] = [
 		"description": "Bộ nguồn chuyển mạch ATX quạt lưới tổ ong cung cấp điện tải nặng."
 	},
 
+	# --- Phẩm Xanh Dương (Blue) & Xanh Lá (Green): Các vật phẩm trong ảnh 8 (a171 - a182) ---
+	{
+		"id": "hunting_matches",
+		"display_name": "Hunting Matches",
+		"rarity": ITEM_CLASS.Rarity.BLUE,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 8,
+		"weight_str": "0.20KG",
+		"category": "general",
+		"asset_path": "res://assets/auction_items/a171.png",
+		"description": "Hộp diêm săn bắn chuyên dụng chống gió và chống nước trong điều kiện khắc nghiệt."
+	},
+	{
+		"id": "multi_purpose_battery",
+		"display_name": "Multi-Purpose Battery",
+		"rarity": ITEM_CLASS.Rarity.BLUE,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 8,
+		"weight_str": "0.10KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a172.png",
+		"description": "Khối pin thông minh đa năng 5200mAh tích hợp đầu đèn chiếu sáng dã chiến."
+	},
+	{
+		"id": "light_outdoor_stove",
+		"display_name": "Light Outdoor Stove",
+		"rarity": ITEM_CLASS.Rarity.BLUE,
+		"grid_width": 2,
+		"grid_height": 2,
+		"silver_value": 14,
+		"weight_str": "1.60KG",
+		"category": "kitchen",
+		"asset_path": "res://assets/auction_items/a173.png",
+		"description": "Bếp gas dã ngoại siêu nhẹ gấp gọn gắn bình áp suất cao phục vụ đun nấu sinh tồn."
+	},
+	{
+		"id": "medical_uav",
+		"display_name": "Medical UAV",
+		"rarity": ITEM_CLASS.Rarity.BLUE,
+		"grid_width": 2,
+		"grid_height": 2,
+		"silver_value": 14,
+		"weight_str": "1.09KG",
+		"category": "medical",
+		"asset_path": "res://assets/auction_items/a174.png",
+		"description": "Thiết bị bay không người lái bốn cánh vận chuyển huyết thanh và thuốc cấp cứu tự hành."
+	},
+	{
+		"id": "electric_lighter",
+		"display_name": "Electric Lighter",
+		"rarity": ITEM_CLASS.Rarity.GREEN,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 4,
+		"weight_str": "0.10KG",
+		"category": "general",
+		"asset_path": "res://assets/auction_items/a175.png",
+		"description": "Bật lửa điện tử phóng tia hồ quang plasma chống gió thổi mạnh."
+	},
+	{
+		"id": "mini_hydrogen_battery",
+		"display_name": "Mini Hydrogen Battery",
+		"rarity": ITEM_CLASS.Rarity.GREEN,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 4,
+		"weight_str": "<0.10KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a176.png",
+		"description": "Thỏi pin nhiên liệu hydro mini cung cấp dòng điện ổn định cho cảm biến tinh vi."
+	},
+	{
+		"id": "screwdriver",
+		"display_name": "Screwdriver",
+		"rarity": ITEM_CLASS.Rarity.GREEN,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 4,
+		"weight_str": "0.15KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a177.png",
+		"description": "Tua vít hai đầu cán bọc cao su cách điện chuyên dùng tháo lắp linh kiện cơ khí."
+	},
+	{
+		"id": "electric_breaching_hammer",
+		"display_name": "Electric Breaching Hammer",
+		"rarity": ITEM_CLASS.Rarity.GREEN,
+		"grid_width": 2,
+		"grid_height": 1,
+		"silver_value": 5,
+		"weight_str": "2.20KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a178.png",
+		"description": "Máy đục phá khóa thủy lực cầm tay chạy điện dùng cho đột nhập cứu nạn nhanh."
+	},
+	{
+		"id": "wood_plank",
+		"display_name": "Wood Plank",
+		"rarity": ITEM_CLASS.Rarity.GREEN,
+		"grid_width": 2,
+		"grid_height": 1,
+		"silver_value": 5,
+		"weight_str": "0.60KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a179.png",
+		"description": "Tấm ván gỗ ép xử lý chống ẩm dùng làm tấm kê gia cố công sự hoặc đóng hòm."
+	},
+	{
+		"id": "wire",
+		"display_name": "Wire",
+		"rarity": ITEM_CLASS.Rarity.GREEN,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 4,
+		"weight_str": "0.20KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a180.png",
+		"description": "Cuộn dây đồng trần dẫn điện bọc sợi chịu lực dùng nối mạch và buộc cố định."
+	},
+	{
+		"id": "portable_hydraulic_wrench",
+		"display_name": "Portable Hydraulic Wrench",
+		"rarity": ITEM_CLASS.Rarity.GREEN,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 4,
+		"weight_str": "0.50KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a181.png",
+		"description": "Cờ lê thủy lực cơ học đầu khẩu màng trập tự điều chỉnh kích cỡ đai ốc."
+	},
+	{
+		"id": "needle_nose_pliers",
+		"display_name": "Needle-Nose Pliers",
+		"rarity": ITEM_CLASS.Rarity.GREEN,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 4,
+		"weight_str": "0.20KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a182.png",
+		"description": "Kìm mỏ nhọn mũi thẳng thon dài chuyên kẹp gắp dây và uốn nắn chi tiết nhỏ."
+	},
+
 	# --- Tài nguyên Nâng cấp (Refinement Chips & Locking Component) ---
 	{
 		"id": "refinement_chips_2",
