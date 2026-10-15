@@ -5,15 +5,15 @@ const ITEM_CLASS := preload("res://scripts/domain/loot/MysteryChestItem.gd")
 
 # Danh mục phân loại
 const CATEGORIES: Array[Dictionary] = [
-	{"id": "", "label": "Tất cả", "icon": "⊞"},
-	{"id": "antique", "label": "Đồ Cổ", "icon": "🏺"},
-	{"id": "tool", "label": "Công Cụ", "icon": "🔨"},
-	{"id": "document", "label": "Tài Liệu", "icon": "📄"},
-	{"id": "medical", "label": "Y Tế", "icon": "🧪"},
-	{"id": "kitchen", "label": "Nhà Bếp", "icon": "🍴"},
-	{"id": "cards", "label": "Bài / Giải Trí", "icon": "🃏"},
-	{"id": "general", "label": "Gia Dụng", "icon": "📦"},
-	{"id": "resource", "label": "Tài Nguyên", "icon": "💾"},
+	{"id": "", "label": "Tất cả", "icon": "⊞", "icon_path": "res://assets/ui/rarity/select.png"},
+	{"id": "antique", "label": "Đồ Cổ", "icon": "🏺", "icon_path": "res://assets/auction_items/do_co.png"},
+	{"id": "tool", "label": "Công Cụ", "icon": "🔨", "icon_path": "res://assets/auction_items/cong_cu.png"},
+	{"id": "document", "label": "Tài Liệu", "icon": "📄", "icon_path": "res://assets/auction_items/tai_lieu.png"},
+	{"id": "medical", "label": "Y Tế", "icon": "🧪", "icon_path": "res://assets/auction_items/y_te.png"},
+	{"id": "kitchen", "label": "Nhà Bếp", "icon": "🍴", "icon_path": "res://assets/auction_items/nha_bep.png"},
+	{"id": "cards", "label": "Bài / Giải Trí", "icon": "🃏", "icon_path": "res://assets/auction_items/bai_giai_tri.png"},
+	{"id": "general", "label": "Gia Dụng", "icon": "📦", "icon_path": "res://assets/auction_items/gia_dung.png"},
+	{"id": "resource", "label": "Tài Nguyên", "icon": "💾", "icon_path": "res://assets/auction_items/tai_nguyen.png"},
 ]
 
 # Danh mục toàn bộ vật phẩm theo đặc tả Bidking & Hoàng Cung

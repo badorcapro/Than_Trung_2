@@ -375,14 +375,32 @@ func _build_sidebar() -> Control:
 		var c_id: String = String(cat_entry.get("id", ""))
 		var c_lbl: String = String(cat_entry.get("label", ""))
 		var c_icon: String = String(cat_entry.get("icon", "📦"))
+		var c_icon_path: String = String(cat_entry.get("icon_path", ""))
 
 		var c_btn := Button.new()
-		c_btn.text = "%s" % c_icon
 		c_btn.tooltip_text = c_lbl
-		c_btn.custom_minimum_size = Vector2(62, 36)
-		c_btn.add_theme_font_size_override("font_size", 16)
+		c_btn.custom_minimum_size = Vector2(62, 40)
 		c_btn.focus_mode = FOCUS_NONE
 		c_btn.set_meta("cat_id", c_id)
+
+		var tex: Texture2D = _get_cached_texture(c_icon_path) if not c_icon_path.is_empty() else null
+		if tex != null:
+			var icon_rect := TextureRect.new()
+			icon_rect.name = "CatIcon"
+			icon_rect.set_anchors_preset(PRESET_FULL_RECT)
+			icon_rect.offset_left = 4
+			icon_rect.offset_top = 4
+			icon_rect.offset_right = -4
+			icon_rect.offset_bottom = -4
+			icon_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+			icon_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+			icon_rect.mouse_filter = MOUSE_FILTER_IGNORE
+			icon_rect.texture = tex
+			c_btn.add_child(icon_rect)
+		else:
+			c_btn.text = "%s" % c_icon
+			c_btn.add_theme_font_size_override("font_size", 16)
+
 		c_btn.pressed.connect(func() -> void:
 			if c_id.is_empty():
 				_category_filter_enabled = false
