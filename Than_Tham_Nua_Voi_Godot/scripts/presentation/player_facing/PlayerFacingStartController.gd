@@ -3185,14 +3185,27 @@ func _init_toast_layer() -> void:
 	_toast_layer.layer = 250
 	add_child(_toast_layer)
 
+	var toast_root := Control.new()
+	toast_root.name = "ToastRoot"
+	toast_root.set_anchors_preset(Control.PRESET_FULL_RECT)
+	toast_root.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_toast_layer.add_child(toast_root)
+
 	_toast_panel = PanelContainer.new()
 	_toast_panel.name = "ToastPanel"
 	_toast_panel.visible = false
 	_toast_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_toast_panel.custom_minimum_size = Vector2(620, 56)
-	_toast_panel.set_anchors_preset(Control.PRESET_CENTER_TOP)
-	_toast_panel.position = Vector2(330, 24)
-	_toast_panel.size = Vector2(620, 56)
+	_toast_panel.custom_minimum_size = Vector2(680, 56)
+	_toast_panel.anchor_left = 0.5
+	_toast_panel.anchor_right = 0.5
+	_toast_panel.anchor_top = 0.0
+	_toast_panel.anchor_bottom = 0.0
+	_toast_panel.offset_left = -340.0
+	_toast_panel.offset_right = 340.0
+	_toast_panel.offset_top = 20.0
+	_toast_panel.offset_bottom = 76.0
+	_toast_panel.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	_toast_panel.grow_vertical = Control.GROW_DIRECTION_END
 
 	var style := StyleBoxFlat.new()
 	style.bg_color = Color(0.08, 0.10, 0.14, 0.95)
@@ -3207,10 +3220,10 @@ func _init_toast_layer() -> void:
 	style.corner_radius_bottom_right = 10
 	style.shadow_color = Color(0.0, 0.0, 0.0, 0.6)
 	style.shadow_size = 8
-	style.content_margin_left = 16
-	style.content_margin_right = 16
-	style.content_margin_top = 8
-	style.content_margin_bottom = 8
+	style.content_margin_left = 20
+	style.content_margin_right = 20
+	style.content_margin_top = 10
+	style.content_margin_bottom = 10
 	_toast_panel.add_theme_stylebox_override("panel", style)
 
 	_toast_label = RichTextLabel.new()
@@ -3218,11 +3231,12 @@ func _init_toast_layer() -> void:
 	_toast_label.bbcode_enabled = true
 	_toast_label.fit_content = true
 	_toast_label.scroll_active = false
+	_toast_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_toast_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_toast_label.add_theme_font_size_override("normal_font_size", 16)
-	_toast_label.add_theme_font_size_override("bold_font_size", 16)
+	_toast_label.add_theme_font_size_override("normal_font_size", 15)
+	_toast_label.add_theme_font_size_override("bold_font_size", 15)
 	_toast_panel.add_child(_toast_label)
-	_toast_layer.add_child(_toast_panel)
+	toast_root.add_child(_toast_panel)
 
 
 func _show_toast(text: String, is_error: bool = false) -> void:
@@ -3238,6 +3252,16 @@ func _show_toast(text: String, is_error: bool = false) -> void:
 
 	var prefix: String = "[color=#ff6666][b]❌ CẢNH BÁO:[/b][/color] " if is_error else "[color=#f6c95c][b]💾 HỆ THỐNG:[/b][/color] "
 	_toast_label.text = "[center]%s%s[/center]" % [prefix, text]
+
+	# Luôn đảm bảo căn giữa chính xác ở đỉnh màn hình
+	_toast_panel.anchor_left = 0.5
+	_toast_panel.anchor_right = 0.5
+	_toast_panel.anchor_top = 0.0
+	_toast_panel.anchor_bottom = 0.0
+	_toast_panel.offset_left = -340.0
+	_toast_panel.offset_right = 340.0
+	_toast_panel.offset_top = 20.0
+	_toast_panel.offset_bottom = 76.0
 
 	if _toast_tween != null and _toast_tween.is_valid():
 		_toast_tween.kill()
