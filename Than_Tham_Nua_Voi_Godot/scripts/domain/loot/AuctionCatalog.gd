@@ -2615,6 +2615,152 @@ static var _CATALOG_ITEMS: Array[Dictionary] = [
 		"description": "Trạm vô tuyến dã chiến quân sự cỡ lớn liên lạc tầm xa đa băng tần."
 	},
 
+	# --- Phẩm Vàng (Legendary): Các vật phẩm đợt 18 ---
+	{
+		"id": "programmable_processor",
+		"display_name": "Programmable Processor",
+		"rarity": ITEM_CLASS.Rarity.GOLD,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 44,
+		"weight_str": "0.27KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a051.png",
+		"description": "Bộ vi xử lý logic khả trình công nghiệp hỗ trợ tự động hóa các hệ thống phức tạp."
+	},
+	{
+		"id": "digital_camera",
+		"display_name": "Digital Camera",
+		"rarity": ITEM_CLASS.Rarity.GOLD,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 41,
+		"weight_str": "0.36KG",
+		"category": "general",
+		"asset_path": "res://assets/auction_items/a052.png",
+		"description": "Máy ảnh kỹ thuật số bỏ túi độ phân giải cao dùng trong lưu trữ hình ảnh hiện trường."
+	},
+	{
+		"id": "military_explosive",
+		"display_name": "Military Explosive",
+		"rarity": ITEM_CLASS.Rarity.GOLD,
+		"grid_width": 2,
+		"grid_height": 2,
+		"silver_value": 45,
+		"weight_str": "0.91KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a053.png",
+		"description": "Khối bộc phá quân sự dã chiến có sức công phá cực lớn được bảo vệ trong hộp thép."
+	},
+	{
+		"id": "e_type_canister",
+		"display_name": "E-Type Canister",
+		"rarity": ITEM_CLASS.Rarity.GOLD,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 42,
+		"weight_str": "0.36KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a054.png",
+		"description": "Bình lọc khí độc quân sự kiểu E lọc sạch các tác nhân hóa học và khí độc hại."
+	},
+	{
+		"id": "mobile_cable",
+		"display_name": "Mobile Cable",
+		"rarity": ITEM_CLASS.Rarity.GOLD,
+		"grid_width": 2,
+		"grid_height": 2,
+		"silver_value": 39,
+		"weight_str": "1.88KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a055.png",
+		"description": "Cuộn dây cáp truyền tín hiệu dã chiến bọc cao su chịu tải cao trên giá đỡ kim loại."
+	},
+	{
+		"id": "ledx",
+		"display_name": "LEDX",
+		"rarity": ITEM_CLASS.Rarity.GOLD,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 50,
+		"weight_str": "0.36KG",
+		"category": "medical",
+		"asset_path": "res://assets/auction_items/a056.png",
+		"description": "Thiết bị y tế soi mạch máu LEDX tối tân ứng dụng trong phẫu thuật dã chiến."
+	},
+	{
+		"id": "oximeter",
+		"display_name": "Oximeter",
+		"rarity": ITEM_CLASS.Rarity.GOLD,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 43,
+		"weight_str": "1.46KG",
+		"category": "medical",
+		"asset_path": "res://assets/auction_items/a057.png",
+		"description": "Máy đo nồng độ bão hòa oxy trong máu kẹp ngón tay độ chính xác tiêu chuẩn bệnh viện."
+	},
+	{
+		"id": "coffee_bottle",
+		"display_name": "Coffee",
+		"rarity": ITEM_CLASS.Rarity.GOLD,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 38,
+		"weight_str": "0.27KG",
+		"category": "kitchen",
+		"asset_path": "res://assets/auction_items/a058.png",
+		"description": "Chai cà phê sữa Casablanca hảo hạng đậm đà giúp hồi phục sự tỉnh táo tức thì."
+	},
+	{
+		"id": "data_design_blueprints",
+		"display_name": "Data: Design Blueprints",
+		"rarity": ITEM_CLASS.Rarity.GOLD,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 56,
+		"weight_str": "<0.10KG",
+		"category": "document",
+		"asset_path": "res://assets/auction_items/a059.png",
+		"description": "Thanh vi mạch M.2 lưu trữ toàn bộ bản vẽ thiết kế công nghệ chế tạo tối mật."
+	},
+	{
+		"id": "pure_gold_lighter",
+		"display_name": "Pure Gold Lighter",
+		"rarity": ITEM_CLASS.Rarity.GOLD,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 48,
+		"weight_str": "0.41KG",
+		"category": "antique",
+		"asset_path": "res://assets/auction_items/a060.png",
+		"description": "Bật lửa xăng chế tác từ vàng ròng nguyên khối khắc huy hiệu quân đội tinh xảo."
+	},
+	{
+		"id": "merit_medal",
+		"display_name": "Merit Medal",
+		"rarity": ITEM_CLASS.Rarity.GOLD,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 46,
+		"weight_str": "0.11KG",
+		"category": "antique",
+		"asset_path": "res://assets/auction_items/a061.png",
+		"description": "Huân chương công trạng quân sự cao quý đính kèm dải ruy băng danh dự."
+	},
+	{
+		"id": "shiny_pirate_gold_coin",
+		"display_name": "Shiny Pirate Gold Coin",
+		"rarity": ITEM_CLASS.Rarity.GOLD,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 52,
+		"weight_str": "0.71KG",
+		"category": "antique",
+		"asset_path": "res://assets/auction_items/a062.png",
+		"description": "Đồng xu vàng hải tặc cổ đại sáng lấp lánh khắc họa phù điêu thần mặt trời huyền bí."
+	},
+
 	# --- Tài nguyên Nâng cấp (Refinement Chips & Locking Component) ---
 	{
 		"id": "refinement_chips_2",
