@@ -1447,6 +1447,152 @@ static var _CATALOG_ITEMS: Array[Dictionary] = [
 		"description": "Máy ghi âm tình báo chuyên dụng đa kênh tích hợp mic định hướng bắt sóng tầm xa."
 	},
 
+	# --- Phẩm Xanh Dương (Blue): Các vật phẩm trong ảnh 10 (a147 - a158) ---
+	{
+		"id": "medical_alcohol",
+		"display_name": "Medical Alcohol",
+		"rarity": ITEM_CLASS.Rarity.BLUE,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 8,
+		"weight_str": "0.72KG",
+		"category": "medical",
+		"asset_path": "res://assets/auction_items/a147.png",
+		"description": "Chai cồn y tế Isopropyl 75% sát khuẩn vết thương và khử trùng dụng cụ."
+	},
+	{
+		"id": "fried_noodles",
+		"display_name": "Fried Noodles",
+		"rarity": ITEM_CLASS.Rarity.BLUE,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 8,
+		"weight_str": "0.27KG",
+		"category": "kitchen",
+		"asset_path": "res://assets/auction_items/a148.png",
+		"description": "Gói mì xào thịt xé dưa chua sấy khô ép chân không bổ dưỡng."
+	},
+	{
+		"id": "coke",
+		"display_name": "Coke",
+		"rarity": ITEM_CLASS.Rarity.BLUE,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 8,
+		"weight_str": "0.27KG",
+		"category": "kitchen",
+		"asset_path": "res://assets/auction_items/a149.png",
+		"description": "Lon nước ngọt có ga Elis vị cola giải khát sảng khoái và tăng hưng phấn."
+	},
+	{
+		"id": "canned_ration",
+		"display_name": "Canned Ration",
+		"rarity": ITEM_CLASS.Rarity.BLUE,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 8,
+		"weight_str": "0.31KG",
+		"category": "kitchen",
+		"asset_path": "res://assets/auction_items/a150.png",
+		"description": "Hộp đồ hộp khẩu phần thịt bò kho hầm chín kỹ dã chiến giàu đạm."
+	},
+	{
+		"id": "soy_protein_powder",
+		"display_name": "Soy Protein Powder",
+		"rarity": ITEM_CLASS.Rarity.BLUE,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 8,
+		"weight_str": "0.45KG",
+		"category": "kitchen",
+		"asset_path": "res://assets/auction_items/a151.png",
+		"description": "Túi bột đạm đậu nành cô đặc bổ sung dinh dưỡng và tăng cơ bắp nhanh chóng."
+	},
+	{
+		"id": "flash_drive",
+		"display_name": "Flash Drive",
+		"rarity": ITEM_CLASS.Rarity.BLUE,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 8,
+		"weight_str": "<0.10KG",
+		"category": "document",
+		"asset_path": "res://assets/auction_items/a152.png",
+		"description": "Ổ nhớ USB Flash Drive nhỏ gọn bảo mật dữ liệu quân sự mật mã cao."
+	},
+	{
+		"id": "memory_card",
+		"display_name": "Memory Card",
+		"rarity": ITEM_CLASS.Rarity.BLUE,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 8,
+		"weight_str": "<0.10KG",
+		"category": "document",
+		"asset_path": "res://assets/auction_items/a153.png",
+		"description": "Thẻ nhớ ConDisk Extreme 256GB tốc độ cao lưu trữ hình ảnh và tọa độ mật."
+	},
+	{
+		"id": "data_trade_documents",
+		"display_name": "Data: Trade Documents",
+		"rarity": ITEM_CLASS.Rarity.BLUE,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 8,
+		"weight_str": "<0.10KG",
+		"category": "document",
+		"asset_path": "res://assets/auction_items/a154.png",
+		"description": "Ổ cứng gắn trong chứa toàn bộ hồ sơ giao thương buôn bán bí mật giữa các phủ."
+	},
+	{
+		"id": "intel_document",
+		"display_name": "Intel Document",
+		"rarity": ITEM_CLASS.Rarity.BLUE,
+		"grid_width": 1,
+		"grid_height": 2,
+		"silver_value": 10,
+		"weight_str": "0.22KG",
+		"category": "document",
+		"asset_path": "res://assets/auction_items/a155.png",
+		"description": "Bìa kẹp tài liệu tình báo tuyệt mật đóng dấu mật thư phòng nội các."
+	},
+	{
+		"id": "weird_pirate_silver_coin",
+		"display_name": "Weird Pirate Silver Coin",
+		"rarity": ITEM_CLASS.Rarity.BLUE,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 8,
+		"weight_str": "0.68KG",
+		"category": "antique",
+		"asset_path": "res://assets/auction_items/a156.png",
+		"description": "Đồng bạc cổ hải tặc khắc hình thần mặt trời viền rắn ngậm đuôi Ouroboros kỳ bí."
+	},
+	{
+		"id": "ancient_pirate_telescope",
+		"display_name": "Ancient Pirate Telescope",
+		"rarity": ITEM_CLASS.Rarity.BLUE,
+		"grid_width": 1,
+		"grid_height": 2,
+		"silver_value": 10,
+		"weight_str": "0.83KG",
+		"category": "antique",
+		"asset_path": "res://assets/auction_items/a157.png",
+		"description": "Kính viễn vọng đơn thị cổ của hải tặc bọc da đen nạm vàng dùng viễn thám đường biển."
+	},
+	{
+		"id": "dancing_girl_statue",
+		"display_name": "Dancing Girl - Custom Statue",
+		"rarity": ITEM_CLASS.Rarity.BLUE,
+		"grid_width": 1,
+		"grid_height": 2,
+		"silver_value": 10,
+		"weight_str": "0.45KG",
+		"category": "antique",
+		"asset_path": "res://assets/auction_items/a158.png",
+		"description": "Tượng vũ nữ bạc nguyên khối tạo hình vũ điệu cung đình cổ đại duyên dáng."
+	},
+
 	# --- Tài nguyên Nâng cấp (Refinement Chips & Locking Component) ---
 	{
 		"id": "refinement_chips_2",
