@@ -37,6 +37,12 @@ Tài liệu này lưu trữ toàn bộ kiến thức tổng quan, kiến trúc, 
    * Sau khi hoàn thành bất kỳ tác vụ nào do người dùng giao, Antigravity **bắt buộc tự động chạy commit Git và đẩy thẳng lên remote (`git push origin main`)** để đồng bộ mã nguồn.
    * Định dạng commit tuân thủ chuẩn **Conventional Commits**: `<type>(<scope>): <mô tả ngắn>`.
    * Chủ động hoàn thiện code và tự động hóa kiểm tra nội bộ; không bắt người dùng phải kiểm tra thủ công trên GUI nếu không có yêu cầu đặc biệt.
+5. ⚖️ **Quy Tắc Định Giá Vật Phẩm Đấu Giá (Decoupled Size-Price Valuation):**
+   * Tuyệt đối **không** định giá vật phẩm theo kích thước ô lưới (không mặc định đồ to 2x2, 2x3, 4x2 là đắt tiền, đồ nhỏ 1x1, 1x2 là rẻ tiền).
+   * Giá trị xu bạc (`silver_value`) phải được phân bổ ngẫu nhiên và phản ánh bản chất thực tế của vật phẩm trong cùng bậc phẩm chất (Rarity):
+     - Đồ công nghệ cao, thiết bị điện tử, dữ liệu tình báo, y tế, dụng cụ cơ khí chính xác (dù chỉ chiếm 1x1, 1x2) hoàn toàn có thể sở hữu mức giá cao nhất trong bậc.
+     - Đồ thô sơ, vật liệu xây dựng cồng kềnh, thức ăn tiêu hao (dù chiếm 2x2, 2x3) có thể có mức giá thấp hoặc trung bình trong bậc.
+     - Đảm bảo tính đa dạng, tự nhiên và phá vỡ công thức tính giá theo diện tích hình học.
 
 ---
 
