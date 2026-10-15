@@ -501,15 +501,23 @@ func _build_content_area() -> Control:
 	content_vbox.offset_top = 8
 	content_vbox.offset_bottom = -8
 
-	# Header Bar (Price range & items count)
+	# Header Bar (Price range & items count - neatly padded inside khung.png's top bar)
+	var header_margin := MarginContainer.new()
+	header_margin.custom_minimum_size = Vector2(0, 36)
+	header_margin.add_theme_constant_override("margin_left", 32)
+	header_margin.add_theme_constant_override("margin_right", 16)
+	content_vbox.add_child(header_margin)
+
 	var header_bar := HBoxContainer.new()
-	header_bar.custom_minimum_size = Vector2(0, 36)
-	content_vbox.add_child(header_bar)
+	header_bar.size_flags_horizontal = SIZE_EXPAND_FILL
+	header_bar.size_flags_vertical = SIZE_EXPAND_FILL
+	header_margin.add_child(header_bar)
 
 	_item_count_lbl = Label.new()
 	_item_count_lbl.text = "0 Vật Phẩm"
 	_item_count_lbl.add_theme_font_size_override("font_size", 14)
-	_item_count_lbl.add_theme_color_override("font_color", Color("#94a3b8"))
+	_item_count_lbl.add_theme_color_override("font_color", Color("#cbd5e1"))
+	_item_count_lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	header_bar.add_child(_item_count_lbl)
 
 	var sp := Control.new()
@@ -520,6 +528,7 @@ func _build_content_area() -> Control:
 	_price_range_lbl.text = "0 - 0 Xu Bạc"
 	_price_range_lbl.add_theme_font_size_override("font_size", 15)
 	_price_range_lbl.add_theme_color_override("font_color", Color("#f6c95c"))
+	_price_range_lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	header_bar.add_child(_price_range_lbl)
 
 	# Scrollable grid of items
