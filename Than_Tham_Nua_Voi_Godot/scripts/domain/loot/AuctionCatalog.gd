@@ -1739,6 +1739,152 @@ static var _CATALOG_ITEMS: Array[Dictionary] = [
 		"description": "Ống nghe y tế màng kép khuếch đại âm thanh nhịp tim và tiếng thở nội tạng."
 	},
 
+	# --- Đợt 12: 12 Vật phẩm mới (Batch 12: 2 Purple + 10 Blue, a123 -> a134) ---
+	{
+		"id": "military_camping_lantern",
+		"display_name": "Military Camping Lantern",
+		"rarity": ITEM_CLASS.Rarity.PURPLE,
+		"grid_width": 1,
+		"grid_height": 2,
+		"silver_value": 24,
+		"weight_str": "2.20KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a123.png",
+		"description": "Đèn cắm trại quân dụng dã chiến bằng kim loại bền chắc, chịu va đập và chiếu sáng xuyên đêm."
+	},
+	{
+		"id": "portable_survival_kit",
+		"display_name": "Portable Survival Kit",
+		"rarity": ITEM_CLASS.Rarity.PURPLE,
+		"grid_width": 2,
+		"grid_height": 1,
+		"silver_value": 24,
+		"weight_str": "2.60KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a124.png",
+		"description": "Bộ hộp sinh tồn dã ngoại EDC chuyên nghiệp chứa đầy đủ dụng cụ khẩn cấp trong hộp thiếc."
+	},
+	{
+		"id": "pack_of_cement",
+		"display_name": "Pack of Cement",
+		"rarity": ITEM_CLASS.Rarity.BLUE,
+		"grid_width": 2,
+		"grid_height": 2,
+		"silver_value": 14,
+		"weight_str": "4.52KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a125.png",
+		"description": "Bao xi măng Kena Cement chất lượng cao dùng trong xây dựng và gia cố công trình kiến trúc."
+	},
+	{
+		"id": "bucket_of_paint",
+		"display_name": "Bucket of Paint",
+		"rarity": ITEM_CLASS.Rarity.BLUE,
+		"grid_width": 2,
+		"grid_height": 2,
+		"silver_value": 14,
+		"weight_str": "4.52KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a126.png",
+		"description": "Thùng sơn Rainbow Paint sắc vàng thu Autumn Yellow chống thấm và bền màu ngoại thất."
+	},
+	{
+		"id": "mechanical_sledgehammer",
+		"display_name": "Mechanical Sledgehammer",
+		"rarity": ITEM_CLASS.Rarity.BLUE,
+		"grid_width": 2,
+		"grid_height": 2,
+		"silver_value": 14,
+		"weight_str": "4.98KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a127.png",
+		"description": "Máy khoan búa cơ khí hạng nặng chạy điện dùng để phá đá và đục bê tông kiên cố."
+	},
+	{
+		"id": "high_precision_caliper",
+		"display_name": "High-precision Caliper",
+		"rarity": ITEM_CLASS.Rarity.BLUE,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 8,
+		"weight_str": "0.45KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a128.png",
+		"description": "Thước kẹp điện tử kỹ thuật số đo lường chuẩn xác đến từng mi-li-mét trong gia công cơ khí."
+	},
+	{
+		"id": "polymer_fabric",
+		"display_name": "Polymer Fabric",
+		"rarity": ITEM_CLASS.Rarity.BLUE,
+		"grid_width": 2,
+		"grid_height": 1,
+		"silver_value": 10,
+		"weight_str": "<0.10KG",
+		"category": "general",
+		"asset_path": "res://assets/auction_items/a129.png",
+		"description": "Tấm bạt vải sợi tổng hợp polymer siêu nhẹ chống thấm nước và che chắn bụi bẩn."
+	},
+	{
+		"id": "fuel",
+		"display_name": "Fuel",
+		"rarity": ITEM_CLASS.Rarity.BLUE,
+		"grid_width": 2,
+		"grid_height": 2,
+		"silver_value": 14,
+		"weight_str": "2.90KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a130.png",
+		"description": "Can dầu nhớt động cơ BSUIOLG 40W chuyên dụng bôi trơn máy móc và cơ cấu truyền động."
+	},
+	{
+		"id": "basic_fuel",
+		"display_name": "Basic Fuel",
+		"rarity": ITEM_CLASS.Rarity.BLUE,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 8,
+		"weight_str": "0.45KG",
+		"category": "kitchen",
+		"asset_path": "res://assets/auction_items/a131.png",
+		"description": "Hộp nhiên liệu cồn đun dã chiến có bấc an toàn, tạo ngọn lửa xanh sạch không khói."
+	},
+	{
+		"id": "gas_tank",
+		"display_name": "Gas Tank",
+		"rarity": ITEM_CLASS.Rarity.BLUE,
+		"grid_width": 1,
+		"grid_height": 2,
+		"silver_value": 10,
+		"weight_str": "4.73KG",
+		"category": "kitchen",
+		"asset_path": "res://assets/auction_items/a132.png",
+		"description": "Bình gas mini vỏ thép màu đỏ chứa khí hóa lỏng đun nấu di động tiện lợi."
+	},
+	{
+		"id": "tool_kit",
+		"display_name": "Tool Kit",
+		"rarity": ITEM_CLASS.Rarity.BLUE,
+		"grid_width": 2,
+		"grid_height": 2,
+		"silver_value": 14,
+		"weight_str": "1.45KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a133.png",
+		"description": "Hộp đồ nghề sửa chữa đa năng gồm tua-vít, kìm, cờ-lê và các đầu vặn cơ khí tiêu chuẩn."
+	},
+	{
+		"id": "aramid_fiber",
+		"display_name": "Aramid Fiber",
+		"rarity": ITEM_CLASS.Rarity.BLUE,
+		"grid_width": 2,
+		"grid_height": 1,
+		"silver_value": 10,
+		"weight_str": "1.61KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a134.png",
+		"description": "Tấm sợi Aramid cấu trúc gợn sóng chịu nhiệt cao và chống đâm xuyên dùng trong áo giáp."
+	},
+
 	# --- Tài nguyên Nâng cấp (Refinement Chips & Locking Component) ---
 	{
 		"id": "refinement_chips_2",

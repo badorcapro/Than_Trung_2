@@ -14,3 +14,6 @@ Than_Tham_Nua_Voi_Godot/builds/local/*
 # Windows thumbnail caches
 Thumbs.db
 Desktop.ini
+
+# Scratch temporary testing scripts
+scratch/
