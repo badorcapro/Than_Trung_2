@@ -1593,6 +1593,152 @@ static var _CATALOG_ITEMS: Array[Dictionary] = [
 		"description": "Tượng vũ nữ bạc nguyên khối tạo hình vũ điệu cung đình cổ đại duyên dáng."
 	},
 
+	# --- Phẩm Xanh Dương (Blue): Các vật phẩm trong ảnh 11 (a135 - a146) ---
+	{
+		"id": "cordless_portable_drill",
+		"display_name": "Cordless Portable Drill",
+		"rarity": ITEM_CLASS.Rarity.BLUE,
+		"grid_width": 2,
+		"grid_height": 1,
+		"silver_value": 10,
+		"weight_str": "0.86KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a135.png",
+		"description": "Máy khoan pin cầm tay không dây trang bị động cơ không chổi than tốc độ cao."
+	},
+	{
+		"id": "relay",
+		"display_name": "Relay",
+		"rarity": ITEM_CLASS.Rarity.BLUE,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 8,
+		"weight_str": "0.36KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a136.png",
+		"description": "Rơ-le công nghiệp Hudson Industries chuyển mạch tự động đóng ngắt an toàn."
+	},
+	{
+		"id": "military_power_bank",
+		"display_name": "Military Power Bank",
+		"rarity": ITEM_CLASS.Rarity.BLUE,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 8,
+		"weight_str": "0.90KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a137.png",
+		"description": "Trạm sạc dự phòng quân sự vỏ kim loại chịu va đập kèm cáp đa chuẩn."
+	},
+	{
+		"id": "audio_player",
+		"display_name": "Audio Player",
+		"rarity": ITEM_CLASS.Rarity.BLUE,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 8,
+		"weight_str": "0.18KG",
+		"category": "document",
+		"asset_path": "res://assets/auction_items/a138.png",
+		"description": "Máy nghe nhạc kỹ thuật số bỏ túi lưu giữ các đoạn băng thu âm và giai điệu xưa."
+	},
+	{
+		"id": "camera",
+		"display_name": "Camera",
+		"rarity": ITEM_CLASS.Rarity.BLUE,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 8,
+		"weight_str": "0.72KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a139.png",
+		"description": "Camera hành trình khối lập phương chống nước ghi hình góc rộng độ phân giải cao."
+	},
+	{
+		"id": "lcd_screen",
+		"display_name": "LCD Screen",
+		"rarity": ITEM_CLASS.Rarity.BLUE,
+		"grid_width": 2,
+		"grid_height": 2,
+		"silver_value": 14,
+		"weight_str": "1.81KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a140.png",
+		"description": "Tấm nền màn hình LCD hiển thị tinh thể lỏng tích hợp cáp bẹ kết nối vi xử lý."
+	},
+	{
+		"id": "solar_panel",
+		"display_name": "Solar Panel",
+		"rarity": ITEM_CLASS.Rarity.BLUE,
+		"grid_width": 4,
+		"grid_height": 2,
+		"silver_value": 24,
+		"weight_str": "2.26KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a141.png",
+		"description": "Tấm pin năng lượng mặt trời quang điện gấp gọn khung hợp kim nhôm hấp thụ quang năng."
+	},
+	{
+		"id": "gunpowder",
+		"display_name": "Gunpowder",
+		"rarity": ITEM_CLASS.Rarity.BLUE,
+		"grid_width": 1,
+		"grid_height": 2,
+		"silver_value": 10,
+		"weight_str": "0.54KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a142.png",
+		"description": "Bình thuốc súng đen công nghiệp nguyên chất niêm phong phục vụ chế tạo đạn dược."
+	},
+	{
+		"id": "firearm_parts",
+		"display_name": "Firearm Parts",
+		"rarity": ITEM_CLASS.Rarity.BLUE,
+		"grid_width": 2,
+		"grid_height": 1,
+		"silver_value": 10,
+		"weight_str": "0.50KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a143.png",
+		"description": "Bộ linh kiện súng trường cơ bản gồm nòng súng, khóa nòng và ốp tay cầm gỗ."
+	},
+	{
+		"id": "socket_adapter",
+		"display_name": "Socket Adapter",
+		"rarity": ITEM_CLASS.Rarity.BLUE,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 8,
+		"weight_str": "0.12KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a144.png",
+		"description": "Bộ chuyển đổi đầu cắm điện mô-đun công nghiệp hỗ trợ nhiều chân tiếp xúc."
+	},
+	{
+		"id": "forehead_thermometer",
+		"display_name": "Forehead Thermometer",
+		"rarity": ITEM_CLASS.Rarity.BLUE,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 8,
+		"weight_str": "0.58KG",
+		"category": "medical",
+		"asset_path": "res://assets/auction_items/a145.png",
+		"description": "Nhiệt kế hồng ngoại đo trán không tiếp xúc quét thân nhiệt tức thì qua cảm biến."
+	},
+	{
+		"id": "stethoscope",
+		"display_name": "Stethoscope",
+		"rarity": ITEM_CLASS.Rarity.BLUE,
+		"grid_width": 1,
+		"grid_height": 2,
+		"silver_value": 10,
+		"weight_str": "<0.10KG",
+		"category": "medical",
+		"asset_path": "res://assets/auction_items/a146.png",
+		"description": "Ống nghe y tế màng kép khuếch đại âm thanh nhịp tim và tiếng thở nội tạng."
+	},
+
 	# --- Tài nguyên Nâng cấp (Refinement Chips & Locking Component) ---
 	{
 		"id": "refinement_chips_2",
