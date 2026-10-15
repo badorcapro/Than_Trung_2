@@ -845,7 +845,7 @@ func _create_item_card(data: Dictionary) -> Control:
 	return card
 
 
-## Vẽ ma trận 16 ô (4x4) thể hiện diện tích chiếm chỗ của vật phẩm (Căn góc dưới bên phải chuẩn Bidking)
+## Vẽ ma trận 16 ô (4x4) thể hiện diện tích chiếm chỗ của vật phẩm (Đi từ góc trên bên trái đi xuống)
 func _create_footprint_matrix(item_w: int, item_h: int) -> Control:
 	var ctrl := Control.new()
 	ctrl.custom_minimum_size = Vector2(32, 32)
@@ -855,10 +855,7 @@ func _create_footprint_matrix(item_w: int, item_h: int) -> Control:
 		var empty_col := Color(1.0, 1.0, 1.0, 0.15)
 		var filled_col := Color(1.0, 1.0, 1.0, 0.95)
 
-		var start_col := 4 - clampi(item_w, 1, 4)
-		var start_row := 4 - clampi(item_h, 1, 4)
-
-		# 4 columns x 4 rows
+		# 4 columns x 4 rows, đi từ góc trên bên trái đi xuống
 		for row in range(4):
 			for col in range(4):
 				var r := Rect2(
@@ -867,8 +864,7 @@ func _create_footprint_matrix(item_w: int, item_h: int) -> Control:
 					cell_sz,
 					cell_sz
 				)
-				# Căn về góc dưới bên phải (col >= start_col và row >= start_row)
-				if col >= start_col and row >= start_row:
+				if col < item_w and row < item_h:
 					ctrl.draw_rect(r, filled_col, true)
 				else:
 					ctrl.draw_rect(r, empty_col, true)
