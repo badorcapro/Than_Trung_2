@@ -186,7 +186,7 @@ func _build_sidebar() -> Control:
 	r_reset_btn.focus_mode = FOCUS_NONE
 	r_reset_btn.expand_icon = true
 	r_reset_btn.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	var sel_all_tex := _get_cached_texture("res://assets/ui/rarity/rarity_btn_select_all.png")
+	var sel_all_tex := _get_cached_texture("res://assets/ui/rarity/select.png")
 	if sel_all_tex != null:
 		r_reset_btn.icon = sel_all_tex
 	else:
@@ -205,7 +205,7 @@ func _build_sidebar() -> Control:
 	r_deselect_btn.focus_mode = FOCUS_NONE
 	r_deselect_btn.expand_icon = true
 	r_deselect_btn.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	var desel_all_tex := _get_cached_texture("res://assets/ui/rarity/rarity_btn_deselect_all.png")
+	var desel_all_tex := _get_cached_texture("res://assets/ui/rarity/unselect.png")
 	if desel_all_tex != null:
 		r_deselect_btn.icon = desel_all_tex
 	else:
@@ -309,7 +309,7 @@ func _build_sidebar() -> Control:
 	c_reset_btn.focus_mode = FOCUS_NONE
 	c_reset_btn.expand_icon = true
 	c_reset_btn.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	var c_sel_tex := _get_cached_texture("res://assets/ui/rarity/rarity_btn_select_all.png")
+	var c_sel_tex := _get_cached_texture("res://assets/ui/rarity/select.png")
 	if c_sel_tex != null:
 		c_reset_btn.icon = c_sel_tex
 	else:
@@ -328,7 +328,7 @@ func _build_sidebar() -> Control:
 	c_deselect_btn.focus_mode = FOCUS_NONE
 	c_deselect_btn.expand_icon = true
 	c_deselect_btn.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	var c_desel_tex := _get_cached_texture("res://assets/ui/rarity/rarity_btn_deselect_all.png")
+	var c_desel_tex := _get_cached_texture("res://assets/ui/rarity/unselect.png")
 	if c_desel_tex != null:
 		c_deselect_btn.icon = c_desel_tex
 	else:
@@ -400,7 +400,7 @@ func _build_sidebar() -> Control:
 	s_reset_btn.focus_mode = FOCUS_NONE
 	s_reset_btn.expand_icon = true
 	s_reset_btn.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	var s_sel_tex := _get_cached_texture("res://assets/ui/rarity/rarity_btn_select_all.png")
+	var s_sel_tex := _get_cached_texture("res://assets/ui/rarity/select.png")
 	if s_sel_tex != null:
 		s_reset_btn.icon = s_sel_tex
 	else:
@@ -419,7 +419,7 @@ func _build_sidebar() -> Control:
 	s_deselect_btn.focus_mode = FOCUS_NONE
 	s_deselect_btn.expand_icon = true
 	s_deselect_btn.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	var s_desel_tex := _get_cached_texture("res://assets/ui/rarity/rarity_btn_deselect_all.png")
+	var s_desel_tex := _get_cached_texture("res://assets/ui/rarity/unselect.png")
 	if s_desel_tex != null:
 		s_deselect_btn.icon = s_desel_tex
 	else:
