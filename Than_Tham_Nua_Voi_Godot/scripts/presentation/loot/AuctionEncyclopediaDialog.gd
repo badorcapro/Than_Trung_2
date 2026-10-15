@@ -182,15 +182,21 @@ func _build_sidebar() -> Control:
 
 	var r_reset_btn := Button.new()
 	r_reset_btn.tooltip_text = "Chọn tất cả phẩm chất"
-	r_reset_btn.custom_minimum_size = Vector2(26, 26)
+	r_reset_btn.custom_minimum_size = Vector2(32, 32)
 	r_reset_btn.focus_mode = FOCUS_NONE
-	r_reset_btn.expand_icon = true
-	r_reset_btn.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	var r_sel_icon := TextureRect.new()
+	r_sel_icon.set_anchors_preset(PRESET_FULL_RECT)
+	r_sel_icon.offset_left = 3
+	r_sel_icon.offset_top = 3
+	r_sel_icon.offset_right = -3
+	r_sel_icon.offset_bottom = -3
+	r_sel_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	r_sel_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	r_sel_icon.mouse_filter = MOUSE_FILTER_IGNORE
 	var sel_all_tex := _get_cached_texture("res://assets/ui/rarity/select.png")
 	if sel_all_tex != null:
-		r_reset_btn.icon = sel_all_tex
-	else:
-		r_reset_btn.text = "⊞"
+		r_sel_icon.texture = sel_all_tex
+	r_reset_btn.add_child(r_sel_icon)
 	r_reset_btn.pressed.connect(func() -> void:
 		_rarity_filter_enabled = false
 		_selected_rarities.clear()
@@ -201,15 +207,21 @@ func _build_sidebar() -> Control:
 
 	var r_deselect_btn := Button.new()
 	r_deselect_btn.tooltip_text = "Bỏ chọn tất cả phẩm chất"
-	r_deselect_btn.custom_minimum_size = Vector2(26, 26)
+	r_deselect_btn.custom_minimum_size = Vector2(32, 32)
 	r_deselect_btn.focus_mode = FOCUS_NONE
-	r_deselect_btn.expand_icon = true
-	r_deselect_btn.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	var r_desel_icon := TextureRect.new()
+	r_desel_icon.set_anchors_preset(PRESET_FULL_RECT)
+	r_desel_icon.offset_left = 3
+	r_desel_icon.offset_top = 3
+	r_desel_icon.offset_right = -3
+	r_desel_icon.offset_bottom = -3
+	r_desel_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	r_desel_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	r_desel_icon.mouse_filter = MOUSE_FILTER_IGNORE
 	var desel_all_tex := _get_cached_texture("res://assets/ui/rarity/unselect.png")
 	if desel_all_tex != null:
-		r_deselect_btn.icon = desel_all_tex
-	else:
-		r_deselect_btn.text = "⊟"
+		r_desel_icon.texture = desel_all_tex
+	r_deselect_btn.add_child(r_desel_icon)
 	r_deselect_btn.pressed.connect(func() -> void:
 		_rarity_filter_enabled = true
 		_selected_rarities.clear()
@@ -305,15 +317,21 @@ func _build_sidebar() -> Control:
 
 	var c_reset_btn := Button.new()
 	c_reset_btn.tooltip_text = "Chọn tất cả chủng loại"
-	c_reset_btn.custom_minimum_size = Vector2(24, 24)
+	c_reset_btn.custom_minimum_size = Vector2(32, 32)
 	c_reset_btn.focus_mode = FOCUS_NONE
-	c_reset_btn.expand_icon = true
-	c_reset_btn.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	var c_sel_icon := TextureRect.new()
+	c_sel_icon.set_anchors_preset(PRESET_FULL_RECT)
+	c_sel_icon.offset_left = 3
+	c_sel_icon.offset_top = 3
+	c_sel_icon.offset_right = -3
+	c_sel_icon.offset_bottom = -3
+	c_sel_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	c_sel_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	c_sel_icon.mouse_filter = MOUSE_FILTER_IGNORE
 	var c_sel_tex := _get_cached_texture("res://assets/ui/rarity/select.png")
 	if c_sel_tex != null:
-		c_reset_btn.icon = c_sel_tex
-	else:
-		c_reset_btn.text = "⊞"
+		c_sel_icon.texture = c_sel_tex
+	c_reset_btn.add_child(c_sel_icon)
 	c_reset_btn.pressed.connect(func() -> void:
 		_category_filter_enabled = false
 		_selected_categories.clear()
@@ -324,15 +342,21 @@ func _build_sidebar() -> Control:
 
 	var c_deselect_btn := Button.new()
 	c_deselect_btn.tooltip_text = "Bỏ chọn tất cả chủng loại"
-	c_deselect_btn.custom_minimum_size = Vector2(24, 24)
+	c_deselect_btn.custom_minimum_size = Vector2(32, 32)
 	c_deselect_btn.focus_mode = FOCUS_NONE
-	c_deselect_btn.expand_icon = true
-	c_deselect_btn.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	var c_desel_icon := TextureRect.new()
+	c_desel_icon.set_anchors_preset(PRESET_FULL_RECT)
+	c_desel_icon.offset_left = 3
+	c_desel_icon.offset_top = 3
+	c_desel_icon.offset_right = -3
+	c_desel_icon.offset_bottom = -3
+	c_desel_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	c_desel_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	c_desel_icon.mouse_filter = MOUSE_FILTER_IGNORE
 	var c_desel_tex := _get_cached_texture("res://assets/ui/rarity/unselect.png")
 	if c_desel_tex != null:
-		c_deselect_btn.icon = c_desel_tex
-	else:
-		c_deselect_btn.text = "⊟"
+		c_desel_icon.texture = c_desel_tex
+	c_deselect_btn.add_child(c_desel_icon)
 	c_deselect_btn.pressed.connect(func() -> void:
 		_category_filter_enabled = true
 		_selected_categories.clear()
@@ -396,15 +420,21 @@ func _build_sidebar() -> Control:
 
 	var s_reset_btn := Button.new()
 	s_reset_btn.tooltip_text = "Chọn tất cả hình dáng"
-	s_reset_btn.custom_minimum_size = Vector2(24, 24)
+	s_reset_btn.custom_minimum_size = Vector2(32, 32)
 	s_reset_btn.focus_mode = FOCUS_NONE
-	s_reset_btn.expand_icon = true
-	s_reset_btn.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	var s_sel_icon := TextureRect.new()
+	s_sel_icon.set_anchors_preset(PRESET_FULL_RECT)
+	s_sel_icon.offset_left = 3
+	s_sel_icon.offset_top = 3
+	s_sel_icon.offset_right = -3
+	s_sel_icon.offset_bottom = -3
+	s_sel_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	s_sel_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	s_sel_icon.mouse_filter = MOUSE_FILTER_IGNORE
 	var s_sel_tex := _get_cached_texture("res://assets/ui/rarity/select.png")
 	if s_sel_tex != null:
-		s_reset_btn.icon = s_sel_tex
-	else:
-		s_reset_btn.text = "⊞"
+		s_sel_icon.texture = s_sel_tex
+	s_reset_btn.add_child(s_sel_icon)
 	s_reset_btn.pressed.connect(func() -> void:
 		_shape_filter_enabled = false
 		_selected_shapes.clear()
@@ -415,15 +445,21 @@ func _build_sidebar() -> Control:
 
 	var s_deselect_btn := Button.new()
 	s_deselect_btn.tooltip_text = "Bỏ chọn tất cả hình dáng"
-	s_deselect_btn.custom_minimum_size = Vector2(24, 24)
+	s_deselect_btn.custom_minimum_size = Vector2(32, 32)
 	s_deselect_btn.focus_mode = FOCUS_NONE
-	s_deselect_btn.expand_icon = true
-	s_deselect_btn.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	var s_desel_icon := TextureRect.new()
+	s_desel_icon.set_anchors_preset(PRESET_FULL_RECT)
+	s_desel_icon.offset_left = 3
+	s_desel_icon.offset_top = 3
+	s_desel_icon.offset_right = -3
+	s_desel_icon.offset_bottom = -3
+	s_desel_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	s_desel_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	s_desel_icon.mouse_filter = MOUSE_FILTER_IGNORE
 	var s_desel_tex := _get_cached_texture("res://assets/ui/rarity/unselect.png")
 	if s_desel_tex != null:
-		s_deselect_btn.icon = s_desel_tex
-	else:
-		s_deselect_btn.text = "⊟"
+		s_desel_icon.texture = s_desel_tex
+	s_deselect_btn.add_child(s_desel_icon)
 	s_deselect_btn.pressed.connect(func() -> void:
 		_shape_filter_enabled = true
 		_selected_shapes.clear()
