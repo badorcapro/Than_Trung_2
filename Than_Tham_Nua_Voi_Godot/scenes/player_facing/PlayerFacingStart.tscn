@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://scripts/presentation/player_facing/PlayerFacingLootMapView.gd" id="3"]
 [ext_resource type="VideoStream" path="res://assets/ui/common/splash_intro.ogv" id="4_splash_intro"]
 [ext_resource type="Texture2D" path="res://assets/ui/common/splash_bg.png" id="5_splash_bg"]
-[ext_resource type="Texture2D" path="res://assets/ui/common/main_menu_bg.png" id="6_menu_bg"]
+[ext_resource type="Texture2D" path="res://assets/ui/desktop/needy_desktop_bg_1080.png" id="6_menu_bg"]
 [ext_resource type="VideoStream" path="res://assets/ui/common/splash_loop.ogv" id="7_splash_loop"]
 [ext_resource type="Texture2D" path="res://assets/ui/desktop/needy_desktop_bg_1080.png" id="8_desktop_bg"]
 [ext_resource type="Texture2D" path="res://assets/ui/desktop/icons/new_icon_window.png" id="9_new_icon_window"]
@@ -1073,6 +1073,224 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_desktop_btn_hover")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_desktop_btn_hover")
 text = "🎁  Bách Khoa Vật Phẩm Rơi Trong Loot Map (77 Ô)"
 alignment = 0
+
+[node name="DesktopModeSelectDialog" type="Control" parent="DesktopRoot"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DimBackdrop" type="ColorRect" parent="DesktopRoot/DesktopModeSelectDialog"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.7)
+
+[node name="ModeSelectBox" type="Panel" parent="DesktopRoot/DesktopModeSelectDialog"]
+custom_minimum_size = Vector2(740, 500)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -370.0
+offset_top = -250.0
+offset_right = 370.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_win11_card")
+
+[node name="TopBar" type="HBoxContainer" parent="DesktopRoot/DesktopModeSelectDialog/ModeSelectBox"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 24.0
+offset_top = 16.0
+offset_right = -18.0
+offset_bottom = 46.0
+grow_horizontal = 2
+
+[node name="Title" type="Label" parent="DesktopRoot/DesktopModeSelectDialog/ModeSelectBox/TopBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.96, 0.88, 0.65, 1)
+theme_override_font_sizes/font_size = 17
+text = "⚔️ KHỞI CHẠY MÔ PHỎNG — CHỌN THỂ THỨC KỲ ÁN"
+vertical_alignment = 1
+
+[node name="ModeSelectCloseBtn" type="Button" parent="DesktopRoot/DesktopModeSelectDialog/ModeSelectBox/TopBar"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+focus_mode = 2
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxFlat_desktop_btn_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_desktop_btn_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_desktop_btn_hover")
+text = "✕"
+
+[node name="ContentVBox" type="VBoxContainer" parent="DesktopRoot/DesktopModeSelectDialog/ModeSelectBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = 58.0
+offset_right = -24.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 14
+
+[node name="Subtitle" type="Label" parent="DesktopRoot/DesktopModeSelectDialog/ModeSelectBox/ContentVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.82, 0.86, 0.94, 0.92)
+theme_override_font_sizes/font_size = 13
+text = "Lựa chọn chế độ thi đấu kỳ án hoàng cung để kích hoạt quy tắc phân định và bàn cờ:"
+
+[node name="CardsHBox" type="HBoxContainer" parent="DesktopRoot/DesktopModeSelectDialog/ModeSelectBox/ContentVBox"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 18
+
+[node name="ClassicCard" type="Panel" parent="DesktopRoot/DesktopModeSelectDialog/ModeSelectBox/ContentVBox/CardsHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_dark_card")
+
+[node name="CardVBox" type="VBoxContainer" parent="DesktopRoot/DesktopModeSelectDialog/ModeSelectBox/ContentVBox/CardsHBox/ClassicCard"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = -16.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="Badge" type="Label" parent="DesktopRoot/DesktopModeSelectDialog/ModeSelectBox/ContentVBox/CardsHBox/ClassicCard/CardVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.82, 0.38, 1)
+theme_override_font_sizes/font_size = 11
+text = "[ 👑 BẬC HOÀNG TRIỀU • MẶC ĐỊNH ]"
+
+[node name="ModeName" type="Label" parent="DesktopRoot/DesktopModeSelectDialog/ModeSelectBox/ContentVBox/CardsHBox/ClassicCard/CardVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.96, 0.92, 1)
+theme_override_font_sizes/font_size = 18
+text = "CHẾ ĐỘ CỔ ĐIỂN"
+
+[node name="Sep" type="HSeparator" parent="DesktopRoot/DesktopModeSelectDialog/ModeSelectBox/ContentVBox/CardsHBox/ClassicCard/CardVBox"]
+layout_mode = 2
+
+[node name="Desc" type="Label" parent="DesktopRoot/DesktopModeSelectDialog/ModeSelectBox/ContentVBox/CardsHBox/ClassicCard/CardVBox"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.85, 0.88, 0.94, 0.9)
+theme_override_constants/line_spacing = 4
+theme_override_font_sizes/font_size = 12
+text = "✦ 2 Vòng Kỳ Án Hoàng Cung liên tiếp.
+✦ Đua điểm Công Danh Phẩm Vị quan chức.
+✦ Khám phá Bản Đồ Cung Cấm 77 ô Imperial Court.
+✦ Đấu Giá Hòm Báu & tranh đoạt Cổ Vật hoàng triều."
+autowrap_mode = 2
+
+[node name="DesktopModeBtnClassic" type="Button" parent="DesktopRoot/DesktopModeSelectDialog/ModeSelectBox/ContentVBox/CardsHBox/ClassicCard/CardVBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+focus_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxFlat_dupery_btn_accent_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_dupery_btn_accent_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_dupery_btn_accent_hover")
+text = "▶ Chọn Chế Độ Cổ Điển"
+
+[node name="CustomCard" type="Panel" parent="DesktopRoot/DesktopModeSelectDialog/ModeSelectBox/ContentVBox/CardsHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_dark_card")
+
+[node name="CardVBox" type="VBoxContainer" parent="DesktopRoot/DesktopModeSelectDialog/ModeSelectBox/ContentVBox/CardsHBox/CustomCard"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = -16.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="Badge" type="Label" parent="DesktopRoot/DesktopModeSelectDialog/ModeSelectBox/ContentVBox/CardsHBox/CustomCard/CardVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.85, 0.95, 1)
+theme_override_font_sizes/font_size = 11
+text = "[ ⚙️ THIẾT LẬP TỰ DO ]"
+
+[node name="ModeName" type="Label" parent="DesktopRoot/DesktopModeSelectDialog/ModeSelectBox/ContentVBox/CardsHBox/CustomCard/CardVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.96, 0.92, 1)
+theme_override_font_sizes/font_size = 18
+text = "CHẾ ĐỘ TÙY CHỈNH"
+
+[node name="Sep" type="HSeparator" parent="DesktopRoot/DesktopModeSelectDialog/ModeSelectBox/ContentVBox/CardsHBox/CustomCard/CardVBox"]
+layout_mode = 2
+
+[node name="Desc" type="Label" parent="DesktopRoot/DesktopModeSelectDialog/ModeSelectBox/ContentVBox/CardsHBox/CustomCard/CardVBox"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.85, 0.88, 0.94, 0.9)
+theme_override_constants/line_spacing = 4
+theme_override_font_sizes/font_size = 12
+text = "✦ Tùy chỉnh điều kiện đạt Phẩm Vị mục tiêu.
+✦ Tùy chọn giới hạn số Round (1 - 5 Vòng).
+✦ Thử nghiệm cơ chế suy luận và chiến thuật.
+✦ Thích hợp cho phòng tập và kiểm thử."
+autowrap_mode = 2
+
+[node name="DesktopModeBtnCustom" type="Button" parent="DesktopRoot/DesktopModeSelectDialog/ModeSelectBox/ContentVBox/CardsHBox/CustomCard/CardVBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+focus_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.95, 0.98, 1)
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxFlat_desktop_btn_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_desktop_btn_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_desktop_btn_hover")
+text = "▶ Chọn Chế Độ Tùy Chỉnh"
+
+[node name="BottomHBox" type="HBoxContainer" parent="DesktopRoot/DesktopModeSelectDialog/ModeSelectBox/ContentVBox"]
+layout_mode = 2
+alignment = 1
+
+[node name="ModeSelectCancelBtn" type="Button" parent="DesktopRoot/DesktopModeSelectDialog/ModeSelectBox/ContentVBox/BottomHBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(220, 38)
+layout_mode = 2
+focus_mode = 2
+theme_override_colors/font_color = Color(0.88, 0.9, 0.95, 1)
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = SubResource("StyleBoxFlat_desktop_btn_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_desktop_btn_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_desktop_btn_hover")
+text = "✕  Đóng / Quay Lại Desktop"
 
 [node name="SafeMargin" type="MarginContainer" parent="."]
 unique_name_in_owner = true

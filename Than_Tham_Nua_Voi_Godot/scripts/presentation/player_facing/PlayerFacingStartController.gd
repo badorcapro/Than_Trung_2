@@ -100,7 +100,7 @@ var _toast_label: RichTextLabel = null
 var _toast_tween: Tween = null
 
 const SPLASH_BG_TEXTURE: Texture2D = preload("res://assets/ui/common/splash_bg.png")
-const MAIN_MENU_BG_TEXTURE: Texture2D = preload("res://assets/ui/common/main_menu_bg.png")
+const MAIN_MENU_BG_TEXTURE: Texture2D = preload("res://assets/ui/desktop/needy_desktop_bg_1080.png")
 const LOBBY_BG_TEXTURE: Texture2D = preload("res://assets/ui/common/lobby_bg.png")
 
 @onready var background_rect: TextureRect = get_node_or_null("Background") as TextureRect
@@ -123,6 +123,11 @@ const LOBBY_BG_TEXTURE: Texture2D = preload("res://assets/ui/common/lobby_bg.png
 @onready var desktop_new_sim_dialog: Control = get_node_or_null("%DesktopNewSimDialog") as Control
 @onready var new_sim_confirm_btn: Button = get_node_or_null("%NewSimConfirmBtn") as Button
 @onready var new_sim_cancel_btn: Button = get_node_or_null("%NewSimCancelBtn") as Button
+@onready var desktop_mode_select_dialog: Control = get_node_or_null("%DesktopModeSelectDialog") as Control
+@onready var mode_select_close_btn: Button = get_node_or_null("%ModeSelectCloseBtn") as Button
+@onready var desktop_mode_btn_classic: Button = get_node_or_null("%DesktopModeBtnClassic") as Button
+@onready var desktop_mode_btn_custom: Button = get_node_or_null("%DesktopModeBtnCustom") as Button
+@onready var mode_select_cancel_btn: Button = get_node_or_null("%ModeSelectCancelBtn") as Button
 @onready var desktop_codex_dialog: Control = get_node_or_null("%DesktopCodexDialog") as Control
 @onready var codex_close_btn: Button = get_node_or_null("%CodexCloseBtn") as Button
 @onready var codex_btn_auction: Button = get_node_or_null("%CodexBtnAuction") as Button
@@ -378,6 +383,11 @@ func _input(event: InputEvent) -> void:
 			desktop_new_sim_dialog.visible = false
 			get_viewport().set_input_as_handled()
 			return
+	if desktop_mode_select_dialog != null and desktop_mode_select_dialog.visible:
+		if key_event.keycode == KEY_ESCAPE:
+			desktop_mode_select_dialog.visible = false
+			get_viewport().set_input_as_handled()
+			return
 	if _character_sheet != null and _character_sheet.visible:
 		if key_event.keycode == KEY_ESCAPE or key_event.keycode == KEY_C:
 			_character_sheet.visible = false
@@ -477,10 +487,21 @@ func _init_desktop_system() -> void:
 	if codex_btn_loot != null and not codex_btn_loot.pressed.is_connected(_on_codex_loot_pressed):
 		codex_btn_loot.pressed.connect(_on_codex_loot_pressed)
 
+	if mode_select_close_btn != null and not mode_select_close_btn.pressed.is_connected(_on_desktop_mode_select_closed):
+		mode_select_close_btn.pressed.connect(_on_desktop_mode_select_closed)
+	if mode_select_cancel_btn != null and not mode_select_cancel_btn.pressed.is_connected(_on_desktop_mode_select_closed):
+		mode_select_cancel_btn.pressed.connect(_on_desktop_mode_select_closed)
+	if desktop_mode_btn_classic != null and not desktop_mode_btn_classic.pressed.is_connected(_on_desktop_mode_classic_pressed):
+		desktop_mode_btn_classic.pressed.connect(_on_desktop_mode_classic_pressed)
+	if desktop_mode_btn_custom != null and not desktop_mode_btn_custom.pressed.is_connected(_on_desktop_mode_custom_pressed):
+		desktop_mode_btn_custom.pressed.connect(_on_desktop_mode_custom_pressed)
+
 	if desktop_start_menu != null:
 		desktop_start_menu.visible = false
 	if desktop_new_sim_dialog != null:
 		desktop_new_sim_dialog.visible = false
+	if desktop_mode_select_dialog != null:
+		desktop_mode_select_dialog.visible = false
 	if desktop_codex_dialog != null:
 		desktop_codex_dialog.visible = false
 
@@ -514,6 +535,8 @@ func _on_taskbar_window_pressed() -> void:
 		desktop_codex_dialog.visible = false
 	if desktop_new_sim_dialog != null:
 		desktop_new_sim_dialog.visible = false
+	if desktop_mode_select_dialog != null:
+		desktop_mode_select_dialog.visible = false
 	if desktop_start_menu != null:
 		desktop_start_menu.visible = not desktop_start_menu.visible
 
@@ -527,13 +550,13 @@ func _on_taskbar_start_pressed() -> void:
 		if desktop_new_sim_dialog != null:
 			desktop_new_sim_dialog.visible = true
 	else:
-		_on_new_game_pressed()
+		_open_desktop_mode_select()
 
 
 func _on_new_sim_confirmed() -> void:
 	if desktop_new_sim_dialog != null:
 		desktop_new_sim_dialog.visible = false
-	_on_new_game_pressed()
+	_open_desktop_mode_select()
 
 
 func _on_new_sim_cancelled() -> void:
@@ -546,6 +569,8 @@ func _on_taskbar_continue_pressed() -> void:
 		desktop_start_menu.visible = false
 	if desktop_new_sim_dialog != null:
 		desktop_new_sim_dialog.visible = false
+	if desktop_mode_select_dialog != null:
+		desktop_mode_select_dialog.visible = false
 	if desktop_codex_dialog != null:
 		desktop_codex_dialog.visible = false
 	if _autosave_service != null and _autosave_service.has_valid_autosave():
@@ -559,6 +584,8 @@ func _on_taskbar_codex_pressed() -> void:
 		desktop_start_menu.visible = false
 	if desktop_new_sim_dialog != null:
 		desktop_new_sim_dialog.visible = false
+	if desktop_mode_select_dialog != null:
+		desktop_mode_select_dialog.visible = false
 	if desktop_codex_dialog != null:
 		desktop_codex_dialog.visible = not desktop_codex_dialog.visible
 
@@ -600,13 +627,56 @@ func _on_taskbar_settings_pressed() -> void:
 		desktop_codex_dialog.visible = false
 	if desktop_new_sim_dialog != null:
 		desktop_new_sim_dialog.visible = false
+	if desktop_mode_select_dialog != null:
+		desktop_mode_select_dialog.visible = false
 	_on_settings_pressed()
 
 
-func _on_new_game_pressed() -> void:
-	setup.begin_new_game()
-	_show_phase(setup.phase)
+func _open_desktop_mode_select() -> void:
+	if desktop_start_menu != null:
+		desktop_start_menu.visible = false
+	if desktop_codex_dialog != null:
+		desktop_codex_dialog.visible = false
+	if desktop_new_sim_dialog != null:
+		desktop_new_sim_dialog.visible = false
+	if desktop_mode_select_dialog != null:
+		desktop_mode_select_dialog.visible = true
 	_show_message("Chọn chế độ trận đấu.")
+
+
+func _on_desktop_mode_select_closed() -> void:
+	if desktop_mode_select_dialog != null:
+		desktop_mode_select_dialog.visible = false
+
+
+func _on_desktop_mode_classic_pressed() -> void:
+	if desktop_mode_select_dialog != null:
+		desktop_mode_select_dialog.visible = false
+	setup.begin_new_game()
+	var mode_result: Dictionary = setup.choose_match_mode(MATCH_RULES.Mode.CLASSIC)
+	if not bool(mode_result.get("success", false)):
+		_show_toast("Không thể thiết lập Chế Độ Cổ Điển.", true)
+		return
+	setup.confirm_match_rules()
+	setup.choose_player_count(3)
+	_show_phase(setup.phase)
+	_show_toast("✅ Đã chọn Chế Độ Cổ Điển! Sẵn sàng bước tiếp theo: Chọn Nhân Vật.")
+
+
+func _on_desktop_mode_custom_pressed() -> void:
+	if desktop_mode_select_dialog != null:
+		desktop_mode_select_dialog.visible = false
+	setup.begin_new_game()
+	var mode_result: Dictionary = setup.choose_match_mode(MATCH_RULES.Mode.CUSTOM)
+	if not bool(mode_result.get("success", false)):
+		_show_toast("Không thể thiết lập Chế Độ Tùy Chỉnh.", true)
+		return
+	_show_phase(setup.phase)
+	_show_toast("⚙️ Đã chọn Chế Độ Tùy Chỉnh! Đang chuẩn bị thiết lập...")
+
+
+func _on_new_game_pressed() -> void:
+	_open_desktop_mode_select()
 
 
 func _on_continue_pressed() -> void:
@@ -3123,20 +3193,29 @@ func _show_phase(next_phase: int) -> void:
 		background_rect.texture = MAIN_MENU_BG_TEXTURE
 	if splash_panel != null:
 		splash_panel.visible = false
+	var is_desktop_phase: bool = next_phase in [
+		SETUP_SESSION.Phase.MAIN_MENU,
+		SETUP_SESSION.Phase.MATCH_MODE,
+		SETUP_SESSION.Phase.MATCH_RULES,
+		SETUP_SESSION.Phase.PLAYER_COUNT,
+		SETUP_SESSION.Phase.CHARACTER_SELECTION,
+		SETUP_SESSION.Phase.PASS_DEVICE,
+		SETUP_SESSION.Phase.LINEUP_CONFIRMATION,
+	]
 	var is_main_menu: bool = next_phase == SETUP_SESSION.Phase.MAIN_MENU
 	if game_title != null:
-		game_title.visible = not is_main_menu
+		game_title.visible = not is_desktop_phase
 	if subtitle != null:
-		subtitle.visible = not is_main_menu
+		subtitle.visible = not is_desktop_phase
 	if safe_margin != null:
 		safe_margin.visible = (
-			not is_main_menu
+			not is_desktop_phase
 			and next_phase != SETUP_SESSION.Phase.CASE_ACTIVE
 			and next_phase != SETUP_SESSION.Phase.LOOT_ACTIVE
 			and next_phase != SETUP_SESSION.Phase.EQUIPMENT_MANAGEMENT
 		)
 	if desktop_root != null:
-		desktop_root.visible = is_main_menu
+		desktop_root.visible = is_desktop_phase
 	if main_menu != null:
 		main_menu.visible = is_main_menu
 	if is_main_menu:
@@ -3144,14 +3223,22 @@ func _show_phase(next_phase: int) -> void:
 			desktop_start_menu.visible = false
 		if desktop_new_sim_dialog != null:
 			desktop_new_sim_dialog.visible = false
+		if desktop_mode_select_dialog != null:
+			desktop_mode_select_dialog.visible = false
 		if desktop_codex_dialog != null:
 			desktop_codex_dialog.visible = false
-	match_mode.visible = next_phase == SETUP_SESSION.Phase.MATCH_MODE
-	match_rules_panel.visible = next_phase == SETUP_SESSION.Phase.MATCH_RULES
-	player_count.visible = next_phase == SETUP_SESSION.Phase.PLAYER_COUNT
-	character_selection.visible = next_phase == SETUP_SESSION.Phase.CHARACTER_SELECTION
-	pass_device.visible = next_phase == SETUP_SESSION.Phase.PASS_DEVICE
-	lineup_confirmation.visible = next_phase == SETUP_SESSION.Phase.LINEUP_CONFIRMATION
+	if next_phase == SETUP_SESSION.Phase.MATCH_MODE:
+		if desktop_mode_select_dialog != null:
+			desktop_mode_select_dialog.visible = true
+	else:
+		if desktop_mode_select_dialog != null and next_phase != SETUP_SESSION.Phase.MAIN_MENU:
+			desktop_mode_select_dialog.visible = false
+	match_mode.visible = not is_desktop_phase and next_phase == SETUP_SESSION.Phase.MATCH_MODE
+	match_rules_panel.visible = not is_desktop_phase and next_phase == SETUP_SESSION.Phase.MATCH_RULES
+	player_count.visible = not is_desktop_phase and next_phase == SETUP_SESSION.Phase.PLAYER_COUNT
+	character_selection.visible = not is_desktop_phase and next_phase == SETUP_SESSION.Phase.CHARACTER_SELECTION
+	pass_device.visible = not is_desktop_phase and next_phase == SETUP_SESSION.Phase.PASS_DEVICE
+	lineup_confirmation.visible = not is_desktop_phase and next_phase == SETUP_SESSION.Phase.LINEUP_CONFIRMATION
 	case_selection.visible = next_phase == SETUP_SESSION.Phase.CASE_SELECTION_READY
 	case_host.visible = next_phase == SETUP_SESSION.Phase.CASE_ACTIVE
 	results_panel.visible = next_phase == SETUP_SESSION.Phase.CASE_RESULTS
