@@ -829,6 +829,22 @@ func _refresh_character_select_ui() -> void:
 				stats_lbl.text = "Tốc độ: %d • Thể lực: %d • Túi: %d" % [
 					char_def.base_speed, char_def.base_stamina, char_def.base_bag_level
 				]
+			var slot_avatar_frame: Panel = filled_view.get_node_or_null("AvatarFrame") as Panel
+			if slot_avatar_frame != null:
+				var lore_slot: Dictionary = CHARACTER_LORE_SKILLS.get(char_def.character_id, {})
+				var house_col: Color = lore_slot.get("house_color", Color(0.8, 0.7, 0.4))
+				var s_style := StyleBoxFlat.new()
+				s_style.bg_color = Color(0.06, 0.08, 0.12, 0.6)
+				s_style.border_width_left = 2
+				s_style.border_width_top = 2
+				s_style.border_width_right = 2
+				s_style.border_width_bottom = 2
+				s_style.border_color = house_col
+				s_style.corner_radius_top_left = 60
+				s_style.corner_radius_top_right = 60
+				s_style.corner_radius_bottom_right = 60
+				s_style.corner_radius_bottom_left = 60
+				slot_avatar_frame.add_theme_stylebox_override("panel", s_style)
 
 			var avatar_img: TextureRect = get_node_or_null("%AvatarImg" + str(i)) as TextureRect
 			var placeholder_lbl: Label = get_node_or_null("%AvatarPlaceholder" + str(i)) as Label
