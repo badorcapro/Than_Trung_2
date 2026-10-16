@@ -15,7 +15,7 @@ const DEFAULT_CHARACTERS_DATA: Array[Dictionary] = [
 	{
 		"name": "Hoàng Linh Lâm",
 		"short_name": "Hoàng Lâm",
-		"title": "Đại Hoàng Tử",
+		"title": "Nhà họ Hoàng",
 		"icon": "👑",
 		"portrait": "res://assets/portraits/character_hoang_linh_lam.png",
 		"theme_color": Color("#facc15")
@@ -23,7 +23,7 @@ const DEFAULT_CHARACTERS_DATA: Array[Dictionary] = [
 	{
 		"name": "Chu Tuệ Nguyệt",
 		"short_name": "Tuệ Nguyệt",
-		"title": "Hỏa Phụng Quân Sư",
+		"title": "Nhà họ Chu",
 		"icon": "🔥",
 		"portrait": "res://assets/portraits/character_chu_tue_nguyet.png",
 		"theme_color": Color("#f87171")
@@ -31,7 +31,7 @@ const DEFAULT_CHARACTERS_DATA: Array[Dictionary] = [
 	{
 		"name": "Kim Thanh Giai",
 		"short_name": "Thanh Giai",
-		"title": "Kim Tiền Thần Đoán",
+		"title": "Nhà họ Kim",
 		"icon": "💎",
 		"portrait": "res://assets/portraits/character_kim_thanh_giai.png",
 		"theme_color": Color("#38bdf8")
@@ -39,7 +39,7 @@ const DEFAULT_CHARACTERS_DATA: Array[Dictionary] = [
 	{
 		"name": "Huyền Ca Xuý",
 		"short_name": "Ca Xuý",
-		"title": "Chiêm Tinh Diệu Toán",
+		"title": "Nhà họ Huyền",
 		"icon": "🔮",
 		"portrait": "res://assets/portraits/character_huyen_ca_xuy.png",
 		"theme_color": Color("#c084fc")
@@ -47,7 +47,7 @@ const DEFAULT_CHARACTERS_DATA: Array[Dictionary] = [
 	{
 		"name": "Lam Phương Xuân",
 		"short_name": "Phương Xuân",
-		"title": "Thần Y Thanh Tùng",
+		"title": "Nhà họ Lam",
 		"icon": "🌿",
 		"portrait": "res://assets/portraits/character_lam_phuong_xuan.png",
 		"theme_color": Color("#4ade80")

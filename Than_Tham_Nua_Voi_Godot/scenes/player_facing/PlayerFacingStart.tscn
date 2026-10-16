@@ -17,6 +17,8 @@
 [ext_resource type="Texture2D" path="res://assets/ui/desktop/tray_wifi.png" id="16_tray_wifi"]
 [ext_resource type="Texture2D" path="res://assets/ui/desktop/desktop_window_frame.png" id="17_window_frame"]
 [ext_resource type="Texture2D" path="res://assets/ui/desktop/window_close_jade.png" id="18_window_close_jade"]
+[ext_resource type="Texture2D" path="res://assets/hinh_nen.png" id="19_hinh_nen"]
+[ext_resource type="Texture2D" path="res://assets/khung_bang.png" id="20_khung_bang"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_imperial_window"]
 texture = ExtResource("17_window_frame")
@@ -24,6 +26,19 @@ texture_margin_left = 68.0
 texture_margin_top = 92.0
 texture_margin_right = 68.0
 texture_margin_bottom = 68.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_inspector_bang"]
+content_margin_left = 28.0
+content_margin_top = 22.0
+content_margin_right = 28.0
+content_margin_bottom = 22.0
+texture = ExtResource("20_khung_bang")
+texture_margin_left = 90.0
+texture_margin_top = 85.0
+texture_margin_right = 90.0
+texture_margin_bottom = 85.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jade_close_btn_hover"]
 bg_color = Color(1, 0.95, 0.6, 0.22)
@@ -2115,6 +2130,17 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="PickerBackground" type="TextureRect" parent="DesktopRoot/CharacterPickerModal"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("19_hinh_nen")
+expand_mode = 1
+stretch_mode = 6
+
 [node name="PickerDim" type="ColorRect" parent="DesktopRoot/CharacterPickerModal"]
 layout_mode = 1
 anchors_preset = 15
@@ -2122,7 +2148,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.03, 0.045, 0.075, 0.97)
+color = Color(0.02, 0.03, 0.06, 0.5)
 
 [node name="PickerMargin" type="MarginContainer" parent="DesktopRoot/CharacterPickerModal"]
 layout_mode = 1
@@ -2173,7 +2199,7 @@ alignment = 1
 [node name="InspectorPanel" type="PanelContainer" parent="DesktopRoot/CharacterPickerModal/PickerMargin/PickerVBox"]
 custom_minimum_size = Vector2(0, 250)
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_holocure_panel")
+theme_override_styles/panel = SubResource("StyleBoxTexture_inspector_bang")
 
 [node name="InspectorHBox" type="HBoxContainer" parent="DesktopRoot/CharacterPickerModal/PickerMargin/PickerVBox/InspectorPanel"]
 layout_mode = 2
@@ -2248,7 +2274,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.5, 0.85, 1, 1)
 theme_override_font_sizes/font_size = 12
-text = "Đại Hoàng Tử • Nhà họ Hoàng"
+text = "Nhà họ Hoàng"
 
 [node name="Sep" type="HSeparator" parent="DesktopRoot/CharacterPickerModal/PickerMargin/PickerVBox/InspectorPanel/InspectorHBox/ColProfile/ProfileHBox/ProfileVBox"]
 layout_mode = 2

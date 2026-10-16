@@ -102,6 +102,7 @@ var _toast_tween: Tween = null
 const SPLASH_BG_TEXTURE: Texture2D = preload("res://assets/ui/common/splash_bg.png")
 const MAIN_MENU_BG_TEXTURE: Texture2D = preload("res://assets/ui/desktop/needy_desktop_bg_1080.png")
 const LOBBY_BG_TEXTURE: Texture2D = preload("res://assets/ui/common/lobby_bg.png")
+const CARD_FRAME_TEXTURE: Texture2D = preload("res://assets/khung_the.png")
 
 @onready var background_rect: TextureRect = get_node_or_null("Background") as TextureRect
 @onready var splash_panel: Control = get_node_or_null("%SplashPanel") as Control
@@ -166,7 +167,6 @@ var _inspected_character: CharacterDefinition = null
 
 const CHARACTER_LORE_SKILLS: Dictionary = {
 	&"character_hoang_linh_lam": {
-		"title": "Đại Hoàng Tử",
 		"house_name": "Nhà họ Hoàng",
 		"house_color": Color(1.0, 0.85, 0.4),
 		"icon": "👑",
@@ -178,7 +178,6 @@ const CHARACTER_LORE_SKILLS: Dictionary = {
 		"skill2_desc": "Sở hữu quyền ưu tiên tại các trạm gác cấm thành và được chư quan hoàng cung kính nể khi thu thập mật án trên bản đồ."
 	},
 	&"character_chu_tue_nguyet": {
-		"title": "Hỏa Phụng Quân Sư",
 		"house_name": "Nhà họ Chu",
 		"house_color": Color(0.98, 0.45, 0.4),
 		"icon": "🔥",
@@ -190,7 +189,6 @@ const CHARACTER_LORE_SKILLS: Dictionary = {
 		"skill2_desc": "Tạo áp lực tâm lý cực đại khi đối chất trực diện, khiến nghịch thần khó che giấu tà tâm và sơ hở phản trắc."
 	},
 	&"character_kim_thanh_giai": {
-		"title": "Kim Tiền Thần Đoán",
 		"house_name": "Nhà họ Kim",
 		"house_color": Color(0.45, 0.85, 1.0),
 		"icon": "💎",
@@ -202,7 +200,6 @@ const CHARACTER_LORE_SKILLS: Dictionary = {
 		"skill2_desc": "Mạng lưới thương hội rộng khắp toàn cõi, mở khóa nguồn tiếp cận mật báo kinh tài và đạo cụ quý hiếm trên bàn cờ."
 	},
 	&"character_huyen_ca_xuy": {
-		"title": "Chiêm Tinh Diệu Toán",
 		"house_name": "Nhà họ Huyền",
 		"house_color": Color(0.8, 0.6, 1.0),
 		"icon": "🔮",
@@ -214,7 +211,6 @@ const CHARACTER_LORE_SKILLS: Dictionary = {
 		"skill2_desc": "Thấu suốt quy luật ngũ hành bát quái, lần theo manh mối huyền thuật và hóa giải các luồng ám khí tha hóa trong hoàng thành."
 	},
 	&"character_lam_phuong_xuan": {
-		"title": "Thần Y Thanh Tùng",
 		"house_name": "Nhà họ Lam",
 		"house_color": Color(0.45, 0.9, 0.55),
 		"icon": "🌿",
@@ -927,46 +923,28 @@ func _build_character_picker_grid() -> void:
 		var is_inspected: bool = (_inspected_character != null and _inspected_character.character_id == char_def.character_id)
 
 		var tile_btn := Button.new()
-		tile_btn.custom_minimum_size = Vector2(160, 200)
+		tile_btn.custom_minimum_size = Vector2(165, 235)
 		tile_btn.focus_mode = Control.FOCUS_NONE
 		tile_btn.name = "Tile_" + String(char_def.character_id)
 
-		var normal_style := StyleBoxFlat.new()
-		normal_style.bg_color = Color(0.08, 0.1, 0.16, 0.85)
-		normal_style.border_width_left = 2 if is_inspected else 1
-		normal_style.border_width_top = 2 if is_inspected else 1
-		normal_style.border_width_right = 2 if is_inspected else 1
-		normal_style.border_width_bottom = 2 if is_inspected else 1
-		normal_style.border_color = Color(1.0, 0.85, 0.35, 1.0) if is_inspected else Color(0.35, 0.42, 0.55, 0.45)
-		normal_style.corner_radius_top_left = 10
-		normal_style.corner_radius_top_right = 10
-		normal_style.corner_radius_bottom_right = 10
-		normal_style.corner_radius_bottom_left = 10
-		normal_style.content_margin_left = 10.0
-		normal_style.content_margin_top = 10.0
-		normal_style.content_margin_right = 10.0
-		normal_style.content_margin_bottom = 10.0
+		var normal_style := StyleBoxTexture.new()
+		normal_style.texture = CARD_FRAME_TEXTURE
+		normal_style.texture_margin_left = 16.0
+		normal_style.texture_margin_top = 16.0
+		normal_style.texture_margin_right = 16.0
+		normal_style.texture_margin_bottom = 16.0
 		if is_inspected:
-			normal_style.shadow_color = Color(1.0, 0.8, 0.2, 0.5)
-			normal_style.shadow_size = 8
+			normal_style.modulate_color = Color(1.25, 1.2, 0.95)
+		else:
+			normal_style.modulate_color = Color(0.9, 0.92, 0.96)
 
-		var hover_style := StyleBoxFlat.new()
-		hover_style.bg_color = Color(0.14, 0.18, 0.28, 0.95)
-		hover_style.border_width_left = 2
-		hover_style.border_width_top = 2
-		hover_style.border_width_right = 2
-		hover_style.border_width_bottom = 2
-		hover_style.border_color = Color(1.0, 0.85, 0.35, 1.0)
-		hover_style.corner_radius_top_left = 10
-		hover_style.corner_radius_top_right = 10
-		hover_style.corner_radius_bottom_right = 10
-		hover_style.corner_radius_bottom_left = 10
-		hover_style.shadow_color = Color(1.0, 0.8, 0.2, 0.5)
-		hover_style.shadow_size = 10
-		hover_style.content_margin_left = 10.0
-		hover_style.content_margin_top = 10.0
-		hover_style.content_margin_right = 10.0
-		hover_style.content_margin_bottom = 10.0
+		var hover_style := StyleBoxTexture.new()
+		hover_style.texture = CARD_FRAME_TEXTURE
+		hover_style.texture_margin_left = 16.0
+		hover_style.texture_margin_top = 16.0
+		hover_style.texture_margin_right = 16.0
+		hover_style.texture_margin_bottom = 16.0
+		hover_style.modulate_color = Color(1.35, 1.3, 1.05)
 
 		tile_btn.add_theme_stylebox_override("normal", normal_style)
 		tile_btn.add_theme_stylebox_override("hover", hover_style)
@@ -977,29 +955,29 @@ func _build_character_picker_grid() -> void:
 
 		var vbox := VBoxContainer.new()
 		vbox.set_anchors_preset(Control.PRESET_FULL_RECT)
-		vbox.offset_left = 8
-		vbox.offset_top = 8
-		vbox.offset_right = -8
-		vbox.offset_bottom = -8
+		vbox.offset_left = 10
+		vbox.offset_top = 16
+		vbox.offset_right = -10
+		vbox.offset_bottom = -12
 		vbox.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		vbox.add_theme_constant_override("separation", 6)
+		vbox.add_theme_constant_override("separation", 5)
 		tile_btn.add_child(vbox)
 
 		var avatar_frame := Panel.new()
-		avatar_frame.custom_minimum_size = Vector2(110, 110)
+		avatar_frame.custom_minimum_size = Vector2(104, 104)
 		avatar_frame.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 		avatar_frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		var circle_frame_style := StyleBoxFlat.new()
 		circle_frame_style.bg_color = Color(0.06, 0.08, 0.12, 0.6)
-		circle_frame_style.border_width_left = 2
-		circle_frame_style.border_width_top = 2
-		circle_frame_style.border_width_right = 2
-		circle_frame_style.border_width_bottom = 2
-		circle_frame_style.border_color = Color(0.65, 0.55, 0.35, 0.7)
-		circle_frame_style.corner_radius_top_left = 55
-		circle_frame_style.corner_radius_top_right = 55
-		circle_frame_style.corner_radius_bottom_right = 55
-		circle_frame_style.corner_radius_bottom_left = 55
+		circle_frame_style.border_width_left = 3 if is_inspected else 2
+		circle_frame_style.border_width_top = 3 if is_inspected else 2
+		circle_frame_style.border_width_right = 3 if is_inspected else 2
+		circle_frame_style.border_width_bottom = 3 if is_inspected else 2
+		circle_frame_style.border_color = Color(1.0, 0.85, 0.35, 1.0) if is_inspected else Color(0.65, 0.55, 0.35, 0.7)
+		circle_frame_style.corner_radius_top_left = 52
+		circle_frame_style.corner_radius_top_right = 52
+		circle_frame_style.corner_radius_bottom_right = 52
+		circle_frame_style.corner_radius_bottom_left = 52
 		avatar_frame.add_theme_stylebox_override("panel", circle_frame_style)
 		vbox.add_child(avatar_frame)
 
@@ -1090,7 +1068,6 @@ func _inspect_character(char_def: CharacterDefinition) -> void:
 	_inspected_character = char_def
 
 	var lore: Dictionary = CHARACTER_LORE_SKILLS.get(char_def.character_id, {
-		"title": "Thám Tử Hoàng Cung",
 		"house_name": "Ngũ Đại Gia Tộc",
 		"house_color": Color(1, 0.85, 0.4),
 		"icon": "⚖️",
@@ -1105,7 +1082,7 @@ func _inspect_character(char_def: CharacterDefinition) -> void:
 	if inspect_char_name != null:
 		inspect_char_name.text = char_def.display_name
 	if inspect_house_badge != null:
-		inspect_house_badge.text = lore.title + " • " + lore.house_name
+		inspect_house_badge.text = lore.house_name
 		inspect_house_badge.add_theme_color_override("font_color", lore.house_color)
 
 	var crest_path: String = "res://assets/ui/crests/crest_%s.png" % String(char_def.origin_house_id)
