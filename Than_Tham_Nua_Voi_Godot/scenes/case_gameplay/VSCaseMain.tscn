@@ -4,13 +4,14 @@
 [ext_resource type="Theme" uid="uid://c8asethemecase01" path="res://themes/CaseTheme.tres" id="2"]
 [ext_resource type="PackedScene" uid="uid://b7d07ctqbtiei" path="res://scenes/case_gameplay/CaseBoard.tscn" id="3"]
 [ext_resource type="Script" uid="uid://dqqtongtu3j2v" path="res://scripts/presentation/case_gameplay/InvestigationCursorFeedback.gd" id="4"]
-[ext_resource type="Texture2D" path="res://assets/ui/case/dupery/tabletop_bg.png" id="5_case_bg"]
-[ext_resource type="Texture2D" path="res://assets/ui/case/dupery/pocket_watch.png" id="6_pocket_watch"]
+[ext_resource type="Texture2D" path="res://assets/ui/case/imperial/table_desk_bg.png" id="5_case_bg"]
+[ext_resource type="Texture2D" path="res://assets/ui/case/imperial/compass_clock.png" id="6_pocket_watch"]
 [ext_resource type="Texture2D" path="res://assets/ui/case/dupery/hours_note.png" id="7_hours_note"]
-[ext_resource type="Texture2D" path="res://assets/ui/case/dupery/ratio_notepad.png" id="8_ratio_notepad"]
-[ext_resource type="Texture2D" path="res://assets/ui/case/dupery/daily_suspect_newspaper.png" id="9_newspaper"]
-[ext_resource type="Texture2D" path="res://assets/ui/case/dupery/suspects_ledger_sheet.png" id="10_ledger_sheet"]
+[ext_resource type="Texture2D" path="res://assets/ui/case/imperial/ratio_scroll_paper.png" id="8_ratio_notepad"]
+[ext_resource type="Texture2D" path="res://assets/ui/case/imperial/imperial_gazette.png" id="9_newspaper"]
+[ext_resource type="Texture2D" path="res://assets/ui/case/imperial/role_codex_book.png" id="10_ledger_sheet"]
 [ext_resource type="AudioStream" path="res://assets/audio/sfx_page_flip.wav" id="11_page_flip_sfx"]
+[ext_resource type="Texture2D" path="res://assets/ui/case/imperial/desk_brush_inkstone.png" id="12_desk_brush"]
 
 [sub_resource type="StyleBoxFlat" id="StatusBadge"]
 content_margin_left = 10.0
@@ -32,14 +33,14 @@ corner_radius_bottom_left = 6
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ledger"]
 texture = ExtResource("10_ledger_sheet")
-texture_margin_left = 34.0
-texture_margin_top = 46.0
-texture_margin_right = 18.0
-texture_margin_bottom = 20.0
-content_margin_left = 38.0
-content_margin_top = 48.0
-content_margin_right = 18.0
-content_margin_bottom = 20.0
+texture_margin_left = 22.0
+texture_margin_top = 35.0
+texture_margin_right = 22.0
+texture_margin_bottom = 35.0
+content_margin_left = 26.0
+content_margin_top = 38.0
+content_margin_right = 24.0
+content_margin_bottom = 28.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pause_window"]
 bg_color = Color(0.10, 0.09, 0.08, 0.96)
@@ -224,7 +225,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="RatioContainer" type="TextureRect" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/DuperyLeftColumn"]
-custom_minimum_size = Vector2(230, 215)
+custom_minimum_size = Vector2(210, 240)
 layout_mode = 2
 size_flags_horizontal = 4
 texture = ExtResource("8_ratio_notepad")
@@ -238,49 +239,49 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 32
-theme_override_constants/margin_top = 58
+theme_override_constants/margin_left = 28
+theme_override_constants/margin_top = 48
 theme_override_constants/margin_right = 24
-theme_override_constants/margin_bottom = 16
+theme_override_constants/margin_bottom = 24
 
 [node name="RatioRows" type="VBoxContainer" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/DuperyLeftColumn/RatioContainer/RatioMargin"]
 layout_mode = 2
-theme_override_constants/separation = 5
+theme_override_constants/separation = 4
 
 [node name="RatioInnocentLabel" type="Label" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/DuperyLeftColumn/RatioContainer/RatioMargin/RatioRows"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.18, 0.52, 0.82, 1)
-theme_override_font_sizes/font_size = 17
+theme_override_font_sizes/font_size = 16
 text = "Innocent: 5"
 
 [node name="RatioMeddlerLabel" type="Label" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/DuperyLeftColumn/RatioContainer/RatioMargin/RatioRows"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.82, 0.62, 0.16, 1)
-theme_override_font_sizes/font_size = 17
+theme_override_font_sizes/font_size = 16
 text = "Meddler: 0"
 
 [node name="RatioUnderlingLabel" type="Label" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/DuperyLeftColumn/RatioContainer/RatioMargin/RatioRows"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.85, 0.22, 0.22, 1)
-theme_override_font_sizes/font_size = 17
+theme_override_font_sizes/font_size = 16
 text = "Underling: 2"
 
 [node name="RatioTraitorLabel" type="Label" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/DuperyLeftColumn/RatioContainer/RatioMargin/RatioRows"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.55, 0.24, 0.72, 1)
-theme_override_font_sizes/font_size = 17
+theme_override_font_sizes/font_size = 16
 text = "Traitor: 0"
 
 [node name="NewspaperContainer" type="Control" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/DuperyLeftColumn"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(250, 180)
+custom_minimum_size = Vector2(245, 175)
 layout_mode = 2
 size_flags_horizontal = 4
-pivot_offset = Vector2(125, 90)
+pivot_offset = Vector2(122, 87)
 
 [node name="NewspaperTexture" type="TextureRect" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/DuperyLeftColumn/NewspaperContainer"]
 layout_mode = 1

@@ -181,59 +181,44 @@ func _build_location_tile(location: BoardLocationDefinition, elapsed_hours: int)
 
 
 func _build_crime_scene_tile(_location: BoardLocationDefinition) -> Control:
-	var panel := PanelContainer.new()
-	panel.name = "CrimeSceneTile"
-	panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	panel.custom_minimum_size = _tile_size
-	panel.size_flags_horizontal = Control.SIZE_FILL
-	panel.size_flags_vertical = Control.SIZE_FILL
-	var style := StyleBoxFlat.new()
-	style.bg_color = Color(0.16, 0.14, 0.12, 0.94)
-	style.border_color = Color(0.72, 0.60, 0.35, 1.0)
-	style.border_width_left = 2
-	style.border_width_top = 2
-	style.border_width_right = 2
-	style.border_width_bottom = 2
-	style.content_margin_left = 8.0
-	style.content_margin_right = 8.0
-	style.content_margin_top = 9.0
-	style.content_margin_bottom = 9.0
-	panel.add_theme_stylebox_override("panel", style)
+	var container := Control.new()
+	container.name = "CrimeSceneTile"
+	container.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	container.custom_minimum_size = _tile_size
+	container.size_flags_horizontal = Control.SIZE_FILL
+	container.size_flags_vertical = Control.SIZE_FILL
+
+	var tex_rect := TextureRect.new()
+	tex_rect.name = "CrimeSceneTexture"
+	tex_rect.set_anchors_preset(Control.PRESET_FULL_RECT)
+	tex_rect.texture = preload("res://assets/ui/case/imperial/crime_scene_center.png")
+	tex_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	tex_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+	tex_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	container.add_child(tex_rect)
 
 	var column: VBoxContainer = VBoxContainer.new()
+	column.set_anchors_preset(Control.PRESET_FULL_RECT)
 	column.alignment = BoxContainer.ALIGNMENT_CENTER
-	column.add_theme_constant_override("separation", 8)
-	panel.add_child(column)
+	column.add_theme_constant_override("separation", 6)
+	container.add_child(column)
 
 	var title: Label = Label.new()
 	title.name = "CrimeSceneTitle"
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	title.add_theme_color_override("font_color", Color(1.0, 0.88, 0.52, 1.0))
+	title.add_theme_color_override("font_color", Color(1.0, 0.94, 0.65, 1.0))
 	title.add_theme_font_size_override("font_size", 16)
 	title.text = "HIỆN TRƯỜNG"
 	column.add_child(title)
 
-	var icon_frame: ColorRect = ColorRect.new()
-	icon_frame.name = "CrimeSceneIconFrame"
-	icon_frame.custom_minimum_size = Vector2(78, 78)
-	icon_frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	icon_frame.color = Color(0.26, 0.10, 0.10, 1.0)
-	column.add_child(icon_frame)
-
 	var icon_label: Label = Label.new()
 	icon_label.name = "CrimeSceneIcon"
-	icon_label.set_anchors_preset(Control.PRESET_FULL_RECT)
-	icon_label.anchor_right = 1.0
-	icon_label.anchor_bottom = 1.0
-	icon_label.grow_horizontal = Control.GROW_DIRECTION_BOTH
-	icon_label.grow_vertical = Control.GROW_DIRECTION_BOTH
 	icon_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	icon_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	icon_label.add_theme_color_override("font_color", Color(0.96, 0.78, 0.42, 1.0))
-	icon_label.add_theme_font_size_override("font_size", 24)
+	icon_label.add_theme_font_size_override("font_size", 28)
 	icon_label.text = "!"
-	icon_frame.add_child(icon_label)
-	return panel
+	column.add_child(icon_label)
+	return container
 
 
 func _build_clock_tower_tile(location: BoardLocationDefinition, elapsed_hours: int) -> Control:
