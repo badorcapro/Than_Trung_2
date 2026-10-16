@@ -69,12 +69,7 @@ var _bag_modal_bal: Label
 # Item Texture Cache & Hover Preview Card
 var _item_texture_cache: Dictionary = {}
 var _item_hover_popup: Control
-var _hover_frame_rect: TextureRect
-var _hover_icon_rect: TextureRect
-var _hover_name_lbl: Label
-var _hover_rarity_lbl: Label
-var _hover_dims_lbl: Label
-var _hover_val_lbl: Label
+var _current_hovered_item_id: String = ""
 
 # Turn State for Multi-player Bidding
 var _current_turn_bidder_index: int = 0
@@ -264,6 +259,7 @@ func _build_ui() -> void:
 	_grid_draw_control.draw.connect(_on_grid_draw)
 	_grid_draw_control.gui_input.connect(_on_grid_gui_input)
 	_grid_draw_control.mouse_exited.connect(func() -> void:
+		_current_hovered_item_id = ""
 		if _item_hover_popup != null:
 			_item_hover_popup.visible = false
 	)
@@ -712,6 +708,11 @@ func _build_settlement_dialog() -> void:
 	_settlement_grid_draw_control.mouse_filter = MOUSE_FILTER_PASS
 	_settlement_grid_draw_control.draw.connect(_on_settlement_grid_draw)
 	_settlement_grid_draw_control.gui_input.connect(_on_settlement_grid_gui_input)
+	_settlement_grid_draw_control.mouse_exited.connect(func() -> void:
+		_current_hovered_item_id = ""
+		if _item_hover_popup != null:
+			_item_hover_popup.visible = false
+	)
 	s_grid_center.add_child(_settlement_grid_draw_control)
 
 
@@ -1303,124 +1304,43 @@ func _build_item_hover_popup() -> void:
 	if _item_hover_popup != null:
 		return
 	_item_hover_popup = Control.new()
-	_item_hover_popup.custom_minimum_size = Vector2(246, 180)
-	_item_hover_popup.size = Vector2(246, 180)
+	_item_hover_popup.custom_minimum_size = Vector2(246, 193)
+	_item_hover_popup.size = Vector2(246, 193)
 	_item_hover_popup.mouse_filter = MOUSE_FILTER_IGNORE
 	_item_hover_popup.visible = false
 	_item_hover_popup.top_level = true
 	add_child(_item_hover_popup)
 
-	# 1. Background Antique Card Frame (khung_item.png)
-	_hover_frame_rect = TextureRect.new()
-	_hover_frame_rect.set_anchors_preset(PRESET_FULL_RECT)
-	_hover_frame_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	_hover_frame_rect.stretch_mode = TextureRect.STRETCH_SCALE
-	_hover_frame_rect.mouse_filter = MOUSE_FILTER_IGNORE
-	var frame_tex := load("res://assets/ui/rarity/khung_item.png") as Texture2D
-	if frame_tex != null:
-		_hover_frame_rect.texture = frame_tex
-	_item_hover_popup.add_child(_hover_frame_rect)
 
-	# Card Content layout
-	var card_vbox := VBoxContainer.new()
-	card_vbox.set_anchors_preset(PRESET_FULL_RECT)
-	card_vbox.mouse_filter = MOUSE_FILTER_IGNORE
-	card_vbox.add_theme_constant_override("separation", 2)
-	_item_hover_popup.add_child(card_vbox)
-
-	# Header (name + rarity)
-	var header_margin := MarginContainer.new()
-	header_margin.add_theme_constant_override("margin_left", 12)
-	header_margin.add_theme_constant_override("margin_right", 12)
-	header_margin.add_theme_constant_override("margin_top", 8)
-	card_vbox.add_child(header_margin)
-
-	var h_vbox := VBoxContainer.new()
-	h_vbox.add_theme_constant_override("separation", 1)
-	header_margin.add_child(h_vbox)
-
-	_hover_name_lbl = Label.new()
-	_hover_name_lbl.text = "Tên Vật Phẩm"
-	_hover_name_lbl.clip_text = true
-	_hover_name_lbl.add_theme_font_size_override("font_size", 12)
-	_hover_name_lbl.add_theme_color_override("font_color", Color.WHITE)
-	h_vbox.add_child(_hover_name_lbl)
-
-	_hover_rarity_lbl = Label.new()
-	_hover_rarity_lbl.text = "Phẩm chất"
-	_hover_rarity_lbl.add_theme_font_size_override("font_size", 10)
-	h_vbox.add_child(_hover_rarity_lbl)
-
-	# Center preview sprite
-	var center_box := CenterContainer.new()
-	center_box.size_flags_vertical = SIZE_EXPAND_FILL
-	center_box.custom_minimum_size = Vector2(0, 75)
-	card_vbox.add_child(center_box)
-
-	_hover_icon_rect = TextureRect.new()
-	_hover_icon_rect.custom_minimum_size = Vector2(65, 65)
-	_hover_icon_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	_hover_icon_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	_hover_icon_rect.mouse_filter = MOUSE_FILTER_IGNORE
-	center_box.add_child(_hover_icon_rect)
-
-	# Footer (dimensions, price)
-	var footer_margin := MarginContainer.new()
-	footer_margin.add_theme_constant_override("margin_left", 12)
-	footer_margin.add_theme_constant_override("margin_right", 12)
-	footer_margin.add_theme_constant_override("margin_bottom", 8)
-	card_vbox.add_child(footer_margin)
-
-	var f_hbox := HBoxContainer.new()
-	f_hbox.add_theme_constant_override("separation", 8)
-	footer_margin.add_child(f_hbox)
-
-	_hover_dims_lbl = Label.new()
-	_hover_dims_lbl.text = "1x1 ô"
-	_hover_dims_lbl.add_theme_font_size_override("font_size", 10)
-	_hover_dims_lbl.add_theme_color_override("font_color", Color("#8be9fd"))
-	f_hbox.add_child(_hover_dims_lbl)
-
-	var sp_f := Control.new()
-	sp_f.size_flags_horizontal = SIZE_EXPAND_FILL
-	f_hbox.add_child(sp_f)
-
-	_hover_val_lbl = Label.new()
-	_hover_val_lbl.text = "0 Xu"
-	_hover_val_lbl.add_theme_font_size_override("font_size", 11)
-	_hover_val_lbl.add_theme_color_override("font_color", Color("#f6c95c"))
-	f_hbox.add_child(_hover_val_lbl)
+static func _set_mouse_filter_recursive(node: Node, filter: int) -> void:
+	if node is Control:
+		(node as Control).mouse_filter = filter
+	for child in node.get_children():
+		_set_mouse_filter_recursive(child, filter)
 
 
 func _show_item_hover_popup(item: ITEM_CLASS, mouse_pos: Vector2) -> void:
 	if _item_hover_popup == null:
 		_build_item_hover_popup()
 	if item == null:
+		_current_hovered_item_id = ""
 		_item_hover_popup.visible = false
 		return
 
-	var r_color: Color = ITEM_CLASS.rarity_color(item.rarity)
-	_hover_name_lbl.text = item.display_name
-	_hover_rarity_lbl.text = ITEM_CLASS.rarity_name(item.rarity)
-	_hover_rarity_lbl.add_theme_color_override("font_color", r_color)
-	_hover_dims_lbl.text = "%dx%d ô" % [item.grid_width, item.grid_height]
+	var str_id: String = String(item.item_id)
+	if _current_hovered_item_id != str_id or _item_hover_popup.get_child_count() == 0:
+		_current_hovered_item_id = str_id
+		for ch in _item_hover_popup.get_children():
+			ch.queue_free()
 
-	if item.is_resource and item.silver_value == 0:
-		_hover_val_lbl.text = "Tài nguyên"
-		_hover_val_lbl.add_theme_color_override("font_color", Color("#8be9fd"))
-	elif item.reward_type == "black_ticket":
-		_hover_val_lbl.text = "Vé đen 🎟️"
-		_hover_val_lbl.add_theme_color_override("font_color", Color("#ff79c6"))
-	else:
-		_hover_val_lbl.text = "%s Xu Bạc" % _format_number(item.silver_value)
-		_hover_val_lbl.add_theme_color_override("font_color", Color("#f6c95c"))
-
-	var tex: Texture2D = _get_cached_item_texture(item.asset_path)
-	_hover_icon_rect.texture = tex
+		# Khởi tạo card chuẩn xác 100% từ Bách Khoa Toàn Thư (AuctionEncyclopediaDialog)
+		var card: Control = ENCYCLOPEDIA_DIALOG_CLASS.create_item_card(item.to_dict())
+		_set_mouse_filter_recursive(card, Control.MOUSE_FILTER_IGNORE)
+		_item_hover_popup.add_child(card)
 
 	var vp_size := get_viewport_rect().size
 	var pop_w: float = 246.0
-	var pop_h: float = 180.0
+	var pop_h: float = 193.0
 	var target_x: float = mouse_pos.x + 16.0
 	var target_y: float = mouse_pos.y + 16.0
 	if target_x + pop_w > vp_size.x:
@@ -1452,6 +1372,7 @@ func _on_grid_gui_input(event: InputEvent) -> void:
 		if hovered_item != null:
 			_show_item_hover_popup(hovered_item, _grid_draw_control.get_global_mouse_position())
 		else:
+			_current_hovered_item_id = ""
 			if _item_hover_popup != null:
 				_item_hover_popup.visible = false
 
@@ -2014,6 +1935,7 @@ func _on_settlement_grid_gui_input(event: InputEvent) -> void:
 		if hovered_item != null:
 			_show_item_hover_popup(hovered_item, _settlement_grid_draw_control.get_global_mouse_position())
 		else:
+			_current_hovered_item_id = ""
 			if _item_hover_popup != null:
 				_item_hover_popup.visible = false
 

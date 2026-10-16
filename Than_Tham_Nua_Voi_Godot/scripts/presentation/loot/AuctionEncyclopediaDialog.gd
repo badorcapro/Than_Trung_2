@@ -45,7 +45,7 @@ var _category_buttons: Array[Button] = []
 var _shape_buttons: Array[Button] = []
 
 # Cache textures to avoid disk thrashing
-var _texture_cache: Dictionary = {}
+static var _texture_cache: Dictionary = {}
 
 
 func _init() -> void:
@@ -668,7 +668,7 @@ func _refresh_items_grid() -> void:
 		_cards_grid.add_child(card)
 
 
-func _create_item_card(data: Dictionary) -> Control:
+static func create_item_card(data: Dictionary) -> Control:
 	var rarity: int = int(data.get("rarity", ITEM_CLASS.Rarity.WHITE))
 	var r_color: Color = ITEM_CLASS.rarity_color(rarity as ITEM_CLASS.Rarity)
 	var d_name: String = String(data.get("display_name", "Vật Phẩm"))
@@ -686,7 +686,7 @@ func _create_item_card(data: Dictionary) -> Control:
 		d_name,
 		ITEM_CLASS.rarity_name(rarity as ITEM_CLASS.Rarity),
 		w, h,
-		_format_number(s_val),
+		format_number(s_val),
 		weight_str
 	]
 
@@ -697,7 +697,7 @@ func _create_item_card(data: Dictionary) -> Control:
 	frame_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	frame_rect.stretch_mode = TextureRect.STRETCH_SCALE
 	frame_rect.mouse_filter = MOUSE_FILTER_IGNORE
-	var frame_tex := _get_cached_texture("res://assets/ui/rarity/khung_item.png")
+	var frame_tex := get_cached_texture("res://assets/ui/rarity/khung_item.png")
 	if frame_tex != null:
 		frame_rect.texture = frame_tex
 	card.add_child(frame_rect)
@@ -737,7 +737,7 @@ func _create_item_card(data: Dictionary) -> Control:
 	rarity_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	rarity_icon.tooltip_text = ITEM_CLASS.rarity_name(rarity as ITEM_CLASS.Rarity)
 	var r_svg_path := _get_rarity_svg_path(rarity, true)
-	var r_tex := _get_cached_texture(r_svg_path)
+	var r_tex := get_cached_texture(r_svg_path)
 	if r_tex != null:
 		rarity_icon.texture = r_tex
 		h_hbox.add_child(rarity_icon)
@@ -777,12 +777,12 @@ func _create_item_card(data: Dictionary) -> Control:
 	body_control.add_child(texture_rect)
 
 	if not asset_path.is_empty():
-		var tex: Texture2D = _get_cached_texture(asset_path)
+		var tex: Texture2D = get_cached_texture(asset_path)
 		if tex != null:
 			texture_rect.texture = tex
 
 	# 16-Cell (4x4) Footprint Matrix in Bottom-Right Corner
-	var footprint_control := _create_footprint_matrix(w, h)
+	var footprint_control := create_footprint_matrix(w, h)
 	footprint_control.set_anchors_preset(PRESET_BOTTOM_RIGHT)
 	footprint_control.offset_left = -44
 	footprint_control.offset_top = -42
@@ -827,7 +827,7 @@ func _create_item_card(data: Dictionary) -> Control:
 		res_icon.custom_minimum_size = Vector2(16, 16)
 		res_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		res_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-		var r_icon_tex := _get_cached_texture("res://assets/auction_items/tai_nguyen.png")
+		var r_icon_tex := get_cached_texture("res://assets/auction_items/tai_nguyen.png")
 		if r_icon_tex != null:
 			res_icon.texture = r_icon_tex
 		res_tag.add_child(res_icon)
@@ -835,7 +835,7 @@ func _create_item_card(data: Dictionary) -> Control:
 		f_hbox.add_child(res_tag)
 	else:
 		var price_lbl := Label.new()
-		price_lbl.text = "🪙 %s Xu" % _format_number(s_val)
+		price_lbl.text = "🪙 %s Xu" % format_number(s_val)
 		price_lbl.add_theme_color_override("font_color", Color("#f6c95c"))
 		price_lbl.add_theme_font_size_override("font_size", 12)
 		f_hbox.add_child(price_lbl)
@@ -843,8 +843,13 @@ func _create_item_card(data: Dictionary) -> Control:
 	return card
 
 
+func _create_item_card(data: Dictionary) -> Control:
+	return create_item_card(data)
+
+
+
 ## Vẽ ma trận ô thể hiện diện tích chiếm chỗ của vật phẩm (Đi từ góc trên bên trái đi xuống)
-func _create_footprint_matrix(item_w: int, item_h: int) -> Control:
+static func create_footprint_matrix(item_w: int, item_h: int) -> Control:
 	var ctrl := Control.new()
 	var cols := maxi(4, item_w)
 	var rows := maxi(4, item_h)
@@ -877,9 +882,15 @@ func _create_footprint_matrix(item_w: int, item_h: int) -> Control:
 	return ctrl
 
 
-func _get_cached_texture(path: String) -> Texture2D:
+func _create_footprint_matrix(item_w: int, item_h: int) -> Control:
+	return create_footprint_matrix(item_w, item_h)
+
+
+static func get_cached_texture(path: String) -> Texture2D:
+	if path.is_empty():
+		return null
 	if _texture_cache.has(path):
-		return _texture_cache[path]
+		return _texture_cache[path] as Texture2D
 	if ResourceLoader.exists(path):
 		var res := load(path)
 		if res is Texture2D:
@@ -897,7 +908,11 @@ func _get_cached_texture(path: String) -> Texture2D:
 	return null
 
 
-func _format_number(val: int) -> String:
+func _get_cached_texture(path: String) -> Texture2D:
+	return get_cached_texture(path)
+
+
+static func format_number(val: int) -> String:
 	var s := str(absi(val))
 	var res := ""
 	var cnt := 0
@@ -907,6 +922,10 @@ func _format_number(val: int) -> String:
 		if cnt % 3 == 0 and i > 0:
 			res = "," + res
 	return ("-" if val < 0 else "") + res
+
+
+func _format_number(val: int) -> String:
+	return format_number(val)
 
 
 ## Xóa bỏ hoàn toàn StyleBox viền xanh mặc định của Button để icon hiển thị trọn vẹn
