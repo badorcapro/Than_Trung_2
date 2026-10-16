@@ -136,6 +136,18 @@ const LOBBY_BG_TEXTURE: Texture2D = preload("res://assets/ui/common/lobby_bg.png
 @onready var codex_btn_relics: Button = get_node_or_null("%CodexBtnRelics") as Button
 @onready var codex_btn_stigmata: Button = get_node_or_null("%CodexBtnStigmata") as Button
 @onready var codex_btn_loot: Button = get_node_or_null("%CodexBtnLoot") as Button
+@onready var desktop_character_select_dialog: Control = get_node_or_null("%DesktopCharacterSelectDialog") as Control
+@onready var char_select_back_btn: Button = get_node_or_null("%CharSelectBackBtn") as Button
+@onready var char_select_start_btn: Button = get_node_or_null("%CharSelectStartBtn") as Button
+@onready var character_picker_modal: Control = get_node_or_null("%CharacterPickerModal") as Control
+@onready var picker_close_btn: Button = get_node_or_null("%PickerCloseBtn") as Button
+@onready var picker_title: Label = get_node_or_null("%PickerTitle") as Label
+@onready var picker_grid: HBoxContainer = get_node_or_null("%PickerGrid") as HBoxContainer
+
+var _desktop_selected_characters: Array = [null, null, null, null]
+var _current_picking_slot_index: int = -1
+var _desktop_selected_mode: int = MATCH_RULES.Mode.CLASSIC
+
 @onready var continue_button: Button = (
 	get_node_or_null("%Continue") as Button
 	if get_node_or_null("%Continue") != null
@@ -507,6 +519,25 @@ func _init_desktop_system() -> void:
 		desktop_mode_select_dialog.visible = false
 	if desktop_codex_dialog != null:
 		desktop_codex_dialog.visible = false
+	if desktop_character_select_dialog != null:
+		desktop_character_select_dialog.visible = false
+	if character_picker_modal != null:
+		character_picker_modal.visible = false
+
+	if char_select_back_btn != null and not char_select_back_btn.pressed.is_connected(_on_char_select_back_pressed):
+		char_select_back_btn.pressed.connect(_on_char_select_back_pressed)
+	if char_select_start_btn != null and not char_select_start_btn.pressed.is_connected(_on_char_select_start_pressed):
+		char_select_start_btn.pressed.connect(_on_char_select_start_pressed)
+	if picker_close_btn != null and not picker_close_btn.pressed.is_connected(_on_picker_close_pressed):
+		picker_close_btn.pressed.connect(_on_picker_close_pressed)
+
+	for i in range(4):
+		var slot_btn: Button = get_node_or_null("%SlotBtn" + str(i)) as Button
+		if slot_btn != null and not slot_btn.pressed.is_connected(_on_slot_btn_pressed.bind(i)):
+			slot_btn.pressed.connect(_on_slot_btn_pressed.bind(i))
+		var remove_btn: Button = get_node_or_null("%RemoveBtn" + str(i)) as Button
+		if remove_btn != null and not remove_btn.pressed.is_connected(_on_remove_slot_pressed.bind(i)):
+			remove_btn.pressed.connect(_on_remove_slot_pressed.bind(i))
 
 	_refresh_continue_button()
 
@@ -655,27 +686,252 @@ func _on_desktop_mode_select_closed() -> void:
 func _on_desktop_mode_classic_pressed() -> void:
 	if desktop_mode_select_dialog != null:
 		desktop_mode_select_dialog.visible = false
-	setup.begin_new_game()
-	var mode_result: Dictionary = setup.choose_match_mode(MATCH_RULES.Mode.CLASSIC)
-	if not bool(mode_result.get("success", false)):
-		_show_toast("Không thể thiết lập Chế Độ Cổ Điển.", true)
-		return
-	setup.confirm_match_rules()
-	setup.choose_player_count(3)
-	_show_phase(setup.phase)
-	_show_toast("✅ Đã chọn Chế Độ Cổ Điển! Sẵn sàng bước tiếp theo: Chọn Nhân Vật.")
+	_open_desktop_character_select(MATCH_RULES.Mode.CLASSIC)
 
 
 func _on_desktop_mode_custom_pressed() -> void:
 	if desktop_mode_select_dialog != null:
 		desktop_mode_select_dialog.visible = false
-	setup.begin_new_game()
-	var mode_result: Dictionary = setup.choose_match_mode(MATCH_RULES.Mode.CUSTOM)
-	if not bool(mode_result.get("success", false)):
-		_show_toast("Không thể thiết lập Chế Độ Tùy Chỉnh.", true)
+	_open_desktop_character_select(MATCH_RULES.Mode.CUSTOM)
+
+
+func _open_desktop_character_select(mode: int) -> void:
+	_desktop_selected_mode = mode
+	if desktop_mode_select_dialog != null:
+		desktop_mode_select_dialog.visible = false
+	if desktop_character_select_dialog != null:
+		desktop_character_select_dialog.visible = true
+	if character_picker_modal != null:
+		character_picker_modal.visible = false
+	_refresh_character_select_ui()
+
+
+func _refresh_character_select_ui() -> void:
+	var filled_count: int = 0
+	for i in range(4):
+		var char_def = _desktop_selected_characters[i]
+		var empty_view: Control = get_node_or_null("%EmptyView" + str(i)) as Control
+		var filled_view: Control = get_node_or_null("%FilledView" + str(i)) as Control
+
+		if char_def == null:
+			if empty_view != null: empty_view.visible = true
+			if filled_view != null: filled_view.visible = false
+		else:
+			filled_count += 1
+			if empty_view != null: empty_view.visible = false
+			if filled_view != null: filled_view.visible = true
+
+			var name_lbl: Label = get_node_or_null("%CharName" + str(i)) as Label
+			if name_lbl != null: name_lbl.text = char_def.display_name
+
+			var house_lbl: Label = get_node_or_null("%HouseBadge" + str(i)) as Label
+			if house_lbl != null:
+				match char_def.origin_house_id:
+					&"house_hoang": house_lbl.text = "👑 Nhà họ Hoàng"
+					&"house_chu": house_lbl.text = "🔥 Nhà họ Chu"
+					&"house_kim": house_lbl.text = "💎 Nhà họ Kim"
+					&"house_huyen": house_lbl.text = "🔮 Nhà họ Huyền"
+					&"house_lam": house_lbl.text = "🌿 Nhà họ Lam"
+					_: house_lbl.text = "Hoàng Cung"
+
+			var stats_lbl: Label = get_node_or_null("%StatsLabel" + str(i)) as Label
+			if stats_lbl != null:
+				stats_lbl.text = "Tốc độ: %d • Thể lực: %d • Túi: %d" % [
+					char_def.base_speed, char_def.base_stamina, char_def.base_bag_level
+				]
+
+			var avatar_img: TextureRect = get_node_or_null("%AvatarImg" + str(i)) as TextureRect
+			var placeholder_lbl: Label = get_node_or_null("%AvatarPlaceholder" + str(i)) as Label
+			var portrait_path: String = "res://assets/portraits/%s.png" % String(char_def.character_id)
+			if ResourceLoader.exists(portrait_path):
+				var tex := load(portrait_path) as Texture2D
+				if avatar_img != null:
+					avatar_img.texture = tex
+					avatar_img.visible = true
+				if placeholder_lbl != null:
+					placeholder_lbl.visible = false
+			else:
+				if avatar_img != null:
+					avatar_img.visible = false
+				if placeholder_lbl != null:
+					placeholder_lbl.visible = true
+					match char_def.origin_house_id:
+						&"house_hoang": placeholder_lbl.text = "👑\nHOÀNG"
+						&"house_chu": placeholder_lbl.text = "🔥\nCHU"
+						&"house_kim": placeholder_lbl.text = "💎\nKIM"
+						&"house_huyen": placeholder_lbl.text = "🔮\nHUYỀN"
+						&"house_lam": placeholder_lbl.text = "🌿\nLAM"
+						_: placeholder_lbl.text = "THÁM TỬ"
+
+	if char_select_start_btn != null:
+		if filled_count < 2:
+			char_select_start_btn.disabled = true
+			char_select_start_btn.text = "▶ Bắt Đầu Kỳ Án (Cần tối thiểu 2 người)"
+		else:
+			char_select_start_btn.disabled = false
+			char_select_start_btn.text = "▶ Bắt Đầu Kỳ Án (%d Người Chơi)" % filled_count
+
+
+func _on_slot_btn_pressed(slot_idx: int) -> void:
+	_current_picking_slot_index = slot_idx
+	if character_picker_modal != null:
+		character_picker_modal.visible = true
+	if picker_title != null:
+		picker_title.text = "CHỌN NHÂN VẬT CHO THÁM TỬ %d" % (slot_idx + 1)
+	_build_character_picker_grid()
+
+
+func _on_remove_slot_pressed(slot_idx: int) -> void:
+	_desktop_selected_characters[slot_idx] = null
+	_refresh_character_select_ui()
+
+
+func _on_picker_close_pressed() -> void:
+	if character_picker_modal != null:
+		character_picker_modal.visible = false
+
+
+func _build_character_picker_grid() -> void:
+	if picker_grid == null:
 		return
+	for child in picker_grid.get_children():
+		child.queue_free()
+
+	var all_characters: Array[CharacterDefinition] = ProductionCharacterRepository.load_all()
+	for char_def in all_characters:
+		var card := Panel.new()
+		card.custom_minimum_size = Vector2(170, 310)
+		card.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+
+		var is_already_chosen: bool = false
+		for s_idx in range(4):
+			if s_idx != _current_picking_slot_index and _desktop_selected_characters[s_idx] != null:
+				if _desktop_selected_characters[s_idx].character_id == char_def.character_id:
+					is_already_chosen = true
+					break
+
+		var vbox := VBoxContainer.new()
+		vbox.set_anchors_preset(Control.PRESET_FULL_RECT)
+		vbox.offset_left = 10
+		vbox.offset_top = 12
+		vbox.offset_right = -10
+		vbox.offset_bottom = -12
+		vbox.add_theme_constant_override("separation", 8)
+		card.add_child(vbox)
+
+		# Avatar or stylized placeholder
+		var avatar_frame := Panel.new()
+		avatar_frame.custom_minimum_size = Vector2(0, 140)
+		avatar_frame.size_flags_vertical = Control.SIZE_EXPAND_FILL
+		vbox.add_child(avatar_frame)
+
+		var portrait_path: String = "res://assets/portraits/%s.png" % String(char_def.character_id)
+		if ResourceLoader.exists(portrait_path):
+			var tex := load(portrait_path) as Texture2D
+			var tr := TextureRect.new()
+			tr.texture = tex
+			tr.set_anchors_preset(Control.PRESET_FULL_RECT)
+			tr.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+			tr.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+			avatar_frame.add_child(tr)
+		else:
+			var pl_lbl := Label.new()
+			pl_lbl.set_anchors_preset(Control.PRESET_FULL_RECT)
+			pl_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			pl_lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+			pl_lbl.add_theme_font_size_override("font_size", 20)
+			match char_def.origin_house_id:
+				&"house_hoang": pl_lbl.text = "👑\nHOÀNG"
+				&"house_chu": pl_lbl.text = "🔥\nCHU"
+				&"house_kim": pl_lbl.text = "💎\nKIM"
+				&"house_huyen": pl_lbl.text = "🔮\nHUYỀN"
+				&"house_lam": pl_lbl.text = "🌿\nLAM"
+				_: pl_lbl.text = "THÁM TỬ"
+			avatar_frame.add_child(pl_lbl)
+
+		var name_lbl := Label.new()
+		name_lbl.text = char_def.display_name
+		name_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		name_lbl.add_theme_font_size_override("font_size", 14)
+		name_lbl.add_theme_color_override("font_color", Color(1, 0.95, 0.88))
+		vbox.add_child(name_lbl)
+
+		var house_lbl := Label.new()
+		house_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		house_lbl.add_theme_font_size_override("font_size", 11)
+		match char_def.origin_house_id:
+			&"house_hoang":
+				house_lbl.text = "Nhà họ Hoàng"
+				house_lbl.add_theme_color_override("font_color", Color(0.9, 0.8, 0.4))
+			&"house_chu":
+				house_lbl.text = "Nhà họ Chu"
+				house_lbl.add_theme_color_override("font_color", Color(0.95, 0.45, 0.45))
+			&"house_kim":
+				house_lbl.text = "Nhà họ Kim"
+				house_lbl.add_theme_color_override("font_color", Color(0.4, 0.85, 0.9))
+			&"house_huyen":
+				house_lbl.text = "Nhà họ Huyền"
+				house_lbl.add_theme_color_override("font_color", Color(0.75, 0.6, 0.95))
+			&"house_lam":
+				house_lbl.text = "Nhà họ Lam"
+				house_lbl.add_theme_color_override("font_color", Color(0.5, 0.88, 0.55))
+			_:
+				house_lbl.text = "Hoàng Cung"
+		vbox.add_child(house_lbl)
+
+		var select_btn := Button.new()
+		select_btn.custom_minimum_size = Vector2(0, 36)
+		select_btn.focus_mode = Control.FOCUS_NONE
+		if is_already_chosen:
+			select_btn.text = "Đã Tham Chiến"
+			select_btn.disabled = true
+			card.modulate.a = 0.5
+		else:
+			select_btn.text = "Chọn Thám Tử"
+			select_btn.pressed.connect(func() -> void:
+				if _current_picking_slot_index >= 0 and _current_picking_slot_index < 4:
+					_desktop_selected_characters[_current_picking_slot_index] = char_def
+					if character_picker_modal != null:
+						character_picker_modal.visible = false
+					_refresh_character_select_ui()
+			)
+		vbox.add_child(select_btn)
+
+		picker_grid.add_child(card)
+
+
+func _on_char_select_back_pressed() -> void:
+	if desktop_character_select_dialog != null:
+		desktop_character_select_dialog.visible = false
+	if desktop_mode_select_dialog != null:
+		desktop_mode_select_dialog.visible = true
+
+
+func _on_char_select_start_pressed() -> void:
+	var chosen: Array[CharacterDefinition] = []
+	for c in _desktop_selected_characters:
+		if c != null:
+			chosen.append(c as CharacterDefinition)
+
+	if chosen.size() < 2:
+		return
+
+	if desktop_character_select_dialog != null:
+		desktop_character_select_dialog.visible = false
+
+	setup.begin_new_game()
+	setup.choose_match_mode(_desktop_selected_mode)
+	setup.confirm_match_rules()
+	setup.choose_player_count(chosen.size())
+
+	for i in range(chosen.size()):
+		setup.select_character(chosen[i].character_id)
+		setup.lock_current_character()
+		if setup.phase == SETUP_SESSION.Phase.PASS_DEVICE:
+			setup.continue_after_pass_device()
+
+	setup.confirm_lineup()
 	_show_phase(setup.phase)
-	_show_toast("⚙️ Đã chọn Chế Độ Tùy Chỉnh! Đang chuẩn bị thiết lập...")
 
 
 func _on_new_game_pressed() -> void:

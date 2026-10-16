@@ -1327,6 +1327,744 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_desktop_btn_hover")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_desktop_btn_hover")
 text = "Quay Lại"
 
+[node name="DesktopCharacterSelectDialog" type="Control" parent="DesktopRoot"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DimBackdrop" type="ColorRect" parent="DesktopRoot/DesktopCharacterSelectDialog"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.75)
+
+[node name="CharSelectBox" type="Panel" parent="DesktopRoot/DesktopCharacterSelectDialog"]
+custom_minimum_size = Vector2(1040, 620)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -520.0
+offset_top = -310.0
+offset_right = 520.0
+offset_bottom = 310.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_imperial_window")
+
+[node name="TopBar" type="HBoxContainer" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 68.0
+offset_top = 16.0
+offset_right = -68.0
+offset_bottom = 54.0
+grow_horizontal = 2
+alignment = 1
+
+[node name="Title" type="Label" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/TopBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.96, 0.88, 0.65, 1)
+theme_override_font_sizes/font_size = 17
+text = "GHI DANH THÁM TỬ — CHỌN NHÂN VẬT THAM CHIẾN"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ContentVBox" type="VBoxContainer" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 36.0
+offset_top = 88.0
+offset_right = -36.0
+offset_bottom = -28.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 16
+
+[node name="SlotsHBox" type="HBoxContainer" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 16
+
+[node name="SlotCard0" type="Panel" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_dark_card")
+
+[node name="EmptyView0" type="VBoxContainer" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard0"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 16.0
+offset_right = -12.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 14
+alignment = 1
+
+[node name="Header" type="Label" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard0/EmptyView0"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.45, 1)
+theme_override_font_sizes/font_size = 14
+text = "THÁM TỬ 1"
+horizontal_alignment = 1
+
+[node name="SlotBtn0" type="Button" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard0/EmptyView0"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(90, 90)
+layout_mode = 2
+size_flags_horizontal = 4
+focus_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("StyleBoxFlat_desktop_btn_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_dupery_btn_accent_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_dupery_btn_accent_hover")
+text = "➕"
+
+[node name="Hint" type="Label" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard0/EmptyView0"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.65, 0.72, 0.85, 0.8)
+theme_override_font_sizes/font_size = 11
+text = "Nhấp để ghi danh"
+horizontal_alignment = 1
+
+[node name="FilledView0" type="VBoxContainer" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard0"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 10.0
+offset_right = -12.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 6
+
+[node name="TopRow" type="HBoxContainer" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard0/FilledView0"]
+layout_mode = 2
+
+[node name="SeatLabel" type="Label" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard0/FilledView0/TopRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 0.85, 0.45, 1)
+theme_override_font_sizes/font_size = 12
+text = "P1 • THÁM TỬ"
+
+[node name="RemoveBtn0" type="Button" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard0/FilledView0/TopRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(48, 22)
+layout_mode = 2
+focus_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.9, 0.9, 1)
+theme_override_font_sizes/font_size = 10
+theme_override_styles/normal = SubResource("StyleBoxFlat_desktop_btn_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_desktop_btn_hover")
+text = "✕ Đổi"
+
+[node name="AvatarFrame" type="Panel" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard0/FilledView0"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_desktop_btn_normal")
+
+[node name="AvatarImg0" type="TextureRect" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard0/FilledView0/AvatarFrame"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="AvatarPlaceholder0" type="Label" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard0/FilledView0/AvatarFrame"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.9, 0.5, 0.9)
+theme_override_font_sizes/font_size = 22
+text = "HOÀNG"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CharName0" type="Label" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard0/FilledView0"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.96, 0.92, 1)
+theme_override_font_sizes/font_size = 14
+text = "Hoàng Linh Lâm"
+horizontal_alignment = 1
+
+[node name="HouseBadge0" type="Label" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard0/FilledView0"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.8, 0.4, 1)
+theme_override_font_sizes/font_size = 11
+text = "Nhà họ Hoàng"
+horizontal_alignment = 1
+
+[node name="StatsLabel0" type="Label" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard0/FilledView0"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.75, 0.8, 0.9, 0.85)
+theme_override_font_sizes/font_size = 11
+text = "Tốc: 2 • Lực: 2 • Túi: 2"
+horizontal_alignment = 1
+
+[node name="SlotCard1" type="Panel" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_dark_card")
+
+[node name="EmptyView1" type="VBoxContainer" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard1"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 16.0
+offset_right = -12.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 14
+alignment = 1
+
+[node name="Header" type="Label" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard1/EmptyView1"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.45, 1)
+theme_override_font_sizes/font_size = 14
+text = "THÁM TỬ 2"
+horizontal_alignment = 1
+
+[node name="SlotBtn1" type="Button" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard1/EmptyView1"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(90, 90)
+layout_mode = 2
+size_flags_horizontal = 4
+focus_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("StyleBoxFlat_desktop_btn_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_dupery_btn_accent_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_dupery_btn_accent_hover")
+text = "➕"
+
+[node name="Hint" type="Label" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard1/EmptyView1"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.65, 0.72, 0.85, 0.8)
+theme_override_font_sizes/font_size = 11
+text = "Nhấp để ghi danh"
+horizontal_alignment = 1
+
+[node name="FilledView1" type="VBoxContainer" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard1"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 10.0
+offset_right = -12.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 6
+
+[node name="TopRow" type="HBoxContainer" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard1/FilledView1"]
+layout_mode = 2
+
+[node name="SeatLabel" type="Label" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard1/FilledView1/TopRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 0.85, 0.45, 1)
+theme_override_font_sizes/font_size = 12
+text = "P2 • THÁM TỬ"
+
+[node name="RemoveBtn1" type="Button" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard1/FilledView1/TopRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(48, 22)
+layout_mode = 2
+focus_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.9, 0.9, 1)
+theme_override_font_sizes/font_size = 10
+theme_override_styles/normal = SubResource("StyleBoxFlat_desktop_btn_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_desktop_btn_hover")
+text = "✕ Đổi"
+
+[node name="AvatarFrame" type="Panel" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard1/FilledView1"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_desktop_btn_normal")
+
+[node name="AvatarImg1" type="TextureRect" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard1/FilledView1/AvatarFrame"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="AvatarPlaceholder1" type="Label" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard1/FilledView1/AvatarFrame"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.9, 0.5, 0.9)
+theme_override_font_sizes/font_size = 22
+text = "HOÀNG"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CharName1" type="Label" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard1/FilledView1"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.96, 0.92, 1)
+theme_override_font_sizes/font_size = 14
+text = "Hoàng Linh Lâm"
+horizontal_alignment = 1
+
+[node name="HouseBadge1" type="Label" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard1/FilledView1"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.8, 0.4, 1)
+theme_override_font_sizes/font_size = 11
+text = "Nhà họ Hoàng"
+horizontal_alignment = 1
+
+[node name="StatsLabel1" type="Label" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard1/FilledView1"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.75, 0.8, 0.9, 0.85)
+theme_override_font_sizes/font_size = 11
+text = "Tốc: 2 • Lực: 2 • Túi: 2"
+horizontal_alignment = 1
+
+[node name="SlotCard2" type="Panel" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_dark_card")
+
+[node name="EmptyView2" type="VBoxContainer" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard2"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 16.0
+offset_right = -12.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 14
+alignment = 1
+
+[node name="Header" type="Label" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard2/EmptyView2"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.45, 1)
+theme_override_font_sizes/font_size = 14
+text = "THÁM TỬ 3"
+horizontal_alignment = 1
+
+[node name="SlotBtn2" type="Button" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard2/EmptyView2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(90, 90)
+layout_mode = 2
+size_flags_horizontal = 4
+focus_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("StyleBoxFlat_desktop_btn_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_dupery_btn_accent_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_dupery_btn_accent_hover")
+text = "➕"
+
+[node name="Hint" type="Label" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard2/EmptyView2"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.65, 0.72, 0.85, 0.8)
+theme_override_font_sizes/font_size = 11
+text = "Nhấp để ghi danh"
+horizontal_alignment = 1
+
+[node name="FilledView2" type="VBoxContainer" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard2"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 10.0
+offset_right = -12.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 6
+
+[node name="TopRow" type="HBoxContainer" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard2/FilledView2"]
+layout_mode = 2
+
+[node name="SeatLabel" type="Label" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard2/FilledView2/TopRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 0.85, 0.45, 1)
+theme_override_font_sizes/font_size = 12
+text = "P3 • THÁM TỬ"
+
+[node name="RemoveBtn2" type="Button" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard2/FilledView2/TopRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(48, 22)
+layout_mode = 2
+focus_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.9, 0.9, 1)
+theme_override_font_sizes/font_size = 10
+theme_override_styles/normal = SubResource("StyleBoxFlat_desktop_btn_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_desktop_btn_hover")
+text = "✕ Đổi"
+
+[node name="AvatarFrame" type="Panel" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard2/FilledView2"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_desktop_btn_normal")
+
+[node name="AvatarImg2" type="TextureRect" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard2/FilledView2/AvatarFrame"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="AvatarPlaceholder2" type="Label" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard2/FilledView2/AvatarFrame"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.9, 0.5, 0.9)
+theme_override_font_sizes/font_size = 22
+text = "HOÀNG"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CharName2" type="Label" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard2/FilledView2"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.96, 0.92, 1)
+theme_override_font_sizes/font_size = 14
+text = "Hoàng Linh Lâm"
+horizontal_alignment = 1
+
+[node name="HouseBadge2" type="Label" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard2/FilledView2"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.8, 0.4, 1)
+theme_override_font_sizes/font_size = 11
+text = "Nhà họ Hoàng"
+horizontal_alignment = 1
+
+[node name="StatsLabel2" type="Label" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard2/FilledView2"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.75, 0.8, 0.9, 0.85)
+theme_override_font_sizes/font_size = 11
+text = "Tốc: 2 • Lực: 2 • Túi: 2"
+horizontal_alignment = 1
+
+[node name="SlotCard3" type="Panel" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_dark_card")
+
+[node name="EmptyView3" type="VBoxContainer" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard3"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 16.0
+offset_right = -12.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 14
+alignment = 1
+
+[node name="Header" type="Label" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard3/EmptyView3"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.45, 1)
+theme_override_font_sizes/font_size = 14
+text = "THÁM TỬ 4"
+horizontal_alignment = 1
+
+[node name="SlotBtn3" type="Button" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard3/EmptyView3"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(90, 90)
+layout_mode = 2
+size_flags_horizontal = 4
+focus_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("StyleBoxFlat_desktop_btn_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_dupery_btn_accent_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_dupery_btn_accent_hover")
+text = "➕"
+
+[node name="Hint" type="Label" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard3/EmptyView3"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.65, 0.72, 0.85, 0.8)
+theme_override_font_sizes/font_size = 11
+text = "Nhấp để ghi danh"
+horizontal_alignment = 1
+
+[node name="FilledView3" type="VBoxContainer" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard3"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 10.0
+offset_right = -12.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 6
+
+[node name="TopRow" type="HBoxContainer" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard3/FilledView3"]
+layout_mode = 2
+
+[node name="SeatLabel" type="Label" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard3/FilledView3/TopRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 0.85, 0.45, 1)
+theme_override_font_sizes/font_size = 12
+text = "P4 • THÁM TỬ"
+
+[node name="RemoveBtn3" type="Button" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard3/FilledView3/TopRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(48, 22)
+layout_mode = 2
+focus_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.9, 0.9, 1)
+theme_override_font_sizes/font_size = 10
+theme_override_styles/normal = SubResource("StyleBoxFlat_desktop_btn_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_desktop_btn_hover")
+text = "✕ Đổi"
+
+[node name="AvatarFrame" type="Panel" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard3/FilledView3"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_desktop_btn_normal")
+
+[node name="AvatarImg3" type="TextureRect" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard3/FilledView3/AvatarFrame"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="AvatarPlaceholder3" type="Label" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard3/FilledView3/AvatarFrame"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.9, 0.5, 0.9)
+theme_override_font_sizes/font_size = 22
+text = "HOÀNG"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CharName3" type="Label" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard3/FilledView3"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.96, 0.92, 1)
+theme_override_font_sizes/font_size = 14
+text = "Hoàng Linh Lâm"
+horizontal_alignment = 1
+
+[node name="HouseBadge3" type="Label" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard3/FilledView3"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.8, 0.4, 1)
+theme_override_font_sizes/font_size = 11
+text = "Nhà họ Hoàng"
+horizontal_alignment = 1
+
+[node name="StatsLabel3" type="Label" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard3/FilledView3"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.75, 0.8, 0.9, 0.85)
+theme_override_font_sizes/font_size = 11
+text = "Tốc: 2 • Lực: 2 • Túi: 2"
+horizontal_alignment = 1
+
+[node name="BottomHBox" type="HBoxContainer" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 20
+
+[node name="CharSelectBackBtn" type="Button" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/BottomHBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 42)
+layout_mode = 2
+focus_mode = 2
+theme_override_colors/font_color = Color(0.88, 0.9, 0.95, 1)
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxFlat_desktop_btn_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_desktop_btn_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_desktop_btn_hover")
+text = "Quay Lại"
+
+[node name="CharSelectStartBtn" type="Button" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/BottomHBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(340, 42)
+layout_mode = 2
+focus_mode = 2
+disabled = true
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxFlat_dupery_btn_accent_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_dupery_btn_accent_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_dupery_btn_accent_hover")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_desktop_btn_normal")
+text = "▶ Bắt Đầu Kỳ Án (Cần tối thiểu 2 người)"
+
+[node name="CharacterPickerModal" type="Control" parent="DesktopRoot/DesktopCharacterSelectDialog"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PickerDim" type="ColorRect" parent="DesktopRoot/DesktopCharacterSelectDialog/CharacterPickerModal"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.8)
+
+[node name="PickerBox" type="Panel" parent="DesktopRoot/DesktopCharacterSelectDialog/CharacterPickerModal"]
+custom_minimum_size = Vector2(960, 520)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -480.0
+offset_top = -260.0
+offset_right = 480.0
+offset_bottom = 260.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_imperial_window")
+
+[node name="PickerVBox" type="VBoxContainer" parent="DesktopRoot/DesktopCharacterSelectDialog/CharacterPickerModal/PickerBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 32.0
+offset_top = 28.0
+offset_right = -32.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 12
+
+[node name="PickerTitle" type="Label" parent="DesktopRoot/DesktopCharacterSelectDialog/CharacterPickerModal/PickerBox/PickerVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.96, 0.88, 0.65, 1)
+theme_override_font_sizes/font_size = 16
+text = "CHỌN NHÂN VẬT THAM CHIẾN"
+horizontal_alignment = 1
+
+[node name="PickerSubtitle" type="Label" parent="DesktopRoot/DesktopCharacterSelectDialog/CharacterPickerModal/PickerBox/PickerVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.85, 0.95, 0.9)
+theme_override_font_sizes/font_size = 12
+text = "Mỗi thám tử đại diện một trong ngũ đại gia tộc hoàng cung, sở hữu phong cách điều tra độc đáo:"
+horizontal_alignment = 1
+
+[node name="PickerGrid" type="HBoxContainer" parent="DesktopRoot/DesktopCharacterSelectDialog/CharacterPickerModal/PickerBox/PickerVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 12
+
+[node name="PickerCloseBtn" type="Button" parent="DesktopRoot/DesktopCharacterSelectDialog/CharacterPickerModal/PickerBox/PickerVBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 36)
+layout_mode = 2
+size_flags_horizontal = 4
+focus_mode = 2
+theme_override_colors/font_color = Color(0.88, 0.9, 0.95, 1)
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = SubResource("StyleBoxFlat_desktop_btn_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_desktop_btn_hover")
+text = "Đóng / Hủy"
+
+
 [node name="SafeMargin" type="MarginContainer" parent="."]
 unique_name_in_owner = true
 layout_mode = 1

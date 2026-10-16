@@ -157,9 +157,9 @@ func _build_ui() -> void:
 	body_hbox.add_theme_constant_override("separation", 20)
 	main_vbox.add_child(body_hbox)
 
-	# CỘT TRÁI: NGƯỜI THAM GIA ĐẤU GIÁ (BIDDERS - 310px)
+	# CỘT TRÁI: NGƯỜI THAM GIA ĐẤU GIÁ (BIDDERS - 340px)
 	_left_column = VBoxContainer.new()
-	_left_column.custom_minimum_size = Vector2(310, 0)
+	_left_column.custom_minimum_size = Vector2(340, 0)
 	_left_column.add_theme_constant_override("separation", 8)
 	body_hbox.add_child(_left_column)
 
@@ -233,12 +233,7 @@ func _build_ui() -> void:
 	var crate_panel := PanelContainer.new()
 	crate_panel.size_flags_horizontal = SIZE_EXPAND_FILL
 	crate_panel.size_flags_vertical = SIZE_EXPAND_FILL
-	var c_style := StyleBoxFlat.new()
-	c_style.bg_color = Color(0.04, 0.07, 0.12, 0.45)
-	c_style.border_width_left = 0
-	c_style.border_width_top = 0
-	c_style.border_width_right = 0
-	c_style.border_width_bottom = 0
+	var c_style := StyleBoxEmpty.new()
 	crate_panel.add_theme_stylebox_override("panel", c_style)
 	_right_column.add_child(crate_panel)
 
@@ -718,7 +713,9 @@ func _build_settlement_dialog() -> void:
 
 func _generate_grid_placements() -> void:
 	_grid_placements.clear()
-	_dynamic_grid_rows = 8
+	# Chiều cao hòm bí ẩn mặc định 28 hàng để luôn luôn cuộn được,
+	# ngăn người chơi nhìn kích thước khung mà đoán trước được hòm to hay nhỏ
+	_dynamic_grid_rows = 28
 	var occupancy: Array[Array] = []
 	for y in range(_dynamic_grid_rows):
 		var row: Array = []
@@ -943,7 +940,7 @@ func _render_bidders() -> void:
 		)
 
 		var card := PanelContainer.new()
-		card.custom_minimum_size = Vector2(310, 70)
+		card.custom_minimum_size = Vector2(340, 70)
 		card.size_flags_horizontal = SIZE_EXPAND_FILL
 		card.mouse_filter = MOUSE_FILTER_PASS
 
@@ -1032,7 +1029,7 @@ func _render_bidders() -> void:
 		name_lbl.text = "%d. %s" % [i + 1, String(pid)]
 		name_lbl.clip_text = true
 		name_lbl.size_flags_horizontal = SIZE_EXPAND_FILL
-		name_lbl.add_theme_font_size_override("font_size", 12)
+		name_lbl.add_theme_font_size_override("font_size", 11)
 		name_lbl.add_theme_color_override("font_color", Color.WHITE if is_active else Color("#6272a4"))
 		name_hbox.add_child(name_lbl)
 
@@ -1229,9 +1226,9 @@ func _render_clues() -> void:
 
 
 func _on_grid_draw() -> void:
-	# 1. Subtle 1x1 grid lines
+	# 1. Subtle 1x1 grid lines (bỏ 2 đường viền ngoài cùng bên trái và phải)
 	var line_color := Color(0.2, 0.3, 0.4, 0.35)
-	for x in range(GRID_COLS + 1):
+	for x in range(1, GRID_COLS):
 		_grid_draw_control.draw_line(Vector2(x * CELL_SIZE, 0), Vector2(x * CELL_SIZE, _dynamic_grid_rows * CELL_SIZE), line_color, 1.0)
 	for y in range(_dynamic_grid_rows + 1):
 		_grid_draw_control.draw_line(Vector2(0, y * CELL_SIZE), Vector2(GRID_COLS * CELL_SIZE, y * CELL_SIZE), line_color, 1.0)
