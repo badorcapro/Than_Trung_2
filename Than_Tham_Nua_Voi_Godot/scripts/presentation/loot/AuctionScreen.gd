@@ -18,7 +18,7 @@ const DEFAULT_CHARACTERS_DATA: Array[Dictionary] = [
 		"title": "Nhà họ Hoàng",
 		"icon": "👑",
 		"portrait": "res://assets/portraits/character_hoang_linh_lam.png",
-		"theme_color": Color("#facc15")
+		"theme_color": Color("#f59e0b")
 	},
 	{
 		"name": "Chu Tuệ Nguyệt",
@@ -26,7 +26,7 @@ const DEFAULT_CHARACTERS_DATA: Array[Dictionary] = [
 		"title": "Nhà họ Chu",
 		"icon": "🔥",
 		"portrait": "res://assets/portraits/character_chu_tue_nguyet.png",
-		"theme_color": Color("#f87171")
+		"theme_color": Color("#ef4444")
 	},
 	{
 		"name": "Kim Thanh Giai",
@@ -34,7 +34,7 @@ const DEFAULT_CHARACTERS_DATA: Array[Dictionary] = [
 		"title": "Nhà họ Kim",
 		"icon": "💎",
 		"portrait": "res://assets/portraits/character_kim_thanh_giai.png",
-		"theme_color": Color("#38bdf8")
+		"theme_color": Color("#e2e8f0")
 	},
 	{
 		"name": "Huyền Ca Xuý",
@@ -42,7 +42,7 @@ const DEFAULT_CHARACTERS_DATA: Array[Dictionary] = [
 		"title": "Nhà họ Huyền",
 		"icon": "🔮",
 		"portrait": "res://assets/portraits/character_huyen_ca_xuy.png",
-		"theme_color": Color("#c084fc")
+		"theme_color": Color("#38bdf8")
 	},
 	{
 		"name": "Lam Phương Xuân",
@@ -50,7 +50,7 @@ const DEFAULT_CHARACTERS_DATA: Array[Dictionary] = [
 		"title": "Nhà họ Lam",
 		"icon": "🌿",
 		"portrait": "res://assets/portraits/character_lam_phuong_xuan.png",
-		"theme_color": Color("#4ade80")
+		"theme_color": Color("#10b981")
 	}
 ]
 
@@ -1128,7 +1128,7 @@ func _render_bidders() -> void:
 			fold_lbl.add_theme_color_override("font_color", Color("#6272a4"))
 			row1_hbox.add_child(fold_lbl)
 
-		# Hàng 2: Banner tên nhân vật / danh hiệu (Tiến Sĩ Cuồng Nhiệt style)
+		# Hàng 2: Tên nhân vật phóng to theo màu gia tộc (Hoàng, Chu, Kim, Huyền, Lam)
 		var banner_panel := PanelContainer.new()
 		banner_panel.size_flags_horizontal = SIZE_EXPAND_FILL
 		var banner_sb := StyleBoxFlat.new()
@@ -1144,20 +1144,11 @@ func _render_bidders() -> void:
 		banner_panel.add_theme_stylebox_override("panel", banner_sb)
 		right_vbox.add_child(banner_panel)
 
-		var banner_hbox := HBoxContainer.new()
-		banner_hbox.add_theme_constant_override("separation", 6)
-		banner_panel.add_child(banner_hbox)
-
-		var b_icon := Label.new()
-		b_icon.text = char_data.icon
-		b_icon.add_theme_font_size_override("font_size", 10)
-		banner_hbox.add_child(b_icon)
-
 		var b_title := Label.new()
-		b_title.text = "%s · %s" % [char_data.name, char_data.title]
-		b_title.add_theme_font_size_override("font_size", 10)
-		b_title.add_theme_color_override("font_color", char_data.theme_color.lightened(0.2))
-		banner_hbox.add_child(b_title)
+		b_title.text = char_data.name
+		b_title.add_theme_font_size_override("font_size", 13)
+		b_title.add_theme_color_override("font_color", char_data.theme_color)
+		banner_panel.add_child(b_title)
 
 		# Hàng 3: 5 Cột Round (1, 2, 3, 4, 5)
 		var rounds_hbox := HBoxContainer.new()
