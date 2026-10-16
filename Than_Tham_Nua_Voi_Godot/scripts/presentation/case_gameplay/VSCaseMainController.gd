@@ -77,6 +77,49 @@ signal integration_truth_acknowledged
 @onready var solver_inspection_body: RichTextLabel = get_node_or_null("%SolverInspectionBody") as RichTextLabel
 @onready var solver_inspection_close_button: Button = get_node_or_null("%SolverInspectionCloseButton") as Button
 
+# Dupery UI nodes
+@onready var hours_passed_number: Label = get_node_or_null("%HoursPassedNumber") as Label
+@onready var ratio_innocent_label: Label = get_node_or_null("%RatioInnocentLabel") as Label
+@onready var ratio_meddler_label: Label = get_node_or_null("%RatioMeddlerLabel") as Label
+@onready var ratio_underling_label: Label = get_node_or_null("%RatioUnderlingLabel") as Label
+@onready var ratio_traitor_label: Label = get_node_or_null("%RatioTraitorLabel") as Label
+@onready var newspaper_header_label: Label = get_node_or_null("%NewspaperHeaderLabel") as Label
+@onready var newspaper_reputation_needle: Polygon2D = get_node_or_null("%NewspaperReputationNeedle") as Polygon2D
+@onready var page_flip_audio: AudioStreamPlayer = get_node_or_null("%PageFlipAudio") as AudioStreamPlayer
+@onready var newspaper_container: Control = get_node_or_null("%NewspaperContainer") as Control
+
+# ESC Pause Menu nodes
+@onready var pause_menu_overlay: Control = get_node_or_null("%PauseMenuOverlay") as Control
+@onready var pause_main_panel: Control = get_node_or_null("%PauseMainPanel") as Control
+@onready var pause_settings_panel: Control = get_node_or_null("%PauseSettingsPanel") as Control
+@onready var pause_keybinds_panel: Control = get_node_or_null("%PauseKeybindsPanel") as Control
+@onready var pause_quit_confirm: Control = get_node_or_null("%PauseQuitConfirm") as Control
+
+@onready var pause_resume_btn: Button = get_node_or_null("%PauseResumeBtn") as Button
+@onready var pause_settings_btn: Button = get_node_or_null("%PauseSettingsBtn") as Button
+@onready var pause_keybinds_btn: Button = get_node_or_null("%PauseKeybindsBtn") as Button
+@onready var pause_quit_btn: Button = get_node_or_null("%PauseQuitBtn") as Button
+
+@onready var master_vol_slider: HSlider = get_node_or_null("%MasterVolSlider") as HSlider
+@onready var music_vol_slider: HSlider = get_node_or_null("%MusicVolSlider") as HSlider
+@onready var sfx_vol_slider: HSlider = get_node_or_null("%SfxVolSlider") as HSlider
+@onready var fullscreen_check: CheckBox = get_node_or_null("%FullscreenCheck") as CheckBox
+@onready var settings_back_btn: Button = get_node_or_null("%SettingsBackBtn") as Button
+
+@onready var keybind_submit_btn: Button = get_node_or_null("%KeybindSubmitBtn") as Button
+@onready var keybind_accuse_btn: Button = get_node_or_null("%KeybindAccuseBtn") as Button
+@onready var keybind_swap_player_btn: Button = get_node_or_null("%KeybindSwapPlayerBtn") as Button
+@onready var keybinds_back_btn: Button = get_node_or_null("%KeybindsBackBtn") as Button
+
+@onready var quit_confirm_yes_btn: Button = get_node_or_null("%QuitConfirmYesBtn") as Button
+@onready var quit_confirm_no_btn: Button = get_node_or_null("%QuitConfirmNoBtn") as Button
+
+var hotkey_submit: Key = KEY_Z
+var hotkey_accuse: Key = KEY_X
+var hotkey_swap_player: Key = KEY_C
+var _listening_keybind: String = ""
+var _viewed_player_index: int = 0
+
 var case_definition: CaseDefinition
 var role_definitions: Array[RoleDefinition] = []
 var runtime_state: CaseRuntimeState
@@ -156,6 +199,7 @@ func _ready() -> void:
 		debug_solver_button.pressed.connect(_on_debug_solver_pressed)
 	if solver_inspection_close_button != null and not solver_inspection_close_button.pressed.is_connected(_close_solver_inspection):
 		solver_inspection_close_button.pressed.connect(_close_solver_inspection)
+	_setup_pause_menu()
 	_load_and_start_fresh_runtime()
 
 
@@ -437,6 +481,34 @@ func _update_public_log() -> void:
 		recent_log_label.text = ""
 
 	_render_role_reference_list()
+
+	# Dupery Ratio update
+	var counts: Dictionary = {
+		CaseEnums.RoleGroup.CHINH_NHAN: 0,
+		CaseEnums.RoleGroup.HIEU_SU: 0,
+		CaseEnums.RoleGroup.TONG_PHAM: 0,
+		CaseEnums.RoleGroup.NGHICH_THAN: 0,
+	}
+	if case_definition != null:
+		for suspect in case_definition.suspects:
+		if suspect != null and counts.has(suspect.role_group):
+			counts[suspect.role_group] = int(counts.get(suspect.role_group, 0)) + 1
+	if ratio_innocent_label != null:
+		ratio_innocent_label.text = "Innocent: %d" % counts[CaseEnums.RoleGroup.CHINH_NHAN]
+	if ratio_meddler_label != null:
+		ratio_meddler_label.text = "Meddler: %d" % counts[CaseEnums.RoleGroup.HIEU_SU]
+	if ratio_underling_label != null:
+		ratio_underling_label.text = "Underling: %d" % counts[CaseEnums.RoleGroup.TONG_PHAM]
+	if ratio_traitor_label != null:
+		ratio_traitor_label.text = "Traitor: %d" % counts[CaseEnums.RoleGroup.NGHICH_THAN]
+
+	# Dupery Hours update
+	if hours_passed_number != null:
+		var elapsed: int = maxi(0, runtime_state.elapsed_hours if runtime_state != null else 0)
+		hours_passed_number.text = "%d" % elapsed
+
+	# Dupery Newspaper update
+	_update_newspaper_player_display()
 
 
 func _update_action_ui() -> void:
@@ -1368,27 +1440,39 @@ func _add_role_reference_button(role: RoleDefinition, nested: bool) -> void:
 	button.flat = true
 	button.custom_minimum_size = Vector2(0, 26)
 	var indent: String = "    " if nested else ""
-	button.text = "%s%s" % [
+	button.text = "%s• %s" % [
 		indent,
 		_player_facing_text(role.display_name),
 	]
 	button.alignment = HORIZONTAL_ALIGNMENT_LEFT
 	button.focus_mode = Control.FOCUS_NONE
-	button.tooltip_text = "Xem luật vai"
+	button.tooltip_text = "Click để gạch bỏ loại trừ • Rê chuột xem chức năng"
 	button.add_theme_color_override("font_color", _role_group_color(role.role_group))
-	button.add_theme_font_size_override("font_size", 16 if not nested else 14)
+	button.add_theme_font_size_override("font_size", 14 if not nested else 13)
 	var normal_style := StyleBoxFlat.new()
 	normal_style.bg_color = Color(0, 0, 0, 0)
-	normal_style.border_width_bottom = 1
-	normal_style.border_color = Color(0.72, 0.60, 0.35, 0.20)
 	button.add_theme_stylebox_override("normal", normal_style)
 	var hover_style := StyleBoxFlat.new()
 	hover_style.bg_color = Color(0.72, 0.60, 0.35, 0.15)
-	hover_style.border_width_bottom = 1
-	hover_style.border_color = Color(0.85, 0.72, 0.40, 0.50)
 	button.add_theme_stylebox_override("hover", hover_style)
 	button.add_theme_stylebox_override("pressed", hover_style)
-	button.pressed.connect(_on_role_reference_pressed.bind(role.role_id))
+
+	# Strike line for elimination
+	var strike_line := ColorRect.new()
+	strike_line.name = "StrikeLine"
+	strike_line.visible = false
+	strike_line.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	strike_line.color = Color(0.18, 0.15, 0.12, 0.88)
+	strike_line.set_anchors_preset(Control.PRESET_FULL_RECT)
+	strike_line.anchor_top = 0.48
+	strike_line.anchor_bottom = 0.54
+	button.add_child(strike_line)
+
+	button.pressed.connect(func():
+		strike_line.visible = not strike_line.visible
+		button.modulate = Color(0.50, 0.48, 0.45, 0.65) if strike_line.visible else Color.WHITE
+	)
+	button.mouse_entered.connect(_on_role_reference_pressed.bind(role.role_id))
 	role_list.add_child(button)
 
 
@@ -1677,3 +1761,255 @@ func _active_private_player() -> PlayerCaseState:
 	if runtime_state.case_outcome == CaseEnums.CaseOutcome.AWAITING_FINAL_VERDICT:
 		return runtime_state.find_player(runtime_state.current_final_player_id())
 	return turn_manager.get_current_player()
+
+
+# -------------------------------------------------------------
+# Input Handling: Hotkeys (Z, X, C) & ESC Pause Menu
+# -------------------------------------------------------------
+func _unhandled_input(event: InputEvent) -> void:
+	if not (event is InputEventKey):
+		return
+	var key_event: InputEventKey = event as InputEventKey
+	if not key_event.pressed or key_event.echo:
+		return
+
+	# If capturing keybind
+	if not _listening_keybind.is_empty():
+		var key_code: Key = key_event.physical_keycode if key_event.physical_keycode != KEY_NONE else key_event.keycode
+		if key_code == KEY_ESCAPE:
+			_listening_keybind = ""
+			_update_keybind_labels()
+			get_viewport().set_input_as_handled()
+			return
+		match _listening_keybind:
+			"submit":
+				hotkey_submit = key_code
+			"accuse":
+				hotkey_accuse = key_code
+			"swap_player":
+				hotkey_swap_player = key_code
+		_listening_keybind = ""
+		_update_keybind_labels()
+		get_viewport().set_input_as_handled()
+		return
+
+	# ESC key -> Pause menu
+	if key_event.keycode == KEY_ESCAPE or key_event.physical_keycode == KEY_ESCAPE:
+		_toggle_pause_menu()
+		get_viewport().set_input_as_handled()
+		return
+
+	# If pause menu is active, do not trigger game hotkeys
+	if pause_menu_overlay != null and pause_menu_overlay.visible:
+		return
+
+	# Game hotkeys
+	var code: Key = key_event.physical_keycode if key_event.physical_keycode != KEY_NONE else key_event.keycode
+	if code == hotkey_submit:
+		_handle_hotkey_submit()
+		get_viewport().set_input_as_handled()
+	elif code == hotkey_accuse:
+		_handle_hotkey_accuse()
+		get_viewport().set_input_as_handled()
+	elif code == hotkey_swap_player:
+		_handle_hotkey_swap_player()
+		get_viewport().set_input_as_handled()
+
+
+func _handle_hotkey_submit() -> void:
+	if runtime_state == null or _is_tutorial_dialogue_blocking() or _is_final_handoff_blocking():
+		return
+	if selection_state.selected_submission_evil_ids.is_empty():
+		_set_phase_hint("CHUỘT PHẢI để chọn nghi phạm phe Ác trước khi bấm [Z] Trình Án!")
+		return
+	_confirm_submission()
+
+
+func _handle_hotkey_accuse() -> void:
+	if runtime_state == null or _is_tutorial_dialogue_blocking() or _is_final_handoff_blocking():
+		return
+	var hovered_id: int = board.get_hovered_suspect_id() if board != null else 0
+	if hovered_id <= 0:
+		_set_phase_hint("RÊ CHUỘT vào thẻ nghi phạm trên Bàn cờ trước khi bấm [X] Chỉ Điểm!")
+		return
+	if not _is_valid_single_accuse_target(hovered_id):
+		_set_phase_hint("Nghi phạm #%02d không thể Chỉ Điểm (đã lộ hoặc không hợp lệ)!" % hovered_id)
+		return
+	selection_state.selected_submission_evil_ids = PackedInt32Array([hovered_id])
+	_on_single_accuse_pressed()
+
+
+func _handle_hotkey_swap_player() -> void:
+	var players: Array[PlayerCaseState] = turn_manager.turn_order if not turn_manager.turn_order.is_empty() else integration_players
+	if players.is_empty():
+		return
+	_viewed_player_index = (_viewed_player_index + 1) % players.size()
+	_update_newspaper_player_display()
+	_play_page_flip_animation()
+
+
+func _play_page_flip_animation() -> void:
+	if page_flip_audio != null:
+		page_flip_audio.play()
+	if newspaper_container != null:
+		var tw: Tween = create_tween()
+		tw.tween_property(newspaper_container, "scale", Vector2(0.92, 0.94), 0.08).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+		tw.tween_property(newspaper_container, "scale", Vector2.ONE, 0.12).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+
+
+func _update_newspaper_player_display() -> void:
+	var players: Array[PlayerCaseState] = turn_manager.turn_order if not turn_manager.turn_order.is_empty() else integration_players
+	if players.is_empty() or newspaper_header_label == null:
+		return
+	_viewed_player_index = clampi(_viewed_player_index, 0, players.size() - 1)
+	var p: PlayerCaseState = players[_viewed_player_index]
+	var key_text: String = OS.get_keycode_string(hotkey_swap_player)
+	newspaper_header_label.text = "Trang: P%d — %s  [%s]" % [_viewed_player_index + 1, p.display_name, key_text]
+	if newspaper_reputation_needle != null:
+		var rep_fraction: float = clampf(float(p.reputation) / 6.0, 0.0, 1.0)
+		var target_x: float = 30.0 + rep_fraction * 200.0
+		var tw: Tween = create_tween()
+		tw.tween_property(newspaper_reputation_needle, "position:x", target_x, 0.25).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+
+
+# -------------------------------------------------------------
+# Pause Menu Setup & Signal Callbacks
+# -------------------------------------------------------------
+func _setup_pause_menu() -> void:
+	if pause_resume_btn != null and not pause_resume_btn.pressed.is_connected(_toggle_pause_menu):
+		pause_resume_btn.pressed.connect(_toggle_pause_menu)
+	if pause_settings_btn != null and not pause_settings_btn.pressed.is_connected(_show_pause_settings):
+		pause_settings_btn.pressed.connect(_show_pause_settings)
+	if pause_keybinds_btn != null and not pause_keybinds_btn.pressed.is_connected(_show_pause_keybinds):
+		pause_keybinds_btn.pressed.connect(_show_pause_keybinds)
+	if pause_quit_btn != null and not pause_quit_btn.pressed.is_connected(_show_pause_quit_confirm):
+		pause_quit_btn.pressed.connect(_show_pause_quit_confirm)
+
+	if settings_back_btn != null and not settings_back_btn.pressed.is_connected(_show_pause_main):
+		settings_back_btn.pressed.connect(_show_pause_main)
+	if keybinds_back_btn != null and not keybinds_back_btn.pressed.is_connected(_show_pause_main):
+		keybinds_back_btn.pressed.connect(_show_pause_main)
+	if quit_confirm_no_btn != null and not quit_confirm_no_btn.pressed.is_connected(_show_pause_main):
+		quit_confirm_no_btn.pressed.connect(_show_pause_main)
+	if quit_confirm_yes_btn != null and not quit_confirm_yes_btn.pressed.is_connected(_on_pause_quit_confirmed):
+		quit_confirm_yes_btn.pressed.connect(_on_pause_quit_confirmed)
+
+	if master_vol_slider != null and not master_vol_slider.value_changed.is_connected(_on_master_vol_changed):
+		master_vol_slider.value_changed.connect(_on_master_vol_changed)
+	if music_vol_slider != null and not music_vol_slider.value_changed.is_connected(_on_music_vol_changed):
+		music_vol_slider.value_changed.connect(_on_music_vol_changed)
+	if sfx_vol_slider != null and not sfx_vol_slider.value_changed.is_connected(_on_sfx_vol_changed):
+		sfx_vol_slider.value_changed.connect(_on_sfx_vol_changed)
+	if fullscreen_check != null and not fullscreen_check.toggled.is_connected(_on_fullscreen_toggled):
+		fullscreen_check.toggled.connect(_on_fullscreen_toggled)
+
+	if keybind_submit_btn != null and not keybind_submit_btn.pressed.is_connected(_start_listening_keybind.bind("submit")):
+		keybind_submit_btn.pressed.connect(_start_listening_keybind.bind("submit"))
+	if keybind_accuse_btn != null and not keybind_accuse_btn.pressed.is_connected(_start_listening_keybind.bind("accuse")):
+		keybind_accuse_btn.pressed.connect(_start_listening_keybind.bind("accuse"))
+	if keybind_swap_player_btn != null and not keybind_swap_player_btn.pressed.is_connected(_start_listening_keybind.bind("swap_player")):
+		keybind_swap_player_btn.pressed.connect(_start_listening_keybind.bind("swap_player"))
+
+	_update_keybind_labels()
+
+
+func _toggle_pause_menu() -> void:
+	if pause_menu_overlay == null:
+		return
+	if pause_menu_overlay.visible:
+		if pause_settings_panel != null and pause_settings_panel.visible:
+			_show_pause_main()
+		elif pause_keybinds_panel != null and pause_keybinds_panel.visible:
+			_show_pause_main()
+		elif pause_quit_confirm != null and pause_quit_confirm.visible:
+			_show_pause_main()
+		else:
+			pause_menu_overlay.visible = false
+	else:
+		_show_pause_main()
+		pause_menu_overlay.visible = true
+
+
+func _show_pause_main() -> void:
+	if pause_main_panel != null: pause_main_panel.visible = true
+	if pause_settings_panel != null: pause_settings_panel.visible = false
+	if pause_keybinds_panel != null: pause_keybinds_panel.visible = false
+	if pause_quit_confirm != null: pause_quit_confirm.visible = false
+
+
+func _show_pause_settings() -> void:
+	if pause_main_panel != null: pause_main_panel.visible = false
+	if pause_settings_panel != null: pause_settings_panel.visible = true
+	if pause_keybinds_panel != null: pause_keybinds_panel.visible = false
+	if pause_quit_confirm != null: pause_quit_confirm.visible = false
+
+
+func _show_pause_keybinds() -> void:
+	_listening_keybind = ""
+	_update_keybind_labels()
+	if pause_main_panel != null: pause_main_panel.visible = false
+	if pause_settings_panel != null: pause_settings_panel.visible = false
+	if pause_keybinds_panel != null: pause_keybinds_panel.visible = true
+	if pause_quit_confirm != null: pause_quit_confirm.visible = false
+
+
+func _show_pause_quit_confirm() -> void:
+	if pause_main_panel != null: pause_main_panel.visible = false
+	if pause_settings_panel != null: pause_settings_panel.visible = false
+	if pause_keybinds_panel != null: pause_keybinds_panel.visible = false
+	if pause_quit_confirm != null: pause_quit_confirm.visible = true
+
+
+func _on_pause_quit_confirmed() -> void:
+	if pause_menu_overlay != null:
+		pause_menu_overlay.visible = false
+	AppFlow.go_to_player_main_menu()
+
+
+func _start_listening_keybind(action: String) -> void:
+	_listening_keybind = action
+	match action:
+		"submit":
+			if keybind_submit_btn != null: keybind_submit_btn.text = "Nhấn phím..."
+		"accuse":
+			if keybind_accuse_btn != null: keybind_accuse_btn.text = "Nhấn phím..."
+		"swap_player":
+			if keybind_swap_player_btn != null: keybind_swap_player_btn.text = "Nhấn phím..."
+
+
+func _update_keybind_labels() -> void:
+	if keybind_submit_btn != null:
+		keybind_submit_btn.text = OS.get_keycode_string(hotkey_submit)
+	if keybind_accuse_btn != null:
+		keybind_accuse_btn.text = OS.get_keycode_string(hotkey_accuse)
+	if keybind_swap_player_btn != null:
+		keybind_swap_player_btn.text = OS.get_keycode_string(hotkey_swap_player)
+	_update_newspaper_player_display()
+
+
+func _on_master_vol_changed(value: float) -> void:
+	var master_bus: int = AudioServer.get_bus_index("Master")
+	if master_bus >= 0:
+		var db: float = linear_to_db(clampf(value / 100.0, 0.0001, 1.0))
+		AudioServer.set_bus_volume_db(master_bus, db)
+
+
+func _on_music_vol_changed(value: float) -> void:
+	var bus: int = AudioServer.get_bus_index("Music")
+	if bus >= 0:
+		var db: float = linear_to_db(clampf(value / 100.0, 0.0001, 1.0))
+		AudioServer.set_bus_volume_db(bus, db)
+
+
+func _on_sfx_vol_changed(value: float) -> void:
+	var bus: int = AudioServer.get_bus_index("SFX")
+	if bus >= 0:
+		var db: float = linear_to_db(clampf(value / 100.0, 0.0001, 1.0))
+		AudioServer.set_bus_volume_db(bus, db)
+
+
+func _on_fullscreen_toggled(is_toggled: bool) -> void:
+	if is_toggled:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+	else:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)

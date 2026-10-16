@@ -4,7 +4,13 @@
 [ext_resource type="Theme" uid="uid://c8asethemecase01" path="res://themes/CaseTheme.tres" id="2"]
 [ext_resource type="PackedScene" uid="uid://b7d07ctqbtiei" path="res://scenes/case_gameplay/CaseBoard.tscn" id="3"]
 [ext_resource type="Script" uid="uid://dqqtongtu3j2v" path="res://scripts/presentation/case_gameplay/InvestigationCursorFeedback.gd" id="4"]
-[ext_resource type="Texture2D" path="res://assets/ui/case/case_investigation_bg.png" id="5_case_bg"]
+[ext_resource type="Texture2D" path="res://assets/ui/case/dupery/tabletop_bg.png" id="5_case_bg"]
+[ext_resource type="Texture2D" path="res://assets/ui/case/dupery/pocket_watch.png" id="6_pocket_watch"]
+[ext_resource type="Texture2D" path="res://assets/ui/case/dupery/hours_note.png" id="7_hours_note"]
+[ext_resource type="Texture2D" path="res://assets/ui/case/dupery/ratio_notepad.png" id="8_ratio_notepad"]
+[ext_resource type="Texture2D" path="res://assets/ui/case/dupery/daily_suspect_newspaper.png" id="9_newspaper"]
+[ext_resource type="Texture2D" path="res://assets/ui/case/dupery/suspects_ledger_sheet.png" id="10_ledger_sheet"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx_page_flip.wav" id="11_page_flip_sfx"]
 
 [sub_resource type="StyleBoxFlat" id="StatusBadge"]
 content_margin_left = 10.0
@@ -21,6 +27,32 @@ corner_radius_top_left = 6
 corner_radius_top_right = 6
 corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_info"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ledger"]
+texture = ExtResource("10_ledger_sheet")
+texture_margin_left = 34.0
+texture_margin_top = 46.0
+texture_margin_right = 18.0
+texture_margin_bottom = 20.0
+content_margin_left = 38.0
+content_margin_top = 48.0
+content_margin_right = 18.0
+content_margin_bottom = 20.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pause_window"]
+bg_color = Color(0.10, 0.09, 0.08, 0.96)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.72, 0.60, 0.35, 0.90)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
 
 [node name="VSCaseMain" type="Control" unique_id=1613225088]
 layout_mode = 3
@@ -145,178 +177,233 @@ size_flags_vertical = 3
 theme_override_constants/separation = 12
 
 [node name="InfoPanel" type="PanelContainer" parent="SafeMargin/MainColumn/ContentRoot" unique_id=2072476385]
-custom_minimum_size = Vector2(216, 0)
+custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_info")
+
+[node name="DuperyLeftColumn" type="VBoxContainer" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel"]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="ClockRow" type="HBoxContainer" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/DuperyLeftColumn"]
+custom_minimum_size = Vector2(0, 120)
+layout_mode = 2
+theme_override_constants/separation = 4
+alignment = 1
+
+[node name="PocketWatch" type="TextureRect" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/DuperyLeftColumn/ClockRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+texture = ExtResource("6_pocket_watch")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="HoursNote" type="TextureRect" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/DuperyLeftColumn/ClockRow"]
+custom_minimum_size = Vector2(110, 95)
+layout_mode = 2
+texture = ExtResource("7_hours_note")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="HoursPassedNumber" type="Label" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/DuperyLeftColumn/ClockRow/HoursNote"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 35.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.12, 0.10, 0.08, 1)
+theme_override_font_sizes/font_size = 32
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RatioContainer" type="TextureRect" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/DuperyLeftColumn"]
+custom_minimum_size = Vector2(230, 215)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("8_ratio_notepad")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="RatioMargin" type="MarginContainer" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/DuperyLeftColumn/RatioContainer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 58
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 16
+
+[node name="RatioRows" type="VBoxContainer" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/DuperyLeftColumn/RatioContainer/RatioMargin"]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="RatioInnocentLabel" type="Label" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/DuperyLeftColumn/RatioContainer/RatioMargin/RatioRows"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.18, 0.52, 0.82, 1)
+theme_override_font_sizes/font_size = 17
+text = "Innocent: 5"
+
+[node name="RatioMeddlerLabel" type="Label" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/DuperyLeftColumn/RatioContainer/RatioMargin/RatioRows"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.82, 0.62, 0.16, 1)
+theme_override_font_sizes/font_size = 17
+text = "Meddler: 0"
+
+[node name="RatioUnderlingLabel" type="Label" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/DuperyLeftColumn/RatioContainer/RatioMargin/RatioRows"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.22, 0.22, 1)
+theme_override_font_sizes/font_size = 17
+text = "Underling: 2"
+
+[node name="RatioTraitorLabel" type="Label" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/DuperyLeftColumn/RatioContainer/RatioMargin/RatioRows"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.55, 0.24, 0.72, 1)
+theme_override_font_sizes/font_size = 17
+text = "Traitor: 0"
+
+[node name="NewspaperContainer" type="Control" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/DuperyLeftColumn"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(250, 180)
+layout_mode = 2
+size_flags_horizontal = 4
+pivot_offset = Vector2(125, 90)
+
+[node name="NewspaperTexture" type="TextureRect" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/DuperyLeftColumn/NewspaperContainer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("9_newspaper")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="NewspaperHeaderLabel" type="Label" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/DuperyLeftColumn/NewspaperContainer"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 18.0
+offset_top = 1.0
+offset_right = -18.0
+offset_bottom = 22.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.18, 0.15, 0.12, 0.95)
+theme_override_font_sizes/font_size = 11
+text = "Trang: P1 — Người chơi 1  [C]"
+horizontal_alignment = 1
+
+[node name="NewspaperReputationNeedle" type="Polygon2D" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/DuperyLeftColumn/NewspaperContainer"]
+unique_name_in_owner = true
+position = Vector2(195, 78)
+color = Color(0.85, 0.15, 0.15, 1)
+polygon = PackedVector2Array(-6, 0, 6, 0, 0, 10)
 
 [node name="InfoColumn" type="VBoxContainer" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel" unique_id=847885339]
+visible = false
 layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/separation = 6
 
 [node name="ElapsedHoursLabel" type="Label" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/InfoColumn" unique_id=1523567326]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0.92, 0.85, 0.70, 1)
-theme_override_font_sizes/font_size = 14
 text = "Thời gian: 0h"
-horizontal_alignment = 1
 
 [node name="TurnLabel" type="Label" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/InfoColumn" unique_id=567111891]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 58)
 layout_mode = 2
-theme_override_colors/font_color = Color(1.0, 0.88, 0.52, 1)
-theme_override_font_sizes/font_size = 20
-text = "Lượt 1 — Đang khởi tạo"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="InfoGapTop" type="Control" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/InfoColumn" unique_id=1540859316]
-custom_minimum_size = Vector2(0, 14)
-layout_mode = 2
+text = "Lượt 1"
 
 [node name="InfoTitle" type="Label" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/InfoColumn" unique_id=1873117624]
 layout_mode = 2
-theme_override_colors/font_color = Color(1.0, 0.88, 0.52, 1)
-theme_override_font_sizes/font_size = 17
 text = "Thông tin Kỳ Án"
 
 [node name="DescriptionLabel" type="RichTextLabel" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/InfoColumn" unique_id=805940335]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 78)
 layout_mode = 2
 bbcode_enabled = true
-text = "Đang tải mô tả…"
-fit_content = true
-scroll_active = false
 
 [node name="PlayerStripLabel" type="RichTextLabel" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/InfoColumn" unique_id=1155294317]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 88)
 layout_mode = 2
 bbcode_enabled = true
-text = "Đang tải người chơi…"
-fit_content = true
-scroll_active = false
 
 [node name="RecentLogLabel" type="Label" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/InfoColumn" unique_id=1517326603]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
-theme_override_colors/font_color = Color(0.78, 0.72, 0.60, 1)
-theme_override_font_sizes/font_size = 11
-autowrap_mode = 2
-
-[node name="LeftActionSpacer" type="Control" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/InfoColumn"]
-layout_mode = 2
-size_flags_vertical = 3
 
 [node name="LeftActionArea" type="VBoxContainer" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/InfoColumn"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_constants/separation = 6
 
 [node name="ActionReason" type="Label" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/InfoColumn/LeftActionArea" unique_id=1797450003]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
-theme_override_colors/font_color = Color(0.88, 0.84, 0.74, 1)
-theme_override_font_sizes/font_size = 11
-autowrap_mode = 2
 
 [node name="SelectionPrompt" type="Label" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/InfoColumn/LeftActionArea" unique_id=1497807872]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
-theme_override_colors/font_color = Color(0.95, 0.77, 0.35, 1)
-theme_override_font_sizes/font_size = 12
-text = "Chọn một nghi phạm chưa điều tra"
-autowrap_mode = 2
 
 [node name="FunctionPicker" type="OptionButton" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/InfoColumn/LeftActionArea" unique_id=619262063]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
-tooltip_text = "Chọn nghi phạm sở hữu chức năng cần dùng"
 
 [node name="SubmissionClassificationPanel" type="VBoxContainer" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/InfoColumn/LeftActionArea" unique_id=1769889398]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
-theme_override_constants/separation = 5
 
 [node name="InvestigateButton" type="Button" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/InfoColumn/LeftActionArea" unique_id=1831713968]
 unique_name_in_owner = true
 layout_mode = 2
-tooltip_text = "Bắt đầu chọn một nghi phạm chưa điều tra"
-disabled = true
-text = "Điều tra"
 
 [node name="PrivateKnowledgeButton" type="Button" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/InfoColumn/LeftActionArea" unique_id=1597862616]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
-text = "Hồ sơ riêng"
 
 [node name="SingleAccuseButton" type="Button" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/InfoColumn/LeftActionArea" unique_id=1687015423]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
-tooltip_text = "Chỉ Điểm một nghi phạm là Phe Ác"
-disabled = true
-text = "Chỉ Điểm"
 
 [node name="SubmitButton" type="Button" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/InfoColumn/LeftActionArea" unique_id=443534974]
 unique_name_in_owner = true
-visible = false
-custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
-tooltip_text = "Trình Án sớm và khóa đáp án sau khi xác nhận"
-disabled = true
-text = "TRÌNH ÁN"
 
 [node name="ConfirmationRow" type="HBoxContainer" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/InfoColumn/LeftActionArea" unique_id=947818174]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
-theme_override_constants/separation = 8
 
 [node name="ConfirmButton" type="Button" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/InfoColumn/LeftActionArea/ConfirmationRow" unique_id=1920209669]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 3
-disabled = true
-text = "Xác nhận"
 
 [node name="CancelButton" type="Button" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/InfoColumn/LeftActionArea/ConfirmationRow" unique_id=1369538649]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 3
-text = "Hủy"
 
 [node name="FunctionButton" type="Button" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/InfoColumn/LeftActionArea" unique_id=1397129989]
 unique_name_in_owner = true
 layout_mode = 2
-tooltip_text = "Chọn hai nghi phạm bằng chức năng Thợ May đã khả dụng"
-disabled = true
-text = "Dùng chức năng"
 
 [node name="FinalResultLabel" type="Label" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/InfoColumn/LeftActionArea" unique_id=919339738]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
-text = "Phán quyết cuối"
-horizontal_alignment = 1
-autowrap_mode = 2
 
 [node name="ScopeNote" type="Label" parent="SafeMargin/MainColumn/ContentRoot/InfoPanel/InfoColumn/LeftActionArea" unique_id=1447071590]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.70, 0.66, 0.58, 1)
-theme_override_font_sizes/font_size = 12
-text = "2I: Truth Reveal và quyết toán thưởng
-TEST_ONLY / NOT_BALANCE_LOCKED"
-horizontal_alignment = 1
 
 [node name="CenterColumn" type="VBoxContainer" parent="SafeMargin/MainColumn/ContentRoot" unique_id=1640877259]
 layout_mode = 2
@@ -330,28 +417,34 @@ layout_mode = 2
 
 [node name="BoardHelpLabel" type="Label" parent="SafeMargin/MainColumn/ContentRoot/CenterColumn" unique_id=1082575205]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
-theme_override_colors/font_color = Color(0.88, 0.82, 0.70, 1)
-theme_override_font_sizes/font_size = 11
-text = "Giữ chuột trái để điều tra. Chuột phải để đánh dấu nghi phạm."
+
+[node name="HotkeyGuideLabel" type="Label" parent="SafeMargin/MainColumn/ContentRoot/CenterColumn"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.92, 0.84, 0.65, 0.85)
+theme_override_font_sizes/font_size = 12
+text = "[Z] Trình Án   •   [X] Chỉ Điểm   •   [C] Đổi Trang Báo   •   [ESC] Cài Đặt / Tạm Dừng"
 horizontal_alignment = 1
-autowrap_mode = 2
 
 [node name="RolePanel" type="PanelContainer" parent="SafeMargin/MainColumn/ContentRoot" unique_id=363330037]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(232, 0)
+custom_minimum_size = Vector2(236, 0)
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxTexture_ledger")
 
 [node name="RoleColumn" type="VBoxContainer" parent="SafeMargin/MainColumn/ContentRoot/RolePanel" unique_id=2135345643]
 layout_mode = 2
-theme_override_constants/separation = 7
+theme_override_constants/separation = 4
 
 [node name="ActionTitle" type="Label" parent="SafeMargin/MainColumn/ContentRoot/RolePanel/RoleColumn" unique_id=1704274778]
 layout_mode = 2
-theme_override_colors/font_color = Color(1.0, 0.88, 0.52, 1)
-theme_override_font_sizes/font_size = 17
-text = "THÂN PHẬN"
+theme_override_colors/font_color = Color(0.72, 0.18, 0.16, 1)
+theme_override_font_sizes/font_size = 15
+text = "S U S P E C T S"
+horizontal_alignment = 1
 
 [node name="RoleListScroll" type="ScrollContainer" parent="SafeMargin/MainColumn/ContentRoot/RolePanel/RoleColumn" unique_id=518206533]
 unique_name_in_owner = true
@@ -364,9 +457,9 @@ vertical_scroll_mode = 1
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/separation = 4
+theme_override_constants/separation = 3
 
-[node name="TruthRevealPanel" type="PanelContainer" parent="." unique_id=1608989080]
+[node name="TruthRevealPanel"  type="PanelContainer" parent="." unique_id=1608989080]
 unique_name_in_owner = true
 visible = false
 layout_mode = 1
@@ -829,3 +922,268 @@ text = "Đóng"
 [connection signal="pressed" from="SafeMargin/MainColumn/ContentRoot/InfoPanel/InfoColumn/LeftActionArea/ConfirmationRow/CancelButton" to="." method="_on_cancel_pressed"]
 [connection signal="pressed" from="SafeMargin/MainColumn/ContentRoot/InfoPanel/InfoColumn/LeftActionArea/FunctionButton" to="." method="_on_function_pressed"]
 [connection signal="pressed" from="TruthRevealPanel/TruthColumn/TruthBackButton" to="." method="_on_back_pressed"]
+
+[node name="PauseMenuOverlay" type="Control" parent="." unique_id=987123456]
+unique_name_in_owner = true
+visible = false
+z_index = 60
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PauseBackdrop" type="ColorRect" parent="PauseMenuOverlay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.02, 0.02, 0.03, 0.75)
+
+[node name="PauseCenter" type="CenterContainer" parent="PauseMenuOverlay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PauseWindow" type="PanelContainer" parent="PauseMenuOverlay/PauseCenter"]
+custom_minimum_size = Vector2(440, 360)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_pause_window")
+
+[node name="PauseMargin" type="MarginContainer" parent="PauseMenuOverlay/PauseCenter/PauseWindow"]
+layout_mode = 2
+theme_override_constants/margin_left = 28
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 28
+theme_override_constants/margin_bottom = 24
+
+[node name="PauseMainPanel" type="VBoxContainer" parent="PauseMenuOverlay/PauseCenter/PauseWindow/PauseMargin"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="PauseTitle" type="Label" parent="PauseMenuOverlay/PauseCenter/PauseWindow/PauseMargin/PauseMainPanel"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.86, 0.42, 1)
+theme_override_font_sizes/font_size = 22
+text = "✦ TẠM DỪNG ✦"
+horizontal_alignment = 1
+
+[node name="PauseTitleSep" type="HSeparator" parent="PauseMenuOverlay/PauseCenter/PauseWindow/PauseMargin/PauseMainPanel"]
+layout_mode = 2
+
+[node name="PauseResumeBtn" type="Button" parent="PauseMenuOverlay/PauseCenter/PauseWindow/PauseMargin/PauseMainPanel"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+text = "▶ Tiếp Tục Điều Tra"
+
+[node name="PauseSettingsBtn" type="Button" parent="PauseMenuOverlay/PauseCenter/PauseWindow/PauseMargin/PauseMainPanel"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+text = "⚙ Cài Đặt Hệ Thống"
+
+[node name="PauseKeybindsBtn" type="Button" parent="PauseMenuOverlay/PauseCenter/PauseWindow/PauseMargin/PauseMainPanel"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+text = "⌨ Thiết Lập Phím (Bind Nút)"
+
+[node name="PauseQuitBtn" type="Button" parent="PauseMenuOverlay/PauseCenter/PauseWindow/PauseMargin/PauseMainPanel"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.55, 0.55, 1)
+text = "🚪 Thoát Ra Menu Chính"
+
+[node name="PauseSettingsPanel" type="VBoxContainer" parent="PauseMenuOverlay/PauseCenter/PauseWindow/PauseMargin"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="SettingsTitle" type="Label" parent="PauseMenuOverlay/PauseCenter/PauseWindow/PauseMargin/PauseSettingsPanel"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.86, 0.42, 1)
+theme_override_font_sizes/font_size = 20
+text = "CÀI ĐẶT HỆ THỐNG"
+horizontal_alignment = 1
+
+[node name="MasterVolRow" type="HBoxContainer" parent="PauseMenuOverlay/PauseCenter/PauseWindow/PauseMargin/PauseSettingsPanel"]
+layout_mode = 2
+
+[node name="MasterVolLabel" type="Label" parent="PauseMenuOverlay/PauseCenter/PauseWindow/PauseMargin/PauseSettingsPanel/MasterVolRow"]
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+text = "Âm lượng tổng:"
+
+[node name="MasterVolSlider" type="HSlider" parent="PauseMenuOverlay/PauseCenter/PauseWindow/PauseMargin/PauseSettingsPanel/MasterVolRow"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+value = 80.0
+
+[node name="MusicVolRow" type="HBoxContainer" parent="PauseMenuOverlay/PauseCenter/PauseWindow/PauseMargin/PauseSettingsPanel"]
+layout_mode = 2
+
+[node name="MusicVolLabel" type="Label" parent="PauseMenuOverlay/PauseCenter/PauseWindow/PauseMargin/PauseSettingsPanel/MusicVolRow"]
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+text = "Âm nhạc:"
+
+[node name="MusicVolSlider" type="HSlider" parent="PauseMenuOverlay/PauseCenter/PauseWindow/PauseMargin/PauseSettingsPanel/MusicVolRow"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+value = 75.0
+
+[node name="SfxVolRow" type="HBoxContainer" parent="PauseMenuOverlay/PauseCenter/PauseWindow/PauseMargin/PauseSettingsPanel"]
+layout_mode = 2
+
+[node name="SfxVolLabel" type="Label" parent="PauseMenuOverlay/PauseCenter/PauseWindow/PauseMargin/PauseSettingsPanel/SfxVolRow"]
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+text = "Hiệu ứng âm thanh:"
+
+[node name="SfxVolSlider" type="HSlider" parent="PauseMenuOverlay/PauseCenter/PauseWindow/PauseMargin/PauseSettingsPanel/SfxVolRow"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+value = 85.0
+
+[node name="FullscreenRow" type="HBoxContainer" parent="PauseMenuOverlay/PauseCenter/PauseWindow/PauseMargin/PauseSettingsPanel"]
+layout_mode = 2
+
+[node name="FullscreenCheck" type="CheckBox" parent="PauseMenuOverlay/PauseCenter/PauseWindow/PauseMargin/PauseSettingsPanel/FullscreenRow"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Chế độ Toàn màn hình (Fullscreen)"
+
+[node name="SettingsBackBtn" type="Button" parent="PauseMenuOverlay/PauseCenter/PauseWindow/PauseMargin/PauseSettingsPanel"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 38)
+layout_mode = 2
+text = "← Quay Lại"
+
+[node name="PauseKeybindsPanel" type="VBoxContainer" parent="PauseMenuOverlay/PauseCenter/PauseWindow/PauseMargin"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="KeybindsTitle" type="Label" parent="PauseMenuOverlay/PauseCenter/PauseWindow/PauseMargin/PauseKeybindsPanel"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.86, 0.42, 1)
+theme_override_font_sizes/font_size = 20
+text = "THIẾT LẬP PHÍM NÓNG"
+horizontal_alignment = 1
+
+[node name="KeybindsHint" type="Label" parent="PauseMenuOverlay/PauseCenter/PauseWindow/PauseMargin/PauseKeybindsPanel"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.78, 0.72, 0.60, 1)
+theme_override_font_sizes/font_size = 12
+text = "Nhấn vào nút bên phải để gán lại phím (lưu trong phiên chơi):"
+autowrap_mode = 2
+
+[node name="KeybindSubmitRow" type="HBoxContainer" parent="PauseMenuOverlay/PauseCenter/PauseWindow/PauseMargin/PauseKeybindsPanel"]
+layout_mode = 2
+
+[node name="KeybindSubmitLabel" type="Label" parent="PauseMenuOverlay/PauseCenter/PauseWindow/PauseMargin/PauseKeybindsPanel/KeybindSubmitRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Trình Án (Gửi phán quyết):"
+
+[node name="KeybindSubmitBtn" type="Button" parent="PauseMenuOverlay/PauseCenter/PauseWindow/PauseMargin/PauseKeybindsPanel/KeybindSubmitRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(90, 32)
+layout_mode = 2
+text = "Z"
+
+[node name="KeybindAccuseRow" type="HBoxContainer" parent="PauseMenuOverlay/PauseCenter/PauseWindow/PauseMargin/PauseKeybindsPanel"]
+layout_mode = 2
+
+[node name="KeybindAccuseLabel" type="Label" parent="PauseMenuOverlay/PauseCenter/PauseWindow/PauseMargin/PauseKeybindsPanel/KeybindAccuseRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Chỉ Điểm (Nghi phạm chọn):"
+
+[node name="KeybindAccuseBtn" type="Button" parent="PauseMenuOverlay/PauseCenter/PauseWindow/PauseMargin/PauseKeybindsPanel/KeybindAccuseRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(90, 32)
+layout_mode = 2
+text = "X"
+
+[node name="KeybindSwapRow" type="HBoxContainer" parent="PauseMenuOverlay/PauseCenter/PauseWindow/PauseMargin/PauseKeybindsPanel"]
+layout_mode = 2
+
+[node name="KeybindSwapLabel" type="Label" parent="PauseMenuOverlay/PauseCenter/PauseWindow/PauseMargin/PauseKeybindsPanel/KeybindSwapRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Đổi Trang Báo (Xem Uy Tín):"
+
+[node name="KeybindSwapPlayerBtn" type="Button" parent="PauseMenuOverlay/PauseCenter/PauseWindow/PauseMargin/PauseKeybindsPanel/KeybindSwapRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(90, 32)
+layout_mode = 2
+text = "C"
+
+[node name="KeybindsBackBtn" type="Button" parent="PauseMenuOverlay/PauseCenter/PauseWindow/PauseMargin/PauseKeybindsPanel"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 38)
+layout_mode = 2
+text = "← Quay Lại"
+
+[node name="PauseQuitConfirm" type="VBoxContainer" parent="PauseMenuOverlay/PauseCenter/PauseWindow/PauseMargin"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="QuitConfirmTitle" type="Label" parent="PauseMenuOverlay/PauseCenter/PauseWindow/PauseMargin/PauseQuitConfirm"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.45, 0.45, 1)
+theme_override_font_sizes/font_size = 20
+text = "XÁC NHẬN RỜI VỤ ÁN"
+horizontal_alignment = 1
+
+[node name="QuitConfirmBody" type="Label" parent="PauseMenuOverlay/PauseCenter/PauseWindow/PauseMargin/PauseQuitConfirm"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.92, 0.88, 0.82, 1)
+theme_override_font_sizes/font_size = 14
+text = "Bạn có chắc chắn muốn rời khỏi vụ án hiện tại? Tiến trình điều tra của vụ án này sẽ không được lưu."
+autowrap_mode = 2
+horizontal_alignment = 1
+
+[node name="QuitConfirmBtns" type="HBoxContainer" parent="PauseMenuOverlay/PauseCenter/PauseWindow/PauseMargin/PauseQuitConfirm"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="QuitConfirmYesBtn" type="Button" parent="PauseMenuOverlay/PauseCenter/PauseWindow/PauseMargin/PauseQuitConfirm/QuitConfirmBtns"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 38)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 0.5, 0.5, 1)
+text = "Đồng Ý Rời"
+
+[node name="QuitConfirmNoBtn" type="Button" parent="PauseMenuOverlay/PauseCenter/PauseWindow/PauseMargin/PauseQuitConfirm/QuitConfirmBtns"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 38)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Hủy"
+
+[node name="PageFlipAudio" type="AudioStreamPlayer" parent="." unique_id=987654321]
+unique_name_in_owner = true
+stream = ExtResource("11_page_flip_sfx")
+volume_db = -4.0
