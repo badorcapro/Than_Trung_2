@@ -1246,7 +1246,33 @@ func _get_rect_perimeter_point(rect: Rect2, dist: float) -> Vector2:
 	return Vector2(rect.position.x, rect.position.y + h - d)
 
 
-func _draw_running_light_border(canvas: Control, rect: Rect2, light_color: Color, light_width: float, phase_seed: float = 0.0) -> void:
+func _draw_rect_perimeter_segment(canvas: Control, rect: Rect2, sa: float, sb: float, color: Color, width: float, corners: Array[float], p: float) -> void:
+	if sa > sb:
+		var p0 := _get_rect_perimeter_point(rect, sa)
+		var pc := _get_rect_perimeter_point(rect, p)
+		var p_zero := _get_rect_perimeter_point(rect, 0.0)
+		var p1 := _get_rect_perimeter_point(rect, sb)
+		canvas.draw_line(p0, pc, color, width)
+		canvas.draw_line(p_zero, p1, color, width)
+	else:
+		var found_c: float = -1.0
+		for c in corners:
+			if sa < c and c < sb:
+				found_c = c
+				break
+		if found_c >= 0.0:
+			var p0 := _get_rect_perimeter_point(rect, sa)
+			var pc := _get_rect_perimeter_point(rect, found_c)
+			var p1 := _get_rect_perimeter_point(rect, sb)
+			canvas.draw_line(p0, pc, color, width)
+			canvas.draw_line(pc, p1, color, width)
+		else:
+			var p0 := _get_rect_perimeter_point(rect, sa)
+			var p1 := _get_rect_perimeter_point(rect, sb)
+			canvas.draw_line(p0, p1, color, width)
+
+
+func _draw_running_light_border(canvas: Control, rect: Rect2, light_color: Color, base_width: float = 2.0, phase_seed: float = 0.0) -> void:
 	if _settlement_overlay != null and _settlement_overlay.visible:
 		return
 	var w: float = rect.size.x
@@ -1255,46 +1281,41 @@ func _draw_running_light_border(canvas: Control, rect: Rect2, light_color: Color
 	if p <= 0.0:
 		return
 
-	var trail_len: float = clampf(p * 0.32, 28.0, 75.0)
-	var head_dist: float = fposmod(_border_anim_time * 140.0 + phase_seed, p)
-	var num_steps: int = 12
-	var step: float = trail_len / float(num_steps)
+	# BidKing Style: 2 vệt sáng đối diện nhau (cách nhau 180 độ qua chu vi) cùng chạy quanh viền hình chữ nhật
+	# Không vẽ hạt/cục tròn rời mà làm dày viền cục bộ và phát sáng neon khi vệt sáng đi qua
+	var beam_len: float = clampf(p * 0.28, 24.0, 70.0)
+	var half_len: float = beam_len * 0.5
 	var corners: Array[float] = [w, w + h, 2.0 * w + h]
+	var num_steps: int = 12
+	var step: float = beam_len / float(num_steps)
 
-	for i in range(num_steps):
-		var d0: float = fposmod(head_dist - trail_len + float(i) * step, p)
-		var d1: float = fposmod(head_dist - trail_len + float(i + 1) * step, p)
-		var alpha: float = pow(float(i + 1) / float(num_steps), 1.6)
-		var seg_color := Color(light_color.r, light_color.g, light_color.b, light_color.a * alpha)
+	var center0: float = fposmod(_border_anim_time * 115.0 + phase_seed, p)
+	var centers: Array[float] = [center0, fposmod(center0 + p * 0.5, p)]
 
-		if d0 > d1:
-			var p0 := _get_rect_perimeter_point(rect, d0)
-			var pc := _get_rect_perimeter_point(rect, p)
-			var p_zero := _get_rect_perimeter_point(rect, 0.0)
-			var p1 := _get_rect_perimeter_point(rect, d1)
-			canvas.draw_line(p0, pc, seg_color, light_width)
-			canvas.draw_line(p_zero, p1, seg_color, light_width)
-		else:
-			var found_c: float = -1.0
-			for c in corners:
-				if d0 < c and c < d1:
-					found_c = c
-					break
-			if found_c >= 0.0:
-				var p0 := _get_rect_perimeter_point(rect, d0)
-				var pc := _get_rect_perimeter_point(rect, found_c)
-				var p1 := _get_rect_perimeter_point(rect, d1)
-				canvas.draw_line(p0, pc, seg_color, light_width)
-				canvas.draw_line(pc, p1, seg_color, light_width)
-			else:
-				var p0 := _get_rect_perimeter_point(rect, d0)
-				var p1 := _get_rect_perimeter_point(rect, d1)
-				canvas.draw_line(p0, p1, seg_color, light_width)
+	for center in centers:
+		for k in range(num_steps):
+			var ta: float = -half_len + float(k) * step
+			var tb: float = -half_len + float(k + 1) * step
+			var tmid: float = (ta + tb) * 0.5
+			var u: float = clampf(absf(tmid) / half_len, 0.0, 1.0)
+			# Cosine bell curve: 1.0 ở tâm vệt sáng, 0.0 ở 2 mép
+			var f: float = cos(u * PI * 0.5)
 
-	# Luminous spark / bead at the head
-	var head_pt := _get_rect_perimeter_point(rect, head_dist)
-	canvas.draw_circle(head_pt, light_width * 0.9, Color(1.0, 1.0, 1.0, 0.95))
-	canvas.draw_circle(head_pt, light_width * 1.8, Color(light_color.r, light_color.g, light_color.b, 0.35))
+			var sa: float = fposmod(center + ta, p)
+			var sb: float = fposmod(center + tb, p)
+
+			# 1. Hào quang neon phát sáng nở rộng ra ngoài viền (Outer neon bloom)
+			var bloom_w: float = base_width + 3.0 * f
+			var bloom_col := Color(light_color.r, light_color.g, light_color.b, light_color.a * 0.32 * f)
+			_draw_rect_perimeter_segment(canvas, rect, sa, sb, bloom_col, bloom_w, corners, p)
+
+			# 2. Lõi viền nở to nhẹ và sáng rực trắng theo viền (Core thickened bright line)
+			var core_w: float = base_width + 1.2 * f
+			var core_r: float = lerpf(light_color.r, 1.0, 0.65 * f)
+			var core_g: float = lerpf(light_color.g, 1.0, 0.65 * f)
+			var core_b: float = lerpf(light_color.b, 1.0, 0.65 * f)
+			var core_col := Color(core_r, core_g, core_b, light_color.a * (0.35 + 0.65 * f))
+			_draw_rect_perimeter_segment(canvas, rect, sa, sb, core_col, core_w, corners, p)
 
 
 func _on_grid_draw() -> void:
@@ -1323,8 +1344,8 @@ func _on_grid_draw() -> void:
 
 		if is_full_reveal:
 			_grid_draw_control.draw_rect(rect, Color(r_color.r, r_color.g, r_color.b, 0.25), true)
-			_grid_draw_control.draw_rect(rect, r_color, false, 2.5)
-			_draw_running_light_border(_grid_draw_control, rect, r_color.lightened(0.4), 3.2, phase_seed)
+			_grid_draw_control.draw_rect(rect, r_color, false, 2.2)
+			_draw_running_light_border(_grid_draw_control, rect, r_color.lightened(0.4), 2.2, phase_seed)
 
 			# 1. Vẽ hình ảnh vật phẩm thực tế từ asset_path nếu có (bảo toàn tỉ lệ gốc, không bị kéo giãn)
 			var tex: Texture2D = _get_cached_item_texture(item.asset_path)
@@ -1363,13 +1384,13 @@ func _on_grid_draw() -> void:
 				# Gợi ý kích cỡ đổi sang màu xám nhạt với hiệu ứng chạy ánh sáng ở viền
 				_grid_draw_control.draw_rect(rect, Color(0.85, 0.88, 0.92, 0.08), true)
 				_grid_draw_control.draw_rect(rect, Color(0.72, 0.76, 0.82, 0.85), false, 2.0)
-				_draw_running_light_border(_grid_draw_control, rect, Color(0.95, 0.98, 1.0, 1.0), 3.0, phase_seed)
+				_draw_running_light_border(_grid_draw_control, rect, Color(0.95, 0.98, 1.0, 1.0), 2.0, phase_seed)
 			if is_quality_reveal:
 				# Gợi ý phẩm cấp hiển thị ở ô góc 1x1 kèm hiệu ứng chạy ánh sáng ở viền
 				var q_rect := Rect2(pos.x * CELL_SIZE + 2, pos.y * CELL_SIZE + 2, CELL_SIZE - 4, CELL_SIZE - 4)
 				_grid_draw_control.draw_rect(q_rect, Color(r_color.r, r_color.g, r_color.b, 0.7), true)
 				_grid_draw_control.draw_rect(q_rect, r_color, false, 2.0)
-				_draw_running_light_border(_grid_draw_control, q_rect, r_color.lightened(0.4), 2.8, phase_seed + 20.0)
+				_draw_running_light_border(_grid_draw_control, q_rect, r_color.lightened(0.4), 2.0, phase_seed + 20.0)
 
 
 
