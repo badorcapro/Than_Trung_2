@@ -27,18 +27,29 @@ texture_margin_top = 92.0
 texture_margin_right = 68.0
 texture_margin_bottom = 68.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_inspector_bang"]
-content_margin_left = 28.0
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_inspector_slate"]
+content_margin_left = 32.0
 content_margin_top = 22.0
-content_margin_right = 28.0
+content_margin_right = 32.0
 content_margin_bottom = 22.0
-texture = ExtResource("20_khung_bang")
-texture_margin_left = 90.0
-texture_margin_top = 85.0
-texture_margin_right = 90.0
-texture_margin_bottom = 85.0
-axis_stretch_horizontal = 1
-axis_stretch_vertical = 1
+bg_color = Color(0.05, 0.07, 0.11, 0.94)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.96, 0.62, 0.04, 0.9)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0, 0, 0, 0.8)
+shadow_size = 18
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_subcol"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_divider"]
+color = Color(1, 0.85, 0.45, 0.22)
+vertical = true
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jade_close_btn_hover"]
 bg_color = Color(1, 0.95, 0.6, 0.22)
@@ -2193,23 +2204,24 @@ size_flags_vertical = 3
 [node name="PickerGrid" type="HBoxContainer" parent="DesktopRoot/CharacterPickerModal/PickerMargin/PickerVBox/GridCenter"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_constants/separation = 22
+theme_override_constants/separation = 36
 alignment = 1
 
 [node name="InspectorPanel" type="PanelContainer" parent="DesktopRoot/CharacterPickerModal/PickerMargin/PickerVBox"]
-custom_minimum_size = Vector2(0, 250)
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 240)
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxTexture_inspector_bang")
+theme_override_styles/panel = SubResource("StyleBoxFlat_inspector_slate")
 
 [node name="InspectorHBox" type="HBoxContainer" parent="DesktopRoot/CharacterPickerModal/PickerMargin/PickerVBox/InspectorPanel"]
 layout_mode = 2
-theme_override_constants/separation = 16
+theme_override_constants/separation = 20
 
 [node name="ColProfile" type="PanelContainer" parent="DesktopRoot/CharacterPickerModal/PickerMargin/PickerVBox/InspectorPanel/InspectorHBox"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 1.05
-theme_override_styles/panel = SubResource("StyleBoxFlat_holocure_subcol")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_subcol")
 
 [node name="ProfileHBox" type="HBoxContainer" parent="DesktopRoot/CharacterPickerModal/PickerMargin/PickerVBox/InspectorPanel/InspectorHBox/ColProfile"]
 layout_mode = 2
@@ -2300,11 +2312,15 @@ theme_override_colors/font_color = Color(0.9, 0.92, 0.96, 1)
 theme_override_font_sizes/font_size = 12
 text = "🎒 Sức chứa túi: Cấp 2"
 
+[node name="InspectorSep1" type="VSeparator" parent="DesktopRoot/CharacterPickerModal/PickerMargin/PickerVBox/InspectorPanel/InspectorHBox"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_divider")
+
 [node name="ColSkill1" type="PanelContainer" parent="DesktopRoot/CharacterPickerModal/PickerMargin/PickerVBox/InspectorPanel/InspectorHBox"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 1.25
-theme_override_styles/panel = SubResource("StyleBoxFlat_holocure_subcol")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_subcol")
 
 [node name="Skill1VBox" type="VBoxContainer" parent="DesktopRoot/CharacterPickerModal/PickerMargin/PickerVBox/InspectorPanel/InspectorHBox/ColSkill1"]
 layout_mode = 2
@@ -2343,11 +2359,15 @@ theme_override_font_sizes/font_size = 12
 text = "Nắm giữ hoàng quyền và ngọc tỷ ngự chế. Khi thẩm tra nghi phạm, uy lực đế vương khiến kẻ nói dối dễ để lộ sơ hở trong lời khai."
 autowrap_mode = 3
 
+[node name="InspectorSep2" type="VSeparator" parent="DesktopRoot/CharacterPickerModal/PickerMargin/PickerVBox/InspectorPanel/InspectorHBox"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_divider")
+
 [node name="ColSkill2" type="PanelContainer" parent="DesktopRoot/CharacterPickerModal/PickerMargin/PickerVBox/InspectorPanel/InspectorHBox"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 1.25
-theme_override_styles/panel = SubResource("StyleBoxFlat_holocure_subcol")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_subcol")
 
 [node name="Skill2VBox" type="VBoxContainer" parent="DesktopRoot/CharacterPickerModal/PickerMargin/PickerVBox/InspectorPanel/InspectorHBox/ColSkill2"]
 layout_mode = 2

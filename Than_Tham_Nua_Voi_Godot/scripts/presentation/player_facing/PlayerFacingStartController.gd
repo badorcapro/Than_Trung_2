@@ -102,7 +102,13 @@ var _toast_tween: Tween = null
 const SPLASH_BG_TEXTURE: Texture2D = preload("res://assets/ui/common/splash_bg.png")
 const MAIN_MENU_BG_TEXTURE: Texture2D = preload("res://assets/ui/desktop/needy_desktop_bg_1080.png")
 const LOBBY_BG_TEXTURE: Texture2D = preload("res://assets/ui/common/lobby_bg.png")
-const CARD_FRAME_TEXTURE: Texture2D = preload("res://assets/khung_the.png")
+const SEAL_FRAME_TEXTURES: Dictionary = {
+	&"house_hoang": preload("res://assets/ui/character_select/seal_frame_hoang.png"),
+	&"house_chu": preload("res://assets/ui/character_select/seal_frame_chu.png"),
+	&"house_kim": preload("res://assets/ui/character_select/seal_frame_kim.png"),
+	&"house_lam": preload("res://assets/ui/character_select/seal_frame_lam.png"),
+	&"house_huyen": preload("res://assets/ui/character_select/seal_frame_huyen.png"),
+}
 
 @onready var background_rect: TextureRect = get_node_or_null("Background") as TextureRect
 @onready var splash_panel: Control = get_node_or_null("%SplashPanel") as Control
@@ -145,6 +151,7 @@ const CARD_FRAME_TEXTURE: Texture2D = preload("res://assets/khung_the.png")
 @onready var picker_confirm_btn: Button = get_node_or_null("%PickerConfirmBtn") as Button
 @onready var picker_title: Label = get_node_or_null("%PickerTitle") as Label
 @onready var picker_grid: HBoxContainer = get_node_or_null("%PickerGrid") as HBoxContainer
+@onready var inspector_panel: PanelContainer = get_node_or_null("%InspectorPanel") as PanelContainer
 @onready var inspect_avatar_img: TextureRect = get_node_or_null("%InspectAvatarImg") as TextureRect
 @onready var inspect_avatar_placeholder: Label = get_node_or_null("%InspectAvatarPlaceholder") as Label
 @onready var inspect_char_name: Label = get_node_or_null("%InspectCharName") as Label
@@ -168,7 +175,7 @@ var _inspected_character: CharacterDefinition = null
 const CHARACTER_LORE_SKILLS: Dictionary = {
 	&"character_hoang_linh_lam": {
 		"house_name": "Nhà họ Hoàng",
-		"house_color": Color(1.0, 0.85, 0.4),
+		"house_color": Color("#f59e0b"),
 		"icon": "👑",
 		"skill1_name": "Thiên Tử Uy Quyền",
 		"skill1_tag": "[Bản Lĩnh Gia Tộc]",
@@ -179,7 +186,7 @@ const CHARACTER_LORE_SKILLS: Dictionary = {
 	},
 	&"character_chu_tue_nguyet": {
 		"house_name": "Nhà họ Chu",
-		"house_color": Color(0.98, 0.45, 0.4),
+		"house_color": Color("#ef4444"),
 		"icon": "🔥",
 		"skill1_name": "Liệt Hỏa Thấu Thị",
 		"skill1_tag": "[Bản Lĩnh Gia Tộc]",
@@ -190,7 +197,7 @@ const CHARACTER_LORE_SKILLS: Dictionary = {
 	},
 	&"character_kim_thanh_giai": {
 		"house_name": "Nhà họ Kim",
-		"house_color": Color(0.45, 0.85, 1.0),
+		"house_color": Color("#e2e8f0"),
 		"icon": "💎",
 		"skill1_name": "Đoán Châu Liệt Bảo",
 		"skill1_tag": "[Bản Lĩnh Gia Tộc]",
@@ -201,7 +208,7 @@ const CHARACTER_LORE_SKILLS: Dictionary = {
 	},
 	&"character_huyen_ca_xuy": {
 		"house_name": "Nhà họ Huyền",
-		"house_color": Color(0.8, 0.6, 1.0),
+		"house_color": Color("#38bdf8"),
 		"icon": "🔮",
 		"skill1_name": "Kỳ Môn Độn Giáp",
 		"skill1_tag": "[Bản Lĩnh Gia Tộc]",
@@ -212,7 +219,7 @@ const CHARACTER_LORE_SKILLS: Dictionary = {
 	},
 	&"character_lam_phuong_xuan": {
 		"house_name": "Nhà họ Lam",
-		"house_color": Color(0.45, 0.9, 0.55),
+		"house_color": Color("#10b981"),
 		"icon": "🌿",
 		"skill1_name": "Diệu Thủ Hồi Xuân",
 		"skill1_tag": "[Bản Lĩnh Gia Tộc]",
@@ -908,6 +915,7 @@ func _on_picker_close_pressed() -> void:
 func _build_character_picker_grid() -> void:
 	if picker_grid == null:
 		return
+	picker_grid.add_theme_constant_override("separation", 36)
 	for child in picker_grid.get_children():
 		child.queue_free()
 
@@ -923,133 +931,75 @@ func _build_character_picker_grid() -> void:
 		var is_inspected: bool = (_inspected_character != null and _inspected_character.character_id == char_def.character_id)
 
 		var tile_btn := Button.new()
-		tile_btn.custom_minimum_size = Vector2(165, 235)
+		tile_btn.custom_minimum_size = Vector2(160, 160)
 		tile_btn.focus_mode = Control.FOCUS_NONE
+		tile_btn.flat = true
 		tile_btn.name = "Tile_" + String(char_def.character_id)
+		tile_btn.pivot_offset = Vector2(80, 80)
 
-		var normal_style := StyleBoxTexture.new()
-		normal_style.texture = CARD_FRAME_TEXTURE
-		normal_style.texture_margin_left = 16.0
-		normal_style.texture_margin_top = 16.0
-		normal_style.texture_margin_right = 16.0
-		normal_style.texture_margin_bottom = 16.0
-		if is_inspected:
-			normal_style.modulate_color = Color(1.25, 1.2, 0.95)
-		else:
-			normal_style.modulate_color = Color(0.9, 0.92, 0.96)
+		var empty_style := StyleBoxEmpty.new()
+		tile_btn.add_theme_stylebox_override("normal", empty_style)
+		tile_btn.add_theme_stylebox_override("hover", empty_style)
+		tile_btn.add_theme_stylebox_override("pressed", empty_style)
+		tile_btn.add_theme_stylebox_override("focus", empty_style)
 
-		var hover_style := StyleBoxTexture.new()
-		hover_style.texture = CARD_FRAME_TEXTURE
-		hover_style.texture_margin_left = 16.0
-		hover_style.texture_margin_top = 16.0
-		hover_style.texture_margin_right = 16.0
-		hover_style.texture_margin_bottom = 16.0
-		hover_style.modulate_color = Color(1.35, 1.3, 1.05)
-
-		tile_btn.add_theme_stylebox_override("normal", normal_style)
-		tile_btn.add_theme_stylebox_override("hover", hover_style)
-		tile_btn.add_theme_stylebox_override("pressed", hover_style)
-
-		if is_already_chosen_other:
-			tile_btn.modulate.a = 0.5
-
-		var vbox := VBoxContainer.new()
-		vbox.set_anchors_preset(Control.PRESET_FULL_RECT)
-		vbox.offset_left = 10
-		vbox.offset_top = 16
-		vbox.offset_right = -10
-		vbox.offset_bottom = -12
-		vbox.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		vbox.add_theme_constant_override("separation", 5)
-		tile_btn.add_child(vbox)
-
-		var avatar_frame := Panel.new()
-		avatar_frame.custom_minimum_size = Vector2(104, 104)
-		avatar_frame.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-		avatar_frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		var circle_frame_style := StyleBoxFlat.new()
-		circle_frame_style.bg_color = Color(0.06, 0.08, 0.12, 0.6)
-		circle_frame_style.border_width_left = 3 if is_inspected else 2
-		circle_frame_style.border_width_top = 3 if is_inspected else 2
-		circle_frame_style.border_width_right = 3 if is_inspected else 2
-		circle_frame_style.border_width_bottom = 3 if is_inspected else 2
-		circle_frame_style.border_color = Color(1.0, 0.85, 0.35, 1.0) if is_inspected else Color(0.65, 0.55, 0.35, 0.7)
-		circle_frame_style.corner_radius_top_left = 52
-		circle_frame_style.corner_radius_top_right = 52
-		circle_frame_style.corner_radius_bottom_right = 52
-		circle_frame_style.corner_radius_bottom_left = 52
-		avatar_frame.add_theme_stylebox_override("panel", circle_frame_style)
-		vbox.add_child(avatar_frame)
-
+		# 1. Avatar Portrait (centered at 14, 14, size 132x132)
 		var portrait_path: String = "res://assets/portraits/%s.png" % String(char_def.character_id)
+		var avatar_rect := TextureRect.new()
+		avatar_rect.name = "AvatarRect"
+		avatar_rect.custom_minimum_size = Vector2(132, 132)
+		avatar_rect.position = Vector2(14, 14)
+		avatar_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		avatar_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		avatar_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		if ResourceLoader.exists(portrait_path):
-			var tex := load(portrait_path) as Texture2D
-			var tr := TextureRect.new()
-			tr.texture = tex
-			tr.set_anchors_preset(Control.PRESET_FULL_RECT)
-			tr.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-			tr.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-			tr.mouse_filter = Control.MOUSE_FILTER_IGNORE
-			avatar_frame.add_child(tr)
+			avatar_rect.texture = load(portrait_path) as Texture2D
+		tile_btn.add_child(avatar_rect)
+
+		# 2. Imperial Jade Seal Frame (160x160)
+		var seal_tex: Texture2D = SEAL_FRAME_TEXTURES.get(char_def.origin_house_id)
+		var seal_rect := TextureRect.new()
+		seal_rect.name = "SealRect"
+		seal_rect.custom_minimum_size = Vector2(160, 160)
+		seal_rect.position = Vector2.ZERO
+		seal_rect.texture = seal_tex
+		seal_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		seal_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		seal_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		tile_btn.add_child(seal_rect)
+
+		# Visual state
+		if is_inspected:
+			tile_btn.scale = Vector2(1.08, 1.08)
+			seal_rect.modulate = Color(1.35, 1.3, 1.1)
 		else:
-			var pl_lbl := Label.new()
-			pl_lbl.set_anchors_preset(Control.PRESET_FULL_RECT)
-			pl_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-			pl_lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-			pl_lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
-			pl_lbl.add_theme_font_size_override("font_size", 22)
-			match char_def.origin_house_id:
-				&"house_hoang": pl_lbl.text = "👑\nHOÀNG"
-				&"house_chu": pl_lbl.text = "🔥\nCHU"
-				&"house_kim": pl_lbl.text = "💎\nKIM"
-				&"house_huyen": pl_lbl.text = "🔮\nHUYỀN"
-				&"house_lam": pl_lbl.text = "🌿\nLAM"
-				_: pl_lbl.text = "THÁM TỬ"
-			avatar_frame.add_child(pl_lbl)
-
-		var name_lbl := Label.new()
-		name_lbl.text = char_def.display_name
-		name_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		name_lbl.add_theme_font_size_override("font_size", 14)
-		name_lbl.add_theme_color_override("font_color", Color(1, 0.95, 0.88))
-		name_lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		vbox.add_child(name_lbl)
-
-		var house_lbl := Label.new()
-		house_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		house_lbl.add_theme_font_size_override("font_size", 11)
-		house_lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		match char_def.origin_house_id:
-			&"house_hoang":
-				house_lbl.text = "Nhà họ Hoàng"
-				house_lbl.add_theme_color_override("font_color", Color(0.95, 0.82, 0.4))
-			&"house_chu":
-				house_lbl.text = "Nhà họ Chu"
-				house_lbl.add_theme_color_override("font_color", Color(0.98, 0.45, 0.45))
-			&"house_kim":
-				house_lbl.text = "Nhà họ Kim"
-				house_lbl.add_theme_color_override("font_color", Color(0.45, 0.85, 1.0))
-			&"house_huyen":
-				house_lbl.text = "Nhà họ Huyền"
-				house_lbl.add_theme_color_override("font_color", Color(0.8, 0.6, 1.0))
-			&"house_lam":
-				house_lbl.text = "Nhà họ Lam"
-				house_lbl.add_theme_color_override("font_color", Color(0.5, 0.9, 0.55))
-			_:
-				house_lbl.text = "Hoàng Cung"
-		vbox.add_child(house_lbl)
+			tile_btn.scale = Vector2(1.0, 1.0)
+			seal_rect.modulate = Color(1.0, 1.0, 1.0)
 
 		if is_already_chosen_other:
-			var tag_lbl := Label.new()
-			tag_lbl.text = "[ĐÃ CHỌN]"
-			tag_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-			tag_lbl.add_theme_font_size_override("font_size", 10)
-			tag_lbl.add_theme_color_override("font_color", Color(0.8, 0.4, 0.4))
-			tag_lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
-			vbox.add_child(tag_lbl)
+			tile_btn.modulate.a = 0.4
+			var lock_lbl := Label.new()
+			lock_lbl.set_anchors_preset(Control.PRESET_FULL_RECT)
+			lock_lbl.text = "🔒\n[ĐÃ CHỌN]"
+			lock_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			lock_lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+			lock_lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			lock_lbl.add_theme_font_size_override("font_size", 14)
+			lock_lbl.add_theme_color_override("font_color", Color(1, 0.4, 0.4, 0.95))
+			tile_btn.add_child(lock_lbl)
 
 		tile_btn.mouse_entered.connect(func() -> void:
+			var tw := tile_btn.create_tween()
+			tw.tween_property(tile_btn, "scale", Vector2(1.08, 1.08), 0.1).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+			seal_rect.modulate = Color(1.35, 1.3, 1.1)
 			_inspect_character(char_def)
+		)
+
+		tile_btn.mouse_exited.connect(func() -> void:
+			if _inspected_character == null or _inspected_character.character_id != char_def.character_id:
+				var tw := tile_btn.create_tween()
+				tw.tween_property(tile_btn, "scale", Vector2(1.0, 1.0), 0.1).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+				seal_rect.modulate = Color(1.0, 1.0, 1.0)
 		)
 
 		tile_btn.pressed.connect(func() -> void:
@@ -1079,8 +1029,18 @@ func _inspect_character(char_def: CharacterDefinition) -> void:
 		"skill2_desc": "Bí thuật kế thừa qua các thế hệ hoàng cung."
 	})
 
+	if inspector_panel != null:
+		var slate_style: StyleBoxFlat = inspector_panel.get_theme_stylebox("panel") as StyleBoxFlat
+		if slate_style != null:
+			slate_style = slate_style.duplicate()
+			slate_style.border_color = lore.house_color
+			slate_style.shadow_color = Color(lore.house_color.r, lore.house_color.g, lore.house_color.b, 0.25)
+			slate_style.shadow_size = 14
+			inspector_panel.add_theme_stylebox_override("panel", slate_style)
+
 	if inspect_char_name != null:
 		inspect_char_name.text = char_def.display_name
+		inspect_char_name.add_theme_color_override("font_color", lore.house_color.lightened(0.35))
 	if inspect_house_badge != null:
 		inspect_house_badge.text = lore.house_name
 		inspect_house_badge.add_theme_color_override("font_color", lore.house_color)
@@ -1136,6 +1096,7 @@ func _inspect_character(char_def: CharacterDefinition) -> void:
 
 	if inspect_skill1_title != null:
 		inspect_skill1_title.text = lore.skill1_name
+		inspect_skill1_title.add_theme_color_override("font_color", lore.house_color.lightened(0.2))
 	if inspect_skill1_tag != null:
 		inspect_skill1_tag.text = lore.skill1_tag
 	if inspect_skill1_desc != null:
@@ -1143,6 +1104,7 @@ func _inspect_character(char_def: CharacterDefinition) -> void:
 
 	if inspect_skill2_title != null:
 		inspect_skill2_title.text = lore.skill2_name
+		inspect_skill2_title.add_theme_color_override("font_color", Color(0.65, 0.88, 1.0))
 	if inspect_skill2_tag != null:
 		inspect_skill2_tag.text = lore.skill2_tag
 	if inspect_skill2_desc != null:
@@ -1161,25 +1123,21 @@ func _inspect_character(char_def: CharacterDefinition) -> void:
 			picker_confirm_btn.text = "Đã Tham Chiến Ở Vị Trí Khác"
 		else:
 			picker_confirm_btn.disabled = false
-			picker_confirm_btn.text = "✔ Xác Nhận Chọn: %s" % char_def.display_name
+			picker_confirm_btn.text = "✔ Xác Nhận Chọn: %s (%s)" % [char_def.display_name, lore.house_name]
 
 	if picker_grid != null:
 		for card_btn in picker_grid.get_children():
 			if card_btn is Button:
 				var is_this_card: bool = (card_btn.name == "Tile_" + String(char_def.character_id))
-				var sb: StyleBoxFlat = card_btn.get_theme_stylebox("normal").duplicate() as StyleBoxFlat
-				if sb != null:
-					sb.border_width_left = 2 if is_this_card else 1
-					sb.border_width_top = 2 if is_this_card else 1
-					sb.border_width_right = 2 if is_this_card else 1
-					sb.border_width_bottom = 2 if is_this_card else 1
-					sb.border_color = Color(1.0, 0.85, 0.35, 1.0) if is_this_card else Color(0.35, 0.42, 0.55, 0.45)
-					if is_this_card:
-						sb.shadow_color = Color(1.0, 0.8, 0.2, 0.5)
-						sb.shadow_size = 8
-					else:
-						sb.shadow_size = 0
-					card_btn.add_theme_stylebox_override("normal", sb)
+				var seal_node: TextureRect = card_btn.get_node_or_null("SealRect") as TextureRect
+				if is_this_card:
+					card_btn.scale = Vector2(1.08, 1.08)
+					if seal_node != null:
+						seal_node.modulate = Color(1.35, 1.3, 1.1)
+				else:
+					card_btn.scale = Vector2(1.0, 1.0)
+					if seal_node != null:
+						seal_node.modulate = Color(1.0, 1.0, 1.0)
 
 
 func _select_character_for_current_slot(char_def: CharacterDefinition) -> void:
