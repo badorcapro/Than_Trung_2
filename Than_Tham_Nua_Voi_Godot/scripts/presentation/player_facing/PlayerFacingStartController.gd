@@ -298,9 +298,10 @@ const CHARACTER_LORE_SKILLS: Dictionary = {
 @onready var dice_card: Control = %DiceCard
 @onready var dice_icon_label: Label = %DiceIconLabel
 @onready var dice_result_label: RichTextLabel = %DiceResultLabel
-@onready var player_cards_container: HBoxContainer = get_node_or_null("%PlayerCardsContainer") as HBoxContainer
+@onready var player_cards_container: BoxContainer = get_node_or_null("%PlayerCardsContainer") as BoxContainer
 @onready var item_hotbar_container: HBoxContainer = get_node_or_null("%ItemHotbarContainer") as HBoxContainer
 @onready var roll_dice_button: Button = get_node_or_null("%RollDiceButton") as Button
+@onready var open_bag_button: Button = get_node_or_null("%OpenBagButton") as Button
 @onready var incoming_item_label: Label = get_node_or_null("%IncomingItemLabel") as Label
 @onready var current_items_container: HBoxContainer = get_node_or_null("%CurrentItemsContainer") as HBoxContainer
 @onready var replace_confirm_modal: Control = get_node_or_null("%ReplaceConfirmModal") as Control
@@ -381,6 +382,8 @@ func _ready() -> void:
 	_init_pummel_styles()
 	if roll_dice_button != null and not roll_dice_button.pressed.is_connected(_on_move_pressed):
 		roll_dice_button.pressed.connect(_on_move_pressed)
+	if open_bag_button != null and not open_bag_button.pressed.is_connected(_toggle_loot_detail_panel):
+		open_bag_button.pressed.connect(_toggle_loot_detail_panel)
 	if confirm_replace_button != null and not confirm_replace_button.pressed.is_connected(_on_confirm_replace_accepted):
 		confirm_replace_button.pressed.connect(_on_confirm_replace_accepted)
 	if cancel_replace_button != null and not cancel_replace_button.pressed.is_connected(_on_cancel_replace_dismissed):
@@ -451,38 +454,38 @@ func _init_dossier_system() -> void:
 
 func _init_pummel_styles() -> void:
 	_pummel_style_normal = StyleBoxFlat.new()
-	_pummel_style_normal.bg_color = Color(0.07, 0.08, 0.11, 0.88)
+	_pummel_style_normal.bg_color = Color(0.10, 0.08, 0.07, 0.92)
 	_pummel_style_normal.border_width_left = 1
 	_pummel_style_normal.border_width_top = 1
 	_pummel_style_normal.border_width_right = 1
 	_pummel_style_normal.border_width_bottom = 1
-	_pummel_style_normal.border_color = Color(0.35, 0.4, 0.45, 0.4)
+	_pummel_style_normal.border_color = Color(0.45, 0.35, 0.22, 0.65)
 	_pummel_style_normal.corner_radius_top_left = 8
 	_pummel_style_normal.corner_radius_top_right = 8
 	_pummel_style_normal.corner_radius_bottom_right = 8
 	_pummel_style_normal.corner_radius_bottom_left = 8
-	_pummel_style_normal.content_margin_left = 12.0
-	_pummel_style_normal.content_margin_top = 6.0
-	_pummel_style_normal.content_margin_right = 12.0
-	_pummel_style_normal.content_margin_bottom = 6.0
+	_pummel_style_normal.content_margin_left = 10.0
+	_pummel_style_normal.content_margin_top = 8.0
+	_pummel_style_normal.content_margin_right = 10.0
+	_pummel_style_normal.content_margin_bottom = 8.0
 
 	_pummel_style_active = StyleBoxFlat.new()
-	_pummel_style_active.bg_color = Color(0.12, 0.13, 0.18, 0.96)
+	_pummel_style_active.bg_color = Color(0.16, 0.11, 0.08, 0.96)
 	_pummel_style_active.border_width_left = 2
 	_pummel_style_active.border_width_top = 2
 	_pummel_style_active.border_width_right = 2
 	_pummel_style_active.border_width_bottom = 2
-	_pummel_style_active.border_color = Color(1.0, 0.84, 0.2, 0.95)
+	_pummel_style_active.border_color = Color(1.0, 0.84, 0.25, 0.98)
 	_pummel_style_active.corner_radius_top_left = 8
 	_pummel_style_active.corner_radius_top_right = 8
 	_pummel_style_active.corner_radius_bottom_right = 8
 	_pummel_style_active.corner_radius_bottom_left = 8
-	_pummel_style_active.shadow_color = Color(1.0, 0.8, 0.1, 0.35)
-	_pummel_style_active.shadow_size = 8
-	_pummel_style_active.content_margin_left = 12.0
-	_pummel_style_active.content_margin_top = 6.0
-	_pummel_style_active.content_margin_right = 12.0
-	_pummel_style_active.content_margin_bottom = 6.0
+	_pummel_style_active.shadow_color = Color(1.0, 0.8, 0.2, 0.4)
+	_pummel_style_active.shadow_size = 10
+	_pummel_style_active.content_margin_left = 10.0
+	_pummel_style_active.content_margin_top = 8.0
+	_pummel_style_active.content_margin_right = 10.0
+	_pummel_style_active.content_margin_bottom = 8.0
 
 	_pummel_slot_style = StyleBoxFlat.new()
 	_pummel_slot_style.bg_color = Color(0.09, 0.1, 0.14, 0.9)
@@ -1788,6 +1791,8 @@ func _toggle_loot_detail_panel() -> void:
 		_refresh_pummel_item_hotbar(case_flow.loot_session)
 	if toggle_detail_button != null:
 		toggle_detail_button.text = "[TAB] Đóng túi" if _item_tray_open else "[TAB] Túi đồ"
+	if open_bag_button != null:
+		open_bag_button.text = "🎒 [TAB] ĐÓNG TÚI" if _item_tray_open else "🎒 [TAB] TÚI VẬT PHẨM"
 
 
 func _handle_loot_z_press() -> void:
@@ -2852,6 +2857,17 @@ func _refresh_pummel_player_cards(session: LOOT_REWARD_SESSION) -> void:
 			var cap: int = round_loot.capacity if round_loot != null else 2
 			bag_label.text = "🎒 %d/%d" % [carried, cap]
 			bag_label.tooltip_text = "Túi đồ: %d/%d món" % [carried, cap]
+
+		var avatar_rect: TextureRect = card.find_child("AvatarRect", true, false) as TextureRect
+		if avatar_rect != null:
+			if character != null and not character.portrait.is_empty() and ResourceLoader.exists(character.portrait):
+				avatar_rect.texture = load(character.portrait) as Texture2D
+			else:
+				avatar_rect.texture = null
+
+		var turn_badge: Label = card.find_child("TurnBadge", true, false) as Label
+		if turn_badge != null:
+			turn_badge.visible = is_active
 
 
 func _on_pummel_player_card_gui_input(event: InputEvent, card: Control) -> void:

@@ -350,6 +350,17 @@ corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 shadow_color = Color(1.0, 0.8, 0.1, 0.35)
 shadow_size = 8
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_avatar_sub"]
+bg_color = Color(0.06, 0.05, 0.04, 0.95)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.72, 0.58, 0.32, 0.8)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pummel_roll_btn"]
 content_margin_left = 20.0
@@ -4153,382 +4164,524 @@ grow_vertical = 2
 mouse_filter = 1
 script = ExtResource("3")
 
-[node name="LootTopHud" type="MarginContainer" parent="LootPanel"]
+[node name="LootLeftFlank" type="MarginContainer" parent="LootPanel"]
 layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 90.0
-grow_horizontal = 2
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 240.0
+grow_vertical = 2
 mouse_filter = 2
 theme_override_constants/margin_left = 22
-theme_override_constants/margin_top = 16
-theme_override_constants/margin_right = 22
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_bottom = 20
 
-[node name="HeaderRow" type="HBoxContainer" parent="LootPanel/LootTopHud"]
+[node name="VBox" type="VBoxContainer" parent="LootPanel/LootLeftFlank"]
 layout_mode = 2
 mouse_filter = 2
+theme_override_constants/separation = 12
 
-[node name="PummelTopContainer" type="VBoxContainer" parent="LootPanel/LootTopHud/HeaderRow"]
+[node name="FlankTitle" type="Label" parent="LootPanel/LootLeftFlank/VBox"]
 layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 6
+theme_override_colors/font_color = Color(0.96, 0.82, 0.45, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.9)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 14
+text = "🏛️ THÁM TỬ HOÀNG CUNG"
 
-[node name="PlayerCardsContainer" type="HBoxContainer" parent="LootPanel/LootTopHud/HeaderRow/PummelTopContainer"]
+[node name="PlayerCardsContainer" type="VBoxContainer" parent="LootPanel/LootLeftFlank/VBox"]
 unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 10
 
-[node name="Card_0" type="PanelContainer" parent="LootPanel/LootTopHud/HeaderRow/PummelTopContainer/PlayerCardsContainer"]
-custom_minimum_size = Vector2(204, 62)
+[node name="Card_0" type="PanelContainer" parent="LootPanel/LootLeftFlank/VBox/PlayerCardsContainer"]
+custom_minimum_size = Vector2(216, 72)
 layout_mode = 2
-mouse_filter = 2
+mouse_filter = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_pummel_card")
 
-[node name="VBox" type="VBoxContainer" parent="LootPanel/LootTopHud/HeaderRow/PummelTopContainer/PlayerCardsContainer/Card_0"]
+[node name="HBox" type="HBoxContainer" parent="LootPanel/LootLeftFlank/VBox/PlayerCardsContainer/Card_0"]
 layout_mode = 2
 mouse_filter = 2
-theme_override_constants/separation = 2
+theme_override_constants/separation = 8
 
-[node name="Top" type="HBoxContainer" parent="LootPanel/LootTopHud/HeaderRow/PummelTopContainer/PlayerCardsContainer/Card_0/VBox"]
+[node name="AvatarFrame" type="PanelContainer" parent="LootPanel/LootLeftFlank/VBox/PlayerCardsContainer/Card_0/HBox"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_avatar_sub")
+
+[node name="AvatarRect" type="TextureRect" parent="LootPanel/LootLeftFlank/VBox/PlayerCardsContainer/Card_0/HBox/AvatarFrame"]
 layout_mode = 2
 mouse_filter = 2
-theme_override_constants/separation = 6
+expand_mode = 1
+stretch_mode = 6
 
-[node name="Badge" type="Label" parent="LootPanel/LootTopHud/HeaderRow/PummelTopContainer/PlayerCardsContainer/Card_0/VBox/Top"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.2, 0.75, 1, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
-theme_override_constants/outline_size = 4
-theme_override_font_sizes/font_size = 13
-text = "🔵 P1"
-
-[node name="Name" type="Label" parent="LootPanel/LootTopHud/HeaderRow/PummelTopContainer/PlayerCardsContainer/Card_0/VBox/Top"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_colors/font_color = Color(0.95, 0.95, 0.95, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
-theme_override_constants/outline_size = 4
-theme_override_font_sizes/font_size = 13
-text = "P1"
-text_overrun_behavior = 3
-
-[node name="Crown" type="Label" parent="LootPanel/LootTopHud/HeaderRow/PummelTopContainer/PlayerCardsContainer/Card_0/VBox/Top"]
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.85, 0.2, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
-theme_override_constants/outline_size = 4
-theme_override_font_sizes/font_size = 13
-text = "👑"
-
-[node name="Stats" type="HBoxContainer" parent="LootPanel/LootTopHud/HeaderRow/PummelTopContainer/PlayerCardsContainer/Card_0/VBox"]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 6
-
-[node name="Hp" type="Label" parent="LootPanel/LootTopHud/HeaderRow/PummelTopContainer/PlayerCardsContainer/Card_0/VBox/Stats"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.4, 0.85, 1, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
-theme_override_constants/outline_size = 3
-theme_override_font_sizes/font_size = 11
-text = "⚡ 2"
-
-[node name="Merit" type="Label" parent="LootPanel/LootTopHud/HeaderRow/PummelTopContainer/PlayerCardsContainer/Card_0/VBox/Stats"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.45, 0.9, 0.6, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
-theme_override_constants/outline_size = 3
-theme_override_font_sizes/font_size = 11
-text = "👟 2"
-
-[node name="Coins" type="Label" parent="LootPanel/LootTopHud/HeaderRow/PummelTopContainer/PlayerCardsContainer/Card_0/VBox/Stats"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.9, 0.9, 0.5, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
-theme_override_constants/outline_size = 3
-theme_override_font_sizes/font_size = 11
-text = "🪙 0"
-
-[node name="Bag" type="Label" parent="LootPanel/LootTopHud/HeaderRow/PummelTopContainer/PlayerCardsContainer/Card_0/VBox/Stats"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.7, 0.9, 1, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
-theme_override_constants/outline_size = 3
-theme_override_font_sizes/font_size = 11
-text = "🎒 0/2"
-
-[node name="Card_1" type="PanelContainer" parent="LootPanel/LootTopHud/HeaderRow/PummelTopContainer/PlayerCardsContainer"]
-custom_minimum_size = Vector2(204, 62)
-layout_mode = 2
-mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_pummel_card")
-
-[node name="VBox" type="VBoxContainer" parent="LootPanel/LootTopHud/HeaderRow/PummelTopContainer/PlayerCardsContainer/Card_1"]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 2
-
-[node name="Top" type="HBoxContainer" parent="LootPanel/LootTopHud/HeaderRow/PummelTopContainer/PlayerCardsContainer/Card_1/VBox"]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 6
-
-[node name="Badge" type="Label" parent="LootPanel/LootTopHud/HeaderRow/PummelTopContainer/PlayerCardsContainer/Card_1/VBox/Top"]
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.35, 0.45, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
-theme_override_constants/outline_size = 4
-theme_override_font_sizes/font_size = 13
-text = "🔴 P2"
-
-[node name="Name" type="Label" parent="LootPanel/LootTopHud/HeaderRow/PummelTopContainer/PlayerCardsContainer/Card_1/VBox/Top"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_colors/font_color = Color(0.95, 0.95, 0.95, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
-theme_override_constants/outline_size = 4
-theme_override_font_sizes/font_size = 13
-text = "P2"
-text_overrun_behavior = 3
-
-[node name="Crown" type="Label" parent="LootPanel/LootTopHud/HeaderRow/PummelTopContainer/PlayerCardsContainer/Card_1/VBox/Top"]
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.85, 0.2, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
-theme_override_constants/outline_size = 4
-theme_override_font_sizes/font_size = 13
-text = "👑"
-
-[node name="Stats" type="HBoxContainer" parent="LootPanel/LootTopHud/HeaderRow/PummelTopContainer/PlayerCardsContainer/Card_1/VBox"]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 6
-
-[node name="Hp" type="Label" parent="LootPanel/LootTopHud/HeaderRow/PummelTopContainer/PlayerCardsContainer/Card_1/VBox/Stats"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.4, 0.85, 1, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
-theme_override_constants/outline_size = 3
-theme_override_font_sizes/font_size = 11
-text = "⚡ 2"
-
-[node name="Merit" type="Label" parent="LootPanel/LootTopHud/HeaderRow/PummelTopContainer/PlayerCardsContainer/Card_1/VBox/Stats"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.45, 0.9, 0.6, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
-theme_override_constants/outline_size = 3
-theme_override_font_sizes/font_size = 11
-text = "👟 2"
-
-[node name="Coins" type="Label" parent="LootPanel/LootTopHud/HeaderRow/PummelTopContainer/PlayerCardsContainer/Card_1/VBox/Stats"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.9, 0.9, 0.5, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
-theme_override_constants/outline_size = 3
-theme_override_font_sizes/font_size = 11
-text = "🪙 0"
-
-[node name="Bag" type="Label" parent="LootPanel/LootTopHud/HeaderRow/PummelTopContainer/PlayerCardsContainer/Card_1/VBox/Stats"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.7, 0.9, 1, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
-theme_override_constants/outline_size = 3
-theme_override_font_sizes/font_size = 11
-text = "🎒 0/2"
-
-[node name="Card_2" type="PanelContainer" parent="LootPanel/LootTopHud/HeaderRow/PummelTopContainer/PlayerCardsContainer"]
-custom_minimum_size = Vector2(204, 62)
-layout_mode = 2
-mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_pummel_card")
-
-[node name="VBox" type="VBoxContainer" parent="LootPanel/LootTopHud/HeaderRow/PummelTopContainer/PlayerCardsContainer/Card_2"]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 2
-
-[node name="Top" type="HBoxContainer" parent="LootPanel/LootTopHud/HeaderRow/PummelTopContainer/PlayerCardsContainer/Card_2/VBox"]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 6
-
-[node name="Badge" type="Label" parent="LootPanel/LootTopHud/HeaderRow/PummelTopContainer/PlayerCardsContainer/Card_2/VBox/Top"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.35, 0.9, 0.45, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
-theme_override_constants/outline_size = 4
-theme_override_font_sizes/font_size = 13
-text = "🟢 P3"
-
-[node name="Name" type="Label" parent="LootPanel/LootTopHud/HeaderRow/PummelTopContainer/PlayerCardsContainer/Card_2/VBox/Top"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_colors/font_color = Color(0.95, 0.95, 0.95, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
-theme_override_constants/outline_size = 4
-theme_override_font_sizes/font_size = 13
-text = "P3"
-text_overrun_behavior = 3
-
-[node name="Crown" type="Label" parent="LootPanel/LootTopHud/HeaderRow/PummelTopContainer/PlayerCardsContainer/Card_2/VBox/Top"]
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.85, 0.2, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
-theme_override_constants/outline_size = 4
-theme_override_font_sizes/font_size = 13
-text = "👑"
-
-[node name="Stats" type="HBoxContainer" parent="LootPanel/LootTopHud/HeaderRow/PummelTopContainer/PlayerCardsContainer/Card_2/VBox"]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 6
-
-[node name="Hp" type="Label" parent="LootPanel/LootTopHud/HeaderRow/PummelTopContainer/PlayerCardsContainer/Card_2/VBox/Stats"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.4, 0.85, 1, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
-theme_override_constants/outline_size = 3
-theme_override_font_sizes/font_size = 11
-text = "⚡ 2"
-
-[node name="Merit" type="Label" parent="LootPanel/LootTopHud/HeaderRow/PummelTopContainer/PlayerCardsContainer/Card_2/VBox/Stats"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.45, 0.9, 0.6, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
-theme_override_constants/outline_size = 3
-theme_override_font_sizes/font_size = 11
-text = "👟 2"
-
-[node name="Coins" type="Label" parent="LootPanel/LootTopHud/HeaderRow/PummelTopContainer/PlayerCardsContainer/Card_2/VBox/Stats"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.9, 0.9, 0.5, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
-theme_override_constants/outline_size = 3
-theme_override_font_sizes/font_size = 11
-text = "🪙 0"
-
-[node name="Bag" type="Label" parent="LootPanel/LootTopHud/HeaderRow/PummelTopContainer/PlayerCardsContainer/Card_2/VBox/Stats"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.7, 0.9, 1, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
-theme_override_constants/outline_size = 3
-theme_override_font_sizes/font_size = 11
-text = "🎒 0/2"
-
-[node name="Card_3" type="PanelContainer" parent="LootPanel/LootTopHud/HeaderRow/PummelTopContainer/PlayerCardsContainer"]
-custom_minimum_size = Vector2(204, 62)
-layout_mode = 2
-mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_pummel_card")
-
-[node name="VBox" type="VBoxContainer" parent="LootPanel/LootTopHud/HeaderRow/PummelTopContainer/PlayerCardsContainer/Card_3"]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 2
-
-[node name="Top" type="HBoxContainer" parent="LootPanel/LootTopHud/HeaderRow/PummelTopContainer/PlayerCardsContainer/Card_3/VBox"]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 6
-
-[node name="Badge" type="Label" parent="LootPanel/LootTopHud/HeaderRow/PummelTopContainer/PlayerCardsContainer/Card_3/VBox/Top"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.8, 0.45, 1, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
-theme_override_constants/outline_size = 4
-theme_override_font_sizes/font_size = 13
-text = "🟣 P4"
-
-[node name="Name" type="Label" parent="LootPanel/LootTopHud/HeaderRow/PummelTopContainer/PlayerCardsContainer/Card_3/VBox/Top"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_colors/font_color = Color(0.95, 0.95, 0.95, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
-theme_override_constants/outline_size = 4
-theme_override_font_sizes/font_size = 13
-text = "P4"
-text_overrun_behavior = 3
-
-[node name="Crown" type="Label" parent="LootPanel/LootTopHud/HeaderRow/PummelTopContainer/PlayerCardsContainer/Card_3/VBox/Top"]
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.85, 0.2, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
-theme_override_constants/outline_size = 4
-theme_override_font_sizes/font_size = 13
-text = "👑"
-
-[node name="Stats" type="HBoxContainer" parent="LootPanel/LootTopHud/HeaderRow/PummelTopContainer/PlayerCardsContainer/Card_3/VBox"]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 6
-
-[node name="Hp" type="Label" parent="LootPanel/LootTopHud/HeaderRow/PummelTopContainer/PlayerCardsContainer/Card_3/VBox/Stats"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.4, 0.85, 1, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
-theme_override_constants/outline_size = 3
-theme_override_font_sizes/font_size = 11
-text = "⚡ 2"
-
-[node name="Merit" type="Label" parent="LootPanel/LootTopHud/HeaderRow/PummelTopContainer/PlayerCardsContainer/Card_3/VBox/Stats"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.45, 0.9, 0.6, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
-theme_override_constants/outline_size = 3
-theme_override_font_sizes/font_size = 11
-text = "👟 2"
-
-[node name="Coins" type="Label" parent="LootPanel/LootTopHud/HeaderRow/PummelTopContainer/PlayerCardsContainer/Card_3/VBox/Stats"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.9, 0.9, 0.5, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
-theme_override_constants/outline_size = 3
-theme_override_font_sizes/font_size = 11
-text = "🪙 0"
-
-[node name="Bag" type="Label" parent="LootPanel/LootTopHud/HeaderRow/PummelTopContainer/PlayerCardsContainer/Card_3/VBox/Stats"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.7, 0.9, 1, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
-theme_override_constants/outline_size = 3
-theme_override_font_sizes/font_size = 11
-text = "🎒 0/2"
-
-[node name="ActionGuide" type="Label" parent="LootPanel/LootTopHud/HeaderRow/PummelTopContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-mouse_filter = 2
-theme_override_colors/font_color = Color(0.96, 0.88, 0.6, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.95)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
-theme_override_constants/shadow_offset_x = 1
-theme_override_constants/shadow_offset_y = 2
-theme_override_constants/outline_size = 5
-theme_override_font_sizes/font_size = 13
-text = "🎲 [Z] Đổ xúc xắc · [TAB] Túi đồ (Dùng đồ) · Click ô vàng để rẽ nhánh."
-
-[node name="ActiveTurnLabel" type="Label" parent="LootPanel/LootTopHud/HeaderRow/PummelTopContainer"]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-
-[node name="LootText" type="RichTextLabel" parent="LootPanel/LootTopHud/HeaderRow/PummelTopContainer"]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-
-[node name="Spacer" type="Control" parent="LootPanel/LootTopHud/HeaderRow"]
+[node name="VBox" type="VBoxContainer" parent="LootPanel/LootLeftFlank/VBox/PlayerCardsContainer/Card_0/HBox"]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
+theme_override_constants/separation = 3
 
-[node name="RightShortcuts" type="VBoxContainer" parent="LootPanel/LootTopHud/HeaderRow"]
+[node name="Top" type="HBoxContainer" parent="LootPanel/LootLeftFlank/VBox/PlayerCardsContainer/Card_0/HBox/VBox"]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 4
 
-[node name="ShortcutHintTitle" type="Label" parent="LootPanel/LootTopHud/HeaderRow/RightShortcuts"]
+[node name="Badge" type="Label" parent="LootPanel/LootLeftFlank/VBox/PlayerCardsContainer/Card_0/HBox/VBox/Top"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2, 0.75, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 12
+text = "🔵 P1"
+
+[node name="Name" type="Label" parent="LootPanel/LootLeftFlank/VBox/PlayerCardsContainer/Card_0/HBox/VBox/Top"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.95, 0.95, 0.95, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 12
+text = "P1"
+text_overrun_behavior = 3
+
+[node name="Crown" type="Label" parent="LootPanel/LootLeftFlank/VBox/PlayerCardsContainer/Card_0/HBox/VBox/Top"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.2, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 12
+text = "👑"
+
+[node name="Stats" type="HBoxContainer" parent="LootPanel/LootLeftFlank/VBox/PlayerCardsContainer/Card_0/HBox/VBox"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 5
+
+[node name="Hp" type="Label" parent="LootPanel/LootLeftFlank/VBox/PlayerCardsContainer/Card_0/HBox/VBox/Stats"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.85, 1, 1)
+theme_override_font_sizes/font_size = 11
+text = "⚡ 2"
+
+[node name="Merit" type="Label" parent="LootPanel/LootLeftFlank/VBox/PlayerCardsContainer/Card_0/HBox/VBox/Stats"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.45, 0.9, 0.6, 1)
+theme_override_font_sizes/font_size = 11
+text = "👟 2"
+
+[node name="Coins" type="Label" parent="LootPanel/LootLeftFlank/VBox/PlayerCardsContainer/Card_0/HBox/VBox/Stats"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.9, 0.5, 1)
+theme_override_font_sizes/font_size = 11
+text = "🪙 0"
+
+[node name="Bag" type="Label" parent="LootPanel/LootLeftFlank/VBox/PlayerCardsContainer/Card_0/HBox/VBox/Stats"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 11
+text = "🎒 0/2"
+
+[node name="TurnBadge" type="Label" parent="LootPanel/LootLeftFlank/VBox/PlayerCardsContainer/Card_0/HBox/VBox"]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.25, 1)
+theme_override_colors/font_outline_color = Color(0.18, 0.1, 0.04, 0.95)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 10
+text = "⭐ ĐANG ĐẾN LƯỢT"
+
+[node name="Card_1" type="PanelContainer" parent="LootPanel/LootLeftFlank/VBox/PlayerCardsContainer"]
+custom_minimum_size = Vector2(216, 72)
+layout_mode = 2
+mouse_filter = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_pummel_card")
+
+[node name="HBox" type="HBoxContainer" parent="LootPanel/LootLeftFlank/VBox/PlayerCardsContainer/Card_1"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 8
+
+[node name="AvatarFrame" type="PanelContainer" parent="LootPanel/LootLeftFlank/VBox/PlayerCardsContainer/Card_1/HBox"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_avatar_sub")
+
+[node name="AvatarRect" type="TextureRect" parent="LootPanel/LootLeftFlank/VBox/PlayerCardsContainer/Card_1/HBox/AvatarFrame"]
+layout_mode = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 6
+
+[node name="VBox" type="VBoxContainer" parent="LootPanel/LootLeftFlank/VBox/PlayerCardsContainer/Card_1/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_constants/separation = 3
+
+[node name="Top" type="HBoxContainer" parent="LootPanel/LootLeftFlank/VBox/PlayerCardsContainer/Card_1/HBox/VBox"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="Badge" type="Label" parent="LootPanel/LootLeftFlank/VBox/PlayerCardsContainer/Card_1/HBox/VBox/Top"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.35, 0.45, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 12
+text = "🔴 P2"
+
+[node name="Name" type="Label" parent="LootPanel/LootLeftFlank/VBox/PlayerCardsContainer/Card_1/HBox/VBox/Top"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.95, 0.95, 0.95, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 12
+text = "P2"
+text_overrun_behavior = 3
+
+[node name="Crown" type="Label" parent="LootPanel/LootLeftFlank/VBox/PlayerCardsContainer/Card_1/HBox/VBox/Top"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.2, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 12
+text = "👑"
+
+[node name="Stats" type="HBoxContainer" parent="LootPanel/LootLeftFlank/VBox/PlayerCardsContainer/Card_1/HBox/VBox"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 5
+
+[node name="Hp" type="Label" parent="LootPanel/LootLeftFlank/VBox/PlayerCardsContainer/Card_1/HBox/VBox/Stats"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.85, 1, 1)
+theme_override_font_sizes/font_size = 11
+text = "⚡ 2"
+
+[node name="Merit" type="Label" parent="LootPanel/LootLeftFlank/VBox/PlayerCardsContainer/Card_1/HBox/VBox/Stats"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.45, 0.9, 0.6, 1)
+theme_override_font_sizes/font_size = 11
+text = "👟 2"
+
+[node name="Coins" type="Label" parent="LootPanel/LootLeftFlank/VBox/PlayerCardsContainer/Card_1/HBox/VBox/Stats"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.9, 0.5, 1)
+theme_override_font_sizes/font_size = 11
+text = "🪙 0"
+
+[node name="Bag" type="Label" parent="LootPanel/LootLeftFlank/VBox/PlayerCardsContainer/Card_1/HBox/VBox/Stats"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 11
+text = "🎒 0/2"
+
+[node name="TurnBadge" type="Label" parent="LootPanel/LootLeftFlank/VBox/PlayerCardsContainer/Card_1/HBox/VBox"]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.25, 1)
+theme_override_colors/font_outline_color = Color(0.18, 0.1, 0.04, 0.95)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 10
+text = "⭐ ĐANG ĐẾN LƯỢT"
+
+[node name="Card_2" type="PanelContainer" parent="LootPanel/LootLeftFlank/VBox/PlayerCardsContainer"]
+custom_minimum_size = Vector2(216, 72)
+layout_mode = 2
+mouse_filter = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_pummel_card")
+
+[node name="HBox" type="HBoxContainer" parent="LootPanel/LootLeftFlank/VBox/PlayerCardsContainer/Card_2"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 8
+
+[node name="AvatarFrame" type="PanelContainer" parent="LootPanel/LootLeftFlank/VBox/PlayerCardsContainer/Card_2/HBox"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_avatar_sub")
+
+[node name="AvatarRect" type="TextureRect" parent="LootPanel/LootLeftFlank/VBox/PlayerCardsContainer/Card_2/HBox/AvatarFrame"]
+layout_mode = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 6
+
+[node name="VBox" type="VBoxContainer" parent="LootPanel/LootLeftFlank/VBox/PlayerCardsContainer/Card_2/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_constants/separation = 3
+
+[node name="Top" type="HBoxContainer" parent="LootPanel/LootLeftFlank/VBox/PlayerCardsContainer/Card_2/HBox/VBox"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="Badge" type="Label" parent="LootPanel/LootLeftFlank/VBox/PlayerCardsContainer/Card_2/HBox/VBox/Top"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.35, 0.9, 0.45, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 12
+text = "🟢 P3"
+
+[node name="Name" type="Label" parent="LootPanel/LootLeftFlank/VBox/PlayerCardsContainer/Card_2/HBox/VBox/Top"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.95, 0.95, 0.95, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 12
+text = "P3"
+text_overrun_behavior = 3
+
+[node name="Crown" type="Label" parent="LootPanel/LootLeftFlank/VBox/PlayerCardsContainer/Card_2/HBox/VBox/Top"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.2, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 12
+text = "👑"
+
+[node name="Stats" type="HBoxContainer" parent="LootPanel/LootLeftFlank/VBox/PlayerCardsContainer/Card_2/HBox/VBox"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 5
+
+[node name="Hp" type="Label" parent="LootPanel/LootLeftFlank/VBox/PlayerCardsContainer/Card_2/HBox/VBox/Stats"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.85, 1, 1)
+theme_override_font_sizes/font_size = 11
+text = "⚡ 2"
+
+[node name="Merit" type="Label" parent="LootPanel/LootLeftFlank/VBox/PlayerCardsContainer/Card_2/HBox/VBox/Stats"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.45, 0.9, 0.6, 1)
+theme_override_font_sizes/font_size = 11
+text = "👟 2"
+
+[node name="Coins" type="Label" parent="LootPanel/LootLeftFlank/VBox/PlayerCardsContainer/Card_2/HBox/VBox/Stats"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.9, 0.5, 1)
+theme_override_font_sizes/font_size = 11
+text = "🪙 0"
+
+[node name="Bag" type="Label" parent="LootPanel/LootLeftFlank/VBox/PlayerCardsContainer/Card_2/HBox/VBox/Stats"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 11
+text = "🎒 0/2"
+
+[node name="TurnBadge" type="Label" parent="LootPanel/LootLeftFlank/VBox/PlayerCardsContainer/Card_2/HBox/VBox"]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.25, 1)
+theme_override_colors/font_outline_color = Color(0.18, 0.1, 0.04, 0.95)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 10
+text = "⭐ ĐANG ĐẾN LƯỢT"
+
+[node name="Card_3" type="PanelContainer" parent="LootPanel/LootLeftFlank/VBox/PlayerCardsContainer"]
+custom_minimum_size = Vector2(216, 72)
+layout_mode = 2
+mouse_filter = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_pummel_card")
+
+[node name="HBox" type="HBoxContainer" parent="LootPanel/LootLeftFlank/VBox/PlayerCardsContainer/Card_3"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 8
+
+[node name="AvatarFrame" type="PanelContainer" parent="LootPanel/LootLeftFlank/VBox/PlayerCardsContainer/Card_3/HBox"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_avatar_sub")
+
+[node name="AvatarRect" type="TextureRect" parent="LootPanel/LootLeftFlank/VBox/PlayerCardsContainer/Card_3/HBox/AvatarFrame"]
+layout_mode = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 6
+
+[node name="VBox" type="VBoxContainer" parent="LootPanel/LootLeftFlank/VBox/PlayerCardsContainer/Card_3/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_constants/separation = 3
+
+[node name="Top" type="HBoxContainer" parent="LootPanel/LootLeftFlank/VBox/PlayerCardsContainer/Card_3/HBox/VBox"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="Badge" type="Label" parent="LootPanel/LootLeftFlank/VBox/PlayerCardsContainer/Card_3/HBox/VBox/Top"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.45, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 12
+text = "🟣 P4"
+
+[node name="Name" type="Label" parent="LootPanel/LootLeftFlank/VBox/PlayerCardsContainer/Card_3/HBox/VBox/Top"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.95, 0.95, 0.95, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 12
+text = "P4"
+text_overrun_behavior = 3
+
+[node name="Crown" type="Label" parent="LootPanel/LootLeftFlank/VBox/PlayerCardsContainer/Card_3/HBox/VBox/Top"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.2, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 12
+text = "👑"
+
+[node name="Stats" type="HBoxContainer" parent="LootPanel/LootLeftFlank/VBox/PlayerCardsContainer/Card_3/HBox/VBox"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 5
+
+[node name="Hp" type="Label" parent="LootPanel/LootLeftFlank/VBox/PlayerCardsContainer/Card_3/HBox/VBox/Stats"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.85, 1, 1)
+theme_override_font_sizes/font_size = 11
+text = "⚡ 2"
+
+[node name="Merit" type="Label" parent="LootPanel/LootLeftFlank/VBox/PlayerCardsContainer/Card_3/HBox/VBox/Stats"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.45, 0.9, 0.6, 1)
+theme_override_font_sizes/font_size = 11
+text = "👟 2"
+
+[node name="Coins" type="Label" parent="LootPanel/LootLeftFlank/VBox/PlayerCardsContainer/Card_3/HBox/VBox/Stats"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.9, 0.5, 1)
+theme_override_font_sizes/font_size = 11
+text = "🪙 0"
+
+[node name="Bag" type="Label" parent="LootPanel/LootLeftFlank/VBox/PlayerCardsContainer/Card_3/HBox/VBox/Stats"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 11
+text = "🎒 0/2"
+
+[node name="TurnBadge" type="Label" parent="LootPanel/LootLeftFlank/VBox/PlayerCardsContainer/Card_3/HBox/VBox"]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.25, 1)
+theme_override_colors/font_outline_color = Color(0.18, 0.1, 0.04, 0.95)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 10
+text = "⭐ ĐANG ĐẾN LƯỢT"
+
+[node name="LootRightFlank" type="MarginContainer" parent="LootPanel"]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -280.0
+grow_horizontal = 0
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 22
+theme_override_constants/margin_bottom = 20
+
+[node name="VBox" type="VBoxContainer" parent="LootPanel/LootRightFlank"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 12
+
+[node name="TurnInfoCard" type="PanelContainer" parent="LootPanel/LootRightFlank/VBox"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_pummel_card")
+
+[node name="InfoVBox" type="VBoxContainer" parent="LootPanel/LootRightFlank/VBox/TurnInfoCard"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="ActiveTurnLabel" type="Label" parent="LootPanel/LootRightFlank/VBox/TurnInfoCard/InfoVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.25, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 14
+text = "🎯 ĐẾN LƯỢT"
+
+[node name="ActionGuide" type="Label" parent="LootPanel/LootRightFlank/VBox/TurnInfoCard/InfoVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.92, 0.88, 0.78, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 12
+autowrap_mode = 2
+text = "🎲 [Z] Đổ xúc xắc · [TAB] Túi đồ"
+
+[node name="LootText" type="RichTextLabel" parent="LootPanel/LootRightFlank/VBox/TurnInfoCard/InfoVBox"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="ActionControls" type="VBoxContainer" parent="LootPanel/LootRightFlank/VBox"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 8
+
+[node name="RollDiceButton" type="Button" parent="LootPanel/LootRightFlank/VBox/ActionControls"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0.12, 0.08, 0.04, 1)
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("StyleBoxFlat_pummel_roll_btn")
+text = "🎲 [Z] ĐỔ XÚC XẮC"
+
+[node name="OpenBagButton" type="Button" parent="LootPanel/LootRightFlank/VBox/ActionControls"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 38)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0.95, 0.9, 0.78, 1)
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = SubResource("StyleBoxFlat_pummel_card")
+text = "🎒 [TAB] TÚI VẬT PHẨM"
+
+[node name="Spacer" type="Control" parent="LootPanel/LootRightFlank/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="RightShortcuts" type="VBoxContainer" parent="LootPanel/LootRightFlank/VBox"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="ShortcutHintTitle" type="Label" parent="LootPanel/LootRightFlank/VBox/RightShortcuts"]
 layout_mode = 2
 mouse_filter = 2
 theme_override_colors/font_color = Color(0.96, 0.82, 0.45, 1)
@@ -4537,13 +4690,12 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
 theme_override_constants/shadow_offset_x = 1
 theme_override_constants/shadow_offset_y = 2
 theme_override_constants/outline_size = 5
-theme_override_font_sizes/font_size = 14
-horizontal_alignment = 2
+theme_override_font_sizes/font_size = 13
 text = "PHÍM TẮT THAO TÁC"
 
-[node name="ShortcutHintText" type="RichTextLabel" parent="LootPanel/LootTopHud/HeaderRow/RightShortcuts"]
+[node name="ShortcutHintText" type="RichTextLabel" parent="LootPanel/LootRightFlank/VBox/RightShortcuts"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(250, 75)
+custom_minimum_size = Vector2(240, 75)
 layout_mode = 2
 mouse_filter = 2
 theme_override_colors/default_color = Color(0.92, 0.92, 0.9, 1)
@@ -4551,15 +4703,15 @@ theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.9)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
 theme_override_constants/shadow_offset_x = 1
 theme_override_constants/shadow_offset_y = 2
-theme_override_constants/outline_size = 5
-theme_override_font_sizes/normal_font_size = 13
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/normal_font_size = 12
 bbcode_enabled = true
 fit_content = true
 autowrap_mode = 0
-text = "[right][color=#f6c95c][b][Z][/b][/color] Đổ xúc xắc / Đi tiếp
+text = "[color=#f6c95c][b][Z][/b][/color] Đổ xúc xắc / Đi tiếp
 [color=#f6c95c][b][TAB][/b][/color] Túi đồ (Dùng đồ)
 [color=#f6c95c][b][SPACE][/b][/color] Định vị nhân vật
-[color=#8be9fd][b]Cuộn chuột[/b][/color] Thu phóng bản đồ[/right]"
+[color=#8be9fd][b]Cuộn chuột[/b][/color] Thu phóng bản đồ"
 
 [node name="BranchPanel" type="MarginContainer" parent="LootPanel"]
 unique_name_in_owner = true
@@ -4632,10 +4784,6 @@ theme_override_constants/separation = 10
 visible = false
 layout_mode = 2
 
-[node name="RollDiceButton" type="Button" parent="LootPanel/ItemWindowPanel/Panel/Row"]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
 
 [node name="ItemSourceSelector" type="OptionButton" parent="LootPanel/ItemWindowPanel/Panel/Row"]
 unique_name_in_owner = true

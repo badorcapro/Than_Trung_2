@@ -11,8 +11,8 @@ const CAMERA_MAX_ZOOM := 1.4
 const CAMERA_ZOOM_STEP := 0.1
 const CAMERA_FIT_SCREEN_MARGIN := 32.0
 const CAMERA_DRAG_THRESHOLD := 16.0
-const BOARD_ROUTE_WIDTH := 16.0
-const BOARD_ROUTE_SHADOW_WIDTH := 28.0
+const BOARD_ROUTE_WIDTH := 13.0
+const BOARD_ROUTE_SHADOW_WIDTH := 22.0
 const MAP_TEXTURE_PATH := "res://assets/maps/imperial_court_board_v1.png"
 const MAP_TEXTURE_FALLBACK_PATH := "res://assets/maps/imperial_court_map.png"
 
@@ -474,32 +474,6 @@ func _draw() -> void:
 					Color.WHITE if not is_consumed else Color(0.6, 0.6, 0.6, 0.7)
 				)
 
-				# Bottom-right quantity badge (ở góc phải item có số)
-				if show_count and not is_consumed:
-					var num_str: String = String(rew.get("amount_str", "%d" % amount))
-					var badge_font_size: int = maxi(int(9.0 * visual_scale), 7)
-					var text_w: float = ThemeDB.fallback_font.get_string_size(
-						num_str, HORIZONTAL_ALIGNMENT_CENTER, -1, badge_font_size
-					).x
-					var badge_w: float = maxf(text_w + 6.0 * visual_scale, 17.0 * visual_scale)
-					var badge_h: float = 14.0 * visual_scale
-					var badge_center: Vector2 = center + Vector2(radius * 0.62, radius * 0.62)
-					var badge_rect := Rect2(badge_center - Vector2(badge_w * 0.5, badge_h * 0.5), Vector2(badge_w, badge_h))
-
-					# Badge drop shadow
-					draw_rect(badge_rect.grow(1.2 * visual_scale), Color(0.02, 0.02, 0.03, 0.75), true)
-					# Badge golden-amber border
-					draw_rect(badge_rect, Color(1.0, 0.84, 0.25, 0.98), false, 1.2 * visual_scale)
-					# Badge dark background
-					draw_rect(badge_rect, Color(0.08, 0.1, 0.14, 0.98), true)
-					# Badge quantity text
-					var badge_pos: Vector2 = badge_rect.position + Vector2(0.0, float(badge_font_size) * 1.05)
-					draw_string(
-						ThemeDB.fallback_font, badge_pos, num_str,
-						HORIZONTAL_ALIGNMENT_CENTER, badge_w, badge_font_size,
-						Color(1.0, 0.94, 0.6)
-					)
-
 				if is_consumed:
 					draw_circle(center, radius, Color(0.0, 0.0, 0.0, 0.55))
 					draw_string(ThemeDB.fallback_font, center + Vector2(-9.0, 5.0), "✔", HORIZONTAL_ALIGNMENT_CENTER, 18.0, 13, Color(0.4, 0.9, 0.45))
@@ -616,8 +590,27 @@ func has_custom_map_texture() -> bool:
 
 
 func _draw_board_background() -> void:
-	# Deep antique charcoal tabletop border / table mat
-	draw_rect(Rect2(Vector2.ZERO, size), Color(0.065, 0.08, 0.075, 1.0), true)
+	var v_scale: float = _visual_scale()
+	# 1. Mặt bàn gỗ gụ hoàng cung (Imperial Tabletop - Warm Deep Mahogany & Rosewood)
+	draw_rect(Rect2(Vector2.ZERO, size), Color(0.082, 0.058, 0.045, 1.0), true)
+
+	# Faint woven wood/silk grain slats across the screen
+	var slat_step: float = 38.0
+	var slat_y: float = 0.0
+	while slat_y < size.y:
+		draw_line(
+			Vector2(0, slat_y), Vector2(size.x, slat_y),
+			Color(0.12, 0.085, 0.065, 0.35), 1.0
+		)
+		slat_y += slat_step
+
+	# Dark vignette rim around the screen perimeter to focus eyes inward
+	var edge_vignette_w: float = 80.0
+	draw_rect(Rect2(Vector2.ZERO, Vector2(size.x, edge_vignette_w)), Color(0.02, 0.015, 0.01, 0.55), true)
+	draw_rect(Rect2(Vector2(0, size.y - edge_vignette_w), Vector2(size.x, edge_vignette_w)), Color(0.02, 0.015, 0.01, 0.55), true)
+	draw_rect(Rect2(Vector2.ZERO, Vector2(edge_vignette_w, size.y)), Color(0.02, 0.015, 0.01, 0.55), true)
+	draw_rect(Rect2(Vector2(size.x - edge_vignette_w, 0), Vector2(edge_vignette_w, size.y)), Color(0.02, 0.015, 0.01, 0.55), true)
+
 	if not _uses_authored_world_coordinates():
 		return
 	var tex: Texture2D = _get_map_texture()
@@ -625,15 +618,46 @@ func _draw_board_background() -> void:
 		var tex_world_rect: Rect2 = _map_texture_world_rect()
 		var screen_pos: Vector2 = _world_to_screen(tex_world_rect.position)
 		var screen_rect := Rect2(screen_pos, tex_world_rect.size * _zoom)
-		# Soft drop shadow for parchment map scroll
-		var shadow_rect := screen_rect.grow(16.0 * _visual_scale())
-		shadow_rect.position += Vector2(10.0, 16.0) * _visual_scale()
-		draw_rect(shadow_rect, Color(0.02, 0.03, 0.025, 0.68), true)
-		# Outer antique scroll border
-		var border_rect := screen_rect.grow(4.0 * _visual_scale())
-		draw_rect(border_rect, Color(0.32, 0.25, 0.16, 0.95), false, 5.0 * _visual_scale())
-		# Authentic illustrated Imperial Court Map
-		draw_texture_rect(tex, screen_rect, false)
+
+		# Multi-layered soft drop shadow for 3D parchment scroll depth
+		var shadow_deep := screen_rect.grow(30.0 * v_scale)
+		shadow_deep.position += Vector2(16.0, 24.0) * v_scale
+		draw_rect(shadow_deep, Color(0.01, 0.01, 0.01, 0.38), true)
+
+		var shadow_near := screen_rect.grow(14.0 * v_scale)
+		shadow_near.position += Vector2(8.0, 12.0) * v_scale
+		draw_rect(shadow_near, Color(0.015, 0.012, 0.01, 0.65), true)
+
+		# Outer antique scroll border (aged bronze & imperial gold)
+		var border_rect := screen_rect.grow(5.0 * v_scale)
+		draw_rect(border_rect, Color(0.38, 0.28, 0.16, 0.98), false, 5.0 * v_scale)
+		var inner_gold_rect := screen_rect.grow(1.5 * v_scale)
+		draw_rect(inner_gold_rect, Color(0.85, 0.70, 0.35, 0.65), false, 1.5 * v_scale)
+
+		# Authentic illustrated Imperial Court Map with subtle warm rice-paper tint
+		draw_texture_rect(tex, screen_rect, false, Color(0.97, 0.94, 0.89, 1.0))
+
+		# Cylindrical antique scroll rods at top and bottom ends (Trục cuốn hoàng gia)
+		var rod_h: float = 14.0 * v_scale
+		var rod_overhang: float = 24.0 * v_scale
+		var top_rod_rect := Rect2(screen_rect.position.x - rod_overhang, screen_rect.position.y - rod_h * 0.5, screen_rect.size.x + rod_overhang * 2.0, rod_h)
+		var btm_rod_rect := Rect2(screen_rect.position.x - rod_overhang, screen_rect.position.y + screen_rect.size.y - rod_h * 0.5, screen_rect.size.x + rod_overhang * 2.0, rod_h)
+
+		# Rod shadows
+		draw_rect(top_rod_rect.grow(2.0 * v_scale), Color(0.02, 0.015, 0.01, 0.5), true)
+		draw_rect(btm_rod_rect.grow(2.0 * v_scale), Color(0.02, 0.015, 0.01, 0.5), true)
+		# Rod ebony wood bodies
+		draw_rect(top_rod_rect, Color(0.18, 0.12, 0.08, 0.98), true)
+		draw_rect(btm_rod_rect, Color(0.18, 0.12, 0.08, 0.98), true)
+		# Rod specular gold rim highlights
+		draw_line(top_rod_rect.position + Vector2(0, 2.0 * v_scale), top_rod_rect.position + Vector2(top_rod_rect.size.x, 2.0 * v_scale), Color(0.85, 0.70, 0.35, 0.85), 1.8 * v_scale)
+		draw_line(btm_rod_rect.position + Vector2(0, 2.0 * v_scale), btm_rod_rect.position + Vector2(btm_rod_rect.size.x, 2.0 * v_scale), Color(0.85, 0.70, 0.35, 0.85), 1.8 * v_scale)
+		# Rod golden knob caps (chốt đầu trục bằng vàng)
+		var cap_w: float = 16.0 * v_scale
+		draw_rect(Rect2(top_rod_rect.position.x, top_rod_rect.position.y - 2.0 * v_scale, cap_w, rod_h + 4.0 * v_scale), Color(0.95, 0.80, 0.35, 0.98), true)
+		draw_rect(Rect2(top_rod_rect.position.x + top_rod_rect.size.x - cap_w, top_rod_rect.position.y - 2.0 * v_scale, cap_w, rod_h + 4.0 * v_scale), Color(0.95, 0.80, 0.35, 0.98), true)
+		draw_rect(Rect2(btm_rod_rect.position.x, btm_rod_rect.position.y - 2.0 * v_scale, cap_w, rod_h + 4.0 * v_scale), Color(0.95, 0.80, 0.35, 0.98), true)
+		draw_rect(Rect2(btm_rod_rect.position.x + btm_rod_rect.size.x - cap_w, btm_rod_rect.position.y - 2.0 * v_scale, cap_w, rod_h + 4.0 * v_scale), Color(0.95, 0.80, 0.35, 0.98), true)
 	else:
 		_draw_fallback_background()
 
