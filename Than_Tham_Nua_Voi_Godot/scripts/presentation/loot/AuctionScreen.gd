@@ -139,6 +139,17 @@ var _settlement_spinner_angle: float = 0.0
 var _continue_pulse_time: float = 0.0
 var _border_anim_time: float = 0.0
 
+# Audio & SFX for Crate Loading / Item Reveal
+## Ngưỡng giá trị kích hoạt SFX vang vọng (mặc định = 37, tương đương giá món vàng thấp nhất hiện tại)
+const HIGH_VALUE_SFX_THRESHOLD: int = 37
+const SFX_ITEM_REVEAL_NORMAL_PATH: String = "res://assets/audio/sfx_item_reveal_normal.wav"
+const SFX_ITEM_REVEAL_HIGH_VALUE_PATH: String = "res://assets/audio/sfx_item_reveal_high_value.wav"
+
+var _sfx_player: AudioStreamPlayer
+var _sfx_high_val_player: AudioStreamPlayer
+var _sfx_normal_stream: AudioStream
+var _sfx_high_val_stream: AudioStream
+
 
 func _init() -> void:
 	name = "AuctionScreen"
@@ -466,6 +477,31 @@ func _build_ui() -> void:
 	encyclopedia_dialog = ENCYCLOPEDIA_DIALOG_CLASS.new()
 	encyclopedia_dialog.visible = false
 	add_child(encyclopedia_dialog)
+
+	# Audio Players for Item Reveal
+	_sfx_player = AudioStreamPlayer.new()
+	_sfx_player.bus = &"Master"
+	add_child(_sfx_player)
+
+	_sfx_high_val_player = AudioStreamPlayer.new()
+	_sfx_high_val_player.bus = &"Master"
+	add_child(_sfx_high_val_player)
+
+	if ResourceLoader.exists(SFX_ITEM_REVEAL_NORMAL_PATH):
+		_sfx_normal_stream = load(SFX_ITEM_REVEAL_NORMAL_PATH) as AudioStream
+	if ResourceLoader.exists(SFX_ITEM_REVEAL_HIGH_VALUE_PATH):
+		_sfx_high_val_stream = load(SFX_ITEM_REVEAL_HIGH_VALUE_PATH) as AudioStream
+
+
+func _play_reveal_sfx(silver_val: int) -> void:
+	if silver_val >= HIGH_VALUE_SFX_THRESHOLD:
+		if _sfx_high_val_player != null and _sfx_high_val_stream != null:
+			_sfx_high_val_player.stream = _sfx_high_val_stream
+			_sfx_high_val_player.play()
+	else:
+		if _sfx_player != null and _sfx_normal_stream != null:
+			_sfx_player.stream = _sfx_normal_stream
+			_sfx_player.play()
 
 
 func _build_settlement_dialog() -> void:
@@ -1850,6 +1886,7 @@ func _run_settlement_reveal() -> void:
 		_settlement_revealed_item_ids[i_id] = true
 		_settlement_accumulated_value += item.silver_value
 		_active_loading_item_id = ""
+		_play_reveal_sfx(item.silver_value)
 		_update_settlement_stats()
 		if _settlement_grid_draw_control != null:
 			_settlement_grid_draw_control.queue_redraw()
