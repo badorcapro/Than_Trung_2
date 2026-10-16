@@ -199,15 +199,15 @@ func _build_ui() -> void:
 	body_hbox.add_theme_constant_override("separation", 20)
 	main_vbox.add_child(body_hbox)
 
-	# CỘT TRÁI: NGƯỜI THAM GIA ĐẤU GIÁ (BIDDERS - 370px BidKing Style)
+	# CỘT TRÁI: NGƯỜI THAM GIA ĐẤU GIÁ (BIDDERS - 410px BidKing Style)
 	_left_column = VBoxContainer.new()
-	_left_column.custom_minimum_size = Vector2(370, 0)
+	_left_column.custom_minimum_size = Vector2(410, 0)
 	_left_column.size_flags_vertical = SIZE_EXPAND_FILL
 	_left_column.add_theme_constant_override("separation", 8)
 	body_hbox.add_child(_left_column)
 
 	var bidders_scroll := ScrollContainer.new()
-	bidders_scroll.custom_minimum_size = Vector2(370, 0)
+	bidders_scroll.custom_minimum_size = Vector2(410, 0)
 	bidders_scroll.size_flags_vertical = SIZE_EXPAND_FILL
 	bidders_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	_left_column.add_child(bidders_scroll)
@@ -970,7 +970,7 @@ func _render_bidders() -> void:
 
 		# Thẻ Bidder phong cách BidKing Cyber-Tabletop (Ảnh 1 & 3)
 		var card := PanelContainer.new()
-		card.custom_minimum_size = Vector2(360, 114)
+		card.custom_minimum_size = Vector2(400, 150)
 		card.size_flags_horizontal = SIZE_EXPAND_FILL
 		card.mouse_filter = MOUSE_FILTER_PASS
 
@@ -1007,20 +1007,20 @@ func _render_bidders() -> void:
 		card.add_child(margin)
 
 		var root_hbox := HBoxContainer.new()
-		root_hbox.add_theme_constant_override("separation", 10)
+		root_hbox.add_theme_constant_override("separation", 14)
 		margin.add_child(root_hbox)
 
 		# =========================================================
-		# 1. CỘT TRÁI (2 AVATAR XẾP DỌC)
+		# 1. CỘT TRÁI (2 AVATAR XẾP DỌC - ENLARGED > 50%)
 		# =========================================================
 		var left_col := VBoxContainer.new()
-		left_col.custom_minimum_size = Vector2(44, 0)
-		left_col.add_theme_constant_override("separation", 3)
+		left_col.custom_minimum_size = Vector2(72, 0)
+		left_col.add_theme_constant_override("separation", 6)
 		root_hbox.add_child(left_col)
 
-		# Ô 1 (Trên): Avatar người chơi (Player Avatar Placeholder)
+		# Ô 1 (Trên): Avatar người chơi (Player Avatar Placeholder: 56x56)
 		var p_av_panel := PanelContainer.new()
-		p_av_panel.custom_minimum_size = Vector2(40, 40)
+		p_av_panel.custom_minimum_size = Vector2(56, 56)
 		var p_av_sb := StyleBoxFlat.new()
 		p_av_sb.bg_color = Color(0.04, 0.07, 0.11, 0.9)
 		p_av_sb.border_color = Color(0.40, 0.52, 0.68, 0.7)
@@ -1039,10 +1039,10 @@ func _render_bidders() -> void:
 		p_av_panel.add_child(p_av_center)
 		var p_av_lbl := Label.new()
 		p_av_lbl.text = "👤"
-		p_av_lbl.add_theme_font_size_override("font_size", 16)
+		p_av_lbl.add_theme_font_size_override("font_size", 24)
 		p_av_center.add_child(p_av_lbl)
 
-		# Ô 2 (Dưới): Avatar nhân vật (Character Portrait) - Full hình, bỏ khung xanh dương
+		# Ô 2 (Dưới): Avatar nhân vật (Character Portrait: 72x72) - Full hình, bỏ viền
 		var p_path: String = char_data.portrait
 		var portrait_tex: Texture2D = _get_cached_item_texture(p_path)
 		if portrait_tex != null:
@@ -1050,14 +1050,14 @@ func _render_bidders() -> void:
 			c_img.texture = portrait_tex
 			c_img.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 			c_img.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
-			c_img.custom_minimum_size = Vector2(46, 46)
+			c_img.custom_minimum_size = Vector2(72, 72)
 			left_col.add_child(c_img)
 		else:
 			var c_center := CenterContainer.new()
-			c_center.custom_minimum_size = Vector2(46, 46)
+			c_center.custom_minimum_size = Vector2(72, 72)
 			var c_icon_lbl := Label.new()
 			c_icon_lbl.text = char_data.icon
-			c_icon_lbl.add_theme_font_size_override("font_size", 20)
+			c_icon_lbl.add_theme_font_size_override("font_size", 34)
 			c_center.add_child(c_icon_lbl)
 			left_col.add_child(c_center)
 
@@ -1066,7 +1066,7 @@ func _render_bidders() -> void:
 		# =========================================================
 		var right_vbox := VBoxContainer.new()
 		right_vbox.size_flags_horizontal = SIZE_EXPAND_FILL
-		right_vbox.add_theme_constant_override("separation", 4)
+		right_vbox.add_theme_constant_override("separation", 6)
 		root_hbox.add_child(right_vbox)
 
 		# Hàng 1: Tên người chơi & Trạng thái ra giá góc phải
