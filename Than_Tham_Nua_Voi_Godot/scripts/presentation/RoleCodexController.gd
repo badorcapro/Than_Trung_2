@@ -492,4 +492,4 @@ func _hide_role_glossary_tooltip() -> void:
 
 func _on_back_pressed() -> void:
 	_hide_role_glossary_tooltip()
-	AppFlow.go_to_debug_home()
+	AppFlow.go_to_player_main_menu()
