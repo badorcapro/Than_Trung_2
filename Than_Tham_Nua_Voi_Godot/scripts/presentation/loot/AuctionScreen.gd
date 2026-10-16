@@ -968,259 +968,356 @@ func _render_bidders() -> void:
 		child.queue_free()
 
 	var curr_pid := _get_current_turn_player_id()
-	var frame_tex := load("res://assets/ui/auction/bidder_card_frame.png") as Texture2D
-
-	var badges: Array[String] = [
-		"Nhà Sưu Tầm Đỉnh",
-		"Tiến Sĩ Cuồng Nhiệt",
-		"Thần Thám Tướng Quân",
-		"Quan Khảo Trắc"
-	]
-	var avatar_icons: Array[String] = ["🧑‍💼", "🕵️", "👑", "🧙‍♂️"]
 
 	for i in range(auction_session.eligible_player_ids.size()):
 		var pid: StringName = auction_session.eligible_player_ids[i]
 		var is_active: bool = auction_session.active_bidder_ids.has(pid)
 		var is_current_turn: bool = (not _round_completed and pid == curr_pid)
-		var is_leader: bool = (
-			_round_completed
-			and auction_session.highest_bidder_id == pid
-			and auction_session.highest_bid > 0
-		)
+		var char_data: Dictionary = DEFAULT_CHARACTERS_DATA[i % DEFAULT_CHARACTERS_DATA.size()]
 
+		# Thẻ Bidder phong cách BidKing Cyber-Tabletop (Ảnh 1 & 3)
 		var card := PanelContainer.new()
-		card.custom_minimum_size = Vector2(340, 70)
+		card.custom_minimum_size = Vector2(360, 114)
 		card.size_flags_horizontal = SIZE_EXPAND_FILL
 		card.mouse_filter = MOUSE_FILTER_PASS
 
-		if frame_tex != null:
-			var card_style := StyleBoxTexture.new()
-			card_style.texture = frame_tex
-			card_style.texture_margin_left = 24
-			card_style.texture_margin_top = 16
-			card_style.texture_margin_right = 24
-			card_style.texture_margin_bottom = 16
-			card_style.content_margin_left = 0
-			card_style.content_margin_right = 0
-			card_style.content_margin_top = 0
-			card_style.content_margin_bottom = 0
-			if not is_active:
-				card_style.modulate_color = Color(0.4, 0.4, 0.45, 0.6)
-			elif is_current_turn:
-				card_style.modulate_color = Color(1.15, 1.15, 1.05, 1.0)
-			else:
-				card_style.modulate_color = Color(0.9, 0.9, 0.95, 0.9)
-			card.add_theme_stylebox_override("panel", card_style)
+		var card_sb := StyleBoxFlat.new()
+		card_sb.bg_color = Color(0.08, 0.11, 0.16, 0.94)
+		if is_current_turn:
+			card_sb.border_color = Color("#f6c95c")
+			card_sb.border_width_left = 2
+			card_sb.border_width_top = 2
+			card_sb.border_width_right = 2
+			card_sb.border_width_bottom = 2
 		else:
-			var fb := StyleBoxFlat.new()
-			fb.bg_color = Color(0.08, 0.12, 0.18, 0.85)
-			fb.border_color = Color("#f6c95c") if is_current_turn else Color(0.3, 0.4, 0.5, 0.6)
-			fb.border_width_left = 2 if is_current_turn else 1
-			fb.border_width_top = 2 if is_current_turn else 1
-			fb.border_width_right = 2 if is_current_turn else 1
-			fb.border_width_bottom = 2 if is_current_turn else 1
-			fb.corner_radius_top_left = 6
-			fb.corner_radius_top_right = 6
-			fb.corner_radius_bottom_left = 6
-			fb.corner_radius_bottom_right = 6
-			card.add_theme_stylebox_override("panel", fb)
+			card_sb.border_color = Color(0.24, 0.32, 0.44, 0.55)
+			card_sb.border_width_left = 1
+			card_sb.border_width_top = 1
+			card_sb.border_width_right = 1
+			card_sb.border_width_bottom = 1
+		card_sb.corner_radius_top_left = 8
+		card_sb.corner_radius_top_right = 8
+		card_sb.corner_radius_bottom_left = 8
+		card_sb.corner_radius_bottom_right = 8
+		card.add_theme_stylebox_override("panel", card_sb)
+
+		if not is_active:
+			card.modulate = Color(0.6, 0.6, 0.65, 0.65)
 
 		_bidders_container.add_child(card)
 
 		var margin := MarginContainer.new()
-		margin.add_theme_constant_override("margin_left", 12)
-		margin.add_theme_constant_override("margin_right", 12)
-		margin.add_theme_constant_override("margin_top", 6)
-		margin.add_theme_constant_override("margin_bottom", 6)
+		margin.add_theme_constant_override("margin_left", 8)
+		margin.add_theme_constant_override("margin_right", 8)
+		margin.add_theme_constant_override("margin_top", 8)
+		margin.add_theme_constant_override("margin_bottom", 8)
 		card.add_child(margin)
 
-		var hbox := HBoxContainer.new()
-		hbox.add_theme_constant_override("separation", 10)
-		hbox.alignment = BoxContainer.ALIGNMENT_CENTER
-		margin.add_child(hbox)
+		var root_hbox := HBoxContainer.new()
+		root_hbox.add_theme_constant_override("separation", 10)
+		margin.add_child(root_hbox)
 
-		# 1. Avatar box on the left (Roomy 38x38)
-		var av_panel := PanelContainer.new()
-		av_panel.custom_minimum_size = Vector2(38, 38)
-		var av_sb := StyleBoxFlat.new()
-		av_sb.bg_color = Color(0.05, 0.08, 0.12, 0.9)
-		av_sb.border_color = Color("#f6c95c") if is_current_turn else Color(0.4, 0.5, 0.6, 0.6)
-		av_sb.border_width_left = 1
-		av_sb.border_width_top = 1
-		av_sb.border_width_right = 1
-		av_sb.border_width_bottom = 1
-		av_sb.corner_radius_top_left = 6
-		av_sb.corner_radius_top_right = 6
-		av_sb.corner_radius_bottom_left = 6
-		av_sb.corner_radius_bottom_right = 6
-		av_panel.add_theme_stylebox_override("panel", av_sb)
-		hbox.add_child(av_panel)
+		# =========================================================
+		# 1. CỘT TRÁI (2 AVATAR XẾP DỌC)
+		# =========================================================
+		var left_col := VBoxContainer.new()
+		left_col.custom_minimum_size = Vector2(44, 0)
+		left_col.add_theme_constant_override("separation", 3)
+		root_hbox.add_child(left_col)
 
-		var av_center := CenterContainer.new()
-		av_panel.add_child(av_center)
-		var av_lbl := Label.new()
-		av_lbl.text = avatar_icons[i % avatar_icons.size()]
-		av_lbl.add_theme_font_size_override("font_size", 18)
-		av_center.add_child(av_lbl)
+		# Ô 1 (Trên): Avatar người chơi (Player Avatar Placeholder)
+		var p_av_panel := PanelContainer.new()
+		p_av_panel.custom_minimum_size = Vector2(40, 40)
+		var p_av_sb := StyleBoxFlat.new()
+		p_av_sb.bg_color = Color(0.04, 0.07, 0.11, 0.9)
+		p_av_sb.border_color = Color(0.40, 0.52, 0.68, 0.7)
+		p_av_sb.border_width_left = 1
+		p_av_sb.border_width_top = 1
+		p_av_sb.border_width_right = 1
+		p_av_sb.border_width_bottom = 1
+		p_av_sb.corner_radius_top_left = 6
+		p_av_sb.corner_radius_top_right = 6
+		p_av_sb.corner_radius_bottom_left = 6
+		p_av_sb.corner_radius_bottom_right = 6
+		p_av_panel.add_theme_stylebox_override("panel", p_av_sb)
+		left_col.add_child(p_av_panel)
 
-		# 2. Middle Content VBox
-		var mid_vbox := VBoxContainer.new()
-		mid_vbox.size_flags_horizontal = SIZE_EXPAND_FILL
-		mid_vbox.add_theme_constant_override("separation", 4)
-		hbox.add_child(mid_vbox)
+		var p_av_center := CenterContainer.new()
+		p_av_panel.add_child(p_av_center)
+		var p_av_lbl := Label.new()
+		p_av_lbl.text = "👤"
+		p_av_lbl.add_theme_font_size_override("font_size", 16)
+		p_av_center.add_child(p_av_lbl)
 
-		# Row A: Name and Role Badge
-		var name_hbox := HBoxContainer.new()
-		name_hbox.add_theme_constant_override("separation", 6)
-		mid_vbox.add_child(name_hbox)
+		# Ô 2 (Dưới): Avatar nhân vật (Character Portrait)
+		var c_av_panel := PanelContainer.new()
+		c_av_panel.custom_minimum_size = Vector2(40, 40)
+		var c_av_sb := StyleBoxFlat.new()
+		c_av_sb.bg_color = Color(0.04, 0.07, 0.11, 0.9)
+		c_av_sb.border_color = char_data.theme_color
+		c_av_sb.border_width_left = 1
+		c_av_sb.border_width_top = 1
+		c_av_sb.border_width_right = 1
+		c_av_sb.border_width_bottom = 1
+		c_av_sb.corner_radius_top_left = 6
+		c_av_sb.corner_radius_top_right = 6
+		c_av_sb.corner_radius_bottom_left = 6
+		c_av_sb.corner_radius_bottom_right = 6
+		c_av_panel.add_theme_stylebox_override("panel", c_av_sb)
+		left_col.add_child(c_av_panel)
 
-		var name_lbl := Label.new()
-		name_lbl.text = "%d. %s" % [i + 1, String(pid)]
-		name_lbl.clip_text = true
-		name_lbl.size_flags_horizontal = SIZE_EXPAND_FILL
-		name_lbl.add_theme_font_size_override("font_size", 11)
-		name_lbl.add_theme_color_override("font_color", Color.WHITE if is_active else Color("#6272a4"))
-		name_hbox.add_child(name_lbl)
+		var p_path: String = char_data.portrait
+		var portrait_tex: Texture2D = _get_cached_item_texture(p_path)
+		if portrait_tex != null:
+			var c_img := TextureRect.new()
+			c_img.texture = portrait_tex
+			c_img.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+			c_img.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+			c_img.custom_minimum_size = Vector2(38, 38)
+			c_av_panel.add_child(c_img)
+		else:
+			var c_center := CenterContainer.new()
+			c_av_panel.add_child(c_center)
+			var c_icon_lbl := Label.new()
+			c_icon_lbl.text = char_data.icon
+			c_icon_lbl.add_theme_font_size_override("font_size", 16)
+			c_center.add_child(c_icon_lbl)
 
-		var badge_lbl := Label.new()
-		badge_lbl.text = "[%s]" % badges[i % badges.size()]
-		badge_lbl.add_theme_font_size_override("font_size", 10)
-		badge_lbl.add_theme_color_override("font_color", Color("#f6c95c") if is_current_turn else Color("#8be9fd"))
-		name_hbox.add_child(badge_lbl)
+		var c_name_lbl := Label.new()
+		c_name_lbl.text = char_data.short_name
+		c_name_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		c_name_lbl.add_theme_font_size_override("font_size", 9)
+		c_name_lbl.add_theme_color_override("font_color", Color(0.85, 0.88, 0.92))
+		left_col.add_child(c_name_lbl)
 
-		# Row B: 5 Square Round Indicators [1] [2] [3] [4] [5]
+		# =========================================================
+		# 2. KHU VỰC BÊN PHẢI (THÔNG TIN & 5 CỘT ROUND)
+		# =========================================================
+		var right_vbox := VBoxContainer.new()
+		right_vbox.size_flags_horizontal = SIZE_EXPAND_FILL
+		right_vbox.add_theme_constant_override("separation", 4)
+		root_hbox.add_child(right_vbox)
+
+		# Hàng 1: Tên người chơi & Trạng thái ra giá góc phải
+		var row1_hbox := HBoxContainer.new()
+		row1_hbox.size_flags_horizontal = SIZE_EXPAND_FILL
+		right_vbox.add_child(row1_hbox)
+
+		var p_name_lbl := Label.new()
+		p_name_lbl.text = "Player %d" % (i + 1)
+		p_name_lbl.size_flags_horizontal = SIZE_EXPAND_FILL
+		p_name_lbl.add_theme_font_size_override("font_size", 13)
+		p_name_lbl.add_theme_color_override("font_color", Color.WHITE if is_active else Color("#6272a4"))
+		row1_hbox.add_child(p_name_lbl)
+
+		# Góc phải Hàng 1: Hộp cọc tiền (Image 3) khi đến lượt, hoặc [Top X] Ra giá lần Y
+		if is_current_turn:
+			# Ảnh 3: Hộp cọc tiền 🪙 nổi bật khi đến lượt
+			var coin_box := PanelContainer.new()
+			coin_box.custom_minimum_size = Vector2(92, 22)
+			var coin_sb := StyleBoxFlat.new()
+			coin_sb.bg_color = Color(0.96, 0.98, 1.0, 0.95)
+			coin_sb.border_color = Color("#f6c95c")
+			coin_sb.border_width_left = 1
+			coin_sb.border_width_top = 1
+			coin_sb.border_width_right = 1
+			coin_sb.border_width_bottom = 1
+			coin_sb.corner_radius_top_left = 4
+			coin_sb.corner_radius_top_right = 4
+			coin_sb.corner_radius_bottom_left = 4
+			coin_sb.corner_radius_bottom_right = 4
+			coin_box.add_theme_stylebox_override("panel", coin_sb)
+
+			var coin_hbox := HBoxContainer.new()
+			coin_hbox.alignment = BoxContainer.ALIGNMENT_CENTER
+			coin_hbox.add_theme_constant_override("separation", 4)
+			coin_box.add_child(coin_hbox)
+
+			var coin_icon := Label.new()
+			coin_icon.text = "🪙"
+			coin_icon.add_theme_font_size_override("font_size", 11)
+			coin_hbox.add_child(coin_icon)
+
+			var coin_txt := Label.new()
+			coin_txt.text = "Đang ra giá"
+			coin_txt.add_theme_font_size_override("font_size", 10)
+			coin_txt.add_theme_color_override("font_color", Color(0.12, 0.16, 0.22, 1.0))
+			coin_hbox.add_child(coin_txt)
+
+			row1_hbox.add_child(coin_box)
+		else:
+			# Trạng thái vòng hoặc thứ hạng
+			var status_hbox := HBoxContainer.new()
+			status_hbox.add_theme_constant_override("separation", 4)
+			status_hbox.alignment = BoxContainer.ALIGNMENT_END
+			row1_hbox.add_child(status_hbox)
+
+			if not is_active:
+				var fold_lbl := Label.new()
+				fold_lbl.text = "🏳️ Đã bỏ"
+				fold_lbl.add_theme_font_size_override("font_size", 10)
+				fold_lbl.add_theme_color_override("font_color", Color("#6272a4"))
+				status_hbox.add_child(fold_lbl)
+			else:
+				var curr_round: int = auction_session.current_round
+				var rk: int = 0
+				if _round_completed:
+					rk = auction_session.get_player_rank_in_round(pid, curr_round)
+				elif curr_round > 1:
+					rk = auction_session.get_player_rank_in_round(pid, curr_round - 1)
+
+				if rk > 0:
+					var rk_panel := PanelContainer.new()
+					rk_panel.custom_minimum_size = Vector2(20, 18)
+					var rk_sb := StyleBoxFlat.new()
+					rk_sb.corner_radius_top_left = 3
+					rk_sb.corner_radius_top_right = 3
+					rk_sb.corner_radius_bottom_left = 3
+					rk_sb.corner_radius_bottom_right = 3
+					match rk:
+						1: rk_sb.bg_color = Color(0.92, 0.70, 0.05, 0.95)
+						2: rk_sb.bg_color = Color(0.06, 0.71, 0.83, 0.95)
+						3: rk_sb.bg_color = Color(0.23, 0.51, 0.96, 0.95)
+						_: rk_sb.bg_color = Color(0.13, 0.77, 0.36, 0.95)
+					rk_panel.add_theme_stylebox_override("panel", rk_sb)
+
+					var rk_lbl := Label.new()
+					rk_lbl.text = str(rk)
+					rk_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+					rk_lbl.add_theme_font_size_override("font_size", 10)
+					rk_lbl.add_theme_color_override("font_color", Color.BLACK if rk == 1 else Color.WHITE)
+					rk_panel.add_child(rk_lbl)
+					status_hbox.add_child(rk_panel)
+
+				var turn_txt := Label.new()
+				turn_txt.text = "Ra giá lần %d" % auction_session.current_round
+				turn_txt.add_theme_font_size_override("font_size", 10)
+				turn_txt.add_theme_color_override("font_color", Color(0.75, 0.82, 0.9))
+				status_hbox.add_child(turn_txt)
+
+		# Hàng 2: Banner tên nhân vật / danh hiệu (Tiến Sĩ Cuồng Nhiệt style)
+		var banner_panel := PanelContainer.new()
+		banner_panel.size_flags_horizontal = SIZE_EXPAND_FILL
+		var banner_sb := StyleBoxFlat.new()
+		banner_sb.bg_color = Color(0.12, 0.16, 0.22, 0.85)
+		banner_sb.border_width_left = 3
+		banner_sb.border_color = char_data.theme_color
+		banner_sb.corner_radius_top_right = 3
+		banner_sb.corner_radius_bottom_right = 3
+		banner_sb.content_margin_left = 6
+		banner_sb.content_margin_right = 6
+		banner_sb.content_margin_top = 2
+		banner_sb.content_margin_bottom = 2
+		banner_panel.add_theme_stylebox_override("panel", banner_sb)
+		right_vbox.add_child(banner_panel)
+
+		var banner_hbox := HBoxContainer.new()
+		banner_hbox.add_theme_constant_override("separation", 6)
+		banner_panel.add_child(banner_hbox)
+
+		var b_icon := Label.new()
+		b_icon.text = char_data.icon
+		b_icon.add_theme_font_size_override("font_size", 10)
+		banner_hbox.add_child(b_icon)
+
+		var b_title := Label.new()
+		b_title.text = "%s · %s" % [char_data.name, char_data.title]
+		b_title.add_theme_font_size_override("font_size", 10)
+		b_title.add_theme_color_override("font_color", char_data.theme_color.lightened(0.2))
+		banner_hbox.add_child(b_title)
+
+		# Hàng 3: 5 Cột Round (1, 2, 3, 4, 5)
 		var rounds_hbox := HBoxContainer.new()
-		rounds_hbox.add_theme_constant_override("separation", 4)
-		mid_vbox.add_child(rounds_hbox)
+		rounds_hbox.add_theme_constant_override("separation", 6)
+		right_vbox.add_child(rounds_hbox)
 
 		for r in range(1, 6):
-			var r_box := PanelContainer.new()
-			r_box.custom_minimum_size = Vector2(18, 18)
-			r_box.mouse_filter = MOUSE_FILTER_PASS
-			var r_sb := StyleBoxFlat.new()
-			r_sb.corner_radius_top_left = 3
-			r_sb.corner_radius_top_right = 3
-			r_sb.corner_radius_bottom_left = 3
-			r_sb.corner_radius_bottom_right = 3
+			var r_col := VBoxContainer.new()
+			r_col.custom_minimum_size = Vector2(36, 0)
+			r_col.alignment = BoxContainer.ALIGNMENT_CENTER
+			r_col.add_theme_constant_override("separation", 2)
+			rounds_hbox.add_child(r_col)
 
-			var r_center := CenterContainer.new()
-			r_box.add_child(r_center)
-			var r_num := Label.new()
-			r_num.text = str(r)
-			r_num.add_theme_font_size_override("font_size", 10)
-			r_center.add_child(r_num)
+			# 1. Con số round
+			var r_lbl := Label.new()
+			r_lbl.text = str(r)
+			r_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			r_lbl.add_theme_font_size_override("font_size", 9)
+			if r <= auction_session.current_round:
+				r_lbl.add_theme_color_override("font_color", Color("#cbd5e1"))
+			else:
+				r_lbl.add_theme_color_override("font_color", Color("#475569"))
+			r_col.add_child(r_lbl)
 
-			# Hover logic for round indicators
-			if r < auction_session.current_round:
-				r_sb.bg_color = Color(0.15, 0.35, 0.25, 0.9)
-				r_sb.border_color = Color("#50fa7b")
-				r_sb.border_width_left = 1
-				r_sb.border_width_top = 1
-				r_sb.border_width_right = 1
-				r_sb.border_width_bottom = 1
-				r_num.add_theme_color_override("font_color", Color("#50fa7b"))
+			# 2. Ô vuông item sử dụng ở round đó (Placeholder)
+			var item_slot := PanelContainer.new()
+			item_slot.custom_minimum_size = Vector2(26, 26)
+			var slot_sb := StyleBoxFlat.new()
+			slot_sb.bg_color = Color(0.04, 0.06, 0.09, 0.85)
+			slot_sb.border_color = Color(0.24, 0.32, 0.44, 0.5)
+			slot_sb.border_width_left = 1
+			slot_sb.border_width_top = 1
+			slot_sb.border_width_right = 1
+			slot_sb.border_width_bottom = 1
+			slot_sb.corner_radius_top_left = 3
+			slot_sb.corner_radius_top_right = 3
+			slot_sb.corner_radius_bottom_left = 3
+			slot_sb.corner_radius_bottom_right = 3
+			item_slot.add_theme_stylebox_override("panel", slot_sb)
+			item_slot.tooltip_text = "Ô vật phẩm vòng %d (Trống)" % r
+			r_col.add_child(item_slot)
 
+			# 3. Con số thứ tự đặt giá & Tooltip xem giá khi trỏ chuột
+			var rank_box := PanelContainer.new()
+			rank_box.custom_minimum_size = Vector2(22, 18)
+			rank_box.mouse_filter = MOUSE_FILTER_PASS
+			var rank_sb := StyleBoxFlat.new()
+			rank_sb.corner_radius_top_left = 3
+			rank_sb.corner_radius_top_right = 3
+			rank_sb.corner_radius_bottom_left = 3
+			rank_sb.corner_radius_bottom_right = 3
+
+			var is_round_done: bool = (r < auction_session.current_round) or (r == auction_session.current_round and _round_completed)
+			var past_rank: int = 0
+			if is_round_done:
+				past_rank = auction_session.get_player_rank_in_round(pid, r)
+
+			var rank_lbl := Label.new()
+			rank_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			rank_lbl.add_theme_font_size_override("font_size", 9)
+
+			if past_rank > 0:
+				match past_rank:
+					1:
+						rank_sb.bg_color = Color(0.92, 0.70, 0.05, 0.95)
+						rank_lbl.add_theme_color_override("font_color", Color(0.1, 0.1, 0.1))
+					2:
+						rank_sb.bg_color = Color(0.06, 0.71, 0.83, 0.95)
+						rank_lbl.add_theme_color_override("font_color", Color.WHITE)
+					3:
+						rank_sb.bg_color = Color(0.23, 0.51, 0.96, 0.95)
+						rank_lbl.add_theme_color_override("font_color", Color.WHITE)
+					_:
+						rank_sb.bg_color = Color(0.13, 0.77, 0.36, 0.95)
+						rank_lbl.add_theme_color_override("font_color", Color.WHITE)
+				rank_lbl.text = str(past_rank)
+
+				# Cơ chế Tooltip: Chỉ hiển thị giá đã đặt khi người chơi trỏ vào thẻ của chính mình ở lượt mình
 				if pid == curr_pid:
 					var past_bid: int = auction_session.get_player_bid_in_round(pid, r)
-					if past_bid > 0:
-						r_box.tooltip_text = "Vòng %d: Bạn đã ra giá %s Xu" % [r, _format_number(past_bid)]
-					else:
-						r_box.tooltip_text = "Vòng %d: Bạn đã bỏ qua lượt" % r
+					rank_box.tooltip_text = "%s Xu" % _format_number(past_bid) if past_bid > 0 else "0 Xu"
 				else:
-					var past_rank: int = auction_session.get_player_rank_in_round(pid, r)
-					if past_rank > 0:
-						r_box.tooltip_text = "Vòng %d: %s xếp Hạng #%d" % [r, String(pid), past_rank]
-					else:
-						r_box.tooltip_text = "Vòng %d: %s không tham gia" % [r, String(pid)]
-			elif r == auction_session.current_round:
-				if not is_active:
-					r_sb.bg_color = Color(0.1, 0.1, 0.12, 0.5)
-					r_sb.border_color = Color(0.3, 0.3, 0.35, 0.4)
-					r_num.add_theme_color_override("font_color", Color("#6272a4"))
-					r_box.tooltip_text = "Vòng %d: Đã bỏ cuộc" % r
-				elif is_current_turn:
-					r_sb.bg_color = Color(0.4, 0.35, 0.1, 0.95)
-					r_sb.border_color = Color("#f6c95c")
-					r_sb.border_width_left = 1
-					r_sb.border_width_top = 1
-					r_sb.border_width_right = 1
-					r_sb.border_width_bottom = 1
-					r_num.add_theme_color_override("font_color", Color("#f6c95c"))
-					r_box.tooltip_text = "Vòng %d: Lượt hiện tại của bạn" % r
-				elif auction_session.round_bids.has(pid):
-					r_sb.bg_color = Color(0.12, 0.25, 0.35, 0.9)
-					r_sb.border_color = Color("#8be9fd")
-					r_sb.border_width_left = 1
-					r_sb.border_width_top = 1
-					r_sb.border_width_right = 1
-					r_sb.border_width_bottom = 1
-					r_num.add_theme_color_override("font_color", Color("#8be9fd"))
-					if _round_completed:
-						var past_rank: int = auction_session.get_player_rank_in_round(pid, r)
-						r_box.tooltip_text = "Vòng %d: %s xếp Hạng #%d" % [r, String(pid), past_rank]
-					else:
-						r_box.tooltip_text = "Vòng %d: %s đã nộp giá ẩn" % [r, String(pid)]
-				else:
-					r_sb.bg_color = Color(0.08, 0.12, 0.16, 0.7)
-					r_sb.border_color = Color(0.3, 0.4, 0.5, 0.5)
-					r_num.add_theme_color_override("font_color", Color("#abb2bf"))
-					r_box.tooltip_text = "Vòng %d: Chưa ra giá" % r
+					rank_box.tooltip_text = ""
 			else:
-				r_sb.bg_color = Color(0.06, 0.08, 0.11, 0.5)
-				r_sb.border_color = Color(0.2, 0.25, 0.3, 0.4)
-				r_num.add_theme_color_override("font_color", Color("#4b5263"))
-				r_box.tooltip_text = "Vòng %d: Chưa diễn ra" % r
+				rank_sb.bg_color = Color(0.10, 0.13, 0.18, 0.5)
+				rank_lbl.text = "-"
+				rank_lbl.add_theme_color_override("font_color", Color("#475569"))
+				rank_box.tooltip_text = ""
 
-			r_box.add_theme_stylebox_override("panel", r_sb)
-			rounds_hbox.add_child(r_box)
+			rank_box.add_theme_stylebox_override("panel", rank_sb)
+			rank_box.add_child(rank_lbl)
+			r_col.add_child(rank_box)
 
-		# 3. Right Status Tag
-		var status_box := VBoxContainer.new()
-		status_box.alignment = BoxContainer.ALIGNMENT_CENTER
-		hbox.add_child(status_box)
-
-		var bid_lbl := Label.new()
-		bid_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-
-		if not is_active:
-			bid_lbl.text = "🏳️ Bỏ"
-			bid_lbl.add_theme_font_size_override("font_size", 11)
-			bid_lbl.add_theme_color_override("font_color", Color("#6272a4"))
-		elif _round_completed:
-			var rk: int = auction_session.get_player_rank_in_round(pid, auction_session.current_round)
-			if rk > 0:
-				bid_lbl.text = "#%d" % rk
-				bid_lbl.add_theme_font_size_override("font_size", 16)
-				match rk:
-					1:
-						bid_lbl.add_theme_color_override("font_color", Color("#f6c95c"))
-						bid_lbl.tooltip_text = "Hạng #1 (Vàng hoàng kim)"
-					2:
-						bid_lbl.add_theme_color_override("font_color", Color("#e2e8f0"))
-						bid_lbl.tooltip_text = "Hạng #2 (Bạc sáng)"
-					3:
-						bid_lbl.add_theme_color_override("font_color", Color("#cd7f32"))
-						bid_lbl.tooltip_text = "Hạng #3 (Đồng)"
-					_:
-						bid_lbl.add_theme_color_override("font_color", Color("#94a3b8"))
-						bid_lbl.tooltip_text = "Hạng #%d" % rk
-			else:
-				bid_lbl.text = "Bỏ qua"
-				bid_lbl.add_theme_font_size_override("font_size", 11)
-				bid_lbl.add_theme_color_override("font_color", Color("#888888"))
-		else:
-			bid_lbl.add_theme_font_size_override("font_size", 11)
-			if auction_session.round_bids.has(pid):
-				bid_lbl.text = "🔒 Đã ra"
-				bid_lbl.add_theme_color_override("font_color", Color("#8be9fd"))
-			elif is_current_turn:
-				bid_lbl.text = "👉 Đang gõ"
-				bid_lbl.add_theme_color_override("font_color", Color("#f6c95c"))
-			else:
-				bid_lbl.text = "⏳ Chờ"
-				bid_lbl.add_theme_color_override("font_color", Color("#6272a4"))
-
-		status_box.add_child(bid_lbl)
 
 
 func _render_clues() -> void:
