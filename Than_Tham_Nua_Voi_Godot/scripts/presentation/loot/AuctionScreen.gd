@@ -485,6 +485,7 @@ func _build_ui() -> void:
 
 	_sfx_high_val_player = AudioStreamPlayer.new()
 	_sfx_high_val_player.bus = &"Master"
+	_sfx_high_val_player.volume_db = 2.5
 	add_child(_sfx_high_val_player)
 
 	if ResourceLoader.exists(SFX_ITEM_REVEAL_NORMAL_PATH):
@@ -1844,10 +1845,12 @@ func _run_settlement_reveal() -> void:
 		if _settlement_grid_draw_control != null:
 			_settlement_grid_draw_control.queue_redraw()
 
-		# Determine wait duration according to user specification:
-		# 5 món top (Flight Recorder, Armored Vehicle Battery, Micro Reactor, Medical Ventilator, Heart of Africa) load đúng 3.0s.
-		# Đồ Đỏ khác: ngẫu nhiên từ 0.5s đến 3.0s.
-		var wait_time: float = 0.35
+		# Determine wait duration according to user specification (reduced speed by 50% = 2x wait time):
+		# 5 món top (Flight Recorder, Armored Vehicle Battery, Micro Reactor, Medical Ventilator, Heart of Africa) load đúng 6.0s (trước là 3.0s).
+		# Đồ Đỏ khác: ngẫu nhiên từ 1.0s đến 6.0s (trước là 0.5s - 3.0s).
+		# Đồ Vàng: ngẫu nhiên từ 0.6s đến 1.6s (trước là 0.3s - 0.8s).
+		# Đồ khác: ngẫu nhiên từ 0.4s đến 0.9s (trước là 0.2s - 0.45s).
+		var wait_time: float = 0.70
 		var item_id_str := String(item.item_id).to_lower()
 		var d_name_lower := item.display_name.to_lower()
 		var is_top_5: bool = (
@@ -1858,13 +1861,13 @@ func _run_settlement_reveal() -> void:
 			or "heart_of_africa" in item_id_str or "heart of africa" in d_name_lower
 		)
 		if is_top_5:
-			wait_time = 3.0
+			wait_time = 6.0
 		elif item.rarity == ITEM_CLASS.Rarity.RED:
-			wait_time = randf_range(0.5, 3.0)
+			wait_time = randf_range(1.0, 6.0)
 		elif item.rarity == ITEM_CLASS.Rarity.GOLD:
-			wait_time = randf_range(0.3, 0.8)
+			wait_time = randf_range(0.6, 1.6)
 		else:
-			wait_time = randf_range(0.2, 0.45)
+			wait_time = randf_range(0.4, 0.9)
 
 		var start_ticks: int = Time.get_ticks_msec()
 		var last_ticks: int = start_ticks
