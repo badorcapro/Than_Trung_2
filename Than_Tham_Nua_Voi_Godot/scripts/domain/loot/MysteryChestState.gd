@@ -296,9 +296,10 @@ func _create_hint(type: HintType) -> Dictionary:
 
 		HintType.COUNT_RANGE:
 			has_quantity_hint = true
-			var delta: int = maxi(1, randi_range(1, 3))
-			var min_c: int = maxi(0, total_count - delta)
-			var max_c: int = total_count + delta
+			var low_delta: int = randi_range(1, 5)
+			var high_delta: int = randi_range(1, 5)
+			var min_c: int = maxi(0, total_count - low_delta)
+			var max_c: int = total_count + high_delta
 			result["title"] = "Khoảng Số Lượng"
 			result["description"] = "Tổng số vật phẩm trong hòm nằm trong khoảng từ %d đến %d món." % [min_c, max_c]
 
