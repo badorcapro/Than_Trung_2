@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://0phdv8lu3ogs"
-path="res://.godot/imported/ke_say_ruou.png-e31d6406f0365130acf58eb3dc29e018.ctex"
+path="res://.godot/imported/ke_say_ruou.png-2c818734a4c737ae52863aaf18bd2418.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://assets/ui/case/role_icons/ke_say_ruou.png"
-dest_files=["res://.godot/imported/ke_say_ruou.png-e31d6406f0365130acf58eb3dc29e018.ctex"]
+dest_files=["res://.godot/imported/ke_say_ruou.png-2c818734a4c737ae52863aaf18bd2418.ctex"]
 
 [params]
 

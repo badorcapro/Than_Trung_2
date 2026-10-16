@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cy8o0uwv1tkp0"
-path="res://.godot/imported/Traitor.png-d9f3823edb71ca81b33990fbbab089c9.ctex"
+path="res://.godot/imported/Traitor.png-b58354075a6375ee4fbf22d67f689583.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://assets/ui/case/role_groups/Traitor.png"
-dest_files=["res://.godot/imported/Traitor.png-d9f3823edb71ca81b33990fbbab089c9.ctex"]
+dest_files=["res://.godot/imported/Traitor.png-b58354075a6375ee4fbf22d67f689583.ctex"]
 
 [params]
 

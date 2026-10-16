@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cc21ee10odbwr"
-path="res://.godot/imported/nha_toan_hoc.png-c962fc3c857e0a5e72bd5eea2222297a.ctex"
+path="res://.godot/imported/nha_toan_hoc.png-ebb02e8231ff32f50e4d11ada4dbe492.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://assets/ui/case/role_icons/nha_toan_hoc.png"
-dest_files=["res://.godot/imported/nha_toan_hoc.png-c962fc3c857e0a5e72bd5eea2222297a.ctex"]
+dest_files=["res://.godot/imported/nha_toan_hoc.png-ebb02e8231ff32f50e4d11ada4dbe492.ctex"]
 
 [params]
 

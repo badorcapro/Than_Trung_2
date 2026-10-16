@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cooj0ndxjbwnf"
-path="res://.godot/imported/ngu_y.png-a472b508f22ff759d35d5da8f302ec0b.ctex"
+path="res://.godot/imported/ngu_y.png-22d70602f730edaabfd9b75556f1a8b9.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://assets/ui/case/role_icons/ngu_y.png"
-dest_files=["res://.godot/imported/ngu_y.png-a472b508f22ff759d35d5da8f302ec0b.ctex"]
+dest_files=["res://.godot/imported/ngu_y.png-22d70602f730edaabfd9b75556f1a8b9.ctex"]
 
 [params]
 

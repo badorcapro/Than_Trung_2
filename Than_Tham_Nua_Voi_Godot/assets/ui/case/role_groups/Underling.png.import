@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://d3e7fee4hhbuc"
-path="res://.godot/imported/Underling.png-24c52653413bf648a8ac350c48ca89bb.ctex"
+path="res://.godot/imported/Underling.png-e98fe945e87f0e11504071aaf5e06597.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://assets/ui/case/role_groups/Underling.png"
-dest_files=["res://.godot/imported/Underling.png-24c52653413bf648a8ac350c48ca89bb.ctex"]
+dest_files=["res://.godot/imported/Underling.png-e98fe945e87f0e11504071aaf5e06597.ctex"]
 
 [params]
 

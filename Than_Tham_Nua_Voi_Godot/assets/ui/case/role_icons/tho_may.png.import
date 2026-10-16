@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b4ow2eqr8ly7w"
-path="res://.godot/imported/tho_may.png-a912bea5183f41c21e5e61b1230de528.ctex"
+path="res://.godot/imported/tho_may.png-58f04adc74e3db85d22f7eb844a8e263.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://assets/ui/case/role_icons/tho_may.png"
-dest_files=["res://.godot/imported/tho_may.png-a912bea5183f41c21e5e61b1230de528.ctex"]
+dest_files=["res://.godot/imported/tho_may.png-58f04adc74e3db85d22f7eb844a8e263.ctex"]
 
 [params]
 

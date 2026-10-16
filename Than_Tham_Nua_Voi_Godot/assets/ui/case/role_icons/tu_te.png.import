@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://7scobly4itvw"
-path="res://.godot/imported/tu_te.png-d5a4480b24af79982363a535f6f6b9f9.ctex"
+path="res://.godot/imported/tu_te.png-630574bab6e5e1e9d87b7d83063dfcc8.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://assets/ui/case/role_icons/tu_te.png"
-dest_files=["res://.godot/imported/tu_te.png-d5a4480b24af79982363a535f6f6b9f9.ctex"]
+dest_files=["res://.godot/imported/tu_te.png-630574bab6e5e1e9d87b7d83063dfcc8.ctex"]
 
 [params]
 

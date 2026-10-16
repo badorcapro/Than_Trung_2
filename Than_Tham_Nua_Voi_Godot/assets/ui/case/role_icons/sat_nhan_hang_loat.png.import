@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bvgogfexryvcy"
-path="res://.godot/imported/sat_nhan_hang_loat.png-40b1a0d48da4c2b39b65c591920a7a8a.ctex"
+path="res://.godot/imported/sat_nhan_hang_loat.png-eec677f58b1c1b7ce4a9ea34642a6582.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://assets/ui/case/role_icons/sat_nhan_hang_loat.png"
-dest_files=["res://.godot/imported/sat_nhan_hang_loat.png-40b1a0d48da4c2b39b65c591920a7a8a.ctex"]
+dest_files=["res://.godot/imported/sat_nhan_hang_loat.png-eec677f58b1c1b7ce4a9ea34642a6582.ctex"]
 
 [params]
 

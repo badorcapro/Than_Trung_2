@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dn7gvuivcopyq"
-path="res://.godot/imported/ke_con_do.png-94c9ef6a2b2e1ebac388b2bbcc9c2736.ctex"
+path="res://.godot/imported/ke_con_do.png-fbcff71f4a3c75588f68539ca3863003.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://assets/ui/case/role_icons/ke_con_do.png"
-dest_files=["res://.godot/imported/ke_con_do.png-94c9ef6a2b2e1ebac388b2bbcc9c2736.ctex"]
+dest_files=["res://.godot/imported/ke_con_do.png-fbcff71f4a3c75588f68539ca3863003.ctex"]
 
 [params]
 

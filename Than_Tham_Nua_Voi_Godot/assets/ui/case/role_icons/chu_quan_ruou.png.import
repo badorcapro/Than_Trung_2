@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cbo236spcxod2"
-path="res://.godot/imported/chu_quan_ruou.png-b30fe772962a564c41193ab3c2686fa8.ctex"
+path="res://.godot/imported/chu_quan_ruou.png-a0e834be8a6ae2002c0648b40bcf8756.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://assets/ui/case/role_icons/chu_quan_ruou.png"
-dest_files=["res://.godot/imported/chu_quan_ruou.png-b30fe772962a564c41193ab3c2686fa8.ctex"]
+dest_files=["res://.godot/imported/chu_quan_ruou.png-a0e834be8a6ae2002c0648b40bcf8756.ctex"]
 
 [params]
 

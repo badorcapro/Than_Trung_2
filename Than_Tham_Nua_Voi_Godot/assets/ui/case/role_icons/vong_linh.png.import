@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://nbletbq1nx4w"
-path="res://.godot/imported/vong_linh.png-10dd3be6f9736daa09d9b654db3977fb.ctex"
+path="res://.godot/imported/vong_linh.png-33b8161bea20db58c8090fb518a75283.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://assets/ui/case/role_icons/vong_linh.png"
-dest_files=["res://.godot/imported/vong_linh.png-10dd3be6f9736daa09d9b654db3977fb.ctex"]
+dest_files=["res://.godot/imported/vong_linh.png-33b8161bea20db58c8090fb518a75283.ctex"]
 
 [params]
 
