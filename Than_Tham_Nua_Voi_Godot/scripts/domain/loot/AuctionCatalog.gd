@@ -2907,6 +2907,152 @@ static var _CATALOG_ITEMS: Array[Dictionary] = [
 		"description": "Điện thoại thông minh bảo mật thương hiệu Maer tích hợp thuật toán mã hóa cuộc gọi."
 	},
 
+	# --- Phẩm Đỏ (Mythic / Relic): Các vật phẩm đợt 20 ---
+	{
+		"id": "smoothbore_gun_exhibit",
+		"display_name": "Smoothbore Gun Exhibit",
+		"rarity": ITEM_CLASS.Rarity.RED,
+		"grid_width": 4,
+		"grid_height": 1,
+		"silver_value": 70,
+		"weight_str": "4.11KG",
+		"category": "antique",
+		"asset_path": "res://assets/auction_items/a027.png",
+		"description": "Súng hỏa mai nòng trơn cổ đại dùng làm hiện vật triển lãm hoàng cung."
+	},
+	{
+		"id": "heart_of_africa",
+		"display_name": "Heart of Africa",
+		"rarity": ITEM_CLASS.Rarity.RED,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 96,
+		"weight_str": "0.62KG",
+		"category": "antique",
+		"asset_path": "res://assets/auction_items/a028.png",
+		"description": "Viên kim cương thô hình giọt nước huyền thoại Trái Tim Châu Phi với độ tinh khiết hoàn mỹ."
+	},
+	{
+		"id": "gold_bar_9999",
+		"display_name": "999.9 Gold Bar",
+		"rarity": ITEM_CLASS.Rarity.RED,
+		"grid_width": 1,
+		"grid_height": 2,
+		"silver_value": 85,
+		"weight_str": "4.25KG",
+		"category": "antique",
+		"asset_path": "res://assets/auction_items/a029.png",
+		"description": "Thỏi vàng ròng nguyên chất 999.9 đúc dấu ấn ngân khố hoàng gia sáng rực rỡ."
+	},
+	{
+		"id": "saeed_pocket_watch",
+		"display_name": "Saeed's Pocket Watch",
+		"rarity": ITEM_CLASS.Rarity.RED,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 76,
+		"weight_str": "0.33KG",
+		"category": "antique",
+		"asset_path": "res://assets/auction_items/a030.png",
+		"description": "Đồng hồ bỏ túi mạ vàng gia truyền của thương nhân Saeed mở nắp khắc hoa văn tinh xảo."
+	},
+	{
+		"id": "mandelbrick_supercomputing_unit",
+		"display_name": "MandelBrick Supercomputing Unit",
+		"rarity": ITEM_CLASS.Rarity.RED,
+		"grid_width": 3,
+		"grid_height": 3,
+		"silver_value": 92,
+		"weight_str": "4.52KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a031.png",
+		"description": "Bo mạch khối siêu máy tính MandelBrick kiến trúc lượng tử xử lý thuật toán tối mật."
+	},
+	{
+		"id": "portable_military_radar",
+		"display_name": "Portable Military Radar",
+		"rarity": ITEM_CLASS.Rarity.RED,
+		"grid_width": 3,
+		"grid_height": 3,
+		"silver_value": 82,
+		"weight_str": "9.50KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a032.png",
+		"description": "Đài radar quân sự dã chiến di động quét mục tiêu tầm xa và cảnh báo sớm."
+	},
+	{
+		"id": "military_information_terminal",
+		"display_name": "Military Information Terminal",
+		"rarity": ITEM_CLASS.Rarity.RED,
+		"grid_width": 3,
+		"grid_height": 2,
+		"silver_value": 72,
+		"weight_str": "2.71KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a033.png",
+		"description": "Trạm điều hành thông tin tác chiến quân sự bọc giáp chống va đập và chống nhiễu."
+	},
+	{
+		"id": "battle_tank_model",
+		"display_name": "Battle Tank Model",
+		"rarity": ITEM_CLASS.Rarity.RED,
+		"grid_width": 2,
+		"grid_height": 3,
+		"silver_value": 65,
+		"weight_str": "3.35KG",
+		"category": "general",
+		"asset_path": "res://assets/auction_items/a034.png",
+		"description": "Mô hình xe tăng chiến đấu chủ lực bọc thép sa mạc đúc hợp kim tinh xảo."
+	},
+	{
+		"id": "infantry_fighting_vehicle_model",
+		"display_name": "Infantry Fighting Vehicle Model",
+		"rarity": ITEM_CLASS.Rarity.RED,
+		"grid_width": 3,
+		"grid_height": 2,
+		"silver_value": 63,
+		"weight_str": "2.35KG",
+		"category": "general",
+		"asset_path": "res://assets/auction_items/a035.png",
+		"description": "Mô hình xe bọc thép chở quân tác chiến bộ binh đa trục bánh lốp dã chiến."
+	},
+	{
+		"id": "luxury_mechanical_watch",
+		"display_name": "Luxury Mechanical Watch",
+		"rarity": ITEM_CLASS.Rarity.RED,
+		"grid_width": 1,
+		"grid_height": 1,
+		"silver_value": 84,
+		"weight_str": "0.16KG",
+		"category": "antique",
+		"asset_path": "res://assets/auction_items/a036.png",
+		"description": "Đồng hồ cơ khí xa xỉ bằng vàng 18K lộ cơ tourbillon đẳng cấp quý tộc hoàng gia."
+	},
+	{
+		"id": "top_secret_server",
+		"display_name": "Top Secret Server",
+		"rarity": ITEM_CLASS.Rarity.RED,
+		"grid_width": 3,
+		"grid_height": 3,
+		"silver_value": 86,
+		"weight_str": "5.52KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a037.png",
+		"description": "Máy chủ rack tuyệt mật lưu trữ tài liệu tình báo cơ mật và khóa giải mã mật mã."
+	},
+	{
+		"id": "automated_external_defibrillator",
+		"display_name": "Automated External Defibrillator",
+		"rarity": ITEM_CLASS.Rarity.RED,
+		"grid_width": 2,
+		"grid_height": 3,
+		"silver_value": 78,
+		"weight_str": "1.36KG",
+		"category": "medical",
+		"asset_path": "res://assets/auction_items/a038.png",
+		"description": "Máy khử rung tim ngoài tự động (AED) dã chiến cấp cứu ngừng tuần hoàn khẩn cấp."
+	},
+
 	# --- Tài nguyên Nâng cấp (Refinement Chips & Locking Component) ---
 	{
 		"id": "refinement_chips_2",
