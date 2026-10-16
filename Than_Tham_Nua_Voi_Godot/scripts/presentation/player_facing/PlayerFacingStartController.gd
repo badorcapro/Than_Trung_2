@@ -141,12 +141,90 @@ const LOBBY_BG_TEXTURE: Texture2D = preload("res://assets/ui/common/lobby_bg.png
 @onready var char_select_start_btn: Button = get_node_or_null("%CharSelectStartBtn") as Button
 @onready var character_picker_modal: Control = get_node_or_null("%CharacterPickerModal") as Control
 @onready var picker_close_btn: Button = get_node_or_null("%PickerCloseBtn") as Button
+@onready var picker_confirm_btn: Button = get_node_or_null("%PickerConfirmBtn") as Button
 @onready var picker_title: Label = get_node_or_null("%PickerTitle") as Label
 @onready var picker_grid: HBoxContainer = get_node_or_null("%PickerGrid") as HBoxContainer
+@onready var inspect_avatar_img: TextureRect = get_node_or_null("%InspectAvatarImg") as TextureRect
+@onready var inspect_avatar_placeholder: Label = get_node_or_null("%InspectAvatarPlaceholder") as Label
+@onready var inspect_char_name: Label = get_node_or_null("%InspectCharName") as Label
+@onready var inspect_house_badge: Label = get_node_or_null("%InspectHouseBadge") as Label
+@onready var inspect_speed_label: Label = get_node_or_null("%InspectSpeedLabel") as Label
+@onready var inspect_stamina_label: Label = get_node_or_null("%InspectStaminaLabel") as Label
+@onready var inspect_bag_label: Label = get_node_or_null("%InspectBagLabel") as Label
+@onready var inspect_skill1_title: Label = get_node_or_null("%InspectSkill1Title") as Label
+@onready var inspect_skill1_tag: Label = get_node_or_null("%InspectSkill1Tag") as Label
+@onready var inspect_skill1_desc: Label = get_node_or_null("%InspectSkill1Desc") as Label
+@onready var inspect_skill2_title: Label = get_node_or_null("%InspectSkill2Title") as Label
+@onready var inspect_skill2_tag: Label = get_node_or_null("%InspectSkill2Tag") as Label
+@onready var inspect_skill2_desc: Label = get_node_or_null("%InspectSkill2Desc") as Label
 
 var _desktop_selected_characters: Array = [null, null, null, null]
 var _current_picking_slot_index: int = -1
 var _desktop_selected_mode: int = MATCH_RULES.Mode.CLASSIC
+var _inspected_character: CharacterDefinition = null
+
+const CHARACTER_LORE_SKILLS: Dictionary = {
+	&"character_hoang_linh_lam": {
+		"title": "Đại Hoàng Tử",
+		"house_name": "Nhà họ Hoàng",
+		"house_color": Color(1.0, 0.85, 0.4),
+		"icon": "👑",
+		"skill1_name": "Thiên Tử Uy Quyền",
+		"skill1_tag": "[Bản Lĩnh Gia Tộc]",
+		"skill1_desc": "Nắm giữ hoàng quyền và ngọc tỷ ngự chế. Khi thẩm tra nghi phạm, uy lực đế vương khiến kẻ nói dối dễ để lộ sơ hở trong lời khai.",
+		"skill2_name": "Hoàng Triều Lệnh Dụ",
+		"skill2_tag": "[Bí Thuật Hoàng Triều]",
+		"skill2_desc": "Sở hữu quyền ưu tiên tại các trạm gác cấm thành và được chư quan hoàng cung kính nể khi thu thập mật án trên bản đồ."
+	},
+	&"character_chu_tue_nguyet": {
+		"title": "Hỏa Phụng Quân Sư",
+		"house_name": "Nhà họ Chu",
+		"house_color": Color(0.98, 0.45, 0.4),
+		"icon": "🔥",
+		"skill1_name": "Liệt Hỏa Thấu Thị",
+		"skill1_tag": "[Bản Lĩnh Gia Tộc]",
+		"skill1_desc": "Nhãn lực hỏa phượng thiêu rọi mọi lớp ngụy trang. Dễ dàng phát giác các vật phẩm tà đạo và dấu vết bị thiêu hủy tinh vi.",
+		"skill2_name": "Xích Diễm Phán Quyết",
+		"skill2_tag": "[Bí Thuật Hoàng Triều]",
+		"skill2_desc": "Tạo áp lực tâm lý cực đại khi đối chất trực diện, khiến nghịch thần khó che giấu tà tâm và sơ hở phản trắc."
+	},
+	&"character_kim_thanh_giai": {
+		"title": "Kim Tiền Thần Đoán",
+		"house_name": "Nhà họ Kim",
+		"house_color": Color(0.45, 0.85, 1.0),
+		"icon": "💎",
+		"skill1_name": "Đoán Châu Liệt Bảo",
+		"skill1_tag": "[Bản Lĩnh Gia Tộc]",
+		"skill1_desc": "Giám định tuyệt đỉnh mọi cổ vật, châu báu và đạo cụ đấu giá. Nhận biết chân giả và giá trị thực ngay từ cái nhìn đầu tiên.",
+		"skill2_name": "Phú Khả Địch Quốc",
+		"skill2_tag": "[Bí Thuật Hoàng Triều]",
+		"skill2_desc": "Mạng lưới thương hội rộng khắp toàn cõi, mở khóa nguồn tiếp cận mật báo kinh tài và đạo cụ quý hiếm trên bàn cờ."
+	},
+	&"character_huyen_ca_xuy": {
+		"title": "Chiêm Tinh Diệu Toán",
+		"house_name": "Nhà họ Huyền",
+		"house_color": Color(0.8, 0.6, 1.0),
+		"icon": "🔮",
+		"skill1_name": "Kỳ Môn Độn Giáp",
+		"skill1_tag": "[Bản Lĩnh Gia Tộc]",
+		"skill1_desc": "Tinh thông thiên văn địa lý và thuật âm dương. Dự đoán trước các sự kiện mốc giờ hung hiểm và động thái của kẻ giấu mặt.",
+		"skill2_name": "Huyền Thần Diễn Quái",
+		"skill2_tag": "[Bí Thuật Hoàng Triều]",
+		"skill2_desc": "Thấu suốt quy luật ngũ hành bát quái, lần theo manh mối huyền thuật và hóa giải các luồng ám khí tha hóa trong hoàng thành."
+	},
+	&"character_lam_phuong_xuan": {
+		"title": "Thần Y Thanh Tùng",
+		"house_name": "Nhà họ Lam",
+		"house_color": Color(0.45, 0.9, 0.55),
+		"icon": "🌿",
+		"skill1_name": "Diệu Thủ Hồi Xuân",
+		"skill1_tag": "[Bản Lĩnh Gia Tộc]",
+		"skill1_desc": "Y thuật đệ nhất thiên hạ, tường tận bách thảo. Nhận diện chuẩn xác mọi loại độc dược cung đình và phục hồi thể lực thám tử.",
+		"skill2_name": "Thanh Khí Dưỡng Thần",
+		"skill2_tag": "[Bí Thuật Hoàng Triều]",
+		"skill2_desc": "Duy trì tâm trí thanh tịnh, kháng cự tà khí mê hồn trận và phát hiện tàn dư dược chất tại hiện trường án mạng."
+	}
+}
 
 @onready var continue_button: Button = (
 	get_node_or_null("%Continue") as Button
@@ -401,6 +479,16 @@ func _input(event: InputEvent) -> void:
 			desktop_mode_select_dialog.visible = false
 			get_viewport().set_input_as_handled()
 			return
+	if character_picker_modal != null and character_picker_modal.visible:
+		if key_event.keycode == KEY_ESCAPE:
+			_on_picker_close_pressed()
+			get_viewport().set_input_as_handled()
+			return
+	if desktop_character_select_dialog != null and desktop_character_select_dialog.visible:
+		if key_event.keycode == KEY_ESCAPE:
+			_on_char_select_back_pressed()
+			get_viewport().set_input_as_handled()
+			return
 	if _character_sheet != null and _character_sheet.visible:
 		if key_event.keycode == KEY_ESCAPE or key_event.keycode == KEY_C:
 			_character_sheet.visible = false
@@ -530,6 +618,8 @@ func _init_desktop_system() -> void:
 		char_select_start_btn.pressed.connect(_on_char_select_start_pressed)
 	if picker_close_btn != null and not picker_close_btn.pressed.is_connected(_on_picker_close_pressed):
 		picker_close_btn.pressed.connect(_on_picker_close_pressed)
+	if picker_confirm_btn != null and not picker_confirm_btn.pressed.is_connected(_on_picker_confirm_pressed):
+		picker_confirm_btn.pressed.connect(_on_picker_confirm_pressed)
 
 	for i in range(4):
 		var slot_btn: Button = get_node_or_null("%SlotBtn" + str(i)) as Button

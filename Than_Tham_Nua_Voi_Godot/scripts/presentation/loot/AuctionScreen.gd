@@ -96,6 +96,7 @@ var _settlement_revealed_item_ids: Dictionary = {} # item_id -> bool
 var _settlement_accumulated_value: int = 0
 var _settlement_spinner_angle: float = 0.0
 var _continue_pulse_time: float = 0.0
+var _border_anim_time: float = 0.0
 
 
 func _init() -> void:
@@ -1226,6 +1227,76 @@ func _render_clues() -> void:
 		vbox.add_child(d_lbl)
 
 
+func _get_rect_perimeter_point(rect: Rect2, dist: float) -> Vector2:
+	var w: float = rect.size.x
+	var h: float = rect.size.y
+	var p: float = 2.0 * (w + h)
+	if p <= 0.0:
+		return rect.position
+	var d: float = fposmod(dist, p)
+	if d < w:
+		return Vector2(rect.position.x + d, rect.position.y)
+	d -= w
+	if d < h:
+		return Vector2(rect.position.x + w, rect.position.y + d)
+	d -= h
+	if d < w:
+		return Vector2(rect.position.x + w - d, rect.position.y + h)
+	d -= w
+	return Vector2(rect.position.x, rect.position.y + h - d)
+
+
+func _draw_running_light_border(canvas: Control, rect: Rect2, light_color: Color, light_width: float, phase_seed: float = 0.0) -> void:
+	if _settlement_overlay != null and _settlement_overlay.visible:
+		return
+	var w: float = rect.size.x
+	var h: float = rect.size.y
+	var p: float = 2.0 * (w + h)
+	if p <= 0.0:
+		return
+
+	var trail_len: float = clampf(p * 0.32, 28.0, 75.0)
+	var head_dist: float = fposmod(_border_anim_time * 140.0 + phase_seed, p)
+	var num_steps: int = 12
+	var step: float = trail_len / float(num_steps)
+	var corners: Array[float] = [w, w + h, 2.0 * w + h]
+
+	for i in range(num_steps):
+		var d0: float = fposmod(head_dist - trail_len + float(i) * step, p)
+		var d1: float = fposmod(head_dist - trail_len + float(i + 1) * step, p)
+		var alpha: float = pow(float(i + 1) / float(num_steps), 1.6)
+		var seg_color := Color(light_color.r, light_color.g, light_color.b, light_color.a * alpha)
+
+		if d0 > d1:
+			var p0 := _get_rect_perimeter_point(rect, d0)
+			var pc := _get_rect_perimeter_point(rect, p)
+			var p_zero := _get_rect_perimeter_point(rect, 0.0)
+			var p1 := _get_rect_perimeter_point(rect, d1)
+			canvas.draw_line(p0, pc, seg_color, light_width)
+			canvas.draw_line(p_zero, p1, seg_color, light_width)
+		else:
+			var found_c: float = -1.0
+			for c in corners:
+				if d0 < c and c < d1:
+					found_c = c
+					break
+			if found_c >= 0.0:
+				var p0 := _get_rect_perimeter_point(rect, d0)
+				var pc := _get_rect_perimeter_point(rect, found_c)
+				var p1 := _get_rect_perimeter_point(rect, d1)
+				canvas.draw_line(p0, pc, seg_color, light_width)
+				canvas.draw_line(pc, p1, seg_color, light_width)
+			else:
+				var p0 := _get_rect_perimeter_point(rect, d0)
+				var p1 := _get_rect_perimeter_point(rect, d1)
+				canvas.draw_line(p0, p1, seg_color, light_width)
+
+	# Luminous spark / bead at the head
+	var head_pt := _get_rect_perimeter_point(rect, head_dist)
+	canvas.draw_circle(head_pt, light_width * 0.9, Color(1.0, 1.0, 1.0, 0.95))
+	canvas.draw_circle(head_pt, light_width * 1.8, Color(light_color.r, light_color.g, light_color.b, 0.35))
+
+
 func _on_grid_draw() -> void:
 	# 1. Subtle 1x1 grid lines (bỏ 2 đường viền ngoài cùng bên trái và phải)
 	var line_color := Color(0.2, 0.3, 0.4, 0.35)
@@ -1248,10 +1319,12 @@ func _on_grid_draw() -> void:
 		var is_full_reveal: bool = _revealed_items.has(i_id)
 		var is_quality_reveal: bool = _revealed_qualities.has(i_id)
 		var is_outline_reveal: bool = _revealed_outlines.has(i_id)
+		var phase_seed: float = float((pos.x * 37 + pos.y * 61) % 150) * 3.0
 
 		if is_full_reveal:
 			_grid_draw_control.draw_rect(rect, Color(r_color.r, r_color.g, r_color.b, 0.25), true)
 			_grid_draw_control.draw_rect(rect, r_color, false, 2.5)
+			_draw_running_light_border(_grid_draw_control, rect, r_color.lightened(0.4), 3.2, phase_seed)
 
 			# 1. Vẽ hình ảnh vật phẩm thực tế từ asset_path nếu có (bảo toàn tỉ lệ gốc, không bị kéo giãn)
 			var tex: Texture2D = _get_cached_item_texture(item.asset_path)
@@ -1285,13 +1358,19 @@ func _on_grid_draw() -> void:
 			_grid_draw_control.draw_rect(tag_rect, Color(0, 0, 0, 0.75), true)
 			var v_pos := Vector2(pos.x * CELL_SIZE + 4, (pos.y + h) * CELL_SIZE - 4)
 			_grid_draw_control.draw_string(font, v_pos, v_text, HORIZONTAL_ALIGNMENT_LEFT, w * CELL_SIZE - 8, 9, r_color)
-		elif is_quality_reveal:
-			var q_rect := Rect2(pos.x * CELL_SIZE + 2, pos.y * CELL_SIZE + 2, CELL_SIZE - 4, CELL_SIZE - 4)
-			_grid_draw_control.draw_rect(q_rect, Color(r_color.r, r_color.g, r_color.b, 0.7), true)
-			_grid_draw_control.draw_rect(q_rect, r_color, false, 2.0)
-		elif is_outline_reveal:
-			_grid_draw_control.draw_rect(rect, Color(1, 1, 1, 0.08), true)
-			_grid_draw_control.draw_rect(rect, Color("#4deeea"), false, 2.0)
+		else:
+			if is_outline_reveal:
+				# Gợi ý kích cỡ đổi sang màu xám nhạt với hiệu ứng chạy ánh sáng ở viền
+				_grid_draw_control.draw_rect(rect, Color(0.85, 0.88, 0.92, 0.08), true)
+				_grid_draw_control.draw_rect(rect, Color(0.72, 0.76, 0.82, 0.85), false, 2.0)
+				_draw_running_light_border(_grid_draw_control, rect, Color(0.95, 0.98, 1.0, 1.0), 3.0, phase_seed)
+			if is_quality_reveal:
+				# Gợi ý phẩm cấp hiển thị ở ô góc 1x1 kèm hiệu ứng chạy ánh sáng ở viền
+				var q_rect := Rect2(pos.x * CELL_SIZE + 2, pos.y * CELL_SIZE + 2, CELL_SIZE - 4, CELL_SIZE - 4)
+				_grid_draw_control.draw_rect(q_rect, Color(r_color.r, r_color.g, r_color.b, 0.7), true)
+				_grid_draw_control.draw_rect(q_rect, r_color, false, 2.0)
+				_draw_running_light_border(_grid_draw_control, q_rect, r_color.lightened(0.4), 2.8, phase_seed + 20.0)
+
 
 
 func _get_cached_item_texture(path: String) -> Texture2D:
@@ -1976,6 +2055,10 @@ func _process(delta: float) -> void:
 			_settlement_continue_btn.modulate.a = 0.7 + 0.3 * sin(_continue_pulse_time)
 		if _is_settlement_revealing and _settlement_grid_draw_control != null:
 			_settlement_grid_draw_control.queue_redraw()
+	else:
+		if visible and _grid_draw_control != null and (_revealed_outlines.size() > 0 or _revealed_qualities.size() > 0 or _revealed_items.size() > 0):
+			_border_anim_time += delta
+			_grid_draw_control.queue_redraw()
 
 
 func _on_settlement_overlay_gui_input(_event: InputEvent) -> void:
