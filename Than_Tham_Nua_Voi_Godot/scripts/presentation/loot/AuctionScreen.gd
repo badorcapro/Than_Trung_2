@@ -152,15 +152,15 @@ func _build_ui() -> void:
 	body_hbox.add_theme_constant_override("separation", 16)
 	main_vbox.add_child(body_hbox)
 
-	# CỘT TRÁI: NGƯỜI THAM GIA ĐẤU GIÁ (BIDDERS - 330px)
+	# CỘT TRÁI: NGƯỜI THAM GIA ĐẤU GIÁ (BIDDERS - 280px)
 	_left_column = VBoxContainer.new()
-	_left_column.custom_minimum_size = Vector2(330, 0)
-	_left_column.add_theme_constant_override("separation", 10)
+	_left_column.custom_minimum_size = Vector2(280, 0)
+	_left_column.add_theme_constant_override("separation", 8)
 	body_hbox.add_child(_left_column)
 
 	_bidders_container = VBoxContainer.new()
 	_bidders_container.size_flags_horizontal = SIZE_EXPAND_FILL
-	_bidders_container.add_theme_constant_override("separation", 10)
+	_bidders_container.add_theme_constant_override("separation", 8)
 	_left_column.add_child(_bidders_container)
 
 	# CỘT GIỮA: BẢNG MANH MỐI FEED (440px)
@@ -915,7 +915,7 @@ func _render_bidders() -> void:
 		child.queue_free()
 
 	var curr_pid := _get_current_turn_player_id()
-	var frame_tex := load("res://assets/ui/auction/hud_panel_frame.png") as Texture2D
+	var frame_tex := load("res://assets/ui/auction/bidder_card_frame.png") as Texture2D
 
 	var badges: Array[String] = [
 		"Nhà Sưu Tầm Đỉnh",
@@ -936,16 +936,16 @@ func _render_bidders() -> void:
 		)
 
 		var card := PanelContainer.new()
-		card.custom_minimum_size = Vector2(320, 92)
+		card.custom_minimum_size = Vector2(280, 70)
 		card.mouse_filter = MOUSE_FILTER_PASS
 
 		if frame_tex != null:
 			var card_style := StyleBoxTexture.new()
 			card_style.texture = frame_tex
-			card_style.texture_margin_left = 200
-			card_style.texture_margin_top = 160
-			card_style.texture_margin_right = 200
-			card_style.texture_margin_bottom = 160
+			card_style.texture_margin_left = 44
+			card_style.texture_margin_top = 18
+			card_style.texture_margin_right = 44
+			card_style.texture_margin_bottom = 18
 			if not is_active:
 				card_style.modulate_color = Color(0.4, 0.4, 0.45, 0.6)
 			elif is_current_turn:
@@ -961,29 +961,29 @@ func _render_bidders() -> void:
 			fb.border_width_top = 2 if is_current_turn else 1
 			fb.border_width_right = 2 if is_current_turn else 1
 			fb.border_width_bottom = 2 if is_current_turn else 1
-			fb.corner_radius_top_left = 8
-			fb.corner_radius_top_right = 8
-			fb.corner_radius_bottom_left = 8
-			fb.corner_radius_bottom_right = 8
+			fb.corner_radius_top_left = 6
+			fb.corner_radius_top_right = 6
+			fb.corner_radius_bottom_left = 6
+			fb.corner_radius_bottom_right = 6
 			card.add_theme_stylebox_override("panel", fb)
 
 		_bidders_container.add_child(card)
 
 		var margin := MarginContainer.new()
-		margin.add_theme_constant_override("margin_left", 22)
-		margin.add_theme_constant_override("margin_right", 22)
-		margin.add_theme_constant_override("margin_top", 12)
-		margin.add_theme_constant_override("margin_bottom", 12)
+		margin.add_theme_constant_override("margin_left", 16)
+		margin.add_theme_constant_override("margin_right", 16)
+		margin.add_theme_constant_override("margin_top", 6)
+		margin.add_theme_constant_override("margin_bottom", 6)
 		card.add_child(margin)
 
 		var hbox := HBoxContainer.new()
-		hbox.add_theme_constant_override("separation", 10)
+		hbox.add_theme_constant_override("separation", 8)
 		hbox.alignment = BoxContainer.ALIGNMENT_CENTER
 		margin.add_child(hbox)
 
 		# 1. Avatar box on the left
 		var av_panel := PanelContainer.new()
-		av_panel.custom_minimum_size = Vector2(44, 44)
+		av_panel.custom_minimum_size = Vector2(34, 34)
 		var av_sb := StyleBoxFlat.new()
 		av_sb.bg_color = Color(0.05, 0.08, 0.12, 0.9)
 		av_sb.border_color = Color("#f6c95c") if is_current_turn else Color(0.4, 0.5, 0.6, 0.6)
@@ -991,10 +991,10 @@ func _render_bidders() -> void:
 		av_sb.border_width_top = 1
 		av_sb.border_width_right = 1
 		av_sb.border_width_bottom = 1
-		av_sb.corner_radius_top_left = 6
-		av_sb.corner_radius_top_right = 6
-		av_sb.corner_radius_bottom_left = 6
-		av_sb.corner_radius_bottom_right = 6
+		av_sb.corner_radius_top_left = 4
+		av_sb.corner_radius_top_right = 4
+		av_sb.corner_radius_bottom_left = 4
+		av_sb.corner_radius_bottom_right = 4
 		av_panel.add_theme_stylebox_override("panel", av_sb)
 		hbox.add_child(av_panel)
 
@@ -1002,13 +1002,13 @@ func _render_bidders() -> void:
 		av_panel.add_child(av_center)
 		var av_lbl := Label.new()
 		av_lbl.text = avatar_icons[i % avatar_icons.size()]
-		av_lbl.add_theme_font_size_override("font_size", 20)
+		av_lbl.add_theme_font_size_override("font_size", 16)
 		av_center.add_child(av_lbl)
 
 		# 2. Middle Content VBox
 		var mid_vbox := VBoxContainer.new()
 		mid_vbox.size_flags_horizontal = SIZE_EXPAND_FILL
-		mid_vbox.add_theme_constant_override("separation", 3)
+		mid_vbox.add_theme_constant_override("separation", 2)
 		hbox.add_child(mid_vbox)
 
 		# Row A: Title & Name
@@ -1018,24 +1018,24 @@ func _render_bidders() -> void:
 
 		var name_lbl := Label.new()
 		name_lbl.text = "%d %s" % [i + 1, String(pid)]
-		name_lbl.add_theme_font_size_override("font_size", 13)
+		name_lbl.add_theme_font_size_override("font_size", 12)
 		name_lbl.add_theme_color_override("font_color", Color.WHITE if is_active else Color("#6272a4"))
 		name_hbox.add_child(name_lbl)
 
 		var badge_lbl := Label.new()
 		badge_lbl.text = "[%s]" % badges[i % badges.size()]
-		badge_lbl.add_theme_font_size_override("font_size", 11)
+		badge_lbl.add_theme_font_size_override("font_size", 10)
 		badge_lbl.add_theme_color_override("font_color", Color("#f6c95c") if is_current_turn else Color("#8be9fd"))
 		name_hbox.add_child(badge_lbl)
 
 		# Row B: 5 Square Round Indicators [1] [2] [3] [4] [5]
 		var rounds_hbox := HBoxContainer.new()
-		rounds_hbox.add_theme_constant_override("separation", 4)
+		rounds_hbox.add_theme_constant_override("separation", 3)
 		mid_vbox.add_child(rounds_hbox)
 
 		for r in range(1, 6):
 			var r_box := PanelContainer.new()
-			r_box.custom_minimum_size = Vector2(20, 20)
+			r_box.custom_minimum_size = Vector2(17, 17)
 			var r_sb := StyleBoxFlat.new()
 			r_sb.corner_radius_top_left = 3
 			r_sb.corner_radius_top_right = 3
@@ -1046,7 +1046,7 @@ func _render_bidders() -> void:
 			r_box.add_child(r_center)
 			var r_num := Label.new()
 			r_num.text = str(r)
-			r_num.add_theme_font_size_override("font_size", 10)
+			r_num.add_theme_font_size_override("font_size", 9)
 			r_center.add_child(r_num)
 
 			if r < auction_session.current_round:
