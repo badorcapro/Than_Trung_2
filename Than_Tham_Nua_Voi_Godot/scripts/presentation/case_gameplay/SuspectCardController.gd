@@ -13,8 +13,9 @@ const FUNCTION_MARKER_CONSUMED := "consumed"
 const FUNCTION_HAND_AVAILABLE_TEXTURE: Texture2D = preload("res://assets/ui/case/function_hand_available.png")
 const FUNCTION_HAND_CONSUMED_TEXTURE: Texture2D = preload("res://assets/ui/case/function_hand_consumed.png")
 const DEAD_MARKER_TEXTURE: Texture2D = preload("res://assets/ui/case/dead_marker_universal.png")
-const CARD_SKIN_3X3_TEXTURE: Texture2D = preload("res://assets/ui/case/suspect_card_skin_green_3x3_runtime.png")
-const CARD_SKIN_4X4_TEXTURE: Texture2D = preload("res://assets/ui/case/suspect_card_skin_green_4x4_runtime.png")
+const CARD_SKIN_3X3_TEXTURE: Texture2D = preload("res://assets/ui/case/dupery/polaroid_card_frame.png")
+const CARD_SKIN_4X4_TEXTURE: Texture2D = preload("res://assets/ui/case/dupery/polaroid_card_frame.png")
+const DOOR_SILHOUETTE_TEXTURE: Texture2D = preload("res://assets/ui/case/dupery/art_door_silhouette.png")
 const ROLE_ICON_DICH_PHU: Texture2D = preload("res://assets/ui/case/role_icons/dich_phu.png")
 const DISPLAY_FONT: Font = preload("res://assets/fonts/TimesNewRoman.ttf")
 const BODY_FONT: Font = preload("res://assets/fonts/Arial.ttf")
@@ -123,11 +124,18 @@ func configure(view_data: SuspectPublicViewData, public_function_result_lines: P
 	)
 
 	if role_icon != null:
-		role_icon.visible = show_dich_phu_icon
-		role_icon.texture = ROLE_ICON_DICH_PHU if show_dich_phu_icon else null
+		if not public_data.is_investigated:
+			role_icon.visible = true
+			role_icon.texture = DOOR_SILHOUETTE_TEXTURE
+		elif show_dich_phu_icon:
+			role_icon.visible = true
+			role_icon.texture = ROLE_ICON_DICH_PHU
+		else:
+			role_icon.visible = false
+			role_icon.texture = null
 
 	if unknown_icon_label != null:
-		unknown_icon_label.visible = not show_dich_phu_icon
+		unknown_icon_label.visible = public_data.is_investigated and not show_dich_phu_icon
 		unknown_icon_label.text = _portrait_symbol()
 		unknown_icon_label.add_theme_color_override("font_color", _portrait_symbol_color())
 
