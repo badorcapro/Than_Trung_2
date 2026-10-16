@@ -2190,7 +2190,7 @@ layout_mode = 2
 theme_override_constants/separation = 14
 
 [node name="InspectAvatarFrame" type="Panel" parent="DesktopRoot/CharacterPickerModal/PickerMargin/PickerVBox/InspectorPanel/InspectorHBox/ColProfile/ProfileHBox"]
-custom_minimum_size = Vector2(100, 120)
+custom_minimum_size = Vector2(120, 120)
 layout_mode = 2
 size_flags_vertical = 4
 

@@ -969,9 +969,21 @@ func _build_character_picker_grid() -> void:
 		tile_btn.add_child(vbox)
 
 		var avatar_frame := Panel.new()
-		avatar_frame.custom_minimum_size = Vector2(0, 110)
-		avatar_frame.size_flags_vertical = Control.SIZE_EXPAND_FILL
+		avatar_frame.custom_minimum_size = Vector2(110, 110)
+		avatar_frame.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 		avatar_frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		var circle_frame_style := StyleBoxFlat.new()
+		circle_frame_style.bg_color = Color(0.06, 0.08, 0.12, 0.6)
+		circle_frame_style.border_width_left = 2
+		circle_frame_style.border_width_top = 2
+		circle_frame_style.border_width_right = 2
+		circle_frame_style.border_width_bottom = 2
+		circle_frame_style.border_color = Color(0.65, 0.55, 0.35, 0.7)
+		circle_frame_style.corner_radius_top_left = 55
+		circle_frame_style.corner_radius_top_right = 55
+		circle_frame_style.corner_radius_bottom_right = 55
+		circle_frame_style.corner_radius_bottom_left = 55
+		avatar_frame.add_theme_stylebox_override("panel", circle_frame_style)
 		vbox.add_child(avatar_frame)
 
 		var portrait_path: String = "res://assets/portraits/%s.png" % String(char_def.character_id)
@@ -1085,6 +1097,23 @@ func _inspect_character(char_def: CharacterDefinition) -> void:
 		inspect_stamina_label.text = "⚡ Thể lực: %d / 2" % char_def.base_stamina
 	if inspect_bag_label != null:
 		inspect_bag_label.text = "🎒 Sức chứa túi: Cấp %d" % char_def.base_bag_level
+
+	var inspect_avatar_frame: Panel = get_node_or_null("%InspectAvatarFrame") as Panel
+	if inspect_avatar_frame != null:
+		var frame_style := StyleBoxFlat.new()
+		frame_style.bg_color = Color(0.06, 0.08, 0.12, 0.8)
+		frame_style.border_width_left = 3
+		frame_style.border_width_top = 3
+		frame_style.border_width_right = 3
+		frame_style.border_width_bottom = 3
+		frame_style.border_color = lore.house_color
+		frame_style.corner_radius_top_left = 60
+		frame_style.corner_radius_top_right = 60
+		frame_style.corner_radius_bottom_right = 60
+		frame_style.corner_radius_bottom_left = 60
+		frame_style.shadow_color = Color(lore.house_color.r, lore.house_color.g, lore.house_color.b, 0.4)
+		frame_style.shadow_size = 10
+		inspect_avatar_frame.add_theme_stylebox_override("panel", frame_style)
 
 	var portrait_path: String = "res://assets/portraits/%s.png" % String(char_def.character_id)
 	if ResourceLoader.exists(portrait_path):

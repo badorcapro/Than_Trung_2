@@ -1273,8 +1273,6 @@ func _draw_rect_perimeter_segment(canvas: Control, rect: Rect2, sa: float, sb: f
 
 
 func _draw_running_light_border(canvas: Control, rect: Rect2, light_color: Color, base_width: float = 2.0, phase_seed: float = 0.0) -> void:
-	if _settlement_overlay != null and _settlement_overlay.visible:
-		return
 	var w: float = rect.size.x
 	var h: float = rect.size.y
 	var p: float = 2.0 * (w + h)
@@ -1928,13 +1926,15 @@ func _on_settlement_grid_draw() -> void:
 
 		var is_revealed: bool = _settlement_revealed_item_ids.has(String(i_id))
 		var is_loading: bool = (_active_loading_item_id == String(i_id))
+		var phase_seed: float = float((pos.x * 37 + pos.y * 61) % 150) * 3.0
 
 		if is_revealed:
 			var r_color: Color = ITEM_CLASS.rarity_color(item.rarity)
 			var fill_color := Color(r_color.r, r_color.g, r_color.b, 0.35)
 			_settlement_grid_draw_control.draw_rect(rect, fill_color, true)
-			var b_width: float = 3.0 if (item.rarity == ITEM_CLASS.Rarity.RED or item.rarity == ITEM_CLASS.Rarity.GOLD) else 2.0
+			var b_width: float = 2.5 if (item.rarity == ITEM_CLASS.Rarity.RED or item.rarity == ITEM_CLASS.Rarity.GOLD) else 2.0
 			_settlement_grid_draw_control.draw_rect(rect, r_color, false, b_width)
+			_draw_running_light_border(_settlement_grid_draw_control, rect, r_color.lightened(0.4), b_width, phase_seed)
 
 			if item.rarity == ITEM_CLASS.Rarity.RED:
 				var inner_rect := rect.grow(-2)
@@ -2011,6 +2011,7 @@ func _on_settlement_grid_draw() -> void:
 			var slot_bg := Color(0.18, 0.23, 0.30, 0.95)
 			_settlement_grid_draw_control.draw_rect(rect, slot_bg, true)
 			_settlement_grid_draw_control.draw_rect(rect, Color(0.85, 0.92, 1.0, 0.8), false, 2.0)
+			_draw_running_light_border(_settlement_grid_draw_control, rect, Color(0.95, 0.98, 1.0, 1.0), 2.0, phase_seed)
 
 			# Spinner arc at center
 			var center_pos := rect.position + rect.size * 0.5
@@ -2069,16 +2070,16 @@ func _rarity_badge(rarity: int) -> String:
 
 
 func _process(delta: float) -> void:
+	_border_anim_time += delta
 	if _settlement_overlay != null and _settlement_overlay.visible:
 		_settlement_spinner_angle = fmod(_settlement_spinner_angle + delta * 8.0, TAU)
 		_continue_pulse_time += delta * 4.0
 		if _settlement_continue_btn != null and _settlement_continue_btn.visible:
 			_settlement_continue_btn.modulate.a = 0.7 + 0.3 * sin(_continue_pulse_time)
-		if _is_settlement_revealing and _settlement_grid_draw_control != null:
+		if _settlement_grid_draw_control != null and _settlement_grid_draw_control.is_visible_in_tree():
 			_settlement_grid_draw_control.queue_redraw()
 	else:
 		if visible and _grid_draw_control != null and (_revealed_outlines.size() > 0 or _revealed_qualities.size() > 0 or _revealed_items.size() > 0):
-			_border_anim_time += delta
 			_grid_draw_control.queue_redraw()
 
 
