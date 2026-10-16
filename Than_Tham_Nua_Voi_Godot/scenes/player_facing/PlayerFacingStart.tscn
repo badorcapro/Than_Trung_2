@@ -1526,7 +1526,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.96, 0.88, 0.65, 1)
 theme_override_font_sizes/font_size = 17
-text = "GHI DANH THÁM TỬ — CHỌN NHÂN VẬT THAM CHIẾN"
+text = "CHỈ ĐỊNH ĐỐI TƯỢNG THÍ NGHIỆM"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -1632,30 +1632,42 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_desktop_btn_normal")
 theme_override_styles/hover = SubResource("StyleBoxFlat_desktop_btn_hover")
 text = "✕ Đổi"
 
-[node name="AvatarFrame" type="Panel" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard0/FilledView0"]
+[node name="AvatarCenter" type="CenterContainer" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard0/FilledView0"]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_desktop_btn_normal")
 
-[node name="AvatarImg0" type="TextureRect" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard0/FilledView0/AvatarFrame"]
+[node name="AvatarFrame" type="Control" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard0/FilledView0/AvatarCenter"]
+custom_minimum_size = Vector2(160, 160)
+layout_mode = 2
+
+[node name="AvatarImg0" type="TextureRect" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard0/FilledView0/AvatarCenter/AvatarFrame"]
 unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 144.0
+offset_bottom = 144.0
 expand_mode = 1
 stretch_mode = 5
 
-[node name="AvatarPlaceholder0" type="Label" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard0/FilledView0/AvatarFrame"]
+[node name="SealFrame0" type="TextureRect" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard0/FilledView0/AvatarCenter/AvatarFrame"]
 unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+custom_minimum_size = Vector2(160, 160)
+layout_mode = 0
+offset_right = 160.0
+offset_bottom = 160.0
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="AvatarPlaceholder0" type="Label" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard0/FilledView0/AvatarCenter/AvatarFrame"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 144.0
+offset_bottom = 144.0
 theme_override_colors/font_color = Color(1, 0.9, 0.5, 0.9)
 theme_override_font_sizes/font_size = 22
 text = "HOÀNG"
@@ -1770,30 +1782,42 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_desktop_btn_normal")
 theme_override_styles/hover = SubResource("StyleBoxFlat_desktop_btn_hover")
 text = "✕ Đổi"
 
-[node name="AvatarFrame" type="Panel" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard1/FilledView1"]
+[node name="AvatarCenter" type="CenterContainer" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard1/FilledView1"]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_desktop_btn_normal")
 
-[node name="AvatarImg1" type="TextureRect" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard1/FilledView1/AvatarFrame"]
+[node name="AvatarFrame" type="Control" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard1/FilledView1/AvatarCenter"]
+custom_minimum_size = Vector2(160, 160)
+layout_mode = 2
+
+[node name="AvatarImg1" type="TextureRect" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard1/FilledView1/AvatarCenter/AvatarFrame"]
 unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 144.0
+offset_bottom = 144.0
 expand_mode = 1
 stretch_mode = 5
 
-[node name="AvatarPlaceholder1" type="Label" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard1/FilledView1/AvatarFrame"]
+[node name="SealFrame1" type="TextureRect" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard1/FilledView1/AvatarCenter/AvatarFrame"]
 unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+custom_minimum_size = Vector2(160, 160)
+layout_mode = 0
+offset_right = 160.0
+offset_bottom = 160.0
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="AvatarPlaceholder1" type="Label" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard1/FilledView1/AvatarCenter/AvatarFrame"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 144.0
+offset_bottom = 144.0
 theme_override_colors/font_color = Color(1, 0.9, 0.5, 0.9)
 theme_override_font_sizes/font_size = 22
 text = "HOÀNG"
@@ -1908,30 +1932,42 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_desktop_btn_normal")
 theme_override_styles/hover = SubResource("StyleBoxFlat_desktop_btn_hover")
 text = "✕ Đổi"
 
-[node name="AvatarFrame" type="Panel" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard2/FilledView2"]
+[node name="AvatarCenter" type="CenterContainer" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard2/FilledView2"]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_desktop_btn_normal")
 
-[node name="AvatarImg2" type="TextureRect" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard2/FilledView2/AvatarFrame"]
+[node name="AvatarFrame" type="Control" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard2/FilledView2/AvatarCenter"]
+custom_minimum_size = Vector2(160, 160)
+layout_mode = 2
+
+[node name="AvatarImg2" type="TextureRect" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard2/FilledView2/AvatarCenter/AvatarFrame"]
 unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 144.0
+offset_bottom = 144.0
 expand_mode = 1
 stretch_mode = 5
 
-[node name="AvatarPlaceholder2" type="Label" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard2/FilledView2/AvatarFrame"]
+[node name="SealFrame2" type="TextureRect" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard2/FilledView2/AvatarCenter/AvatarFrame"]
 unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+custom_minimum_size = Vector2(160, 160)
+layout_mode = 0
+offset_right = 160.0
+offset_bottom = 160.0
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="AvatarPlaceholder2" type="Label" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard2/FilledView2/AvatarCenter/AvatarFrame"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 144.0
+offset_bottom = 144.0
 theme_override_colors/font_color = Color(1, 0.9, 0.5, 0.9)
 theme_override_font_sizes/font_size = 22
 text = "HOÀNG"
@@ -2046,30 +2082,42 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_desktop_btn_normal")
 theme_override_styles/hover = SubResource("StyleBoxFlat_desktop_btn_hover")
 text = "✕ Đổi"
 
-[node name="AvatarFrame" type="Panel" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard3/FilledView3"]
+[node name="AvatarCenter" type="CenterContainer" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard3/FilledView3"]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_desktop_btn_normal")
 
-[node name="AvatarImg3" type="TextureRect" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard3/FilledView3/AvatarFrame"]
+[node name="AvatarFrame" type="Control" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard3/FilledView3/AvatarCenter"]
+custom_minimum_size = Vector2(160, 160)
+layout_mode = 2
+
+[node name="AvatarImg3" type="TextureRect" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard3/FilledView3/AvatarCenter/AvatarFrame"]
 unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 144.0
+offset_bottom = 144.0
 expand_mode = 1
 stretch_mode = 5
 
-[node name="AvatarPlaceholder3" type="Label" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard3/FilledView3/AvatarFrame"]
+[node name="SealFrame3" type="TextureRect" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard3/FilledView3/AvatarCenter/AvatarFrame"]
 unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+custom_minimum_size = Vector2(160, 160)
+layout_mode = 0
+offset_right = 160.0
+offset_bottom = 160.0
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="AvatarPlaceholder3" type="Label" parent="DesktopRoot/DesktopCharacterSelectDialog/CharSelectBox/ContentVBox/SlotsHBox/SlotCard3/FilledView3/AvatarCenter/AvatarFrame"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 144.0
+offset_bottom = 144.0
 theme_override_colors/font_color = Color(1, 0.9, 0.5, 0.9)
 theme_override_font_sizes/font_size = 22
 text = "HOÀNG"
@@ -2129,7 +2177,7 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_dupery_btn_accent_norma
 theme_override_styles/hover = SubResource("StyleBoxFlat_dupery_btn_accent_hover")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_dupery_btn_accent_hover")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_desktop_btn_normal")
-text = "▶ Bắt Đầu Kỳ Án (Cần tối thiểu 2 người)"
+text = "▶ Bắt Đầu Mô Phỏng (Cần tối thiểu 2 người)"
 
 [node name="CharacterPickerModal" type="Control" parent="DesktopRoot"]
 unique_name_in_owner = true

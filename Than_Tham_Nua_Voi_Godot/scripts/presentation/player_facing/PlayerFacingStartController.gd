@@ -821,34 +821,25 @@ func _refresh_character_select_ui() -> void:
 			var house_lbl: Label = get_node_or_null("%HouseBadge" + str(i)) as Label
 			if house_lbl != null:
 				match char_def.origin_house_id:
-					&"house_hoang": house_lbl.text = "👑 Nhà họ Hoàng"
-					&"house_chu": house_lbl.text = "🔥 Nhà họ Chu"
-					&"house_kim": house_lbl.text = "💎 Nhà họ Kim"
-					&"house_huyen": house_lbl.text = "🔮 Nhà họ Huyền"
-					&"house_lam": house_lbl.text = "🌿 Nhà họ Lam"
+					&"house_hoang": house_lbl.text = "Nhà họ Hoàng"
+					&"house_chu": house_lbl.text = "Nhà họ Chu"
+					&"house_kim": house_lbl.text = "Nhà họ Kim"
+					&"house_huyen": house_lbl.text = "Nhà họ Huyền"
+					&"house_lam": house_lbl.text = "Nhà họ Lam"
 					_: house_lbl.text = "Hoàng Cung"
+				var lore_slot: Dictionary = CHARACTER_LORE_SKILLS.get(char_def.character_id, {})
+				var house_col: Color = lore_slot.get("house_color", Color(0.9, 0.8, 0.4))
+				house_lbl.add_theme_color_override("font_color", house_col)
 
 			var stats_lbl: Label = get_node_or_null("%StatsLabel" + str(i)) as Label
 			if stats_lbl != null:
 				stats_lbl.text = "Tốc độ: %d • Thể lực: %d • Túi: %d" % [
 					char_def.base_speed, char_def.base_stamina, char_def.base_bag_level
 				]
-			var slot_avatar_frame: Panel = filled_view.get_node_or_null("AvatarFrame") as Panel
-			if slot_avatar_frame != null:
-				var lore_slot: Dictionary = CHARACTER_LORE_SKILLS.get(char_def.character_id, {})
-				var house_col: Color = lore_slot.get("house_color", Color(0.8, 0.7, 0.4))
-				var s_style := StyleBoxFlat.new()
-				s_style.bg_color = Color(0.06, 0.08, 0.12, 0.6)
-				s_style.border_width_left = 2
-				s_style.border_width_top = 2
-				s_style.border_width_right = 2
-				s_style.border_width_bottom = 2
-				s_style.border_color = house_col
-				s_style.corner_radius_top_left = 60
-				s_style.corner_radius_top_right = 60
-				s_style.corner_radius_bottom_right = 60
-				s_style.corner_radius_bottom_left = 60
-				slot_avatar_frame.add_theme_stylebox_override("panel", s_style)
+
+			var seal_frame_img: TextureRect = get_node_or_null("%SealFrame" + str(i)) as TextureRect
+			if seal_frame_img != null:
+				seal_frame_img.texture = SEAL_FRAME_TEXTURES.get(char_def.origin_house_id)
 
 			var avatar_img: TextureRect = get_node_or_null("%AvatarImg" + str(i)) as TextureRect
 			var placeholder_lbl: Label = get_node_or_null("%AvatarPlaceholder" + str(i)) as Label
@@ -866,20 +857,20 @@ func _refresh_character_select_ui() -> void:
 				if placeholder_lbl != null:
 					placeholder_lbl.visible = true
 					match char_def.origin_house_id:
-						&"house_hoang": placeholder_lbl.text = "👑\nHOÀNG"
-						&"house_chu": placeholder_lbl.text = "🔥\nCHU"
-						&"house_kim": placeholder_lbl.text = "💎\nKIM"
-						&"house_huyen": placeholder_lbl.text = "🔮\nHUYỀN"
-						&"house_lam": placeholder_lbl.text = "🌿\nLAM"
+						&"house_hoang": placeholder_lbl.text = "HOÀNG"
+						&"house_chu": placeholder_lbl.text = "CHU"
+						&"house_kim": placeholder_lbl.text = "KIM"
+						&"house_huyen": placeholder_lbl.text = "HUYỀN"
+						&"house_lam": placeholder_lbl.text = "LAM"
 						_: placeholder_lbl.text = "THÁM TỬ"
 
 	if char_select_start_btn != null:
 		if filled_count < 2:
 			char_select_start_btn.disabled = true
-			char_select_start_btn.text = "▶ Bắt Đầu Kỳ Án (Cần tối thiểu 2 người)"
+			char_select_start_btn.text = "▶ Bắt Đầu Mô Phỏng (Cần tối thiểu 2 người)"
 		else:
 			char_select_start_btn.disabled = false
-			char_select_start_btn.text = "▶ Bắt Đầu Kỳ Án (%d Người Chơi)" % filled_count
+			char_select_start_btn.text = "▶ Bắt Đầu Mô Phỏng"
 
 
 func _on_slot_btn_pressed(slot_idx: int) -> void:
