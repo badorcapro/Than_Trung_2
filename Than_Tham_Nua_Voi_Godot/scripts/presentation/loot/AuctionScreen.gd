@@ -23,6 +23,7 @@ var _grid_placements: Dictionary = {}
 var _revealed_items: Dictionary = {} # item_id -> bool
 var _revealed_outlines: Dictionary = {} # item_id -> bool
 var _revealed_qualities: Dictionary = {} # item_id -> bool
+var _dynamic_grid_rows: int = 8
 
 # UI Nodes
 var _bg_rect: ColorRect
@@ -165,28 +166,18 @@ func _build_ui() -> void:
 
 	var b_panel := PanelContainer.new()
 	b_panel.size_flags_vertical = SIZE_EXPAND_FILL
-	var hud_frame_tex := load("res://assets/ui/auction/hud_panel_frame.png") as Texture2D
-	if hud_frame_tex != null:
-		var bp_style := StyleBoxTexture.new()
-		bp_style.texture = hud_frame_tex
-		bp_style.texture_margin_left = 48
-		bp_style.texture_margin_top = 48
-		bp_style.texture_margin_right = 48
-		bp_style.texture_margin_bottom = 48
-		b_panel.add_theme_stylebox_override("panel", bp_style)
-	else:
-		var bp_style := StyleBoxFlat.new()
-		bp_style.bg_color = Color(0.08, 0.12, 0.16, 0.85)
-		bp_style.border_color = Color(0.25, 0.38, 0.5, 0.6)
-		bp_style.border_width_left = 1
-		bp_style.border_width_top = 1
-		bp_style.border_width_right = 1
-		bp_style.border_width_bottom = 1
-		bp_style.corner_radius_top_left = 6
-		bp_style.corner_radius_top_right = 6
-		bp_style.corner_radius_bottom_left = 6
-		bp_style.corner_radius_bottom_right = 6
-		b_panel.add_theme_stylebox_override("panel", bp_style)
+	var bp_style := StyleBoxFlat.new()
+	bp_style.bg_color = Color(0.04, 0.07, 0.12, 0.72)
+	bp_style.border_color = Color(0.32, 0.45, 0.60, 0.55)
+	bp_style.border_width_left = 1
+	bp_style.border_width_top = 1
+	bp_style.border_width_right = 1
+	bp_style.border_width_bottom = 1
+	bp_style.corner_radius_top_left = 8
+	bp_style.corner_radius_top_right = 8
+	bp_style.corner_radius_bottom_left = 8
+	bp_style.corner_radius_bottom_right = 8
+	b_panel.add_theme_stylebox_override("panel", bp_style)
 	_left_column.add_child(b_panel)
 
 	var b_scroll := ScrollContainer.new()
@@ -265,38 +256,35 @@ func _build_ui() -> void:
 	grid_top.add_child(enc_btn)
 
 	var crate_panel := PanelContainer.new()
-	crate_panel.custom_minimum_size = Vector2(GRID_COLS * CELL_SIZE + 20, GRID_ROWS * CELL_SIZE + 20)
 	crate_panel.size_flags_horizontal = SIZE_EXPAND_FILL
 	crate_panel.size_flags_vertical = SIZE_EXPAND_FILL
-	if hud_frame_tex != null:
-		var c_style := StyleBoxTexture.new()
-		c_style.texture = hud_frame_tex
-		c_style.texture_margin_left = 48
-		c_style.texture_margin_top = 48
-		c_style.texture_margin_right = 48
-		c_style.texture_margin_bottom = 48
-		crate_panel.add_theme_stylebox_override("panel", c_style)
-	else:
-		var c_style := StyleBoxFlat.new()
-		c_style.bg_color = Color(0.04, 0.07, 0.1, 0.95)
-		c_style.border_color = Color(0.25, 0.45, 0.65, 0.8)
-		c_style.border_width_left = 2
-		c_style.border_width_top = 2
-		c_style.border_width_right = 2
-		c_style.border_width_bottom = 2
-		c_style.corner_radius_top_left = 8
-		c_style.corner_radius_top_right = 8
-		c_style.corner_radius_bottom_left = 8
-		c_style.corner_radius_bottom_right = 8
-		crate_panel.add_theme_stylebox_override("panel", c_style)
+	var c_style := StyleBoxFlat.new()
+	c_style.bg_color = Color(0.04, 0.07, 0.12, 0.72)
+	c_style.border_color = Color(0.32, 0.45, 0.60, 0.55)
+	c_style.border_width_left = 1
+	c_style.border_width_top = 1
+	c_style.border_width_right = 1
+	c_style.border_width_bottom = 1
+	c_style.corner_radius_top_left = 8
+	c_style.corner_radius_top_right = 8
+	c_style.corner_radius_bottom_left = 8
+	c_style.corner_radius_bottom_right = 8
+	crate_panel.add_theme_stylebox_override("panel", c_style)
 	_right_column.add_child(crate_panel)
 
+	var crate_scroll := ScrollContainer.new()
+	crate_scroll.size_flags_horizontal = SIZE_EXPAND_FILL
+	crate_scroll.size_flags_vertical = SIZE_EXPAND_FILL
+	crate_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	crate_scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_AUTO
+	crate_panel.add_child(crate_scroll)
+
 	var center_grid := CenterContainer.new()
-	center_grid.set_anchors_preset(PRESET_FULL_RECT)
-	crate_panel.add_child(center_grid)
+	center_grid.size_flags_horizontal = SIZE_EXPAND_FILL
+	crate_scroll.add_child(center_grid)
 
 	_grid_draw_control = Control.new()
-	_grid_draw_control.custom_minimum_size = Vector2(GRID_COLS * CELL_SIZE, GRID_ROWS * CELL_SIZE)
+	_grid_draw_control.custom_minimum_size = Vector2(GRID_COLS * CELL_SIZE, _dynamic_grid_rows * CELL_SIZE)
 	_grid_draw_control.draw.connect(_on_grid_draw)
 	center_grid.add_child(_grid_draw_control)
 
@@ -373,94 +361,93 @@ func _build_ui() -> void:
 	_bid_box.add_theme_constant_override("separation", 8)
 	btm_hbox.add_child(_bid_box)
 
-	var minus_btn := Button.new()
-	minus_btn.text = "- 20"
-	minus_btn.custom_minimum_size = Vector2(48, 34)
-	minus_btn.focus_mode = FOCUS_NONE
-	minus_btn.pressed.connect(func() -> void: _adjust_bid(-20))
-	_bid_box.add_child(minus_btn)
-
+	# Hidden compatibility inputs for tests and programmatic control
 	_bid_input = LineEdit.new()
-	_bid_input.placeholder_text = "Nhập Xu..."
-	_bid_input.alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_bid_input.custom_minimum_size = Vector2(110, 34)
-	_bid_input.add_theme_font_size_override("font_size", 15)
-	_bid_input.add_theme_color_override("font_color", Color("#f6c95c"))
+	_bid_input.visible = false
 	_bid_input.text_changed.connect(_on_bid_input_changed)
 	_bid_input.text_submitted.connect(func(_t: String) -> void: _on_confirm_bid_pressed())
-	_bid_input.secret = true
 	_bid_box.add_child(_bid_input)
 
-	var eye_btn := Button.new()
-	eye_btn.text = "👁️"
-	eye_btn.tooltip_text = "Ẩn / Hiện số tiền đang gõ"
-	eye_btn.custom_minimum_size = Vector2(36, 34)
-	eye_btn.focus_mode = FOCUS_NONE
-	eye_btn.pressed.connect(func() -> void:
-		_bid_input.secret = not _bid_input.secret
-	)
-	_bid_box.add_child(eye_btn)
-
-	var plus_btn := Button.new()
-	plus_btn.text = "+ 20"
-	plus_btn.custom_minimum_size = Vector2(48, 34)
-	plus_btn.focus_mode = FOCUS_NONE
-	plus_btn.pressed.connect(func() -> void: _adjust_bid(20))
-	_bid_box.add_child(plus_btn)
-
-	var plus_100_btn := Button.new()
-	plus_100_btn.text = "+ 100"
-	plus_100_btn.custom_minimum_size = Vector2(56, 34)
-	plus_100_btn.focus_mode = FOCUS_NONE
-	plus_100_btn.pressed.connect(func() -> void: _adjust_bid(100))
-	_bid_box.add_child(plus_100_btn)
-
-	var plus_500_btn := Button.new()
-	plus_500_btn.text = "+ 500"
-	plus_500_btn.custom_minimum_size = Vector2(56, 34)
-	plus_500_btn.focus_mode = FOCUS_NONE
-	plus_500_btn.pressed.connect(func() -> void: _adjust_bid(500))
-	_bid_box.add_child(plus_500_btn)
-
-	_open_numpad_btn = Button.new()
-	_open_numpad_btn.text = "⚡ Đặt Giá (Bàn Phím)"
-	_open_numpad_btn.custom_minimum_size = Vector2(170, 36)
-	_open_numpad_btn.focus_mode = FOCUS_NONE
-	var on_style := StyleBoxFlat.new()
-	on_style.bg_color = Color("#f6c95c")
-	on_style.corner_radius_top_left = 6
-	on_style.corner_radius_top_right = 6
-	on_style.corner_radius_bottom_left = 6
-	on_style.corner_radius_bottom_right = 6
-	_open_numpad_btn.add_theme_stylebox_override("normal", on_style)
-	var on_hover := on_style.duplicate() as StyleBoxFlat
-	on_hover.bg_color = Color("#ffe082")
-	_open_numpad_btn.add_theme_stylebox_override("hover", on_hover)
-	_open_numpad_btn.add_theme_color_override("font_color", Color.BLACK)
-	_open_numpad_btn.add_theme_font_size_override("font_size", 14)
-	_open_numpad_btn.pressed.connect(_open_numpad_modal)
-	_bid_box.add_child(_open_numpad_btn)
-
 	_confirm_bid_btn = Button.new()
-	_confirm_bid_btn.text = "✅ Xác Nhận Ra Giá"
-	_confirm_bid_btn.custom_minimum_size = Vector2(150, 36)
-	_confirm_bid_btn.focus_mode = FOCUS_NONE
+	_confirm_bid_btn.visible = false
 	_confirm_bid_btn.pressed.connect(_on_confirm_bid_pressed)
 	_bid_box.add_child(_confirm_bid_btn)
 
+	# Main Bidking-style Action Buttons
+	_open_numpad_btn = Button.new()
+	_open_numpad_btn.text = "⚡ ĐẶT GIÁ"
+	_open_numpad_btn.custom_minimum_size = Vector2(220, 46)
+	_open_numpad_btn.focus_mode = FOCUS_NONE
+	var on_style := StyleBoxFlat.new()
+	on_style.bg_color = Color("#ffd600")
+	on_style.border_color = Color("#fff59d")
+	on_style.border_width_left = 1
+	on_style.border_width_top = 1
+	on_style.border_width_right = 1
+	on_style.border_width_bottom = 1
+	on_style.corner_radius_top_left = 8
+	on_style.corner_radius_top_right = 8
+	on_style.corner_radius_bottom_left = 8
+	on_style.corner_radius_bottom_right = 8
+	_open_numpad_btn.add_theme_stylebox_override("normal", on_style)
+	var on_hover := on_style.duplicate() as StyleBoxFlat
+	on_hover.bg_color = Color("#ffea00")
+	_open_numpad_btn.add_theme_stylebox_override("hover", on_hover)
+	_open_numpad_btn.add_theme_color_override("font_color", Color.BLACK)
+	_open_numpad_btn.add_theme_font_size_override("font_size", 16)
+	_open_numpad_btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	_open_numpad_btn.pressed.connect(_open_numpad_modal)
+	_bid_box.add_child(_open_numpad_btn)
+
 	_pass_btn = Button.new()
-	_pass_btn.text = "⏭️ Bỏ Qua Lượt"
+	_pass_btn.text = "❌ BỎ QUA LƯỢT"
 	_pass_btn.tooltip_text = "Không nâng giá ở lượt này, giữ nguyên giá hiện tại"
-	_pass_btn.custom_minimum_size = Vector2(120, 36)
+	_pass_btn.custom_minimum_size = Vector2(150, 46)
 	_pass_btn.focus_mode = FOCUS_NONE
+	var pass_style := StyleBoxFlat.new()
+	pass_style.bg_color = Color(0.85, 0.22, 0.26, 0.95)
+	pass_style.border_color = Color(1.0, 0.45, 0.48, 0.8)
+	pass_style.border_width_left = 1
+	pass_style.border_width_top = 1
+	pass_style.border_width_right = 1
+	pass_style.border_width_bottom = 1
+	pass_style.corner_radius_top_left = 8
+	pass_style.corner_radius_top_right = 8
+	pass_style.corner_radius_bottom_left = 8
+	pass_style.corner_radius_bottom_right = 8
+	_pass_btn.add_theme_stylebox_override("normal", pass_style)
+	var pass_hover := pass_style.duplicate() as StyleBoxFlat
+	pass_hover.bg_color = Color(0.95, 0.30, 0.35, 1.0)
+	_pass_btn.add_theme_stylebox_override("hover", pass_hover)
+	_pass_btn.add_theme_color_override("font_color", Color.WHITE)
+	_pass_btn.add_theme_font_size_override("font_size", 14)
+	_pass_btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	_pass_btn.pressed.connect(_on_pass_bid_pressed)
 	_bid_box.add_child(_pass_btn)
 
 	_fold_btn = Button.new()
-	_fold_btn.text = "🏳️ Bỏ Cuộc"
+	_fold_btn.text = "🏳️ BỎ CUỘC"
 	_fold_btn.tooltip_text = "Rút lui hoàn toàn khỏi phiên đấu giá hòm này"
-	_fold_btn.custom_minimum_size = Vector2(95, 36)
+	_fold_btn.custom_minimum_size = Vector2(110, 46)
 	_fold_btn.focus_mode = FOCUS_NONE
+	var fold_style := StyleBoxFlat.new()
+	fold_style.bg_color = Color(0.12, 0.16, 0.22, 0.85)
+	fold_style.border_color = Color(0.3, 0.4, 0.5, 0.6)
+	fold_style.border_width_left = 1
+	fold_style.border_width_top = 1
+	fold_style.border_width_right = 1
+	fold_style.border_width_bottom = 1
+	fold_style.corner_radius_top_left = 8
+	fold_style.corner_radius_top_right = 8
+	fold_style.corner_radius_bottom_left = 8
+	fold_style.corner_radius_bottom_right = 8
+	_fold_btn.add_theme_stylebox_override("normal", fold_style)
+	var fold_hover := fold_style.duplicate() as StyleBoxFlat
+	fold_hover.bg_color = Color(0.20, 0.26, 0.34, 0.95)
+	_fold_btn.add_theme_stylebox_override("hover", fold_hover)
+	_fold_btn.add_theme_color_override("font_color", Color("#cbd5e1"))
+	_fold_btn.add_theme_font_size_override("font_size", 13)
+	_fold_btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	_fold_btn.pressed.connect(_on_fold_bid_pressed)
 	_bid_box.add_child(_fold_btn)
 
@@ -765,15 +752,22 @@ func _build_settlement_dialog() -> void:
 	s_grid_panel.mouse_filter = MOUSE_FILTER_PASS
 	right_vbox.add_child(s_grid_panel)
 
+	var s_grid_scroll := ScrollContainer.new()
+	s_grid_scroll.size_flags_horizontal = SIZE_EXPAND_FILL
+	s_grid_scroll.size_flags_vertical = SIZE_EXPAND_FILL
+	s_grid_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	s_grid_scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_AUTO
+	s_grid_panel.add_child(s_grid_scroll)
+
 	var s_grid_center := CenterContainer.new()
-	s_grid_center.set_anchors_preset(PRESET_FULL_RECT)
+	s_grid_center.size_flags_horizontal = SIZE_EXPAND_FILL
 	s_grid_center.mouse_filter = MOUSE_FILTER_PASS
-	s_grid_panel.add_child(s_grid_center)
+	s_grid_scroll.add_child(s_grid_center)
 
 	_settlement_grid_draw_control = Control.new()
 	_settlement_grid_draw_control.custom_minimum_size = Vector2(
 		GRID_COLS * SETTLEMENT_CELL_SIZE,
-		GRID_ROWS * SETTLEMENT_CELL_SIZE
+		_dynamic_grid_rows * SETTLEMENT_CELL_SIZE
 	)
 	_settlement_grid_draw_control.mouse_filter = MOUSE_FILTER_PASS
 	_settlement_grid_draw_control.draw.connect(_on_settlement_grid_draw)
@@ -782,44 +776,62 @@ func _build_settlement_dialog() -> void:
 
 func _generate_grid_placements() -> void:
 	_grid_placements.clear()
+	_dynamic_grid_rows = 8
 	var occupancy: Array[Array] = []
-	for y in range(GRID_ROWS):
+	for y in range(_dynamic_grid_rows):
 		var row: Array = []
 		for x in range(GRID_COLS):
 			row.append(false)
 		occupancy.append(row)
 
 	if auction_session == null or auction_session.mystery_chest == null:
+		if _grid_draw_control != null:
+			_grid_draw_control.custom_minimum_size = Vector2(GRID_COLS * CELL_SIZE, _dynamic_grid_rows * CELL_SIZE)
 		return
 
 	for item: ITEM_CLASS in auction_session.mystery_chest.items:
 		var w: int = mini(GRID_COLS, maxi(1, item.grid_width))
-		var h: int = mini(GRID_ROWS, maxi(1, item.grid_height))
+		var h: int = maxi(1, item.grid_height)
 		var placed := false
 
-		# Find first available spot
-		for y in range(GRID_ROWS - h + 1):
-			if placed: break
-			for x in range(GRID_COLS - w + 1):
-				var can_fit := true
-				for dy in range(h):
-					for dx in range(w):
-						if occupancy[y + dy][x + dx]:
-							can_fit = false
-							break
-					if not can_fit: break
-				if can_fit:
+		while not placed:
+			for y in range(_dynamic_grid_rows - h + 1):
+				if placed: break
+				for x in range(GRID_COLS - w + 1):
+					var can_fit := true
 					for dy in range(h):
 						for dx in range(w):
-							occupancy[y + dy][x + dx] = true
-					_grid_placements[String(item.item_id)] = {
-						"pos": Vector2i(x, y),
-						"w": w,
-						"h": h,
-						"item": item
-					}
-					placed = true
-					break
+							if occupancy[y + dy][x + dx]:
+								can_fit = false
+								break
+						if not can_fit: break
+					if can_fit:
+						for dy in range(h):
+							for dx in range(w):
+								occupancy[y + dy][x + dx] = true
+						_grid_placements[String(item.item_id)] = {
+							"pos": Vector2i(x, y),
+							"w": w,
+							"h": h,
+							"item": item
+						}
+						placed = true
+						break
+			if not placed:
+				# Tự động nới thêm 4 hàng vào lưới khi hòm chứa nhiều đồ (kể cả 100+ món)
+				for _add_r in range(4):
+					var new_row: Array = []
+					for x in range(GRID_COLS):
+						new_row.append(false)
+					occupancy.append(new_row)
+				_dynamic_grid_rows += 4
+
+	if _grid_draw_control != null:
+		_grid_draw_control.custom_minimum_size = Vector2(GRID_COLS * CELL_SIZE, _dynamic_grid_rows * CELL_SIZE)
+		_grid_draw_control.queue_redraw()
+	if _settlement_grid_draw_control != null:
+		_settlement_grid_draw_control.custom_minimum_size = Vector2(GRID_COLS * SETTLEMENT_CELL_SIZE, _dynamic_grid_rows * SETTLEMENT_CELL_SIZE)
+		_settlement_grid_draw_control.queue_redraw()
 
 
 func _sync_reveals_from_hints() -> void:
@@ -1169,8 +1181,8 @@ func _on_grid_draw() -> void:
 	# 1. Subtle 1x1 grid lines
 	var line_color := Color(0.2, 0.3, 0.4, 0.35)
 	for x in range(GRID_COLS + 1):
-		_grid_draw_control.draw_line(Vector2(x * CELL_SIZE, 0), Vector2(x * CELL_SIZE, GRID_ROWS * CELL_SIZE), line_color, 1.0)
-	for y in range(GRID_ROWS + 1):
+		_grid_draw_control.draw_line(Vector2(x * CELL_SIZE, 0), Vector2(x * CELL_SIZE, _dynamic_grid_rows * CELL_SIZE), line_color, 1.0)
+	for y in range(_dynamic_grid_rows + 1):
 		_grid_draw_control.draw_line(Vector2(0, y * CELL_SIZE), Vector2(GRID_COLS * CELL_SIZE, y * CELL_SIZE), line_color, 1.0)
 
 	# 2. Draw placed items
@@ -1616,11 +1628,11 @@ func _on_settlement_grid_draw() -> void:
 	for x in range(GRID_COLS + 1):
 		_settlement_grid_draw_control.draw_line(
 			Vector2(x * SETTLEMENT_CELL_SIZE, 0),
-			Vector2(x * SETTLEMENT_CELL_SIZE, GRID_ROWS * SETTLEMENT_CELL_SIZE),
+			Vector2(x * SETTLEMENT_CELL_SIZE, _dynamic_grid_rows * SETTLEMENT_CELL_SIZE),
 			line_color,
 			1.0
 		)
-	for y in range(GRID_ROWS + 1):
+	for y in range(_dynamic_grid_rows + 1):
 		_settlement_grid_draw_control.draw_line(
 			Vector2(0, y * SETTLEMENT_CELL_SIZE),
 			Vector2(GRID_COLS * SETTLEMENT_CELL_SIZE, y * SETTLEMENT_CELL_SIZE),
@@ -2136,4 +2148,3 @@ func _open_numpad_modal() -> void:
 func _close_numpad_modal() -> void:
 	if _numpad_modal != null:
 		_numpad_modal.visible = false
-

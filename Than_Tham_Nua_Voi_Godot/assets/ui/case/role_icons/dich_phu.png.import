@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://djanewis3qhpt"
-path="res://.godot/imported/dich_phu.png-9e541334c835581e7527aaebcc1ec927.ctex"
+uid="uid://bkyb53v35cg1r"
+path="res://.godot/imported/dich_phu.png-508f825ca825de17cfa1453e368f4dd2.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://assets/ui/case/role_icons/dich_phu.png"
-dest_files=["res://.godot/imported/dich_phu.png-9e541334c835581e7527aaebcc1ec927.ctex"]
+dest_files=["res://.godot/imported/dich_phu.png-508f825ca825de17cfa1453e368f4dd2.ctex"]
 
 [params]
 
