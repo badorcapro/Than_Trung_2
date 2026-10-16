@@ -943,12 +943,12 @@ func _build_character_picker_grid() -> void:
 		tile_btn.add_theme_stylebox_override("pressed", empty_style)
 		tile_btn.add_theme_stylebox_override("focus", empty_style)
 
-		# 1. Avatar Portrait (centered at 14, 14, size 132x132)
+		# 1. Avatar Portrait (centered at 16, 16, size 128x128)
 		var portrait_path: String = "res://assets/portraits/%s.png" % String(char_def.character_id)
 		var avatar_rect := TextureRect.new()
 		avatar_rect.name = "AvatarRect"
-		avatar_rect.custom_minimum_size = Vector2(132, 132)
-		avatar_rect.position = Vector2(14, 14)
+		avatar_rect.custom_minimum_size = Vector2(128, 128)
+		avatar_rect.position = Vector2(16, 16)
 		avatar_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		avatar_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		avatar_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
