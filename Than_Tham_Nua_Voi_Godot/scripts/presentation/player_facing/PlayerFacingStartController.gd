@@ -336,11 +336,38 @@ const CHARACTER_LORE_SKILLS: Dictionary = {
 @onready var next_case_title: Label = %NextCaseTitle
 @onready var next_case_description: Label = %NextCaseDescription
 @onready var next_case_status: Label = %NextCaseStatus
-@onready var next_case_options: GridContainer = %NextCaseOptions
+@onready var next_case_options: Container = %NextCaseOptions
 @onready var next_case_option_1: Button = %NextCaseOption1
 @onready var next_case_option_2: Button = %NextCaseOption2
 @onready var next_case_option_3: Button = %NextCaseOption3
 @onready var start_next_case_button: Button = %StartNextCase
+
+@onready var dossier_bg_1: PanelContainer = %DossierBg1
+@onready var dossier_bg_2: PanelContainer = %DossierBg2
+@onready var dossier_bg_3: PanelContainer = %DossierBg3
+@onready var dossier_title_1: Label = %DossierTitle1
+@onready var dossier_title_2: Label = %DossierTitle2
+@onready var dossier_title_3: Label = %DossierTitle3
+@onready var dossier_region_1: Label = %DossierRegion1
+@onready var dossier_region_2: Label = %DossierRegion2
+@onready var dossier_region_3: Label = %DossierRegion3
+@onready var dossier_desc_1: Label = %DossierDesc1
+@onready var dossier_desc_2: Label = %DossierDesc2
+@onready var dossier_desc_3: Label = %DossierDesc3
+@onready var dossier_progress_1: Label = %DossierProgress1
+@onready var dossier_progress_2: Label = %DossierProgress2
+@onready var dossier_progress_3: Label = %DossierProgress3
+@onready var dossier_badges_1: HBoxContainer = %DossierBadges1
+@onready var dossier_badges_2: HBoxContainer = %DossierBadges2
+@onready var dossier_badges_3: HBoxContainer = %DossierBadges3
+@onready var dossier_seal_1: TextureRect = %DossierSeal1
+@onready var dossier_seal_2: TextureRect = %DossierSeal2
+@onready var dossier_seal_3: TextureRect = %DossierSeal3
+
+const DOSSIER_RESTING_ROTATIONS := [-3.0, 0.0, 3.0]
+var _selected_next_case_index: int = 0
+var _seal_sfx_player: AudioStreamPlayer
+var _cached_roles_by_id: Dictionary = {}
 @onready var match_results_panel: Control = %MatchResultsPanel
 @onready var match_results_text: RichTextLabel = %MatchResultsText
 
@@ -389,6 +416,7 @@ func _ready() -> void:
 	_init_cheat_layer()
 	_init_toast_layer()
 	_init_desktop_system()
+	_init_dossier_system()
 	if FileAccess.file_exists("user://player_facing_runtime_save.json"):
 		DirAccess.remove_absolute(ProjectSettings.globalize_path("user://player_facing_runtime_save.json"))
 	if splash_click_catcher != null and not splash_click_catcher.pressed.is_connected(_on_splash_click_catcher_pressed):
@@ -397,6 +425,24 @@ func _ready() -> void:
 		splash_video.finished.connect(_on_splash_intro_finished)
 	_start_splash_prompt_pulse()
 	_show_phase(SETUP_SESSION.Phase.MAIN_MENU)
+
+
+func _init_dossier_system() -> void:
+	_seal_sfx_player = AudioStreamPlayer.new()
+	_seal_sfx_player.bus = &"Master"
+	if ResourceLoader.exists("res://assets/audio/sfx_item_reveal_normal.wav"):
+		_seal_sfx_player.stream = load("res://assets/audio/sfx_item_reveal_normal.wav") as AudioStream
+	add_child(_seal_sfx_player)
+
+	if next_case_option_1 != null:
+		next_case_option_1.mouse_entered.connect(_on_dossier_mouse_entered.bind(0))
+		next_case_option_1.mouse_exited.connect(_on_dossier_mouse_exited.bind(0))
+	if next_case_option_2 != null:
+		next_case_option_2.mouse_entered.connect(_on_dossier_mouse_entered.bind(1))
+		next_case_option_2.mouse_exited.connect(_on_dossier_mouse_exited.bind(1))
+	if next_case_option_3 != null:
+		next_case_option_3.mouse_entered.connect(_on_dossier_mouse_entered.bind(2))
+		next_case_option_3.mouse_exited.connect(_on_dossier_mouse_exited.bind(2))
 
 
 func _init_pummel_styles() -> void:
@@ -1500,19 +1546,72 @@ func _on_start_case_pressed() -> void:
 
 
 func _on_start_next_case_pressed() -> void:
-	_start_static_next_case()
+	if _has_procedural_next_case_options():
+		_start_next_case_from_option(_selected_next_case_index)
+	else:
+		_start_static_next_case()
 
 
 func _on_next_case_option_1_pressed() -> void:
-	_start_next_case_from_option(0)
+	_handle_dossier_press(0)
 
 
 func _on_next_case_option_2_pressed() -> void:
-	_start_next_case_from_option(1)
+	_handle_dossier_press(1)
 
 
 func _on_next_case_option_3_pressed() -> void:
-	_start_next_case_from_option(2)
+	_handle_dossier_press(2)
+
+
+func _handle_dossier_press(index: int) -> void:
+	if _selected_next_case_index == index:
+		# Double click or click on already-selected dossier confirms and begins investigation!
+		_start_next_case_from_option(index)
+		return
+	_select_dossier(index)
+
+
+func _select_dossier(index: int) -> void:
+	_selected_next_case_index = index
+	_update_dossier_selection_visuals()
+	_play_seal_stamp_sfx()
+
+
+func _on_dossier_mouse_entered(index: int) -> void:
+	var btn := _dossier_button(index)
+	if btn == null:
+		return
+	btn.z_index = 10
+	var tween := create_tween().set_parallel(true)
+	tween.tween_property(btn, "rotation_degrees", 0.0, 0.16).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	tween.tween_property(btn, "scale", Vector2(1.04, 1.04), 0.16).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+
+
+func _on_dossier_mouse_exited(index: int) -> void:
+	var btn := _dossier_button(index)
+	if btn == null:
+		return
+	var is_sel: bool = (index == _selected_next_case_index)
+	btn.z_index = 2 if is_sel else 0
+	var rest_rot: float = DOSSIER_RESTING_ROTATIONS[index]
+	var tween := create_tween().set_parallel(true)
+	tween.tween_property(btn, "rotation_degrees", rest_rot, 0.2).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	tween.tween_property(btn, "scale", Vector2(1.0, 1.0), 0.2).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+
+
+func _dossier_button(index: int) -> Button:
+	match index:
+		0: return next_case_option_1
+		1: return next_case_option_2
+		2: return next_case_option_3
+		_: return null
+
+
+func _play_seal_stamp_sfx() -> void:
+	if _seal_sfx_player != null and _seal_sfx_player.stream != null:
+		_seal_sfx_player.pitch_scale = randf_range(0.96, 1.04)
+		_seal_sfx_player.play()
 
 
 func _start_static_next_case() -> void:
@@ -3481,18 +3580,262 @@ func _refresh_procedural_next_case_options() -> void:
 	var options: Array[Dictionary] = _procedural_next_case_options()
 	var has_options: bool = options.size() == 3
 	next_case_options.visible = has_options
-	start_next_case_button.visible = false
-	start_next_case_button.disabled = true
 	if not has_options:
 		next_case_status.text = "Chưa có đủ ba Kỳ Án sinh tự động để lựa chọn."
-		_set_next_case_option_button(next_case_option_1, {}, 0)
-		_set_next_case_option_button(next_case_option_2, {}, 1)
-		_set_next_case_option_button(next_case_option_3, {}, 2)
+		start_next_case_button.visible = false
+		start_next_case_button.disabled = true
 		return
-	next_case_status.text = "Chọn một trong ba Kỳ Án sinh tự động."
-	_set_next_case_option_button(next_case_option_1, options[0], 0)
-	_set_next_case_option_button(next_case_option_2, options[1], 1)
-	_set_next_case_option_button(next_case_option_3, options[2], 2)
+
+	next_case_status.text = "Thám tử hãy xem xét các hồ sơ kỳ án dưới đây và chọn một kỳ án để thụ lý điều tra."
+
+	var titles := [dossier_title_1, dossier_title_2, dossier_title_3]
+	var regions := [dossier_region_1, dossier_region_2, dossier_region_3]
+	var descs := [dossier_desc_1, dossier_desc_2, dossier_desc_3]
+	var progresses := [dossier_progress_1, dossier_progress_2, dossier_progress_3]
+	var badge_rows := [dossier_badges_1, dossier_badges_2, dossier_badges_3]
+
+	var default_regions := ["THÁI Y VIỆN", "NGỰ THIỆN PHÒNG", "TÀNG THƯ CÁC"]
+	var default_descs := [
+		"Một án mạng đầu độc xảy ra tại Thái Y Viện. Khí độc phát tán, nghi phạm che giấu hành tung.",
+		"Đêm yến tiệc cung đình hỗn loạn. Ngự thiện phòng phát hiện dấu vết tráo độc và cải trang.",
+		"Mật thư cơ mật hoàng cung bị thất lạc. Kẻ phản trắc đang lẩn khuất giữa các đại thần triều đình."
+	]
+
+	var solved_count: int = 0
+	var total_rounds: int = 7
+	if case_flow != null and case_flow.match_state != null:
+		solved_count = case_flow.match_state.completed_round_count
+		if case_flow.match_state.match_rules != null:
+			total_rounds = case_flow.match_state.match_rules.max_rounds
+
+	for i in range(3):
+		var opt: Dictionary = options[i]
+		var case_def: CaseDefinition = null
+		if case_flow != null and i < case_flow.next_case_option_definitions.size():
+			case_def = case_flow.next_case_option_definitions[i]
+
+		var title_str: String = _get_case_option_title(i)
+		if titles[i] != null:
+			titles[i].text = title_str
+
+		var region_str: String = default_regions[i]
+		if case_def != null and case_def.crime_scene != null and not case_def.crime_scene.display_name.is_empty():
+			region_str = case_def.crime_scene.display_name.to_upper()
+		if regions[i] != null:
+			regions[i].text = "KHU VỰC: %s" % region_str
+
+		var desc_str: String = String(opt.get("description", ""))
+		if desc_str.is_empty() or desc_str.begins_with("Một Kỳ Án được chọn từ Seed Warehouse"):
+			desc_str = default_descs[i]
+		if descs[i] != null:
+			descs[i].text = desc_str
+
+		if progresses[i] != null:
+			progresses[i].text = "⚖ Đã giải: %d / %d" % [solved_count, total_rounds]
+
+		var role_ids: Array[StringName] = []
+		if case_def != null:
+			if case_def.suspected_role_ids.size() > 0:
+				role_ids = case_def.suspected_role_ids
+			elif case_def.suspects.size() > 0:
+				for suspect in case_def.suspects:
+					var r_id: StringName = suspect.displayed_role_id if not suspect.displayed_role_id.is_empty() else suspect.true_role_id
+					if not role_ids.has(r_id):
+						role_ids.append(r_id)
+		if role_ids.is_empty():
+			role_ids = [&"poisoner", &"barkeep", &"serial_killer", &"mathematician", &"tailor"]
+
+		if badge_rows[i] != null:
+			_populate_dossier_role_badges(badge_rows[i], role_ids)
+
+	_update_dossier_selection_visuals()
+
+
+func _update_dossier_selection_visuals() -> void:
+	var bgs := [dossier_bg_1, dossier_bg_2, dossier_bg_3]
+	var seals := [dossier_seal_1, dossier_seal_2, dossier_seal_3]
+	var buttons := [next_case_option_1, next_case_option_2, next_case_option_3]
+
+	for i in range(3):
+		var is_sel: bool = (i == _selected_next_case_index)
+		if bgs[i] != null:
+			bgs[i].add_theme_stylebox_override("panel", _get_dossier_selected_style() if is_sel else _get_dossier_paper_style())
+		if seals[i] != null:
+			if is_sel:
+				seals[i].visible = true
+				seals[i].scale = Vector2(1.3, 1.3)
+				var tween := create_tween()
+				tween.tween_property(seals[i], "scale", Vector2(1.0, 1.0), 0.14).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+			else:
+				seals[i].visible = false
+		if buttons[i] != null:
+			buttons[i].z_index = 2 if is_sel else 0
+
+	var case_name: String = _get_case_option_title(_selected_next_case_index)
+	start_next_case_button.visible = true
+	start_next_case_button.disabled = false
+	start_next_case_button.text = "▶ BẮT ĐẦU ĐIỀU TRA: %s" % case_name.to_upper()
+
+
+func _get_dossier_paper_style() -> StyleBoxFlat:
+	var sb := StyleBoxFlat.new()
+	sb.content_margin_left = 14.0
+	sb.content_margin_top = 14.0
+	sb.content_margin_right = 14.0
+	sb.content_margin_bottom = 14.0
+	sb.bg_color = Color(0.95, 0.93, 0.88, 1.0)
+	sb.border_width_left = 2
+	sb.border_width_top = 2
+	sb.border_width_right = 2
+	sb.border_width_bottom = 2
+	sb.border_color = Color(0.78, 0.72, 0.58, 0.9)
+	sb.corner_radius_top_left = 6
+	sb.corner_radius_top_right = 6
+	sb.corner_radius_bottom_right = 6
+	sb.corner_radius_bottom_left = 6
+	sb.shadow_color = Color(0, 0, 0, 0.45)
+	sb.shadow_size = 14
+	sb.shadow_offset = Vector2(3, 6)
+	return sb
+
+
+func _get_dossier_selected_style() -> StyleBoxFlat:
+	var sb := StyleBoxFlat.new()
+	sb.content_margin_left = 14.0
+	sb.content_margin_top = 14.0
+	sb.content_margin_right = 14.0
+	sb.content_margin_bottom = 14.0
+	sb.bg_color = Color(0.97, 0.95, 0.90, 1.0)
+	sb.border_width_left = 3
+	sb.border_width_top = 3
+	sb.border_width_right = 3
+	sb.border_width_bottom = 3
+	sb.border_color = Color(0.88, 0.65, 0.18, 1.0)
+	sb.corner_radius_top_left = 6
+	sb.corner_radius_top_right = 6
+	sb.corner_radius_bottom_right = 6
+	sb.corner_radius_bottom_left = 6
+	sb.shadow_color = Color(0.88, 0.65, 0.18, 0.45)
+	sb.shadow_size = 20
+	sb.shadow_offset = Vector2(0, 6)
+	return sb
+
+
+func _get_case_option_title(option_index: int) -> String:
+	var options := _procedural_next_case_options()
+	if option_index >= 0 and option_index < options.size():
+		var name: String = String(options[option_index].get("name", ""))
+		if not name.is_empty() and name != "Kỳ Án Sinh Tự Động" and name != "Generated Candidate Case":
+			return name
+	match option_index:
+		0: return "Thái Y Viện Tẩy Trần"
+		1: return "Ngự Thiện Phòng Đoạt Mệnh"
+		2: return "Tàng Thư Các Thất Lạc"
+		_: return "Kỳ Án Hoàng Cung"
+
+
+func _get_role_definition_cache() -> Dictionary:
+	if _cached_roles_by_id.is_empty():
+		for role: RoleDefinition in FixtureRepository.load_roles():
+			if role != null and not String(role.role_id).is_empty():
+				_cached_roles_by_id[role.role_id] = role
+	return _cached_roles_by_id
+
+
+func _populate_dossier_role_badges(container: HBoxContainer, role_ids: Array[StringName]) -> void:
+	if container == null:
+		return
+	for child in container.get_children():
+		child.queue_free()
+
+	var role_map := _get_role_definition_cache()
+	for role_id: StringName in role_ids:
+		var role: RoleDefinition = role_map.get(role_id)
+		var badge := _create_role_badge(role_id, role)
+		container.add_child(badge)
+
+
+func _create_role_badge(role_id: StringName, role: RoleDefinition) -> PanelContainer:
+	var badge := PanelContainer.new()
+	badge.custom_minimum_size = Vector2(48, 58)
+	badge.mouse_filter = Control.MOUSE_FILTER_PASS
+
+	var group: CaseEnums.RoleGroup = role.role_group if role != null else CaseEnums.RoleGroup.CHINH_NHAN
+	var border_col: Color
+	var bg_col: Color
+	match group:
+		CaseEnums.RoleGroup.CHINH_NHAN:
+			border_col = Color(0.25, 0.62, 0.65, 0.95)
+			bg_col = Color(0.92, 0.96, 0.96, 1.0)
+		CaseEnums.RoleGroup.HIEU_SU:
+			border_col = Color(0.55, 0.35, 0.72, 0.95)
+			bg_col = Color(0.95, 0.92, 0.98, 1.0)
+		CaseEnums.RoleGroup.TONG_PHAM:
+			border_col = Color(0.82, 0.32, 0.32, 0.95)
+			bg_col = Color(0.98, 0.93, 0.93, 1.0)
+		CaseEnums.RoleGroup.NGHICH_THAN:
+			border_col = Color(0.68, 0.12, 0.12, 0.95)
+			bg_col = Color(0.96, 0.89, 0.89, 1.0)
+		_:
+			border_col = Color(0.6, 0.6, 0.6, 0.9)
+			bg_col = Color(0.94, 0.94, 0.94, 1.0)
+
+	var sb := StyleBoxFlat.new()
+	sb.content_margin_left = 3.0
+	sb.content_margin_top = 3.0
+	sb.content_margin_right = 3.0
+	sb.content_margin_bottom = 3.0
+	sb.bg_color = bg_col
+	sb.border_width_left = 2
+	sb.border_width_top = 2
+	sb.border_width_right = 2
+	sb.border_width_bottom = 2
+	sb.border_color = border_col
+	sb.corner_radius_top_left = 4
+	sb.corner_radius_top_right = 4
+	sb.corner_radius_bottom_right = 4
+	sb.corner_radius_bottom_left = 4
+	sb.shadow_color = Color(0, 0, 0, 0.2)
+	sb.shadow_size = 2
+	sb.shadow_offset = Vector2(0, 1)
+	badge.add_theme_stylebox_override("panel", sb)
+
+	var vbox := VBoxContainer.new()
+	vbox.mouse_filter = Control.MOUSE_FILTER_PASS
+	vbox.theme_override_constants_set("separation", 2)
+	vbox.alignment = BoxContainer.ALIGNMENT_CENTER
+	badge.add_child(vbox)
+
+	var icon_rect := TextureRect.new()
+	icon_rect.custom_minimum_size = Vector2(28, 28)
+	icon_rect.mouse_filter = Control.MOUSE_FILTER_PASS
+	icon_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	icon_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	var icon_path: String = RoleCodexController.ROLE_ICON_PATHS.get(role_id, "")
+	if not icon_path.is_empty() and ResourceLoader.exists(icon_path):
+		icon_rect.texture = load(icon_path) as Texture2D
+	vbox.add_child(icon_rect)
+
+	var name_lbl := Label.new()
+	name_lbl.mouse_filter = Control.MOUSE_FILTER_PASS
+	name_lbl.theme_override_font_sizes_set("font_size", 9)
+	name_lbl.add_theme_color_override("font_color", Color(0.15, 0.12, 0.08, 1.0))
+	name_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	name_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	name_lbl.text = role.display_name if role != null else String(role_id)
+	vbox.add_child(name_lbl)
+
+	if role != null:
+		badge.tooltip_text = "✦ %s ✦\nNhóm: %s | Phe: %s\n\n%s" % [
+			role.display_name,
+			RoleReferenceFormatter.role_group_full_label(role.role_group),
+			RoleReferenceFormatter.role_alignment_label(role.role_group),
+			RoleReferenceFormatter.role_body_text(role)
+		]
+	else:
+		badge.tooltip_text = String(role_id)
+
+	return badge
 
 
 func _procedural_next_case_options() -> Array[Dictionary]:
@@ -3506,15 +3849,13 @@ func _has_procedural_next_case_options() -> bool:
 
 
 func _set_next_case_option_button(button: Button, option: Dictionary, option_index: int) -> void:
+	if button == null:
+		return
 	button.disabled = option.is_empty()
 	if option.is_empty():
-		button.text = "Kỳ Án %d" % (option_index + 1)
 		button.tooltip_text = ""
 		return
-	var name: String = String(option.get("name", "Kỳ Án Sinh Tự Động"))
-	var description: String = String(option.get("description", ""))
-	button.text = "Kỳ Án %d\n%s\n%s" % [option_index + 1, name, description]
-	button.tooltip_text = "Chọn Kỳ Án %d" % (option_index + 1)
+	button.tooltip_text = "Chọn Kỳ Án %d: %s" % [option_index + 1, _get_case_option_title(option_index)]
 
 
 func _show_round_indicator(round_number: int) -> void:
