@@ -3649,6 +3649,9 @@ func _refresh_procedural_next_case_options() -> void:
 		if role_ids.is_empty():
 			role_ids = [&"poisoner", &"barkeep", &"serial_killer", &"mathematician", &"tailor"]
 
+		if role_ids.size() > 5:
+			role_ids = role_ids.slice(0, 5)
+
 		if badge_rows[i] != null:
 			_populate_dossier_role_badges(badge_rows[i], role_ids)
 
@@ -3761,45 +3764,39 @@ func _populate_dossier_role_badges(container: HBoxContainer, role_ids: Array[Str
 
 func _create_role_badge(role_id: StringName, role: RoleDefinition) -> PanelContainer:
 	var badge := PanelContainer.new()
-	badge.custom_minimum_size = Vector2(48, 58)
+	badge.custom_minimum_size = Vector2(46, 54)
 	badge.mouse_filter = Control.MOUSE_FILTER_PASS
 
 	var group: CaseEnums.RoleGroup = role.role_group if role != null else CaseEnums.RoleGroup.CHINH_NHAN
 	var border_col: Color
-	var bg_col: Color
 	match group:
 		CaseEnums.RoleGroup.CHINH_NHAN:
-			border_col = Color(0.25, 0.62, 0.65, 0.95)
-			bg_col = Color(0.92, 0.96, 0.96, 1.0)
+			border_col = Color(0.18, 0.45, 0.52, 0.95)
 		CaseEnums.RoleGroup.HIEU_SU:
-			border_col = Color(0.55, 0.35, 0.72, 0.95)
-			bg_col = Color(0.95, 0.92, 0.98, 1.0)
+			border_col = Color(0.48, 0.28, 0.62, 0.95)
 		CaseEnums.RoleGroup.TONG_PHAM:
-			border_col = Color(0.82, 0.32, 0.32, 0.95)
-			bg_col = Color(0.98, 0.93, 0.93, 1.0)
+			border_col = Color(0.72, 0.24, 0.20, 0.95)
 		CaseEnums.RoleGroup.NGHICH_THAN:
-			border_col = Color(0.68, 0.12, 0.12, 0.95)
-			bg_col = Color(0.96, 0.89, 0.89, 1.0)
+			border_col = Color(0.82, 0.12, 0.12, 0.95)
 		_:
-			border_col = Color(0.6, 0.6, 0.6, 0.9)
-			bg_col = Color(0.94, 0.94, 0.94, 1.0)
+			border_col = Color(0.55, 0.45, 0.35, 0.9)
 
 	var sb := StyleBoxFlat.new()
-	sb.content_margin_left = 3.0
-	sb.content_margin_top = 3.0
-	sb.content_margin_right = 3.0
-	sb.content_margin_bottom = 3.0
-	sb.bg_color = bg_col
-	sb.border_width_left = 2
-	sb.border_width_top = 2
-	sb.border_width_right = 2
-	sb.border_width_bottom = 2
+	sb.content_margin_left = 2.0
+	sb.content_margin_top = 2.0
+	sb.content_margin_right = 2.0
+	sb.content_margin_bottom = 2.0
+	sb.bg_color = Color(0.96, 0.94, 0.90, 1.0)
+	sb.border_width_left = 1
+	sb.border_width_top = 1
+	sb.border_width_right = 1
+	sb.border_width_bottom = 1
 	sb.border_color = border_col
-	sb.corner_radius_top_left = 4
-	sb.corner_radius_top_right = 4
-	sb.corner_radius_bottom_right = 4
-	sb.corner_radius_bottom_left = 4
-	sb.shadow_color = Color(0, 0, 0, 0.2)
+	sb.corner_radius_top_left = 3
+	sb.corner_radius_top_right = 3
+	sb.corner_radius_bottom_right = 3
+	sb.corner_radius_bottom_left = 3
+	sb.shadow_color = Color(0, 0, 0, 0.15)
 	sb.shadow_size = 2
 	sb.shadow_offset = Vector2(0, 1)
 	badge.add_theme_stylebox_override("panel", sb)
@@ -3810,22 +3807,39 @@ func _create_role_badge(role_id: StringName, role: RoleDefinition) -> PanelConta
 	vbox.alignment = BoxContainer.ALIGNMENT_CENTER
 	badge.add_child(vbox)
 
+	var icon_frame := PanelContainer.new()
+	icon_frame.custom_minimum_size = Vector2(26, 26)
+	icon_frame.mouse_filter = Control.MOUSE_FILTER_PASS
+	var frame_sb := StyleBoxFlat.new()
+	frame_sb.bg_color = Color(0.08, 0.08, 0.10, 0.95)
+	frame_sb.border_width_left = 1
+	frame_sb.border_width_top = 1
+	frame_sb.border_width_right = 1
+	frame_sb.border_width_bottom = 1
+	frame_sb.border_color = border_col
+	frame_sb.corner_radius_top_left = 2
+	frame_sb.corner_radius_top_right = 2
+	frame_sb.corner_radius_bottom_right = 2
+	frame_sb.corner_radius_bottom_left = 2
+	icon_frame.add_theme_stylebox_override("panel", frame_sb)
+	vbox.add_child(icon_frame)
+
 	var icon_rect := TextureRect.new()
-	icon_rect.custom_minimum_size = Vector2(28, 28)
+	icon_rect.custom_minimum_size = Vector2(22, 22)
 	icon_rect.mouse_filter = Control.MOUSE_FILTER_PASS
 	icon_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	icon_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	var icon_path: String = RoleCodexController.ROLE_ICON_PATHS.get(role_id, "")
 	if not icon_path.is_empty() and ResourceLoader.exists(icon_path):
 		icon_rect.texture = load(icon_path) as Texture2D
-	vbox.add_child(icon_rect)
+	icon_frame.add_child(icon_rect)
 
 	var name_lbl := Label.new()
 	name_lbl.mouse_filter = Control.MOUSE_FILTER_PASS
-	name_lbl.add_theme_font_size_override("font_size", 9)
-	name_lbl.add_theme_color_override("font_color", Color(0.15, 0.12, 0.08, 1.0))
+	name_lbl.add_theme_font_size_override("font_size", 8)
+	name_lbl.add_theme_color_override("font_color", Color(0.18, 0.14, 0.10, 1.0))
 	name_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	name_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	name_lbl.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	name_lbl.text = role.display_name if role != null else String(role_id)
 	vbox.add_child(name_lbl)
 

@@ -3403,35 +3403,29 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-theme_override_constants/margin_left = 22
-theme_override_constants/margin_top = 22
-theme_override_constants/margin_right = 22
-theme_override_constants/margin_bottom = 18
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 26
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 20
 
 [node name="Content" type="VBoxContainer" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption1/Margin"]
 layout_mode = 2
 mouse_filter = 2
-theme_override_constants/separation = 8
+theme_override_constants/separation = 6
 
-[node name="HeaderRow" type="HBoxContainer" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption1/Margin/Content"]
+[node name="HeaderVBox" type="VBoxContainer" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption1/Margin/Content"]
 layout_mode = 2
 mouse_filter = 2
-theme_override_constants/separation = 8
+theme_override_constants/separation = 2
 
-[node name="LeftVBox" type="VBoxContainer" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption1/Margin/Content/HeaderRow"]
+[node name="DossierTag1" type="Label" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption1/Margin/Content/HeaderVBox"]
 layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-theme_override_constants/separation = 3
-
-[node name="DossierTag1" type="Label" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption1/Margin/Content/HeaderRow/LeftVBox"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.55, 0.35, 0.15, 1)
-theme_override_font_sizes/font_size = 11
+theme_override_colors/font_color = Color(0.55, 0.38, 0.22, 1)
+theme_override_font_sizes/font_size = 10
 text = "✦ HỒ SƠ ÁN VĂN #1 ✦"
 mouse_filter = 2
 
-[node name="DossierTitle1" type="Label" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption1/Margin/Content/HeaderRow/LeftVBox"]
+[node name="DossierTitle1" type="Label" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption1/Margin/Content/HeaderVBox"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.12, 0.1, 0.08, 1)
@@ -3440,94 +3434,84 @@ text = "KỲ ÁN HOÀNG CUNG"
 autowrap_mode = 2
 mouse_filter = 2
 
-[node name="RegionTape1" type="PanelContainer" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption1/Margin/Content/HeaderRow/LeftVBox"]
+[node name="RegionTape1" type="PanelContainer" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption1/Margin/Content/HeaderVBox"]
 layout_mode = 2
 size_flags_horizontal = 0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_dossier_tape")
 
-[node name="DossierRegion1" type="Label" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption1/Margin/Content/HeaderRow/LeftVBox/RegionTape1"]
+[node name="DossierRegion1" type="Label" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption1/Margin/Content/HeaderVBox/RegionTape1"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.35, 0.25, 0.12, 1)
-theme_override_font_sizes/font_size = 11
+theme_override_font_sizes/font_size = 10
 text = "KHU VỰC: THÁI Y VIỆN"
 mouse_filter = 2
 
-[node name="Polaroid1" type="PanelContainer" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption1/Margin/Content/HeaderRow"]
-custom_minimum_size = Vector2(74, 82)
+[node name="MiddleRow" type="HBoxContainer" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption1/Margin/Content"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 8
+
+[node name="StatsVBox" type="VBoxContainer" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption1/Margin/Content/MiddleRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_constants/separation = 3
+
+[node name="GridLabel1" type="Label" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption1/Margin/Content/MiddleRow/StatsVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.32, 0.26, 0.2, 1)
+theme_override_font_sizes/font_size = 11
+text = "📐 Quy mô: Lưới 3 × 3"
+mouse_filter = 2
+
+[node name="DossierProgress1" type="Label" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption1/Margin/Content/MiddleRow/StatsVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.32, 0.26, 0.2, 1)
+theme_override_font_sizes/font_size = 11
+text = "⚖ Tiến độ: Đã giải 0 vụ"
+mouse_filter = 2
+
+[node name="Polaroid1" type="PanelContainer" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption1/Margin/Content/MiddleRow"]
+custom_minimum_size = Vector2(66, 72)
 layout_mode = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_dossier_polaroid")
 
-[node name="VBox" type="VBoxContainer" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption1/Margin/Content/HeaderRow/Polaroid1"]
+[node name="VBox" type="VBoxContainer" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption1/Margin/Content/MiddleRow/Polaroid1"]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 2
 
-[node name="DossierPhoto1" type="TextureRect" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption1/Margin/Content/HeaderRow/Polaroid1/VBox"]
+[node name="DossierPhoto1" type="TextureRect" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption1/Margin/Content/MiddleRow/Polaroid1/VBox"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(66, 56)
+custom_minimum_size = Vector2(58, 48)
 layout_mode = 2
 mouse_filter = 2
 texture = ExtResource("22_icon_case_game")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="PhotoLabel1" type="Label" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption1/Margin/Content/HeaderRow/Polaroid1/VBox"]
+[node name="PhotoLabel1" type="Label" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption1/Margin/Content/MiddleRow/Polaroid1/VBox"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.45, 0.4, 0.35, 1)
-theme_override_font_sizes/font_size = 9
+theme_override_font_sizes/font_size = 8
 text = "HIỆN TRƯỜNG"
 horizontal_alignment = 1
-mouse_filter = 2
-
-[node name="MetricsRow1" type="HBoxContainer" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption1/Margin/Content"]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 16
-
-[node name="GridLabel1" type="Label" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption1/Margin/Content/MetricsRow1"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.3, 0.25, 0.2, 1)
-theme_override_font_sizes/font_size = 11
-text = "📐 Lưới: 3 × 3"
-mouse_filter = 2
-
-[node name="DossierProgress1" type="Label" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption1/Margin/Content/MetricsRow1"]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.3, 0.25, 0.2, 1)
-theme_override_font_sizes/font_size = 11
-text = "⚖ Đã giải: 0 / 7"
-mouse_filter = 2
-
-[node name="Divider1" type="HSeparator" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption1/Margin/Content"]
-layout_mode = 2
-mouse_filter = 2
-theme_override_styles/separator = SubResource("StyleBoxLine_dossier_divider")
-
-[node name="DossierDesc1" type="Label" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption1/Margin/Content"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_colors/font_color = Color(0.35, 0.3, 0.25, 1)
-theme_override_font_sizes/font_size = 11
-text = "Một vụ kỳ án bí ẩn phát sinh tại hoàng triều, đang chờ thám tử tiến hành điều tra..."
-autowrap_mode = 2
-max_lines_visible = 3
 mouse_filter = 2
 
 [node name="SuspectsBox1" type="VBoxContainer" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption1/Margin/Content"]
 layout_mode = 2
 mouse_filter = 2
-theme_override_constants/separation = 6
+theme_override_constants/separation = 4
 
 [node name="SuspectsLabel1" type="Label" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption1/Margin/Content/SuspectsBox1"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.5, 0.3, 0.15, 1)
-theme_override_font_sizes/font_size = 11
-text = "NGHI PHẠM XUẤT HIỆN TRONG ÁN (5)"
+theme_override_colors/font_color = Color(0.5, 0.32, 0.16, 1)
+theme_override_font_sizes/font_size = 10
+text = "HỒ SƠ NGHI PHẠM CHÍNH (5)"
 mouse_filter = 2
 
 [node name="DossierBadges1" type="HBoxContainer" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption1/Margin/Content/SuspectsBox1"]
@@ -3536,12 +3520,41 @@ layout_mode = 2
 alignment = 1
 theme_override_constants/separation = 5
 
+[node name="Divider1" type="HSeparator" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption1/Margin/Content"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_dossier_divider")
+
+[node name="NotesBox1" type="VBoxContainer" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption1/Margin/Content"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+theme_override_constants/separation = 2
+
+[node name="NotesTitle1" type="Label" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption1/Margin/Content/NotesBox1"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.55, 0.4, 0.25, 1)
+theme_override_font_sizes/font_size = 9
+text = "TRÍCH YẾU ÁN VĂN:"
+mouse_filter = 2
+
+[node name="DossierDesc1" type="Label" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption1/Margin/Content/NotesBox1"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.35, 0.28, 0.22, 1)
+theme_override_font_sizes/font_size = 11
+text = "Một vụ kỳ án bí ẩn phát sinh tại hoàng triều, đang chờ thám tử tiến hành điều tra..."
+autowrap_mode = 2
+max_lines_visible = 3
+mouse_filter = 2
+
 [node name="Paperclip1" type="TextureRect" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption1"]
 layout_mode = 0
-offset_left = 4.0
-offset_top = -16.0
-offset_right = 72.0
-offset_bottom = 54.0
+offset_left = -8.0
+offset_top = -20.0
+offset_right = 50.0
+offset_bottom = 44.0
 mouse_filter = 2
 texture = ExtResource("24_dossier_paperclip")
 expand_mode = 1
@@ -3552,12 +3565,12 @@ unique_name_in_owner = true
 visible = false
 modulate = Color(0.85, 0.18, 0.15, 0.95)
 layout_mode = 0
-offset_left = 180.0
-offset_top = 330.0
-offset_right = 300.0
-offset_bottom = 450.0
-pivot_offset = Vector2(60, 60)
-rotation = -0.20944
+offset_left = 175.0
+offset_top = 345.0
+offset_right = 285.0
+offset_bottom = 445.0
+pivot_offset = Vector2(55, 50)
+rotation = -0.16
 mouse_filter = 2
 texture = ExtResource("21_seal_stamp")
 expand_mode = 1
@@ -3618,35 +3631,29 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-theme_override_constants/margin_left = 22
-theme_override_constants/margin_top = 22
-theme_override_constants/margin_right = 22
-theme_override_constants/margin_bottom = 18
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 26
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 20
 
 [node name="Content" type="VBoxContainer" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption2/Margin"]
 layout_mode = 2
 mouse_filter = 2
-theme_override_constants/separation = 8
+theme_override_constants/separation = 6
 
-[node name="HeaderRow" type="HBoxContainer" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption2/Margin/Content"]
+[node name="HeaderVBox" type="VBoxContainer" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption2/Margin/Content"]
 layout_mode = 2
 mouse_filter = 2
-theme_override_constants/separation = 8
+theme_override_constants/separation = 2
 
-[node name="LeftVBox" type="VBoxContainer" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption2/Margin/Content/HeaderRow"]
+[node name="DossierTag2" type="Label" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption2/Margin/Content/HeaderVBox"]
 layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-theme_override_constants/separation = 3
-
-[node name="DossierTag2" type="Label" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption2/Margin/Content/HeaderRow/LeftVBox"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.55, 0.35, 0.15, 1)
-theme_override_font_sizes/font_size = 11
+theme_override_colors/font_color = Color(0.55, 0.38, 0.22, 1)
+theme_override_font_sizes/font_size = 10
 text = "✦ HỒ SƠ ÁN VĂN #2 ✦"
 mouse_filter = 2
 
-[node name="DossierTitle2" type="Label" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption2/Margin/Content/HeaderRow/LeftVBox"]
+[node name="DossierTitle2" type="Label" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption2/Margin/Content/HeaderVBox"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.12, 0.1, 0.08, 1)
@@ -3655,94 +3662,84 @@ text = "KỲ ÁN HOÀNG CUNG"
 autowrap_mode = 2
 mouse_filter = 2
 
-[node name="RegionTape2" type="PanelContainer" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption2/Margin/Content/HeaderRow/LeftVBox"]
+[node name="RegionTape2" type="PanelContainer" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption2/Margin/Content/HeaderVBox"]
 layout_mode = 2
 size_flags_horizontal = 0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_dossier_tape")
 
-[node name="DossierRegion2" type="Label" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption2/Margin/Content/HeaderRow/LeftVBox/RegionTape2"]
+[node name="DossierRegion2" type="Label" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption2/Margin/Content/HeaderVBox/RegionTape2"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.35, 0.25, 0.12, 1)
-theme_override_font_sizes/font_size = 11
+theme_override_font_sizes/font_size = 10
 text = "KHU VỰC: NGỰ THIỆN PHÒNG"
 mouse_filter = 2
 
-[node name="Polaroid2" type="PanelContainer" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption2/Margin/Content/HeaderRow"]
-custom_minimum_size = Vector2(74, 82)
+[node name="MiddleRow" type="HBoxContainer" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption2/Margin/Content"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 8
+
+[node name="StatsVBox" type="VBoxContainer" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption2/Margin/Content/MiddleRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_constants/separation = 3
+
+[node name="GridLabel2" type="Label" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption2/Margin/Content/MiddleRow/StatsVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.32, 0.26, 0.2, 1)
+theme_override_font_sizes/font_size = 11
+text = "📐 Quy mô: Lưới 3 × 3"
+mouse_filter = 2
+
+[node name="DossierProgress2" type="Label" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption2/Margin/Content/MiddleRow/StatsVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.32, 0.26, 0.2, 1)
+theme_override_font_sizes/font_size = 11
+text = "⚖ Tiến độ: Đã giải 0 vụ"
+mouse_filter = 2
+
+[node name="Polaroid2" type="PanelContainer" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption2/Margin/Content/MiddleRow"]
+custom_minimum_size = Vector2(66, 72)
 layout_mode = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_dossier_polaroid")
 
-[node name="VBox" type="VBoxContainer" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption2/Margin/Content/HeaderRow/Polaroid2"]
+[node name="VBox" type="VBoxContainer" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption2/Margin/Content/MiddleRow/Polaroid2"]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 2
 
-[node name="DossierPhoto2" type="TextureRect" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption2/Margin/Content/HeaderRow/Polaroid2/VBox"]
+[node name="DossierPhoto2" type="TextureRect" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption2/Margin/Content/MiddleRow/Polaroid2/VBox"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(66, 56)
+custom_minimum_size = Vector2(58, 48)
 layout_mode = 2
 mouse_filter = 2
 texture = ExtResource("22_icon_case_game")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="PhotoLabel2" type="Label" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption2/Margin/Content/HeaderRow/Polaroid2/VBox"]
+[node name="PhotoLabel2" type="Label" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption2/Margin/Content/MiddleRow/Polaroid2/VBox"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.45, 0.4, 0.35, 1)
-theme_override_font_sizes/font_size = 9
+theme_override_font_sizes/font_size = 8
 text = "HIỆN TRƯỜNG"
 horizontal_alignment = 1
-mouse_filter = 2
-
-[node name="MetricsRow2" type="HBoxContainer" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption2/Margin/Content"]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 16
-
-[node name="GridLabel2" type="Label" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption2/Margin/Content/MetricsRow2"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.3, 0.25, 0.2, 1)
-theme_override_font_sizes/font_size = 11
-text = "📐 Lưới: 3 × 3"
-mouse_filter = 2
-
-[node name="DossierProgress2" type="Label" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption2/Margin/Content/MetricsRow2"]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.3, 0.25, 0.2, 1)
-theme_override_font_sizes/font_size = 11
-text = "⚖ Đã giải: 0 / 7"
-mouse_filter = 2
-
-[node name="Divider2" type="HSeparator" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption2/Margin/Content"]
-layout_mode = 2
-mouse_filter = 2
-theme_override_styles/separator = SubResource("StyleBoxLine_dossier_divider")
-
-[node name="DossierDesc2" type="Label" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption2/Margin/Content"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_colors/font_color = Color(0.35, 0.3, 0.25, 1)
-theme_override_font_sizes/font_size = 11
-text = "Một vụ kỳ án bí ẩn phát sinh tại hoàng triều, đang chờ thám tử tiến hành điều tra..."
-autowrap_mode = 2
-max_lines_visible = 3
 mouse_filter = 2
 
 [node name="SuspectsBox2" type="VBoxContainer" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption2/Margin/Content"]
 layout_mode = 2
 mouse_filter = 2
-theme_override_constants/separation = 6
+theme_override_constants/separation = 4
 
 [node name="SuspectsLabel2" type="Label" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption2/Margin/Content/SuspectsBox2"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.5, 0.3, 0.15, 1)
-theme_override_font_sizes/font_size = 11
-text = "NGHI PHẠM XUẤT HIỆN TRONG ÁN (5)"
+theme_override_colors/font_color = Color(0.5, 0.32, 0.16, 1)
+theme_override_font_sizes/font_size = 10
+text = "HỒ SƠ NGHI PHẠM CHÍNH (5)"
 mouse_filter = 2
 
 [node name="DossierBadges2" type="HBoxContainer" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption2/Margin/Content/SuspectsBox2"]
@@ -3751,12 +3748,41 @@ layout_mode = 2
 alignment = 1
 theme_override_constants/separation = 5
 
+[node name="Divider2" type="HSeparator" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption2/Margin/Content"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_dossier_divider")
+
+[node name="NotesBox2" type="VBoxContainer" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption2/Margin/Content"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+theme_override_constants/separation = 2
+
+[node name="NotesTitle2" type="Label" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption2/Margin/Content/NotesBox2"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.55, 0.4, 0.25, 1)
+theme_override_font_sizes/font_size = 9
+text = "TRÍCH YẾU ÁN VĂN:"
+mouse_filter = 2
+
+[node name="DossierDesc2" type="Label" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption2/Margin/Content/NotesBox2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.35, 0.28, 0.22, 1)
+theme_override_font_sizes/font_size = 11
+text = "Một vụ kỳ án bí ẩn phát sinh tại hoàng triều, đang chờ thám tử tiến hành điều tra..."
+autowrap_mode = 2
+max_lines_visible = 3
+mouse_filter = 2
+
 [node name="Paperclip2" type="TextureRect" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption2"]
 layout_mode = 0
-offset_left = 4.0
-offset_top = -16.0
-offset_right = 72.0
-offset_bottom = 54.0
+offset_left = -8.0
+offset_top = -20.0
+offset_right = 50.0
+offset_bottom = 44.0
 mouse_filter = 2
 texture = ExtResource("24_dossier_paperclip")
 expand_mode = 1
@@ -3767,12 +3793,12 @@ unique_name_in_owner = true
 visible = false
 modulate = Color(0.85, 0.18, 0.15, 0.95)
 layout_mode = 0
-offset_left = 180.0
-offset_top = 330.0
-offset_right = 300.0
-offset_bottom = 450.0
-pivot_offset = Vector2(60, 60)
-rotation = -0.20944
+offset_left = 175.0
+offset_top = 345.0
+offset_right = 285.0
+offset_bottom = 445.0
+pivot_offset = Vector2(55, 50)
+rotation = -0.16
 mouse_filter = 2
 texture = ExtResource("21_seal_stamp")
 expand_mode = 1
@@ -3833,35 +3859,29 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-theme_override_constants/margin_left = 22
-theme_override_constants/margin_top = 22
-theme_override_constants/margin_right = 22
-theme_override_constants/margin_bottom = 18
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 26
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 20
 
 [node name="Content" type="VBoxContainer" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption3/Margin"]
 layout_mode = 2
 mouse_filter = 2
-theme_override_constants/separation = 8
+theme_override_constants/separation = 6
 
-[node name="HeaderRow" type="HBoxContainer" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption3/Margin/Content"]
+[node name="HeaderVBox" type="VBoxContainer" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption3/Margin/Content"]
 layout_mode = 2
 mouse_filter = 2
-theme_override_constants/separation = 8
+theme_override_constants/separation = 2
 
-[node name="LeftVBox" type="VBoxContainer" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption3/Margin/Content/HeaderRow"]
+[node name="DossierTag3" type="Label" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption3/Margin/Content/HeaderVBox"]
 layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-theme_override_constants/separation = 3
-
-[node name="DossierTag3" type="Label" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption3/Margin/Content/HeaderRow/LeftVBox"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.55, 0.35, 0.15, 1)
-theme_override_font_sizes/font_size = 11
+theme_override_colors/font_color = Color(0.55, 0.38, 0.22, 1)
+theme_override_font_sizes/font_size = 10
 text = "✦ HỒ SƠ ÁN VĂN #3 ✦"
 mouse_filter = 2
 
-[node name="DossierTitle3" type="Label" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption3/Margin/Content/HeaderRow/LeftVBox"]
+[node name="DossierTitle3" type="Label" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption3/Margin/Content/HeaderVBox"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.12, 0.1, 0.08, 1)
@@ -3870,94 +3890,84 @@ text = "KỲ ÁN HOÀNG CUNG"
 autowrap_mode = 2
 mouse_filter = 2
 
-[node name="RegionTape3" type="PanelContainer" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption3/Margin/Content/HeaderRow/LeftVBox"]
+[node name="RegionTape3" type="PanelContainer" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption3/Margin/Content/HeaderVBox"]
 layout_mode = 2
 size_flags_horizontal = 0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_dossier_tape")
 
-[node name="DossierRegion3" type="Label" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption3/Margin/Content/HeaderRow/LeftVBox/RegionTape3"]
+[node name="DossierRegion3" type="Label" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption3/Margin/Content/HeaderVBox/RegionTape3"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.35, 0.25, 0.12, 1)
-theme_override_font_sizes/font_size = 11
+theme_override_font_sizes/font_size = 10
 text = "KHU VỰC: TÀNG THƯ CÁC"
 mouse_filter = 2
 
-[node name="Polaroid3" type="PanelContainer" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption3/Margin/Content/HeaderRow"]
-custom_minimum_size = Vector2(74, 82)
+[node name="MiddleRow" type="HBoxContainer" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption3/Margin/Content"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 8
+
+[node name="StatsVBox" type="VBoxContainer" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption3/Margin/Content/MiddleRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_constants/separation = 3
+
+[node name="GridLabel3" type="Label" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption3/Margin/Content/MiddleRow/StatsVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.32, 0.26, 0.2, 1)
+theme_override_font_sizes/font_size = 11
+text = "📐 Quy mô: Lưới 3 × 3"
+mouse_filter = 2
+
+[node name="DossierProgress3" type="Label" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption3/Margin/Content/MiddleRow/StatsVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.32, 0.26, 0.2, 1)
+theme_override_font_sizes/font_size = 11
+text = "⚖ Tiến độ: Đã giải 0 vụ"
+mouse_filter = 2
+
+[node name="Polaroid3" type="PanelContainer" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption3/Margin/Content/MiddleRow"]
+custom_minimum_size = Vector2(66, 72)
 layout_mode = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_dossier_polaroid")
 
-[node name="VBox" type="VBoxContainer" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption3/Margin/Content/HeaderRow/Polaroid3"]
+[node name="VBox" type="VBoxContainer" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption3/Margin/Content/MiddleRow/Polaroid3"]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 2
 
-[node name="DossierPhoto3" type="TextureRect" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption3/Margin/Content/HeaderRow/Polaroid3/VBox"]
+[node name="DossierPhoto3" type="TextureRect" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption3/Margin/Content/MiddleRow/Polaroid3/VBox"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(66, 56)
+custom_minimum_size = Vector2(58, 48)
 layout_mode = 2
 mouse_filter = 2
 texture = ExtResource("22_icon_case_game")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="PhotoLabel3" type="Label" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption3/Margin/Content/HeaderRow/Polaroid3/VBox"]
+[node name="PhotoLabel3" type="Label" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption3/Margin/Content/MiddleRow/Polaroid3/VBox"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.45, 0.4, 0.35, 1)
-theme_override_font_sizes/font_size = 9
+theme_override_font_sizes/font_size = 8
 text = "HIỆN TRƯỜNG"
 horizontal_alignment = 1
-mouse_filter = 2
-
-[node name="MetricsRow3" type="HBoxContainer" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption3/Margin/Content"]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 16
-
-[node name="GridLabel3" type="Label" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption3/Margin/Content/MetricsRow3"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.3, 0.25, 0.2, 1)
-theme_override_font_sizes/font_size = 11
-text = "📐 Lưới: 3 × 3"
-mouse_filter = 2
-
-[node name="DossierProgress3" type="Label" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption3/Margin/Content/MetricsRow3"]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.3, 0.25, 0.2, 1)
-theme_override_font_sizes/font_size = 11
-text = "⚖ Đã giải: 0 / 7"
-mouse_filter = 2
-
-[node name="Divider3" type="HSeparator" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption3/Margin/Content"]
-layout_mode = 2
-mouse_filter = 2
-theme_override_styles/separator = SubResource("StyleBoxLine_dossier_divider")
-
-[node name="DossierDesc3" type="Label" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption3/Margin/Content"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_colors/font_color = Color(0.35, 0.3, 0.25, 1)
-theme_override_font_sizes/font_size = 11
-text = "Một vụ kỳ án bí ẩn phát sinh tại hoàng triều, đang chờ thám tử tiến hành điều tra..."
-autowrap_mode = 2
-max_lines_visible = 3
 mouse_filter = 2
 
 [node name="SuspectsBox3" type="VBoxContainer" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption3/Margin/Content"]
 layout_mode = 2
 mouse_filter = 2
-theme_override_constants/separation = 6
+theme_override_constants/separation = 4
 
 [node name="SuspectsLabel3" type="Label" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption3/Margin/Content/SuspectsBox3"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.5, 0.3, 0.15, 1)
-theme_override_font_sizes/font_size = 11
-text = "NGHI PHẠM XUẤT HIỆN TRONG ÁN (5)"
+theme_override_colors/font_color = Color(0.5, 0.32, 0.16, 1)
+theme_override_font_sizes/font_size = 10
+text = "HỒ SƠ NGHI PHẠM CHÍNH (5)"
 mouse_filter = 2
 
 [node name="DossierBadges3" type="HBoxContainer" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption3/Margin/Content/SuspectsBox3"]
@@ -3966,12 +3976,41 @@ layout_mode = 2
 alignment = 1
 theme_override_constants/separation = 5
 
+[node name="Divider3" type="HSeparator" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption3/Margin/Content"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_dossier_divider")
+
+[node name="NotesBox3" type="VBoxContainer" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption3/Margin/Content"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+theme_override_constants/separation = 2
+
+[node name="NotesTitle3" type="Label" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption3/Margin/Content/NotesBox3"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.55, 0.4, 0.25, 1)
+theme_override_font_sizes/font_size = 9
+text = "TRÍCH YẾU ÁN VĂN:"
+mouse_filter = 2
+
+[node name="DossierDesc3" type="Label" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption3/Margin/Content/NotesBox3"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.35, 0.28, 0.22, 1)
+theme_override_font_sizes/font_size = 11
+text = "Một vụ kỳ án bí ẩn phát sinh tại hoàng triều, đang chờ thám tử tiến hành điều tra..."
+autowrap_mode = 2
+max_lines_visible = 3
+mouse_filter = 2
+
 [node name="Paperclip3" type="TextureRect" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column/NextCaseOptions/NextCaseOption3"]
 layout_mode = 0
-offset_left = 4.0
-offset_top = -16.0
-offset_right = 72.0
-offset_bottom = 54.0
+offset_left = -8.0
+offset_top = -20.0
+offset_right = 50.0
+offset_bottom = 44.0
 mouse_filter = 2
 texture = ExtResource("24_dossier_paperclip")
 expand_mode = 1
@@ -3982,12 +4021,12 @@ unique_name_in_owner = true
 visible = false
 modulate = Color(0.85, 0.18, 0.15, 0.95)
 layout_mode = 0
-offset_left = 180.0
-offset_top = 330.0
-offset_right = 300.0
-offset_bottom = 450.0
-pivot_offset = Vector2(60, 60)
-rotation = -0.20944
+offset_left = 175.0
+offset_top = 345.0
+offset_right = 285.0
+offset_bottom = 445.0
+pivot_offset = Vector2(55, 50)
+rotation = -0.16
 mouse_filter = 2
 texture = ExtResource("21_seal_stamp")
 expand_mode = 1
