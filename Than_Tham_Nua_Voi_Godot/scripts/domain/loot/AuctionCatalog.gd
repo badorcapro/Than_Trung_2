@@ -3307,8 +3307,8 @@ static var _CATALOG_ITEMS: Array[Dictionary] = [
 		"id": "refinement_chips_2",
 		"display_name": "Refinement Chips (2)",
 		"rarity": ITEM_CLASS.Rarity.WHITE,
-		"grid_width": 5,
-		"grid_height": 1,
+		"grid_width": 1,
+		"grid_height": 5,
 		"silver_value": 0,
 		"weight_str": "0.05KG",
 		"category": "resource",
@@ -3322,8 +3322,8 @@ static var _CATALOG_ITEMS: Array[Dictionary] = [
 		"id": "refinement_chips_4",
 		"display_name": "Refinement Chips (4)",
 		"rarity": ITEM_CLASS.Rarity.GREEN,
-		"grid_width": 5,
-		"grid_height": 1,
+		"grid_width": 1,
+		"grid_height": 5,
 		"silver_value": 0,
 		"weight_str": "0.05KG",
 		"category": "resource",
@@ -3337,8 +3337,8 @@ static var _CATALOG_ITEMS: Array[Dictionary] = [
 		"id": "refinement_chips_8",
 		"display_name": "Refinement Chips (8)",
 		"rarity": ITEM_CLASS.Rarity.BLUE,
-		"grid_width": 5,
-		"grid_height": 1,
+		"grid_width": 1,
+		"grid_height": 5,
 		"silver_value": 0,
 		"weight_str": "0.05KG",
 		"category": "resource",
@@ -3352,8 +3352,8 @@ static var _CATALOG_ITEMS: Array[Dictionary] = [
 		"id": "refinement_chips_16",
 		"display_name": "Refinement Chips (16)",
 		"rarity": ITEM_CLASS.Rarity.PURPLE,
-		"grid_width": 5,
-		"grid_height": 1,
+		"grid_width": 1,
+		"grid_height": 5,
 		"silver_value": 0,
 		"weight_str": "0.05KG",
 		"category": "resource",
@@ -3367,8 +3367,8 @@ static var _CATALOG_ITEMS: Array[Dictionary] = [
 		"id": "refinement_chips_32",
 		"display_name": "Refinement Chips (32)",
 		"rarity": ITEM_CLASS.Rarity.GOLD,
-		"grid_width": 5,
-		"grid_height": 1,
+		"grid_width": 1,
+		"grid_height": 5,
 		"silver_value": 0,
 		"weight_str": "0.05KG",
 		"category": "resource",
@@ -3382,8 +3382,8 @@ static var _CATALOG_ITEMS: Array[Dictionary] = [
 		"id": "locking_component_5",
 		"display_name": "Locking Component (5)",
 		"rarity": ITEM_CLASS.Rarity.RED,
-		"grid_width": 5,
-		"grid_height": 1,
+		"grid_width": 1,
+		"grid_height": 5,
 		"silver_value": 0,
 		"weight_str": "0.20KG",
 		"category": "resource",
@@ -3410,13 +3410,14 @@ static func get_item_by_id(item_id: String) -> Dictionary:
 static func filter_items(
 	rarity_filter: int = -1,
 	category_filter: String = "",
-	shape_filter: Vector2i = Vector2i.ZERO
+	shape_filter: Vector2i = Vector2i.ZERO,
+	allow_resources: bool = false
 ) -> Array[Dictionary]:
 	var results: Array[Dictionary] = []
 	for it in _CATALOG_ITEMS:
 		var is_res: bool = bool(it.get("is_resource", false)) or String(it.get("category", "")) == "resource"
 		if is_res:
-			if category_filter != "resource":
+			if category_filter != "resource" and not allow_resources:
 				continue
 		elif not category_filter.is_empty() and String(it.get("category", "")) != category_filter:
 			continue

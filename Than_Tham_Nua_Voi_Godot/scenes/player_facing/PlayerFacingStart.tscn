@@ -15,6 +15,26 @@
 [ext_resource type="Texture2D" path="res://assets/ui/desktop/icons/new_icon_settings.png" id="13_new_icon_settings"]
 [ext_resource type="Texture2D" path="res://assets/ui/desktop/tray_audio.png" id="15_tray_audio"]
 [ext_resource type="Texture2D" path="res://assets/ui/desktop/tray_wifi.png" id="16_tray_wifi"]
+[ext_resource type="Texture2D" path="res://assets/ui/desktop/desktop_window_frame.png" id="17_window_frame"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_imperial_window"]
+texture = ExtResource("17_window_frame")
+texture_margin_left = 190.0
+texture_margin_top = 78.0
+texture_margin_right = 190.0
+texture_margin_bottom = 195.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jade_close_btn_hover"]
+bg_color = Color(1, 1, 1, 0.16)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 0.92, 0.55, 0.85)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_desktop_icon"]
 
@@ -855,30 +875,49 @@ grow_vertical = 2
 color = Color(0, 0, 0, 0.65)
 
 [node name="ConfirmBox" type="Panel" parent="DesktopRoot/DesktopNewSimDialog"]
-custom_minimum_size = Vector2(480, 240)
+custom_minimum_size = Vector2(560, 320)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -240.0
-offset_top = -120.0
-offset_right = 240.0
-offset_bottom = 120.0
+offset_left = -280.0
+offset_top = -160.0
+offset_right = 280.0
+offset_bottom = 160.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_win11_card")
+theme_override_styles/panel = SubResource("StyleBoxTexture_imperial_window")
+
+[node name="NewSimTopCloseBtn" type="Button" parent="DesktopRoot/DesktopNewSimDialog/ConfirmBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(46, 36)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -58.0
+offset_top = 8.0
+offset_right = -12.0
+offset_bottom = 46.0
+grow_horizontal = 0
+focus_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_desktop_icon")
+theme_override_styles/hover = SubResource("StyleBoxFlat_jade_close_btn_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_jade_close_btn_hover")
+text = ""
+tooltip_text = "Đóng hộp thoại"
 
 [node name="VBox" type="VBoxContainer" parent="DesktopRoot/DesktopNewSimDialog/ConfirmBox"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 24.0
-offset_top = 20.0
-offset_right = -24.0
-offset_bottom = -20.0
+offset_left = 36.0
+offset_top = 68.0
+offset_right = -36.0
+offset_bottom = -24.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 14
@@ -951,29 +990,29 @@ grow_vertical = 2
 color = Color(0, 0, 0, 0.7)
 
 [node name="CodexBox" type="Panel" parent="DesktopRoot/DesktopCodexDialog"]
-custom_minimum_size = Vector2(620, 440)
+custom_minimum_size = Vector2(680, 500)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -310.0
-offset_top = -220.0
-offset_right = 310.0
-offset_bottom = 220.0
+offset_left = -340.0
+offset_top = -250.0
+offset_right = 340.0
+offset_bottom = 250.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_win11_card")
+theme_override_styles/panel = SubResource("StyleBoxTexture_imperial_window")
 
 [node name="TopBar" type="HBoxContainer" parent="DesktopRoot/DesktopCodexDialog/CodexBox"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_left = 20.0
-offset_top = 16.0
-offset_right = -16.0
-offset_bottom = 44.0
+offset_left = 32.0
+offset_top = 10.0
+offset_right = -12.0
+offset_bottom = 50.0
 grow_horizontal = 2
 
 [node name="Title" type="Label" parent="DesktopRoot/DesktopCodexDialog/CodexBox/TopBar"]
@@ -986,24 +1025,24 @@ vertical_alignment = 1
 
 [node name="CodexCloseBtn" type="Button" parent="DesktopRoot/DesktopCodexDialog/CodexBox/TopBar"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(30, 30)
+custom_minimum_size = Vector2(46, 36)
 layout_mode = 2
 focus_mode = 2
-theme_override_font_sizes/font_size = 14
-theme_override_styles/normal = SubResource("StyleBoxFlat_desktop_btn_normal")
-theme_override_styles/hover = SubResource("StyleBoxFlat_desktop_btn_hover")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_desktop_btn_hover")
-text = "✕"
+theme_override_styles/normal = SubResource("StyleBoxEmpty_desktop_icon")
+theme_override_styles/hover = SubResource("StyleBoxFlat_jade_close_btn_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_jade_close_btn_hover")
+text = ""
+tooltip_text = "Đóng Bách Khoa Toàn Thư"
 
 [node name="ItemList" type="VBoxContainer" parent="DesktopRoot/DesktopCodexDialog/CodexBox"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 24.0
-offset_top = 60.0
-offset_right = -24.0
-offset_bottom = -20.0
+offset_left = 36.0
+offset_top = 68.0
+offset_right = -36.0
+offset_bottom = -24.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 10
@@ -1094,29 +1133,29 @@ grow_vertical = 2
 color = Color(0, 0, 0, 0.7)
 
 [node name="ModeSelectBox" type="Panel" parent="DesktopRoot/DesktopModeSelectDialog"]
-custom_minimum_size = Vector2(740, 500)
+custom_minimum_size = Vector2(860, 560)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -370.0
-offset_top = -250.0
-offset_right = 370.0
-offset_bottom = 250.0
+offset_left = -430.0
+offset_top = -280.0
+offset_right = 430.0
+offset_bottom = 280.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_win11_card")
+theme_override_styles/panel = SubResource("StyleBoxTexture_imperial_window")
 
 [node name="TopBar" type="HBoxContainer" parent="DesktopRoot/DesktopModeSelectDialog/ModeSelectBox"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_left = 24.0
-offset_top = 16.0
-offset_right = -18.0
-offset_bottom = 46.0
+offset_left = 32.0
+offset_top = 10.0
+offset_right = -12.0
+offset_bottom = 50.0
 grow_horizontal = 2
 
 [node name="Title" type="Label" parent="DesktopRoot/DesktopModeSelectDialog/ModeSelectBox/TopBar"]
@@ -1129,24 +1168,24 @@ vertical_alignment = 1
 
 [node name="ModeSelectCloseBtn" type="Button" parent="DesktopRoot/DesktopModeSelectDialog/ModeSelectBox/TopBar"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(30, 30)
+custom_minimum_size = Vector2(46, 36)
 layout_mode = 2
 focus_mode = 2
-theme_override_font_sizes/font_size = 14
-theme_override_styles/normal = SubResource("StyleBoxFlat_desktop_btn_normal")
-theme_override_styles/hover = SubResource("StyleBoxFlat_desktop_btn_hover")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_desktop_btn_hover")
-text = "✕"
+theme_override_styles/normal = SubResource("StyleBoxEmpty_desktop_icon")
+theme_override_styles/hover = SubResource("StyleBoxFlat_jade_close_btn_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_jade_close_btn_hover")
+text = ""
+tooltip_text = "Đóng cửa sổ"
 
 [node name="ContentVBox" type="VBoxContainer" parent="DesktopRoot/DesktopModeSelectDialog/ModeSelectBox"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 24.0
-offset_top = 58.0
-offset_right = -24.0
-offset_bottom = -20.0
+offset_left = 36.0
+offset_top = 68.0
+offset_right = -36.0
+offset_bottom = -24.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 14

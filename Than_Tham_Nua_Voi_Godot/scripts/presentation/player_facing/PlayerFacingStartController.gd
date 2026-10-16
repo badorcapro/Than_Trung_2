@@ -123,6 +123,7 @@ const LOBBY_BG_TEXTURE: Texture2D = preload("res://assets/ui/common/lobby_bg.png
 @onready var desktop_new_sim_dialog: Control = get_node_or_null("%DesktopNewSimDialog") as Control
 @onready var new_sim_confirm_btn: Button = get_node_or_null("%NewSimConfirmBtn") as Button
 @onready var new_sim_cancel_btn: Button = get_node_or_null("%NewSimCancelBtn") as Button
+@onready var new_sim_top_close_btn: Button = get_node_or_null("%NewSimTopCloseBtn") as Button
 @onready var desktop_mode_select_dialog: Control = get_node_or_null("%DesktopModeSelectDialog") as Control
 @onready var mode_select_close_btn: Button = get_node_or_null("%ModeSelectCloseBtn") as Button
 @onready var desktop_mode_btn_classic: Button = get_node_or_null("%DesktopModeBtnClassic") as Button
@@ -473,6 +474,8 @@ func _init_desktop_system() -> void:
 		new_sim_confirm_btn.pressed.connect(_on_new_sim_confirmed)
 	if new_sim_cancel_btn != null and not new_sim_cancel_btn.pressed.is_connected(_on_new_sim_cancelled):
 		new_sim_cancel_btn.pressed.connect(_on_new_sim_cancelled)
+	if new_sim_top_close_btn != null and not new_sim_top_close_btn.pressed.is_connected(_on_new_sim_cancelled):
+		new_sim_top_close_btn.pressed.connect(_on_new_sim_cancelled)
 
 	if codex_close_btn != null and not codex_close_btn.pressed.is_connected(_on_codex_dialog_closed):
 		codex_close_btn.pressed.connect(_on_codex_dialog_closed)

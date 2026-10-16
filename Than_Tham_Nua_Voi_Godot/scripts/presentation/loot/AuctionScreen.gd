@@ -66,6 +66,16 @@ var _bag_modal: Control
 var _bag_modal_title: Label
 var _bag_modal_bal: Label
 
+# Item Texture Cache & Hover Preview Card
+var _item_texture_cache: Dictionary = {}
+var _item_hover_popup: Control
+var _hover_frame_rect: TextureRect
+var _hover_icon_rect: TextureRect
+var _hover_name_lbl: Label
+var _hover_rarity_lbl: Label
+var _hover_dims_lbl: Label
+var _hover_val_lbl: Label
+
 # Turn State for Multi-player Bidding
 var _current_turn_bidder_index: int = 0
 var _round_completed: bool = false
@@ -152,9 +162,9 @@ func _build_ui() -> void:
 	body_hbox.add_theme_constant_override("separation", 20)
 	main_vbox.add_child(body_hbox)
 
-	# CỘT TRÁI: NGƯỜI THAM GIA ĐẤU GIÁ (BIDDERS - 230px)
+	# CỘT TRÁI: NGƯỜI THAM GIA ĐẤU GIÁ (BIDDERS - 310px)
 	_left_column = VBoxContainer.new()
-	_left_column.custom_minimum_size = Vector2(230, 0)
+	_left_column.custom_minimum_size = Vector2(310, 0)
 	_left_column.add_theme_constant_override("separation", 8)
 	body_hbox.add_child(_left_column)
 
@@ -208,12 +218,6 @@ func _build_ui() -> void:
 	var grid_top := HBoxContainer.new()
 	_right_column.add_child(grid_top)
 
-	var grid_title := Label.new()
-	grid_title.text = "📦 CHIẾN LỢI PHẨM TRONG HÒM"
-	grid_title.add_theme_font_size_override("font_size", 16)
-	grid_title.add_theme_color_override("font_color", Color("#f1fa8c"))
-	grid_top.add_child(grid_title)
-
 	var sp_gt := Control.new()
 	sp_gt.size_flags_horizontal = SIZE_EXPAND_FILL
 	grid_top.add_child(sp_gt)
@@ -235,16 +239,11 @@ func _build_ui() -> void:
 	crate_panel.size_flags_horizontal = SIZE_EXPAND_FILL
 	crate_panel.size_flags_vertical = SIZE_EXPAND_FILL
 	var c_style := StyleBoxFlat.new()
-	c_style.bg_color = Color(0.04, 0.07, 0.12, 0.72)
-	c_style.border_color = Color(0.32, 0.45, 0.60, 0.55)
-	c_style.border_width_left = 1
-	c_style.border_width_top = 1
-	c_style.border_width_right = 1
-	c_style.border_width_bottom = 1
-	c_style.corner_radius_top_left = 8
-	c_style.corner_radius_top_right = 8
-	c_style.corner_radius_bottom_left = 8
-	c_style.corner_radius_bottom_right = 8
+	c_style.bg_color = Color(0.04, 0.07, 0.12, 0.45)
+	c_style.border_width_left = 0
+	c_style.border_width_top = 0
+	c_style.border_width_right = 0
+	c_style.border_width_bottom = 0
 	crate_panel.add_theme_stylebox_override("panel", c_style)
 	_right_column.add_child(crate_panel)
 
@@ -261,7 +260,13 @@ func _build_ui() -> void:
 
 	_grid_draw_control = Control.new()
 	_grid_draw_control.custom_minimum_size = Vector2(GRID_COLS * CELL_SIZE, _dynamic_grid_rows * CELL_SIZE)
+	_grid_draw_control.mouse_filter = MOUSE_FILTER_PASS
 	_grid_draw_control.draw.connect(_on_grid_draw)
+	_grid_draw_control.gui_input.connect(_on_grid_gui_input)
+	_grid_draw_control.mouse_exited.connect(func() -> void:
+		if _item_hover_popup != null:
+			_item_hover_popup.visible = false
+	)
 	center_grid.add_child(_grid_draw_control)
 
 	_min_value_label = Label.new()
@@ -936,7 +941,7 @@ func _render_bidders() -> void:
 		)
 
 		var card := PanelContainer.new()
-		card.custom_minimum_size = Vector2(230, 62)
+		card.custom_minimum_size = Vector2(310, 70)
 		card.size_flags_horizontal = SIZE_EXPAND_FILL
 		card.mouse_filter = MOUSE_FILTER_PASS
 
@@ -975,20 +980,20 @@ func _render_bidders() -> void:
 		_bidders_container.add_child(card)
 
 		var margin := MarginContainer.new()
-		margin.add_theme_constant_override("margin_left", 8)
-		margin.add_theme_constant_override("margin_right", 8)
-		margin.add_theme_constant_override("margin_top", 4)
-		margin.add_theme_constant_override("margin_bottom", 4)
+		margin.add_theme_constant_override("margin_left", 12)
+		margin.add_theme_constant_override("margin_right", 12)
+		margin.add_theme_constant_override("margin_top", 6)
+		margin.add_theme_constant_override("margin_bottom", 6)
 		card.add_child(margin)
 
 		var hbox := HBoxContainer.new()
-		hbox.add_theme_constant_override("separation", 6)
+		hbox.add_theme_constant_override("separation", 10)
 		hbox.alignment = BoxContainer.ALIGNMENT_CENTER
 		margin.add_child(hbox)
 
-		# 1. Avatar box on the left
+		# 1. Avatar box on the left (Roomy 38x38)
 		var av_panel := PanelContainer.new()
-		av_panel.custom_minimum_size = Vector2(26, 26)
+		av_panel.custom_minimum_size = Vector2(38, 38)
 		var av_sb := StyleBoxFlat.new()
 		av_sb.bg_color = Color(0.05, 0.08, 0.12, 0.9)
 		av_sb.border_color = Color("#f6c95c") if is_current_turn else Color(0.4, 0.5, 0.6, 0.6)
@@ -996,10 +1001,10 @@ func _render_bidders() -> void:
 		av_sb.border_width_top = 1
 		av_sb.border_width_right = 1
 		av_sb.border_width_bottom = 1
-		av_sb.corner_radius_top_left = 4
-		av_sb.corner_radius_top_right = 4
-		av_sb.corner_radius_bottom_left = 4
-		av_sb.corner_radius_bottom_right = 4
+		av_sb.corner_radius_top_left = 6
+		av_sb.corner_radius_top_right = 6
+		av_sb.corner_radius_bottom_left = 6
+		av_sb.corner_radius_bottom_right = 6
 		av_panel.add_theme_stylebox_override("panel", av_sb)
 		hbox.add_child(av_panel)
 
@@ -1007,48 +1012,58 @@ func _render_bidders() -> void:
 		av_panel.add_child(av_center)
 		var av_lbl := Label.new()
 		av_lbl.text = avatar_icons[i % avatar_icons.size()]
-		av_lbl.add_theme_font_size_override("font_size", 13)
+		av_lbl.add_theme_font_size_override("font_size", 18)
 		av_center.add_child(av_lbl)
 
 		# 2. Middle Content VBox
 		var mid_vbox := VBoxContainer.new()
 		mid_vbox.size_flags_horizontal = SIZE_EXPAND_FILL
-		mid_vbox.add_theme_constant_override("separation", 2)
+		mid_vbox.add_theme_constant_override("separation", 4)
 		hbox.add_child(mid_vbox)
 
-		# Row A: Name (with badge in tooltip to conserve horizontal space)
+		# Row A: Name and Role Badge
+		var name_hbox := HBoxContainer.new()
+		name_hbox.add_theme_constant_override("separation", 6)
+		mid_vbox.add_child(name_hbox)
+
 		var name_lbl := Label.new()
 		name_lbl.text = "%d. %s" % [i + 1, String(pid)]
 		name_lbl.clip_text = true
 		name_lbl.size_flags_horizontal = SIZE_EXPAND_FILL
-		name_lbl.tooltip_text = "%s [%s]" % [String(pid), badges[i % badges.size()]]
-		name_lbl.add_theme_font_size_override("font_size", 11)
+		name_lbl.add_theme_font_size_override("font_size", 12)
 		name_lbl.add_theme_color_override("font_color", Color.WHITE if is_active else Color("#6272a4"))
-		mid_vbox.add_child(name_lbl)
+		name_hbox.add_child(name_lbl)
+
+		var badge_lbl := Label.new()
+		badge_lbl.text = "[%s]" % badges[i % badges.size()]
+		badge_lbl.add_theme_font_size_override("font_size", 10)
+		badge_lbl.add_theme_color_override("font_color", Color("#f6c95c") if is_current_turn else Color("#8be9fd"))
+		name_hbox.add_child(badge_lbl)
 
 		# Row B: 5 Square Round Indicators [1] [2] [3] [4] [5]
 		var rounds_hbox := HBoxContainer.new()
-		rounds_hbox.add_theme_constant_override("separation", 2)
+		rounds_hbox.add_theme_constant_override("separation", 4)
 		mid_vbox.add_child(rounds_hbox)
 
 		for r in range(1, 6):
 			var r_box := PanelContainer.new()
-			r_box.custom_minimum_size = Vector2(14, 14)
+			r_box.custom_minimum_size = Vector2(18, 18)
+			r_box.mouse_filter = MOUSE_FILTER_PASS
 			var r_sb := StyleBoxFlat.new()
-			r_sb.corner_radius_top_left = 2
-			r_sb.corner_radius_top_right = 2
-			r_sb.corner_radius_bottom_left = 2
-			r_sb.corner_radius_bottom_right = 2
+			r_sb.corner_radius_top_left = 3
+			r_sb.corner_radius_top_right = 3
+			r_sb.corner_radius_bottom_left = 3
+			r_sb.corner_radius_bottom_right = 3
 
 			var r_center := CenterContainer.new()
 			r_box.add_child(r_center)
 			var r_num := Label.new()
 			r_num.text = str(r)
-			r_num.add_theme_font_size_override("font_size", 8)
+			r_num.add_theme_font_size_override("font_size", 10)
 			r_center.add_child(r_num)
 
+			# Hover logic for round indicators
 			if r < auction_session.current_round:
-				# Past rounds: check if player participated
 				r_sb.bg_color = Color(0.15, 0.35, 0.25, 0.9)
 				r_sb.border_color = Color("#50fa7b")
 				r_sb.border_width_left = 1
@@ -1056,11 +1071,25 @@ func _render_bidders() -> void:
 				r_sb.border_width_right = 1
 				r_sb.border_width_bottom = 1
 				r_num.add_theme_color_override("font_color", Color("#50fa7b"))
+
+				if pid == curr_pid:
+					var past_bid: int = auction_session.get_player_bid_in_round(pid, r)
+					if past_bid > 0:
+						r_box.tooltip_text = "Vòng %d: Bạn đã ra giá %s Xu" % [r, _format_number(past_bid)]
+					else:
+						r_box.tooltip_text = "Vòng %d: Bạn đã bỏ qua lượt" % r
+				else:
+					var past_rank: int = auction_session.get_player_rank_in_round(pid, r)
+					if past_rank > 0:
+						r_box.tooltip_text = "Vòng %d: %s xếp Hạng #%d" % [r, String(pid), past_rank]
+					else:
+						r_box.tooltip_text = "Vòng %d: %s không tham gia" % [r, String(pid)]
 			elif r == auction_session.current_round:
 				if not is_active:
 					r_sb.bg_color = Color(0.1, 0.1, 0.12, 0.5)
 					r_sb.border_color = Color(0.3, 0.3, 0.35, 0.4)
 					r_num.add_theme_color_override("font_color", Color("#6272a4"))
+					r_box.tooltip_text = "Vòng %d: Đã bỏ cuộc" % r
 				elif is_current_turn:
 					r_sb.bg_color = Color(0.4, 0.35, 0.1, 0.95)
 					r_sb.border_color = Color("#f6c95c")
@@ -1069,6 +1098,7 @@ func _render_bidders() -> void:
 					r_sb.border_width_right = 1
 					r_sb.border_width_bottom = 1
 					r_num.add_theme_color_override("font_color", Color("#f6c95c"))
+					r_box.tooltip_text = "Vòng %d: Lượt hiện tại của bạn" % r
 				elif auction_session.round_bids.has(pid):
 					r_sb.bg_color = Color(0.12, 0.25, 0.35, 0.9)
 					r_sb.border_color = Color("#8be9fd")
@@ -1077,15 +1107,21 @@ func _render_bidders() -> void:
 					r_sb.border_width_right = 1
 					r_sb.border_width_bottom = 1
 					r_num.add_theme_color_override("font_color", Color("#8be9fd"))
+					if _round_completed:
+						var past_rank: int = auction_session.get_player_rank_in_round(pid, r)
+						r_box.tooltip_text = "Vòng %d: %s xếp Hạng #%d" % [r, String(pid), past_rank]
+					else:
+						r_box.tooltip_text = "Vòng %d: %s đã nộp giá ẩn" % [r, String(pid)]
 				else:
 					r_sb.bg_color = Color(0.08, 0.12, 0.16, 0.7)
 					r_sb.border_color = Color(0.3, 0.4, 0.5, 0.5)
 					r_num.add_theme_color_override("font_color", Color("#abb2bf"))
+					r_box.tooltip_text = "Vòng %d: Chưa ra giá" % r
 			else:
-				# Future rounds
 				r_sb.bg_color = Color(0.06, 0.08, 0.11, 0.5)
 				r_sb.border_color = Color(0.2, 0.25, 0.3, 0.4)
 				r_num.add_theme_color_override("font_color", Color("#4b5263"))
+				r_box.tooltip_text = "Vòng %d: Chưa diễn ra" % r
 
 			r_box.add_theme_stylebox_override("panel", r_sb)
 			rounds_hbox.add_child(r_box)
@@ -1095,22 +1131,37 @@ func _render_bidders() -> void:
 		status_box.alignment = BoxContainer.ALIGNMENT_CENTER
 		hbox.add_child(status_box)
 
-		var b_val: int = int(auction_session.round_bids.get(pid, 0))
 		var bid_lbl := Label.new()
-		bid_lbl.add_theme_font_size_override("font_size", 10)
 		bid_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 
 		if not is_active:
 			bid_lbl.text = "🏳️ Bỏ"
+			bid_lbl.add_theme_font_size_override("font_size", 11)
 			bid_lbl.add_theme_color_override("font_color", Color("#6272a4"))
 		elif _round_completed:
-			if b_val > 0:
-				bid_lbl.text = "%s Xu" % _format_number(b_val)
-				bid_lbl.add_theme_color_override("font_color", Color("#f1fa8c") if is_leader else Color("#50fa7b"))
+			var rk: int = auction_session.get_player_rank_in_round(pid, auction_session.current_round)
+			if rk > 0:
+				bid_lbl.text = "#%d" % rk
+				bid_lbl.add_theme_font_size_override("font_size", 16)
+				match rk:
+					1:
+						bid_lbl.add_theme_color_override("font_color", Color("#f6c95c"))
+						bid_lbl.tooltip_text = "Hạng #1 (Vàng hoàng kim)"
+					2:
+						bid_lbl.add_theme_color_override("font_color", Color("#e2e8f0"))
+						bid_lbl.tooltip_text = "Hạng #2 (Bạc sáng)"
+					3:
+						bid_lbl.add_theme_color_override("font_color", Color("#cd7f32"))
+						bid_lbl.tooltip_text = "Hạng #3 (Đồng)"
+					_:
+						bid_lbl.add_theme_color_override("font_color", Color("#94a3b8"))
+						bid_lbl.tooltip_text = "Hạng #%d" % rk
 			else:
 				bid_lbl.text = "Bỏ qua"
+				bid_lbl.add_theme_font_size_override("font_size", 11)
 				bid_lbl.add_theme_color_override("font_color", Color("#888888"))
 		else:
+			bid_lbl.add_theme_font_size_override("font_size", 11)
 			if auction_session.round_bids.has(pid):
 				bid_lbl.text = "🔒 Đã ra"
 				bid_lbl.add_theme_color_override("font_color", Color("#8be9fd"))
@@ -1506,18 +1557,27 @@ func _run_settlement_reveal() -> void:
 		if _settlement_grid_draw_control != null:
 			_settlement_grid_draw_control.queue_redraw()
 
-		# Determine wait duration according to user specification (doubled for suspenseful reveal):
-		var wait_time: float = 0.4
-		if item.rarity == ITEM_CLASS.Rarity.GOLD or item.rarity == ITEM_CLASS.Rarity.RED:
-			var val_ratio: float = clampf(float(item.silver_value) / 450.0, 0.0, 1.0)
-			var prob_long: float = lerpf(0.35, 0.85, val_ratio)
-			if randf() < prob_long:
-				wait_time = randf_range(1.6, 4.0)
-			else:
-				wait_time = randf_range(0.3, 1.2)
+		# Determine wait duration according to user specification:
+		# 5 món top (Flight Recorder, Armored Vehicle Battery, Micro Reactor, Medical Ventilator, Heart of Africa) load đúng 3.0s.
+		# Đồ Đỏ khác: ngẫu nhiên từ 0.5s đến 3.0s.
+		var wait_time: float = 0.35
+		var item_id_str := String(item.item_id).to_lower()
+		var d_name_lower := item.display_name.to_lower()
+		var is_top_5: bool = (
+			"flight_recorder" in item_id_str or "flight recorder" in d_name_lower
+			or "armored_vehicle_battery" in item_id_str or "armored vehicle battery" in d_name_lower
+			or "micro_reactor" in item_id_str or "micro reactor" in d_name_lower
+			or "medical_ventilator" in item_id_str or "medical ventilator" in d_name_lower
+			or "heart_of_africa" in item_id_str or "heart of africa" in d_name_lower
+		)
+		if is_top_5:
+			wait_time = 3.0
+		elif item.rarity == ITEM_CLASS.Rarity.RED:
+			wait_time = randf_range(0.5, 3.0)
+		elif item.rarity == ITEM_CLASS.Rarity.GOLD:
+			wait_time = randf_range(0.3, 0.8)
 		else:
-			# "khoảng load nhẹ ở giữa ô đồ trước khi xuất hiện"
-			wait_time = randf_range(0.25, 0.55)
+			wait_time = randf_range(0.2, 0.45)
 
 		var start_ticks: int = Time.get_ticks_msec()
 		var last_ticks: int = start_ticks
@@ -2300,18 +2360,21 @@ func _handle_numpad_action(action_id: String) -> void:
 				_numpad_current_str = "0"
 		"prev_bid":
 			var curr_pid := _get_current_turn_player_id()
-			var prev: int = int(auction_session.round_bids.get(curr_pid, 0))
+			var prev: int = 0
+			if auction_session != null and auction_session.current_round > 1:
+				prev = auction_session.get_player_bid_in_round(curr_pid, auction_session.current_round - 1)
+			if prev <= 0 and auction_session != null and not auction_session.rounds_bids_history.is_empty():
+				var last_dict: Dictionary = auction_session.rounds_bids_history.back()
+				prev = int(last_dict.get(curr_pid, 0))
 			_numpad_current_str = str(maxi(0, prev))
 		"multiplier":
 			var ratio: float = 2.0
 			if auction_session != null and AUCTION_SESSION_CLASS.KNOCKOUT_RATIOS.has(auction_session.current_round):
 				ratio = float(AUCTION_SESSION_CLASS.KNOCKOUT_RATIOS[auction_session.current_round])
-			var base_val: int = 0
-			if auction_session != null:
-				base_val = auction_session.highest_bid
-			if base_val <= 0:
-				base_val = maxi(10, _numpad_current_str.to_int())
-			var target_bid := int(ceil(float(base_val) * ratio))
+			var curr_val: int = _numpad_current_str.to_int()
+			if curr_val <= 0:
+				curr_val = 10
+			var target_bid := int(ceil(float(curr_val) * ratio))
 			var curr_pid := _get_current_turn_player_id()
 			var max_bal: int = int(player_silver_balances.get(curr_pid, target_bid))
 			target_bid = mini(target_bid, max_bal)

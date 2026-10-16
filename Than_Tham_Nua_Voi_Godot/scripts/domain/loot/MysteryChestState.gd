@@ -101,7 +101,7 @@ func _generate_random_item() -> MysteryChestItem:
 
 
 func _apply_item_profile(item: MysteryChestItem) -> void:
-	var catalog_candidates: Array[Dictionary] = CATALOG_CLASS.filter_items(item.rarity)
+	var catalog_candidates: Array[Dictionary] = CATALOG_CLASS.filter_items(item.rarity, "", Vector2i.ZERO, true)
 	if not catalog_candidates.is_empty():
 		var chosen: Dictionary = _pick_weighted_candidate(catalog_candidates)
 		item.display_name = String(chosen.get("display_name", "Vật Phẩm"))

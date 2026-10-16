@@ -31,6 +31,7 @@ var hints_history: Array[Dictionary] = []
 var highest_bid: int = 0
 var highest_bidder_id: StringName = &""
 var round_bids: Dictionary = {} # player_id -> int
+var rounds_bids_history: Array[Dictionary] = [] # list of round_bids per round (index 0 = round 1)
 var folded_player_ids: Array[StringName] = []
 
 # Final Settlement
@@ -67,6 +68,7 @@ func initialize(vault_reach_player_ids: Array[StringName], chest: MysteryChestSt
 		highest_bid = 0
 		highest_bidder_id = &""
 		folded_player_ids.clear()
+		rounds_bids_history.clear()
 		_publish_next_hint("Khởi Điểm Đấu Giá")
 
 
@@ -221,6 +223,12 @@ func resolve_round_bids() -> Dictionary:
 	if state != State.AUCTION_ACTIVE:
 		return {}
 
+	# Lưu lịch sử đặt giá của vòng này
+	if rounds_bids_history.size() < current_round:
+		rounds_bids_history.append(round_bids.duplicate())
+	else:
+		rounds_bids_history[current_round - 1] = round_bids.duplicate()
+
 	var max_bid: int = 0
 	var max_bidder: StringName = &""
 
@@ -239,6 +247,43 @@ func resolve_round_bids() -> Dictionary:
 		"highest_bidder_id": highest_bidder_id,
 		"knockout": ko_result
 	}
+
+
+## Lấy giá đặt của một người chơi trong một vòng cụ thể (round_idx: 1-indexed)
+func get_player_bid_in_round(player_id: StringName, round_idx: int) -> int:
+	if round_idx < 1 or round_idx > rounds_bids_history.size():
+		return -1
+	var r_dict: Dictionary = rounds_bids_history[round_idx - 1]
+	if r_dict.has(player_id):
+		return int(r_dict[player_id])
+	return -1
+
+
+## Lấy thứ hạng (Rank 1, 2, 3...) của người chơi trong một vòng cụ thể (round_idx: 1-indexed)
+func get_player_rank_in_round(player_id: StringName, round_idx: int) -> int:
+	var r_dict: Dictionary = {}
+	if round_idx == current_round and not round_bids.is_empty():
+		r_dict = round_bids
+	elif round_idx >= 1 and round_idx <= rounds_bids_history.size():
+		r_dict = rounds_bids_history[round_idx - 1]
+	else:
+		return -1
+
+	if r_dict.is_empty() or not r_dict.has(player_id):
+		return -1
+
+	# Sắp xếp danh sách người chơi theo giá giảm dần
+	var sorted_pids: Array = r_dict.keys()
+	sorted_pids.sort_custom(func(a: Variant, b: Variant) -> bool:
+		return int(r_dict.get(a, 0)) > int(r_dict.get(b, 0))
+	)
+
+	var target_bid: int = int(r_dict.get(player_id, 0))
+	var rank: int = 1
+	for other_pid in sorted_pids:
+		if int(r_dict.get(other_pid, 0)) > target_bid:
+			rank += 1
+	return rank
 
 
 func _publish_next_hint(phase_title: String) -> void:
