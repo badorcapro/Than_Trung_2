@@ -594,32 +594,21 @@ func _build_settlement_dialog() -> void:
 	left_vbox.add_child(winner_profile_hbox)
 
 	var av_frame := PanelContainer.new()
-	av_frame.custom_minimum_size = Vector2(88, 88)
-	var av_frame_sb := StyleBoxFlat.new()
-	av_frame_sb.bg_color = Color(0.12, 0.16, 0.22, 0.85)
-	av_frame_sb.border_color = Color(0.45, 0.58, 0.75, 0.6)
-	av_frame_sb.border_width_left = 2
-	av_frame_sb.border_width_top = 2
-	av_frame_sb.border_width_right = 2
-	av_frame_sb.border_width_bottom = 2
-	av_frame_sb.corner_radius_top_left = 8
-	av_frame_sb.corner_radius_top_right = 8
-	av_frame_sb.corner_radius_bottom_left = 8
-	av_frame_sb.corner_radius_bottom_right = 8
-	av_frame.add_theme_stylebox_override("panel", av_frame_sb)
+	av_frame.custom_minimum_size = Vector2(132, 132)
+	av_frame.add_theme_stylebox_override("panel", StyleBoxEmpty.new())
 	winner_profile_hbox.add_child(av_frame)
 
 	_settlement_avatar_rect = TextureRect.new()
 	_settlement_avatar_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	_settlement_avatar_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
-	_settlement_avatar_rect.custom_minimum_size = Vector2(88, 88)
+	_settlement_avatar_rect.custom_minimum_size = Vector2(132, 132)
 	av_frame.add_child(_settlement_avatar_rect)
 
 	_settlement_avatar_placeholder = CenterContainer.new()
-	_settlement_avatar_placeholder.custom_minimum_size = Vector2(88, 88)
+	_settlement_avatar_placeholder.custom_minimum_size = Vector2(132, 132)
 	var av_ph_lbl := Label.new()
 	av_ph_lbl.text = "❓"
-	av_ph_lbl.add_theme_font_size_override("font_size", 36)
+	av_ph_lbl.add_theme_font_size_override("font_size", 54)
 	_settlement_avatar_placeholder.add_child(av_ph_lbl)
 	_settlement_avatar_placeholder.visible = false
 	av_frame.add_child(_settlement_avatar_placeholder)

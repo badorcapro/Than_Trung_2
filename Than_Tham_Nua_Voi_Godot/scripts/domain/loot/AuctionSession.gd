@@ -47,7 +47,7 @@ func initialize(vault_reach_player_ids: Array[StringName], chest: MysteryChestSt
 	eligible_player_ids = vault_reach_player_ids.duplicate()
 	active_bidder_ids = vault_reach_player_ids.duplicate()
 	mystery_chest = chest if chest != null else MysteryChestState.new()
-	mystery_chest.generate_hint_pack(8)
+	mystery_chest.generate_hint_pack(12)
 
 	if eligible_player_ids.is_empty():
 		state = State.CANCELLED
@@ -55,15 +55,15 @@ func initialize(vault_reach_player_ids: Array[StringName], chest: MysteryChestSt
 
 	if eligible_player_ids.size() == 1:
 		state = State.SOLO_OFFER
-		var total_val: int = maxi(20, mystery_chest.total_silver_value())
-		# Giá máy tự ra: 50% - 150% tổng giá trị hòm
-		var ratio: float = randf_range(0.5, 1.5)
-		solo_offer_price = maxi(5, int(round(float(total_val) * ratio)))
-		var solo_clue_count: int = randi_range(3, 4)
-		for idx in range(solo_clue_count):
-			_publish_next_hint("Ưu Đãi Solo (%d/%d)" % [idx + 1, solo_clue_count])
-		if randf() < 0.5:
-			_publish_bonus_hint("Ưu Đãi Solo (Thêm)")
+		var total_val: int = maxi(1, mystery_chest.total_silver_value())
+		# Giá máy tự ra: 1% - 199% tổng giá trị hòm
+		var ratio: float = randf_range(0.01, 1.99)
+		solo_offer_price = maxi(1, int(round(float(total_val) * ratio)))
+		# 5 gợi ý round mặc định, và roll 5 lần tỉ lệ 50/50 nhận thêm gợi ý nhỏ
+		for idx in range(5):
+			_publish_next_hint("Vòng Đấu Giá %d" % [idx + 1])
+			if randf() < 0.5:
+				_publish_bonus_hint("Gợi Ý Phụ (Vòng %d)" % [idx + 1])
 	else:
 		state = State.AUCTION_ACTIVE
 		current_round = 1
