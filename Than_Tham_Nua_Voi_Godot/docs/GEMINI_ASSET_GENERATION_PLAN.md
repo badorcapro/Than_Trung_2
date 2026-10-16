@@ -1,201 +1,191 @@
-# Kế Hoạch & Bộ Prompt Sinh Asset Cho Gemini Web (Google Imagen 3)
+# Kế Hoạch & Bộ Prompt Sinh Asset Biểu Tượng Vai Trò (Chuẩn Dupery)
 ## Dự án: Thần Thám Nửa Vời – Truyền Kì Kỳ Án Hoàng Cung
 
-> **Cam kết cốt lõi:** 100% các asset trong tài liệu này là **Đạo Cụ / Cổ Vật / Biểu Tượng / Phù Ấn Độc Lập (Freestanding Props & Emblems)**, hoàn toàn **KHÔNG CÓ HÌNH NGƯỜI, KHÔNG MODEL ANIME, KHÔNG NGƯỜI THẬT** để loại bỏ triệt để cảm giác "nét vẽ AI" gây khó chịu cho người chơi.
+> **Định hướng phong cách tri ân Dupery:**
+> - **100% Tối Giản (Minimalist 2D Flat Silhouette / Stencil Glyphs):** Biểu tượng hình bóng phẳng, đơn sắc, tương phản cao trên nền đen hoặc trong suốt.
+> - **Tuyệt đối KHÔNG vẽ người / anime / mặt người:** Chỉ sử dụng hình bóng biểu trưng của đồ vật, huy hiệu, động vật hoặc ấn ký đặc trưng của vai trò.
+> - **Khả năng đọc lướt (Instant Readability):** Đảm bảo người chơi nhìn lướt qua ở kích thước nhỏ (32×32, 48×48, 64×64) trên bàn cờ hoặc trong sổ tay là nhận ra ngay vai trò.
+> - **Màu sắc nhận diện theo 4 Nhóm Vai Trò:**
+>   - 🔵 **Người Vô Tội (Innocent):** Xanh Cyan / Lam sáng (`#5DADE2` hoặc `#A9DCFF`)
+>   - 🟡 **Kẻ Bao Đồng (Meddler):** Vàng / Hổ phách (`#F5B041` hoặc `#F9E79F`)
+>   - 🔴 **Thuộc Hạ (Underling):** Đỏ san hô / Đỏ thắm (`#E74C3C` hoặc `#F1948A`)
+>   - 🟣 **Nghịch Thần (Traitor):** Tím quý tộc / Violet (`#A569BD` hoặc `#BB8FCE`)
 
 ---
 
-## 🎨 Quy Chuẩn Mỹ Thuật Chung (Global Art Direction)
-* **Phong cách:** Semi-realistic ancient Asian imperial prop illustration (Minh họa đạo cụ cổ phong Á Đông bán thực, sắc nét, chất liệu cao cấp: ngọc thạch, vàng ròng, đồng thau, lụa là, gốm sứ cổ, gỗ mun).
-* **Quy chuẩn khung hình:** Vật thể tự do ở trung tâm (Freestanding isolated object on solid dark charcoal background), góc 3D nghiêng 45 độ hoặc chính diện, không đóng khung cứng để Godot UI tự do lồng khung thẻ bài.
-* **Ánh sáng:** Cinematic studio lighting, chiaroscuro rim light, viền sắc nét, độ phân giải 8k, tuyệt đối không có watermark hay chữ rác.
+## 🏛️ 1. Danh Sách 4 Asset Nhóm Đã Thêm (Group Banners)
+Người dùng đã thêm 4 asset nền/banner nhóm tại `Than_Tham_Nua_Voi_Godot/assets/`:
+1. `Innocent.png` — Banner đại diện nhóm Người Vô Tội (Màu xanh lam)
+2. `Meddler.png` — Banner đại diện nhóm Kẻ Bao Đồng (Màu vàng hổ phách)
+3. `Underling.png` — Banner đại diện nhóm Thuộc Hạ (Màu đỏ thắm)
+4. `Traitor.png` — Banner đại diện nhóm Nghịch Thần (Màu tím)
 
 ---
 
-## 📜 ĐỢT 1: 20 ĐẠO CỤ BIỂU TRƯNG VAI TRÒ HOÀNG CUNG (ROLE PROPS)
-*(Thay thế hoàn toàn chân dung người bằng vật phẩm/đạo cụ biểu trưng đặc trưng của từng vai trò)*
+## 📋 2. Bảng Rà Soát Toàn Bộ 21 Vai Trò Thực Tế Trong Game
+*(Được trích xuất và xác thực 100% từ mã nguồn `FixtureRepository.gd` và màn hình `RoleCodexController.gd`)*
 
-### 1. Người Vô Tội (`role_good_fellow`)
-* **Đạo cụ:** Đèn hoa sen giấy mộc mạc và chén trà hoa cúc tinh khiết.
-* **Prompt Gemini Web:**
-  > `A high-end 3D isolated prop illustration of a traditional ancient Asian floating lotus flower lantern, crafted from delicate translucent white and pale pink rice paper with a small glowing golden candle inside, resting gently on a carved wooden saucer next to a pure white porcelain teacup with blooming chrysanthemum tea. Soft warm golden and soothing teal aura, isolated on solid dark charcoal background, cinematic studio lighting, no human figures, clean silhouette, 8k Unreal Engine prop render.`
-
-### 2. Nghịch Thần (`role_traitor`)
-* **Đạo cụ:** Mũ quan gấm đen thêu rồng vàng ẩn giấu và đoản kiếm chủy thủ găm vào cuộn tấu chương.
-* **Prompt Gemini Web:**
-  > `A high-end 3D isolated prop illustration representing an imperial traitor, featuring an opulent black and crimson silk court magistrate official hat adorned with a jade pin, resting beside an ancient folded memorial petition scroll half-pierced by a stealthy golden dragon-hilted dagger. Subtly glowing sinister crimson aura, luxurious antique textures, isolated on solid dark charcoal background, dramatic chiaroscuro rim lighting, no human figures, 8k resolution.`
-
-### 3. Thuộc Hạ (`role_accomplice`)
-* **Đạo cụ:** Cặp phi tiêu ám khí hình lá liễu và lọ thuốc độc nhỏ quấn dây thừng đen.
-* **Prompt Gemini Web:**
-  > `A high-end 3D isolated prop illustration of an imperial shadow assassin's gear, featuring a pair of razor-sharp blackened steel throwing daggers shaped like willow leaves with midnight-blue silk tassels, resting beside a tiny clay flask bound with rough black cords. Faint cold moonlit steel gleam, isolated on solid dark charcoal background, cinematic rim lighting, no humans, crisp clean edges, 8k.`
-
-### 4. Kẻ Bao Đồng (`role_meddler`)
-* **Đạo cụ:** Chiếc quạt giấy gấp vẽ hình mắt chim hạc hé mở và cuốn sổ tay thắt chỉ đỏ.
-* **Prompt Gemini Web:**
-  > `A high-end 3D isolated prop illustration of a nosy courtier's signature tools, featuring a half-unfolded ancient paper folding fan painted with an inquisitive crane eye among auspicious clouds, resting next to a small stitched court gossip notebook tied with a scarlet ribbon and a tiny brass ear-spoon charm. Warm lantern light, isolated on solid dark charcoal background, no human figures, 8k.`
-
-### 5. Độc Sư (`poisoner`)
-* **Đạo cụ:** Lọ gốm độc dược quấn quanh bởi một con rắn lục ngọc bích, khói tím bốc lên.
-* **Prompt Gemini Web:**
-  > `A high-end 3D isolated prop illustration of an ancient imperial poisoner's signature relic, featuring an antique dark purple porcelain potion flask with a miniature jade green venomous serpent coiled protectively around its neck, emitting a faint ethereal spiraling violet and emerald poisonous vapor from the cork. Eerie bioluminescent glow, isolated on solid dark charcoal background, no humans, 8k resolution.`
-
-### 6. Kẻ Say Rượu (`drunkard`)
-* **Đạo cụ:** Bầu rượu hồ lô gốm men lam đổ nghiêng, vài giọt rượu sóng sánh óng ánh.
-* **Prompt Gemini Web:**
-  > `A high-end 3D isolated prop illustration representing the palace drunkard, featuring a rustic ceramic wine gourd glazed in blue-and-white porcelain patterns with a red cord tassel, tipped sideways with glistening drops of amber rice wine spilling onto an antique lacquered wood coaster. Warm cozy tavern lantern highlights, isolated on solid dark charcoal background, no human figures, 8k.`
-
-### 7. Thợ May (`tailor`)
-* **Đạo cụ:** Kéo vàng chạm trổ cổ điển cắt ngang cuộn lụa ngũ sắc và thước đo gỗ đào.
-* **Prompt Gemini Web:**
-  > `A high-end 3D isolated prop illustration representing the royal court tailor, featuring an exquisite pair of antique golden tailoring shears engraved with delicate floral vines, cutting across shimmering rainbow silk brocade ribbons and a polished peachwood measuring ruler marked with brass inlays. Crisp reflections, isolated on solid dark charcoal background, studio lighting, no humans, 8k.`
-
-### 8. Kẻ Bắt Chước (`copycat`)
-* **Đạo cụ:** Mặt nạ kịch hoàng cung chia đôi (một nửa ngọc trắng cười, một nửa gỗ đen khóc).
-* **Prompt Gemini Web:**
-  > `A high-end 3D isolated prop illustration of a theatrical disguise mask, divided symmetrically into two contrasting halves: the left half carved from polished white nephrite jade with a subtle mocking smile, the right half crafted from charred black lacquer with a weeping sorrowful expression, tied with purple silk cords. Ethereal duality aura, isolated on solid dark charcoal background, no humans, 8k.`
-
-### 9. Sát Nhân Hàng Loạt (`serial_killer`)
-* **Đạo cụ:** Chủy thủ đen chạm khắc đầu lâu phong ấn và mảnh khăn vải đen rách mép dính vết sáp đỏ.
-* **Prompt Gemini Web:**
-  > `A high-end 3D isolated prop illustration representing a phantom serial killer, featuring a menacing curved ritual sickle dagger forged from obsidian-black damascus steel, resting upon a torn black velvet shroud stamped with an eerie crimson wax mark. Chilling crimson edge highlights, dark gothic imperial atmosphere, isolated on solid dark charcoal background, no human figures, 8k.`
-
-### 10. Bác Sĩ Phẫu Thuật (`surgeon`)
-* **Đạo cụ:** Bộ dao mổ bạc và kẹp phẫu thuật dã chiến đặt trên khay gốm sứ trắng.
-* **Prompt Gemini Web:**
-  > `A high-end 3D isolated prop illustration representing the imperial court surgeon, featuring a set of gleaming antique silver surgical scalpels, delicate forceps, and silver suture needles neatly arranged inside a clean white celadon porcelain medical dish. Pristine clinical metallic gleam mixed with soft candle rim light, isolated on solid dark charcoal background, no humans, 8k.`
-
-### 11. Thợ Đồng Hồ (`clock_maker`)
-* **Đạo cụ:** Kính lúp một mắt bằng đồng thau kèm bánh răng cơ khí và quả lắc đồng hồ cổ.
-* **Prompt Gemini Web:**
-  > `A high-end 3D isolated prop illustration representing the royal horologist, featuring an intricate Victorian-oriental antique brass watchmaker's monocle with adjustable magnifying lenses, resting amidst interlocking miniature golden clockwork gears, brass cogs, and a tiny swinging pendulum. Warm amber mechanical glow, isolated on solid dark charcoal background, no humans, 8k.`
-
-### 12. Kẻ Lừa Đảo (`conman`)
-* **Đạo cụ:** Cặp xúc xắc ngọc bích gian lận mạ vàng và một thỏi vàng giả bị mẻ góc lộ đất sét bên trong.
-* **Prompt Gemini Web:**
-  > `A high-end 3D isolated prop illustration representing the cunning con artist, featuring a pair of weighted golden dice inlaid with fake jade dots, resting beside an ancient Chinese gold sycee ingot with a chipped corner revealing hidden grey clay underneath. Playful glint of deceit, isolated on solid dark charcoal background, warm gambling hall lighting, no human figures, 8k.`
-
-### 13. Kẻ Bới Vết (`critic`)
-* **Đạo cụ:** Cây bút lông chu sa mực đỏ gác trên giá bút đá hoa cương và tờ sớ tấu gạch chéo đỏ.
-* **Prompt Gemini Web:**
-  > `A high-end 3D isolated prop illustration representing the strict imperial censor, featuring a calligraphy brush with deep red cinnabar ink dripping from the tip, resting on a carved marble mountain brush rest beside an unrolled imperial report scroll stamped with sharp red audit marks. Crisp analytical lighting, isolated on solid dark charcoal background, no humans, 8k.`
-
-### 14. Người Đưa Thư (`mailman`)
-* **Đạo cụ:** Ống tre đưa thư hỏa tốc bịt đồng có cắm lông gà truyền tin (hỏa kê linh).
-* **Prompt Gemini Web:**
-  > `A high-end 3D isolated prop illustration representing the royal express courier, featuring an ancient bamboo dispatch tube bound with polished bronze hoops and sealed with red wax, adorned with three bright pheasant feather plumage indicating top military urgency, resting on weathered leather travel straps. Dawn sunlight rim, isolated on solid dark charcoal background, no humans, 8k.`
-
-### 15. Nhà Toán Học (`mathematician`)
-* **Đạo cụ:** Bàn tính gỗ mun hạt ngọc cẩn xà cừ và thước đo góc thiên văn.
-* **Prompt Gemini Web:**
-  > `A high-end 3D isolated prop illustration representing the imperial astronomer mathematician, featuring a compact antique ebony wood abacus with luminous jade beads, set next to an intricately engraved brass celestial protractor and compass divider. Faint celestial stardust sparkles, isolated on solid dark charcoal background, no human figures, 8k.`
-
-### 16. Người Kể Chuyện (`reporter`)
-* **Đạo cụ:** Khối phách gỗ gõ nhịp (kinh đường mộc) đặt cạnh tách trà bốc khói.
-* **Prompt Gemini Web:**
-  > `A high-end 3D isolated prop illustration representing the teahouse storyteller, featuring a polished dark rosewood gavel / storytelling clapper (xingmu) engraved with cloud waves, resting next to a traditional covered porcelain gaiwan teacup emitting gentle swirling steam. Warm cozy candle glow, isolated on solid dark charcoal background, no human figures, 8k.`
-
-### 17. U Hồn (`spectre`)
-* **Đạo cụ:** Ngọn đèn lồng giấy rách nát cháy ngọn lửa ma trơi xanh lam u linh (quỷ hỏa).
-* **Prompt Gemini Web:**
-  > `A high-end 3D isolated prop illustration representing a haunting palace ghost, featuring a weathered and tattered antique hexagonal paper lantern floating weightlessly, glowing from within with an eerie ethereal blue will-o'-the-wisp ghost flame, with faint translucent spirit ribbons swirling around it. Haunting cyan luminescence, isolated on solid dark charcoal background, no humans, 8k.`
-
-### 18. Lang Y Trấn Thần (`therapist`)
-* **Đạo cụ:** Chuông đồng thiền định và lư trầm hương nhỏ tỏa khói an thần.
-* **Prompt Gemini Web:**
-  > `A high-end 3D isolated prop illustration representing the spiritual mind healer, featuring a small antique bronze Tibetan singing bell with a wooden striker, resting next to an intricately carved lotus-shaped bronze incense burner emitting soft, peaceful spiral ribbons of white agarwood smoke. Divine peaceful golden halo, isolated on solid dark charcoal background, no humans, 8k.`
-
-### 19. Hiệp Khách Cấm Cung (`vigilante`)
-* **Đạo cụ:** Thanh trường kiếm gác trên chiếc nón lá phong trần có dải lụa xanh.
-* **Prompt Gemini Web:**
-  > `A high-end 3D isolated prop illustration representing the righteous imperial vigilante, featuring a classical straight steel longsword in a black sharkskin scabbard with brass fittings, resting across a weathered woven bamboo conical hat with a fluttering azure silk ribbon. Noble heroic moonlight gleam, isolated on solid dark charcoal background, no human figures, 8k.`
-
-### 20. Chiêm Tinh Gia (`weatherman`)
-* **Đạo cụ:** La bàn thiên văn bằng đồng khắc 28 chòm sao và mảnh thiên thạch phát sáng.
-* **Prompt Gemini Web:**
-  > `A high-end 3D isolated prop illustration representing the royal astrologer, featuring an intricate antique brass astrolabe inscribed with 28 lunar constellations and celestial rings, resting beside a glowing fragment of star meteorite pulsing with deep purple cosmic energy. Starlight flares and golden planetary aura, isolated on solid dark charcoal background, no humans, 8k.`
+| STT | Tên Vai Trò (In-game) | Role ID | Nhóm (RoleGroup) | Phe (Alignment) | Ý Tưởng Biểu Tượng (Dupery Stencil Glyph) |
+|:---:|:---|:---|:---|:---|:---|
+| **I** | **NGƯỜI VÔ TỘI** | *(10 vai trò)* | **CHINH_NHAN** | **Phe Thiện** | **Màu Xanh Cyan (#5DADE2)** |
+| 1 | **Thợ May** | `tailor` | Người Vô Tội | Phe Thiện | Cặp kéo may cắt chéo tối giản |
+| 2 | **Dịch Phu** | `mailman` | Người Vô Tội | Phe Thiện | Bức thư niêm phong sáp / Ống thẻ truyền tin |
+| 3 | **Nhà Toán Học** | `mathematician` | Người Vô Tội | Phe Thiện | Bàn tính cổ (Abacus) / Ký hiệu hình học |
+| 4 | **Nhà Khí Tượng** | `weatherman` | Người Vô Tội | Phe Thiện | Chong chóng gió / Mũi tên la bàn chỉ 4 hướng |
+| 5 | **Thợ Đồng Hồ** | `clock_maker` | Người Vô Tội | Phe Thiện | Mặt đồng hồ kim la mã / Quả lắc cơ khí |
+| 6 | **Sử Quan** | `reporter` | Người Vô Tội | Phe Thiện | Cuộn thẻ tre mở ra / Cây bút lông vắt ngang |
+| 7 | **Ngự Khuyển Quan** | `blood_hound` | Người Vô Tội | Phe Thiện | Hình bóng đầu chó săn silhouette nhìn nghiêng |
+| 8 | **Ngự Y** | `therapist` | Người Vô Tội | Phe Thiện | Cối chày giã thuốc bắc / Nhánh thảo dược |
+| 9 | **Sư Tử Phán** | `vigilante` | Người Vô Tội | Phe Thiện | Đầu sư tử đá gầm hoặc thanh kiếm công lý thẳng đứng |
+| 10 | **Tư Tế** | `tutorial_priest` | Người Vô Tội | Phe Thiện | Lư hương tế đỉnh đồng bốc khói / Chuỗi ngọc châu |
+| **II** | **KẺ BAO ĐỒNG** | *(3 vai trò)* | **HIEU_SU** | **Phe Thiện** | **Màu Vàng Gold (#F5B041)** |
+| 11 | **Kẻ Bắt Chước** | `copycat` | Kẻ Bao Đồng | Phe Thiện | Hai chiếc mặt nạ hát tuồng lồng vào nhau / Chiếc gương phản chiếu |
+| 12 | **Kẻ Say Rượu** | `drunkard` | Kẻ Bao Đồng | Phe Thiện | Bình rượu hồ lô nghiêng đổ giọt rượu |
+| 13 | **Bác Sĩ Phẫu Thuật** | `surgeon` | Kẻ Bao Đồng | Phe Thiện | Dao mổ bạc phẫu thuật (Scalpel) sắc nhọn |
+| **III** | **THUỘC HẠ** | *(7 vai trò)* | **TONG_PHAM** | **Phe Ác** | **Màu Đỏ Coral (#E74C3C)** |
+| 14 | **Kẻ Lừa Đảo** | `conman` | Thuộc Hạ | Phe Ác | Bàn tay xòe 3 quân bài úp / Con xúc xắc nghiêng |
+| 15 | **Độc Sư** | `poisoner` | Thuộc Hạ | Phe Ác | Bình độc dược có khói đầu lâu / Giọt nọc độc |
+| 16 | **Chủ Quán Rượu** | `barkeep` | Thuộc Hạ | Phe Ác | Chiếc vại bia gỗ lớn sủi bọt tràn mép |
+| 17 | **Sát Nhân Hàng Loạt** | `serial_killer` | Thuộc Hạ | Phe Ác | Dao găm cong vấy máu / Vết chém xước chéo |
+| 18 | **Vong Linh** | `spectre` | Thuộc Hạ | Phe Ác | Bóng ma trôi bồng bềnh / Đôi mắt ma mị trong sương |
+| 19 | **Kẻ Bất Lương** | `tutorial_scoundrel` | Thuộc Hạ | Phe Ác | Ổ khóa sắt có gai nhọn / Tấm khiên thép gai bảo vệ |
+| 20 | **Kẻ Côn Đồ** | `tutorial_mobster` | Thuộc Hạ | Phe Ác | Nắm đấm sắt siết chặt (Brass knuckles/Fist silhouette) |
+| **IV** | **NGHỊCH THÂN** | *(1 vai trò)* | **NGHICH_THAN** | **Phe Ác** | **Màu Tím Violet (#A569BD)** |
+| 21 | **Nhà Phê Bình** | `critic` | Nghịch Thần | Phe Ác | Chiếc bút lông gạch chéo chữ X lớn / Cuộn tấu bị gạch bỏ |
 
 ---
 
-## 🔮 ĐỢT 2: 12 DI VẬT HOÀNG CUNG (RELICS & IMPERIAL EQUIPMENT)
-*(Vật thể 1:1 Isolated trên nền tối sạch, góc 3D isometric 45 độ, chất liệu hoàng kim/ngọc thạch)*
+## 🎨 3. Cấu Trúc Prompt Chuẩn Dupery Cho Gemini Web
 
-1. **Trấn Quốc Ngọc Tỷ (Imperial Jade Seal):**
-   > `A high-end 3D isolated item illustration of the legendary Chinese Imperial Jade Seal, carved from flawless glowing white nephrite jade, surmounted by an intricately sculpted crouching dragon handle, bottom engraved with ancient imperial seal script in gold leaf. Soft golden-green divine aura, isolated on pure dark charcoal background, cinematic studio lighting, no humans, 8k resolution, Unreal Engine 5 prop render quality.`
-
-2. **Gương Bát Quái Càn Khôn (Eight Trigrams Gold Mirror):**
-   > `A high-end isolated item illustration of an ancient Eight Trigrams bronze mirror, ornate gold-plated rim engraved with Daoist Bagua symbols and celestial dragons, polished mirror surface glowing with ethereal swirling azure light. Intricate antique craftsmanship, isolated on dark charcoal background, magical rim lighting, no humans, fantasy game prop asset.`
-
-3. **Thượng Phương Bảo Kiếm (Imperial Decree Sword):**
-   > `A high-end isolated item illustration of an ancient imperial decree ceremonial straight sword (Jian), polished folded steel blade gleaming with cold silver light, scabbard made of black lacquered wood bound with gold filigree and inlaid with blood-red rubies, golden dragon crossguard. Isolated on dark background, dramatic rim lighting, no humans, 8k game art.`
-
-4. **Quạt Lông Vũ Cung Đình (Royal Peacock Feather Fan):**
-   > `A high-end isolated item illustration of a luxurious ancient Asian royal hand fan made of iridescent peacock feathers and gold foil trim, handle carved from white jade with an emerald pendant hanging from golden silk tassels. Soft sparkling magical aura, isolated on clean dark background, no humans, 8k resolution.`
-
-5. **Ngọc Bội Long Phượng (Dragon & Phoenix Jade Pendant):**
-   > `A high-end isolated item illustration of a circular ancient Chinese bi jade disc carved with interlocking dragon and phoenix in high relief, translucent emerald jade with glowing veins of green light, tied with red royal silk cord and golden beads. Isolated on dark charcoal background, macro jewelry render, no humans, 8k.`
-
-6. **Hồ Lô Cửu Chuyển Kim Đan (Nine-turn Alchemy Gourd):**
-   > `A high-end isolated item illustration of a mystical golden alchemy gourd, painted with swirling cinnabar clouds and gold leaf talismans, top sealed with a carved purple jade stopper emitting a fragrant golden spiral smoke. Soft glowing magical essence, isolated on dark background, no humans, fantasy loot asset.`
-
-7. **Bàn Tính Vàng Khảm Ngọc (Imperial Gold Abacus):**
-   > `A high-end isolated item illustration of an antique imperial court abacus made of solid polished gold frame with jadeite beads strung on silver rods, engraved with miniature auspicious bat and coin motifs. Gleaming metallic reflections, isolated on dark background, luxury ancient artifact render, no humans.`
-
-8. **Trâm Cài Phượng Hoàng (Phoenix Ruby Hairpin):**
-   > `A high-end isolated item illustration of an exquisite imperial golden phoenix hairpin, delicate gold filigree wings inlaid with glowing pigeon-blood rubies and freshwater pearls, dangling golden tassels with crystal drops. Masterpiece ancient royal jewelry, isolated on dark charcoal background, no humans, 8k studio lighting.`
-
-9. **Chuông Đồng Cổ Trừ Tà (Ancient Exorcism Bronze Bell):**
-   > `A high-end isolated item illustration of an antique miniature bronze temple bell, covered in weathered green patina and carved with protective Buddhist and Daoist incantations, wooden handle tipped with a vajra pestle, emitting faint golden soundwaves. Isolated on dark background, no humans, mystical relic prop.`
-
-10. **Kính Thiên Lý Cẩn Xà Cừ (Mother-of-Pearl Spyglass):**
-    > `A high-end isolated item illustration of an ornate collapsible brass spyglass telescope, barrel wrapped in polished tortoiseshell and inlaid with iridescent mother-of-pearl floral patterns, glass lens gleaming with sapphire reflections. Isolated on dark charcoal background, no humans, antique collector item.`
-
-11. **Hộp Gỗ Trầm Hương Niêm Phong (Sealed Agarwood Relic Box):**
-    > `A high-end isolated item illustration of an antique rectangular relic box made of dark carved agarwood, bound with brass corner protectors and sealed with a heavy brass dragon padlock wrapped in talisman paper with red cinnabar stamps. Faint mystic mist escaping from cracks, isolated on dark background, no humans.`
-
-12. **Kim Long Ngự Ấn (Golden Dragon Imperial Seal):**
-    > `A high-end isolated item illustration of a monumental solid gold royal stamp, surmounted by a fierce five-clawed golden dragon holding a glowing pearl in its mouth, mirror-polished gold with sharp ornamental engravings. Warm majestic golden brilliance, isolated on dark charcoal background, no humans, 8k resolution.`
+Công thức prompt tối ưu:
+> `A minimalist flat 2D vector stencil icon of [SUBJECT], solid [COLOR] color silhouette glyph on a pure black background. Dupery and board game token style, clean sharp edges, bold geometric shapes, high contrast, zero shading, zero gradients, no realistic textures, no human face or human body, centered composition, icon design, vector illustration.`
 
 ---
 
-## ⚡ ĐỢT 3: 12 VẾT THÁNH THẦN ẤN (STIGMATA / HOLY MARKS)
-*(Biểu tượng/Dấu ấn phù chú phát sáng 1:1 Isolated trên nền đen thuần, hiệu ứng thần lực)*
+## 📝 4. Bộ Prompt Chi Tiết Cho Từng Vai Trò (Sẵn Sàng Copy/Paste)
 
-1. **Thanh Long (Mộc):** `A mystical glowing elemental stigmata crest of the Azure Dragon, circular oriental tattoo insignia forming an energetic coiled dragon emitting radiant cyan and emerald-green lightning, surrounded by sacred wind runes. Isolated on pure black background, glowing ethereal vector magic seal, no humans, 8k VFX game icon.`
-2. **Bạch Hổ (Kim):** `A mystical glowing elemental stigmata insignia of the White Tiger, stylized fierce tiger claw and fangs mark composed of brilliant platinum-white and golden metallic energy blades, sacred warrior aura. Isolated on black background, glowing celestial martial arts crest, no humans, 8k resolution.`
-3. **Chu Tước (Hỏa):** `A mystical glowing stigmata insignia of the Vermilion Bird Phoenix, blazing wings and fiery tail feathers spiraling in a circular sacred pattern, burning with brilliant scarlet red, crimson and orange magical flames. Isolated on black background, intense fire magic seal, no humans, fantasy UI icon.`
-4. **Huyền Vũ (Thủy):** `A mystical glowing stigmata insignia of the Black Tortoise and Serpent, ancient runic shell pattern intertwined with a water serpent, glowing with deep sapphire blue, aquamarine and abyssal black water magic ripples. Isolated on black background, divine defense crest, no humans, 8k.`
-5. **Kỳ Lân (Thổ):** `A sacred glowing stigmata mark of the divine Qilin, stylized horn and auspicious clouds seal glowing with radiant amber-gold and earthy crystalline light, surrounded by golden petal sparks. Isolated on black background, holy blessing emblem, no humans, high-end fantasy UI asset.`
-6. **Thái Cực Âm Dương:** `A mystical floating Yin-Yang Taiji stigmata symbol, swirling teardrops of pure celestial white light and deep cosmic void black, encircled by eight glowing golden Daoist Bagua trigrams, magical energy vortex. Isolated on dark black background, spiritual sacred emblem, no humans.`
-7. **Huyết Nguyệt:** `An ominous occult stigmata mark of the Blood Moon, a jagged crescent moon dripping with crimson magical light, surrounded by delicate thorny briars and occult eye symbols glowing in deep blood-red. Isolated on black background, dark fantasy curse icon, no humans, 8k.`
-8. **Thiên Phạt:** `A divine heavenly judgment stigmata mark, sharp geometric golden lightning bolts striking downward in a sacred diamond formation, surrounded by glowing plasma sparks and thunder runes. Isolated on pure black background, divine retribution magic crest, no humans.`
-9. **Bạch Liên:** `A divine stigmata mark of a sacred blooming White Lotus flower, delicate petals glowing with pure translucent pearlescent white and soft golden halo light, floating on sacred water ripples. Isolated on black background, purity and healing aura icon, no humans, 8k.`
-10. **Ma Nhãn:** `A forbidden demonic third-eye stigmata mark, stylized vertical dragon/demon eye glowing with menacing violet and magenta psychic flame, encircled by ancient binding chains and runes. Isolated on black background, eldritch perception crest, dark fantasy art, no humans.`
-11. **Thiên Mệnh:** `A supreme imperial stigmata mark featuring the stylized ancient seal-script character for 'Heaven' (天), forged from solid radiant celestial gold with soaring dragon wings on both sides, raining golden dust. Isolated on black background, divine right of kings seal, no humans.`
-12. **Hư Vô:** `A cosmic void stigmata mark resembling a total solar eclipse, a pitch-black central orb surrounded by a violent swirling corona of violet, deep indigo and starlight silver flares, distorting space around it. Isolated on black background, ultimate void magic seal, no humans, 8k.`
+### 🔵 Nhóm 1: Người Vô Tội (Innocent) — Màu Xanh Cyan
+
+#### 1. Thợ May (`tailor`)
+```text
+A minimalist flat 2D vector stencil icon of a classic pair of tailor scissors opened at an angle, solid cyan blue (#5DADE2) silhouette glyph on a pure black background. Dupery and board game token style, clean sharp edges, bold shapes, high contrast, zero gradients, no human figures, centered, 2D vector icon.
+```
+
+#### 2. Dịch Phu (`mailman`)
+```text
+A minimalist flat 2D vector stencil icon of a vintage postal letter envelope with a wax seal emblem, solid cyan blue (#5DADE2) silhouette glyph on a pure black background. Dupery and board game token style, clean sharp edges, bold geometric lines, zero gradients, no human figures, centered, 2D vector icon.
+```
+
+#### 3. Nhà Toán Học (`mathematician`)
+```text
+A minimalist flat 2D vector stencil icon of an ancient abacus frame with counting beads, solid cyan blue (#5DADE2) silhouette glyph on a pure black background. Dupery and board game token style, clean sharp edges, bold geometric shapes, zero gradients, no human figures, centered, 2D vector icon.
+```
+
+#### 4. Nhà Khí Tượng (`weatherman`)
+```text
+A minimalist flat 2D vector stencil icon of a weather vane rooster pointing directions on a cross axis (N-E-S-W), solid cyan blue (#5DADE2) silhouette glyph on a pure black background. Dupery and board game token style, clean sharp edges, bold shapes, zero gradients, no human figures, centered, 2D vector icon.
+```
+
+#### 5. Thợ Đồng Hồ (`clock_maker`)
+```text
+A minimalist flat 2D vector stencil icon of an antique pocket watch face with Roman numerals and clockwork gear cog, solid cyan blue (#5DADE2) silhouette glyph on a pure black background. Dupery and board game token style, clean sharp edges, bold geometric shapes, zero gradients, no human figures, centered, 2D vector icon.
+```
+
+#### 6. Sử Quan (`reporter`)
+```text
+A minimalist flat 2D vector stencil icon of an unrolled ancient scroll parchment with a traditional calligraphy quill feather, solid cyan blue (#5DADE2) silhouette glyph on a pure black background. Dupery and board game token style, clean sharp edges, bold shapes, zero gradients, no human figures, centered, 2D vector icon.
+```
+
+#### 7. Ngự Khuyển Quan (`blood_hound`)
+```text
+A minimalist flat 2D vector stencil icon of an imperial hunting hound dog head silhouette in profile view, solid cyan blue (#5DADE2) silhouette glyph on a pure black background. Dupery and board game token style, bold graphic lines, clean sharp edges, zero gradients, no human figures, centered, 2D vector icon.
+```
+
+#### 8. Ngự Y (`therapist`)
+```text
+A minimalist flat 2D vector stencil icon of an apothecary mortar and pestle with herbal medicinal leaves, solid cyan blue (#5DADE2) silhouette glyph on a pure black background. Dupery and board game token style, clean sharp edges, bold geometric shapes, zero gradients, no human figures, centered, 2D vector icon.
+```
+
+#### 9. Sư Tử Phán (`vigilante`)
+```text
+A minimalist flat 2D vector stencil icon of a fierce stone guardian lion (shishi/foo dog) head silhouette, solid cyan blue (#5DADE2) silhouette glyph on a pure black background. Dupery and board game token style, bold heraldic emblem, clean sharp edges, zero gradients, no human figures, centered, 2D vector icon.
+```
+
+#### 10. Tư Tế (`tutorial_priest`)
+```text
+A minimalist flat 2D vector stencil icon of a sacred ceremonial temple incense burner cauldron with three legs and rising smoke curls, solid cyan blue (#5DADE2) silhouette glyph on a pure black background. Dupery and board game token style, clean sharp edges, bold shapes, zero gradients, no human figures, centered, 2D vector icon.
+```
 
 ---
 
-## 🎒 ĐỢT 4: 12 VẬT PHẨM LOOT BẢN ĐỒ (TABLETOP CONSUMABLES & PROPS)
-*(Đạo cụ tiêu hao 1:1 Isolated trên nền tối, phong cách vật phẩm sa bàn cấm cung)*
+### 🟡 Nhóm 2: Kẻ Bao Đồng (Meddler) — Màu Vàng Hổ Phách
 
-1. **Hành Lộ Phù:** `A high-end isolated item illustration of an ancient yellow paper Daoist talisman inscribed with glowing red cinnabar calligraphy for speed and wind, edges burnt and floating with gentle golden wind embers. Isolated on dark charcoal background, fantasy consumable game prop, no humans.`
-2. **Lệnh Bài Thông Hành:** `A high-end isolated item illustration of an ancient bronze imperial palace transit pass token, rectangular with rounded top, engraved with deep archaic Chinese characters for 'Command / Pass', tied with a weathered red cord and tassel. Authentic aged bronze patina, isolated on dark background, no humans.`
-3. **Ngự Mã Lệnh:** `A high-end isolated item illustration of a silver military horse command medallion, carved with a galloping stallion surrounded by thunderclouds, polished silver with oxidized engravings, hanging from a blue silk lanyard. Isolated on dark background, strategic token asset, no humans.`
-4. **Rương Gỗ Niêm Phong:** `A high-end isolated item illustration of a small heavy royal treasure chest made of dark red mahogany wood, reinforced with ornate brass straps and corner plates, locked with an antique brass latch. Isolated on dark background, classic RPG loot chest, no humans.`
-5. **Chìa Khóa Vàng:** `A high-end isolated item illustration of a heavy ornamental antique skeleton key forged from pure gold, bow shaped into a majestic coiled dragon, shaft engraved with cloud patterns. Gleaming metallic highlights, isolated on dark charcoal background, no humans, 8k resolution.`
-6. **Mật Chỉ Hoàng Đế:** `A high-end isolated item illustration of a secret imperial decree scroll, crafted from rich yellow dragon-brocade silk, partially unrolled showing classical calligraphy, bound with a gold-threaded red ribbon and stamped with an imperial scarlet wax seal. Isolated on dark background, no humans.`
-7. **Trà Thảo Dược:** `A high-end isolated item illustration of an exquisite celadon ceramic tea jar painted with blue lotus motifs, wooden cork stopper tied with hemp string, steaming gently with aromatic herbal vapor. Warm healing aura, isolated on dark background, consumable potion asset, no humans.`
-8. **Túi Gấm Cẩm Nang:** `A high-end isolated item illustration of a small traditional embroidered silk brocade pouch (lucky pouch), vibrant purple and gold floral embroidery, cinched tightly with golden braided cords and two jade beads. Isolated on dark background, mystery item bag, no humans.`
-9. **Đèn Lồng Lụa:** `A high-end isolated item illustration of a miniature portable ancient Asian hexagonal palace lantern, delicate wooden frame with carved latticework and translucent yellow silk panels, glowing brightly from inside with warm candle flame. Isolated on dark background, cozy exploratory prop, no humans.`
-10. **La Bàn Đồng:** `A high-end isolated item illustration of an antique bronze Feng Shui geomancy compass (Luo Pan), circular plate inscribed with intricate concentric rings of Chinese trigrams and heavenly stems, center magnetic needle floating in oil. Isolated on dark background, mystical navigation tool, no humans.`
-11. **Bình Rượu Ngọc Tuyền:** `A high-end isolated item illustration of an ancient Asian wine jug made of polished light green jade with gold-inlaid plum blossom branches, wrapped around the neck with red silk ribbon and wax seal. Isolated on dark charcoal background, consumable stamina item, no humans.`
-12. **Hộp Thuốc Ngự Y:** `A high-end isolated item illustration of a traditional portable imperial apothecary doctor's box, red lacquered wood with brass drawer handles, one small drawer slightly open revealing silver acupuncture needles and herbal pills. Isolated on dark background, medical kit asset, no humans.`
+#### 11. Kẻ Bắt Chước (`copycat`)
+```text
+A minimalist flat 2D vector stencil icon of two overlapping theatrical comedy and tragedy drama masks silhouette, solid golden yellow (#F5B041) silhouette glyph on a pure black background. Dupery and board game token style, clean sharp edges, bold shapes, zero gradients, no human figures, centered, 2D vector icon.
+```
+
+#### 12. Kẻ Say Rượu (`drunkard`)
+```text
+A minimalist flat 2D vector stencil icon of a tilted oriental gourd wine flask (calabash bottle) spilling liquid droplets, solid golden yellow (#F5B041) silhouette glyph on a pure black background. Dupery and board game token style, clean sharp edges, bold shapes, zero gradients, no human figures, centered, 2D vector icon.
+```
+
+#### 13. Bác Sĩ Phẫu Thuật (`surgeon`)
+```text
+A minimalist flat 2D vector stencil icon of a sharp medical surgical scalpel blade pointing downwards, solid golden yellow (#F5B041) silhouette glyph on a pure black background. Dupery and board game token style, clean sharp edges, bold geometric lines, zero gradients, no human figures, centered, 2D vector icon.
+```
 
 ---
 
-## 🚀 Hướng Dẫn Nhanh Khi Tạo Ảnh
-1. Mở **Gemini Web**.
-2. Copy nguyên khối prompt tiếng Anh bên trên vào chat.
-3. Khi ảnh sinh xong, tải về và lưu theo tên gợi ý (ví dụ: `prop_poisoner.png`, `prop_traitor.png`, `relic_jade_seal.png`).
-4. Gửi ảnh vào thư mục dự án hoặc gửi qua chat để Antigravity lắp ráp thẳng vào giao diện!
+### 🔴 Nhóm 3: Thuộc Hạ (Underling) — Màu Đỏ San Hô
+
+#### 14. Kẻ Lừa Đảo (`conman`)
+```text
+A minimalist flat 2D vector stencil icon of a fanned set of three playing cards with an eye emblem on the center card, solid coral red (#E74C3C) silhouette glyph on a pure black background. Dupery and board game token style, clean sharp edges, bold graphic shapes, zero gradients, no human figures, centered, 2D vector icon.
+```
+
+#### 15. Độc Sư (`poisoner`)
+```text
+A minimalist flat 2D vector stencil icon of a poison potion flask bottle with a skull silhouette insignia and falling drop, solid coral red (#E74C3C) silhouette glyph on a pure black background. Dupery and board game token style, clean sharp edges, bold shapes, zero gradients, no human figures, centered, 2D vector icon.
+```
+
+#### 16. Chủ Quán Rượu (`barkeep`)
+```text
+A minimalist flat 2D vector stencil icon of a wooden tavern beer mug stein with thick overflowing foam head, solid coral red (#E74C3C) silhouette glyph on a pure black background. Dupery and board game token style, clean sharp edges, bold shapes, zero gradients, no human figures, centered, 2D vector icon.
+```
+
+#### 17. Sát Nhân Hàng Loạt (`serial_killer`)
+```text
+A minimalist flat 2D vector stencil icon of a menacing curved assassin dagger silhouette crossing three sharp slash marks, solid coral red (#E74C3C) silhouette glyph on a pure black background. Dupery and board game token style, clean sharp edges, bold graphic lines, zero gradients, no human figures, centered, 2D vector icon.
+```
+
+#### 18. Vong Linh (`spectre`)
+```text
+A minimalist flat 2D vector stencil icon of a floating spooky ghostly phantom silhouette with glowing hollow eye holes, solid coral red (#E74C3C) silhouette glyph on a pure black background. Dupery and board game token style, clean sharp edges, bold shapes, zero gradients, no human figures, centered, 2D vector icon.
+```
+
+#### 19. Kẻ Bất Lương (`tutorial_scoundrel`)
+```text
+A minimalist flat 2D vector stencil icon of a fortified padlock surrounded by sharp barbed iron spikes, solid coral red (#E74C3C) silhouette glyph on a pure black background. Dupery and board game token style, clean sharp edges, bold geometric shapes, zero gradients, no human figures, centered, 2D vector icon.
+```
+
+#### 20. Kẻ Côn Đồ (`tutorial_mobster`)
+```text
+A minimalist flat 2D vector stencil icon of a clenched spiked brass knuckle silhouette, solid coral red (#E74C3C) silhouette glyph on a pure black background. Dupery and board game token style, clean sharp edges, bold heavy geometric shapes, zero gradients, no human figures, centered, 2D vector icon.
+```
+
+---
+
+### 🟣 Nhóm 4: Nghịch Thần (Traitor) — Màu Tím Violet
+
+#### 21. Nhà Phê Bình (`critic`)
+```text
+A minimalist flat 2D vector stencil icon of a large bold X cross mark intersecting an imperial calligraphy brush, solid violet purple (#A569BD) silhouette glyph on a pure black background. Dupery and board game token style, clean sharp edges, bold graphical cross, zero gradients, no human figures, centered, 2D vector icon.
+```
+
+---
+
+## 💡 Hướng Dẫn Sử Dụng
+1. Copy từng prompt ở trên vào ô nhập lệnh của **Gemini Web / Imagen 3**.
+2. Kết quả trả về sẽ là hình bóng vector đơn sắc 2D trên nền đen, cực kỳ sạch sẽ và dễ nhìn.
+3. Khi đưa vào Godot, hệ thống có thể dùng shader cắt nền đen hoặc để làm texture icon trên thẻ bài / sổ vai trò.
