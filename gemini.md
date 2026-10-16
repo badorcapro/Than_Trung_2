@@ -43,6 +43,10 @@ Tài liệu này lưu trữ toàn bộ kiến thức tổng quan, kiến trúc, 
      - Đồ công nghệ cao, thiết bị điện tử, dữ liệu tình báo, y tế, dụng cụ cơ khí chính xác (dù chỉ chiếm 1x1, 1x2) hoàn toàn có thể sở hữu mức giá cao nhất trong bậc.
      - Đồ thô sơ, vật liệu xây dựng cồng kềnh, thức ăn tiêu hao (dù chiếm 2x2, 2x3) có thể có mức giá thấp hoặc trung bình trong bậc.
      - Đảm bảo tính đa dạng, tự nhiên và phá vỡ công thức tính giá theo diện tích hình học.
+6. 🖼️ **Quy Chuẩn Thiết Kế Asset Khung UI & NinePatch (Clean Scalable UI Frame Rule):**
+   * **Tối giản hóa họa tiết:** Tuyệt đối tránh nhồi nhét quá nhiều chi tiết phức tạp, hoa văn dày đặc hoặc các hình khối phức tạp (rồng, mây khổng lồ, họa tiết uốn lượn) vào các asset NinePatch/StyleBoxTexture. 
+   * **Đảm bảo khả năng co giãn (Scalability):** Khung giao diện phải sử dụng các đường viền thanh mảnh, góc bo gọn gàng, chia tỉ lệ 9-slice rõ ràng (top/bottom/left/right margins) để khi co giãn từ popup nhỏ (400x250) đến cửa sổ lớn (1200x800) đều giữ nguyên tỷ lệ, không bị kéo dãn bẹp dí hay vỡ nét.
+   * **Tách rời thành phần tương tác (Decoupled Interactive Controls):** Không vẽ/nhúng cứng các nút bấm tương tác (như nút Đóng X, nút Minimize, nút Tab) trực tiếp vào texture nền của cửa sổ. Mọi nút bấm tương tác phải là Node/Texture riêng biệt với hitbox và hiệu ứng hover/focus chuẩn xác 100%.
 
 ---
 
