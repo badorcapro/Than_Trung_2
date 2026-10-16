@@ -1237,7 +1237,6 @@ func _on_grid_draw() -> void:
 		_grid_draw_control.draw_line(Vector2(0, y * CELL_SIZE), Vector2(GRID_COLS * CELL_SIZE, y * CELL_SIZE), line_color, 1.0)
 
 	# 2. Draw placed items
-	var is_finished: bool = (auction_session != null and auction_session.state == AUCTION_SESSION_CLASS.State.COMPLETED)
 	for i_id in _grid_placements:
 		var entry: Dictionary = _grid_placements[i_id]
 		var item: ITEM_CLASS = entry.get("item") as ITEM_CLASS
@@ -1248,7 +1247,7 @@ func _on_grid_draw() -> void:
 		var rect := Rect2(pos.x * CELL_SIZE, pos.y * CELL_SIZE, w * CELL_SIZE, h * CELL_SIZE)
 		var r_color: Color = ITEM_CLASS.rarity_color(item.rarity)
 
-		var is_full_reveal: bool = is_finished or _revealed_items.has(i_id)
+		var is_full_reveal: bool = _revealed_items.has(i_id)
 		var is_quality_reveal: bool = _revealed_qualities.has(i_id)
 		var is_outline_reveal: bool = _revealed_outlines.has(i_id)
 
@@ -1373,8 +1372,7 @@ func _on_grid_gui_input(event: InputEvent) -> void:
 			var w: int = int(entry.get("w", 1))
 			var h: int = int(entry.get("h", 1))
 			if cell_x >= p.x and cell_x < p.x + w and cell_y >= p.y and cell_y < p.y + h:
-				var is_finished: bool = (auction_session != null and auction_session.state == AUCTION_SESSION_CLASS.State.COMPLETED)
-				if is_finished or _revealed_items.has(String(i_id)):
+				if _revealed_items.has(String(i_id)):
 					hovered_item = entry.get("item") as ITEM_CLASS
 				break
 
@@ -1397,11 +1395,11 @@ func _calculate_minimum_estimated_value() -> int:
 		elif _revealed_qualities.has(i_id):
 			match item.rarity:
 				ITEM_CLASS.Rarity.WHITE: total += 1
-				ITEM_CLASS.Rarity.GREEN: total += 15
-				ITEM_CLASS.Rarity.BLUE: total += 20
-				ITEM_CLASS.Rarity.PURPLE: total += 30
-				ITEM_CLASS.Rarity.GOLD: total += 65
-				ITEM_CLASS.Rarity.RED: total += 188
+				ITEM_CLASS.Rarity.GREEN: total += 3
+				ITEM_CLASS.Rarity.BLUE: total += 8
+				ITEM_CLASS.Rarity.PURPLE: total += 11
+				ITEM_CLASS.Rarity.GOLD: total += 37
+				ITEM_CLASS.Rarity.RED: total += 85
 	return total
 
 
@@ -1457,7 +1455,7 @@ func _adjust_bid(delta: int) -> void:
 	var curr_val: int = _current_bid_value
 	if _bid_input != null and not _bid_input.text.is_empty():
 		curr_val = _bid_input.text.to_int()
-	curr_val = maxi(1, curr_val + delta)
+	curr_val = maxi(0, curr_val + delta)
 	_current_bid_value = curr_val
 	if _bid_input != null:
 		_bid_input.text = str(_current_bid_value)
@@ -1475,8 +1473,8 @@ func _on_confirm_bid_pressed() -> void:
 		return
 
 	var bid_val: int = _bid_input.text.to_int() if _bid_input != null and not _bid_input.text.is_empty() else _current_bid_value
-	if bid_val <= 0:
-		_show_bid_feedback("⚠️ Số tiền ra giá phải lớn hơn 0 Xu!")
+	if bid_val < 0:
+		_show_bid_feedback("⚠️ Số tiền ra giá không được nhỏ hơn 0 Xu!")
 		return
 
 	var bal: int = int(player_silver_balances.get(curr_pid, 999999))

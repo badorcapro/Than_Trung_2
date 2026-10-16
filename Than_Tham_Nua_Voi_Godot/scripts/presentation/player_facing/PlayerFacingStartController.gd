@@ -3615,8 +3615,11 @@ func _init_cheat_layer() -> void:
 	_add_cheat_btn(grid, "🔄 Reset 0★ (Vết Thánh A)", func() -> void:
 		_cheat_set_stigmata_stars(&"stigmata_a", 0, 0)
 	)
-	_add_cheat_btn(grid, "🎲 Đổi Pattern Đấu Giá", func() -> void:
-		_cheat_reroll_auction_pattern()
+	_add_cheat_btn(grid, "🎲 Đấu Giá: 1 Người (Solo)", func() -> void:
+		_cheat_start_auction_simulation(false)
+	)
+	_add_cheat_btn(grid, "👥 Đấu Giá: Toàn Bộ Người Chơi", func() -> void:
+		_cheat_start_auction_simulation(true)
 	)
 	_add_cheat_btn(grid, "🔍 Bách Khoa Toàn Thư Đấu Giá", func() -> void:
 		_cheat_open_auction_encyclopedia()
@@ -3912,25 +3915,46 @@ func _cheat_set_stigmata_stars(slot_id: StringName, gold: int, purple: int) -> v
 	_notify_cheat("Không tìm thấy Vết Thánh!", true)
 
 
-func _cheat_reroll_auction_pattern() -> void:
-	var player := _get_cheat_target_player()
-	var pid: StringName = player.player_id if player != null else &"player_1"
-	if _vault_reach_player_ids.is_empty():
-		_vault_reach_player_ids = [pid]
-	_mystery_chest = MYSTERY_CHEST_STATE.new()
-	_mystery_chest.roll_vault_deposit(randi_range(6, 12))
+func _cheat_start_auction_simulation(all_players: bool) -> void:
+	var participant_ids: Array[StringName] = []
 	var player_silvers: Dictionary = {}
-	if case_flow != null and case_flow.match_state != null:
-		for pl: PlayerMatchState in case_flow.match_state.players:
-			player_silvers[pl.player_id] = pl.silver_coin_count
-	if player_silvers.is_empty() and player != null:
-		player_silvers[player.player_id] = player.silver_coin_count
+
+	if all_players:
+		if case_flow != null and case_flow.match_state != null and not case_flow.match_state.players.is_empty():
+			for pl: PlayerMatchState in case_flow.match_state.players:
+				participant_ids.append(pl.player_id)
+				var rand_bal: int = randi_range(60, 250)
+				pl.silver_coin_count = rand_bal
+				player_silvers[pl.player_id] = rand_bal
+		else:
+			for i in range(1, 5):
+				var pid := StringName("player_%d" % i)
+				participant_ids.append(pid)
+				player_silvers[pid] = randi_range(60, 250)
+	else:
+		var target := _get_cheat_target_player()
+		var pid: StringName = target.player_id if target != null else &"player_1"
+		participant_ids.append(pid)
+		var rand_bal: int = randi_range(60, 250)
+		if target != null:
+			target.silver_coin_count = rand_bal
+		player_silvers[pid] = rand_bal
+
+	_vault_reach_player_ids = participant_ids.duplicate()
+	_mystery_chest = MYSTERY_CHEST_STATE.new()
+	_mystery_chest.roll_vault_deposit(randi_range(8, 20))
 	_auction_session = AUCTION_SESSION.new()
-	_auction_session.initialize(_vault_reach_player_ids, _mystery_chest)
+	_auction_session.initialize(participant_ids, _mystery_chest)
+
 	if _auction_screen != null:
 		_auction_screen.setup(_auction_session, player_silvers)
 		_auction_screen.visible = true
-	_notify_cheat("Đã đổi pattern hòm bí ẩn & mở lại phiên Đấu Giá!")
+
+	if _cheat_overlay != null:
+		_cheat_overlay.visible = false
+
+	var mode_name := "Toàn Bộ Người Chơi (%d người)" % participant_ids.size() if all_players else "1 Người (Solo)"
+	_notify_cheat("Đã khởi chạy Giả Lập Đấu Giá: %s (Hòm & giá ngẫu nhiên)!" % mode_name)
 
 
 func _cheat_open_auction_encyclopedia() -> void:

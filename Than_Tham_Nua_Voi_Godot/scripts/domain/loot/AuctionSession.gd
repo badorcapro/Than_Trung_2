@@ -120,11 +120,11 @@ func place_bid(player_id: StringName, bid_amount: int) -> bool:
 		return false
 	if not active_bidder_ids.has(player_id):
 		return false
-	if bid_amount <= 0:
+	if bid_amount < 0:
 		return false
 
 	round_bids[player_id] = bid_amount
-	if bid_amount > highest_bid or highest_bid == 0:
+	if highest_bidder_id == &"" or bid_amount > highest_bid:
 		highest_bid = bid_amount
 		highest_bidder_id = player_id
 	return true
