@@ -491,8 +491,8 @@ func _update_public_log() -> void:
 	}
 	if case_definition != null:
 		for suspect in case_definition.suspects:
-		if suspect != null and counts.has(suspect.role_group):
-			counts[suspect.role_group] = int(counts.get(suspect.role_group, 0)) + 1
+			if suspect != null and counts.has(suspect.role_group):
+				counts[suspect.role_group] = int(counts.get(suspect.role_group, 0)) + 1
 	if ratio_innocent_label != null:
 		ratio_innocent_label.text = "Innocent: %d" % counts[CaseEnums.RoleGroup.CHINH_NHAN]
 	if ratio_meddler_label != null:
