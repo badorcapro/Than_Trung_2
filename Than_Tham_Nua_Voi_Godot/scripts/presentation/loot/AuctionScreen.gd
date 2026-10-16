@@ -49,6 +49,16 @@ var _solo_box: HBoxContainer
 var _solo_buy_btn: Button
 var _solo_pass_btn: Button
 
+# Numpad Modal Nodes (BidKing Style Keypad)
+var _stage_bg_texture: TextureRect
+var _numpad_modal: Control
+var _numpad_input_display: Label
+var _numpad_warning_lbl: Label
+var _numpad_multiplier_btn: Button
+var _numpad_current_str: String = "0"
+var _numpad_secret: bool = false
+var _open_numpad_btn: Button
+
 # Turn State for Multi-player Bidding
 var _current_turn_bidder_index: int = 0
 var _round_completed: bool = false
@@ -95,10 +105,20 @@ func setup(session: AuctionSession, player_silvers: Dictionary = {}) -> void:
 
 
 func _build_ui() -> void:
-	# 1. Dark frosted sci-fi/imperial backdrop
+	# 1. Neo-Imperial Cyber Stage Background
+	var bg_tex := load("res://assets/ui/auction/auction_stage_bg.png") as Texture2D
+	if bg_tex != null:
+		_stage_bg_texture = TextureRect.new()
+		_stage_bg_texture.set_anchors_preset(PRESET_FULL_RECT)
+		_stage_bg_texture.texture = bg_tex
+		_stage_bg_texture.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		_stage_bg_texture.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+		add_child(_stage_bg_texture)
+
+	# 2. Subtle dark contrast overlay so UI frames are crisp and readable
 	_bg_rect = ColorRect.new()
 	_bg_rect.set_anchors_preset(PRESET_FULL_RECT)
-	_bg_rect.color = Color(0.05, 0.08, 0.12, 0.96)
+	_bg_rect.color = Color(0.01, 0.02, 0.04, 0.40)
 	add_child(_bg_rect)
 
 	var main_vbox := VBoxContainer.new()
@@ -145,18 +165,28 @@ func _build_ui() -> void:
 
 	var b_panel := PanelContainer.new()
 	b_panel.size_flags_vertical = SIZE_EXPAND_FILL
-	var bp_style := StyleBoxFlat.new()
-	bp_style.bg_color = Color(0.08, 0.12, 0.16, 0.85)
-	bp_style.border_color = Color(0.25, 0.38, 0.5, 0.6)
-	bp_style.border_width_left = 1
-	bp_style.border_width_top = 1
-	bp_style.border_width_right = 1
-	bp_style.border_width_bottom = 1
-	bp_style.corner_radius_top_left = 6
-	bp_style.corner_radius_top_right = 6
-	bp_style.corner_radius_bottom_left = 6
-	bp_style.corner_radius_bottom_right = 6
-	b_panel.add_theme_stylebox_override("panel", bp_style)
+	var hud_frame_tex := load("res://assets/ui/auction/hud_panel_frame.png") as Texture2D
+	if hud_frame_tex != null:
+		var bp_style := StyleBoxTexture.new()
+		bp_style.texture = hud_frame_tex
+		bp_style.texture_margin_left = 48
+		bp_style.texture_margin_top = 48
+		bp_style.texture_margin_right = 48
+		bp_style.texture_margin_bottom = 48
+		b_panel.add_theme_stylebox_override("panel", bp_style)
+	else:
+		var bp_style := StyleBoxFlat.new()
+		bp_style.bg_color = Color(0.08, 0.12, 0.16, 0.85)
+		bp_style.border_color = Color(0.25, 0.38, 0.5, 0.6)
+		bp_style.border_width_left = 1
+		bp_style.border_width_top = 1
+		bp_style.border_width_right = 1
+		bp_style.border_width_bottom = 1
+		bp_style.corner_radius_top_left = 6
+		bp_style.corner_radius_top_right = 6
+		bp_style.corner_radius_bottom_left = 6
+		bp_style.corner_radius_bottom_right = 6
+		b_panel.add_theme_stylebox_override("panel", bp_style)
 	_left_column.add_child(b_panel)
 
 	var b_scroll := ScrollContainer.new()
@@ -238,18 +268,27 @@ func _build_ui() -> void:
 	crate_panel.custom_minimum_size = Vector2(GRID_COLS * CELL_SIZE + 20, GRID_ROWS * CELL_SIZE + 20)
 	crate_panel.size_flags_horizontal = SIZE_EXPAND_FILL
 	crate_panel.size_flags_vertical = SIZE_EXPAND_FILL
-	var c_style := StyleBoxFlat.new()
-	c_style.bg_color = Color(0.04, 0.07, 0.1, 0.95)
-	c_style.border_color = Color(0.25, 0.45, 0.65, 0.8)
-	c_style.border_width_left = 2
-	c_style.border_width_top = 2
-	c_style.border_width_right = 2
-	c_style.border_width_bottom = 2
-	c_style.corner_radius_top_left = 8
-	c_style.corner_radius_top_right = 8
-	c_style.corner_radius_bottom_left = 8
-	c_style.corner_radius_bottom_right = 8
-	crate_panel.add_theme_stylebox_override("panel", c_style)
+	if hud_frame_tex != null:
+		var c_style := StyleBoxTexture.new()
+		c_style.texture = hud_frame_tex
+		c_style.texture_margin_left = 48
+		c_style.texture_margin_top = 48
+		c_style.texture_margin_right = 48
+		c_style.texture_margin_bottom = 48
+		crate_panel.add_theme_stylebox_override("panel", c_style)
+	else:
+		var c_style := StyleBoxFlat.new()
+		c_style.bg_color = Color(0.04, 0.07, 0.1, 0.95)
+		c_style.border_color = Color(0.25, 0.45, 0.65, 0.8)
+		c_style.border_width_left = 2
+		c_style.border_width_top = 2
+		c_style.border_width_right = 2
+		c_style.border_width_bottom = 2
+		c_style.corner_radius_top_left = 8
+		c_style.corner_radius_top_right = 8
+		c_style.corner_radius_bottom_left = 8
+		c_style.corner_radius_bottom_right = 8
+		crate_panel.add_theme_stylebox_override("panel", c_style)
 	_right_column.add_child(crate_panel)
 
 	var center_grid := CenterContainer.new()
@@ -383,6 +422,25 @@ func _build_ui() -> void:
 	plus_500_btn.pressed.connect(func() -> void: _adjust_bid(500))
 	_bid_box.add_child(plus_500_btn)
 
+	_open_numpad_btn = Button.new()
+	_open_numpad_btn.text = "⚡ Đặt Giá (Bàn Phím)"
+	_open_numpad_btn.custom_minimum_size = Vector2(170, 36)
+	_open_numpad_btn.focus_mode = FOCUS_NONE
+	var on_style := StyleBoxFlat.new()
+	on_style.bg_color = Color("#f6c95c")
+	on_style.corner_radius_top_left = 6
+	on_style.corner_radius_top_right = 6
+	on_style.corner_radius_bottom_left = 6
+	on_style.corner_radius_bottom_right = 6
+	_open_numpad_btn.add_theme_stylebox_override("normal", on_style)
+	var on_hover := on_style.duplicate() as StyleBoxFlat
+	on_hover.bg_color = Color("#ffe082")
+	_open_numpad_btn.add_theme_stylebox_override("hover", on_hover)
+	_open_numpad_btn.add_theme_color_override("font_color", Color.BLACK)
+	_open_numpad_btn.add_theme_font_size_override("font_size", 14)
+	_open_numpad_btn.pressed.connect(_open_numpad_modal)
+	_bid_box.add_child(_open_numpad_btn)
+
 	_confirm_bid_btn = Button.new()
 	_confirm_bid_btn.text = "✅ Xác Nhận Ra Giá"
 	_confirm_bid_btn.custom_minimum_size = Vector2(150, 36)
@@ -433,6 +491,7 @@ func _build_ui() -> void:
 	btm_hbox.add_child(_next_round_btn)
 
 	_build_settlement_dialog()
+	_build_numpad_modal()
 
 	encyclopedia_dialog = ENCYCLOPEDIA_DIALOG_CLASS.new()
 	encyclopedia_dialog.visible = false
@@ -874,6 +933,7 @@ func refresh_ui() -> void:
 				_turn_info_label.text = "✅ Hoàn tất ra giá Vòng %d%s" % [auction_session.current_round, lead_text]
 				_turn_info_label.add_theme_color_override("font_color", Color("#50fa7b"))
 			if _confirm_bid_btn != null: _confirm_bid_btn.disabled = true
+			if _open_numpad_btn != null: _open_numpad_btn.disabled = true
 			if _pass_btn != null: _pass_btn.disabled = true
 			if _fold_btn != null: _fold_btn.disabled = true
 			if _bid_input != null: _bid_input.editable = false
@@ -889,6 +949,7 @@ func refresh_ui() -> void:
 					]
 		else:
 			if _confirm_bid_btn != null: _confirm_bid_btn.disabled = false
+			if _open_numpad_btn != null: _open_numpad_btn.disabled = false
 			if _pass_btn != null: _pass_btn.disabled = false
 			if _fold_btn != null: _fold_btn.disabled = false
 			if _bid_input != null: _bid_input.editable = true
@@ -1707,6 +1768,11 @@ func _unhandled_input(event: InputEvent) -> void:
 	if not visible:
 		return
 	if event is InputEventKey and event.pressed and not event.echo:
+		if event.keycode == KEY_ESCAPE:
+			if _numpad_modal != null and _numpad_modal.visible:
+				_close_numpad_modal()
+				get_viewport().set_input_as_handled()
+				return
 		if event.keycode == KEY_B:
 			if encyclopedia_dialog != null:
 				if encyclopedia_dialog.visible:
@@ -1734,3 +1800,340 @@ func _format_number(val: int) -> String:
 		if cnt % 3 == 0 and i > 0:
 			res = "," + res
 	return res
+
+
+# ==============================================================================
+# BIDKING-STYLE NUMPAD MODAL (Ảnh 2)
+# ==============================================================================
+
+func _build_numpad_modal() -> void:
+	_numpad_modal = Control.new()
+	_numpad_modal.set_anchors_preset(PRESET_FULL_RECT)
+	_numpad_modal.visible = false
+	_numpad_modal.mouse_filter = MOUSE_FILTER_STOP
+	add_child(_numpad_modal)
+
+	# Semi-transparent dark overlay background
+	var backdrop := ColorRect.new()
+	backdrop.set_anchors_preset(PRESET_FULL_RECT)
+	backdrop.color = Color(0.01, 0.02, 0.04, 0.70)
+	backdrop.gui_input.connect(func(event: InputEvent) -> void:
+		if event is InputEventMouseButton and event.pressed:
+			_close_numpad_modal()
+	)
+	_numpad_modal.add_child(backdrop)
+
+	# Modal Dialog Center Container
+	var center_wrap := CenterContainer.new()
+	center_wrap.set_anchors_preset(PRESET_FULL_RECT)
+	center_wrap.mouse_filter = MOUSE_FILTER_PASS
+	_numpad_modal.add_child(center_wrap)
+
+	var dialog_box := PanelContainer.new()
+	dialog_box.custom_minimum_size = Vector2(820, 420)
+	var modal_tex := load("res://assets/ui/auction/numpad_modal_frame.png") as Texture2D
+	if modal_tex != null:
+		var m_style := StyleBoxTexture.new()
+		m_style.texture = modal_tex
+		m_style.texture_margin_left = 64
+		m_style.texture_margin_top = 64
+		m_style.texture_margin_right = 64
+		m_style.texture_margin_bottom = 64
+		dialog_box.add_theme_stylebox_override("panel", m_style)
+	else:
+		var m_flat := StyleBoxFlat.new()
+		m_flat.bg_color = Color(0.08, 0.12, 0.16, 0.96)
+		m_flat.border_color = Color("#f6c95c")
+		m_flat.border_width_left = 2
+		m_flat.border_width_top = 2
+		m_flat.border_width_right = 2
+		m_flat.border_width_bottom = 2
+		m_flat.corner_radius_top_left = 12
+		m_flat.corner_radius_top_right = 12
+		m_flat.corner_radius_bottom_left = 12
+		m_flat.corner_radius_bottom_right = 12
+		dialog_box.add_theme_stylebox_override("panel", m_flat)
+	center_wrap.add_child(dialog_box)
+
+	var dialog_margin := MarginContainer.new()
+	dialog_margin.add_theme_constant_override("margin_left", 36)
+	dialog_margin.add_theme_constant_override("margin_top", 32)
+	dialog_margin.add_theme_constant_override("margin_right", 36)
+	dialog_margin.add_theme_constant_override("margin_bottom", 32)
+	dialog_box.add_child(dialog_margin)
+
+	var dialog_hbox := HBoxContainer.new()
+	dialog_hbox.add_theme_constant_override("separation", 24)
+	dialog_margin.add_child(dialog_hbox)
+
+	# --- LEFT SIDE: 4x4 KEYPAD GRID ---
+	var keypad_grid := GridContainer.new()
+	keypad_grid.columns = 4
+	keypad_grid.custom_minimum_size = Vector2(380, 320)
+	keypad_grid.add_theme_constant_override("h_separation", 8)
+	keypad_grid.add_theme_constant_override("v_separation", 8)
+	dialog_hbox.add_child(keypad_grid)
+
+	# Row 1: 1, 2, 3, Backspace
+	_add_numpad_key(keypad_grid, "1", "1")
+	_add_numpad_key(keypad_grid, "2", "2")
+	_add_numpad_key(keypad_grid, "3", "3")
+	_add_numpad_key(keypad_grid, "⌫", "backspace", Color("#ff79c6"))
+
+	# Row 2: 4, 5, 6, x{ratio}
+	_add_numpad_key(keypad_grid, "4", "4")
+	_add_numpad_key(keypad_grid, "5", "5")
+	_add_numpad_key(keypad_grid, "6", "6")
+	_numpad_multiplier_btn = _add_numpad_key(keypad_grid, "x2.0", "multiplier", Color("#f1fa8c"))
+
+	# Row 3: 7, 8, 9, Giá vòng trước
+	_add_numpad_key(keypad_grid, "7", "7")
+	_add_numpad_key(keypad_grid, "8", "8")
+	_add_numpad_key(keypad_grid, "9", "9")
+	_add_numpad_key(keypad_grid, "Giá Trước", "prev_bid", Color("#8be9fd"), 12)
+
+	# Row 4: 0, 00, 000, Đặt về 0
+	_add_numpad_key(keypad_grid, "0", "0")
+	_add_numpad_key(keypad_grid, "00", "00")
+	_add_numpad_key(keypad_grid, "000", "000")
+	_add_numpad_key(keypad_grid, "Đặt Về 0", "reset_zero", Color("#ff5555"), 12)
+
+	# --- RIGHT SIDE: CONSOLE & ACTIONS ---
+	var right_console := VBoxContainer.new()
+	right_console.size_flags_horizontal = SIZE_EXPAND_FILL
+	right_console.add_theme_constant_override("separation", 14)
+	dialog_hbox.add_child(right_console)
+
+	# Warning notice box
+	var warn_panel := PanelContainer.new()
+	var wp_style := StyleBoxFlat.new()
+	wp_style.bg_color = Color(0.14, 0.18, 0.24, 0.85)
+	wp_style.border_color = Color("#f1fa8c")
+	wp_style.border_width_left = 1
+	wp_style.border_width_top = 1
+	wp_style.border_width_right = 1
+	wp_style.border_width_bottom = 1
+	wp_style.corner_radius_top_left = 6
+	wp_style.corner_radius_top_right = 6
+	wp_style.corner_radius_bottom_left = 6
+	wp_style.corner_radius_bottom_right = 6
+	warn_panel.add_theme_stylebox_override("panel", wp_style)
+	right_console.add_child(warn_panel)
+
+	var warn_margin := MarginContainer.new()
+	warn_margin.add_theme_constant_override("margin_left", 12)
+	warn_margin.add_theme_constant_override("margin_top", 10)
+	warn_margin.add_theme_constant_override("margin_right", 12)
+	warn_margin.add_theme_constant_override("margin_bottom", 10)
+	warn_panel.add_child(warn_margin)
+
+	_numpad_warning_lbl = Label.new()
+	_numpad_warning_lbl.text = "⚠️ Chú ý: Nếu giá cao hơn 2.0 lần so với người thứ hai thì sẽ giao dịch ngay!"
+	_numpad_warning_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_numpad_warning_lbl.add_theme_font_size_override("font_size", 13)
+	_numpad_warning_lbl.add_theme_color_override("font_color", Color("#f1fa8c"))
+	warn_margin.add_child(_numpad_warning_lbl)
+
+	# LCD Display panel
+	var lcd_panel := PanelContainer.new()
+	var lcd_style := StyleBoxFlat.new()
+	lcd_style.bg_color = Color(0.04, 0.06, 0.09, 0.95)
+	lcd_style.border_color = Color("#50fa7b")
+	lcd_style.border_width_left = 2
+	lcd_style.border_width_top = 2
+	lcd_style.border_width_right = 2
+	lcd_style.border_width_bottom = 2
+	lcd_style.corner_radius_top_left = 8
+	lcd_style.corner_radius_top_right = 8
+	lcd_style.corner_radius_bottom_left = 8
+	lcd_style.corner_radius_bottom_right = 8
+	lcd_panel.add_theme_stylebox_override("panel", lcd_style)
+	right_console.add_child(lcd_panel)
+
+	var lcd_margin := MarginContainer.new()
+	lcd_margin.add_theme_constant_override("margin_left", 14)
+	lcd_margin.add_theme_constant_override("margin_top", 14)
+	lcd_margin.add_theme_constant_override("margin_right", 14)
+	lcd_margin.add_theme_constant_override("margin_bottom", 14)
+	lcd_panel.add_child(lcd_margin)
+
+	var lcd_vbox := VBoxContainer.new()
+	lcd_vbox.add_theme_constant_override("separation", 4)
+	lcd_margin.add_child(lcd_vbox)
+
+	var prompt_lbl := Label.new()
+	prompt_lbl.text = "Số tiền đấu giá (Xu Bạc):"
+	prompt_lbl.add_theme_font_size_override("font_size", 12)
+	prompt_lbl.add_theme_color_override("font_color", Color("#8be9fd"))
+	lcd_vbox.add_child(prompt_lbl)
+
+	_numpad_input_display = Label.new()
+	_numpad_input_display.text = "0 Xu"
+	_numpad_input_display.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	_numpad_input_display.add_theme_font_size_override("font_size", 28)
+	_numpad_input_display.add_theme_color_override("font_color", Color("#f6c95c"))
+	lcd_vbox.add_child(_numpad_input_display)
+
+	var spacer_rc := Control.new()
+	spacer_rc.size_flags_vertical = SIZE_EXPAND_FILL
+	right_console.add_child(spacer_rc)
+
+	# Bottom Action Buttons in Numpad
+	var action_row := HBoxContainer.new()
+	action_row.add_theme_constant_override("separation", 10)
+	right_console.add_child(action_row)
+
+	var eye_btn := Button.new()
+	eye_btn.text = "👁️"
+	eye_btn.tooltip_text = "Ẩn / Hiện số tiền trên màn hình"
+	eye_btn.custom_minimum_size = Vector2(44, 44)
+	eye_btn.focus_mode = FOCUS_NONE
+	eye_btn.pressed.connect(func() -> void:
+		_numpad_secret = not _numpad_secret
+		_refresh_numpad_display()
+	)
+	action_row.add_child(eye_btn)
+
+	var confirm_btn := Button.new()
+	confirm_btn.text = "⚡ XÁC NHẬN RA GIÁ"
+	confirm_btn.size_flags_horizontal = SIZE_EXPAND_FILL
+	confirm_btn.custom_minimum_size = Vector2(0, 44)
+	confirm_btn.focus_mode = FOCUS_NONE
+	var cf_style := StyleBoxFlat.new()
+	cf_style.bg_color = Color("#f6c95c")
+	cf_style.corner_radius_top_left = 6
+	cf_style.corner_radius_top_right = 6
+	cf_style.corner_radius_bottom_left = 6
+	cf_style.corner_radius_bottom_right = 6
+	confirm_btn.add_theme_stylebox_override("normal", cf_style)
+	confirm_btn.add_theme_color_override("font_color", Color.BLACK)
+	confirm_btn.add_theme_font_size_override("font_size", 15)
+	confirm_btn.pressed.connect(func() -> void:
+		_bid_input.text = _numpad_current_str
+		_close_numpad_modal()
+		_on_confirm_bid_pressed()
+	)
+	action_row.add_child(confirm_btn)
+
+	var close_btn := Button.new()
+	close_btn.text = "❌"
+	close_btn.tooltip_text = "Đóng bàn phím"
+	close_btn.custom_minimum_size = Vector2(44, 44)
+	close_btn.focus_mode = FOCUS_NONE
+	var cl_style := StyleBoxFlat.new()
+	cl_style.bg_color = Color("#ff5555")
+	cl_style.corner_radius_top_left = 6
+	cl_style.corner_radius_top_right = 6
+	cl_style.corner_radius_bottom_left = 6
+	cl_style.corner_radius_bottom_right = 6
+	close_btn.add_theme_stylebox_override("normal", cl_style)
+	close_btn.pressed.connect(_close_numpad_modal)
+	action_row.add_child(close_btn)
+
+
+func _add_numpad_key(parent: GridContainer, label_text: String, action_id: String, font_col: Color = Color.WHITE, font_sz: int = 16) -> Button:
+	var btn := Button.new()
+	btn.text = label_text
+	btn.size_flags_horizontal = SIZE_EXPAND_FILL
+	btn.size_flags_vertical = SIZE_EXPAND_FILL
+	btn.focus_mode = FOCUS_NONE
+	btn.add_theme_font_size_override("font_size", font_sz)
+	btn.add_theme_color_override("font_color", font_col)
+	var sb := StyleBoxFlat.new()
+	sb.bg_color = Color(0.12, 0.16, 0.22, 0.95)
+	sb.border_color = Color(0.3, 0.4, 0.5, 0.8)
+	sb.border_width_left = 1
+	sb.border_width_top = 1
+	sb.border_width_right = 1
+	sb.border_width_bottom = 1
+	sb.corner_radius_top_left = 6
+	sb.corner_radius_top_right = 6
+	sb.corner_radius_bottom_left = 6
+	sb.corner_radius_bottom_right = 6
+	btn.add_theme_stylebox_override("normal", sb)
+
+	var sb_hover := sb.duplicate() as StyleBoxFlat
+	sb_hover.bg_color = Color(0.18, 0.24, 0.32, 0.98)
+	sb_hover.border_color = Color("#f6c95c")
+	btn.add_theme_stylebox_override("hover", sb_hover)
+
+	btn.pressed.connect(func() -> void: _handle_numpad_action(action_id))
+	parent.add_child(btn)
+	return btn
+
+
+func _handle_numpad_action(action_id: String) -> void:
+	match action_id:
+		"0", "1", "2", "3", "4", "5", "6", "7", "8", "9":
+			if _numpad_current_str == "0":
+				_numpad_current_str = action_id
+			elif _numpad_current_str.length() < 9:
+				_numpad_current_str += action_id
+		"00":
+			if _numpad_current_str != "0" and _numpad_current_str.length() < 8:
+				_numpad_current_str += "00"
+		"000":
+			if _numpad_current_str != "0" and _numpad_current_str.length() < 7:
+				_numpad_current_str += "000"
+		"backspace":
+			if _numpad_current_str.length() > 1:
+				_numpad_current_str = _numpad_current_str.substr(0, _numpad_current_str.length() - 1)
+			else:
+				_numpad_current_str = "0"
+		"reset_zero":
+			_numpad_current_str = "0"
+		"prev_bid":
+			var curr_pid := _get_current_turn_player_id()
+			var prev: int = int(auction_session.round_bids.get(curr_pid, 0))
+			_numpad_current_str = str(maxi(0, prev))
+		"multiplier":
+			var ratio: float = 2.0
+			if auction_session != null and AUCTION_SESSION_CLASS.KNOCKOUT_RATIOS.has(auction_session.current_round):
+				ratio = float(AUCTION_SESSION_CLASS.KNOCKOUT_RATIOS[auction_session.current_round])
+			var base_val: int = 0
+			if auction_session != null:
+				base_val = auction_session.highest_bid
+			if base_val <= 0:
+				base_val = maxi(10, _numpad_current_str.to_int())
+			var target_bid := int(ceil(float(base_val) * ratio))
+			var curr_pid := _get_current_turn_player_id()
+			var max_bal: int = int(player_silver_balances.get(curr_pid, target_bid))
+			target_bid = mini(target_bid, max_bal)
+			_numpad_current_str = str(maxi(1, target_bid))
+
+	if _bid_input != null:
+		_bid_input.text = _numpad_current_str
+	_refresh_numpad_display()
+
+
+func _refresh_numpad_display() -> void:
+	if _numpad_input_display == null:
+		return
+	if _numpad_secret:
+		var hidden := ""
+		for _c in _numpad_current_str:
+			hidden += "●"
+		_numpad_input_display.text = "%s (%d chữ số)" % [hidden, _numpad_current_str.length()]
+	else:
+		_numpad_input_display.text = "%s Xu" % _format_number(_numpad_current_str.to_int())
+
+
+func _open_numpad_modal() -> void:
+	if _numpad_modal == null:
+		return
+	_numpad_modal.visible = true
+	_numpad_current_str = _bid_input.text if _bid_input != null and not _bid_input.text.is_empty() else "0"
+	var ratio: float = 2.0
+	if auction_session != null and AUCTION_SESSION_CLASS.KNOCKOUT_RATIOS.has(auction_session.current_round):
+		ratio = float(AUCTION_SESSION_CLASS.KNOCKOUT_RATIOS[auction_session.current_round])
+	if _numpad_multiplier_btn != null:
+		_numpad_multiplier_btn.text = "x%.1f" % ratio
+	if _numpad_warning_lbl != null:
+		_numpad_warning_lbl.text = "⚠️ Chú ý: Nếu giá cao hơn %.1f lần so với người thứ hai thì sẽ giao dịch ngay!" % ratio
+	_refresh_numpad_display()
+
+
+func _close_numpad_modal() -> void:
+	if _numpad_modal != null:
+		_numpad_modal.visible = false
+
