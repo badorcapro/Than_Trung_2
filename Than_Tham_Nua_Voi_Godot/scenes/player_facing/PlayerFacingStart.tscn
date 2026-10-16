@@ -909,11 +909,12 @@ theme_override_styles/panel = SubResource("StyleBoxTexture_imperial_window")
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_left = 28.0
+offset_left = 68.0
 offset_top = 16.0
-offset_right = -20.0
+offset_right = -68.0
 offset_bottom = 54.0
 grow_horizontal = 2
+alignment = 1
 
 [node name="Title" type="Label" parent="DesktopRoot/DesktopNewSimDialog/ConfirmBox/TopBar"]
 layout_mode = 2
@@ -921,20 +922,8 @@ size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.96, 0.88, 0.65, 1)
 theme_override_font_sizes/font_size = 15
 text = "⚠️ XÁC NHẬN KHỞI CHẠY MÔ PHỎNG"
+horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="NewSimTopCloseBtn" type="Button" parent="DesktopRoot/DesktopNewSimDialog/ConfirmBox/TopBar"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(34, 34)
-layout_mode = 2
-focus_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxEmpty_desktop_icon")
-theme_override_styles/hover = SubResource("StyleBoxFlat_jade_close_btn_hover")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_jade_close_btn_pressed")
-icon = ExtResource("18_window_close_jade")
-expand_icon = true
-text = ""
-tooltip_text = "Đóng hộp thoại"
 
 [node name="VBox" type="VBoxContainer" parent="DesktopRoot/DesktopNewSimDialog/ConfirmBox"]
 layout_mode = 1
@@ -1174,32 +1163,21 @@ theme_override_styles/panel = SubResource("StyleBoxTexture_imperial_window")
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_left = 28.0
+offset_left = 68.0
 offset_top = 16.0
-offset_right = -20.0
+offset_right = -68.0
 offset_bottom = 54.0
 grow_horizontal = 2
+alignment = 1
 
 [node name="Title" type="Label" parent="DesktopRoot/DesktopModeSelectDialog/ModeSelectBox/TopBar"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.96, 0.88, 0.65, 1)
 theme_override_font_sizes/font_size = 17
-text = "⚔️ KHỞI CHẠY MÔ PHỎNG — CHỌN THỂ THỨC KỲ ÁN"
+text = "CHỌN THỂ THỨC MÔ PHỎNG"
+horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="ModeSelectCloseBtn" type="Button" parent="DesktopRoot/DesktopModeSelectDialog/ModeSelectBox/TopBar"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(34, 34)
-layout_mode = 2
-focus_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxEmpty_desktop_icon")
-theme_override_styles/hover = SubResource("StyleBoxFlat_jade_close_btn_hover")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_jade_close_btn_pressed")
-icon = ExtResource("18_window_close_jade")
-expand_icon = true
-text = ""
-tooltip_text = "Đóng cửa sổ"
 
 [node name="ContentVBox" type="VBoxContainer" parent="DesktopRoot/DesktopModeSelectDialog/ModeSelectBox"]
 layout_mode = 1
@@ -1213,12 +1191,6 @@ offset_bottom = -28.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 14
-
-[node name="Subtitle" type="Label" parent="DesktopRoot/DesktopModeSelectDialog/ModeSelectBox/ContentVBox"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.82, 0.86, 0.94, 0.92)
-theme_override_font_sizes/font_size = 13
-text = "Lựa chọn chế độ thi đấu kỳ án hoàng cung để kích hoạt quy tắc phân định và bàn cờ:"
 
 [node name="CardsHBox" type="HBoxContainer" parent="DesktopRoot/DesktopModeSelectDialog/ModeSelectBox/ContentVBox"]
 layout_mode = 2
@@ -1345,7 +1317,7 @@ alignment = 1
 
 [node name="ModeSelectCancelBtn" type="Button" parent="DesktopRoot/DesktopModeSelectDialog/ModeSelectBox/ContentVBox/BottomHBox"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(220, 38)
+custom_minimum_size = Vector2(160, 38)
 layout_mode = 2
 focus_mode = 2
 theme_override_colors/font_color = Color(0.88, 0.9, 0.95, 1)
@@ -1353,7 +1325,7 @@ theme_override_font_sizes/font_size = 13
 theme_override_styles/normal = SubResource("StyleBoxFlat_desktop_btn_normal")
 theme_override_styles/hover = SubResource("StyleBoxFlat_desktop_btn_hover")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_desktop_btn_hover")
-text = "✕  Đóng / Quay Lại Desktop"
+text = "Quay Lại"
 
 [node name="SafeMargin" type="MarginContainer" parent="."]
 unique_name_in_owner = true
