@@ -309,12 +309,18 @@ func _build_ui() -> void:
 	)
 	center_grid.add_child(_grid_draw_control)
 
+	var min_val_margin := MarginContainer.new()
+	min_val_margin.size_flags_horizontal = SIZE_EXPAND_FILL
+	min_val_margin.add_theme_constant_override("margin_right", 60)
+	min_val_margin.add_theme_constant_override("margin_bottom", 6)
+	_right_column.add_child(min_val_margin)
+
 	_min_value_label = Label.new()
 	_min_value_label.text = "Giá ước tính thấp nhất hiện tại: 0 Xu Bạc"
 	_min_value_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	_min_value_label.add_theme_font_size_override("font_size", 15)
 	_min_value_label.add_theme_color_override("font_color", Color("#50fa7b"))
-	_right_column.add_child(_min_value_label)
+	min_val_margin.add_child(_min_value_label)
 
 	# --- BOTTOM ACTION BAR ---
 	# --- Bottom Action Bar (Bidking Style) ---
