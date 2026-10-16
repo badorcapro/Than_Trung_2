@@ -148,6 +148,7 @@ const LOBBY_BG_TEXTURE: Texture2D = preload("res://assets/ui/common/lobby_bg.png
 @onready var inspect_avatar_placeholder: Label = get_node_or_null("%InspectAvatarPlaceholder") as Label
 @onready var inspect_char_name: Label = get_node_or_null("%InspectCharName") as Label
 @onready var inspect_house_badge: Label = get_node_or_null("%InspectHouseBadge") as Label
+@onready var inspect_house_crest: TextureRect = get_node_or_null("%InspectHouseCrest") as TextureRect
 @onready var inspect_speed_label: Label = get_node_or_null("%InspectSpeedLabel") as Label
 @onready var inspect_stamina_label: Label = get_node_or_null("%InspectStaminaLabel") as Label
 @onready var inspect_bag_label: Label = get_node_or_null("%InspectBagLabel") as Label
@@ -1106,6 +1107,16 @@ func _inspect_character(char_def: CharacterDefinition) -> void:
 	if inspect_house_badge != null:
 		inspect_house_badge.text = lore.title + " • " + lore.house_name
 		inspect_house_badge.add_theme_color_override("font_color", lore.house_color)
+
+	var crest_path: String = "res://assets/ui/crests/crest_%s.png" % String(char_def.origin_house_id)
+	if ResourceLoader.exists(crest_path):
+		var crest_tex := load(crest_path) as Texture2D
+		if inspect_house_crest != null:
+			inspect_house_crest.texture = crest_tex
+			inspect_house_crest.visible = true
+	else:
+		if inspect_house_crest != null:
+			inspect_house_crest.visible = false
 
 	if inspect_speed_label != null:
 		inspect_speed_label.text = "🏃 Tốc độ: %d / 2" % char_def.base_speed

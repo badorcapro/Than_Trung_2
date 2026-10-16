@@ -11,7 +11,48 @@ const ENCYCLOPEDIA_DIALOG_CLASS := preload("res://scripts/presentation/loot/Auct
 const CELL_SIZE: int = 46
 const SETTLEMENT_CELL_SIZE: int = 54
 const GRID_COLS: int = 10
-const GRID_ROWS: int = 8
+const DEFAULT_CHARACTERS_DATA: Array[Dictionary] = [
+	{
+		"name": "Hoàng Linh Lâm",
+		"short_name": "Hoàng Lâm",
+		"title": "Đại Hoàng Tử",
+		"icon": "👑",
+		"portrait": "res://assets/portraits/character_hoang_linh_lam.png",
+		"theme_color": Color("#facc15")
+	},
+	{
+		"name": "Chu Tuệ Nguyệt",
+		"short_name": "Tuệ Nguyệt",
+		"title": "Hỏa Phụng Quân Sư",
+		"icon": "🔥",
+		"portrait": "res://assets/portraits/character_chu_tue_nguyet.png",
+		"theme_color": Color("#f87171")
+	},
+	{
+		"name": "Kim Thanh Giai",
+		"short_name": "Thanh Giai",
+		"title": "Kim Tiền Thần Đoán",
+		"icon": "💎",
+		"portrait": "res://assets/portraits/character_kim_thanh_giai.png",
+		"theme_color": Color("#38bdf8")
+	},
+	{
+		"name": "Huyền Ca Xuý",
+		"short_name": "Ca Xuý",
+		"title": "Chiêm Tinh Diệu Toán",
+		"icon": "🔮",
+		"portrait": "res://assets/portraits/character_huyen_ca_xuy.png",
+		"theme_color": Color("#c084fc")
+	},
+	{
+		"name": "Lam Phương Xuân",
+		"short_name": "Phương Xuân",
+		"title": "Thần Y Thanh Tùng",
+		"icon": "🌿",
+		"portrait": "res://assets/portraits/character_lam_phuong_xuan.png",
+		"theme_color": Color("#4ade80")
+	}
+]
 
 var auction_session: AuctionSession
 var player_silver_balances: Dictionary = {} # player_id -> int
@@ -158,16 +199,23 @@ func _build_ui() -> void:
 	body_hbox.add_theme_constant_override("separation", 20)
 	main_vbox.add_child(body_hbox)
 
-	# CỘT TRÁI: NGƯỜI THAM GIA ĐẤU GIÁ (BIDDERS - 340px)
+	# CỘT TRÁI: NGƯỜI THAM GIA ĐẤU GIÁ (BIDDERS - 370px BidKing Style)
 	_left_column = VBoxContainer.new()
-	_left_column.custom_minimum_size = Vector2(340, 0)
+	_left_column.custom_minimum_size = Vector2(370, 0)
+	_left_column.size_flags_vertical = SIZE_EXPAND_FILL
 	_left_column.add_theme_constant_override("separation", 8)
 	body_hbox.add_child(_left_column)
+
+	var bidders_scroll := ScrollContainer.new()
+	bidders_scroll.custom_minimum_size = Vector2(370, 0)
+	bidders_scroll.size_flags_vertical = SIZE_EXPAND_FILL
+	bidders_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	_left_column.add_child(bidders_scroll)
 
 	_bidders_container = VBoxContainer.new()
 	_bidders_container.size_flags_horizontal = SIZE_EXPAND_FILL
 	_bidders_container.add_theme_constant_override("separation", 8)
-	_left_column.add_child(_bidders_container)
+	bidders_scroll.add_child(_bidders_container)
 
 	# CỘT GIỮA: BẢNG MANH MỐI FEED (440px)
 	_mid_column = VBoxContainer.new()
