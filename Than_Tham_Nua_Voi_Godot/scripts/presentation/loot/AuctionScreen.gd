@@ -119,6 +119,10 @@ var _current_bid_value: int = 10
 
 # Settlement UI Nodes (BidKing End-Match Style)
 var _settlement_overlay: ColorRect
+var _settlement_avatar_rect: TextureRect
+var _settlement_avatar_placeholder: CenterContainer
+var _settlement_winner_player_lbl: Label
+var _settlement_winner_char_lbl: Label
 var _settlement_winner_role_lbl: Label
 var _settlement_winner_name_lbl: Label
 var _settlement_final_cost_lbl: Label
@@ -126,6 +130,7 @@ var _settlement_loot_val_lbl: Label
 var _settlement_profit_lbl: Label
 var _settlement_extra_info_lbl: RichTextLabel
 var _settlement_continue_btn: Button
+var _settlement_continue_prompt: Label
 var _settlement_skip_btn: Button
 var _settlement_grid_draw_control: Control
 
@@ -508,118 +513,130 @@ func _play_reveal_sfx(silver_val: int) -> void:
 func _build_settlement_dialog() -> void:
 	_settlement_overlay = ColorRect.new()
 	_settlement_overlay.set_anchors_preset(PRESET_FULL_RECT)
-	_settlement_overlay.color = Color(0.04, 0.06, 0.09, 0.96)
+	# Fullscreen bán trong suốt theo chuẩn Bidking
+	_settlement_overlay.color = Color(0.04, 0.06, 0.09, 0.82)
 	_settlement_overlay.visible = false
 	_settlement_overlay.mouse_filter = MOUSE_FILTER_STOP
 	_settlement_overlay.gui_input.connect(_on_settlement_overlay_gui_input)
 	add_child(_settlement_overlay)
 
-	var margin := MarginContainer.new()
-	margin.set_anchors_preset(PRESET_FULL_RECT)
-	margin.add_theme_constant_override("margin_left", 36)
-	margin.add_theme_constant_override("margin_top", 24)
-	margin.add_theme_constant_override("margin_right", 36)
-	margin.add_theme_constant_override("margin_bottom", 24)
-	margin.mouse_filter = MOUSE_FILTER_PASS
-	_settlement_overlay.add_child(margin)
+	var main_margin := MarginContainer.new()
+	main_margin.set_anchors_preset(PRESET_FULL_RECT)
+	main_margin.add_theme_constant_override("margin_left", 48)
+	main_margin.add_theme_constant_override("margin_top", 28)
+	main_margin.add_theme_constant_override("margin_right", 48)
+	main_margin.add_theme_constant_override("margin_bottom", 16)
+	main_margin.mouse_filter = MOUSE_FILTER_PASS
+	_settlement_overlay.add_child(main_margin)
+
+	var root_vbox := VBoxContainer.new()
+	root_vbox.set_anchors_preset(PRESET_FULL_RECT)
+	root_vbox.add_theme_constant_override("separation", 12)
+	root_vbox.mouse_filter = MOUSE_FILTER_PASS
+	main_margin.add_child(root_vbox)
 
 	var body_hbox := HBoxContainer.new()
-	body_hbox.set_anchors_preset(PRESET_FULL_RECT)
-	body_hbox.add_theme_constant_override("separation", 32)
+	body_hbox.size_flags_horizontal = SIZE_EXPAND_FILL
+	body_hbox.size_flags_vertical = SIZE_EXPAND_FILL
+	body_hbox.add_theme_constant_override("separation", 48)
 	body_hbox.mouse_filter = MOUSE_FILTER_PASS
-	margin.add_child(body_hbox)
+	root_vbox.add_child(body_hbox)
 
-	# --- LEFT COLUMN: MATCH END INFO & STATS (~400px) ---
+	# =========================================================
+	# CỘT TRÁI: MATCH END INFO & STATS (~440px)
+	# =========================================================
 	var left_vbox := VBoxContainer.new()
-	left_vbox.custom_minimum_size = Vector2(400, 0)
-	left_vbox.add_theme_constant_override("separation", 10)
+	left_vbox.custom_minimum_size = Vector2(440, 0)
+	left_vbox.add_theme_constant_override("separation", 24)
 	left_vbox.mouse_filter = MOUSE_FILTER_PASS
 	body_hbox.add_child(left_vbox)
 
+	# 1. Tiêu đề
+	var title_box := VBoxContainer.new()
+	title_box.add_theme_constant_override("separation", 2)
+	left_vbox.add_child(title_box)
+
 	var subtitle_lbl := Label.new()
-	subtitle_lbl.text = "🏛️ HÒM BÍ ẨN HOÀNG CUNG"
+	subtitle_lbl.text = "Phiên Đấu Giá Bí Mật"
 	subtitle_lbl.add_theme_font_size_override("font_size", 14)
-	subtitle_lbl.add_theme_color_override("font_color", Color("#8be9fd"))
-	left_vbox.add_child(subtitle_lbl)
+	subtitle_lbl.add_theme_color_override("font_color", Color("#94a3b8"))
+	title_box.add_child(subtitle_lbl)
 
 	var end_title_lbl := Label.new()
-	end_title_lbl.text = "Kết thúc trận"
-	end_title_lbl.add_theme_font_size_override("font_size", 38)
+	end_title_lbl.text = "Tổng kết"
+	end_title_lbl.add_theme_font_size_override("font_size", 42)
 	end_title_lbl.add_theme_color_override("font_color", Color.WHITE)
-	left_vbox.add_child(end_title_lbl)
+	title_box.add_child(end_title_lbl)
 
-	# Winner / Participant Card
-	var user_card := PanelContainer.new()
-	var uc_style := StyleBoxFlat.new()
-	uc_style.bg_color = Color(0.1, 0.14, 0.2, 0.85)
-	uc_style.border_color = Color(0.3, 0.45, 0.6, 0.6)
-	uc_style.border_width_left = 1
-	uc_style.border_width_top = 1
-	uc_style.border_width_right = 1
-	uc_style.border_width_bottom = 1
-	uc_style.corner_radius_top_left = 8
-	uc_style.corner_radius_top_right = 8
-	uc_style.corner_radius_bottom_left = 8
-	uc_style.corner_radius_bottom_right = 8
-	user_card.add_theme_stylebox_override("panel", uc_style)
-	user_card.mouse_filter = MOUSE_FILTER_PASS
-	left_vbox.add_child(user_card)
+	# 2. Khối Avatar & Thông tin người chiến thắng (Gộp thành 1 Avatar to ~88x88)
+	var winner_profile_hbox := HBoxContainer.new()
+	winner_profile_hbox.add_theme_constant_override("separation", 18)
+	winner_profile_hbox.mouse_filter = MOUSE_FILTER_PASS
+	left_vbox.add_child(winner_profile_hbox)
 
-	var uc_margin := MarginContainer.new()
-	uc_margin.add_theme_constant_override("margin_left", 12)
-	uc_margin.add_theme_constant_override("margin_top", 10)
-	uc_margin.add_theme_constant_override("margin_right", 12)
-	uc_margin.add_theme_constant_override("margin_bottom", 10)
-	uc_margin.mouse_filter = MOUSE_FILTER_PASS
-	user_card.add_child(uc_margin)
+	var av_frame := PanelContainer.new()
+	av_frame.custom_minimum_size = Vector2(88, 88)
+	var av_frame_sb := StyleBoxFlat.new()
+	av_frame_sb.bg_color = Color(0.12, 0.16, 0.22, 0.85)
+	av_frame_sb.border_color = Color(0.45, 0.58, 0.75, 0.6)
+	av_frame_sb.border_width_left = 2
+	av_frame_sb.border_width_top = 2
+	av_frame_sb.border_width_right = 2
+	av_frame_sb.border_width_bottom = 2
+	av_frame_sb.corner_radius_top_left = 8
+	av_frame_sb.corner_radius_top_right = 8
+	av_frame_sb.corner_radius_bottom_left = 8
+	av_frame_sb.corner_radius_bottom_right = 8
+	av_frame.add_theme_stylebox_override("panel", av_frame_sb)
+	winner_profile_hbox.add_child(av_frame)
 
-	var uc_hbox := HBoxContainer.new()
-	uc_hbox.add_theme_constant_override("separation", 14)
-	uc_hbox.mouse_filter = MOUSE_FILTER_PASS
-	uc_margin.add_child(uc_hbox)
+	_settlement_avatar_rect = TextureRect.new()
+	_settlement_avatar_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	_settlement_avatar_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+	_settlement_avatar_rect.custom_minimum_size = Vector2(88, 88)
+	av_frame.add_child(_settlement_avatar_rect)
 
-	var avatar_box := PanelContainer.new()
-	avatar_box.custom_minimum_size = Vector2(50, 50)
-	var av_style := StyleBoxFlat.new()
-	av_style.bg_color = Color(0.15, 0.22, 0.32, 0.9)
-	av_style.border_color = Color("#f6c95c")
-	av_style.border_width_left = 2
-	av_style.border_width_top = 2
-	av_style.border_width_right = 2
-	av_style.border_width_bottom = 2
-	av_style.corner_radius_top_left = 25
-	av_style.corner_radius_top_right = 25
-	av_style.corner_radius_bottom_left = 25
-	av_style.corner_radius_bottom_right = 25
-	avatar_box.add_theme_stylebox_override("panel", av_style)
-	var av_center := CenterContainer.new()
-	avatar_box.add_child(av_center)
-	var av_icon := Label.new()
-	av_icon.text = "👑"
-	av_icon.add_theme_font_size_override("font_size", 22)
-	av_center.add_child(av_icon)
-	uc_hbox.add_child(avatar_box)
+	_settlement_avatar_placeholder = CenterContainer.new()
+	_settlement_avatar_placeholder.custom_minimum_size = Vector2(88, 88)
+	var av_ph_lbl := Label.new()
+	av_ph_lbl.text = "❓"
+	av_ph_lbl.add_theme_font_size_override("font_size", 36)
+	_settlement_avatar_placeholder.add_child(av_ph_lbl)
+	_settlement_avatar_placeholder.visible = false
+	av_frame.add_child(_settlement_avatar_placeholder)
 
-	var uc_info_vbox := VBoxContainer.new()
-	uc_info_vbox.size_flags_horizontal = SIZE_EXPAND_FILL
-	uc_info_vbox.mouse_filter = MOUSE_FILTER_PASS
-	uc_hbox.add_child(uc_info_vbox)
+	var winner_names_vbox := VBoxContainer.new()
+	winner_names_vbox.alignment = BoxContainer.ALIGNMENT_CENTER
+	winner_names_vbox.add_theme_constant_override("separation", 6)
+	winner_names_vbox.mouse_filter = MOUSE_FILTER_PASS
+	winner_profile_hbox.add_child(winner_names_vbox)
 
+	_settlement_winner_player_lbl = Label.new()
+	_settlement_winner_player_lbl.text = "Player 1"
+	_settlement_winner_player_lbl.add_theme_font_size_override("font_size", 20)
+	_settlement_winner_player_lbl.add_theme_color_override("font_color", Color.WHITE)
+	winner_names_vbox.add_child(_settlement_winner_player_lbl)
+
+	_settlement_winner_char_lbl = Label.new()
+	_settlement_winner_char_lbl.text = "Hoàng Linh Lâm"
+	_settlement_winner_char_lbl.add_theme_font_size_override("font_size", 16)
+	_settlement_winner_char_lbl.add_theme_color_override("font_color", Color("#f59e0b"))
+	winner_names_vbox.add_child(_settlement_winner_char_lbl)
+
+	# Compatibility labels (kept for zero runtime breakage)
 	_settlement_winner_role_lbl = Label.new()
-	_settlement_winner_role_lbl.text = "Người chiến thắng"
-	_settlement_winner_role_lbl.add_theme_font_size_override("font_size", 12)
-	_settlement_winner_role_lbl.add_theme_color_override("font_color", Color("#94a3b8"))
-	uc_info_vbox.add_child(_settlement_winner_role_lbl)
-
+	_settlement_winner_role_lbl.visible = false
+	left_vbox.add_child(_settlement_winner_role_lbl)
 	_settlement_winner_name_lbl = Label.new()
-	_settlement_winner_name_lbl.text = "Player"
-	_settlement_winner_name_lbl.add_theme_font_size_override("font_size", 18)
-	_settlement_winner_name_lbl.add_theme_color_override("font_color", Color.WHITE)
-	uc_info_vbox.add_child(_settlement_winner_name_lbl)
+	_settlement_winner_name_lbl.visible = false
+	left_vbox.add_child(_settlement_winner_name_lbl)
+	_settlement_extra_info_lbl = RichTextLabel.new()
+	_settlement_extra_info_lbl.visible = false
+	left_vbox.add_child(_settlement_extra_info_lbl)
 
-	# Stats block
+	# 3. Khối các con số tài chính (Không ghi đơn vị)
 	var stats_vbox := VBoxContainer.new()
-	stats_vbox.add_theme_constant_override("separation", 14)
+	stats_vbox.add_theme_constant_override("separation", 20)
 	stats_vbox.mouse_filter = MOUSE_FILTER_PASS
 	left_vbox.add_child(stats_vbox)
 
@@ -627,14 +644,16 @@ func _build_settlement_dialog() -> void:
 	var s1_box := VBoxContainer.new()
 	s1_box.add_theme_constant_override("separation", 2)
 	stats_vbox.add_child(s1_box)
+
 	var s1_title := Label.new()
 	s1_title.text = "Giá đấu giá cuối cùng"
 	s1_title.add_theme_font_size_override("font_size", 14)
 	s1_title.add_theme_color_override("font_color", Color("#94a3b8"))
 	s1_box.add_child(s1_title)
+
 	_settlement_final_cost_lbl = Label.new()
-	_settlement_final_cost_lbl.text = "0 Xu Bạc"
-	_settlement_final_cost_lbl.add_theme_font_size_override("font_size", 28)
+	_settlement_final_cost_lbl.text = "0"
+	_settlement_final_cost_lbl.add_theme_font_size_override("font_size", 32)
 	_settlement_final_cost_lbl.add_theme_color_override("font_color", Color.WHITE)
 	s1_box.add_child(_settlement_final_cost_lbl)
 
@@ -642,14 +661,16 @@ func _build_settlement_dialog() -> void:
 	var s2_box := VBoxContainer.new()
 	s2_box.add_theme_constant_override("separation", 2)
 	stats_vbox.add_child(s2_box)
+
 	var s2_title := Label.new()
 	s2_title.text = "Giá chiến lợi phẩm"
 	s2_title.add_theme_font_size_override("font_size", 14)
 	s2_title.add_theme_color_override("font_color", Color("#94a3b8"))
 	s2_box.add_child(s2_title)
+
 	_settlement_loot_val_lbl = Label.new()
-	_settlement_loot_val_lbl.text = "0 Xu"
-	_settlement_loot_val_lbl.add_theme_font_size_override("font_size", 30)
+	_settlement_loot_val_lbl.text = "0"
+	_settlement_loot_val_lbl.add_theme_font_size_override("font_size", 32)
 	_settlement_loot_val_lbl.add_theme_color_override("font_color", Color.WHITE)
 	s2_box.add_child(_settlement_loot_val_lbl)
 
@@ -657,54 +678,33 @@ func _build_settlement_dialog() -> void:
 	var s3_box := VBoxContainer.new()
 	s3_box.add_theme_constant_override("separation", 2)
 	stats_vbox.add_child(s3_box)
+
 	var s3_title := Label.new()
 	s3_title.text = "Lợi nhuận"
 	s3_title.add_theme_font_size_override("font_size", 14)
 	s3_title.add_theme_color_override("font_color", Color("#94a3b8"))
 	s3_box.add_child(s3_title)
+
 	_settlement_profit_lbl = Label.new()
-	_settlement_profit_lbl.text = "0 Xu"
-	_settlement_profit_lbl.add_theme_font_size_override("font_size", 30)
+	_settlement_profit_lbl.text = "0"
+	_settlement_profit_lbl.add_theme_font_size_override("font_size", 32)
 	_settlement_profit_lbl.add_theme_color_override("font_color", Color("#50fa7b"))
 	s3_box.add_child(_settlement_profit_lbl)
 
-	# Extra lines
-	_settlement_extra_info_lbl = RichTextLabel.new()
-	_settlement_extra_info_lbl.bbcode_enabled = true
-	_settlement_extra_info_lbl.fit_content = true
-	_settlement_extra_info_lbl.mouse_filter = MOUSE_FILTER_PASS
-	_settlement_extra_info_lbl.add_theme_font_size_override("normal_font_size", 13)
-	left_vbox.add_child(_settlement_extra_info_lbl)
-
+	# Spacer đẩy đáy
 	var sp_left := Control.new()
 	sp_left.size_flags_vertical = SIZE_EXPAND_FILL
 	sp_left.mouse_filter = MOUSE_FILTER_PASS
 	left_vbox.add_child(sp_left)
 
-	# Bottom Continue Box
-	var btm_cont_vbox := VBoxContainer.new()
-	btm_cont_vbox.add_theme_constant_override("separation", 4)
-	btm_cont_vbox.mouse_filter = MOUSE_FILTER_PASS
-	left_vbox.add_child(btm_cont_vbox)
-
+	# Legacy continue button (kept hidden for safety)
 	_settlement_continue_btn = Button.new()
-	_settlement_continue_btn.text = "Nhấn vào đây để tiếp tục ➔"
-	_settlement_continue_btn.custom_minimum_size = Vector2(0, 48)
-	_settlement_continue_btn.add_theme_font_size_override("font_size", 17)
-	_settlement_continue_btn.add_theme_color_override("font_color", Color("#f6c95c"))
-	_settlement_continue_btn.pressed.connect(_on_finish_settlement_pressed)
 	_settlement_continue_btn.visible = false
-	btm_cont_vbox.add_child(_settlement_continue_btn)
+	left_vbox.add_child(_settlement_continue_btn)
 
-	var hint_cont_lbl := Label.new()
-	hint_cont_lbl.text = "(Bấm nút Tiếp tục để hoàn tất)"
-	hint_cont_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	hint_cont_lbl.add_theme_font_size_override("font_size", 12)
-	hint_cont_lbl.add_theme_color_override("font_color", Color("#64748b"))
-	btm_cont_vbox.add_child(hint_cont_lbl)
-
-
-	# --- RIGHT COLUMN: CHEST REVEAL GRID (~720px) ---
+	# =========================================================
+	# CỘT PHẢI: CHEST REVEAL GRID (~720px)
+	# =========================================================
 	var right_vbox := VBoxContainer.new()
 	right_vbox.size_flags_horizontal = SIZE_EXPAND_FILL
 	right_vbox.size_flags_vertical = SIZE_EXPAND_FILL
@@ -712,58 +712,76 @@ func _build_settlement_dialog() -> void:
 	right_vbox.mouse_filter = MOUSE_FILTER_PASS
 	body_hbox.add_child(right_vbox)
 
-	# Top Tab Bar
+	# Top Bar: Nút Bách Khoa Vật Phẩm & Bỏ qua (Skip)
 	var r_top_bar := HBoxContainer.new()
 	r_top_bar.custom_minimum_size = Vector2(0, 36)
+	r_top_bar.add_theme_constant_override("separation", 12)
 	r_top_bar.mouse_filter = MOUSE_FILTER_PASS
 	right_vbox.add_child(r_top_bar)
-
-	var tab_panel := PanelContainer.new()
-	var tp_style := StyleBoxFlat.new()
-	tp_style.bg_color = Color(0.13, 0.18, 0.25, 0.95)
-	tp_style.border_color = Color("#4deeea")
-	tp_style.border_width_bottom = 3
-	tp_style.corner_radius_top_left = 6
-	tp_style.corner_radius_top_right = 6
-	tab_panel.add_theme_stylebox_override("panel", tp_style)
-	r_top_bar.add_child(tab_panel)
-
-	var tab_margin := MarginContainer.new()
-	tab_margin.add_theme_constant_override("margin_left", 16)
-	tab_margin.add_theme_constant_override("margin_right", 16)
-	tab_margin.add_theme_constant_override("margin_top", 6)
-	tab_margin.add_theme_constant_override("margin_bottom", 6)
-	tab_panel.add_child(tab_margin)
-
-	var tab_lbl := Label.new()
-	tab_lbl.text = "🎁 Chiến Lợi Phẩm"
-	tab_lbl.add_theme_font_size_override("font_size", 15)
-	tab_lbl.add_theme_color_override("font_color", Color.WHITE)
-	tab_margin.add_child(tab_lbl)
 
 	var sp_rtab := Control.new()
 	sp_rtab.size_flags_horizontal = SIZE_EXPAND_FILL
 	sp_rtab.mouse_filter = MOUSE_FILTER_PASS
 	r_top_bar.add_child(sp_rtab)
 
+	# Nút Bách Khoa Vật Phẩm
+	var enc_btn := Button.new()
+	enc_btn.text = "📖 Bách Khoa Vật Phẩm"
+	enc_btn.custom_minimum_size = Vector2(175, 34)
+	enc_btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	enc_btn.add_theme_font_size_override("font_size", 13)
+	var enc_sb := StyleBoxFlat.new()
+	enc_sb.bg_color = Color(0.12, 0.16, 0.22, 0.90)
+	enc_sb.border_color = Color(0.35, 0.48, 0.62, 0.7)
+	enc_sb.border_width_left = 1
+	enc_sb.border_width_top = 1
+	enc_sb.border_width_right = 1
+	enc_sb.border_width_bottom = 1
+	enc_sb.corner_radius_top_left = 6
+	enc_sb.corner_radius_top_right = 6
+	enc_sb.corner_radius_bottom_left = 6
+	enc_sb.corner_radius_bottom_right = 6
+	enc_btn.add_theme_stylebox_override("normal", enc_sb)
+	enc_btn.add_theme_color_override("font_color", Color("#e2e8f0"))
+	enc_btn.pressed.connect(func() -> void:
+		if encyclopedia_dialog != null:
+			encyclopedia_dialog.open_dialog()
+	)
+	r_top_bar.add_child(enc_btn)
+
+	# Nút Bỏ qua (Skip)
 	_settlement_skip_btn = Button.new()
 	_settlement_skip_btn.text = "⏩ Bỏ qua (Skip)"
 	_settlement_skip_btn.custom_minimum_size = Vector2(120, 34)
+	_settlement_skip_btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	_settlement_skip_btn.add_theme_font_size_override("font_size", 13)
+	var skip_sb := StyleBoxFlat.new()
+	skip_sb.bg_color = Color(0.18, 0.14, 0.12, 0.90)
+	skip_sb.border_color = Color("#c5a059")
+	skip_sb.border_width_left = 1
+	skip_sb.border_width_top = 1
+	skip_sb.border_width_right = 1
+	skip_sb.border_width_bottom = 1
+	skip_sb.corner_radius_top_left = 6
+	skip_sb.corner_radius_top_right = 6
+	skip_sb.corner_radius_bottom_left = 6
+	skip_sb.corner_radius_bottom_right = 6
+	_settlement_skip_btn.add_theme_stylebox_override("normal", skip_sb)
+	_settlement_skip_btn.add_theme_color_override("font_color", Color("#f6c95c"))
 	_settlement_skip_btn.pressed.connect(_on_skip_pressed)
 	r_top_bar.add_child(_settlement_skip_btn)
 
-	# Grid Container Panel
+	# Grid Container Panel bán trong suốt
 	var s_grid_panel := PanelContainer.new()
 	s_grid_panel.size_flags_horizontal = SIZE_EXPAND_FILL
 	s_grid_panel.size_flags_vertical = SIZE_EXPAND_FILL
 	var gp_style := StyleBoxFlat.new()
-	gp_style.bg_color = Color(0.06, 0.09, 0.13, 0.98)
-	gp_style.border_color = Color(0.25, 0.38, 0.52, 0.7)
-	gp_style.border_width_left = 2
-	gp_style.border_width_top = 2
-	gp_style.border_width_right = 2
-	gp_style.border_width_bottom = 2
+	gp_style.bg_color = Color(0.06, 0.08, 0.12, 0.88)
+	gp_style.border_color = Color(0.25, 0.35, 0.48, 0.6)
+	gp_style.border_width_left = 1
+	gp_style.border_width_top = 1
+	gp_style.border_width_right = 1
+	gp_style.border_width_bottom = 1
 	gp_style.corner_radius_top_left = 8
 	gp_style.corner_radius_top_right = 8
 	gp_style.corner_radius_bottom_left = 8
@@ -798,6 +816,22 @@ func _build_settlement_dialog() -> void:
 			_item_hover_popup.visible = false
 	)
 	s_grid_center.add_child(_settlement_grid_draw_control)
+
+	# =========================================================
+	# DÒNG CHỮ TIẾP TỤC Ở ĐÁY MÀN HÌNH (Glow Prompt)
+	# =========================================================
+	var btm_box := CenterContainer.new()
+	btm_box.custom_minimum_size = Vector2(0, 36)
+	btm_box.mouse_filter = MOUSE_FILTER_PASS
+	root_vbox.add_child(btm_box)
+
+	_settlement_continue_prompt = Label.new()
+	_settlement_continue_prompt.text = "Nhấn vào đây để tiếp tục"
+	_settlement_continue_prompt.add_theme_font_size_override("font_size", 18)
+	_settlement_continue_prompt.add_theme_color_override("font_color", Color("#e2e8f0"))
+	_settlement_continue_prompt.visible = false
+	_settlement_continue_prompt.mouse_filter = MOUSE_FILTER_PASS
+	btm_box.add_child(_settlement_continue_prompt)
 
 
 func _generate_grid_placements() -> void:
@@ -1805,8 +1839,13 @@ func _show_settlement_dialog() -> void:
 	_settlement_accumulated_value = 0
 	_active_loading_item_id = ""
 
-	_settlement_skip_btn.visible = true
-	_settlement_continue_btn.visible = false
+	if _settlement_skip_btn != null:
+		_settlement_skip_btn.visible = true
+		_settlement_skip_btn.text = "⏩ Bỏ qua (Skip)"
+	if _settlement_continue_prompt != null:
+		_settlement_continue_prompt.visible = false
+	if _settlement_continue_btn != null:
+		_settlement_continue_btn.visible = false
 
 	_update_settlement_stats()
 	if _settlement_grid_draw_control != null:
@@ -1914,11 +1953,11 @@ func _finish_settlement_reveal() -> void:
 		_settlement_grid_draw_control.queue_redraw()
 
 	if _settlement_skip_btn != null:
-		_settlement_skip_btn.visible = true
-		_settlement_skip_btn.text = "Tiếp tục ➔"
-		_settlement_skip_btn.custom_minimum_size = Vector2(150, 36)
+		_settlement_skip_btn.visible = false
+	if _settlement_continue_prompt != null:
+		_settlement_continue_prompt.visible = true
 	if _settlement_continue_btn != null:
-		_settlement_continue_btn.visible = true
+		_settlement_continue_btn.visible = false
 
 
 func _update_settlement_stats() -> void:
@@ -1928,44 +1967,78 @@ func _update_settlement_stats() -> void:
 	var is_bought: bool = not auction_session.winner_player_id.is_empty()
 	var final_cost: int = auction_session.final_price_paid if is_bought else 0
 
-	# 1. Winner / Participant
+	# 1. Winner / Participant Profile
 	if is_bought:
-		_settlement_winner_role_lbl.text = "Người chiến thắng"
-		_settlement_winner_name_lbl.text = String(auction_session.winner_player_id)
-		_settlement_final_cost_lbl.text = "%s Xu Bạc" % _format_number(final_cost)
+		var w_pid: StringName = auction_session.winner_player_id
+		var w_idx: int = auction_session.eligible_player_ids.find(w_pid)
+		var p_name: String = "Player %d" % (w_idx + 1) if w_idx >= 0 else String(w_pid)
+		var char_data: Dictionary = DEFAULT_CHARACTERS_DATA[w_idx % DEFAULT_CHARACTERS_DATA.size()] if w_idx >= 0 else DEFAULT_CHARACTERS_DATA[0]
+
+		if _settlement_winner_player_lbl != null:
+			_settlement_winner_player_lbl.text = p_name
+		if _settlement_winner_char_lbl != null:
+			_settlement_winner_char_lbl.text = char_data.name
+			_settlement_winner_char_lbl.add_theme_color_override("font_color", char_data.theme_color)
+
+		var p_path: String = char_data.get("portrait", "")
+		var p_tex: Texture2D = _get_cached_item_texture(p_path) if not p_path.is_empty() else null
+		if _settlement_avatar_rect != null:
+			_settlement_avatar_rect.texture = p_tex
+			_settlement_avatar_rect.visible = (p_tex != null)
+		if _settlement_avatar_placeholder != null:
+			_settlement_avatar_placeholder.visible = (p_tex == null)
+
+		if _settlement_winner_role_lbl != null:
+			_settlement_winner_role_lbl.text = "Người chiến thắng"
+		if _settlement_winner_name_lbl != null:
+			_settlement_winner_name_lbl.text = p_name
+
+		if _settlement_final_cost_lbl != null:
+			_settlement_final_cost_lbl.text = _format_number(final_cost)
 	else:
-		_settlement_winner_role_lbl.text = "Kết quả hòm"
-		_settlement_winner_name_lbl.text = "Không có người mua"
-		_settlement_final_cost_lbl.text = "0 Xu (Bỏ qua)"
+		if _settlement_winner_player_lbl != null:
+			_settlement_winner_player_lbl.text = "Không ai sở hữu"
+		if _settlement_winner_char_lbl != null:
+			_settlement_winner_char_lbl.text = "Hòm đấu giá đã bị bỏ qua"
+			_settlement_winner_char_lbl.add_theme_color_override("font_color", Color("#94a3b8"))
 
-	# 2. Loot value accumulated
-	_settlement_loot_val_lbl.text = "%s Xu" % _format_number(_settlement_accumulated_value)
+		if _settlement_avatar_rect != null:
+			_settlement_avatar_rect.visible = false
+		if _settlement_avatar_placeholder != null:
+			_settlement_avatar_placeholder.visible = true
 
-	# 3. Profit
-	if is_bought:
-		var profit: int = _settlement_accumulated_value - final_cost
-		if profit >= 0:
-			_settlement_profit_lbl.text = "+%s Xu" % _format_number(profit)
-			_settlement_profit_lbl.add_theme_color_override("font_color", Color("#50fa7b"))
+		if _settlement_winner_role_lbl != null:
+			_settlement_winner_role_lbl.text = "Kết quả hòm"
+		if _settlement_winner_name_lbl != null:
+			_settlement_winner_name_lbl.text = "Không có người mua"
+
+		if _settlement_final_cost_lbl != null:
+			_settlement_final_cost_lbl.text = "0"
+
+	# 2. Loot value accumulated (con số, không có đơn vị)
+	if _settlement_loot_val_lbl != null:
+		_settlement_loot_val_lbl.text = _format_number(_settlement_accumulated_value)
+
+	# 3. Profit (con số, không có đơn vị, phân định màu theo âm/dương)
+	if _settlement_profit_lbl != null:
+		if is_bought:
+			var profit: int = _settlement_accumulated_value - final_cost
+			if profit > 0:
+				_settlement_profit_lbl.text = "+%s" % _format_number(profit)
+				_settlement_profit_lbl.add_theme_color_override("font_color", Color("#50fa7b"))
+			elif profit < 0:
+				_settlement_profit_lbl.text = "-%s" % _format_number(absi(profit))
+				_settlement_profit_lbl.add_theme_color_override("font_color", Color("#ff5555"))
+			else:
+				_settlement_profit_lbl.text = "0"
+				_settlement_profit_lbl.add_theme_color_override("font_color", Color("#94a3b8"))
 		else:
-			_settlement_profit_lbl.text = "-%s Xu" % _format_number(absi(profit))
-			_settlement_profit_lbl.add_theme_color_override("font_color", Color("#ff5555"))
-	else:
-		_settlement_profit_lbl.text = "0 Xu (Đã bỏ qua)"
-		_settlement_profit_lbl.add_theme_color_override("font_color", Color("#94a3b8"))
+			_settlement_profit_lbl.text = "0"
+			_settlement_profit_lbl.add_theme_color_override("font_color", Color("#94a3b8"))
 
-	# 4. Extra info
-	var extra_lines: Array[String] = []
-	if is_bought:
-		if auction_session.converted_silver_received > 0:
-			extra_lines.append("[color=#50fa7b]💰 Quy đổi Thường ➔ Vàng:[/color] +%s Xu" % _format_number(auction_session.converted_silver_received))
-		if not auction_session.retained_red_items.is_empty():
-			var names: Array[String] = []
-			for r_it in auction_session.retained_red_items:
-				names.append(r_it.display_name)
-			extra_lines.append("[color=#ff5555]🔥 Bảo vật đỏ giữ lại:[/color] %s" % ", ".join(names))
-
-	_settlement_extra_info_lbl.text = "\n".join(extra_lines)
+	# 4. Extra info (đã bỏ hiển thị ra UI theo yêu cầu người dùng)
+	if _settlement_extra_info_lbl != null:
+		_settlement_extra_info_lbl.text = ""
 
 
 func _on_settlement_grid_draw() -> void:
@@ -2154,7 +2227,9 @@ func _process(delta: float) -> void:
 	_border_anim_time += delta
 	if _settlement_overlay != null and _settlement_overlay.visible:
 		_settlement_spinner_angle = fmod(_settlement_spinner_angle + delta * 8.0, TAU)
-		_continue_pulse_time += delta * 4.0
+		_continue_pulse_time += delta * 3.5
+		if _settlement_continue_prompt != null and _settlement_continue_prompt.visible:
+			_settlement_continue_prompt.modulate.a = 0.45 + 0.55 * abs(sin(_continue_pulse_time))
 		if _settlement_continue_btn != null and _settlement_continue_btn.visible:
 			_settlement_continue_btn.modulate.a = 0.7 + 0.3 * sin(_continue_pulse_time)
 		if _settlement_grid_draw_control != null and _settlement_grid_draw_control.is_visible_in_tree():
@@ -2164,9 +2239,11 @@ func _process(delta: float) -> void:
 			_grid_draw_control.queue_redraw()
 
 
-func _on_settlement_overlay_gui_input(_event: InputEvent) -> void:
-	# Bấm vô màn hình sẽ không qua phase hay skip gì hết theo yêu cầu người dùng
-	pass
+func _on_settlement_overlay_gui_input(event: InputEvent) -> void:
+	# Khi đã hoàn tất reveal, người chơi bấm bất cứ đâu trên màn hình đều tiếp tục được
+	if not _is_settlement_revealing:
+		if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+			_on_finish_settlement_pressed()
 
 
 func _on_skip_pressed() -> void:
