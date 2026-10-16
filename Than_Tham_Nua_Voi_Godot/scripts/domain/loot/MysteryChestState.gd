@@ -19,6 +19,7 @@ enum HintType {
 var items: Array[MysteryChestItem] = []
 var generated_hints: Array[Dictionary] = []
 var current_hint_index: int = 0
+var has_quantity_hint: bool = false
 
 
 func total_silver_value() -> int:
@@ -145,20 +146,24 @@ func _pick_weighted_candidate(candidates: Array[Dictionary]) -> Dictionary:
 	return candidates.back()
 
 
-## Tạo danh sách 6 manh mối (1 lúc bắt đầu + 5 cho 5 vòng đấu giá)
+## Tạo danh sách manh mối cho phiên đấu giá (1 lúc bắt đầu + 5 cho 5 vòng đấu giá)
+## Quy tắc: Gợi ý tổng số lượng (EXACT_COUNT, COUNT_RANGE, COUNT_COMPARISON) tối đa chỉ xuất hiện 1 lần duy nhất.
+## Các gợi ý còn lại có thể lặp lại và trùng lặp bình thường.
 func generate_hint_pack(count: int = 6) -> Array[Dictionary]:
 	generated_hints.clear()
 	current_hint_index = 0
-	var used_types: Dictionary = {}
+	has_quantity_hint = false
 
 	# Đảm bảo có ít nhất vài món nếu hòm trống để có manh mối ý nghĩa
 	if items.is_empty():
 		roll_vault_deposit(2)
 
-	var all_types: Array[HintType] = [
+	var quantity_types: Array[HintType] = [
 		HintType.EXACT_COUNT,
 		HintType.COUNT_RANGE,
 		HintType.COUNT_COMPARISON,
+	]
+	var other_types: Array[HintType] = [
 		HintType.RARITY_COUNT,
 		HintType.RARITY_TOTAL_VALUE,
 		HintType.RARITY_AVERAGE_VALUE,
@@ -166,20 +171,19 @@ func generate_hint_pack(count: int = 6) -> Array[Dictionary]:
 		HintType.REVEAL_OUTLINES,
 		HintType.REVEAL_QUALITY,
 	]
-	all_types.shuffle()
 
-	for type_cand: HintType in all_types:
-		if generated_hints.size() >= count:
-			break
+	while generated_hints.size() < count:
+		var type_cand: HintType
+		# Tối đa chỉ 1 gợi ý về tổng số lượng (EXACT_COUNT, COUNT_RANGE, hoặc COUNT_COMPARISON) được xuất hiện
+		if not has_quantity_hint and randf() < 0.35:
+			type_cand = quantity_types.pick_random()
+			has_quantity_hint = true
+		else:
+			type_cand = other_types.pick_random()
+
 		var hint: Dictionary = _create_hint(type_cand)
 		if not hint.is_empty():
 			generated_hints.append(hint)
-			used_types[type_cand] = true
-
-	# Bổ sung nếu chưa đủ count
-	while generated_hints.size() < count:
-		var fallback_type: HintType = [HintType.REVEAL_ITEMS, HintType.REVEAL_OUTLINES, HintType.RARITY_COUNT].pick_random()
-		generated_hints.append(_create_hint(fallback_type))
 
 	return generated_hints
 
@@ -191,7 +195,86 @@ func next_hint() -> Dictionary:
 		return hint
 	if not generated_hints.is_empty():
 		return generated_hints[generated_hints.size() - 1]
-	return _create_hint(HintType.COUNT_RANGE)
+
+	# Fallback nếu vượt quá danh sách đã sinh: luôn chọn từ other_types để không lặp lại gợi ý tổng số lượng
+	var other_types: Array[HintType] = [
+		HintType.RARITY_COUNT,
+		HintType.RARITY_TOTAL_VALUE,
+		HintType.RARITY_AVERAGE_VALUE,
+		HintType.REVEAL_ITEMS,
+		HintType.REVEAL_OUTLINES,
+		HintType.REVEAL_QUALITY,
+	]
+	return _create_hint(other_types.pick_random())
+
+
+## Tạo 1 gợi ý nhỏ bổ trợ (Bonus Mini Hint) với 50% cơ hội mỗi round:
+## 1) Lộ viền kích thước của 1-3 món (REVEAL_OUTLINES)
+## 2) Lộ Phẩm Cấp của 1-3 món (REVEAL_QUALITY)
+## 3) Phơi Bày 1 Vật Phẩm (REVEAL_ITEMS)
+func create_bonus_hint() -> Dictionary:
+	if items.is_empty():
+		return {}
+
+	var bonus_choice: int = randi() % 3
+	match bonus_choice:
+		0:
+			# Lộ viền kích thước của 1-3 món
+			var count: int = mini(items.size(), randi_range(1, 3))
+			var shuffled := items.duplicate()
+			shuffled.shuffle()
+			var outlines: Array[Dictionary] = []
+			for idx in range(count):
+				var it: MysteryChestItem = shuffled[idx]
+				outlines.append({
+					"item_id": String(it.item_id),
+					"width": it.grid_width,
+					"height": it.grid_height
+				})
+			return {
+				"type": int(HintType.REVEAL_OUTLINES),
+				"title": "Lộ Viền Kích Thước %d Món" % count,
+				"description": "Biết được hình dạng kích cỡ (%d món) đang chiếm vị trí trong hòm." % count,
+				"revealed_outlines": outlines,
+				"revealed_items": [],
+				"revealed_qualities": [],
+				"is_bonus": true,
+			}
+		1:
+			# Lộ Phẩm Cấp của 1-3 món
+			var count: int = mini(items.size(), randi_range(1, 3))
+			var shuffled := items.duplicate()
+			shuffled.shuffle()
+			var qualities: Array[Dictionary] = []
+			for idx in range(count):
+				var it: MysteryChestItem = shuffled[idx]
+				qualities.append({
+					"item_id": String(it.item_id),
+					"rarity": int(it.rarity)
+				})
+			return {
+				"type": int(HintType.REVEAL_QUALITY),
+				"title": "Lộ Phẩm Cấp %d Ô (1x1)" % count,
+				"description": "Nhìn thấy màu sắc phẩm cấp của %d món đồ (thu gọn ô 1x1)." % count,
+				"revealed_qualities": qualities,
+				"revealed_items": [],
+				"revealed_outlines": [],
+				"is_bonus": true,
+			}
+		2:
+			# Phơi Bày 1 Vật Phẩm
+			var it: MysteryChestItem = items.pick_random()
+			return {
+				"type": int(HintType.REVEAL_ITEMS),
+				"title": "Phơi Bày 1 Vật Phẩm",
+				"description": "Đã lộ diện 1 món đồ ngẫu nhiên từ trong Hòm Bí Ẩn!",
+				"revealed_items": [it.to_dict()],
+				"revealed_item_ids": [String(it.item_id)],
+				"revealed_outlines": [],
+				"revealed_qualities": [],
+				"is_bonus": true,
+			}
+	return {}
 
 
 func _create_hint(type: HintType) -> Dictionary:
@@ -207,10 +290,12 @@ func _create_hint(type: HintType) -> Dictionary:
 
 	match type:
 		HintType.EXACT_COUNT:
+			has_quantity_hint = true
 			result["title"] = "Số Lượng Chính Xác"
 			result["description"] = "Trong Hòm Bí Ẩn hiện có chính xác %d vật phẩm." % total_count
 
 		HintType.COUNT_RANGE:
+			has_quantity_hint = true
 			var delta: int = maxi(1, randi_range(1, 3))
 			var min_c: int = maxi(0, total_count - delta)
 			var max_c: int = total_count + delta
@@ -218,6 +303,7 @@ func _create_hint(type: HintType) -> Dictionary:
 			result["description"] = "Tổng số vật phẩm trong hòm nằm trong khoảng từ %d đến %d món." % [min_c, max_c]
 
 		HintType.COUNT_COMPARISON:
+			has_quantity_hint = true
 			result["title"] = "So Sánh Số Lượng"
 			if randi() % 2 == 0 and total_count > 1:
 				var bound: int = randi_range(1, total_count - 1)

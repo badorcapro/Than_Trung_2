@@ -62,6 +62,8 @@ func initialize(vault_reach_player_ids: Array[StringName], chest: MysteryChestSt
 		var solo_clue_count: int = randi_range(3, 4)
 		for idx in range(solo_clue_count):
 			_publish_next_hint("Ưu Đãi Solo (%d/%d)" % [idx + 1, solo_clue_count])
+		if randf() < 0.5:
+			_publish_bonus_hint("Ưu Đãi Solo (Thêm)")
 	else:
 		state = State.AUCTION_ACTIVE
 		current_round = 1
@@ -70,6 +72,8 @@ func initialize(vault_reach_player_ids: Array[StringName], chest: MysteryChestSt
 		folded_player_ids.clear()
 		rounds_bids_history.clear()
 		_publish_next_hint("Khởi Điểm Đấu Giá")
+		if randf() < 0.5:
+			_publish_bonus_hint("Gợi Ý Phụ (Vòng 1)")
 
 
 func is_solo() -> bool:
@@ -216,6 +220,8 @@ func advance_round() -> void:
 	highest_bid = 0
 	highest_bidder_id = &""
 	_publish_next_hint("Vòng Đấu Giá %d" % current_round)
+	if randf() < 0.5:
+		_publish_bonus_hint("Gợi Ý Phụ (Vòng %d)" % current_round)
 
 
 ## Giải quyết kết quả vòng sau khi tất cả người chơi đã nộp giá ẩn
@@ -290,6 +296,15 @@ func _publish_next_hint(phase_title: String) -> void:
 	current_hint = mystery_chest.next_hint()
 	current_hint["phase"] = phase_title
 	hints_history.append(current_hint)
+
+
+func _publish_bonus_hint(phase_title: String) -> void:
+	if mystery_chest == null:
+		return
+	var bonus: Dictionary = mystery_chest.create_bonus_hint()
+	if not bonus.is_empty():
+		bonus["phase"] = phase_title
+		hints_history.append(bonus)
 
 
 func _conclude_auction() -> void:

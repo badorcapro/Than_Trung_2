@@ -1179,11 +1179,12 @@ func _render_clues() -> void:
 		child.queue_free()
 
 	for hint in auction_session.hints_history:
+		var is_bonus: bool = bool(hint.get("is_bonus", false))
 		var card := PanelContainer.new()
 		var cl_style := StyleBoxFlat.new()
-		cl_style.bg_color = Color(0.08, 0.12, 0.18, 0.9)
-		cl_style.border_color = Color(0.3, 0.5, 0.65, 0.7)
-		cl_style.border_width_left = 1
+		cl_style.bg_color = Color(0.10, 0.14, 0.20, 0.95) if is_bonus else Color(0.08, 0.12, 0.18, 0.9)
+		cl_style.border_color = Color("#f1fa8c") if is_bonus else Color(0.3, 0.5, 0.65, 0.7)
+		cl_style.border_width_left = 2 if is_bonus else 1
 		cl_style.border_width_top = 1
 		cl_style.border_width_right = 1
 		cl_style.border_width_bottom = 1
@@ -1199,7 +1200,7 @@ func _render_clues() -> void:
 		card.add_child(hbox)
 
 		var icon_lbl := Label.new()
-		icon_lbl.text = "🔍"
+		icon_lbl.text = "✨" if is_bonus else "🔍"
 		icon_lbl.add_theme_font_size_override("font_size", 22)
 		hbox.add_child(icon_lbl)
 
@@ -1214,7 +1215,7 @@ func _render_clues() -> void:
 		else:
 			t_lbl.text = String(hint.get("title", "Manh Mối"))
 		t_lbl.add_theme_font_size_override("font_size", 14)
-		t_lbl.add_theme_color_override("font_color", Color("#8be9fd"))
+		t_lbl.add_theme_color_override("font_color", Color("#f1fa8c") if is_bonus else Color("#8be9fd"))
 		vbox.add_child(t_lbl)
 
 		var d_lbl := Label.new()
