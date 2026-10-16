@@ -365,7 +365,8 @@ const CHARACTER_LORE_SKILLS: Dictionary = {
 @onready var dossier_seal_3: TextureRect = %DossierSeal3
 
 const DOSSIER_RESTING_ROTATIONS := [-3.0, 0.0, 3.0]
-var _selected_next_case_index: int = 0
+var _selected_next_case_index: int = -1
+var _is_starting_case: bool = false
 var _seal_sfx_player: AudioStreamPlayer
 var _cached_roles_by_id: Dictionary = {}
 @onready var match_results_panel: Control = %MatchResultsPanel
@@ -1568,11 +1569,12 @@ func _on_next_case_option_3_pressed() -> void:
 
 
 func _handle_dossier_press(index: int) -> void:
-	if _selected_next_case_index == index:
-		# Double click or click on already-selected dossier confirms and begins investigation!
-		_start_next_case_from_option(index)
+	if _is_starting_case:
 		return
+	_is_starting_case = true
 	_select_dossier(index)
+	var timer := get_tree().create_timer(0.25)
+	timer.timeout.connect(_start_next_case_from_option.bind(index))
 
 
 func _select_dossier(index: int) -> void:
@@ -3589,7 +3591,9 @@ func _refresh_procedural_next_case_options() -> void:
 		start_next_case_button.disabled = true
 		return
 
-	next_case_status.text = "Thám tử hãy xem xét các hồ sơ kỳ án dưới đây và chọn một kỳ án để thụ lý điều tra."
+	next_case_status.text = "Chọn một Kỳ Án để thụ lý điều tra"
+	_is_starting_case = false
+	_selected_next_case_index = -1
 
 	var titles := [dossier_title_1, dossier_title_2, dossier_title_3]
 	var regions := [dossier_region_1, dossier_region_2, dossier_region_3]
@@ -3681,10 +3685,8 @@ func _update_dossier_selection_visuals() -> void:
 		if buttons[i] != null:
 			buttons[i].z_index = 2 if is_sel else 0
 
-	var case_name: String = _get_case_option_title(_selected_next_case_index)
-	start_next_case_button.visible = true
-	start_next_case_button.disabled = false
-	start_next_case_button.text = "▶ BẮT ĐẦU ĐIỀU TRA: %s" % case_name.to_upper()
+	start_next_case_button.visible = false
+	start_next_case_button.disabled = true
 
 
 func _get_dossier_paper_style() -> StyleBoxFlat:
@@ -4182,9 +4184,9 @@ func _show_phase(next_phase: int) -> void:
 		splash_panel.visible = false
 	var is_main_menu: bool = next_phase == SETUP_SESSION.Phase.MAIN_MENU
 	if game_title != null:
-		game_title.visible = not is_desktop_phase
+		game_title.visible = not is_desktop_phase and next_phase != SETUP_SESSION.Phase.NEXT_CASE_SELECTION
 	if subtitle != null:
-		subtitle.visible = not is_desktop_phase
+		subtitle.visible = not is_desktop_phase and next_phase != SETUP_SESSION.Phase.NEXT_CASE_SELECTION
 	if safe_margin != null:
 		safe_margin.visible = (
 			not is_desktop_phase

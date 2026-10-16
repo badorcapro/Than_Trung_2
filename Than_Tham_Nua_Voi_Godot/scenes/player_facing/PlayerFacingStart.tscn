@@ -4036,6 +4036,7 @@ stretch_mode = 5
 
 [node name="StartNextCase" type="Button" parent="SafeMargin/Page/Content/NextCasePanel/Card/Column"]
 unique_name_in_owner = true
+visible = false
 custom_minimum_size = Vector2(440, 50)
 layout_mode = 2
 size_flags_horizontal = 4
