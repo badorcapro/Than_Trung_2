@@ -133,6 +133,8 @@ var _settlement_continue_btn: Button
 var _settlement_continue_prompt: Label
 var _settlement_skip_btn: Button
 var _settlement_grid_draw_control: Control
+var _settlement_retained_container: VBoxContainer
+var _settlement_retained_counts: Dictionary = {} # clean_name -> { "count": int, "color": Color, "rarity": int }
 
 # Settlement Reveal Animation State
 var _is_settlement_revealing: bool = false
@@ -513,12 +515,29 @@ func _play_reveal_sfx(silver_val: int) -> void:
 func _build_settlement_dialog() -> void:
 	_settlement_overlay = ColorRect.new()
 	_settlement_overlay.set_anchors_preset(PRESET_FULL_RECT)
-	# Fullscreen bán trong suốt theo chuẩn Bidking
-	_settlement_overlay.color = Color(0.04, 0.06, 0.09, 0.82)
+	_settlement_overlay.color = Color(0.02, 0.03, 0.05, 1.0)
 	_settlement_overlay.visible = false
 	_settlement_overlay.mouse_filter = MOUSE_FILTER_STOP
 	_settlement_overlay.gui_input.connect(_on_settlement_overlay_gui_input)
 	add_child(_settlement_overlay)
+
+	# 1. Background Thumbnail Đấu Giá (che hoàn toàn thẻ bidder và các nút bên dưới)
+	var bg_tex := load("res://assets/ui/auction/auction_stage_bg.png") as Texture2D
+	if bg_tex != null:
+		var s_bg_img := TextureRect.new()
+		s_bg_img.set_anchors_preset(PRESET_FULL_RECT)
+		s_bg_img.texture = bg_tex
+		s_bg_img.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		s_bg_img.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+		s_bg_img.mouse_filter = MOUSE_FILTER_IGNORE
+		_settlement_overlay.add_child(s_bg_img)
+
+	# 2. Lớp phủ tối tương phản (Dark Scrim) để text và số nổi bật, không bị chói hay rối mắt
+	var s_dark_scrim := ColorRect.new()
+	s_dark_scrim.set_anchors_preset(PRESET_FULL_RECT)
+	s_dark_scrim.color = Color(0.02, 0.03, 0.05, 0.72)
+	s_dark_scrim.mouse_filter = MOUSE_FILTER_IGNORE
+	_settlement_overlay.add_child(s_dark_scrim)
 
 	var main_margin := MarginContainer.new()
 	main_margin.set_anchors_preset(PRESET_FULL_RECT)
@@ -690,6 +709,12 @@ func _build_settlement_dialog() -> void:
 	_settlement_profit_lbl.add_theme_font_size_override("font_size", 32)
 	_settlement_profit_lbl.add_theme_color_override("font_color", Color("#50fa7b"))
 	s3_box.add_child(_settlement_profit_lbl)
+
+	# Danh sách đồ giữ lại xuất hiện theo thời gian thực dưới Lợi nhuận
+	_settlement_retained_container = VBoxContainer.new()
+	_settlement_retained_container.add_theme_constant_override("separation", 4)
+	_settlement_retained_container.mouse_filter = MOUSE_FILTER_PASS
+	s3_box.add_child(_settlement_retained_container)
 
 	# Spacer đẩy đáy
 	var sp_left := Control.new()
@@ -1847,6 +1872,9 @@ func _show_settlement_dialog() -> void:
 	if _settlement_continue_btn != null:
 		_settlement_continue_btn.visible = false
 
+	_settlement_retained_counts.clear()
+	_render_retained_items_ui()
+
 	_update_settlement_stats()
 	if _settlement_grid_draw_control != null:
 		_settlement_grid_draw_control.queue_redraw()
@@ -1929,6 +1957,7 @@ func _run_settlement_reveal() -> void:
 		_settlement_accumulated_value += item.silver_value
 		_active_loading_item_id = ""
 		_play_reveal_sfx(item.silver_value)
+		_check_and_register_retained_item(item)
 		_update_settlement_stats()
 		if _settlement_grid_draw_control != null:
 			_settlement_grid_draw_control.queue_redraw()
@@ -1947,6 +1976,7 @@ func _finish_settlement_reveal() -> void:
 			var it: ITEM_CLASS = _grid_placements[str_id].get("item") as ITEM_CLASS
 			if it != null:
 				_settlement_accumulated_value += it.silver_value
+				_check_and_register_retained_item(it)
 
 	_update_settlement_stats()
 	if _settlement_grid_draw_control != null:
@@ -2039,6 +2069,76 @@ func _update_settlement_stats() -> void:
 	# 4. Extra info (đã bỏ hiển thị ra UI theo yêu cầu người dùng)
 	if _settlement_extra_info_lbl != null:
 		_settlement_extra_info_lbl.text = ""
+
+
+func _check_and_register_retained_item(item: ITEM_CLASS) -> void:
+	if item == null:
+		return
+	var is_retained: bool = (
+		item.rarity == ITEM_CLASS.Rarity.RED
+		or (item.is_resource and not item.can_sell)
+		or item.is_lab_upgrade_material()
+		or item.reward_type in ["refinement_chips", "lab_material"]
+	)
+	if not is_retained:
+		return
+
+	var clean_name: String = item.display_name.strip_edges()
+	var qty: int = item.quantity if item.quantity > 0 else 1
+	var r_bracket := clean_name.rfind("(")
+	if r_bracket != -1 and clean_name.ends_with(")"):
+		var inside: String = clean_name.substr(r_bracket + 1, clean_name.length() - r_bracket - 2).strip_edges()
+		if inside.is_valid_int():
+			clean_name = clean_name.substr(0, r_bracket).strip_edges()
+			if item.quantity <= 0:
+				qty = inside.to_int()
+
+	if not _settlement_retained_counts.has(clean_name):
+		_settlement_retained_counts[clean_name] = {
+			"count": qty,
+			"color": Color("#ff5555") if item.rarity == ITEM_CLASS.Rarity.RED else Color("#f6c95c"),
+			"rarity": item.rarity
+		}
+	else:
+		_settlement_retained_counts[clean_name]["count"] += qty
+
+	_render_retained_items_ui()
+
+
+func _render_retained_items_ui() -> void:
+	if _settlement_retained_container == null:
+		return
+	for child in _settlement_retained_container.get_children():
+		child.queue_free()
+
+	for c_name in _settlement_retained_counts.keys():
+		var data: Dictionary = _settlement_retained_counts[c_name]
+		var count: int = data.get("count", 1)
+		var c_color: Color = data.get("color", Color("#f6c95c"))
+
+		var item_hbox := HBoxContainer.new()
+		item_hbox.add_theme_constant_override("separation", 6)
+		item_hbox.mouse_filter = MOUSE_FILTER_PASS
+
+		var bullet_lbl := Label.new()
+		bullet_lbl.text = "•"
+		bullet_lbl.add_theme_font_size_override("font_size", 14)
+		bullet_lbl.add_theme_color_override("font_color", c_color)
+		item_hbox.add_child(bullet_lbl)
+
+		var name_lbl := Label.new()
+		name_lbl.text = c_name
+		name_lbl.add_theme_font_size_override("font_size", 14)
+		name_lbl.add_theme_color_override("font_color", Color("#e2e8f0"))
+		item_hbox.add_child(name_lbl)
+
+		var count_lbl := Label.new()
+		count_lbl.text = "+%d" % count
+		count_lbl.add_theme_font_size_override("font_size", 14)
+		count_lbl.add_theme_color_override("font_color", Color("#50fa7b"))
+		item_hbox.add_child(count_lbl)
+
+		_settlement_retained_container.add_child(item_hbox)
 
 
 func _on_settlement_grid_draw() -> void:
