@@ -71,6 +71,7 @@ func to_dict() -> Dictionary:
 		"asset_path": asset_path,
 		"weight_str": weight_str,
 		"category": category,
+		"drop_weight": drop_weight,
 	}
 
 
@@ -91,4 +92,5 @@ static func from_dict(data: Dictionary) -> MysteryChestItem:
 	item.asset_path = String(data.get("asset_path", ""))
 	item.weight_str = String(data.get("weight_str", "<0.10KG"))
 	item.category = String(data.get("category", "general"))
+	item.drop_weight = int(data.get("drop_weight", 100))
 	return item

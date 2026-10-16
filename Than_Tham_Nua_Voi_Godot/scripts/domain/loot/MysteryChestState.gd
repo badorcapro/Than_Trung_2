@@ -103,7 +103,7 @@ func _generate_random_item() -> MysteryChestItem:
 func _apply_item_profile(item: MysteryChestItem) -> void:
 	var catalog_candidates: Array[Dictionary] = CATALOG_CLASS.filter_items(item.rarity)
 	if not catalog_candidates.is_empty():
-		var chosen: Dictionary = catalog_candidates.pick_random()
+		var chosen: Dictionary = _pick_weighted_candidate(catalog_candidates)
 		item.display_name = String(chosen.get("display_name", "Vật Phẩm"))
 		item.silver_value = int(chosen.get("silver_value", 0))
 		item.grid_width = int(chosen.get("grid_width", 1))
@@ -116,6 +116,7 @@ func _apply_item_profile(item: MysteryChestItem) -> void:
 		item.asset_path = String(chosen.get("asset_path", ""))
 		item.weight_str = String(chosen.get("weight_str", "<0.10KG"))
 		item.category = String(chosen.get("category", "general"))
+		item.drop_weight = int(chosen.get("drop_weight", 100))
 		item.item_id = StringName("%s_%d" % [String(chosen.get("id", "item")), randi() % 10000])
 		return
 
@@ -125,6 +126,23 @@ func _apply_item_profile(item: MysteryChestItem) -> void:
 	item.grid_width = 1
 	item.grid_height = 1
 	item.item_id = StringName("vault_item_%s_%d" % [MysteryChestItem.rarity_name(item.rarity).to_lower(), randi() % 10000])
+
+
+func _pick_weighted_candidate(candidates: Array[Dictionary]) -> Dictionary:
+	if candidates.is_empty():
+		return {}
+	var total_weight: int = 0
+	for c in candidates:
+		total_weight += int(c.get("drop_weight", 100))
+	if total_weight <= 0:
+		return candidates.pick_random()
+	var roll: int = randi() % total_weight
+	var current: int = 0
+	for c in candidates:
+		current += int(c.get("drop_weight", 100))
+		if roll < current:
+			return c
+	return candidates.back()
 
 
 ## Tạo danh sách 6 manh mối (1 lúc bắt đầu + 5 cho 5 vòng đấu giá)

@@ -2929,7 +2929,8 @@ static var _CATALOG_ITEMS: Array[Dictionary] = [
 		"rarity": ITEM_CLASS.Rarity.RED,
 		"grid_width": 1,
 		"grid_height": 1,
-		"silver_value": 98,
+		"silver_value": 502,
+		"drop_weight": 2,
 		"weight_str": "0.62KG",
 		"category": "antique",
 		"asset_path": "res://assets/auction_items/a028.png",
@@ -3099,7 +3100,8 @@ static var _CATALOG_ITEMS: Array[Dictionary] = [
 		"rarity": ITEM_CLASS.Rarity.RED,
 		"grid_width": 3,
 		"grid_height": 2,
-		"silver_value": 90,
+		"silver_value": 135,
+		"drop_weight": 40,
 		"weight_str": "15.00KG",
 		"category": "tool",
 		"asset_path": "res://assets/auction_items/a018.png",
@@ -3483,4 +3485,5 @@ static func create_item_instance(data: Dictionary) -> MysteryChestItem:
 	it.is_resource = bool(data.get("is_resource", false))
 	it.can_sell = bool(data.get("can_sell", true))
 	it.reward_type = String(data.get("reward_type", "silver"))
+	it.drop_weight = int(data.get("drop_weight", 100))
 	return it
