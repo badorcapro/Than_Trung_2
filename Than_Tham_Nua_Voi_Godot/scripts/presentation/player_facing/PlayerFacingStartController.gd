@@ -3806,7 +3806,7 @@ func _create_role_badge(role_id: StringName, role: RoleDefinition) -> PanelConta
 
 	var vbox := VBoxContainer.new()
 	vbox.mouse_filter = Control.MOUSE_FILTER_PASS
-	vbox.theme_override_constants_set("separation", 2)
+	vbox.add_theme_constant_override("separation", 2)
 	vbox.alignment = BoxContainer.ALIGNMENT_CENTER
 	badge.add_child(vbox)
 
@@ -3822,7 +3822,7 @@ func _create_role_badge(role_id: StringName, role: RoleDefinition) -> PanelConta
 
 	var name_lbl := Label.new()
 	name_lbl.mouse_filter = Control.MOUSE_FILTER_PASS
-	name_lbl.theme_override_font_sizes_set("font_size", 9)
+	name_lbl.add_theme_font_size_override("font_size", 9)
 	name_lbl.add_theme_color_override("font_color", Color(0.15, 0.12, 0.08, 1.0))
 	name_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	name_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
