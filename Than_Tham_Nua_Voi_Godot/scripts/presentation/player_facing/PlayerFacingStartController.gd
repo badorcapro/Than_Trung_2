@@ -1062,23 +1062,6 @@ func _inspect_character(char_def: CharacterDefinition) -> void:
 	if inspect_bag_label != null:
 		inspect_bag_label.text = "🎒 Sức chứa túi: Cấp %d" % char_def.base_bag_level
 
-	var inspect_avatar_frame: Panel = get_node_or_null("%InspectAvatarFrame") as Panel
-	if inspect_avatar_frame != null:
-		var frame_style := StyleBoxFlat.new()
-		frame_style.bg_color = Color(0.06, 0.08, 0.12, 0.8)
-		frame_style.border_width_left = 3
-		frame_style.border_width_top = 3
-		frame_style.border_width_right = 3
-		frame_style.border_width_bottom = 3
-		frame_style.border_color = lore.house_color
-		frame_style.corner_radius_top_left = 60
-		frame_style.corner_radius_top_right = 60
-		frame_style.corner_radius_bottom_right = 60
-		frame_style.corner_radius_bottom_left = 60
-		frame_style.shadow_color = Color(lore.house_color.r, lore.house_color.g, lore.house_color.b, 0.4)
-		frame_style.shadow_size = 10
-		inspect_avatar_frame.add_theme_stylebox_override("panel", frame_style)
-
 	var portrait_path: String = "res://assets/portraits/%s.png" % String(char_def.character_id)
 	if ResourceLoader.exists(portrait_path):
 		var tex := load(portrait_path) as Texture2D
