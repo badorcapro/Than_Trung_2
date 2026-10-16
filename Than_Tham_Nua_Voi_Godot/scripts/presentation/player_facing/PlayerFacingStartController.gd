@@ -430,7 +430,10 @@ func _ready() -> void:
 func _init_dossier_system() -> void:
 	_seal_sfx_player = AudioStreamPlayer.new()
 	_seal_sfx_player.bus = &"Master"
-	if ResourceLoader.exists("res://assets/audio/sfx_item_reveal_normal.wav"):
+	_seal_sfx_player.volume_db = -4.0
+	if ResourceLoader.exists("res://assets/audio/sfx_seal_stamp.wav"):
+		_seal_sfx_player.stream = load("res://assets/audio/sfx_seal_stamp.wav") as AudioStream
+	elif ResourceLoader.exists("res://assets/audio/sfx_item_reveal_normal.wav"):
 		_seal_sfx_player.stream = load("res://assets/audio/sfx_item_reveal_normal.wav") as AudioStream
 	add_child(_seal_sfx_player)
 
