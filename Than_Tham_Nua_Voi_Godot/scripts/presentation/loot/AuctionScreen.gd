@@ -485,7 +485,7 @@ func _build_ui() -> void:
 
 	_sfx_high_val_player = AudioStreamPlayer.new()
 	_sfx_high_val_player.bus = &"Master"
-	_sfx_high_val_player.volume_db = 2.5
+	_sfx_high_val_player.volume_db = 3.5
 	add_child(_sfx_high_val_player)
 
 	if ResourceLoader.exists(SFX_ITEM_REVEAL_NORMAL_PATH):
