@@ -888,14 +888,7 @@ func refresh_ui() -> void:
 	if auction_session == null:
 		return
 
-	var ko_hint := ""
-	if AUCTION_SESSION_CLASS.KNOCKOUT_RATIOS.has(auction_session.current_round):
-		var r_ratio: float = float(AUCTION_SESSION_CLASS.KNOCKOUT_RATIOS[auction_session.current_round])
-		ko_hint = " • ÁP ĐẢO: TOP 1 ≥ %.1fx TOP 2" % r_ratio
-	else:
-		ko_hint = " • VÒNG CHỐT HẠ"
-
-	_round_label.text = "VÒNG %d / %d%s" % [auction_session.current_round, AUCTION_SESSION_CLASS.MAX_ROUNDS, ko_hint]
+	_round_label.text = "VÒNG %d / %d" % [auction_session.current_round, AUCTION_SESSION_CLASS.MAX_ROUNDS]
 
 	_render_bidders()
 	_render_clues()
@@ -1049,23 +1042,7 @@ func _render_bidders() -> void:
 		p_av_lbl.add_theme_font_size_override("font_size", 16)
 		p_av_center.add_child(p_av_lbl)
 
-		# Ô 2 (Dưới): Avatar nhân vật (Character Portrait)
-		var c_av_panel := PanelContainer.new()
-		c_av_panel.custom_minimum_size = Vector2(40, 40)
-		var c_av_sb := StyleBoxFlat.new()
-		c_av_sb.bg_color = Color(0.04, 0.07, 0.11, 0.9)
-		c_av_sb.border_color = char_data.theme_color
-		c_av_sb.border_width_left = 1
-		c_av_sb.border_width_top = 1
-		c_av_sb.border_width_right = 1
-		c_av_sb.border_width_bottom = 1
-		c_av_sb.corner_radius_top_left = 6
-		c_av_sb.corner_radius_top_right = 6
-		c_av_sb.corner_radius_bottom_left = 6
-		c_av_sb.corner_radius_bottom_right = 6
-		c_av_panel.add_theme_stylebox_override("panel", c_av_sb)
-		left_col.add_child(c_av_panel)
-
+		# Ô 2 (Dưới): Avatar nhân vật (Character Portrait) - Full hình, bỏ khung xanh dương
 		var p_path: String = char_data.portrait
 		var portrait_tex: Texture2D = _get_cached_item_texture(p_path)
 		if portrait_tex != null:
@@ -1073,22 +1050,16 @@ func _render_bidders() -> void:
 			c_img.texture = portrait_tex
 			c_img.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 			c_img.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
-			c_img.custom_minimum_size = Vector2(38, 38)
-			c_av_panel.add_child(c_img)
+			c_img.custom_minimum_size = Vector2(46, 46)
+			left_col.add_child(c_img)
 		else:
 			var c_center := CenterContainer.new()
-			c_av_panel.add_child(c_center)
+			c_center.custom_minimum_size = Vector2(46, 46)
 			var c_icon_lbl := Label.new()
 			c_icon_lbl.text = char_data.icon
-			c_icon_lbl.add_theme_font_size_override("font_size", 16)
+			c_icon_lbl.add_theme_font_size_override("font_size", 20)
 			c_center.add_child(c_icon_lbl)
-
-		var c_name_lbl := Label.new()
-		c_name_lbl.text = char_data.short_name
-		c_name_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		c_name_lbl.add_theme_font_size_override("font_size", 9)
-		c_name_lbl.add_theme_color_override("font_color", Color(0.85, 0.88, 0.92))
-		left_col.add_child(c_name_lbl)
+			left_col.add_child(c_center)
 
 		# =========================================================
 		# 2. KHU VỰC BÊN PHẢI (THÔNG TIN & 5 CỘT ROUND)
@@ -1110,9 +1081,8 @@ func _render_bidders() -> void:
 		p_name_lbl.add_theme_color_override("font_color", Color.WHITE if is_active else Color("#6272a4"))
 		row1_hbox.add_child(p_name_lbl)
 
-		# Góc phải Hàng 1: Hộp cọc tiền (Image 3) khi đến lượt, hoặc [Top X] Ra giá lần Y
+		# Góc phải Hàng 1: Chỉ hiện hộp cọc tiền 🪙 khi tới lượt, bỏ 'Ra giá lần 1/2'
 		if is_current_turn:
-			# Ảnh 3: Hộp cọc tiền 🪙 nổi bật khi đến lượt
 			var coin_box := PanelContainer.new()
 			coin_box.custom_minimum_size = Vector2(92, 22)
 			var coin_sb := StyleBoxFlat.new()
@@ -1145,55 +1115,12 @@ func _render_bidders() -> void:
 			coin_hbox.add_child(coin_txt)
 
 			row1_hbox.add_child(coin_box)
-		else:
-			# Trạng thái vòng hoặc thứ hạng
-			var status_hbox := HBoxContainer.new()
-			status_hbox.add_theme_constant_override("separation", 4)
-			status_hbox.alignment = BoxContainer.ALIGNMENT_END
-			row1_hbox.add_child(status_hbox)
-
-			if not is_active:
-				var fold_lbl := Label.new()
-				fold_lbl.text = "🏳️ Đã bỏ"
-				fold_lbl.add_theme_font_size_override("font_size", 10)
-				fold_lbl.add_theme_color_override("font_color", Color("#6272a4"))
-				status_hbox.add_child(fold_lbl)
-			else:
-				var curr_round: int = auction_session.current_round
-				var rk: int = 0
-				if _round_completed:
-					rk = auction_session.get_player_rank_in_round(pid, curr_round)
-				elif curr_round > 1:
-					rk = auction_session.get_player_rank_in_round(pid, curr_round - 1)
-
-				if rk > 0:
-					var rk_panel := PanelContainer.new()
-					rk_panel.custom_minimum_size = Vector2(20, 18)
-					var rk_sb := StyleBoxFlat.new()
-					rk_sb.corner_radius_top_left = 3
-					rk_sb.corner_radius_top_right = 3
-					rk_sb.corner_radius_bottom_left = 3
-					rk_sb.corner_radius_bottom_right = 3
-					match rk:
-						1: rk_sb.bg_color = Color(0.92, 0.70, 0.05, 0.95)
-						2: rk_sb.bg_color = Color(0.06, 0.71, 0.83, 0.95)
-						3: rk_sb.bg_color = Color(0.23, 0.51, 0.96, 0.95)
-						_: rk_sb.bg_color = Color(0.13, 0.77, 0.36, 0.95)
-					rk_panel.add_theme_stylebox_override("panel", rk_sb)
-
-					var rk_lbl := Label.new()
-					rk_lbl.text = str(rk)
-					rk_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-					rk_lbl.add_theme_font_size_override("font_size", 10)
-					rk_lbl.add_theme_color_override("font_color", Color.BLACK if rk == 1 else Color.WHITE)
-					rk_panel.add_child(rk_lbl)
-					status_hbox.add_child(rk_panel)
-
-				var turn_txt := Label.new()
-				turn_txt.text = "Ra giá lần %d" % auction_session.current_round
-				turn_txt.add_theme_font_size_override("font_size", 10)
-				turn_txt.add_theme_color_override("font_color", Color(0.75, 0.82, 0.9))
-				status_hbox.add_child(turn_txt)
+		elif not is_active:
+			var fold_lbl := Label.new()
+			fold_lbl.text = "🏳️ Đã bỏ"
+			fold_lbl.add_theme_font_size_override("font_size", 10)
+			fold_lbl.add_theme_color_override("font_color", Color("#6272a4"))
+			row1_hbox.add_child(fold_lbl)
 
 		# Hàng 2: Banner tên nhân vật / danh hiệu (Tiến Sĩ Cuồng Nhiệt style)
 		var banner_panel := PanelContainer.new()
