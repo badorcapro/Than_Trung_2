@@ -25,6 +25,7 @@ var reward_type: String = "" # "silver", "black_ticket", "refinement_chips", "la
 var asset_path: String = ""
 var weight_str: String = "<0.10KG"
 var category: String = "general"
+var drop_weight: int = 100
 
 
 static func rarity_name(r: Rarity) -> String:
