@@ -1147,6 +1147,7 @@ func _on_char_select_start_pressed() -> void:
 			chosen.append(c as CharacterDefinition)
 
 	if chosen.size() < 2:
+		_show_toast("Cần tối thiểu 2 đối tượng thí nghiệm để bắt đầu mô phỏng.", true)
 		return
 
 	if desktop_character_select_dialog != null:
@@ -1155,7 +1156,10 @@ func _on_char_select_start_pressed() -> void:
 	setup.begin_new_game()
 	setup.choose_match_mode(_desktop_selected_mode)
 	setup.confirm_match_rules()
-	setup.choose_player_count(chosen.size())
+	var pc_res: Dictionary = setup.choose_player_count(chosen.size(), true)
+	if not bool(pc_res.get("success", false)):
+		_show_toast("Lỗi cấu hình số lượng: %s" % str(pc_res.get("error", "")), true)
+		return
 
 	for i in range(chosen.size()):
 		setup.select_character(chosen[i].character_id)
@@ -1163,8 +1167,30 @@ func _on_char_select_start_pressed() -> void:
 		if setup.phase == SETUP_SESSION.Phase.PASS_DEVICE:
 			setup.continue_after_pass_device()
 
-	setup.confirm_lineup()
+	var confirm_res: Dictionary = setup.confirm_lineup()
+	if not bool(confirm_res.get("success", false)):
+		_show_toast("Không thể xác nhận danh sách đối tượng: %s" % str(confirm_res.get("error", "")), true)
+		return
+
+	var candidate_flow: CASE_FLOW_SESSION = CASE_FLOW_SESSION.new()
+	var initialized: Dictionary = candidate_flow.initialize_player_facing_case_options(
+		setup.match_state
+	)
+	if not bool(initialized.get("success", false)):
+		_show_toast("Chưa thể chuẩn bị Kỳ Án mô phỏng đầu tiên.", true)
+		return
+	var prepared_options: Dictionary = candidate_flow.prepare_default_next_case_options()
+	if not bool(prepared_options.get("success", false)):
+		_show_toast("Chưa thể chuẩn bị ba lựa chọn Kỳ Án mô phỏng.", true)
+		return
+	var presented: Dictionary = setup.mark_first_case_selection_required()
+	if not bool(presented.get("success", false)):
+		_show_toast("Chưa thể mở danh sách Kỳ Án đầu tiên.", true)
+		return
+	case_flow = candidate_flow
+	_refresh_next_case()
 	_show_phase(setup.phase)
+	_show_toast("Đội hình đối tượng đã sẵn sàng. Hãy chọn Kỳ Án mô phỏng.")
 
 
 func _on_new_game_pressed() -> void:

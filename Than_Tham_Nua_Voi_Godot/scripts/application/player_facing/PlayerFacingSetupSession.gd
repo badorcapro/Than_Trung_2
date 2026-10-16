@@ -186,7 +186,7 @@ func back_to_match_rules() -> Dictionary:
 	return _success(&"MATCH_RULES_READY")
 
 
-func choose_player_count(player_count: int) -> Dictionary:
+func choose_player_count(player_count: int, allow_custom_counts: bool = false) -> Dictionary:
 	if phase == Phase.MATCH_MODE:
 		var mode_result: Dictionary = choose_match_mode(MATCH_RULES.Mode.CLASSIC)
 		if not bool(mode_result.get("success", false)):
@@ -196,7 +196,9 @@ func choose_player_count(player_count: int) -> Dictionary:
 			return rules_result
 	if phase != Phase.PLAYER_COUNT:
 		return _failure(&"PLAYER_COUNT_PHASE_REQUIRED")
-	if player_count != SUPPORTED_PLAYER_COUNT:
+	if not allow_custom_counts and player_count != SUPPORTED_PLAYER_COUNT:
+		return _failure(&"PLAYER_COUNT_NOT_SUPPORTED")
+	if allow_custom_counts and (player_count < 2 or player_count > 4):
 		return _failure(&"PLAYER_COUNT_NOT_SUPPORTED")
 	var roster_report: LOOT_VALIDATION_REPORT = (
 		PRODUCTION_CHARACTER_ROSTER_VALIDATOR.new().validate(characters)
@@ -205,7 +207,7 @@ func choose_player_count(player_count: int) -> Dictionary:
 		return _report_failure(roster_report)
 	var report: LOOT_VALIDATION_REPORT = _selection_service.configure_player_count(
 		selection_session,
-		SUPPORTED_PLAYER_COUNT,
+		player_count,
 		false
 	)
 	if not report.is_valid:
@@ -527,7 +529,8 @@ func restore_between_rounds(source_match: MVP_MATCH_STATE) -> Dictionary:
 		return _failure(&"BETWEEN_ROUNDS_MATCH_INVALID")
 	if (
 		not source_match.character_selection_complete
-		or source_match.players.size() != SUPPORTED_PLAYER_COUNT
+		or source_match.players.size() < 2
+		or source_match.players.size() > 4
 		or source_match.current_phase != MVP_ENUMS.Phase.ROUND_START
 		or source_match.match_completion_state != &"NEXT_CASE_REQUIRED"
 		or source_match.completed_round_count < 1
