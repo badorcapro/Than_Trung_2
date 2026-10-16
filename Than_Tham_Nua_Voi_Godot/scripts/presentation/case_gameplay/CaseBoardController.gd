@@ -191,48 +191,33 @@ func _build_crime_scene_tile(_location: BoardLocationDefinition) -> Control:
 	var tex_rect := TextureRect.new()
 	tex_rect.name = "CrimeSceneTexture"
 	tex_rect.set_anchors_preset(Control.PRESET_FULL_RECT)
-	tex_rect.texture = preload("res://assets/ui/case/imperial/crime_scene_center.png")
+	tex_rect.texture = preload("res://assets/ui/case/dupery/crime_scene_card_skin.png")
 	tex_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	tex_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
 	tex_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	container.add_child(tex_rect)
-
-	var column: VBoxContainer = VBoxContainer.new()
-	column.set_anchors_preset(Control.PRESET_FULL_RECT)
-	column.alignment = BoxContainer.ALIGNMENT_CENTER
-	column.add_theme_constant_override("separation", 6)
-	container.add_child(column)
-
-	var title: Label = Label.new()
-	title.name = "CrimeSceneTitle"
-	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	title.add_theme_color_override("font_color", Color(1.0, 0.94, 0.65, 1.0))
-	title.add_theme_font_size_override("font_size", 16)
-	title.text = "HIỆN TRƯỜNG"
-	column.add_child(title)
-
-	var icon_label: Label = Label.new()
-	icon_label.name = "CrimeSceneIcon"
-	icon_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	icon_label.add_theme_color_override("font_color", Color(0.96, 0.78, 0.42, 1.0))
-	icon_label.add_theme_font_size_override("font_size", 28)
-	icon_label.text = "!"
-	column.add_child(icon_label)
 	return container
 
 
 func _build_clock_tower_tile(location: BoardLocationDefinition, elapsed_hours: int) -> Control:
 	var tower: ClockTowerDefinition = location as ClockTowerDefinition
 	var is_ringing: bool = tower != null and elapsed_hours >= 0 and ClockTowerService.hour_is_ringing(tower, elapsed_hours)
-	var panel: PanelContainer = _build_location_panel(
-		"ClockTowerTile",
-		Color(0.18, 0.22, 0.12, 1.0) if is_ringing else Color(0.10, 0.09, 0.09, 1.0),
-		Color(0.96, 0.86, 0.40, 1.0) if is_ringing else Color(0.72, 0.60, 0.35, 1.0)
-	)
-	var column: VBoxContainer = panel.get_child(0) as VBoxContainer
-	_add_location_title(column, location.display_name if location != null and not location.display_name.is_empty() else "Tháp Đồng Hồ", Color(1.0, 0.88, 0.52, 1.0) if is_ringing else Color(0.92, 0.85, 0.70, 1.0))
-	_add_location_icon(column, "REO" if is_ringing else "12", Color(1.0, 0.92, 0.46, 1.0) if is_ringing else Color(0.85, 0.78, 0.65, 1.0))
-	return panel
+	var container := Control.new()
+	container.name = "ClockTowerTile"
+	container.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	container.custom_minimum_size = _tile_size
+	container.size_flags_horizontal = Control.SIZE_FILL
+	container.size_flags_vertical = Control.SIZE_FILL
+
+	var tex_rect := TextureRect.new()
+	tex_rect.name = "ClockTowerTexture"
+	tex_rect.set_anchors_preset(Control.PRESET_FULL_RECT)
+	tex_rect.texture = preload("res://assets/ui/case/dupery/clock_tower_card_skin.png")
+	tex_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	tex_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+	tex_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	container.add_child(tex_rect)
+	return container
 
 
 func _build_generic_location_tile(location: BoardLocationDefinition) -> Control:

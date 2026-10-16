@@ -13,10 +13,8 @@ const FUNCTION_MARKER_CONSUMED := "consumed"
 const FUNCTION_HAND_AVAILABLE_TEXTURE: Texture2D = preload("res://assets/ui/case/function_hand_available.png")
 const FUNCTION_HAND_CONSUMED_TEXTURE: Texture2D = preload("res://assets/ui/case/function_hand_consumed.png")
 const DEAD_MARKER_TEXTURE: Texture2D = preload("res://assets/ui/case/dead_marker_universal.png")
-const CARD_SKIN_3X3_TEXTURE: Texture2D = preload("res://assets/ui/case/imperial/suspect_card_frame.png")
-const CARD_SKIN_4X4_TEXTURE: Texture2D = preload("res://assets/ui/case/imperial/suspect_card_frame.png")
-const DOOR_SILHOUETTE_TEXTURE: Texture2D = preload("res://assets/ui/case/imperial/door_silhouette.png")
-const ROLE_ICON_DICH_PHU: Texture2D = preload("res://assets/ui/case/role_icons/dich_phu.png")
+const CARD_SKIN_DOOR_TEXTURE: Texture2D = preload("res://assets/ui/case/dupery/door_card_skin.png")
+const CARD_SKIN_POLAROID_TEXTURE: Texture2D = preload("res://assets/ui/case/dupery/polaroid_card_frame.png")
 const DISPLAY_FONT: Font = preload("res://assets/fonts/TimesNewRoman.ttf")
 const BODY_FONT: Font = preload("res://assets/fonts/Arial.ttf")
 const ROLE_NAME_FONT: Font = preload("res://assets/fonts/NotoSerif-SemiBold.ttf")
@@ -107,8 +105,55 @@ func configure(view_data: SuspectPublicViewData, public_function_result_lines: P
 	if public_data == null:
 		return
 
+	var card_skin: TextureRect = get_node_or_null("%CardSkin") as TextureRect
+	if card_skin != null:
+		if not public_data.is_investigated:
+			card_skin.texture = CARD_SKIN_DOOR_TEXTURE
+		else:
+			card_skin.texture = CARD_SKIN_POLAROID_TEXTURE
+
+	var top_row: HBoxContainer = get_node_or_null("%TopRow") as HBoxContainer
+	var top_spacer: Control = get_node_or_null("%TopSpacer") as Control
+	var icon_slot_root: Control = get_node_or_null("%IconSlotRoot") as Control
+	var compact: bool = _card_width <= COMPACT_CARD_WIDTH
+
+	if top_row != null:
+		if not public_data.is_investigated:
+			top_row.custom_minimum_size = Vector2(0, 105 if compact else 140)
+			top_row.size_flags_vertical = Control.SIZE_EXPAND_FILL
+		else:
+			top_row.custom_minimum_size = Vector2(0, 54 if compact else 68)
+			top_row.size_flags_vertical = 0
+
+	if top_spacer != null:
+		top_spacer.visible = public_data.is_investigated
+
+	if icon_slot_root != null:
+		icon_slot_root.visible = public_data.is_investigated
+		if public_data.is_investigated:
+			icon_slot_root.custom_minimum_size = Vector2(50, 50) if compact else Vector2(68, 68)
+
 	if number_label != null:
-		number_label.text = "%02d" % public_data.suspect_id
+		if not public_data.is_investigated:
+			number_label.text = "%d" % public_data.suspect_id
+			number_label.add_theme_color_override("font_color", Color(1.0, 1.0, 1.0, 0.98))
+			number_label.add_theme_color_override("font_outline_color", Color(0.12, 0.12, 0.12, 0.9))
+			number_label.add_theme_constant_override("outline_size", 4)
+			number_label.add_theme_font_size_override("font_size", 24 if compact else 32)
+			number_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			number_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+			number_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			number_label.size_flags_vertical = Control.SIZE_EXPAND_FILL
+		else:
+			number_label.text = "%d" % public_data.suspect_id
+			number_label.add_theme_color_override("font_color", Color(0.14, 0.12, 0.10, 1.0))
+			number_label.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0))
+			number_label.add_theme_constant_override("outline_size", 0)
+			number_label.add_theme_font_size_override("font_size", 18 if compact else 24)
+			number_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			number_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+			number_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			number_label.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 
 	if name_label != null:
 		name_label.visible = false
@@ -118,29 +163,27 @@ func configure(view_data: SuspectPublicViewData, public_function_result_lines: P
 		status_label.visible = false
 		status_label.text = ""
 
-	var show_dich_phu_icon := (
-		public_data.is_investigated
-		and _player_facing_text(public_data.public_role_name) == "Dịch Phu"
-	)
-
 	if role_icon != null:
 		if not public_data.is_investigated:
-			role_icon.visible = true
-			role_icon.texture = DOOR_SILHOUETTE_TEXTURE
-		elif show_dich_phu_icon:
-			role_icon.visible = true
-			role_icon.texture = ROLE_ICON_DICH_PHU
-		else:
 			role_icon.visible = false
 			role_icon.texture = null
+		else:
+			var role_name_str := _player_facing_text(public_data.truth_true_role_name if public_data.full_truth_visible else public_data.public_role_name)
+			var icon_res: Texture2D = _get_role_icon_texture(role_name_str)
+			if icon_res != null:
+				role_icon.visible = true
+				role_icon.texture = icon_res
+			else:
+				role_icon.visible = false
+				role_icon.texture = null
 
 	if unknown_icon_label != null:
-		unknown_icon_label.visible = public_data.is_investigated and not show_dich_phu_icon
+		unknown_icon_label.visible = public_data.is_investigated and (role_icon == null or not role_icon.visible)
 		unknown_icon_label.text = _portrait_symbol()
 		unknown_icon_label.add_theme_color_override("font_color", _portrait_symbol_color())
 
 	if role_label != null:
-		role_label.visible = true
+		role_label.visible = public_data.is_investigated
 		if public_data.full_truth_visible:
 			role_label.text = _player_facing_text(public_data.truth_true_role_name)
 		elif not public_data.is_investigated:
@@ -197,7 +240,10 @@ func set_presentation_profile_for_tile_size(tile_size: Vector2) -> void:
 func _apply_presentation_profile(compact: bool) -> void:
 	var card_skin: TextureRect = get_node_or_null("%CardSkin") as TextureRect
 	if card_skin != null:
-		card_skin.texture = CARD_SKIN_4X4_TEXTURE if compact else CARD_SKIN_3X3_TEXTURE
+		if public_data != null and not public_data.is_investigated:
+			card_skin.texture = CARD_SKIN_DOOR_TEXTURE
+		else:
+			card_skin.texture = CARD_SKIN_POLAROID_TEXTURE
 		var skin_overscan: Vector4 = CARD_SKIN_4X4_OVERSCAN if compact else CARD_SKIN_3X3_OVERSCAN
 		card_skin.set_anchors_preset(Control.PRESET_FULL_RECT)
 		card_skin.offset_left = skin_overscan.x
@@ -212,47 +258,48 @@ func _apply_presentation_profile(compact: bool) -> void:
 
 	var top_row: HBoxContainer = get_node_or_null("CardPresentationRoot/CardVisual/CardContent/TopRow") as HBoxContainer
 	if top_row != null:
-		top_row.custom_minimum_size = Vector2(0, 64) if compact else Vector2(0, TOP_ROW_3X3_MIN_HEIGHT)
+		if public_data != null and not public_data.is_investigated:
+			top_row.custom_minimum_size = Vector2(0, 105 if compact else 140)
+			top_row.size_flags_vertical = Control.SIZE_EXPAND_FILL
+		else:
+			top_row.custom_minimum_size = Vector2(0, 54 if compact else 68)
+			top_row.size_flags_vertical = 0
 		top_row.add_theme_constant_override("separation", 4 if compact else 6)
 
 	var icon_slot_root: Control = get_node_or_null("%IconSlotRoot") as Control
 	if icon_slot_root != null:
-		icon_slot_root.custom_minimum_size = Vector2(48, 42) if compact else Vector2(64, 56)
+		icon_slot_root.custom_minimum_size = Vector2(50, 50) if compact else Vector2(68, 68)
 
-	var role_icon: TextureRect = get_node_or_null("%RoleIcon") as TextureRect
-	if role_icon != null:
-		if compact:
-			role_icon.anchor_left = 0.0
-			role_icon.anchor_top = 0.0
-			role_icon.anchor_right = 1.375
-			role_icon.anchor_bottom = 0.85
-		else:
-			# 3x3: human-tuned bằng Remote
-			role_icon.anchor_left = 0.125
-			role_icon.anchor_top = 0.038
-			role_icon.anchor_right = 1.42
-			role_icon.anchor_bottom = 0.725
-
-		role_icon.offset_left = 0.0
-		role_icon.offset_top = 0.0
-		role_icon.offset_right = 0.0
-		role_icon.offset_bottom = 0.0
-		role_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-		role_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-
-	var unknown_icon_label: Label = get_node_or_null("%UnknownIconLabel") as Label
-	if unknown_icon_label != null:
-		unknown_icon_label.add_theme_font_size_override("font_size", 18 if compact else 26)
+	var top_spacer: Control = get_node_or_null("%TopSpacer") as Control
+	if top_spacer != null and public_data != null:
+		top_spacer.visible = public_data.is_investigated
 
 	var number_label: Label = get_node_or_null("%SuspectNumber") as Label
 	if number_label != null:
-		number_label.custom_minimum_size = Vector2(40, 0) if compact else Vector2(60, 50)
-		number_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		number_label.add_theme_font_size_override("font_size", 18 if compact else 23)
+		if public_data != null and not public_data.is_investigated:
+			number_label.custom_minimum_size = Vector2.ZERO
+			number_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			number_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+			number_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			number_label.size_flags_vertical = Control.SIZE_EXPAND_FILL
+			number_label.add_theme_font_size_override("font_size", 24 if compact else 32)
+			number_label.add_theme_color_override("font_color", Color(1.0, 1.0, 1.0, 0.98))
+			number_label.add_theme_color_override("font_outline_color", Color(0.12, 0.12, 0.12, 0.9))
+			number_label.add_theme_constant_override("outline_size", 4)
+		else:
+			number_label.custom_minimum_size = Vector2(40, 0) if compact else Vector2(50, 50)
+			number_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			number_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+			number_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			number_label.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+			number_label.add_theme_font_size_override("font_size", 18 if compact else 24)
+			number_label.add_theme_color_override("font_color", Color(0.14, 0.12, 0.10, 1.0))
+			number_label.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0))
+			number_label.add_theme_constant_override("outline_size", 0)
 
 	var role_label: Label = get_node_or_null("%PublicRoleLabel") as Label
 	if role_label != null:
-		role_label.custom_minimum_size = Vector2(0, 0) if compact else Vector2(0, 28)
+		role_label.custom_minimum_size = Vector2(0, 0) if compact else Vector2(0, 26)
 		role_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		role_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER if compact else VERTICAL_ALIGNMENT_TOP
 		role_label.add_theme_font_size_override("font_size", 11 if compact else 15)
@@ -283,6 +330,7 @@ func _apply_presentation_profile(compact: bool) -> void:
 	if function_results_label != null:
 		function_results_label.custom_minimum_size = Vector2(0, _function_result_region_height)
 
+
 	var function_hand_marker: TextureRect = get_node_or_null("%FunctionHandMarker") as TextureRect
 	if function_hand_marker != null:
 		function_hand_marker.set_offsets_preset(Control.PRESET_TOP_LEFT)
@@ -308,11 +356,48 @@ func _apply_presentation_profile(compact: bool) -> void:
 	_apply_card_typography(compact)
 
 
+func _get_role_icon_texture(role_name: String) -> Texture2D:
+	var normalized := role_name.strip_edges().to_lower()
+	var map: Dictionary = {
+		"bác sĩ phẫu thuật": "bac_si_phau_thuat",
+		"chủ quán rượu": "chu_quan_ruou",
+		"dịch phu": "dich_phu",
+		"độc sư": "doc_su",
+		"kẻ bắt chước": "ke_bat_chuoc",
+		"kẻ bất lương": "ke_bat_luong",
+		"kẻ côn đồ": "ke_con_do",
+		"kẻ lừa đảo": "ke_lua_dao",
+		"kẻ say rượu": "ke_say_ruou",
+		"ngự khuyên quan": "ngu_khuyen_quan",
+		"ngự y": "ngu_y",
+		"nhà khí tượng": "nha_khi_tuong",
+		"nhà phê bình": "nha_phe_binh",
+		"nhà toán học": "nha_toan_hoc",
+		"sát nhân hàng loạt": "sat_nhan_hang_loat",
+		"sử quan": "su_quan",
+		"sư tử phán": "su_tu_phan",
+		"thợ đồng hồ": "tho_dong_ho",
+		"thợ may": "tho_may",
+		"tế tư": "tu_te",
+		"tư tế": "tu_te",
+		"vong linh": "vong_linh",
+	}
+	var filename: String = map.get(normalized, "")
+	if not filename.is_empty():
+		var path := "res://assets/ui/case/role_icons/%s.png" % filename
+		if ResourceLoader.exists(path):
+			return load(path) as Texture2D
+	return null
+
+
 func _apply_card_typography(compact: bool) -> void:
 	var number_label: Label = get_node_or_null("%SuspectNumber") as Label
 	if number_label != null:
 		number_label.add_theme_font_override("font", DISPLAY_FONT)
-		number_label.add_theme_font_size_override("font_size", 19 if compact else 24)
+		if public_data != null and not public_data.is_investigated:
+			number_label.add_theme_font_size_override("font_size", 24 if compact else 32)
+		else:
+			number_label.add_theme_font_size_override("font_size", 19 if compact else 24)
 
 	var role_label: Label = get_node_or_null("%PublicRoleLabel") as Label
 	if role_label != null:
