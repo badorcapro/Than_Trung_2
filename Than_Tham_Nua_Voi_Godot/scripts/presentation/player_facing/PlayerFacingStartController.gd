@@ -867,8 +867,19 @@ func _on_slot_btn_pressed(slot_idx: int) -> void:
 	if character_picker_modal != null:
 		character_picker_modal.visible = true
 	if picker_title != null:
-		picker_title.text = "CHỌN NHÂN VẬT CHO THÁM TỬ %d" % (slot_idx + 1)
+		picker_title.text = "CHỌN THÁM TỬ CHO VỊ TRÍ THÁM TỬ %d" % (slot_idx + 1)
+
+	var all_characters: Array[CharacterDefinition] = ProductionCharacterRepository.load_all()
+	var target_to_inspect: CharacterDefinition = null
+	if slot_idx >= 0 and slot_idx < 4 and _desktop_selected_characters[slot_idx] != null:
+		target_to_inspect = _desktop_selected_characters[slot_idx]
+	elif all_characters.size() > 0:
+		target_to_inspect = all_characters[0]
+
+	_inspected_character = target_to_inspect
 	_build_character_picker_grid()
+	if _inspected_character != null:
+		_inspect_character(_inspected_character)
 
 
 func _on_remove_slot_pressed(slot_idx: int) -> void:
@@ -889,30 +900,78 @@ func _build_character_picker_grid() -> void:
 
 	var all_characters: Array[CharacterDefinition] = ProductionCharacterRepository.load_all()
 	for char_def in all_characters:
-		var card := Panel.new()
-		card.custom_minimum_size = Vector2(170, 310)
-		card.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-
-		var is_already_chosen: bool = false
+		var is_already_chosen_other: bool = false
 		for s_idx in range(4):
 			if s_idx != _current_picking_slot_index and _desktop_selected_characters[s_idx] != null:
 				if _desktop_selected_characters[s_idx].character_id == char_def.character_id:
-					is_already_chosen = true
+					is_already_chosen_other = true
 					break
+
+		var is_inspected: bool = (_inspected_character != null and _inspected_character.character_id == char_def.character_id)
+
+		var tile_btn := Button.new()
+		tile_btn.custom_minimum_size = Vector2(160, 200)
+		tile_btn.focus_mode = Control.FOCUS_NONE
+		tile_btn.name = "Tile_" + String(char_def.character_id)
+
+		var normal_style := StyleBoxFlat.new()
+		normal_style.bg_color = Color(0.08, 0.1, 0.16, 0.85)
+		normal_style.border_width_left = 2 if is_inspected else 1
+		normal_style.border_width_top = 2 if is_inspected else 1
+		normal_style.border_width_right = 2 if is_inspected else 1
+		normal_style.border_width_bottom = 2 if is_inspected else 1
+		normal_style.border_color = Color(1.0, 0.85, 0.35, 1.0) if is_inspected else Color(0.35, 0.42, 0.55, 0.45)
+		normal_style.corner_radius_top_left = 10
+		normal_style.corner_radius_top_right = 10
+		normal_style.corner_radius_bottom_right = 10
+		normal_style.corner_radius_bottom_left = 10
+		normal_style.content_margin_left = 10.0
+		normal_style.content_margin_top = 10.0
+		normal_style.content_margin_right = 10.0
+		normal_style.content_margin_bottom = 10.0
+		if is_inspected:
+			normal_style.shadow_color = Color(1.0, 0.8, 0.2, 0.5)
+			normal_style.shadow_size = 8
+
+		var hover_style := StyleBoxFlat.new()
+		hover_style.bg_color = Color(0.14, 0.18, 0.28, 0.95)
+		hover_style.border_width_left = 2
+		hover_style.border_width_top = 2
+		hover_style.border_width_right = 2
+		hover_style.border_width_bottom = 2
+		hover_style.border_color = Color(1.0, 0.85, 0.35, 1.0)
+		hover_style.corner_radius_top_left = 10
+		hover_style.corner_radius_top_right = 10
+		hover_style.corner_radius_bottom_right = 10
+		hover_style.corner_radius_bottom_left = 10
+		hover_style.shadow_color = Color(1.0, 0.8, 0.2, 0.5)
+		hover_style.shadow_size = 10
+		hover_style.content_margin_left = 10.0
+		hover_style.content_margin_top = 10.0
+		hover_style.content_margin_right = 10.0
+		hover_style.content_margin_bottom = 10.0
+
+		tile_btn.add_theme_stylebox_override("normal", normal_style)
+		tile_btn.add_theme_stylebox_override("hover", hover_style)
+		tile_btn.add_theme_stylebox_override("pressed", hover_style)
+
+		if is_already_chosen_other:
+			tile_btn.modulate.a = 0.5
 
 		var vbox := VBoxContainer.new()
 		vbox.set_anchors_preset(Control.PRESET_FULL_RECT)
-		vbox.offset_left = 10
-		vbox.offset_top = 12
-		vbox.offset_right = -10
-		vbox.offset_bottom = -12
-		vbox.add_theme_constant_override("separation", 8)
-		card.add_child(vbox)
+		vbox.offset_left = 8
+		vbox.offset_top = 8
+		vbox.offset_right = -8
+		vbox.offset_bottom = -8
+		vbox.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		vbox.add_theme_constant_override("separation", 6)
+		tile_btn.add_child(vbox)
 
-		# Avatar or stylized placeholder
 		var avatar_frame := Panel.new()
-		avatar_frame.custom_minimum_size = Vector2(0, 140)
+		avatar_frame.custom_minimum_size = Vector2(0, 110)
 		avatar_frame.size_flags_vertical = Control.SIZE_EXPAND_FILL
+		avatar_frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		vbox.add_child(avatar_frame)
 
 		var portrait_path: String = "res://assets/portraits/%s.png" % String(char_def.character_id)
@@ -923,13 +982,15 @@ func _build_character_picker_grid() -> void:
 			tr.set_anchors_preset(Control.PRESET_FULL_RECT)
 			tr.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 			tr.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+			tr.mouse_filter = Control.MOUSE_FILTER_IGNORE
 			avatar_frame.add_child(tr)
 		else:
 			var pl_lbl := Label.new()
 			pl_lbl.set_anchors_preset(Control.PRESET_FULL_RECT)
 			pl_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 			pl_lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-			pl_lbl.add_theme_font_size_override("font_size", 20)
+			pl_lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			pl_lbl.add_theme_font_size_override("font_size", 22)
 			match char_def.origin_house_id:
 				&"house_hoang": pl_lbl.text = "👑\nHOÀNG"
 				&"house_chu": pl_lbl.text = "🔥\nCHU"
@@ -944,50 +1005,167 @@ func _build_character_picker_grid() -> void:
 		name_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		name_lbl.add_theme_font_size_override("font_size", 14)
 		name_lbl.add_theme_color_override("font_color", Color(1, 0.95, 0.88))
+		name_lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		vbox.add_child(name_lbl)
 
 		var house_lbl := Label.new()
 		house_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		house_lbl.add_theme_font_size_override("font_size", 11)
+		house_lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		match char_def.origin_house_id:
 			&"house_hoang":
 				house_lbl.text = "Nhà họ Hoàng"
-				house_lbl.add_theme_color_override("font_color", Color(0.9, 0.8, 0.4))
+				house_lbl.add_theme_color_override("font_color", Color(0.95, 0.82, 0.4))
 			&"house_chu":
 				house_lbl.text = "Nhà họ Chu"
-				house_lbl.add_theme_color_override("font_color", Color(0.95, 0.45, 0.45))
+				house_lbl.add_theme_color_override("font_color", Color(0.98, 0.45, 0.45))
 			&"house_kim":
 				house_lbl.text = "Nhà họ Kim"
-				house_lbl.add_theme_color_override("font_color", Color(0.4, 0.85, 0.9))
+				house_lbl.add_theme_color_override("font_color", Color(0.45, 0.85, 1.0))
 			&"house_huyen":
 				house_lbl.text = "Nhà họ Huyền"
-				house_lbl.add_theme_color_override("font_color", Color(0.75, 0.6, 0.95))
+				house_lbl.add_theme_color_override("font_color", Color(0.8, 0.6, 1.0))
 			&"house_lam":
 				house_lbl.text = "Nhà họ Lam"
-				house_lbl.add_theme_color_override("font_color", Color(0.5, 0.88, 0.55))
+				house_lbl.add_theme_color_override("font_color", Color(0.5, 0.9, 0.55))
 			_:
 				house_lbl.text = "Hoàng Cung"
 		vbox.add_child(house_lbl)
 
-		var select_btn := Button.new()
-		select_btn.custom_minimum_size = Vector2(0, 36)
-		select_btn.focus_mode = Control.FOCUS_NONE
-		if is_already_chosen:
-			select_btn.text = "Đã Tham Chiến"
-			select_btn.disabled = true
-			card.modulate.a = 0.5
-		else:
-			select_btn.text = "Chọn Thám Tử"
-			select_btn.pressed.connect(func() -> void:
-				if _current_picking_slot_index >= 0 and _current_picking_slot_index < 4:
-					_desktop_selected_characters[_current_picking_slot_index] = char_def
-					if character_picker_modal != null:
-						character_picker_modal.visible = false
-					_refresh_character_select_ui()
-			)
-		vbox.add_child(select_btn)
+		if is_already_chosen_other:
+			var tag_lbl := Label.new()
+			tag_lbl.text = "[ĐÃ CHỌN]"
+			tag_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			tag_lbl.add_theme_font_size_override("font_size", 10)
+			tag_lbl.add_theme_color_override("font_color", Color(0.8, 0.4, 0.4))
+			tag_lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			vbox.add_child(tag_lbl)
 
-		picker_grid.add_child(card)
+		tile_btn.mouse_entered.connect(func() -> void:
+			_inspect_character(char_def)
+		)
+
+		tile_btn.pressed.connect(func() -> void:
+			if _inspected_character != null and _inspected_character.character_id == char_def.character_id:
+				_select_character_for_current_slot(char_def)
+			else:
+				_inspect_character(char_def)
+		)
+
+		picker_grid.add_child(tile_btn)
+
+
+func _inspect_character(char_def: CharacterDefinition) -> void:
+	if char_def == null:
+		return
+	_inspected_character = char_def
+
+	var lore: Dictionary = CHARACTER_LORE_SKILLS.get(char_def.character_id, {
+		"title": "Thám Tử Hoàng Cung",
+		"house_name": "Ngũ Đại Gia Tộc",
+		"house_color": Color(1, 0.85, 0.4),
+		"icon": "⚖️",
+		"skill1_name": "Bản Lĩnh Gia Tộc",
+		"skill1_tag": "[Bản Lĩnh Gia Tộc]",
+		"skill1_desc": "Kỹ năng đặc trưng của gia tộc phục vụ điều tra kỳ án.",
+		"skill2_name": "Bí Thuật Hoàng Triều",
+		"skill2_tag": "[Bí Thuật Hoàng Triều]",
+		"skill2_desc": "Bí thuật kế thừa qua các thế hệ hoàng cung."
+	})
+
+	if inspect_char_name != null:
+		inspect_char_name.text = char_def.display_name
+	if inspect_house_badge != null:
+		inspect_house_badge.text = lore.title + " • " + lore.house_name
+		inspect_house_badge.add_theme_color_override("font_color", lore.house_color)
+
+	if inspect_speed_label != null:
+		inspect_speed_label.text = "🏃 Tốc độ: %d / 2" % char_def.base_speed
+	if inspect_stamina_label != null:
+		inspect_stamina_label.text = "⚡ Thể lực: %d / 2" % char_def.base_stamina
+	if inspect_bag_label != null:
+		inspect_bag_label.text = "🎒 Sức chứa túi: Cấp %d" % char_def.base_bag_level
+
+	var portrait_path: String = "res://assets/portraits/%s.png" % String(char_def.character_id)
+	if ResourceLoader.exists(portrait_path):
+		var tex := load(portrait_path) as Texture2D
+		if inspect_avatar_img != null:
+			inspect_avatar_img.texture = tex
+			inspect_avatar_img.visible = true
+		if inspect_avatar_placeholder != null:
+			inspect_avatar_placeholder.visible = false
+	else:
+		if inspect_avatar_img != null:
+			inspect_avatar_img.visible = false
+		if inspect_avatar_placeholder != null:
+			inspect_avatar_placeholder.visible = true
+			inspect_avatar_placeholder.text = "%s\n%s" % [lore.icon, lore.house_name.replace("Nhà họ ", "").to_upper()]
+
+	if inspect_skill1_title != null:
+		inspect_skill1_title.text = lore.skill1_name
+	if inspect_skill1_tag != null:
+		inspect_skill1_tag.text = lore.skill1_tag
+	if inspect_skill1_desc != null:
+		inspect_skill1_desc.text = lore.skill1_desc
+
+	if inspect_skill2_title != null:
+		inspect_skill2_title.text = lore.skill2_name
+	if inspect_skill2_tag != null:
+		inspect_skill2_tag.text = lore.skill2_tag
+	if inspect_skill2_desc != null:
+		inspect_skill2_desc.text = lore.skill2_desc
+
+	var is_already_chosen_other: bool = false
+	for s_idx in range(4):
+		if s_idx != _current_picking_slot_index and _desktop_selected_characters[s_idx] != null:
+			if _desktop_selected_characters[s_idx].character_id == char_def.character_id:
+				is_already_chosen_other = true
+				break
+
+	if picker_confirm_btn != null:
+		if is_already_chosen_other:
+			picker_confirm_btn.disabled = true
+			picker_confirm_btn.text = "Đã Tham Chiến Ở Vị Trí Khác"
+		else:
+			picker_confirm_btn.disabled = false
+			picker_confirm_btn.text = "✔ Xác Nhận Chọn: %s" % char_def.display_name
+
+	if picker_grid != null:
+		for card_btn in picker_grid.get_children():
+			if card_btn is Button:
+				var is_this_card: bool = (card_btn.name == "Tile_" + String(char_def.character_id))
+				var sb: StyleBoxFlat = card_btn.get_theme_stylebox("normal").duplicate() as StyleBoxFlat
+				if sb != null:
+					sb.border_width_left = 2 if is_this_card else 1
+					sb.border_width_top = 2 if is_this_card else 1
+					sb.border_width_right = 2 if is_this_card else 1
+					sb.border_width_bottom = 2 if is_this_card else 1
+					sb.border_color = Color(1.0, 0.85, 0.35, 1.0) if is_this_card else Color(0.35, 0.42, 0.55, 0.45)
+					if is_this_card:
+						sb.shadow_color = Color(1.0, 0.8, 0.2, 0.5)
+						sb.shadow_size = 8
+					else:
+						sb.shadow_size = 0
+					card_btn.add_theme_stylebox_override("normal", sb)
+
+
+func _select_character_for_current_slot(char_def: CharacterDefinition) -> void:
+	if char_def == null:
+		return
+	for s_idx in range(4):
+		if s_idx != _current_picking_slot_index and _desktop_selected_characters[s_idx] != null:
+			if _desktop_selected_characters[s_idx].character_id == char_def.character_id:
+				return
+	if _current_picking_slot_index >= 0 and _current_picking_slot_index < 4:
+		_desktop_selected_characters[_current_picking_slot_index] = char_def
+		if character_picker_modal != null:
+			character_picker_modal.visible = false
+		_refresh_character_select_ui()
+
+
+func _on_picker_confirm_pressed() -> void:
+	if _inspected_character != null:
+		_select_character_for_current_slot(_inspected_character)
 
 
 func _on_char_select_back_pressed() -> void:
