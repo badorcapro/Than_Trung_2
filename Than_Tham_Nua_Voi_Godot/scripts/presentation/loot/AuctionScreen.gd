@@ -671,7 +671,7 @@ func _build_settlement_dialog() -> void:
 	s1_box.add_child(s1_title)
 
 	_settlement_final_cost_lbl = Label.new()
-	_settlement_final_cost_lbl.text = "0"
+	_settlement_final_cost_lbl.text = "0 Xu Bạc"
 	_settlement_final_cost_lbl.add_theme_font_size_override("font_size", 32)
 	_settlement_final_cost_lbl.add_theme_color_override("font_color", Color.WHITE)
 	s1_box.add_child(_settlement_final_cost_lbl)
@@ -688,7 +688,7 @@ func _build_settlement_dialog() -> void:
 	s2_box.add_child(s2_title)
 
 	_settlement_loot_val_lbl = Label.new()
-	_settlement_loot_val_lbl.text = "0"
+	_settlement_loot_val_lbl.text = "0 Xu Bạc"
 	_settlement_loot_val_lbl.add_theme_font_size_override("font_size", 32)
 	_settlement_loot_val_lbl.add_theme_color_override("font_color", Color.WHITE)
 	s2_box.add_child(_settlement_loot_val_lbl)
@@ -705,7 +705,7 @@ func _build_settlement_dialog() -> void:
 	s3_box.add_child(s3_title)
 
 	_settlement_profit_lbl = Label.new()
-	_settlement_profit_lbl.text = "0"
+	_settlement_profit_lbl.text = "0 Xu Bạc"
 	_settlement_profit_lbl.add_theme_font_size_override("font_size", 32)
 	_settlement_profit_lbl.add_theme_color_override("font_color", Color("#50fa7b"))
 	s3_box.add_child(_settlement_profit_lbl)
@@ -2024,7 +2024,7 @@ func _update_settlement_stats() -> void:
 			_settlement_winner_name_lbl.text = p_name
 
 		if _settlement_final_cost_lbl != null:
-			_settlement_final_cost_lbl.text = _format_number(final_cost)
+			_settlement_final_cost_lbl.text = "%s Xu Bạc" % _format_number(final_cost)
 	else:
 		if _settlement_winner_player_lbl != null:
 			_settlement_winner_player_lbl.text = "Không ai sở hữu"
@@ -2043,27 +2043,27 @@ func _update_settlement_stats() -> void:
 			_settlement_winner_name_lbl.text = "Không có người mua"
 
 		if _settlement_final_cost_lbl != null:
-			_settlement_final_cost_lbl.text = "0"
+			_settlement_final_cost_lbl.text = "0 Xu Bạc"
 
-	# 2. Loot value accumulated (con số, không có đơn vị)
+	# 2. Loot value accumulated
 	if _settlement_loot_val_lbl != null:
-		_settlement_loot_val_lbl.text = _format_number(_settlement_accumulated_value)
+		_settlement_loot_val_lbl.text = "%s Xu Bạc" % _format_number(_settlement_accumulated_value)
 
-	# 3. Profit (con số, không có đơn vị, phân định màu theo âm/dương)
+	# 3. Profit (phân định màu theo âm/dương)
 	if _settlement_profit_lbl != null:
 		if is_bought:
 			var profit: int = _settlement_accumulated_value - final_cost
 			if profit > 0:
-				_settlement_profit_lbl.text = "+%s" % _format_number(profit)
+				_settlement_profit_lbl.text = "+%s Xu Bạc" % _format_number(profit)
 				_settlement_profit_lbl.add_theme_color_override("font_color", Color("#50fa7b"))
 			elif profit < 0:
-				_settlement_profit_lbl.text = "-%s" % _format_number(absi(profit))
+				_settlement_profit_lbl.text = "-%s Xu Bạc" % _format_number(absi(profit))
 				_settlement_profit_lbl.add_theme_color_override("font_color", Color("#ff5555"))
 			else:
-				_settlement_profit_lbl.text = "0"
+				_settlement_profit_lbl.text = "0 Xu Bạc"
 				_settlement_profit_lbl.add_theme_color_override("font_color", Color("#94a3b8"))
 		else:
-			_settlement_profit_lbl.text = "0"
+			_settlement_profit_lbl.text = "0 Xu Bạc"
 			_settlement_profit_lbl.add_theme_color_override("font_color", Color("#94a3b8"))
 
 	# 4. Extra info (đã bỏ hiển thị ra UI theo yêu cầu người dùng)
