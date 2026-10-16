@@ -3606,7 +3606,8 @@ func _refresh_procedural_next_case_options() -> void:
 	if case_flow != null and case_flow.match_state != null:
 		solved_count = case_flow.match_state.completed_round_count
 		if case_flow.match_state.match_rules != null:
-			total_rounds = case_flow.match_state.match_rules.max_rounds
+			if case_flow.match_state.match_rules.round_limit > 0:
+				total_rounds = case_flow.match_state.match_rules.round_limit
 
 	for i in range(3):
 		var opt: Dictionary = options[i]
@@ -3631,7 +3632,10 @@ func _refresh_procedural_next_case_options() -> void:
 			descs[i].text = desc_str
 
 		if progresses[i] != null:
-			progresses[i].text = "⚖ Đã giải: %d / %d" % [solved_count, total_rounds]
+			if case_flow != null and case_flow.match_state != null and case_flow.match_state.match_rules != null and case_flow.match_state.match_rules.round_limit > 0:
+				progresses[i].text = "⚖ Đã giải: %d / %d" % [solved_count, case_flow.match_state.match_rules.round_limit]
+			else:
+				progresses[i].text = "⚖ Đã giải: %d vụ" % solved_count
 
 		var role_ids: Array[StringName] = []
 		if case_def != null:
