@@ -3059,7 +3059,7 @@ static var _CATALOG_ITEMS: Array[Dictionary] = [
 		"display_name": "Blade Server",
 		"rarity": ITEM_CLASS.Rarity.RED,
 		"grid_width": 3,
-		"grid_height": 3,
+		"grid_height": 4,
 		"silver_value": 82,
 		"weight_str": "6.56KG",
 		"category": "tool",
@@ -3197,6 +3197,104 @@ static var _CATALOG_ITEMS: Array[Dictionary] = [
 		"category": "antique",
 		"asset_path": "res://assets/auction_items/a026.png",
 		"description": "Móng vuốt hóa thạch khủng long gai Spinosaurus nguyên vẹn thời tiền sử."
+	},
+
+	# --- Phẩm Đỏ (Mythic / Relic): Các vật phẩm đợt 22 ---
+	{
+		"id": "golden_gazelle",
+		"display_name": "Golden Gazelle",
+		"rarity": ITEM_CLASS.Rarity.RED,
+		"grid_width": 2,
+		"grid_height": 2,
+		"silver_value": 92,
+		"weight_str": "2.90KG",
+		"category": "antique",
+		"asset_path": "res://assets/auction_items/a004.png",
+		"description": "Tượng linh dương vàng nguyên khối tinh xảo niên đại hàng ngàn năm báu vật hoàng tộc."
+	},
+	{
+		"id": "reinforced_carbon_fiber_plate",
+		"display_name": "Reinforced Carbon Fiber Plate",
+		"rarity": ITEM_CLASS.Rarity.RED,
+		"grid_width": 3,
+		"grid_height": 3,
+		"silver_value": 72,
+		"weight_str": "3.73KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a008.png",
+		"description": "Tấm giáp sợi carbon gia cường siêu bền chống đạn và hấp thụ xung lực chiến thuật."
+	},
+	{
+		"id": "rocket_fuel",
+		"display_name": "Rocket Fuel",
+		"rarity": ITEM_CLASS.Rarity.RED,
+		"grid_width": 3,
+		"grid_height": 4,
+		"silver_value": 68,
+		"weight_str": "21.72KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a009.png",
+		"description": "Can nhiên liệu tên lửa đẩy dã chiến 20L công nghệ hàng không vũ trụ Hudson."
+	},
+	{
+		"id": "video_camera",
+		"display_name": "Video Camera",
+		"rarity": ITEM_CLASS.Rarity.RED,
+		"grid_width": 2,
+		"grid_height": 2,
+		"silver_value": 82,
+		"weight_str": "2.35KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a010.png",
+		"description": "Máy quay phim chuyên dụng tác chiến tích hợp micro định hướng và ống kính quang học."
+	},
+	{
+		"id": "graphics_card",
+		"display_name": "Graphics Card",
+		"rarity": ITEM_CLASS.Rarity.RED,
+		"grid_width": 2,
+		"grid_height": 1,
+		"silver_value": 85,
+		"weight_str": "1.43KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a011.png",
+		"description": "Card đồ họa xử lý hình ảnh GPU chuyên dụng hỗ trợ kết xuất mô phỏng chiến thuật phức tạp."
+	},
+	{
+		"id": "military_uav",
+		"display_name": "Military UAV",
+		"rarity": ITEM_CLASS.Rarity.RED,
+		"grid_width": 2,
+		"grid_height": 2,
+		"silver_value": 88,
+		"weight_str": "0.87KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a012.png",
+		"description": "Máy bay không người lái trinh sát quân sự gấp gọn truyền tín hiệu hình ảnh thời gian thực."
+	},
+	{
+		"id": "military_radio",
+		"display_name": "Military Radio",
+		"rarity": ITEM_CLASS.Rarity.RED,
+		"grid_width": 2,
+		"grid_height": 2,
+		"silver_value": 78,
+		"weight_str": "5.34KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a013.png",
+		"description": "Máy thu phát vô tuyến điện tác chiến dã chiến nhảy tần chống nghe lén của chỉ huy."
+	},
+	{
+		"id": "laptop",
+		"display_name": "Laptop",
+		"rarity": ITEM_CLASS.Rarity.RED,
+		"grid_width": 3,
+		"grid_height": 2,
+		"silver_value": 86,
+		"weight_str": "2.26KG",
+		"category": "tool",
+		"asset_path": "res://assets/auction_items/a014.png",
+		"description": "Máy tính xách tay quân sự gia cố chống sốc tích hợp mô-đun giải mã dữ liệu tác chiến."
 	},
 
 	# --- Tài nguyên Nâng cấp (Refinement Chips & Locking Component) ---
