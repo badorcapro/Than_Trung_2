@@ -225,10 +225,12 @@ func _build_ui() -> void:
 
 	var round_badge := PanelContainer.new()
 	var r_style := StyleBoxFlat.new()
-	r_style.bg_color = Color(0.12, 0.22, 0.32, 0.9)
-	r_style.border_color = Color("#4deeea")
+	r_style.bg_color = Color(0.13, 0.09, 0.07, 0.95)
+	r_style.border_color = Color("#c5a059")
 	r_style.border_width_left = 2
 	r_style.border_width_right = 2
+	r_style.border_width_top = 1
+	r_style.border_width_bottom = 1
 	r_style.corner_radius_top_left = 8
 	r_style.corner_radius_top_right = 8
 	r_style.corner_radius_bottom_left = 8
@@ -240,7 +242,7 @@ func _build_ui() -> void:
 	_round_label.text = "VÒNG 1 / 5"
 	_round_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_round_label.add_theme_font_size_override("font_size", 18)
-	_round_label.add_theme_color_override("font_color", Color.WHITE)
+	_round_label.add_theme_color_override("font_color", Color("#fef3c7"))
 	round_badge.add_child(_round_label)
 
 	_clues_scroll = ScrollContainer.new()
@@ -272,7 +274,7 @@ func _build_ui() -> void:
 	enc_btn.focus_mode = FOCUS_NONE
 	enc_btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	enc_btn.tooltip_text = "Tra cứu Bách Khoa Toàn Thư / Xem danh mục đồ đấu giá (Phím B)"
-	enc_btn.add_theme_color_override("font_color", Color("#8be9fd"))
+	enc_btn.add_theme_color_override("font_color", Color("#e6c280"))
 	enc_btn.pressed.connect(func() -> void:
 		if encyclopedia_dialog != null:
 			encyclopedia_dialog.open_dialog()
@@ -976,7 +978,7 @@ func _render_bidders() -> void:
 		card.mouse_filter = MOUSE_FILTER_PASS
 
 		var card_sb := StyleBoxFlat.new()
-		card_sb.bg_color = Color(0.08, 0.11, 0.16, 0.94)
+		card_sb.bg_color = Color(0.07, 0.05, 0.05, 0.94)
 		if is_current_turn:
 			card_sb.border_color = Color("#f6c95c")
 			card_sb.border_width_left = 2
@@ -984,7 +986,7 @@ func _render_bidders() -> void:
 			card_sb.border_width_right = 2
 			card_sb.border_width_bottom = 2
 		else:
-			card_sb.border_color = Color(0.24, 0.32, 0.44, 0.55)
+			card_sb.border_color = Color(0.45, 0.36, 0.26, 0.55)
 			card_sb.border_width_left = 1
 			card_sb.border_width_top = 1
 			card_sb.border_width_right = 1
@@ -1054,7 +1056,7 @@ func _render_bidders() -> void:
 		p_name_lbl.text = "Player %d" % (i + 1)
 		p_name_lbl.size_flags_horizontal = SIZE_EXPAND_FILL
 		p_name_lbl.add_theme_font_size_override("font_size", 13)
-		p_name_lbl.add_theme_color_override("font_color", Color.WHITE if is_active else Color("#6272a4"))
+		p_name_lbl.add_theme_color_override("font_color", Color.WHITE if is_active else Color("#7a6c5d"))
 		row1_hbox.add_child(p_name_lbl)
 
 		# Góc phải Hàng 1: Chỉ hiện hộp cọc tiền 🪙 khi tới lượt, bỏ 'Ra giá lần 1/2'
@@ -1062,8 +1064,8 @@ func _render_bidders() -> void:
 			var coin_box := PanelContainer.new()
 			coin_box.custom_minimum_size = Vector2(92, 22)
 			var coin_sb := StyleBoxFlat.new()
-			coin_sb.bg_color = Color(0.96, 0.98, 1.0, 0.95)
-			coin_sb.border_color = Color("#f6c95c")
+			coin_sb.bg_color = Color(0.98, 0.96, 0.90, 0.95)
+			coin_sb.border_color = Color("#c5a059")
 			coin_sb.border_width_left = 1
 			coin_sb.border_width_top = 1
 			coin_sb.border_width_right = 1
@@ -1087,7 +1089,7 @@ func _render_bidders() -> void:
 			var coin_txt := Label.new()
 			coin_txt.text = "Đang ra giá"
 			coin_txt.add_theme_font_size_override("font_size", 10)
-			coin_txt.add_theme_color_override("font_color", Color(0.12, 0.16, 0.22, 1.0))
+			coin_txt.add_theme_color_override("font_color", Color(0.22, 0.14, 0.08, 1.0))
 			coin_hbox.add_child(coin_txt)
 
 			row1_hbox.add_child(coin_box)
@@ -1095,14 +1097,14 @@ func _render_bidders() -> void:
 			var fold_lbl := Label.new()
 			fold_lbl.text = "🏳️ Đã bỏ"
 			fold_lbl.add_theme_font_size_override("font_size", 10)
-			fold_lbl.add_theme_color_override("font_color", Color("#6272a4"))
+			fold_lbl.add_theme_color_override("font_color", Color("#7a6c5d"))
 			row1_hbox.add_child(fold_lbl)
 
 		# Hàng 2: Tên nhân vật phóng to theo màu gia tộc (Hoàng, Chu, Kim, Huyền, Lam)
 		var banner_panel := PanelContainer.new()
 		banner_panel.size_flags_horizontal = SIZE_EXPAND_FILL
 		var banner_sb := StyleBoxFlat.new()
-		banner_sb.bg_color = Color(0.12, 0.16, 0.22, 0.85)
+		banner_sb.bg_color = Color(0.11, 0.08, 0.07, 0.90)
 		banner_sb.border_width_left = 3
 		banner_sb.border_color = char_data.theme_color
 		banner_sb.corner_radius_top_right = 3
@@ -1138,17 +1140,17 @@ func _render_bidders() -> void:
 			r_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 			r_lbl.add_theme_font_size_override("font_size", 9)
 			if r <= auction_session.current_round:
-				r_lbl.add_theme_color_override("font_color", Color("#cbd5e1"))
+				r_lbl.add_theme_color_override("font_color", Color("#e8dfd5"))
 			else:
-				r_lbl.add_theme_color_override("font_color", Color("#475569"))
+				r_lbl.add_theme_color_override("font_color", Color("#5c4f42"))
 			r_col.add_child(r_lbl)
 
 			# 2. Ô vuông item sử dụng ở round đó (Placeholder)
 			var item_slot := PanelContainer.new()
 			item_slot.custom_minimum_size = Vector2(26, 26)
 			var slot_sb := StyleBoxFlat.new()
-			slot_sb.bg_color = Color(0.04, 0.06, 0.09, 0.85)
-			slot_sb.border_color = Color(0.24, 0.32, 0.44, 0.5)
+			slot_sb.bg_color = Color(0.05, 0.04, 0.04, 0.85)
+			slot_sb.border_color = Color(0.38, 0.30, 0.22, 0.5)
 			slot_sb.border_width_left = 1
 			slot_sb.border_width_top = 1
 			slot_sb.border_width_right = 1
@@ -1222,8 +1224,8 @@ func _render_clues() -> void:
 		var is_bonus: bool = bool(hint.get("is_bonus", false))
 		var card := PanelContainer.new()
 		var cl_style := StyleBoxFlat.new()
-		cl_style.bg_color = Color(0.10, 0.14, 0.20, 0.95) if is_bonus else Color(0.08, 0.12, 0.18, 0.9)
-		cl_style.border_color = Color("#f1fa8c") if is_bonus else Color(0.3, 0.5, 0.65, 0.7)
+		cl_style.bg_color = Color(0.12, 0.08, 0.06, 0.95) if is_bonus else Color(0.08, 0.06, 0.05, 0.92)
+		cl_style.border_color = Color("#f6c95c") if is_bonus else Color(0.55, 0.44, 0.30, 0.70)
 		cl_style.border_width_left = 2 if is_bonus else 1
 		cl_style.border_width_top = 1
 		cl_style.border_width_right = 1
@@ -1255,14 +1257,14 @@ func _render_clues() -> void:
 		else:
 			t_lbl.text = String(hint.get("title", "Manh Mối"))
 		t_lbl.add_theme_font_size_override("font_size", 14)
-		t_lbl.add_theme_color_override("font_color", Color("#f1fa8c") if is_bonus else Color("#8be9fd"))
+		t_lbl.add_theme_color_override("font_color", Color("#fde047") if is_bonus else Color("#e6c280"))
 		vbox.add_child(t_lbl)
 
 		var d_lbl := Label.new()
 		d_lbl.text = String(hint.get("description", ""))
 		d_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		d_lbl.add_theme_font_size_override("font_size", 13)
-		d_lbl.add_theme_color_override("font_color", Color("#e0e0e0"))
+		d_lbl.add_theme_color_override("font_color", Color("#f3ede2"))
 		vbox.add_child(d_lbl)
 
 
