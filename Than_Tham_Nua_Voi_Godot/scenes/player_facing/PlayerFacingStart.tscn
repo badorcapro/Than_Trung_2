@@ -16,21 +16,36 @@
 [ext_resource type="Texture2D" path="res://assets/ui/desktop/tray_audio.png" id="15_tray_audio"]
 [ext_resource type="Texture2D" path="res://assets/ui/desktop/tray_wifi.png" id="16_tray_wifi"]
 [ext_resource type="Texture2D" path="res://assets/ui/desktop/desktop_window_frame.png" id="17_window_frame"]
+[ext_resource type="Texture2D" path="res://assets/ui/desktop/window_close_jade.png" id="18_window_close_jade"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_imperial_window"]
 texture = ExtResource("17_window_frame")
-texture_margin_left = 190.0
-texture_margin_top = 78.0
-texture_margin_right = 190.0
-texture_margin_bottom = 195.0
+texture_margin_left = 68.0
+texture_margin_top = 92.0
+texture_margin_right = 68.0
+texture_margin_bottom = 68.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jade_close_btn_hover"]
-bg_color = Color(1, 1, 1, 0.16)
+bg_color = Color(1, 0.95, 0.6, 0.22)
 border_width_left = 1
 border_width_top = 1
 border_width_right = 1
 border_width_bottom = 1
-border_color = Color(1, 0.92, 0.55, 0.85)
+border_color = Color(1, 0.9, 0.45, 0.95)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+shadow_color = Color(1, 0.85, 0.3, 0.45)
+shadow_size = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jade_close_btn_pressed"]
+bg_color = Color(1, 0.85, 0.3, 0.38)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0.98, 0.75, 1)
 corner_radius_top_left = 6
 corner_radius_top_right = 6
 corner_radius_bottom_right = 6
@@ -883,29 +898,41 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -280.0
-offset_top = -160.0
+offset_top = -170.0
 offset_right = 280.0
-offset_bottom = 160.0
+offset_bottom = 170.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_imperial_window")
 
-[node name="NewSimTopCloseBtn" type="Button" parent="DesktopRoot/DesktopNewSimDialog/ConfirmBox"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(46, 36)
+[node name="TopBar" type="HBoxContainer" parent="DesktopRoot/DesktopNewSimDialog/ConfirmBox"]
 layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
+anchors_preset = 10
 anchor_right = 1.0
-offset_left = -58.0
-offset_top = 8.0
-offset_right = -12.0
-offset_bottom = 46.0
-grow_horizontal = 0
+offset_left = 28.0
+offset_top = 16.0
+offset_right = -20.0
+offset_bottom = 54.0
+grow_horizontal = 2
+
+[node name="Title" type="Label" parent="DesktopRoot/DesktopNewSimDialog/ConfirmBox/TopBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.96, 0.88, 0.65, 1)
+theme_override_font_sizes/font_size = 15
+text = "⚠️ XÁC NHẬN KHỞI CHẠY MÔ PHỎNG"
+vertical_alignment = 1
+
+[node name="NewSimTopCloseBtn" type="Button" parent="DesktopRoot/DesktopNewSimDialog/ConfirmBox/TopBar"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(34, 34)
+layout_mode = 2
 focus_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxEmpty_desktop_icon")
 theme_override_styles/hover = SubResource("StyleBoxFlat_jade_close_btn_hover")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_jade_close_btn_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_jade_close_btn_pressed")
+icon = ExtResource("18_window_close_jade")
+expand_icon = true
 text = ""
 tooltip_text = "Đóng hộp thoại"
 
@@ -915,20 +942,13 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 36.0
-offset_top = 68.0
+offset_top = 90.0
 offset_right = -36.0
-offset_bottom = -24.0
+offset_bottom = -28.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 14
 alignment = 1
-
-[node name="Title" type="Label" parent="DesktopRoot/DesktopNewSimDialog/ConfirmBox/VBox"]
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.85, 0.45, 1)
-theme_override_font_sizes/font_size = 17
-text = "⚠️ XÁC NHẬN KHỞI CHẠY MÔ PHỎNG"
-horizontal_alignment = 1
 
 [node name="Message" type="Label" parent="DesktopRoot/DesktopNewSimDialog/ConfirmBox/VBox"]
 layout_mode = 2
@@ -1009,10 +1029,10 @@ theme_override_styles/panel = SubResource("StyleBoxTexture_imperial_window")
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_left = 32.0
-offset_top = 10.0
-offset_right = -12.0
-offset_bottom = 50.0
+offset_left = 28.0
+offset_top = 16.0
+offset_right = -20.0
+offset_bottom = 54.0
 grow_horizontal = 2
 
 [node name="Title" type="Label" parent="DesktopRoot/DesktopCodexDialog/CodexBox/TopBar"]
@@ -1025,12 +1045,14 @@ vertical_alignment = 1
 
 [node name="CodexCloseBtn" type="Button" parent="DesktopRoot/DesktopCodexDialog/CodexBox/TopBar"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(46, 36)
+custom_minimum_size = Vector2(34, 34)
 layout_mode = 2
 focus_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxEmpty_desktop_icon")
 theme_override_styles/hover = SubResource("StyleBoxFlat_jade_close_btn_hover")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_jade_close_btn_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_jade_close_btn_pressed")
+icon = ExtResource("18_window_close_jade")
+expand_icon = true
 text = ""
 tooltip_text = "Đóng Bách Khoa Toàn Thư"
 
@@ -1040,9 +1062,9 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 36.0
-offset_top = 68.0
+offset_top = 96.0
 offset_right = -36.0
-offset_bottom = -24.0
+offset_bottom = -28.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 10
@@ -1152,10 +1174,10 @@ theme_override_styles/panel = SubResource("StyleBoxTexture_imperial_window")
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_left = 32.0
-offset_top = 10.0
-offset_right = -12.0
-offset_bottom = 50.0
+offset_left = 28.0
+offset_top = 16.0
+offset_right = -20.0
+offset_bottom = 54.0
 grow_horizontal = 2
 
 [node name="Title" type="Label" parent="DesktopRoot/DesktopModeSelectDialog/ModeSelectBox/TopBar"]
@@ -1168,12 +1190,14 @@ vertical_alignment = 1
 
 [node name="ModeSelectCloseBtn" type="Button" parent="DesktopRoot/DesktopModeSelectDialog/ModeSelectBox/TopBar"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(46, 36)
+custom_minimum_size = Vector2(34, 34)
 layout_mode = 2
 focus_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxEmpty_desktop_icon")
 theme_override_styles/hover = SubResource("StyleBoxFlat_jade_close_btn_hover")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_jade_close_btn_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_jade_close_btn_pressed")
+icon = ExtResource("18_window_close_jade")
+expand_icon = true
 text = ""
 tooltip_text = "Đóng cửa sổ"
 
@@ -1183,9 +1207,9 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 36.0
-offset_top = 68.0
+offset_top = 96.0
 offset_right = -36.0
-offset_bottom = -24.0
+offset_bottom = -28.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 14

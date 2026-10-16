@@ -1256,12 +1256,21 @@ func _on_grid_draw() -> void:
 			_grid_draw_control.draw_rect(rect, Color(r_color.r, r_color.g, r_color.b, 0.25), true)
 			_grid_draw_control.draw_rect(rect, r_color, false, 2.5)
 
-			# 1. Vẽ hình ảnh vật phẩm thực tế từ asset_path nếu có
+			# 1. Vẽ hình ảnh vật phẩm thực tế từ asset_path nếu có (bảo toàn tỉ lệ gốc, không bị kéo giãn)
 			var tex: Texture2D = _get_cached_item_texture(item.asset_path)
 			if tex != null:
 				var pad: float = 3.0
-				var draw_r := Rect2(rect.position.x + pad, rect.position.y + pad, rect.size.x - pad * 2.0, rect.size.y - pad * 2.0)
-				_grid_draw_control.draw_texture_rect(tex, draw_r, false)
+				var avail_w: float = rect.size.x - pad * 2.0
+				var avail_h: float = rect.size.y - pad * 2.0
+				var tex_sz: Vector2 = tex.get_size()
+				if tex_sz.x > 0.0 and tex_sz.y > 0.0:
+					var scale_f: float = minf(avail_w / tex_sz.x, avail_h / tex_sz.y)
+					var drawn_w: float = tex_sz.x * scale_f
+					var drawn_h: float = tex_sz.y * scale_f
+					var draw_x: float = rect.position.x + pad + (avail_w - drawn_w) * 0.5
+					var draw_y: float = rect.position.y + pad + (avail_h - drawn_h) * 0.5
+					var draw_r := Rect2(draw_x, draw_y, drawn_w, drawn_h)
+					_grid_draw_control.draw_texture_rect(tex, draw_r, false)
 			else:
 				var font := ThemeDB.fallback_font
 				var t_pos := Vector2(pos.x * CELL_SIZE + 4, pos.y * CELL_SIZE + 13)
@@ -1565,12 +1574,16 @@ func _handle_knockout_victory(ko_data: Dictionary) -> void:
 			r, String(w_pid), _format_number(w_bid)
 		]
 
+	_round_completed = true
 	_show_bid_feedback(msg)
+	refresh_ui()
+
 	if _turn_info_label != null:
 		_turn_info_label.text = msg
 		_turn_info_label.add_theme_color_override("font_color", Color("#50fa7b"))
 
 	if _confirm_bid_btn != null: _confirm_bid_btn.disabled = true
+	if _open_numpad_btn != null: _open_numpad_btn.disabled = true
 	if _pass_btn != null: _pass_btn.disabled = true
 	if _fold_btn != null: _fold_btn.disabled = true
 	if _bid_input != null: _bid_input.editable = false
@@ -1834,12 +1847,21 @@ func _on_settlement_grid_draw() -> void:
 				var inner_rect := rect.grow(-2)
 				_settlement_grid_draw_control.draw_rect(inner_rect, Color(1.0, 0.85, 0.2, 0.4), false, 1.0)
 
-			# 1. Item Sprite Texture (Center)
+			# 1. Item Sprite Texture (Center, bảo toàn tỉ lệ gốc, không bị kéo giãn)
 			var tex: Texture2D = _get_cached_item_texture(item.asset_path)
 			if tex != null:
 				var pad: float = 3.0
-				var draw_r := Rect2(rect.position.x + pad, rect.position.y + pad, rect.size.x - pad * 2.0, rect.size.y - pad * 2.0)
-				_settlement_grid_draw_control.draw_texture_rect(tex, draw_r, false)
+				var avail_w: float = rect.size.x - pad * 2.0
+				var avail_h: float = rect.size.y - pad * 2.0
+				var tex_sz: Vector2 = tex.get_size()
+				if tex_sz.x > 0.0 and tex_sz.y > 0.0:
+					var scale_f: float = minf(avail_w / tex_sz.x, avail_h / tex_sz.y)
+					var drawn_w: float = tex_sz.x * scale_f
+					var drawn_h: float = tex_sz.y * scale_f
+					var draw_x: float = rect.position.x + pad + (avail_w - drawn_w) * 0.5
+					var draw_y: float = rect.position.y + pad + (avail_h - drawn_h) * 0.5
+					var draw_r := Rect2(draw_x, draw_y, drawn_w, drawn_h)
+					_settlement_grid_draw_control.draw_texture_rect(tex, draw_r, false)
 			else:
 				# Fallback Item Name (Top-left)
 				var name_pos := Vector2(rect.position.x + 5, rect.position.y + 14)
