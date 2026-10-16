@@ -2860,8 +2860,12 @@ func _refresh_pummel_player_cards(session: LOOT_REWARD_SESSION) -> void:
 
 		var avatar_rect: TextureRect = card.find_child("AvatarRect", true, false) as TextureRect
 		if avatar_rect != null:
-			if character != null and not character.portrait.is_empty() and ResourceLoader.exists(character.portrait):
-				avatar_rect.texture = load(character.portrait) as Texture2D
+			if character != null:
+				var portrait_path: String = "res://assets/portraits/%s.png" % String(character.character_id)
+				if ResourceLoader.exists(portrait_path):
+					avatar_rect.texture = load(portrait_path) as Texture2D
+				else:
+					avatar_rect.texture = null
 			else:
 				avatar_rect.texture = null
 

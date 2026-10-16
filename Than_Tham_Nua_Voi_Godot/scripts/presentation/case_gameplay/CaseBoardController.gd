@@ -33,17 +33,20 @@ var _board_columns: int = CaseSpatialService.BOARD_COLUMNS
 var _tile_size: Vector2 = BOARD_TILE_SIZE
 
 
+func get_hovered_suspect_id() -> int:
+	return _hovered_suspect_id
+
+
 func _ready() -> void:
-	var style := StyleBoxTexture.new()
-	style.texture = preload("res://assets/ui/case/case_board_mat.png")
-	style.texture_margin_left = 60.0
-	style.texture_margin_top = 60.0
-	style.texture_margin_right = 60.0
-	style.texture_margin_bottom = 60.0
-	style.content_margin_left = 48.0
-	style.content_margin_right = 48.0
-	style.content_margin_top = 38.0
-	style.content_margin_bottom = 40.0
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color(0, 0, 0, 0.22)
+	style.border_color = Color(0.35, 0.30, 0.24, 0.50)
+	style.set_border_width_all(2)
+	style.set_corner_radius_all(6)
+	style.content_margin_left = 18.0
+	style.content_margin_right = 18.0
+	style.content_margin_top = 18.0
+	style.content_margin_bottom = 18.0
 	add_theme_stylebox_override("panel", style)
 	var board_title: Label = get_node_or_null("BoardColumn/BoardTitle") as Label
 	if board_title != null:
