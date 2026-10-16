@@ -3659,7 +3659,7 @@ func _update_dossier_selection_visuals() -> void:
 	for i in range(3):
 		var is_sel: bool = (i == _selected_next_case_index)
 		if bgs[i] != null:
-			bgs[i].add_theme_stylebox_override("panel", _get_dossier_selected_style() if is_sel else _get_dossier_paper_style())
+			bgs[i].visible = is_sel
 		if seals[i] != null:
 			if is_sel:
 				seals[i].visible = true
