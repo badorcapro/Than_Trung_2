@@ -11,7 +11,7 @@ tags = [&"HOUSE"]
 origin_house_id = &"house_huyen"
 outgoing_neighbor_ids = [&"huyen_lane_a_1", &"huyen_lane_b_1"]
 display_name = "Nhà họ Huyền"
-world_position = Vector2(1600, 120)
+world_position = Vector2(2000, 180)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node002"]
@@ -22,7 +22,7 @@ tags = [&"HOUSE"]
 origin_house_id = &"house_huyen"
 outgoing_neighbor_ids = [&"huyen_lane_a_2"]
 display_name = "Nhà họ Huyền · Lối A"
-world_position = Vector2(1440, 300)
+world_position = Vector2(1860, 320)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node003"]
@@ -32,7 +32,7 @@ node_kind = &"HOUSE_PATH"
 tags = [&"HOUSE"]
 origin_house_id = &"house_huyen"
 outgoing_neighbor_ids = [&"huyen_lane_a_3"]
-world_position = Vector2(1360, 520)
+world_position = Vector2(1790, 500)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node004"]
@@ -42,7 +42,7 @@ node_kind = &"HOUSE_PATH"
 tags = [&"HOUSE"]
 origin_house_id = &"house_huyen"
 outgoing_neighbor_ids = [&"huyen_lane_a_4"]
-world_position = Vector2(1390, 780)
+world_position = Vector2(1810, 710)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node005"]
@@ -52,7 +52,7 @@ node_kind = &"HOUSE_PATH"
 tags = [&"HOUSE"]
 origin_house_id = &"house_huyen"
 outgoing_neighbor_ids = [&"central_hub"]
-world_position = Vector2(1470, 1100)
+world_position = Vector2(1880, 890)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node006"]
@@ -63,7 +63,7 @@ tags = [&"HOUSE"]
 origin_house_id = &"house_huyen"
 outgoing_neighbor_ids = [&"huyen_lane_b_2"]
 display_name = "Nhà họ Huyền · Lối B"
-world_position = Vector2(1760, 300)
+world_position = Vector2(2140, 320)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node007"]
@@ -73,7 +73,7 @@ node_kind = &"HOUSE_PATH"
 tags = [&"HOUSE"]
 origin_house_id = &"house_huyen"
 outgoing_neighbor_ids = [&"huyen_lane_b_3"]
-world_position = Vector2(1840, 520)
+world_position = Vector2(2210, 500)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node008"]
@@ -83,7 +83,7 @@ node_kind = &"HOUSE_PATH"
 tags = [&"HOUSE"]
 origin_house_id = &"house_huyen"
 outgoing_neighbor_ids = [&"huyen_lane_b_4"]
-world_position = Vector2(1810, 780)
+world_position = Vector2(2190, 710)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node009"]
@@ -93,7 +93,7 @@ node_kind = &"HOUSE_PATH"
 tags = [&"HOUSE"]
 origin_house_id = &"house_huyen"
 outgoing_neighbor_ids = [&"central_hub"]
-world_position = Vector2(1730, 1100)
+world_position = Vector2(2120, 890)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node010"]
@@ -104,7 +104,7 @@ tags = [&"HOUSE"]
 origin_house_id = &"house_kim"
 outgoing_neighbor_ids = [&"kim_lane_a_1", &"kim_lane_b_1"]
 display_name = "Nhà họ Kim"
-world_position = Vector2(300, 420)
+world_position = Vector2(550, 420)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node011"]
@@ -115,7 +115,7 @@ tags = [&"HOUSE"]
 origin_house_id = &"house_kim"
 outgoing_neighbor_ids = [&"kim_lane_a_2"]
 display_name = "Nhà họ Kim · Lối A"
-world_position = Vector2(520, 300)
+world_position = Vector2(840, 340)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node012"]
@@ -125,7 +125,7 @@ node_kind = &"HOUSE_PATH"
 tags = [&"HOUSE"]
 origin_house_id = &"house_kim"
 outgoing_neighbor_ids = [&"kim_lane_a_3"]
-world_position = Vector2(780, 340)
+world_position = Vector2(1160, 420)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node013"]
@@ -135,7 +135,7 @@ node_kind = &"HOUSE_PATH"
 tags = [&"HOUSE"]
 origin_house_id = &"house_kim"
 outgoing_neighbor_ids = [&"kim_lane_a_4"]
-world_position = Vector2(1040, 520)
+world_position = Vector2(1480, 580)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node014"]
@@ -145,7 +145,7 @@ node_kind = &"HOUSE_PATH"
 tags = [&"HOUSE"]
 origin_house_id = &"house_kim"
 outgoing_neighbor_ids = [&"central_hub"]
-world_position = Vector2(1320, 900)
+world_position = Vector2(1750, 820)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node015"]
@@ -156,7 +156,7 @@ tags = [&"HOUSE"]
 origin_house_id = &"house_kim"
 outgoing_neighbor_ids = [&"kim_lane_b_2"]
 display_name = "Nhà họ Kim · Lối B"
-world_position = Vector2(480, 560)
+world_position = Vector2(780, 580)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node016"]
@@ -166,7 +166,7 @@ node_kind = &"HOUSE_PATH"
 tags = [&"HOUSE"]
 origin_house_id = &"house_kim"
 outgoing_neighbor_ids = [&"kim_lane_b_3"]
-world_position = Vector2(720, 720)
+world_position = Vector2(1080, 720)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node017"]
@@ -176,7 +176,7 @@ node_kind = &"HOUSE_PATH"
 tags = [&"HOUSE"]
 origin_house_id = &"house_kim"
 outgoing_neighbor_ids = [&"kim_lane_b_4"]
-world_position = Vector2(980, 900)
+world_position = Vector2(1380, 860)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node018"]
@@ -186,7 +186,7 @@ node_kind = &"HOUSE_PATH"
 tags = [&"HOUSE"]
 origin_house_id = &"house_kim"
 outgoing_neighbor_ids = [&"central_hub"]
-world_position = Vector2(1300, 1200)
+world_position = Vector2(1720, 980)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node019"]
@@ -197,7 +197,7 @@ tags = [&"HOUSE"]
 origin_house_id = &"house_hoang"
 outgoing_neighbor_ids = [&"hoang_lane_a_1", &"hoang_lane_b_1"]
 display_name = "Nhà họ Hoàng"
-world_position = Vector2(340, 980)
+world_position = Vector2(600, 850)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node020"]
@@ -208,7 +208,7 @@ tags = [&"HOUSE"]
 origin_house_id = &"house_hoang"
 outgoing_neighbor_ids = [&"hoang_lane_a_2"]
 display_name = "Nhà họ Hoàng · Lối A"
-world_position = Vector2(560, 860)
+world_position = Vector2(890, 780)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node021"]
@@ -218,7 +218,7 @@ node_kind = &"HOUSE_PATH"
 tags = [&"HOUSE"]
 origin_house_id = &"house_hoang"
 outgoing_neighbor_ids = [&"hoang_lane_a_3"]
-world_position = Vector2(820, 900)
+world_position = Vector2(1190, 850)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node022"]
@@ -228,7 +228,7 @@ node_kind = &"HOUSE_PATH"
 tags = [&"HOUSE"]
 origin_house_id = &"house_hoang"
 outgoing_neighbor_ids = [&"hoang_lane_a_4"]
-world_position = Vector2(1080, 1080)
+world_position = Vector2(1490, 940)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node023"]
@@ -238,7 +238,7 @@ node_kind = &"HOUSE_PATH"
 tags = [&"HOUSE"]
 origin_house_id = &"house_hoang"
 outgoing_neighbor_ids = [&"central_hub"]
-world_position = Vector2(1360, 1320)
+world_position = Vector2(1780, 1010)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node024"]
@@ -249,7 +249,7 @@ tags = [&"HOUSE"]
 origin_house_id = &"house_hoang"
 outgoing_neighbor_ids = [&"hoang_lane_b_2"]
 display_name = "Nhà họ Hoàng · Lối B"
-world_position = Vector2(520, 1120)
+world_position = Vector2(840, 1020)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node025"]
@@ -259,7 +259,7 @@ node_kind = &"HOUSE_PATH"
 tags = [&"HOUSE"]
 origin_house_id = &"house_hoang"
 outgoing_neighbor_ids = [&"hoang_lane_b_3"]
-world_position = Vector2(760, 1280)
+world_position = Vector2(1120, 1140)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node026"]
@@ -269,7 +269,7 @@ node_kind = &"HOUSE_PATH"
 tags = [&"HOUSE"]
 origin_house_id = &"house_hoang"
 outgoing_neighbor_ids = [&"hoang_lane_b_4"]
-world_position = Vector2(1040, 1400)
+world_position = Vector2(1420, 1200)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node027"]
@@ -279,7 +279,7 @@ node_kind = &"HOUSE_PATH"
 tags = [&"HOUSE"]
 origin_house_id = &"house_hoang"
 outgoing_neighbor_ids = [&"central_hub"]
-world_position = Vector2(1340, 1460)
+world_position = Vector2(1740, 1160)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node028"]
@@ -290,7 +290,7 @@ tags = [&"HOUSE"]
 origin_house_id = &"house_lam"
 outgoing_neighbor_ids = [&"lam_lane_a_1", &"lam_lane_b_1"]
 display_name = "Nhà họ Lam"
-world_position = Vector2(2900, 420)
+world_position = Vector2(3450, 420)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node029"]
@@ -301,7 +301,7 @@ tags = [&"HOUSE"]
 origin_house_id = &"house_lam"
 outgoing_neighbor_ids = [&"lam_lane_a_2"]
 display_name = "Nhà họ Lam · Lối A"
-world_position = Vector2(2680, 300)
+world_position = Vector2(3160, 340)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node030"]
@@ -311,7 +311,7 @@ node_kind = &"HOUSE_PATH"
 tags = [&"HOUSE"]
 origin_house_id = &"house_lam"
 outgoing_neighbor_ids = [&"lam_lane_a_3"]
-world_position = Vector2(2420, 340)
+world_position = Vector2(2840, 420)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node031"]
@@ -321,7 +321,7 @@ node_kind = &"HOUSE_PATH"
 tags = [&"HOUSE"]
 origin_house_id = &"house_lam"
 outgoing_neighbor_ids = [&"lam_lane_a_4"]
-world_position = Vector2(2160, 520)
+world_position = Vector2(2520, 580)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node032"]
@@ -331,7 +331,7 @@ node_kind = &"HOUSE_PATH"
 tags = [&"HOUSE"]
 origin_house_id = &"house_lam"
 outgoing_neighbor_ids = [&"central_hub"]
-world_position = Vector2(1880, 900)
+world_position = Vector2(2250, 820)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node033"]
@@ -342,7 +342,7 @@ tags = [&"HOUSE"]
 origin_house_id = &"house_lam"
 outgoing_neighbor_ids = [&"lam_lane_b_2"]
 display_name = "Nhà họ Lam · Lối B"
-world_position = Vector2(2720, 560)
+world_position = Vector2(3220, 580)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node034"]
@@ -352,7 +352,7 @@ node_kind = &"HOUSE_PATH"
 tags = [&"HOUSE"]
 origin_house_id = &"house_lam"
 outgoing_neighbor_ids = [&"lam_lane_b_3"]
-world_position = Vector2(2480, 720)
+world_position = Vector2(2920, 720)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node035"]
@@ -362,7 +362,7 @@ node_kind = &"HOUSE_PATH"
 tags = [&"HOUSE"]
 origin_house_id = &"house_lam"
 outgoing_neighbor_ids = [&"lam_lane_b_4"]
-world_position = Vector2(2220, 900)
+world_position = Vector2(2620, 860)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node036"]
@@ -372,7 +372,7 @@ node_kind = &"HOUSE_PATH"
 tags = [&"HOUSE"]
 origin_house_id = &"house_lam"
 outgoing_neighbor_ids = [&"central_hub"]
-world_position = Vector2(1900, 1200)
+world_position = Vector2(2280, 980)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node037"]
@@ -383,7 +383,7 @@ tags = [&"HOUSE"]
 origin_house_id = &"house_chu"
 outgoing_neighbor_ids = [&"chu_lane_a_1", &"chu_lane_b_1"]
 display_name = "Nhà họ Chu"
-world_position = Vector2(2860, 980)
+world_position = Vector2(3400, 850)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node038"]
@@ -394,7 +394,7 @@ tags = [&"HOUSE"]
 origin_house_id = &"house_chu"
 outgoing_neighbor_ids = [&"chu_lane_a_2"]
 display_name = "Nhà họ Chu · Lối A"
-world_position = Vector2(2640, 860)
+world_position = Vector2(3110, 780)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node039"]
@@ -404,7 +404,7 @@ node_kind = &"HOUSE_PATH"
 tags = [&"HOUSE"]
 origin_house_id = &"house_chu"
 outgoing_neighbor_ids = [&"chu_lane_a_3"]
-world_position = Vector2(2380, 900)
+world_position = Vector2(2810, 850)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node040"]
@@ -414,7 +414,7 @@ node_kind = &"HOUSE_PATH"
 tags = [&"HOUSE"]
 origin_house_id = &"house_chu"
 outgoing_neighbor_ids = [&"chu_lane_a_4"]
-world_position = Vector2(2120, 1080)
+world_position = Vector2(2510, 940)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node041"]
@@ -424,7 +424,7 @@ node_kind = &"HOUSE_PATH"
 tags = [&"HOUSE"]
 origin_house_id = &"house_chu"
 outgoing_neighbor_ids = [&"central_hub"]
-world_position = Vector2(1840, 1320)
+world_position = Vector2(2220, 1010)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node042"]
@@ -435,7 +435,7 @@ tags = [&"HOUSE"]
 origin_house_id = &"house_chu"
 outgoing_neighbor_ids = [&"chu_lane_b_2"]
 display_name = "Nhà họ Chu · Lối B"
-world_position = Vector2(2680, 1120)
+world_position = Vector2(3160, 1020)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node043"]
@@ -445,7 +445,7 @@ node_kind = &"HOUSE_PATH"
 tags = [&"HOUSE"]
 origin_house_id = &"house_chu"
 outgoing_neighbor_ids = [&"chu_lane_b_3"]
-world_position = Vector2(2440, 1280)
+world_position = Vector2(2880, 1140)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node044"]
@@ -455,7 +455,7 @@ node_kind = &"HOUSE_PATH"
 tags = [&"HOUSE"]
 origin_house_id = &"house_chu"
 outgoing_neighbor_ids = [&"chu_lane_b_4"]
-world_position = Vector2(2160, 1400)
+world_position = Vector2(2580, 1200)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node045"]
@@ -465,7 +465,7 @@ node_kind = &"HOUSE_PATH"
 tags = [&"HOUSE"]
 origin_house_id = &"house_chu"
 outgoing_neighbor_ids = [&"central_hub"]
-world_position = Vector2(1860, 1460)
+world_position = Vector2(2260, 1160)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node046"]
@@ -475,7 +475,7 @@ node_kind = &"CENTRAL_HUB"
 tags = [&"SHARED", &"CENTRAL_HUB"]
 outgoing_neighbor_ids = [&"middle_lane_1_1", &"middle_lane_2_1", &"middle_lane_3_1"]
 display_name = "Đại sân Trung tâm"
-world_position = Vector2(1600, 1500)
+world_position = Vector2(2000, 1050)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node047"]
@@ -485,7 +485,7 @@ node_kind = &"MIDDLE_PATH"
 tags = [&"SHARED", &"MIDDLE"]
 outgoing_neighbor_ids = [&"middle_lane_1_2"]
 display_name = "Trung lộ 1"
-world_position = Vector2(1400, 1700)
+world_position = Vector2(1820, 1140)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node048"]
@@ -494,7 +494,7 @@ node_id = &"middle_lane_1_2"
 node_kind = &"MIDDLE_PATH"
 tags = [&"SHARED", &"MIDDLE"]
 outgoing_neighbor_ids = [&"middle_lane_1_3"]
-world_position = Vector2(1260, 1890)
+world_position = Vector2(1720, 1220)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node049"]
@@ -503,7 +503,7 @@ node_id = &"middle_lane_1_3"
 node_kind = &"MIDDLE_PATH"
 tags = [&"SHARED", &"MIDDLE"]
 outgoing_neighbor_ids = [&"middle_lane_1_4"]
-world_position = Vector2(1280, 2090)
+world_position = Vector2(1730, 1310)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node050"]
@@ -512,7 +512,7 @@ node_id = &"middle_lane_1_4"
 node_kind = &"MIDDLE_PATH"
 tags = [&"SHARED", &"MIDDLE"]
 outgoing_neighbor_ids = [&"middle_lane_1_5"]
-world_position = Vector2(1380, 2270)
+world_position = Vector2(1810, 1390)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node051"]
@@ -521,7 +521,7 @@ node_id = &"middle_lane_1_5"
 node_kind = &"MIDDLE_PATH"
 tags = [&"SHARED", &"MIDDLE"]
 outgoing_neighbor_ids = [&"mausoleum_hub"]
-world_position = Vector2(1480, 2440)
+world_position = Vector2(1900, 1450)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node052"]
@@ -531,7 +531,7 @@ node_kind = &"MIDDLE_PATH"
 tags = [&"SHARED", &"MIDDLE"]
 outgoing_neighbor_ids = [&"middle_lane_2_2"]
 display_name = "Trung lộ 2"
-world_position = Vector2(1600, 1710)
+world_position = Vector2(2000, 1140)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node053"]
@@ -540,7 +540,7 @@ node_id = &"middle_lane_2_2"
 node_kind = &"MIDDLE_PATH"
 tags = [&"SHARED", &"MIDDLE"]
 outgoing_neighbor_ids = [&"middle_lane_2_3"]
-world_position = Vector2(1600, 1900)
+world_position = Vector2(2000, 1220)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node054"]
@@ -549,7 +549,7 @@ node_id = &"middle_lane_2_3"
 node_kind = &"MIDDLE_PATH"
 tags = [&"SHARED", &"MIDDLE"]
 outgoing_neighbor_ids = [&"middle_lane_2_4"]
-world_position = Vector2(1600, 2090)
+world_position = Vector2(2000, 1310)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node055"]
@@ -558,7 +558,7 @@ node_id = &"middle_lane_2_4"
 node_kind = &"MIDDLE_PATH"
 tags = [&"SHARED", &"MIDDLE"]
 outgoing_neighbor_ids = [&"middle_lane_2_5"]
-world_position = Vector2(1600, 2280)
+world_position = Vector2(2000, 1390)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node056"]
@@ -567,7 +567,7 @@ node_id = &"middle_lane_2_5"
 node_kind = &"MIDDLE_PATH"
 tags = [&"SHARED", &"MIDDLE"]
 outgoing_neighbor_ids = [&"mausoleum_hub"]
-world_position = Vector2(1600, 2440)
+world_position = Vector2(2000, 1450)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node057"]
@@ -577,7 +577,7 @@ node_kind = &"MIDDLE_PATH"
 tags = [&"SHARED", &"MIDDLE"]
 outgoing_neighbor_ids = [&"middle_lane_3_2"]
 display_name = "Trung lộ 3"
-world_position = Vector2(1800, 1700)
+world_position = Vector2(2180, 1140)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node058"]
@@ -586,7 +586,7 @@ node_id = &"middle_lane_3_2"
 node_kind = &"MIDDLE_PATH"
 tags = [&"SHARED", &"MIDDLE"]
 outgoing_neighbor_ids = [&"middle_lane_3_3"]
-world_position = Vector2(1940, 1890)
+world_position = Vector2(2280, 1220)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node059"]
@@ -595,7 +595,7 @@ node_id = &"middle_lane_3_3"
 node_kind = &"MIDDLE_PATH"
 tags = [&"SHARED", &"MIDDLE"]
 outgoing_neighbor_ids = [&"middle_lane_3_4"]
-world_position = Vector2(1920, 2090)
+world_position = Vector2(2270, 1310)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node060"]
@@ -604,7 +604,7 @@ node_id = &"middle_lane_3_4"
 node_kind = &"MIDDLE_PATH"
 tags = [&"SHARED", &"MIDDLE"]
 outgoing_neighbor_ids = [&"middle_lane_3_5"]
-world_position = Vector2(1820, 2270)
+world_position = Vector2(2190, 1390)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node061"]
@@ -613,7 +613,7 @@ node_id = &"middle_lane_3_5"
 node_kind = &"MIDDLE_PATH"
 tags = [&"SHARED", &"MIDDLE"]
 outgoing_neighbor_ids = [&"mausoleum_hub"]
-world_position = Vector2(1720, 2440)
+world_position = Vector2(2100, 1450)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node062"]
@@ -623,7 +623,7 @@ node_kind = &"MAUSOLEUM_HUB"
 tags = [&"SHARED", &"MAUSOLEUM_HUB"]
 outgoing_neighbor_ids = [&"final_lane_1_1", &"final_lane_2_1", &"final_lane_3_1"]
 display_name = "Đại lộ Lăng Miếu"
-world_position = Vector2(1600, 2600)
+world_position = Vector2(2000, 1500)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node063"]
@@ -633,7 +633,7 @@ node_kind = &"FINAL_PATH"
 tags = [&"SHARED", &"POST_MAUSOLEUM"]
 outgoing_neighbor_ids = [&"final_lane_1_2"]
 display_name = "Hoàng lộ 1"
-world_position = Vector2(1400, 2780)
+world_position = Vector2(1820, 1580)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node064"]
@@ -642,7 +642,7 @@ node_id = &"final_lane_1_2"
 node_kind = &"FINAL_PATH"
 tags = [&"SHARED", &"POST_MAUSOLEUM"]
 outgoing_neighbor_ids = [&"final_lane_1_3"]
-world_position = Vector2(1400, 2950)
+world_position = Vector2(1830, 1660)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node065"]
@@ -651,7 +651,7 @@ node_id = &"final_lane_1_3"
 node_kind = &"FINAL_PATH"
 tags = [&"SHARED", &"POST_MAUSOLEUM"]
 outgoing_neighbor_ids = [&"final_lane_1_4"]
-world_position = Vector2(1420, 3120)
+world_position = Vector2(1850, 1740)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node066"]
@@ -660,7 +660,7 @@ node_id = &"final_lane_1_4"
 node_kind = &"FINAL_PATH"
 tags = [&"SHARED", &"POST_MAUSOLEUM"]
 outgoing_neighbor_ids = [&"final_lane_1_5"]
-world_position = Vector2(1440, 3290)
+world_position = Vector2(1880, 1810)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node067"]
@@ -670,7 +670,7 @@ node_kind = &"FINAL_PATH"
 tags = [&"SHARED", &"POST_MAUSOLEUM"]
 outgoing_neighbor_ids = [&"royal_vault_hub"]
 display_name = "Hoàng lộ 1"
-world_position = Vector2(1460, 3460)
+world_position = Vector2(1920, 1880)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node068"]
@@ -680,7 +680,7 @@ node_kind = &"FINAL_PATH"
 tags = [&"SHARED", &"POST_MAUSOLEUM"]
 outgoing_neighbor_ids = [&"final_lane_2_2"]
 display_name = "Hoàng lộ 2"
-world_position = Vector2(1600, 2780)
+world_position = Vector2(2000, 1580)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node069"]
@@ -689,7 +689,7 @@ node_id = &"final_lane_2_2"
 node_kind = &"FINAL_PATH"
 tags = [&"SHARED", &"POST_MAUSOLEUM"]
 outgoing_neighbor_ids = [&"final_lane_2_3"]
-world_position = Vector2(1600, 2950)
+world_position = Vector2(2000, 1660)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node070"]
@@ -698,7 +698,7 @@ node_id = &"final_lane_2_3"
 node_kind = &"FINAL_PATH"
 tags = [&"SHARED", &"POST_MAUSOLEUM"]
 outgoing_neighbor_ids = [&"final_lane_2_4"]
-world_position = Vector2(1600, 3120)
+world_position = Vector2(2000, 1740)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node071"]
@@ -707,7 +707,7 @@ node_id = &"final_lane_2_4"
 node_kind = &"FINAL_PATH"
 tags = [&"SHARED", &"POST_MAUSOLEUM"]
 outgoing_neighbor_ids = [&"final_lane_2_5"]
-world_position = Vector2(1600, 3290)
+world_position = Vector2(2000, 1810)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node072"]
@@ -717,7 +717,7 @@ node_kind = &"FINAL_PATH"
 tags = [&"SHARED", &"POST_MAUSOLEUM"]
 outgoing_neighbor_ids = [&"royal_vault_hub"]
 display_name = "Hoàng lộ 2"
-world_position = Vector2(1600, 3460)
+world_position = Vector2(2000, 1880)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node073"]
@@ -727,7 +727,7 @@ node_kind = &"FINAL_PATH"
 tags = [&"SHARED", &"POST_MAUSOLEUM"]
 outgoing_neighbor_ids = [&"final_lane_3_2"]
 display_name = "Hoàng lộ 3"
-world_position = Vector2(1800, 2780)
+world_position = Vector2(2180, 1580)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node074"]
@@ -736,7 +736,7 @@ node_id = &"final_lane_3_2"
 node_kind = &"FINAL_PATH"
 tags = [&"SHARED", &"POST_MAUSOLEUM"]
 outgoing_neighbor_ids = [&"final_lane_3_3"]
-world_position = Vector2(1800, 2950)
+world_position = Vector2(2170, 1660)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node075"]
@@ -745,7 +745,7 @@ node_id = &"final_lane_3_3"
 node_kind = &"FINAL_PATH"
 tags = [&"SHARED", &"POST_MAUSOLEUM"]
 outgoing_neighbor_ids = [&"final_lane_3_4"]
-world_position = Vector2(1780, 3120)
+world_position = Vector2(2150, 1740)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node076"]
@@ -754,7 +754,7 @@ node_id = &"final_lane_3_4"
 node_kind = &"FINAL_PATH"
 tags = [&"SHARED", &"POST_MAUSOLEUM"]
 outgoing_neighbor_ids = [&"final_lane_3_5"]
-world_position = Vector2(1760, 3290)
+world_position = Vector2(2120, 1810)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node077"]
@@ -764,7 +764,7 @@ node_kind = &"FINAL_PATH"
 tags = [&"SHARED", &"POST_MAUSOLEUM"]
 outgoing_neighbor_ids = [&"royal_vault_hub"]
 display_name = "Hoàng lộ 3"
-world_position = Vector2(1740, 3460)
+world_position = Vector2(2080, 1880)
 test_only_not_canon_locked = false
 
 [sub_resource type="Resource" id="Node078"]
@@ -773,7 +773,7 @@ node_id = &"royal_vault_hub"
 node_kind = &"END"
 tags = [&"SHARED", &"POST_MAUSOLEUM", &"END", &"ROYAL_VAULT"]
 display_name = "Kho Báu Hoàng Gia"
-world_position = Vector2(1600, 3660)
+world_position = Vector2(2000, 1950)
 test_only_not_canon_locked = false
 
 [resource]

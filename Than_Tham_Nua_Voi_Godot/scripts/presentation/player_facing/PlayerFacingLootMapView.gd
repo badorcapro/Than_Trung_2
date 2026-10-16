@@ -13,8 +13,8 @@ const CAMERA_FIT_SCREEN_MARGIN := 32.0
 const CAMERA_DRAG_THRESHOLD := 16.0
 const BOARD_ROUTE_WIDTH := 13.0
 const BOARD_ROUTE_SHADOW_WIDTH := 22.0
-const MAP_TEXTURE_PATH := "res://assets/maps/imperial_court_board_v1.png"
-const MAP_TEXTURE_FALLBACK_PATH := "res://assets/maps/imperial_court_map.png"
+const MAP_TEXTURE_PATH := "res://assets/maps/imperial_court_board_landscape.png"
+const MAP_TEXTURE_FALLBACK_PATH := "res://assets/maps/imperial_court_board_v1.png"
 
 const REWARD_SNAPSHOT_SERVICE := preload("res://scripts/application/loot/RewardSnapshotService.gd")
 const PRODUCTION_REWARD_REPO := preload("res://scripts/application/loot/ProductionRewardRepository.gd")
@@ -582,7 +582,7 @@ func _get_map_texture() -> Texture2D:
 
 
 func _map_texture_world_rect() -> Rect2:
-	return Rect2(Vector2(-180.0, -560.0), Vector2(3560.0, 5000.0))
+	return Rect2(Vector2(50.0, -100.0), Vector2(3900.0, 2300.0))
 
 
 func has_custom_map_texture() -> bool:
@@ -591,7 +591,7 @@ func has_custom_map_texture() -> bool:
 
 func _draw_board_background() -> void:
 	var v_scale: float = _visual_scale()
-	# 1. Mặt bàn gỗ gụ hoàng cung (Imperial Tabletop - Warm Deep Mahogany & Rosewood)
+	# 1. Mặt bàn gỗ mun / gấm tối hoàng cung (Imperial Grand Tabletop Background)
 	draw_rect(Rect2(Vector2.ZERO, size), Color(0.082, 0.058, 0.045, 1.0), true)
 
 	# Faint woven wood/silk grain slats across the screen
@@ -619,104 +619,96 @@ func _draw_board_background() -> void:
 		var screen_pos: Vector2 = _world_to_screen(tex_world_rect.position)
 		var screen_rect := Rect2(screen_pos, tex_world_rect.size * _zoom)
 
-		# Multi-layered soft drop shadow for 3D parchment scroll depth
-		var shadow_deep := screen_rect.grow(30.0 * v_scale)
+		# Multi-layered soft drop shadow for 3D panoramic board depth
+		var shadow_deep := screen_rect.grow(36.0 * v_scale)
 		shadow_deep.position += Vector2(16.0, 24.0) * v_scale
-		draw_rect(shadow_deep, Color(0.01, 0.01, 0.01, 0.38), true)
+		draw_rect(shadow_deep, Color(0.01, 0.01, 0.01, 0.42), true)
 
-		var shadow_near := screen_rect.grow(14.0 * v_scale)
+		var shadow_near := screen_rect.grow(16.0 * v_scale)
 		shadow_near.position += Vector2(8.0, 12.0) * v_scale
-		draw_rect(shadow_near, Color(0.015, 0.012, 0.01, 0.65), true)
+		draw_rect(shadow_near, Color(0.015, 0.012, 0.01, 0.70), true)
 
-		# Outer antique scroll border (aged bronze & imperial gold)
-		var border_rect := screen_rect.grow(5.0 * v_scale)
-		draw_rect(border_rect, Color(0.38, 0.28, 0.16, 0.98), false, 5.0 * v_scale)
-		var inner_gold_rect := screen_rect.grow(1.5 * v_scale)
-		draw_rect(inner_gold_rect, Color(0.85, 0.70, 0.35, 0.65), false, 1.5 * v_scale)
+		# Outer antique imperial board border (aged bronze & imperial gold)
+		var border_rect := screen_rect.grow(6.0 * v_scale)
+		draw_rect(border_rect, Color(0.38, 0.28, 0.16, 0.98), false, 6.0 * v_scale)
+		var inner_gold_rect := screen_rect.grow(2.0 * v_scale)
+		draw_rect(inner_gold_rect, Color(0.85, 0.70, 0.35, 0.75), false, 2.0 * v_scale)
 
-		# Authentic illustrated Imperial Court Map with subtle warm rice-paper tint
-		draw_texture_rect(tex, screen_rect, false, Color(0.97, 0.94, 0.89, 1.0))
+		# Authentic illustrated Panoramic Imperial Court Map with rich warm silk tone
+		draw_texture_rect(tex, screen_rect, false, Color(0.98, 0.96, 0.92, 1.0))
 
-		# Cylindrical antique scroll rods at top and bottom ends (Trục cuốn hoàng gia)
-		var rod_h: float = 14.0 * v_scale
-		var rod_overhang: float = 24.0 * v_scale
-		var top_rod_rect := Rect2(screen_rect.position.x - rod_overhang, screen_rect.position.y - rod_h * 0.5, screen_rect.size.x + rod_overhang * 2.0, rod_h)
-		var btm_rod_rect := Rect2(screen_rect.position.x - rod_overhang, screen_rect.position.y + screen_rect.size.y - rod_h * 0.5, screen_rect.size.x + rod_overhang * 2.0, rod_h)
-
-		# Rod shadows
-		draw_rect(top_rod_rect.grow(2.0 * v_scale), Color(0.02, 0.015, 0.01, 0.5), true)
-		draw_rect(btm_rod_rect.grow(2.0 * v_scale), Color(0.02, 0.015, 0.01, 0.5), true)
-		# Rod ebony wood bodies
-		draw_rect(top_rod_rect, Color(0.18, 0.12, 0.08, 0.98), true)
-		draw_rect(btm_rod_rect, Color(0.18, 0.12, 0.08, 0.98), true)
-		# Rod specular gold rim highlights
-		draw_line(top_rod_rect.position + Vector2(0, 2.0 * v_scale), top_rod_rect.position + Vector2(top_rod_rect.size.x, 2.0 * v_scale), Color(0.85, 0.70, 0.35, 0.85), 1.8 * v_scale)
-		draw_line(btm_rod_rect.position + Vector2(0, 2.0 * v_scale), btm_rod_rect.position + Vector2(btm_rod_rect.size.x, 2.0 * v_scale), Color(0.85, 0.70, 0.35, 0.85), 1.8 * v_scale)
-		# Rod golden knob caps (chốt đầu trục bằng vàng)
-		var cap_w: float = 16.0 * v_scale
-		draw_rect(Rect2(top_rod_rect.position.x, top_rod_rect.position.y - 2.0 * v_scale, cap_w, rod_h + 4.0 * v_scale), Color(0.95, 0.80, 0.35, 0.98), true)
-		draw_rect(Rect2(top_rod_rect.position.x + top_rod_rect.size.x - cap_w, top_rod_rect.position.y - 2.0 * v_scale, cap_w, rod_h + 4.0 * v_scale), Color(0.95, 0.80, 0.35, 0.98), true)
-		draw_rect(Rect2(btm_rod_rect.position.x, btm_rod_rect.position.y - 2.0 * v_scale, cap_w, rod_h + 4.0 * v_scale), Color(0.95, 0.80, 0.35, 0.98), true)
-		draw_rect(Rect2(btm_rod_rect.position.x + btm_rod_rect.size.x - cap_w, btm_rod_rect.position.y - 2.0 * v_scale, cap_w, rod_h + 4.0 * v_scale), Color(0.95, 0.80, 0.35, 0.98), true)
+		# Decorative antique corner brackets (Góc kỷ hà thếp vàng 4 góc sa bàn)
+		var corner_size: float = 32.0 * v_scale
+		var c_gold := Color(0.92, 0.78, 0.40, 0.90)
+		# Top-Left
+		draw_line(screen_rect.position, screen_rect.position + Vector2(corner_size, 0), c_gold, 3.0 * v_scale)
+		draw_line(screen_rect.position, screen_rect.position + Vector2(0, corner_size), c_gold, 3.0 * v_scale)
+		# Top-Right
+		var tr := Vector2(screen_rect.end.x, screen_rect.position.y)
+		draw_line(tr, tr + Vector2(-corner_size, 0), c_gold, 3.0 * v_scale)
+		draw_line(tr, tr + Vector2(0, corner_size), c_gold, 3.0 * v_scale)
+		# Bottom-Left
+		var bl := Vector2(screen_rect.position.x, screen_rect.end.y)
+		draw_line(bl, bl + Vector2(corner_size, 0), c_gold, 3.0 * v_scale)
+		draw_line(bl, bl + Vector2(0, -corner_size), c_gold, 3.0 * v_scale)
+		# Bottom-Right
+		draw_line(screen_rect.end, screen_rect.end + Vector2(-corner_size, 0), c_gold, 3.0 * v_scale)
+		draw_line(screen_rect.end, screen_rect.end + Vector2(0, -corner_size), c_gold, 3.0 * v_scale)
 	else:
 		_draw_fallback_background()
 
 
 func _draw_fallback_background() -> void:
 	_draw_world_rect(
-		Rect2(Vector2(1080.0, 40.0), Vector2(1040.0, 2580.0)),
+		Rect2(Vector2(1400.0, 50.0), Vector2(1200.0, 1950.0)),
 		Color(0.16, 0.17, 0.15, 0.9), Color(0.52, 0.43, 0.27, 0.8), 7.0
 	)
 	_draw_world_rect(
-		Rect2(Vector2(1110.0, 1280.0), Vector2(980.0, 1210.0)),
+		Rect2(Vector2(1500.0, 950.0), Vector2(1000.0, 600.0)),
 		Color(0.24, 0.2, 0.15, 0.78), Color(0.76, 0.57, 0.25, 0.72), 5.0
 	)
-	_draw_world_rect(
-		Rect2(Vector2(700.0, 2480.0), Vector2(1800.0, 1080.0)),
-		Color(0.14, 0.24, 0.2, 0.78), Color(0.48, 0.64, 0.45, 0.74), 5.0
-	)
 	_draw_house_regions()
-	_draw_region_heading(Vector2(1640.0, 1530.0), "ĐẠI SÂN TRUNG TÂM", "◆", Color(0.82, 0.72, 0.48))
-	_draw_region_heading(Vector2(1130.0, 1980.0), "BA TRUNG LỘ", "◇", Color(0.7, 0.78, 0.62))
-	_draw_region_heading(Vector2(1640.0, 2630.0), "LĂNG MIẾU", "◆", Color(0.72, 0.78, 0.58))
-	_draw_region_heading(Vector2(980.0, 3260.0), "HOÀNG GIA", "◇", Color(0.76, 0.67, 0.43))
+	_draw_region_heading(Vector2(2000.0, 1050.0), "ĐẠI SÂN TRUNG TÂM", "◆", Color(0.82, 0.72, 0.48))
+	_draw_region_heading(Vector2(2000.0, 1310.0), "BA TRUNG LỘ", "◇", Color(0.7, 0.78, 0.62))
+	_draw_region_heading(Vector2(2000.0, 1500.0), "LĂNG MIẾU", "◆", Color(0.72, 0.78, 0.58))
+	_draw_region_heading(Vector2(2000.0, 1950.0), "HOÀNG GIA", "◇", Color(0.76, 0.67, 0.43))
 
 
 func _draw_house_regions() -> void:
 	_draw_house_region(
 		&"house_huyen", "NHÀ HỌ HUYỀN", "IV",
 		PackedVector2Array([
-			Vector2(1180, 50), Vector2(2020, 50), Vector2(1980, 1130),
-			Vector2(1740, 1220), Vector2(1460, 1220), Vector2(1220, 1130),
-		]), Vector2(1500, 100)
+			Vector2(1650, 60), Vector2(2350, 60), Vector2(2300, 950),
+			Vector2(2000, 1000), Vector2(1700, 950),
+		]), Vector2(1850, 90)
 	)
 	_draw_house_region(
 		&"house_kim", "NHÀ HỌ KIM", "III",
 		PackedVector2Array([
-			Vector2(120, 180), Vector2(1320, 180), Vector2(1450, 780),
-			Vector2(1300, 1230), Vector2(120, 760),
-		]), Vector2(270, 350)
+			Vector2(350, 200), Vector2(1600, 200), Vector2(1800, 750),
+			Vector2(1650, 850), Vector2(350, 580),
+		]), Vector2(450, 320)
 	)
 	_draw_house_region(
 		&"house_lam", "NHÀ HỌ LAM", "V",
 		PackedVector2Array([
-			Vector2(1880, 180), Vector2(3080, 180), Vector2(3080, 760),
-			Vector2(1900, 1230), Vector2(1750, 780),
-		]), Vector2(2670, 350)
+			Vector2(2400, 200), Vector2(3650, 200), Vector2(3650, 580),
+			Vector2(2350, 850), Vector2(2200, 750),
+		]), Vector2(3150, 320)
 	)
 	_draw_house_region(
 		&"house_hoang", "NHÀ HỌ HOÀNG", "I",
 		PackedVector2Array([
-			Vector2(120, 760), Vector2(1300, 950), Vector2(1450, 1490),
-			Vector2(120, 1490),
-		]), Vector2(280, 930)
+			Vector2(350, 620), Vector2(1650, 880), Vector2(1800, 1250),
+			Vector2(350, 1250),
+		]), Vector2(450, 800)
 	)
 	_draw_house_region(
 		&"house_chu", "NHÀ HỌ CHU", "II",
 		PackedVector2Array([
-			Vector2(1900, 950), Vector2(3080, 760), Vector2(3080, 1490),
-			Vector2(1750, 1490),
-		]), Vector2(2670, 930)
+			Vector2(2350, 880), Vector2(3650, 620), Vector2(3650, 1250),
+			Vector2(2200, 1250),
+		]), Vector2(3150, 800)
 	)
 
 
