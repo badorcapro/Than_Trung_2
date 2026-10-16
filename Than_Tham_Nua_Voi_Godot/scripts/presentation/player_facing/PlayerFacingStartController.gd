@@ -102,6 +102,7 @@ var _toast_tween: Tween = null
 const SPLASH_BG_TEXTURE: Texture2D = preload("res://assets/ui/common/splash_bg.png")
 const MAIN_MENU_BG_TEXTURE: Texture2D = preload("res://assets/ui/desktop/needy_desktop_bg_1080.png")
 const LOBBY_BG_TEXTURE: Texture2D = preload("res://assets/ui/common/lobby_bg.png")
+const SIMULATION_BG_TEXTURE: Texture2D = preload("res://assets/hinh_nen.png")
 const SEAL_FRAME_TEXTURES: Dictionary = {
 	&"house_hoang": preload("res://assets/ui/character_select/seal_frame_hoang.png"),
 	&"house_chu": preload("res://assets/ui/character_select/seal_frame_chu.png"),
@@ -1153,44 +1154,133 @@ func _on_char_select_start_pressed() -> void:
 	if desktop_character_select_dialog != null:
 		desktop_character_select_dialog.visible = false
 
-	setup.begin_new_game()
-	setup.choose_match_mode(_desktop_selected_mode)
-	setup.confirm_match_rules()
-	var pc_res: Dictionary = setup.choose_player_count(chosen.size(), true)
-	if not bool(pc_res.get("success", false)):
-		_show_toast("Lỗi cấu hình số lượng: %s" % str(pc_res.get("error", "")), true)
-		return
+	_play_simulation_transition(chosen, func() -> void:
+		setup.begin_new_game()
+		setup.choose_match_mode(_desktop_selected_mode)
+		setup.confirm_match_rules()
+		var pc_res: Dictionary = setup.choose_player_count(chosen.size(), true)
+		if not bool(pc_res.get("success", false)):
+			_show_toast("Lỗi cấu hình số lượng: %s" % str(pc_res.get("error", "")), true)
+			return
 
-	for i in range(chosen.size()):
-		setup.select_character(chosen[i].character_id)
-		setup.lock_current_character()
-		if setup.phase == SETUP_SESSION.Phase.PASS_DEVICE:
-			setup.continue_after_pass_device()
+		for i in range(chosen.size()):
+			setup.select_character(chosen[i].character_id)
+			setup.lock_current_character()
+			if setup.phase == SETUP_SESSION.Phase.PASS_DEVICE:
+				setup.continue_after_pass_device()
 
-	var confirm_res: Dictionary = setup.confirm_lineup()
-	if not bool(confirm_res.get("success", false)):
-		_show_toast("Không thể xác nhận danh sách đối tượng: %s" % str(confirm_res.get("error", "")), true)
-		return
+		var confirm_res: Dictionary = setup.confirm_lineup()
+		if not bool(confirm_res.get("success", false)):
+			_show_toast("Không thể xác nhận danh sách đối tượng: %s" % str(confirm_res.get("error", "")), true)
+			return
 
-	var candidate_flow: CASE_FLOW_SESSION = CASE_FLOW_SESSION.new()
-	var initialized: Dictionary = candidate_flow.initialize_player_facing_case_options(
-		setup.match_state
+		var candidate_flow: CASE_FLOW_SESSION = CASE_FLOW_SESSION.new()
+		var initialized: Dictionary = candidate_flow.initialize_player_facing_case_options(
+			setup.match_state
+		)
+		if not bool(initialized.get("success", false)):
+			_show_toast("Chưa thể chuẩn bị Kỳ Án mô phỏng đầu tiên.", true)
+			return
+		var prepared_options: Dictionary = candidate_flow.prepare_default_next_case_options()
+		if not bool(prepared_options.get("success", false)):
+			_show_toast("Chưa thể chuẩn bị ba lựa chọn Kỳ Án mô phỏng.", true)
+			return
+		var presented: Dictionary = setup.mark_first_case_selection_required()
+		if not bool(presented.get("success", false)):
+			_show_toast("Chưa thể mở danh sách Kỳ Án đầu tiên.", true)
+			return
+		case_flow = candidate_flow
+		_refresh_next_case()
+		_show_phase(setup.phase)
+		_show_toast("Đồng bộ ý thức thành công. Chào mừng Thám Tử đến Hoàng Triều Kỳ Án!")
 	)
-	if not bool(initialized.get("success", false)):
-		_show_toast("Chưa thể chuẩn bị Kỳ Án mô phỏng đầu tiên.", true)
-		return
-	var prepared_options: Dictionary = candidate_flow.prepare_default_next_case_options()
-	if not bool(prepared_options.get("success", false)):
-		_show_toast("Chưa thể chuẩn bị ba lựa chọn Kỳ Án mô phỏng.", true)
-		return
-	var presented: Dictionary = setup.mark_first_case_selection_required()
-	if not bool(presented.get("success", false)):
-		_show_toast("Chưa thể mở danh sách Kỳ Án đầu tiên.", true)
-		return
-	case_flow = candidate_flow
-	_refresh_next_case()
-	_show_phase(setup.phase)
-	_show_toast("Đội hình đối tượng đã sẵn sàng. Hãy chọn Kỳ Án mô phỏng.")
+
+
+func _play_simulation_transition(chosen: Array[CharacterDefinition], on_transition_ready: Callable) -> void:
+	var canvas_layer := CanvasLayer.new()
+	canvas_layer.name = "SimulationNeuralSyncLayer"
+	canvas_layer.layer = 280
+	add_child(canvas_layer)
+
+	var overlay := ColorRect.new()
+	overlay.name = "SyncOverlay"
+	overlay.set_anchors_preset(Control.PRESET_FULL_RECT)
+	overlay.color = Color(0.03, 0.04, 0.06, 1.0)
+	overlay.modulate.a = 0.0
+	overlay.mouse_filter = Control.MOUSE_FILTER_STOP
+	canvas_layer.add_child(overlay)
+
+	var center_vbox := VBoxContainer.new()
+	center_vbox.set_anchors_preset(Control.PRESET_CENTER)
+	center_vbox.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	center_vbox.grow_vertical = Control.GROW_DIRECTION_BOTH
+	center_vbox.alignment = BoxContainer.ALIGNMENT_CENTER
+	center_vbox.add_theme_constant_override("separation", 18)
+	overlay.add_child(center_vbox)
+
+	var seal_icon := TextureRect.new()
+	seal_icon.custom_minimum_size = Vector2(96, 96)
+	seal_icon.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	seal_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	seal_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	seal_icon.pivot_offset = Vector2(48, 48)
+	var first_house: StringName = chosen[0].origin_house_id if not chosen.is_empty() else &"house_hoang"
+	seal_icon.texture = SEAL_FRAME_TEXTURES.get(first_house, SEAL_FRAME_TEXTURES.get(&"house_hoang"))
+	center_vbox.add_child(seal_icon)
+
+	var title_lbl := Label.new()
+	title_lbl.text = "❖ ĐỒNG BỘ Ý THỨC: NHẬP VAI THỂ THỰC NGHIỆM ❖"
+	title_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	title_lbl.add_theme_font_size_override("font_size", 20)
+	title_lbl.add_theme_color_override("font_color", Color(0.96, 0.88, 0.65, 1.0))
+	center_vbox.add_child(title_lbl)
+
+	var status_lbl := Label.new()
+	var char_names: Array[String] = []
+	for c in chosen:
+		char_names.append(c.display_name)
+	status_lbl.text = "NGẮT KẾT NỐI MÁY TRẠM GIÁM SÁT VIÊN\nKHỞI TẠO TIỂU ĐỘI HOÀNG TRIỀU: %s\nTẢI BỐI CẢNH MÔ PHỎNG: HOÀNG TRIỀU KỲ ÁN..." % [", ".join(char_names)]
+	status_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	status_lbl.add_theme_font_size_override("font_size", 13)
+	status_lbl.add_theme_color_override("font_color", Color(0.65, 0.85, 0.9, 0.85))
+	center_vbox.add_child(status_lbl)
+
+	var progress_bar := ProgressBar.new()
+	progress_bar.custom_minimum_size = Vector2(380, 8)
+	progress_bar.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	progress_bar.show_percentage = false
+	progress_bar.min_value = 0.0
+	progress_bar.max_value = 100.0
+	progress_bar.value = 0.0
+	var pb_bg := StyleBoxFlat.new()
+	pb_bg.bg_color = Color(0.1, 0.12, 0.18, 0.8)
+	pb_bg.corner_radius_top_left = 4
+	pb_bg.corner_radius_top_right = 4
+	pb_bg.corner_radius_bottom_right = 4
+	pb_bg.corner_radius_bottom_left = 4
+	var pb_fg := StyleBoxFlat.new()
+	pb_fg.bg_color = Color(0.85, 0.72, 0.35, 1.0)
+	pb_fg.corner_radius_top_left = 4
+	pb_fg.corner_radius_top_right = 4
+	pb_fg.corner_radius_bottom_right = 4
+	pb_fg.corner_radius_bottom_left = 4
+	progress_bar.add_theme_stylebox_override("background", pb_bg)
+	progress_bar.add_theme_stylebox_override("fill", pb_fg)
+	center_vbox.add_child(progress_bar)
+
+	var tween := create_tween()
+	tween.tween_property(overlay, "modulate:a", 1.0, 0.4).set_trans(Tween.TRANS_SINE)
+	tween.parallel().tween_property(progress_bar, "value", 100.0, 0.7).set_delay(0.2).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tween.parallel().tween_property(seal_icon, "scale", Vector2(1.12, 1.12), 0.7).set_delay(0.2).set_trans(Tween.TRANS_SINE)
+	tween.tween_callback(func() -> void:
+		on_transition_ready.call()
+	)
+	tween.tween_interval(0.25)
+	tween.tween_property(overlay, "modulate:a", 0.0, 0.45).set_trans(Tween.TRANS_SINE)
+	tween.finished.connect(func() -> void:
+		if is_instance_valid(canvas_layer):
+			canvas_layer.queue_free()
+	)
 
 
 func _on_new_game_pressed() -> void:
@@ -3707,10 +3797,6 @@ func _show_phase(next_phase: int) -> void:
 		SETUP_SESSION.Phase.ROUND_SUMMARY,
 		SETUP_SESSION.Phase.NEXT_CASE_SELECTION,
 	]
-	if background_rect != null:
-		background_rect.texture = MAIN_MENU_BG_TEXTURE
-	if splash_panel != null:
-		splash_panel.visible = false
 	var is_desktop_phase: bool = next_phase in [
 		SETUP_SESSION.Phase.MAIN_MENU,
 		SETUP_SESSION.Phase.MATCH_MODE,
@@ -3720,6 +3806,18 @@ func _show_phase(next_phase: int) -> void:
 		SETUP_SESSION.Phase.PASS_DEVICE,
 		SETUP_SESSION.Phase.LINEUP_CONFIRMATION,
 	]
+	if background_rect != null:
+		if is_desktop_phase:
+			background_rect.texture = MAIN_MENU_BG_TEXTURE
+			background_rect.modulate = Color.WHITE
+		else:
+			background_rect.texture = SIMULATION_BG_TEXTURE
+			background_rect.modulate = Color(0.88, 0.88, 0.88, 1.0)
+	var bg_tint: ColorRect = get_node_or_null("BackgroundTint") as ColorRect
+	if bg_tint != null:
+		bg_tint.color = Color(0, 0, 0, 0.0) if is_desktop_phase else Color(0.02, 0.03, 0.05, 0.4)
+	if splash_panel != null:
+		splash_panel.visible = false
 	var is_main_menu: bool = next_phase == SETUP_SESSION.Phase.MAIN_MENU
 	if game_title != null:
 		game_title.visible = not is_desktop_phase
