@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0",
+  "workflow_mode": "milestone",
+  "active_profile": "software",
+  "line_budget": {
+    "loc_counting": "non_empty_lines",
+    "include_extensions": [
+      ".py", ".sv", ".v", ".vhd", ".ts", ".tsx", ".js", ".jsx", ".java", ".go",
+      ".rs", ".c", ".cc", ".cpp", ".h", ".hpp", ".cs", ".kt", ".swift"
+    ],
+    "default_role": "domain_logic",
+    "role_map": [
+      { "glob": "scripts/agent/**", "role": "core_engine" },
+      { "glob": "tests/**", "role": "test" },
+      { "glob": "pilot/rtl/**", "role": "rtl" },
+      { "glob": "generated/**", "role": "generated" },
+      { "glob": "**/generated/**", "role": "generated" },
+      { "glob": "vendor/**", "role": "generated" },
+      { "glob": "**/vendor/**", "role": "generated" }
+    ],
+    "profiles": {
+      "software": {
+        "core_engine": { "warn": 300, "review": 350, "hard": 400 },
+        "domain_logic": { "warn": 400, "review": 500, "hard": 800 },
+        "ui_component": { "warn": 300, "review": 400, "hard": 600 },
+        "test": { "warn": 500, "review": 800, "hard": 1200 },
+        "rtl": { "warn": 400, "review": 500, "hard": 800 },
+        "testbench": { "warn": 500, "review": 800, "hard": 1200 },
+        "generated": { "exempt": true }
+      },
+      "semiconductor-hardware": {
+        "core_engine": { "warn": 300, "review": 350, "hard": 400 },
+        "domain_logic": { "warn": 400, "review": 500, "hard": 800 },
+        "ui_component": { "warn": 300, "review": 400, "hard": 600 },
+        "test": { "warn": 500, "review": 800, "hard": 1200 },
+        "rtl": { "warn": 400, "review": 600, "hard": 1000 },
+        "testbench": { "warn": 600, "review": 900, "hard": 1500 },
+        "generated": { "exempt": true }
+      }
+    },
+    "diff_guard": {
+      "max_net_deleted_lines": 150,
+      "max_hunk_lines": 200,
+      "placeholder_patterns": [
+        "(?i)rest of (the )?(code|file|function|class)\\b.{0,30}(unchanged|same|remains)",
+        "(?i)(existing|previous|remaining) code (here|unchanged|remains)",
+        "(?i)\\.\\.\\.\\s*(rest|remaining|existing)\\b"
+      ]
+    }
+  }
+}

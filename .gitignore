@@ -17,3 +17,9 @@ Desktop.ini
 
 # Scratch temporary testing scripts
 scratch/
+
+# Python bytecode and test caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/

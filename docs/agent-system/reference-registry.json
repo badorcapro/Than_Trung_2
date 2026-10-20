@@ -1,0 +1,352 @@
+{
+  "schema_version": "1.0",
+  "project": "AI-AGENTS-Starter",
+  "entries": [
+    {
+      "id": "ARCH-CORE-001",
+      "kind": "architecture",
+      "path": "ARCHITECTURE.md",
+      "authority": "approved",
+      "status": "current",
+      "sha256": "362ff5dbe0effc6c451b140a75a73d2a64b7ae3f91f1003e8be6e38165f6157b",
+      "depends_on": [],
+      "description": "5-Layer Context & 2-Tier Domain Architecture Specification"
+    },
+    {
+      "id": "ADR-ARCH-001",
+      "kind": "decision",
+      "path": "docs/agent-system/decisions/ADR-0001-two-tier-architecture.md",
+      "authority": "approved",
+      "status": "current",
+      "sha256": "005c54c6042909f78dbc630c1ad41d27413f3b95c7d91ad6a7583f7fc1bb3c53",
+      "depends_on": [
+        "ARCH-CORE-001"
+      ],
+      "description": "ADR-0001: Two-Tier Architecture (Core Engine + Pluggable Domain Profiles)"
+    },
+    {
+      "id": "ADR-ARCH-002",
+      "kind": "decision",
+      "path": "docs/agent-system/decisions/ADR-0002-verification-runtime-and-dependencies.md",
+      "authority": "approved",
+      "status": "current",
+      "sha256": "67cb7e426e8021131675c22a0005a62828ec99641d6923a4b2e0f8d4a61a70a9",
+      "depends_on": [
+        "ARCH-CORE-001"
+      ],
+      "description": "ADR-0002: Verification Runtime & Schema Dependencies (Pydantic / PyYAML)"
+    },
+    {
+      "id": "ADR-ARCH-003",
+      "kind": "decision",
+      "path": "docs/agent-system/decisions/ADR-0003-task-contract-format-and-state-hierarchy.md",
+      "authority": "approved",
+      "status": "current",
+      "sha256": "78a93cd6fc35737242409b85e582954f32d3c97fdce526ab6fdff93d2f8378fd",
+      "depends_on": [
+        "ARCH-CORE-001"
+      ],
+      "description": "ADR-0003: Task Contract Format & Anti-Split-Brain State Hierarchy"
+    },
+    {
+      "id": "ADR-ARCH-004",
+      "kind": "decision",
+      "path": "docs/agent-system/decisions/ADR-0004-contract-driven-skills-lifecycle.md",
+      "authority": "approved",
+      "status": "current",
+      "sha256": "b02cae37119a4e263ccdf6eac3f31dc2daa415d80b3eed9e04aecc201cff0b5e",
+      "depends_on": [
+        "ARCH-CORE-001"
+      ],
+      "description": "ADR-0004: Contract-Driven Progressive Disclosure Skills Lifecycle"
+    },
+    {
+      "id": "ADR-ARCH-005",
+      "kind": "decision",
+      "path": "docs/agent-system/decisions/ADR-0005-scope-guard-and-evidence-retention.md",
+      "authority": "approved",
+      "status": "current",
+      "sha256": "bdbdbf1de80bc360790811bb69c62c0d77c9418269ae48ef3202c59ae018b6dc",
+      "depends_on": [
+        "ARCH-CORE-001"
+      ],
+      "description": "ADR-0005: Strict Git Scope Guard & Normalized Evidence Receipts"
+    },
+    {
+      "id": "ADR-ARCH-006",
+      "kind": "decision",
+      "path": "docs/agent-system/decisions/ADR-0006-reference-registry-authority-and-stale-gate.md",
+      "authority": "approved",
+      "status": "current",
+      "sha256": "c9f4b9d3f2e947126f50d4fd0192c90a5146bd2eebf9874f9a164904d3bb04c7",
+      "depends_on": [
+        "ARCH-CORE-001"
+      ],
+      "description": "ADR-0006: Reference Registry Authority & Automated Staleness Gate"
+    },
+    {
+      "id": "ADR-ARCH-007",
+      "kind": "decision",
+      "path": "docs/agent-system/decisions/ADR-0007-isolated-pilot-slice-strategy.md",
+      "authority": "approved",
+      "status": "current",
+      "sha256": "a506bee759e4945f4e103b799829a3429e769c1227ab02ab9aa40b9e73894950",
+      "depends_on": [
+        "ARCH-CORE-001"
+      ],
+      "description": "ADR-0007: Isolated Pilot Target Slice Strategy"
+    },
+    {
+      "id": "ADR-ARCH-008",
+      "kind": "decision",
+      "path": "docs/agent-system/decisions/ADR-0008-bootstrap-exception-and-gatekeeper-recursion.md",
+      "authority": "approved",
+      "status": "current",
+      "sha256": "6669563ee93accab7be3ac73a7d0eed43c189094a37e1699507b5b29c7b85f77",
+      "depends_on": [
+        "ARCH-CORE-001"
+      ],
+      "description": "ADR-0008: Controlled Bootstrap Exception & Gatekeeper Recursion Protocol"
+    },
+    {
+      "id": "ADR-ARCH-009",
+      "kind": "decision",
+      "path": "docs/agent-system/decisions/ADR-0009-three-state-lifecycle-and-phase-gate.md",
+      "authority": "approved",
+      "status": "current",
+      "sha256": "59f7f6cdf4e9ecc8f51718e6cec39781f3938a688bd9f855595032934a9a7786",
+      "depends_on": [
+        "ARCH-CORE-001",
+        "ADR-ARCH-003",
+        "ADR-ARCH-008"
+      ],
+      "description": "ADR-0009: Three-State Task Lifecycle & Mechanical Cross-Phase Gate"
+    },
+    {
+      "id": "RULE-SCOPE-001",
+      "kind": "rule",
+      "path": ".agents/rules/rule_task_contract_and_scope.md",
+      "authority": "approved",
+      "status": "current",
+      "sha256": "482687a02f059c0f7777977754e27007dfd797d3c39892516d4bac93899492b4",
+      "depends_on": [
+        "ARCH-CORE-001",
+        "ADR-ARCH-003",
+        "ADR-ARCH-005"
+      ],
+      "description": "Task Execution Contract & Scope Containment Rule"
+    },
+    {
+      "id": "SKILL-INV-001",
+      "kind": "skill",
+      "path": ".agents/skills/investigate-bug/SKILL.md",
+      "authority": "approved",
+      "status": "current",
+      "sha256": "896fb6a47b0ec876472d3e7c5984083a8c303b0e7fe8dd4595f6cd157bb5c74c",
+      "depends_on": [
+        "ARCH-CORE-001",
+        "ADR-ARCH-004"
+      ],
+      "description": "Systematic Bug Investigation & Root Cause Isolation Skill"
+    },
+    {
+      "id": "SKILL-KNW-001",
+      "kind": "skill",
+      "path": ".agents/skills/knowledge-review/SKILL.md",
+      "authority": "approved",
+      "status": "current",
+      "sha256": "372e2a45e7c8c1229fc1dea4d4d5aa55ee3f8778a8b709ebeea4e4354a891370",
+      "depends_on": [
+        "ARCH-CORE-001",
+        "ADR-ARCH-004",
+        "ADR-ARCH-006"
+      ],
+      "description": "Knowledge Review & Reference Registry Audit Skill"
+    },
+    {
+      "id": "MOD-DOCS-001",
+      "kind": "module",
+      "path": "scripts/agent/check_docs.py",
+      "authority": "approved",
+      "status": "current",
+      "sha256": "b2722e8f47e7a90b6e2e4d6b279482b57aaa84d7873c22e02a1e4f4c12c46aa7",
+      "depends_on": [
+        "ARCH-CORE-001"
+      ],
+      "description": "Anti-Drift Documentation & Workspace Integrity Auditor"
+    },
+    {
+      "id": "MOD-LEARN-001",
+      "kind": "module",
+      "path": "scripts/agent/stage_learning.py",
+      "authority": "approved",
+      "status": "current",
+      "sha256": "8058d5de142c0e0f199cb84cfbef7d064d4fe5b224ffd496928b5f58c11158a9",
+      "depends_on": [
+        "ARCH-CORE-001",
+        "ADR-ARCH-004"
+      ],
+      "description": "Controlled /learn Staging Gate & Rule Authoring Engine"
+    },
+    {
+      "id": "SKILL-LRN-001",
+      "kind": "skill",
+      "path": ".agents/skills/controlled-learning/SKILL.md",
+      "authority": "approved",
+      "status": "current",
+      "sha256": "2e4c669bd95aa137d9353131a806ff7a626a35629b692f44986acb8ff3bd5219",
+      "depends_on": [
+        "ARCH-CORE-001",
+        "MOD-LEARN-001"
+      ],
+      "description": "Controlled Learning & Rule Authoring Workflow Skill"
+    },
+    {
+      "id": "ADR-ARCH-010",
+      "kind": "decision",
+      "path": "docs/agent-system/decisions/ADR-0010-role-based-configurable-line-budgets.md",
+      "authority": "approved",
+      "status": "current",
+      "sha256": "920c8d754c6eb85e46c4493be3974d5a72a580bc10cd1d0b9556c14976237c48",
+      "depends_on": [
+        "ARCH-CORE-001"
+      ],
+      "description": "ADR-0010: Role-Based Configurable Line Budgets"
+    },
+    {
+      "id": "CFG-LBUD-001",
+      "kind": "contract",
+      "path": "docs/agent-system/project-config.json",
+      "authority": "approved",
+      "status": "current",
+      "sha256": "866559ec69d51398308ee08a1ed78ad6ca127bca2d171794c4851dee951521ad",
+      "depends_on": [
+        "ARCH-CORE-001"
+      ],
+      "description": "Project config: role map, line budget profiles, diff guard thresholds"
+    },
+    {
+      "id": "MOD-CFG-001",
+      "kind": "module",
+      "path": "scripts/agent/config_models.py",
+      "authority": "approved",
+      "status": "current",
+      "sha256": "e3f64e410e66f66f9ef15efb6c3dfced13ff5483b47dbfd2683363ebf3deace1",
+      "depends_on": [
+        "ARCH-CORE-001"
+      ],
+      "description": "Pydantic schemas for project-config.json"
+    },
+    {
+      "id": "MOD-LBUD-001",
+      "kind": "module",
+      "path": "scripts/agent/check_line_budget.py",
+      "authority": "approved",
+      "status": "current",
+      "sha256": "41625d0a8e04abfe073132ab832adeb6737d3cc1338dea8f57d8c3171fa2e11b",
+      "depends_on": [
+        "ARCH-CORE-001",
+        "MOD-CFG-001"
+      ],
+      "description": "Role-based line budget checker (warn/review/hard tiers, approved-only exceptions)"
+    },
+    {
+      "id": "MOD-DIFF-001",
+      "kind": "module",
+      "path": "scripts/agent/check_diff_guard.py",
+      "authority": "approved",
+      "status": "current",
+      "sha256": "0a6586b8a42f4358dd8164f0e2ebd997c51bf32d3b921031c907fa0e40d04c02",
+      "depends_on": [
+        "ARCH-CORE-001",
+        "MOD-CFG-001"
+      ],
+      "description": "Post-hoc git diff guard (placeholders, net deletion, hunk size)"
+    },
+    {
+      "id": "ADR-ARCH-011",
+      "kind": "decision",
+      "path": "docs/agent-system/decisions/ADR-0011-workspace-customization-and-workflow-modes.md",
+      "authority": "approved",
+      "status": "current",
+      "sha256": "afa45044aad1e2f5982fb646729b8b798f4f1b40853357b4ced988909894cf66",
+      "depends_on": [
+        "ARCH-CORE-001",
+        "ADR-ARCH-009",
+        "ADR-ARCH-010"
+      ],
+      "description": "ADR-0011: Workspace Customization and Workflow Modes"
+    },
+    {
+      "id": "MOD-CONF-001",
+      "kind": "module",
+      "path": "scripts/agent/configure_project.py",
+      "authority": "approved",
+      "status": "current",
+      "sha256": "7dd31af560c47020caec937869816370ba77ccefb2b75d6c6aef762500ab2f8e",
+      "depends_on": [
+        "ARCH-CORE-001",
+        "MOD-CFG-001"
+      ],
+      "description": "Workspace customization and project-config initialization CLI"
+    },
+    {
+      "id": "SKILL-CUST-001",
+      "kind": "skill",
+      "path": ".agents/skills/customize-workspace/SKILL.md",
+      "authority": "approved",
+      "status": "current",
+      "sha256": "0c780f8e4dfe4e0da49da761cea2be611bdf566fe8cb1aa707736d863c7a2821",
+      "depends_on": [
+        "ARCH-CORE-001",
+        "ADR-ARCH-010",
+        "ADR-ARCH-011",
+        "MOD-CONF-001"
+      ],
+      "description": "Workspace Customization & Onboarding Playbook skill"
+    },
+    {
+      "id": "ADR-ARCH-012",
+      "kind": "decision",
+      "path": "docs/agent-system/decisions/ADR-0012-reusable-template-export-and-packaging.md",
+      "authority": "proposal",
+      "status": "current",
+      "sha256": "5e2e7fa9b6ce834fc94bf4058176cba2732f01e85780e14a8d9e490adcb7648d",
+      "depends_on": [
+        "ARCH-CORE-001",
+        "ADR-ARCH-007",
+        "ADR-ARCH-010",
+        "ADR-ARCH-011"
+      ],
+      "description": "ADR-0012: Reusable Template Export and Packaging"
+    },
+    {
+      "id": "MOD-EXP-001",
+      "kind": "module",
+      "path": "scripts/agent/export_template.py",
+      "authority": "approved",
+      "status": "current",
+      "sha256": "e7879c4b27b8eee599f01836d620b820622ce287c92cf5cd0904cd00df098586",
+      "depends_on": [
+        "ARCH-CORE-001",
+        "MOD-CONF-001"
+      ],
+      "description": "Clean starter template packager and distribution exporter"
+    },
+    {
+      "id": "DOC-README-001",
+      "kind": "runbook",
+      "path": "README.md",
+      "authority": "approved",
+      "status": "current",
+      "sha256": "4a19348350a9d2df43dd288038495fa4de4373ccffef74c9017dc7a94937eb40",
+      "depends_on": [
+        "ARCH-CORE-001",
+        "ADR-ARCH-010",
+        "ADR-ARCH-011",
+        "ADR-ARCH-012"
+      ],
+      "description": "Top-level README documentation and quickstart guide"
+    }
+  ]
+}
