@@ -1,0 +1,39 @@
+{
+  "task_id": "TASK-0008",
+  "verified_at": "2026-10-20T18:10:34.670669+00:00",
+  "contract_sha256": "9bd8b454c2293bb3ddf1eca4d0fc5fa1945081afb0d6f42b8991b4ff1da0cdb5",
+  "diff_sha256": "5500eceb0332218ef64972417285319aa611ffb271ea70a2d90517648dd45016",
+  "modified_files": [
+    "Than_Tham_Nua_Voi_Godot/scenes/tools/RuntimeTreeDump.gd",
+    "Than_Tham_Nua_Voi_Godot/scenes/tools/RuntimeTreeDump.tscn",
+    "docs/agent-system/evidence/godot/runtime_scene_tree.json",
+    "docs/agent-system/evidence/godot/runtime_static_correlation.json",
+    "scripts/agent/capture_runtime_tree.py",
+    "tests/test_capture_runtime_tree.py"
+  ],
+  "scope_passed": true,
+  "commands": [
+    {
+      "command": "python -m unittest tests/test_capture_runtime_tree.py",
+      "exit_code": 0,
+      "duration_ms": 364.36,
+      "stdout_excerpt": "",
+      "stderr_excerpt": "...\n----------------------------------------------------------------------\nRan 3 tests in 0.011s\n\nOK"
+    },
+    {
+      "command": "python scripts/agent/capture_runtime_tree.py --verify",
+      "exit_code": 0,
+      "duration_ms": 358.75,
+      "stdout_excerpt": "{\n  \"success\": true,\n  \"tool\": \"capture_runtime_tree\",\n  \"issues\": [],\n  \"data\": {\n    \"runtime_scene_tree\": \"docs/agent-system/evidence/godot/runtime_scene_tree.json\",\n    \"runtime_static_correlation\": \"docs/agent-system/evidence/godot/runtime_static_correlation.json\",\n    \"summary\": {\n      \"total_runtime_nodes\": 20,\n      \"autoload_singletons_count\": 3,\n      \"static_declared_nodes_count\": 15,\n      \"dynamic_runtime_only_count\": 2,\n      \"correlation_confidence_pct\": 90.0\n    }\n  }\n}",
+      "stderr_excerpt": ""
+    },
+    {
+      "command": "python scripts/agent/check_peer_audit.py --task TASK-0008",
+      "exit_code": 0,
+      "duration_ms": 396.01,
+      "stdout_excerpt": "{\n  \"success\": true,\n  \"tool\": \"check_peer_audit\",\n  \"issues\": [],\n  \"data\": {\n    \"task_id\": \"TASK-0008\",\n    \"subagent_conversation_id\": \"47005e3a-7e63-41ac-b2f7-409109f82e94\",\n    \"verdict\": \"PASS\",\n    \"diff_sha256\": \"5500eceb0332218ef64972417285319aa611ffb271ea70a2d90517648dd45016\",\n    \"audit_receipt\": \"docs/agent-system/evidence/TASK-0008-peer-audit.json\"\n  }\n}",
+      "stderr_excerpt": ""
+    }
+  ],
+  "all_passed": true
+}

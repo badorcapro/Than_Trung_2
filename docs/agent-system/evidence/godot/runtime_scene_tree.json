@@ -1,0 +1,251 @@
+{
+  "autoload_singletons": [
+    {
+      "class_name": "Node",
+      "is_autoload": true,
+      "name": "AppVersion",
+      "node_path": "/root/AppVersion",
+      "script_path": "res://autoload/AppVersion.gd"
+    },
+    {
+      "class_name": "Node",
+      "is_autoload": true,
+      "name": "AppLogger",
+      "node_path": "/root/AppLogger",
+      "script_path": "res://autoload/AppLogger.gd"
+    },
+    {
+      "class_name": "Node",
+      "is_autoload": true,
+      "name": "AppFlow",
+      "node_path": "/root/AppFlow",
+      "script_path": "res://autoload/AppFlow.gd"
+    }
+  ],
+  "engine_version": {
+    "build": "official",
+    "hash": "71f334935c000924d403448e698df4441130df18",
+    "hex": 263682,
+    "major": 4,
+    "minor": 6,
+    "patch": 2,
+    "status": "stable",
+    "string": "4.6.2-stable (official)",
+    "timestamp": 0
+  },
+  "root_node": {
+    "children": [
+      {
+        "children": [],
+        "children_count": 0,
+        "class_name": "Node",
+        "groups": [],
+        "name": "AppVersion",
+        "node_path": "/root/AppVersion",
+        "scene_file_path": "",
+        "script_path": "res://autoload/AppVersion.gd"
+      },
+      {
+        "children": [],
+        "children_count": 0,
+        "class_name": "Node",
+        "groups": [],
+        "name": "AppLogger",
+        "node_path": "/root/AppLogger",
+        "scene_file_path": "",
+        "script_path": "res://autoload/AppLogger.gd"
+      },
+      {
+        "children": [],
+        "children_count": 0,
+        "class_name": "Node",
+        "groups": [],
+        "name": "AppFlow",
+        "node_path": "/root/AppFlow",
+        "scene_file_path": "",
+        "script_path": "res://autoload/AppFlow.gd"
+      },
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "children": [],
+                "children_count": 0,
+                "class_name": "ColorRect",
+                "groups": [],
+                "name": "Background",
+                "node_path": "/root/RuntimeTreeDump/Boot/Background",
+                "scene_file_path": "",
+                "script_path": ""
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "children": [
+                          {
+                            "children": [],
+                            "children_count": 0,
+                            "class_name": "RichTextLabel",
+                            "groups": [],
+                            "name": "BiosStaticText",
+                            "node_path": "/root/RuntimeTreeDump/Boot/BiosPhase/BiosMargin/BiosVBox/BiosStaticText",
+                            "scene_file_path": "",
+                            "script_path": ""
+                          },
+                          {
+                            "children": [],
+                            "children_count": 0,
+                            "class_name": "RichTextLabel",
+                            "groups": [],
+                            "name": "BiosLastLine",
+                            "node_path": "/root/RuntimeTreeDump/Boot/BiosPhase/BiosMargin/BiosVBox/BiosLastLine",
+                            "scene_file_path": "",
+                            "script_path": ""
+                          }
+                        ],
+                        "children_count": 2,
+                        "class_name": "VBoxContainer",
+                        "groups": [],
+                        "name": "BiosVBox",
+                        "node_path": "/root/RuntimeTreeDump/Boot/BiosPhase/BiosMargin/BiosVBox",
+                        "scene_file_path": "",
+                        "script_path": ""
+                      }
+                    ],
+                    "children_count": 1,
+                    "class_name": "MarginContainer",
+                    "groups": [],
+                    "name": "BiosMargin",
+                    "node_path": "/root/RuntimeTreeDump/Boot/BiosPhase/BiosMargin",
+                    "scene_file_path": "",
+                    "script_path": ""
+                  },
+                  {
+                    "children": [],
+                    "children_count": 0,
+                    "class_name": "Label",
+                    "groups": [],
+                    "name": "BiosSkipPrompt",
+                    "node_path": "/root/RuntimeTreeDump/Boot/BiosPhase/BiosSkipPrompt",
+                    "scene_file_path": "",
+                    "script_path": ""
+                  }
+                ],
+                "children_count": 2,
+                "class_name": "Control",
+                "groups": [],
+                "name": "BiosPhase",
+                "node_path": "/root/RuntimeTreeDump/Boot/BiosPhase",
+                "scene_file_path": "",
+                "script_path": ""
+              },
+              {
+                "children": [
+                  {
+                    "children": [],
+                    "children_count": 0,
+                    "class_name": "ColorRect",
+                    "groups": [],
+                    "name": "SplashBg",
+                    "node_path": "/root/RuntimeTreeDump/Boot/SplashPhase/SplashBg",
+                    "scene_file_path": "",
+                    "script_path": ""
+                  },
+                  {
+                    "children": [],
+                    "children_count": 0,
+                    "class_name": "TextureRect",
+                    "groups": [],
+                    "name": "SplashGraphic",
+                    "node_path": "/root/RuntimeTreeDump/Boot/SplashPhase/SplashGraphic",
+                    "scene_file_path": "",
+                    "script_path": ""
+                  },
+                  {
+                    "children": [],
+                    "children_count": 0,
+                    "class_name": "Label",
+                    "groups": [],
+                    "name": "SplashSkipPrompt",
+                    "node_path": "/root/RuntimeTreeDump/Boot/SplashPhase/SplashSkipPrompt",
+                    "scene_file_path": "",
+                    "script_path": ""
+                  }
+                ],
+                "children_count": 3,
+                "class_name": "Control",
+                "groups": [],
+                "name": "SplashPhase",
+                "node_path": "/root/RuntimeTreeDump/Boot/SplashPhase",
+                "scene_file_path": "",
+                "script_path": ""
+              },
+              {
+                "children": [],
+                "children_count": 0,
+                "class_name": "ColorRect",
+                "groups": [],
+                "name": "TransitionOverlay",
+                "node_path": "/root/RuntimeTreeDump/Boot/TransitionOverlay",
+                "scene_file_path": "",
+                "script_path": ""
+              },
+              {
+                "children": [
+                  {
+                    "children": [],
+                    "children_count": 0,
+                    "class_name": "Label",
+                    "groups": [],
+                    "name": "ErrorLabel",
+                    "node_path": "/root/RuntimeTreeDump/Boot/Center/ErrorLabel",
+                    "scene_file_path": "",
+                    "script_path": ""
+                  }
+                ],
+                "children_count": 1,
+                "class_name": "CenterContainer",
+                "groups": [],
+                "name": "Center",
+                "node_path": "/root/RuntimeTreeDump/Boot/Center",
+                "scene_file_path": "",
+                "script_path": ""
+              }
+            ],
+            "children_count": 5,
+            "class_name": "Control",
+            "groups": [
+              "_root_canvas309237645312",
+              "_vp_unhandled_input26105349547"
+            ],
+            "name": "Boot",
+            "node_path": "/root/RuntimeTreeDump/Boot",
+            "scene_file_path": "res://scenes/boot/Boot.tscn",
+            "script_path": "res://scripts/application/BootController.gd"
+          }
+        ],
+        "children_count": 1,
+        "class_name": "Node",
+        "groups": [],
+        "name": "RuntimeTreeDump",
+        "node_path": "/root/RuntimeTreeDump",
+        "scene_file_path": "res://scenes/tools/RuntimeTreeDump.tscn",
+        "script_path": "res://scenes/tools/RuntimeTreeDump.gd"
+      }
+    ],
+    "children_count": 4,
+    "class_name": "Window",
+    "groups": [
+      "_picking_viewports",
+      "_viewports"
+    ],
+    "name": "root",
+    "node_path": "/root",
+    "scene_file_path": "",
+    "script_path": ""
+  },
+  "timestamp": "2026-10-20 18:06:17"
+}
