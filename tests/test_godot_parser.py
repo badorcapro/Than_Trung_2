@@ -92,9 +92,10 @@ class TestGodotParser(unittest.TestCase):
         self.assertEqual(res.data["total_scenes"], 21)
         self.assertGreaterEqual(res.data["total_nodes"], 1000)
         self.assertEqual(res.data["total_static_ui_connections"], 204)
-        self.assertGreaterEqual(res.data["total_dynamic_code_connections"], 150)
+        self.assertEqual(res.data["total_dynamic_code_connections"], 201)
+        self.assertEqual(res.data["total_connections"], 405)
         self.assertEqual(res.data["total_scripts"], 293)
-        self.assertGreaterEqual(res.data["total_methods"], 4000)
+        self.assertEqual(res.data["total_methods"], 4145)
 
     def test_scene_graph_toon_projection(self) -> None:
         scene_json = Path(__file__).resolve().parents[1] / "docs/agent-system/evidence/godot/scene_graph.json"

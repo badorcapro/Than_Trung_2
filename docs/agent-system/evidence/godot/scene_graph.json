@@ -3,8 +3,8 @@
   "total_scenes": 21,
   "total_nodes": 1207,
   "total_static_ui_connections": 204,
-  "total_dynamic_code_connections": 198,
-  "total_connections": 402,
+  "total_dynamic_code_connections": 201,
+  "total_connections": 405,
   "total_dependencies": 74,
   "scenes": [
     {
@@ -15319,7 +15319,7 @@
       "signal": "finished",
       "from_node": "_tween",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 229
     },
     {
@@ -15366,6 +15366,24 @@
       "to_node": "callable",
       "method": "_on_reveal_history_pressed",
       "source_line": 82
+    },
+    {
+      "script_path": "scripts/presentation/case_gameplay/SuspectCardController.gd",
+      "kind": "dynamic_code",
+      "signal": "mouse_entered",
+      "from_node": "self",
+      "to_node": "callable",
+      "method": "_on_mouse_entered",
+      "source_line": 84
+    },
+    {
+      "script_path": "scripts/presentation/case_gameplay/SuspectCardController.gd",
+      "kind": "dynamic_code",
+      "signal": "mouse_exited",
+      "from_node": "self",
+      "to_node": "callable",
+      "method": "_on_mouse_exited",
+      "source_line": 86
     },
     {
       "script_path": "scripts/presentation/case_gameplay/VSCaseMainController.gd",
@@ -15499,7 +15517,7 @@
       "signal": "pressed",
       "from_node": "button",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 1471
     },
     {
@@ -15679,7 +15697,7 @@
       "signal": "gui_input",
       "from_node": "bg_overlay",
       "to_node": "callable",
-      "method": "func(ev: InputEvent",
+      "method": "<lambda>",
       "source_line": 90
     },
     {
@@ -15697,7 +15715,7 @@
       "signal": "pressed",
       "from_node": "r_reset_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 197
     },
     {
@@ -15706,7 +15724,7 @@
       "signal": "pressed",
       "from_node": "r_deselect_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 219
     },
     {
@@ -15715,7 +15733,7 @@
       "signal": "pressed",
       "from_node": "d_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 260
     },
     {
@@ -15724,7 +15742,7 @@
       "signal": "pressed",
       "from_node": "c_reset_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 305
     },
     {
@@ -15733,7 +15751,7 @@
       "signal": "pressed",
       "from_node": "c_deselect_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 327
     },
     {
@@ -15742,7 +15760,7 @@
       "signal": "pressed",
       "from_node": "c_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 368
     },
     {
@@ -15751,7 +15769,7 @@
       "signal": "pressed",
       "from_node": "s_reset_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 413
     },
     {
@@ -15760,7 +15778,7 @@
       "signal": "pressed",
       "from_node": "s_deselect_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 435
     },
     {
@@ -15769,7 +15787,7 @@
       "signal": "pressed",
       "from_node": "sh_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 476
     },
     {
@@ -15778,7 +15796,7 @@
       "signal": "mouse_entered",
       "from_node": "card",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 706
     },
     {
@@ -15787,7 +15805,7 @@
       "signal": "mouse_exited",
       "from_node": "card",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 709
     },
     {
@@ -15796,7 +15814,7 @@
       "signal": "draw",
       "from_node": "ctrl",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 864
     },
     {
@@ -15805,7 +15823,7 @@
       "signal": "pressed",
       "from_node": "enc_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 296
     },
     {
@@ -15832,7 +15850,7 @@
       "signal": "mouse_exited",
       "from_node": "_grid_draw_control",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 325
     },
     {
@@ -15850,7 +15868,7 @@
       "signal": "text_submitted",
       "from_node": "_bid_input",
       "to_node": "callable",
-      "method": "func(_t: String",
+      "method": "<lambda>",
       "source_line": 381
     },
     {
@@ -15904,7 +15922,7 @@
       "signal": "pressed",
       "from_node": "_solo_buy_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 463
     },
     {
@@ -15913,7 +15931,7 @@
       "signal": "pressed",
       "from_node": "_solo_pass_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 470
     },
     {
@@ -15940,7 +15958,7 @@
       "signal": "pressed",
       "from_node": "enc_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 760
     },
     {
@@ -15976,7 +15994,7 @@
       "signal": "mouse_exited",
       "from_node": "_settlement_grid_draw_control",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 827
     },
     {
@@ -15985,7 +16003,7 @@
       "signal": "timeout",
       "from_node": "timer",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 1813
     },
     {
@@ -15994,7 +16012,7 @@
       "signal": "gui_input",
       "from_node": "backdrop",
       "to_node": "callable",
-      "method": "func(event: InputEvent",
+      "method": "<lambda>",
       "source_line": 2398
     },
     {
@@ -16003,7 +16021,7 @@
       "signal": "pressed",
       "from_node": "confirm_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 2643
     },
     {
@@ -16021,7 +16039,7 @@
       "signal": "pressed",
       "from_node": "btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 2715
     },
     {
@@ -16030,7 +16048,7 @@
       "signal": "gui_input",
       "from_node": "backdrop",
       "to_node": "callable",
-      "method": "func(event: InputEvent",
+      "method": "<lambda>",
       "source_line": 2730
     },
     {
@@ -16075,7 +16093,7 @@
       "signal": "auction_finished",
       "from_node": "screen",
       "to_node": "callable",
-      "method": "func(_data: Dictionary",
+      "method": "<lambda>",
       "source_line": 230
     },
     {
@@ -16084,7 +16102,7 @@
       "signal": "pressed",
       "from_node": "btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 310
     },
     {
@@ -16093,7 +16111,7 @@
       "signal": "pressed",
       "from_node": "btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 334
     },
     {
@@ -16156,7 +16174,7 @@
       "signal": "pressed",
       "from_node": "btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 590
     },
     {
@@ -16165,7 +16183,7 @@
       "signal": "gui_input",
       "from_node": "dim_rect",
       "to_node": "callable",
-      "method": "func(ev: InputEvent",
+      "method": "<lambda>",
       "source_line": 605
     },
     {
@@ -16174,7 +16192,7 @@
       "signal": "pressed",
       "from_node": "close_x",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 651
     },
     {
@@ -16183,7 +16201,7 @@
       "signal": "gui_input",
       "from_node": "dim_rect",
       "to_node": "callable",
-      "method": "func(ev: InputEvent",
+      "method": "<lambda>",
       "source_line": 681
     },
     {
@@ -16192,7 +16210,7 @@
       "signal": "pressed",
       "from_node": "close_pop",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 731
     },
     {
@@ -16201,7 +16219,7 @@
       "signal": "pressed",
       "from_node": "cancel_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 827
     },
     {
@@ -16210,7 +16228,7 @@
       "signal": "pressed",
       "from_node": "confirm_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 847
     },
     {
@@ -16219,7 +16237,7 @@
       "signal": "gui_input",
       "from_node": "dim_rect",
       "to_node": "callable",
-      "method": "func(ev: InputEvent",
+      "method": "<lambda>",
       "source_line": 896
     },
     {
@@ -16228,7 +16246,7 @@
       "signal": "pressed",
       "from_node": "close_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 984
     },
     {
@@ -16237,7 +16255,7 @@
       "signal": "pressed",
       "from_node": "btn_up_gold_1",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 1193
     },
     {
@@ -16246,7 +16264,7 @@
       "signal": "pressed",
       "from_node": "btn_up_gold_max",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 1216
     },
     {
@@ -16255,7 +16273,7 @@
       "signal": "pressed",
       "from_node": "btn_up_purple",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 1369
     },
     {
@@ -16264,7 +16282,7 @@
       "signal": "pressed",
       "from_node": "btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 1579
     },
     {
@@ -16273,7 +16291,7 @@
       "signal": "pressed",
       "from_node": "mag_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 1855
     },
     {
@@ -16282,7 +16300,7 @@
       "signal": "pressed",
       "from_node": "attr_pill",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 1872
     },
     {
@@ -16291,7 +16309,7 @@
       "signal": "pressed",
       "from_node": "skill_pill",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 1884
     },
     {
@@ -16309,7 +16327,7 @@
       "signal": "pressed",
       "from_node": "btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 2094
     },
     {
@@ -16318,7 +16336,7 @@
       "signal": "pressed",
       "from_node": "sort_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 2443
     },
     {
@@ -16327,7 +16345,7 @@
       "signal": "gui_input",
       "from_node": "card_panel",
       "to_node": "callable",
-      "method": "func(ev: InputEvent",
+      "method": "<lambda>",
       "source_line": 2578
     },
     {
@@ -16336,7 +16354,7 @@
       "signal": "pressed",
       "from_node": "switch_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 2794
     },
     {
@@ -16345,7 +16363,7 @@
       "signal": "pressed",
       "from_node": "upgrade_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 2816
     },
     {
@@ -16354,7 +16372,7 @@
       "signal": "pressed",
       "from_node": "equip_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 3051
     },
     {
@@ -16363,7 +16381,7 @@
       "signal": "pressed",
       "from_node": "up_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 3078
     },
     {
@@ -16372,7 +16390,7 @@
       "signal": "draw",
       "from_node": "canvas",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 3213
     },
     {
@@ -16381,7 +16399,7 @@
       "signal": "pressed",
       "from_node": "btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 3334
     },
     {
@@ -16390,7 +16408,7 @@
       "signal": "pressed",
       "from_node": "f_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 3446
     },
     {
@@ -16399,7 +16417,7 @@
       "signal": "pressed",
       "from_node": "sort_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 3482
     },
     {
@@ -16408,7 +16426,7 @@
       "signal": "pressed",
       "from_node": "card_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 3594
     },
     {
@@ -16426,7 +16444,7 @@
       "signal": "pressed",
       "from_node": "switch_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 3859
     },
     {
@@ -16435,7 +16453,7 @@
       "signal": "pressed",
       "from_node": "upgrade_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 3892
     },
     {
@@ -16444,7 +16462,7 @@
       "signal": "pressed",
       "from_node": "equip_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 4116
     },
     {
@@ -16453,7 +16471,7 @@
       "signal": "pressed",
       "from_node": "up_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 4138
     },
     {
@@ -16858,7 +16876,7 @@
       "signal": "mouse_entered",
       "from_node": "tile_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 1036
     },
     {
@@ -16867,7 +16885,7 @@
       "signal": "mouse_exited",
       "from_node": "tile_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 1043
     },
     {
@@ -16876,7 +16894,7 @@
       "signal": "pressed",
       "from_node": "tile_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 1050
     },
     {
@@ -16885,7 +16903,7 @@
       "signal": "finished",
       "from_node": "tween",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 1333
     },
     {
@@ -16939,7 +16957,7 @@
       "signal": "finished",
       "from_node": "fade_tween",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 1920
     },
     {
@@ -16957,8 +16975,17 @@
       "signal": "gui_input",
       "from_node": "card",
       "to_node": "callable",
-      "method": "func(event: InputEvent",
+      "method": "<lambda>",
       "source_line": 2811
+    },
+    {
+      "script_path": "scripts/presentation/player_facing/PlayerFacingStartController.gd",
+      "kind": "dynamic_code",
+      "signal": "timeout",
+      "from_node": "create_timer(0.32)",
+      "to_node": "callable",
+      "method": "<lambda>",
+      "source_line": 2894
     },
     {
       "script_path": "scripts/presentation/player_facing/PlayerFacingStartController.gd",
@@ -16984,7 +17011,7 @@
       "signal": "pressed",
       "from_node": "close_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 4442
     },
     {
@@ -16993,7 +17020,7 @@
       "signal": "pressed",
       "from_node": "prev_player_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 4457
     },
     {
@@ -17002,7 +17029,7 @@
       "signal": "pressed",
       "from_node": "next_player_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 4470
     },
     {
@@ -17056,7 +17083,7 @@
       "signal": "suspect_hold_progress_started",
       "from_node": "card",
       "to_node": "callable",
-      "method": "func(_suspect_id: int, _duration_sec: float",
+      "method": "<lambda>",
       "source_line": 8865
     },
     {
@@ -17074,7 +17101,7 @@
       "signal": "suspect_action",
       "from_node": "board",
       "to_node": "callable",
-      "method": "func(suspect_id: int, button_index: int, is_hold: bool",
+      "method": "<lambda>",
       "source_line": 13186
     },
     {
@@ -17083,7 +17110,7 @@
       "signal": "suspect_action",
       "from_node": "board",
       "to_node": "callable",
-      "method": "func(suspect_id: int, button_index: int, is_hold: bool",
+      "method": "<lambda>",
       "source_line": 13272
     },
     {
@@ -17092,7 +17119,7 @@
       "signal": "pressed",
       "from_node": "debug_solver_button",
       "to_node": "callable",
-      "method": "_on_debug_solver_pressed",
+      "method": "_on_debug_solver_pressed)\"",
       "source_line": 130
     }
   ],

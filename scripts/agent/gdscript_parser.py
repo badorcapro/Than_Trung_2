@@ -17,11 +17,44 @@ _SIGNAL_DECL_RE = re.compile(r"^\s*signal\s+([A-Za-z0-9_]+)(?:\(([^)]*)\))?")
 _FUNC_HEAD_RE = re.compile(r"^\s*(static\s+)?func\s+([A-Za-z0-9_]+)\s*\(")
 _PRELOAD_RE = re.compile(r'(?:preload|load)\s*\(\s*["\']([^"\']+)["\']\s*\)')
 
-# Dynamic signal connection patterns (Godot 4: emitter.signal.connect(handler) or connect("signal", handler))
-_DOT_CONNECT_RE = re.compile(r'([A-Za-z0-9_$.]+)\.([A-Za-z0-9_]+)\.connect\s*\(([^)]+)\)')
+# Dynamic signal connection patterns (Godot 4: emitter.signal.connect(handler) or signal.connect(handler))
+_DOT_CONNECT_RE = re.compile(r'(\b[A-Za-z0-9_$.]+(?:\([^)]*\))?\.|\b)([A-Za-z0-9_]+)\.connect\s*\((.*)')
 _CALL_CONNECT_RE = re.compile(r'(?:^|[^A-Za-z0-9_])connect\s*\(\s*["\']([A-Za-z0-9_]+)["\']\s*,\s*([^)]+)\)')
-_EMIT_SIGNAL_RE = re.compile(r'(?:([A-Za-z0-9_$.]+)\.)?emit_signal\s*\(\s*["\']([A-Za-z0-9_]+)["\']')
-_DOT_EMIT_RE = re.compile(r'([A-Za-z0-9_$.]+)\.([A-Za-z0-9_]+)\.emit\s*\(')
+_FUNC_SIG_END_RE = re.compile(r"\)\s*(?:->\s*([^:]+))?\s*:")
+
+
+def split_parameters(raw: str) -> List[str]:
+    """Split parameter list by comma, respecting nested brackets and string literals."""
+    tokens: List[str] = []
+    current: List[str] = []
+    depth = 0
+    in_quote: Optional[str] = None
+
+    for ch in raw:
+        if in_quote:
+            current.append(ch)
+            if ch == in_quote:
+                in_quote = None
+        elif ch in ('"', "'"):
+            in_quote = ch
+            current.append(ch)
+        elif ch in "([{":
+            depth += 1
+            current.append(ch)
+        elif ch in ")]}":
+            depth = max(0, depth - 1)
+            current.append(ch)
+        elif ch == "," and depth == 0:
+            tokens.append("".join(current).strip())
+            current = []
+        else:
+            current.append(ch)
+
+    if current:
+        trailing = "".join(current).strip()
+        if trailing:
+            tokens.append(trailing)
+    return tokens
 
 
 def parse_function_parameters(params_raw: str) -> List[Dict[str, str]]:
@@ -30,7 +63,7 @@ def parse_function_parameters(params_raw: str) -> List[Dict[str, str]]:
     if not params_raw.strip():
         return params
 
-    for raw in params_raw.split(","):
+    for raw in split_parameters(params_raw):
         p = raw.strip()
         if not p:
             continue
@@ -63,37 +96,34 @@ def extract_multiline_functions(lines: List[str], rel_path: str) -> List[Dict[st
             start_line = idx + 1
 
             buf = line
-            while idx < total and "):" not in buf and ") ->" not in buf:
+            while idx < total and not _FUNC_SIG_END_RE.search(buf):
                 idx += 1
                 if idx < total:
                     buf += " " + lines[idx].strip()
 
-            after_paren = buf[buf.find("(") + 1 :]
-            closing_idx = after_paren.rfind(")")
-            params_raw = after_paren[:closing_idx] if closing_idx != -1 else ""
-            return_clause = after_paren[closing_idx + 1 :] if closing_idx != -1 else ""
+            if m_end := _FUNC_SIG_END_RE.search(buf):
+                ret_raw = m_end.group(1)
+                return_type = ret_raw.strip() if ret_raw else "void"
+                paren_start = buf.find("(")
+                params_raw = buf[paren_start + 1 : m_end.start()]
+                parsed_params = parse_function_parameters(params_raw)
 
-            return_type = "void"
-            if "->" in return_clause:
-                return_type = return_clause.partition("->")[2].partition(":")[0].strip() or "void"
-
-            parsed_params = parse_function_parameters(params_raw)
-            methods.append({
-                "script_path": rel_path,
-                "name": func_name,
-                "is_static": is_static,
-                "return_type": return_type,
-                "param_count": len(parsed_params),
-                "params": [p["name"] for p in parsed_params],
-                "start_line": start_line,
-            })
+                methods.append({
+                    "script_path": rel_path,
+                    "name": func_name,
+                    "is_static": is_static,
+                    "return_type": return_type,
+                    "param_count": len(parsed_params),
+                    "params": [p["name"] for p in parsed_params],
+                    "start_line": start_line,
+                })
         idx += 1
 
     return methods
 
 
 def extract_dynamic_connections(lines: List[str], rel_path: str) -> List[Dict[str, Any]]:
-    """Extract dynamic signal connection calls (.connect and connect(...))."""
+    """Extract dynamic signal connection calls (.connect and legacy connect(...))."""
     conns: List[Dict[str, Any]] = []
     for line_idx, line in enumerate(lines, 1):
         s = line.strip()
@@ -101,9 +131,15 @@ def extract_dynamic_connections(lines: List[str], rel_path: str) -> List[Dict[st
             continue
 
         for m in _DOT_CONNECT_RE.finditer(line):
-            source_obj = m.group(1).strip()
+            raw_emitter = m.group(1).rstrip(".").strip()
+            source_obj = raw_emitter if raw_emitter else "self"
             signal_name = m.group(2).strip()
-            target_callable = m.group(3).strip()
+            raw_target = m.group(3).strip()
+            if raw_target.startswith("func"):
+                target_callable = "<lambda>"
+            else:
+                target_callable = raw_target.rstrip(");").strip()
+
             conns.append({
                 "script_path": rel_path,
                 "kind": "dynamic_code",
@@ -115,13 +151,15 @@ def extract_dynamic_connections(lines: List[str], rel_path: str) -> List[Dict[st
             })
 
         for m in _CALL_CONNECT_RE.finditer(line):
+            raw_target = m.group(2).strip()
+            target_callable = "<lambda>" if raw_target.startswith("func") else raw_target.rstrip(");").strip()
             conns.append({
                 "script_path": rel_path,
                 "kind": "dynamic_code",
                 "signal": m.group(1).strip(),
                 "from_node": "self",
                 "to_node": "target",
-                "method": m.group(2).strip(),
+                "method": target_callable,
                 "source_line": line_idx,
             })
     return conns

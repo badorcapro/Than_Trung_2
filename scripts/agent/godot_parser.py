@@ -111,20 +111,20 @@ def verify_godot_parser(
             code="ERR_TOO_FEW_NODES", severity=Severity.ERROR,
             message=f"Expected >= 1,000 nodes, observed {total_nodes}.", location=scene_out.name, fixable_by=FixableBy.AI,
         ))
-    if total_dynamic_conns < 150:
+    if total_dynamic_conns < 200:
         issues.append(Issue(
             code="ERR_TOO_FEW_DYNAMIC_CONNS", severity=Severity.ERROR,
-            message=f"Expected >= 150 dynamic .connect() calls, observed {total_dynamic_conns}.", location=scene_out.name, fixable_by=FixableBy.AI,
+            message=f"Expected >= 200 dynamic .connect() calls, observed {total_dynamic_conns}.", location=scene_out.name, fixable_by=FixableBy.AI,
         ))
     if total_scripts < 250:
         issues.append(Issue(
             code="ERR_TOO_FEW_SCRIPTS", severity=Severity.ERROR,
             message=f"Expected >= 250 scripts, observed {total_scripts}.", location=code_out.name, fixable_by=FixableBy.AI,
         ))
-    if total_methods < 3600:
+    if total_methods < 4140:
         issues.append(Issue(
             code="ERR_TOO_FEW_METHODS", severity=Severity.ERROR,
-            message=f"Expected >= 3,600 methods (including multiline), observed {total_methods}.", location=code_out.name, fixable_by=FixableBy.AI,
+            message=f"Expected >= 4,140 methods (including multiline), observed {total_methods}.", location=code_out.name, fixable_by=FixableBy.AI,
         ))
 
     return ResultEnvelope(

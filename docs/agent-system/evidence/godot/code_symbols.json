@@ -1,9 +1,9 @@
 {
   "schema_version": "1.1",
   "total_scripts": 293,
-  "total_methods": 4046,
+  "total_methods": 4145,
   "total_signals": 19,
-  "total_dynamic_connections": 198,
+  "total_dynamic_connections": 201,
   "total_dependencies": 622,
   "scripts": [
     {
@@ -71,7 +71,7 @@
       "layer": "application",
       "class_name": "GachaService",
       "extends": "RefCounted",
-      "method_count": 7,
+      "method_count": 17,
       "signal_count": 0,
       "dynamic_connection_count": 0,
       "preload_count": 0,
@@ -83,7 +83,7 @@
       "layer": "application",
       "class_name": "EquipmentManagementSerializer",
       "extends": "RefCounted",
-      "method_count": 1,
+      "method_count": 5,
       "signal_count": 0,
       "dynamic_connection_count": 0,
       "preload_count": 0,
@@ -2327,7 +2327,7 @@
       "layer": "infrastructure",
       "class_name": "SequenceGachaRollSource",
       "extends": "RefCounted",
-      "method_count": 1,
+      "method_count": 2,
       "signal_count": 0,
       "dynamic_connection_count": 0,
       "preload_count": 0,
@@ -2413,7 +2413,7 @@
       "extends": "Control",
       "method_count": 69,
       "signal_count": 5,
-      "dynamic_connection_count": 1,
+      "dynamic_connection_count": 3,
       "preload_count": 11,
       "inner_class_count": 0,
       "loc": 1015
@@ -2519,7 +2519,7 @@
       "layer": "presentation",
       "class_name": "none",
       "extends": "Control",
-      "method_count": 2,
+      "method_count": 9,
       "signal_count": 0,
       "dynamic_connection_count": 0,
       "preload_count": 0,
@@ -2531,7 +2531,7 @@
       "layer": "presentation",
       "class_name": "none",
       "extends": "Control",
-      "method_count": 6,
+      "method_count": 14,
       "signal_count": 0,
       "dynamic_connection_count": 0,
       "preload_count": 0,
@@ -2653,7 +2653,7 @@
       "extends": "Control",
       "method_count": 224,
       "signal_count": 0,
-      "dynamic_connection_count": 62,
+      "dynamic_connection_count": 63,
       "preload_count": 18,
       "inner_class_count": 0,
       "loc": 5106
@@ -2747,7 +2747,7 @@
       "layer": "tools",
       "class_name": "SmokeTestRunner",
       "extends": "RefCounted",
-      "method_count": 757,
+      "method_count": 784,
       "signal_count": 0,
       "dynamic_connection_count": 4,
       "preload_count": 61,
@@ -3119,7 +3119,7 @@
       "layer": "other",
       "class_name": "Gd2M4TestSuite",
       "extends": "RefCounted",
-      "method_count": 4,
+      "method_count": 31,
       "signal_count": 0,
       "dynamic_connection_count": 0,
       "preload_count": 1,
@@ -3131,7 +3131,7 @@
       "layer": "other",
       "class_name": "Gd2M5TestSuite",
       "extends": "RefCounted",
-      "method_count": 5,
+      "method_count": 20,
       "signal_count": 0,
       "dynamic_connection_count": 0,
       "preload_count": 1,
@@ -4029,19 +4029,13 @@
       "script_path": "scripts/application/economy/GachaService.gd",
       "name": "basic_roll",
       "is_static": false,
-      "return_type": "void",
-      "param_count": 10,
+      "return_type": "GachaRollResult",
+      "param_count": 4,
       "params": [
         "session",
         "player",
         "definitions",
-        "rng",
-        "&\"basic\"",
-        "&\"BASIC\"",
-        "1) if player.gacha_ticket_count<1",
-        "&\"INSUFFICIENT_TICKETS\") player.gacha_ticket_count-",
-        "EquipmentEnums.Tier.A if category",
-        "&\"POOL_EMPTY\""
+        "rng"
       ],
       "start_line": 6
     },
@@ -4049,20 +4043,15 @@
       "script_path": "scripts/application/economy/GachaService.gd",
       "name": "rate_up_roll",
       "is_static": false,
-      "return_type": "void",
-      "param_count": 11,
+      "return_type": "GachaRollResult",
+      "param_count": 6,
       "params": [
         "session",
         "player",
         "definitions",
         "featured_ids",
         "config",
-        "rng",
-        "&\"rate_up_test\"",
-        "&\"RATE_UP\"",
-        "1) if player.gacha_ticket_count<1",
-        "&\"INSUFFICIENT_TICKETS\") player.gacha_ticket_count-",
-        "EquipmentEnums.Tier.A) if not a_pool.is_empty()"
+        "rng"
       ],
       "start_line": 23
     },
@@ -4082,18 +4071,13 @@
       "script_path": "scripts/application/economy/GachaService.gd",
       "name": "perfect_spin",
       "is_static": false,
-      "return_type": "void",
-      "param_count": 9,
+      "return_type": "GachaRollResult",
+      "param_count": 4,
       "params": [
         "session",
         "player",
         "entries",
-        "rng",
-        "&\"perfect_test\"",
-        "&\"PERFECT\"",
-        "2) if player.gacha_ticket_count<2",
-        "&\"INSUFFICIENT_TICKETS\") if session.pending_choice.is_active()",
-        "&\"CHOICE_PENDING\""
+        "rng"
       ],
       "start_line": 55
     },
@@ -4101,7 +4085,7 @@
       "script_path": "scripts/application/economy/GachaService.gd",
       "name": "claim_choice",
       "is_static": false,
-      "return_type": "void",
+      "return_type": "EquipmentInstance",
       "param_count": 4,
       "params": [
         "session",
@@ -4115,74 +4099,208 @@
       "script_path": "scripts/application/economy/GachaService.gd",
       "name": "exchange_price",
       "is_static": false,
-      "return_type": "void",
-      "param_count": 17,
+      "return_type": "int",
+      "param_count": 2,
       "params": [
         "player",
-        "definition_id",
-        "0)) func exchange(player",
-        "definition",
-        "definition.equipment_definition_id) if player.equipment_exchange_material_count<price",
-        "0))+1;return equipment_service.grant(player",
-        "definition",
-        "&\"EXCHANGE\") func ss_shop_price(player",
-        "definition_id",
-        "0)) func purchase_ss(session",
-        "player",
-        "definition",
-        "player",
-        "definition) var instance_value",
-        "player",
-        "definition",
-        "\"Session and player are required\") if definition"
+        "definition_id"
       ],
       "start_line": 88
     },
     {
       "script_path": "scripts/application/economy/GachaService.gd",
+      "name": "exchange",
+      "is_static": false,
+      "return_type": "EquipmentInstance",
+      "param_count": 2,
+      "params": [
+        "player",
+        "definition"
+      ],
+      "start_line": 89
+    },
+    {
+      "script_path": "scripts/application/economy/GachaService.gd",
+      "name": "ss_shop_price",
+      "is_static": false,
+      "return_type": "int",
+      "param_count": 2,
+      "params": [
+        "player",
+        "definition_id"
+      ],
+      "start_line": 93
+    },
+    {
+      "script_path": "scripts/application/economy/GachaService.gd",
+      "name": "purchase_ss",
+      "is_static": false,
+      "return_type": "EquipmentInstance",
+      "param_count": 3,
+      "params": [
+        "session",
+        "player",
+        "definition"
+      ],
+      "start_line": 94
+    },
+    {
+      "script_path": "scripts/application/economy/GachaService.gd",
+      "name": "purchase_ss_checked",
+      "is_static": false,
+      "return_type": "Dictionary",
+      "param_count": 3,
+      "params": [
+        "session",
+        "player",
+        "definition"
+      ],
+      "start_line": 99
+    },
+    {
+      "script_path": "scripts/application/economy/GachaService.gd",
       "name": "_shop_failure",
       "is_static": false,
-      "return_type": "void",
-      "param_count": 15,
+      "return_type": "Dictionary",
+      "param_count": 2,
       "params": [
         "code",
-        "message",
-        "\"code\"",
-        "\"message\"",
-        "\"instance\"",
-        "\"price\"",
-        "banner_id",
-        "banner_type",
-        "cost",
-        "code",
-        "tier",
-        "id",
-        "type",
-        "amount",
-        "id"
+        "message"
       ],
       "start_line": 126
+    },
+    {
+      "script_path": "scripts/application/economy/GachaService.gd",
+      "name": "_result",
+      "is_static": false,
+      "return_type": "GachaRollResult",
+      "param_count": 4,
+      "params": [
+        "player",
+        "banner_id",
+        "banner_type",
+        "cost"
+      ],
+      "start_line": 129
+    },
+    {
+      "script_path": "scripts/application/economy/GachaService.gd",
+      "name": "_fail",
+      "is_static": false,
+      "return_type": "GachaRollResult",
+      "param_count": 2,
+      "params": [
+        "result",
+        "code"
+      ],
+      "start_line": 131
+    },
+    {
+      "script_path": "scripts/application/economy/GachaService.gd",
+      "name": "_tier_pool",
+      "is_static": false,
+      "return_type": "Array[EquipmentDefinition]",
+      "param_count": 2,
+      "params": [
+        "definitions",
+        "tier"
+      ],
+      "start_line": 132
+    },
+    {
+      "script_path": "scripts/application/economy/GachaService.gd",
+      "name": "_find",
+      "is_static": false,
+      "return_type": "EquipmentDefinition",
+      "param_count": 2,
+      "params": [
+        "definitions",
+        "id"
+      ],
+      "start_line": 137
+    },
+    {
+      "script_path": "scripts/application/economy/GachaService.gd",
+      "name": "_grant_resource",
+      "is_static": false,
+      "return_type": "void",
+      "param_count": 3,
+      "params": [
+        "player",
+        "type",
+        "amount"
+      ],
+      "start_line": 141
+    },
+    {
+      "script_path": "scripts/application/economy/GachaService.gd",
+      "name": "_unlock_ss",
+      "is_static": false,
+      "return_type": "void",
+      "param_count": 2,
+      "params": [
+        "player",
+        "id"
+      ],
+      "start_line": 147
     },
     {
       "script_path": "scripts/application/equipment/EquipmentManagementSerializer.gd",
       "name": "serialize",
       "is_static": false,
-      "return_type": "void",
-      "param_count": 11,
+      "return_type": "String",
+      "param_count": 1,
       "params": [
-        "session",
-        "false))  func round_trip_diagnostic(session",
-        "\"mismatches\"",
-        "\"mismatches\"",
-        "restored.to_dict()",
-        "\"session\"",
-        "mismatches) return {\"matches\"",
-        "\"mismatches\"",
+        "session"
+      ],
+      "start_line": 4
+    },
+    {
+      "script_path": "scripts/application/equipment/EquipmentManagementSerializer.gd",
+      "name": "deserialize",
+      "is_static": false,
+      "return_type": "EquipmentManagementSession",
+      "param_count": 1,
+      "params": [
+        "payload"
+      ],
+      "start_line": 5
+    },
+    {
+      "script_path": "scripts/application/equipment/EquipmentManagementSerializer.gd",
+      "name": "round_trip",
+      "is_static": false,
+      "return_type": "bool",
+      "param_count": 1,
+      "params": [
+        "session"
+      ],
+      "start_line": 9
+    },
+    {
+      "script_path": "scripts/application/equipment/EquipmentManagementSerializer.gd",
+      "name": "round_trip_diagnostic",
+      "is_static": false,
+      "return_type": "Dictionary",
+      "param_count": 1,
+      "params": [
+        "session"
+      ],
+      "start_line": 12
+    },
+    {
+      "script_path": "scripts/application/equipment/EquipmentManagementSerializer.gd",
+      "name": "_collect_mismatches",
+      "is_static": false,
+      "return_type": "void",
+      "param_count": 4,
+      "params": [
+        "expected",
         "actual",
         "path",
         "mismatches"
       ],
-      "start_line": 4
+      "start_line": 20
     },
     {
       "script_path": "scripts/application/equipment/EquipmentManagementService.gd",
@@ -15286,7 +15404,7 @@
       "script_path": "scripts/domain/equipment/EquipmentManagementSession.gd",
       "name": "semantically_equals",
       "is_static": false,
-      "return_type": "void",
+      "return_type": "bool",
       "param_count": 1,
       "params": [
         "other"
@@ -15297,11 +15415,10 @@
       "script_path": "scripts/domain/equipment/EquipmentManagementSession.gd",
       "name": "_normalize_int_dictionary",
       "is_static": true,
-      "return_type": "void",
-      "param_count": 2,
+      "return_type": "Dictionary",
+      "param_count": 1,
       "params": [
-        "source",
-        "0)"
+        "source"
       ],
       "start_line": 63
     },
@@ -15309,17 +15426,10 @@
       "script_path": "scripts/domain/equipment/EquipmentManagementSession.gd",
       "name": "_normalize_history_rows",
       "is_static": true,
-      "return_type": "void",
-      "param_count": 8,
+      "return_type": "Array[Dictionary]",
+      "param_count": 1,
       "params": [
-        "source",
-        "\"purple_level\"",
-        "\"material_delta\"",
-        "\"ticket_cost\"",
-        "\"resource_amount\"",
-        "\"pity_before\"",
-        "\"pity_after\"",
-        "\"exchange_material_delta\"] var boolean_fields"
+        "source"
       ],
       "start_line": 68
     },
@@ -15359,13 +15469,12 @@
       "script_path": "scripts/domain/equipment/M5ContentValidator.gd",
       "name": "validate",
       "is_static": false,
-      "return_type": "void",
-      "param_count": 4,
+      "return_type": "LootValidationReport",
+      "param_count": 3,
       "params": [
         "definitions",
         "config",
-        "entries",
-        "\"Equipment definition id required\""
+        "entries"
       ],
       "start_line": 4
     },
@@ -15373,7 +15482,7 @@
       "script_path": "scripts/domain/equipment/M5ContentValidator.gd",
       "name": "_sum",
       "is_static": false,
-      "return_type": "void",
+      "return_type": "int",
       "param_count": 1,
       "params": [
         "values"
@@ -17303,6 +17412,15 @@
       "start_line": 6
     },
     {
+      "script_path": "scripts/infrastructure/SequenceGachaRollSource.gd",
+      "name": "next_percent",
+      "is_static": false,
+      "return_type": "int",
+      "param_count": 0,
+      "params": [],
+      "start_line": 7
+    },
+    {
       "script_path": "scripts/infrastructure/SequenceMovementRollSource.gd",
       "name": "_init",
       "is_static": false,
@@ -18738,14 +18856,11 @@
       "name": "set_selection_state",
       "is_static": false,
       "return_type": "void",
-      "param_count": 6,
+      "param_count": 3,
       "params": [
         "selectable",
         "selected",
-        "accent",
-        "0.79",
-        "0.36",
-        "1.0)"
+        "accent"
       ],
       "start_line": 512
     },
@@ -21903,58 +22018,91 @@
       "name": "_ready",
       "is_static": false,
       "return_type": "void",
-      "param_count": 1,
-      "params": [
-        ")->void"
-      ],
+      "param_count": 0,
+      "params": [],
       "start_line": 23
     },
     {
       "script_path": "scripts/presentation/loot/Gd2M4Controller.gd",
       "name": "_on_use_pressed",
       "is_static": false,
-      "return_type": "LootMovementPlayerState",
-      "param_count": 27,
-      "params": [
-        ")->void",
-        "item_id",
-        "items); result_label.text",
-        "map_definition",
-        "movement_rng",
-        "rewards); result_label.text",
-        "action.end_node_id]; _refresh() func _on_discard_pressed()->void",
-        "0",
-        "rewards); result_label.text",
-        "rewards); result_label.text",
-        "movement_player.current_node_id",
-        "movement_player.remaining_moves",
-        "player.silver_coin_count",
-        "player.orb_count",
-        "player.gacha_ticket_count",
-        "player.equipment_exp_material_count",
-        "player.equipment_exchange_material_count]) player_overview.text",
-        "\"\")); item_option.add_item(String(item_id)); item_option.set_item_metadata(item_option.item_count-1",
-        "String(item_id)) var round_loot",
-        "round_loot.capacity",
-        "JSON.stringify(round_loot.carried_items)] var effect_lines",
-        "effect.effect_kind",
-        "TemporaryEffectState.Duration.keys()[effect.duration]",
-        "effect.active]) effects_label.text",
-        "result.reward_id",
-        "result.reward_amount",
-        "RewardResolutionResult.Status.keys()[result.status]]) reward_log.text"
-      ],
+      "return_type": "void",
+      "param_count": 0,
+      "params": [],
       "start_line": 33
+    },
+    {
+      "script_path": "scripts/presentation/loot/Gd2M4Controller.gd",
+      "name": "_on_continue_pressed",
+      "is_static": false,
+      "return_type": "void",
+      "param_count": 0,
+      "params": [],
+      "start_line": 38
+    },
+    {
+      "script_path": "scripts/presentation/loot/Gd2M4Controller.gd",
+      "name": "_on_move_pressed",
+      "is_static": false,
+      "return_type": "void",
+      "param_count": 0,
+      "params": [],
+      "start_line": 40
+    },
+    {
+      "script_path": "scripts/presentation/loot/Gd2M4Controller.gd",
+      "name": "_on_discard_pressed",
+      "is_static": false,
+      "return_type": "void",
+      "param_count": 0,
+      "params": [],
+      "start_line": 42
+    },
+    {
+      "script_path": "scripts/presentation/loot/Gd2M4Controller.gd",
+      "name": "_on_skip_incoming_pressed",
+      "is_static": false,
+      "return_type": "void",
+      "param_count": 0,
+      "params": [],
+      "start_line": 44
+    },
+    {
+      "script_path": "scripts/presentation/loot/Gd2M4Controller.gd",
+      "name": "_on_back_pressed",
+      "is_static": false,
+      "return_type": "void",
+      "param_count": 0,
+      "params": [],
+      "start_line": 46
+    },
+    {
+      "script_path": "scripts/presentation/loot/Gd2M4Controller.gd",
+      "name": "_refresh",
+      "is_static": false,
+      "return_type": "void",
+      "param_count": 0,
+      "params": [],
+      "start_line": 48
+    },
+    {
+      "script_path": "scripts/presentation/loot/Gd2M4Controller.gd",
+      "name": "_find_movement_player",
+      "is_static": false,
+      "return_type": "LootMovementPlayerState",
+      "param_count": 1,
+      "params": [
+        "player_id"
+      ],
+      "start_line": 71
     },
     {
       "script_path": "scripts/presentation/loot/Gd2M5Controller.gd",
       "name": "_ready",
       "is_static": false,
       "return_type": "void",
-      "param_count": 1,
-      "params": [
-        ")->void"
-      ],
+      "param_count": 0,
+      "params": [],
       "start_line": 19
     },
     {
@@ -21962,29 +22110,35 @@
       "name": "_on_confirm_pressed",
       "is_static": false,
       "return_type": "void",
-      "param_count": 9,
-      "params": [
-        ")->void",
-        "session.current_player_id());result_label.text",
-        "&\"m5_s_stig_a\"",
-        "&\"m5_s_stig_b\"",
-        "&\"m5_s_stig_c\"]",
-        "equipment.find_definition(definitions",
-        "id)",
-        "&\"TEST_FIXTURE\");equipment.equip(player",
-        "instance.instance_id) result_label.text"
-      ],
+      "param_count": 0,
+      "params": [],
       "start_line": 24
+    },
+    {
+      "script_path": "scripts/presentation/loot/Gd2M5Controller.gd",
+      "name": "_on_grant_loadout_pressed",
+      "is_static": false,
+      "return_type": "void",
+      "param_count": 0,
+      "params": [],
+      "start_line": 25
+    },
+    {
+      "script_path": "scripts/presentation/loot/Gd2M5Controller.gd",
+      "name": "_on_gold_pressed",
+      "is_static": false,
+      "return_type": "void",
+      "param_count": 0,
+      "params": [],
+      "start_line": 30
     },
     {
       "script_path": "scripts/presentation/loot/Gd2M5Controller.gd",
       "name": "_on_gold_max_pressed",
       "is_static": false,
       "return_type": "void",
-      "param_count": 1,
-      "params": [
-        ")->void"
-      ],
+      "param_count": 0,
+      "params": [],
       "start_line": 34
     },
     {
@@ -21992,10 +22146,8 @@
       "name": "_on_purple_pressed",
       "is_static": false,
       "return_type": "void",
-      "param_count": 1,
-      "params": [
-        ")->void"
-      ],
+      "param_count": 0,
+      "params": [],
       "start_line": 38
     },
     {
@@ -22003,52 +22155,74 @@
       "name": "_on_basic_pressed",
       "is_static": false,
       "return_type": "void",
-      "param_count": 21,
-      "params": [
-        ")->void",
-        "session.find_player(session.current_player_id())",
-        "definitions",
-        "SequenceGachaRollSource.new([70",
-        "0]));result_label.text",
-        "result.equipment_definition_id];_refresh() func _on_rate_up_pressed()->void",
-        "&\"m5_s_stig_a\"",
-        "&\"m5_s_stig_b\"",
-        "&\"m5_s_stig_c\"];var result",
-        "session.find_player(session.current_player_id())",
-        "definitions",
-        "featured",
-        "config",
-        "SequenceGachaRollSource.new([95",
-        "20]));result_label.text",
-        "session.find_player(session.current_player_id())",
-        "entries",
-        "SequenceGachaRollSource.new([1]));result_label.text",
-        "session.find_player(session.current_player_id())",
-        "StringName(\"m5_ss_stig_%s\"%String(slot).to_lower())",
-        "definitions);result_label.text"
-      ],
+      "param_count": 0,
+      "params": [],
       "start_line": 42
+    },
+    {
+      "script_path": "scripts/presentation/loot/Gd2M5Controller.gd",
+      "name": "_on_rate_up_pressed",
+      "is_static": false,
+      "return_type": "void",
+      "param_count": 0,
+      "params": [],
+      "start_line": 44
+    },
+    {
+      "script_path": "scripts/presentation/loot/Gd2M5Controller.gd",
+      "name": "_on_perfect_pressed",
+      "is_static": false,
+      "return_type": "void",
+      "param_count": 0,
+      "params": [],
+      "start_line": 46
+    },
+    {
+      "script_path": "scripts/presentation/loot/Gd2M5Controller.gd",
+      "name": "_on_choice_pressed",
+      "is_static": false,
+      "return_type": "void",
+      "param_count": 1,
+      "params": [
+        "slot"
+      ],
+      "start_line": 48
+    },
+    {
+      "script_path": "scripts/presentation/loot/Gd2M5Controller.gd",
+      "name": "_on_ss_shop_pressed",
+      "is_static": false,
+      "return_type": "void",
+      "param_count": 0,
+      "params": [],
+      "start_line": 50
     },
     {
       "script_path": "scripts/presentation/loot/Gd2M5Controller.gd",
       "name": "_on_done_pressed",
       "is_static": false,
       "return_type": "void",
-      "param_count": 11,
-      "params": [
-        ")->void",
-        "session.current_player_id());_refresh() func _on_back_pressed()->void",
-        "\"Current",
-        "session.confirmed_player_ids.has(player.player_id)",
-        "session.done_player_ids.has(player.player_id)",
-        "player.gacha_ticket_count",
-        "player.equipment_exp_material_count",
-        "player.equipment_exchange_material_count",
-        "player.equipment_collection.size()",
-        "equipment.set_passive_active(player",
-        "definitions)]) lines.append(\"Perfect remaining"
-      ],
+      "param_count": 0,
+      "params": [],
       "start_line": 54
+    },
+    {
+      "script_path": "scripts/presentation/loot/Gd2M5Controller.gd",
+      "name": "_on_back_pressed",
+      "is_static": false,
+      "return_type": "void",
+      "param_count": 0,
+      "params": [],
+      "start_line": 55
+    },
+    {
+      "script_path": "scripts/presentation/loot/Gd2M5Controller.gd",
+      "name": "_refresh",
+      "is_static": false,
+      "return_type": "void",
+      "param_count": 0,
+      "params": [],
+      "start_line": 56
     },
     {
       "script_path": "scripts/presentation/loot/Gd2M6Controller.gd",
@@ -34788,13 +34962,12 @@
       "name": "_execute_tailor",
       "is_static": false,
       "return_type": "Dictionary",
-      "param_count": 5,
+      "param_count": 4,
       "params": [
         "case_fixture",
         "roles",
         "players",
-        "targets",
-        "3])"
+        "targets"
       ],
       "start_line": 12439
     },
@@ -35189,13 +35362,11 @@
       "script_path": "scripts/tools/SmokeTestRunner.gd",
       "name": "_submission_current_player",
       "is_static": false,
-      "return_type": "void",
-      "param_count": 4,
+      "return_type": "bool",
+      "param_count": 2,
       "params": [
         "c",
-        "p",
-        "p",
-        "PackedInt32Array()"
+        "p"
       ],
       "start_line": 12692
     },
@@ -35203,12 +35374,10 @@
       "script_path": "scripts/tools/SmokeTestRunner.gd",
       "name": "_submission_main",
       "is_static": false,
-      "return_type": "void",
-      "param_count": 5,
+      "return_type": "bool",
+      "param_count": 3,
       "params": [
         "c",
-        "p",
-        "ids",
         "p",
         "ids"
       ],
@@ -35218,14 +35387,10 @@
       "script_path": "scripts/tools/SmokeTestRunner.gd",
       "name": "_submission_error",
       "is_static": false,
-      "return_type": "void",
-      "param_count": 9,
+      "return_type": "StringName",
+      "param_count": 5,
       "params": [
         "c",
-        "p",
-        "e",
-        "u",
-        "t",
         "p",
         "e",
         "u",
@@ -35274,175 +35439,357 @@
       "script_path": "scripts/tools/SmokeTestRunner.gd",
       "name": "_submission_only_once",
       "is_static": false,
-      "return_type": "void",
-      "param_count": 73,
+      "return_type": "bool",
+      "param_count": 2,
       "params": [
         "c",
-        "p",
-        "p); var r",
-        "1",
-        "PackedInt32Array()",
-        "PackedInt32Array()",
-        "PackedInt32Array()); svc.submit(c",
-        "r",
-        "r.find_player(&\"player_1\")",
-        "s); var s2",
-        "1",
-        "PackedInt32Array()",
-        "PackedInt32Array()",
-        "PackedInt32Array()); return not svc.submit(c",
-        "r",
-        "r.find_player(&\"player_1\")",
-        "s2).success func _submission_wrong_class_still_solves(c",
-        "p",
-        "p",
-        "PackedInt32Array([4",
-        "5])",
-        "PackedInt32Array([5])",
-        "PackedInt32Array([4])); return result.main_answer_correct and not result.underling_classification_correct and not result.traitor_classification_correct func _submission_locks(c",
-        "p",
-        "ids",
-        "p); var r",
-        "1",
-        "ids",
-        "PackedInt32Array()",
-        "PackedInt32Array()); (b.service as CaseSubmissionService).submit(c",
-        "r",
-        "r.find_player(&\"player_1\")",
-        "s); return s.is_locked func _submission_cancel_clean()->bool",
-        "1); var before",
-        "p",
-        "p); var m",
-        "b",
-        "PackedInt32Array([4",
-        "5])); return m.turn_number",
-        "b",
-        "ids",
-        "r.turn_number",
-        "ids",
-        "PackedInt32Array()",
-        "PackedInt32Array()); return (b.service as CaseSubmissionService).submit(c",
-        "r",
-        "r.find_player(r.current_player_id())",
-        "s) func _submission_marks_others(c",
-        "p",
-        "p); _commit_on_bundle(c",
-        "b",
-        "PackedInt32Array([4",
-        "5])); var r",
-        "p",
-        "p); _commit_on_bundle(c",
-        "b",
-        "PackedInt32Array([4])); var r",
-        "b",
-        "PackedInt32Array([4",
-        "5])); return r.find_player(&\"player_1\").submission_status",
-        "p",
-        "p); _commit_on_bundle(c",
-        "b",
-        "PackedInt32Array()); return not (b.runtime as CaseRuntimeState).find_player(&\"player_1\").is_active_in_investigation func _submission_wrong_advances(c",
-        "p",
-        "p); var m",
-        "b",
-        "PackedInt32Array()); m.advance_turn(); return m.turn_number",
-        "1); copies[0].is_active_in_investigation",
-        "1); copies[0].is_active_in_investigation",
-        "1); m.current_turn_index",
-        "p",
-        "p); var r"
+        "p"
       ],
       "start_line": 12703
     },
     {
       "script_path": "scripts/tools/SmokeTestRunner.gd",
+      "name": "_submission_wrong_class_still_solves",
+      "is_static": false,
+      "return_type": "bool",
+      "param_count": 2,
+      "params": [
+        "c",
+        "p"
+      ],
+      "start_line": 12705
+    },
+    {
+      "script_path": "scripts/tools/SmokeTestRunner.gd",
+      "name": "_submission_locks",
+      "is_static": false,
+      "return_type": "bool",
+      "param_count": 3,
+      "params": [
+        "c",
+        "p",
+        "ids"
+      ],
+      "start_line": 12707
+    },
+    {
+      "script_path": "scripts/tools/SmokeTestRunner.gd",
+      "name": "_submission_cancel_clean",
+      "is_static": false,
+      "return_type": "bool",
+      "param_count": 0,
+      "params": [],
+      "start_line": 12709
+    },
+    {
+      "script_path": "scripts/tools/SmokeTestRunner.gd",
+      "name": "_submission_cancel_turn",
+      "is_static": false,
+      "return_type": "bool",
+      "param_count": 1,
+      "params": [
+        "p"
+      ],
+      "start_line": 12711
+    },
+    {
+      "script_path": "scripts/tools/SmokeTestRunner.gd",
+      "name": "_submission_correct_no_advance",
+      "is_static": false,
+      "return_type": "bool",
+      "param_count": 2,
+      "params": [
+        "c",
+        "p"
+      ],
+      "start_line": 12713
+    },
+    {
+      "script_path": "scripts/tools/SmokeTestRunner.gd",
+      "name": "_commit_on_bundle",
+      "is_static": false,
+      "return_type": "CaseSubmissionResult",
+      "param_count": 3,
+      "params": [
+        "c",
+        "b",
+        "ids"
+      ],
+      "start_line": 12715
+    },
+    {
+      "script_path": "scripts/tools/SmokeTestRunner.gd",
+      "name": "_submission_marks_others",
+      "is_static": false,
+      "return_type": "bool",
+      "param_count": 2,
+      "params": [
+        "c",
+        "p"
+      ],
+      "start_line": 12717
+    },
+    {
+      "script_path": "scripts/tools/SmokeTestRunner.gd",
+      "name": "_submission_prior_wrong_stays",
+      "is_static": false,
+      "return_type": "bool",
+      "param_count": 2,
+      "params": [
+        "c",
+        "p"
+      ],
+      "start_line": 12719
+    },
+    {
+      "script_path": "scripts/tools/SmokeTestRunner.gd",
+      "name": "_submission_wrong_inactive",
+      "is_static": false,
+      "return_type": "bool",
+      "param_count": 2,
+      "params": [
+        "c",
+        "p"
+      ],
+      "start_line": 12721
+    },
+    {
+      "script_path": "scripts/tools/SmokeTestRunner.gd",
+      "name": "_submission_wrong_advances",
+      "is_static": false,
+      "return_type": "bool",
+      "param_count": 2,
+      "params": [
+        "c",
+        "p"
+      ],
+      "start_line": 12723
+    },
+    {
+      "script_path": "scripts/tools/SmokeTestRunner.gd",
+      "name": "_turn_skips_one_inactive",
+      "is_static": false,
+      "return_type": "bool",
+      "param_count": 1,
+      "params": [
+        "p"
+      ],
+      "start_line": 12725
+    },
+    {
+      "script_path": "scripts/tools/SmokeTestRunner.gd",
+      "name": "_turn_skips_two_inactive",
+      "is_static": false,
+      "return_type": "bool",
+      "param_count": 1,
+      "params": [
+        "p"
+      ],
+      "start_line": 12730
+    },
+    {
+      "script_path": "scripts/tools/SmokeTestRunner.gd",
+      "name": "_sole_active_loops",
+      "is_static": false,
+      "return_type": "bool",
+      "param_count": 1,
+      "params": [
+        "p"
+      ],
+      "start_line": 12735
+    },
+    {
+      "script_path": "scripts/tools/SmokeTestRunner.gd",
+      "name": "_all_players_fail",
+      "is_static": false,
+      "return_type": "bool",
+      "param_count": 2,
+      "params": [
+        "c",
+        "p"
+      ],
+      "start_line": 12740
+    },
+    {
+      "script_path": "scripts/tools/SmokeTestRunner.gd",
       "name": "_zero_active_no_next",
       "is_static": false,
-      "return_type": "void",
-      "param_count": 39,
+      "return_type": "bool",
+      "param_count": 1,
       "params": [
-        "p",
-        "1); return m.advance_turn()",
-        "roles",
-        "p",
-        "p); var r",
-        "r",
-        "roles).size()",
-        "p",
-        "p); var r",
-        "r",
-        "2",
-        "&\"player_1\").success func _inactive_cannot_function(c",
-        "roles",
-        "p",
-        "roles",
-        "p); var r",
-        "r",
-        "1",
-        "PackedInt32Array([2",
-        "3])",
-        "r.current_player_id()).success func _function_survives_revealer(c",
-        "roles",
-        "p",
-        "roles",
-        "p); var r",
-        "r",
-        "1",
-        "PackedInt32Array([2",
-        "3])",
-        "r.current_player_id()).success func _submission_log_private(c",
-        "p",
-        "p); _commit_on_bundle(c",
-        "b",
-        "PackedInt32Array([4])); var log",
-        "p",
-        "p) func _eight_sets_awaiting(c",
-        "p",
-        "p); var r",
-        "9"
+        "p"
       ],
       "start_line": 12747
     },
     {
       "script_path": "scripts/tools/SmokeTestRunner.gd",
-      "name": "_awaiting_rejects_submission",
+      "name": "_inactive_sees_public",
       "is_static": false,
-      "return_type": "Dictionary",
-      "param_count": 32,
+      "return_type": "bool",
+      "param_count": 3,
       "params": [
         "c",
-        "p",
-        "p); (b.runtime as CaseRuntimeState).case_outcome",
-        "b",
-        "PackedInt32Array([4",
-        "5])).success func _ended_states_lock_actions(c",
-        "p",
-        "p); _commit_on_bundle(c",
-        "b",
-        "PackedInt32Array([4",
-        "5])); return not (b.runtime as CaseRuntimeState).accepts_investigation_actions func _player_status_public_only()->bool",
-        "p",
-        "p",
-        "\"orb\")",
-        "p",
-        "\"merit\")",
-        "p",
-        "\"reputation\")",
-        "p",
-        "\"tickets\")",
-        "p",
-        "kind",
-        "p); var r",
-        "b",
-        "PackedInt32Array()); var after",
-        "p",
-        "p); _commit_on_bundle(c",
-        "first",
-        "PackedInt32Array()); var second",
-        "p); var r",
         "roles",
         "p"
       ],
+      "start_line": 12753
+    },
+    {
+      "script_path": "scripts/tools/SmokeTestRunner.gd",
+      "name": "_inactive_cannot_investigate",
+      "is_static": false,
+      "return_type": "bool",
+      "param_count": 2,
+      "params": [
+        "c",
+        "p"
+      ],
+      "start_line": 12755
+    },
+    {
+      "script_path": "scripts/tools/SmokeTestRunner.gd",
+      "name": "_inactive_cannot_function",
+      "is_static": false,
+      "return_type": "bool",
+      "param_count": 3,
+      "params": [
+        "c",
+        "roles",
+        "p"
+      ],
+      "start_line": 12757
+    },
+    {
+      "script_path": "scripts/tools/SmokeTestRunner.gd",
+      "name": "_function_survives_revealer",
+      "is_static": false,
+      "return_type": "bool",
+      "param_count": 3,
+      "params": [
+        "c",
+        "roles",
+        "p"
+      ],
+      "start_line": 12759
+    },
+    {
+      "script_path": "scripts/tools/SmokeTestRunner.gd",
+      "name": "_submission_log_private",
+      "is_static": false,
+      "return_type": "bool",
+      "param_count": 2,
+      "params": [
+        "c",
+        "p"
+      ],
+      "start_line": 12761
+    },
+    {
+      "script_path": "scripts/tools/SmokeTestRunner.gd",
+      "name": "_public_log_has_no_truth",
+      "is_static": false,
+      "return_type": "bool",
+      "param_count": 2,
+      "params": [
+        "c",
+        "p"
+      ],
+      "start_line": 12763
+    },
+    {
+      "script_path": "scripts/tools/SmokeTestRunner.gd",
+      "name": "_eight_sets_awaiting",
+      "is_static": false,
+      "return_type": "bool",
+      "param_count": 2,
+      "params": [
+        "c",
+        "p"
+      ],
+      "start_line": 12764
+    },
+    {
+      "script_path": "scripts/tools/SmokeTestRunner.gd",
+      "name": "_awaiting_rejects_submission",
+      "is_static": false,
+      "return_type": "bool",
+      "param_count": 2,
+      "params": [
+        "c",
+        "p"
+      ],
       "start_line": 12771
+    },
+    {
+      "script_path": "scripts/tools/SmokeTestRunner.gd",
+      "name": "_ended_states_lock_actions",
+      "is_static": false,
+      "return_type": "bool",
+      "param_count": 2,
+      "params": [
+        "c",
+        "p"
+      ],
+      "start_line": 12773
+    },
+    {
+      "script_path": "scripts/tools/SmokeTestRunner.gd",
+      "name": "_player_status_public_only",
+      "is_static": false,
+      "return_type": "bool",
+      "param_count": 0,
+      "params": [],
+      "start_line": 12775
+    },
+    {
+      "script_path": "scripts/tools/SmokeTestRunner.gd",
+      "name": "_submission_rewards_unchanged",
+      "is_static": false,
+      "return_type": "bool",
+      "param_count": 2,
+      "params": [
+        "c",
+        "p"
+      ],
+      "start_line": 12776
+    },
+    {
+      "script_path": "scripts/tools/SmokeTestRunner.gd",
+      "name": "_submission_resource_delta",
+      "is_static": false,
+      "return_type": "float",
+      "param_count": 3,
+      "params": [
+        "c",
+        "p",
+        "kind"
+      ],
+      "start_line": 12777
+    },
+    {
+      "script_path": "scripts/tools/SmokeTestRunner.gd",
+      "name": "_submission_reset",
+      "is_static": false,
+      "return_type": "bool",
+      "param_count": 2,
+      "params": [
+        "c",
+        "p"
+      ],
+      "start_line": 12779
+    },
+    {
+      "script_path": "scripts/tools/SmokeTestRunner.gd",
+      "name": "_function_text_history_checks",
+      "is_static": false,
+      "return_type": "Dictionary",
+      "param_count": 3,
+      "params": [
+        "c",
+        "roles",
+        "p"
+      ],
+      "start_line": 12781
     },
     {
       "script_path": "scripts/tools/SmokeTestRunner.gd",
@@ -39110,12 +39457,11 @@
       "name": "_row",
       "is_static": false,
       "return_type": "Dictionary",
-      "param_count": 4,
+      "param_count": 3,
       "params": [
         "name",
         "passed",
-        "detail",
-        "deterministic production diversity\""
+        "detail"
       ],
       "start_line": 258
     },
@@ -41467,11 +41813,9 @@
       "name": "_session",
       "is_static": false,
       "return_type": "LootMovementSession",
-      "param_count": 3,
+      "param_count": 1,
       "params": [
-        "indices",
-        "1",
-        "2]"
+        "indices"
       ],
       "start_line": 57
     },
@@ -41673,642 +42017,519 @@
       "script_path": "tests/unit/gd2/Gd2M4TestSuite.gd",
       "name": "_row",
       "is_static": false,
-      "return_type": "void",
-      "param_count": 6,
+      "return_type": "Dictionary",
+      "param_count": 2,
       "params": [
         "name",
-        "passed",
-        "\"passed\"",
-        "\"detail\"",
-        "1",
-        "2])->Array[PlayerPhaseState]"
+        "passed"
       ],
       "start_line": 48
     },
     {
       "script_path": "tests/unit/gd2/Gd2M4TestSuite.gd",
+      "name": "_players",
+      "is_static": false,
+      "return_type": "Array[PlayerPhaseState]",
+      "param_count": 1,
+      "params": [
+        "indices"
+      ],
+      "start_line": 49
+    },
+    {
+      "script_path": "tests/unit/gd2/Gd2M4TestSuite.gd",
       "name": "_session",
       "is_static": false,
-      "return_type": "void",
-      "param_count": 24,
+      "return_type": "LootRewardSession",
+      "param_count": 2,
       "params": [
         "indices",
-        "1",
-        "2]",
-        "reward_set",
-        "characters",
-        "map_definition",
-        "effective_rewards",
-        "SequenceRewardRollSource.new([0",
-        "1",
-        "2",
-        "3",
-        "4",
-        "5",
-        "6])",
-        "&\"test_round_m4\") func _snapshot()->Array[RewardNodeSnapshot]",
-        "map_definition",
-        "rewards",
-        "SequenceRewardRollSource.new([0",
-        "1",
-        "2",
-        "3",
-        "4",
-        "5",
-        "6])) func _snapshot_dicts()->Array[Dictionary]"
+        "reward_set"
       ],
       "start_line": 54
     },
     {
       "script_path": "tests/unit/gd2/Gd2M4TestSuite.gd",
+      "name": "_snapshot",
+      "is_static": false,
+      "return_type": "Array[RewardNodeSnapshot]",
+      "param_count": 0,
+      "params": [],
+      "start_line": 57
+    },
+    {
+      "script_path": "tests/unit/gd2/Gd2M4TestSuite.gd",
+      "name": "_snapshot_dicts",
+      "is_static": false,
+      "return_type": "Array[Dictionary]",
+      "param_count": 0,
+      "params": [],
+      "start_line": 58
+    },
+    {
+      "script_path": "tests/unit/gd2/Gd2M4TestSuite.gd",
       "name": "_snapshot_fixed",
       "is_static": false,
-      "return_type": "void",
-      "param_count": 88,
-      "params": [
-        ")->bool",
-        "map_definition",
-        "SequenceMovementRollSource.new([1])",
-        "rewards); return session.reward_snapshots[0].to_dict()",
-        "map_definition",
-        "rewards",
-        "SequenceRewardRollSource.new([0])); var b",
-        "map_definition",
-        "rewards",
-        "SequenceRewardRollSource.new([1])); return a[0].reward_definition_id!",
-        "&\"m4_player_1\"",
-        "[&\"house_a_1\"",
-        "&\"center_0\"",
-        "&\"center_1\"]",
-        "rewards); return session.reward_history.size()",
-        "amount",
-        "reward_set); var p",
-        "p.player_id",
-        "[&\"house_a_1\"]",
-        "reward_set) match type",
-        "reward_set); service.resolve_trace(s",
-        "s.players[0].player_id",
-        "[&\"house_a_1\"]",
-        "reward_set); return s.find_round_loot_state(s.players[0].player_id).carried_items.is_empty() func _repeatable_revisit()->bool",
-        "reward_set); service.resolve_trace(s",
-        "s.players[0].player_id",
-        "[&\"house_a_1\"]",
-        "reward_set); service.resolve_trace(s",
-        "s.players[0].player_id",
-        "[&\"house_a_1\"]",
-        "reward_set); return s.players[0].orb_count",
-        "1]",
-        "reward_set); service.resolve_trace(s",
-        "s.players[0].player_id",
-        "[&\"house_a_1\"]",
-        "reward_set); service.resolve_trace(s",
-        "s.players[1].player_id",
-        "[&\"house_a_1\"]",
-        "reward_set); return s.players[0].orb_count",
-        "reward_set) if prefill",
-        "s.players[0].player_id",
-        "[&\"house_a_1\"]",
-        "reward_set) return {\"session\"",
-        "0",
-        "reward_set) and StringName(s.find_round_loot_state(s.players[0].player_id).carried_items[0].get(\"item_id\"",
-        "\"\"))",
-        "reward_set) and StringName(s.find_round_loot_state(s.players[0].player_id).carried_items[0].get(\"item_id\"",
-        "\"\"))",
-        "silver]; var s",
-        "characters",
-        "map_definition",
-        "reward_set",
-        "SequenceRewardRollSource.new([0",
-        "1])",
-        "&\"r\"); s.find_round_loot_state(s.players[0].player_id).carried_items.append({\"item_id\"",
-        "s.players[0].player_id",
-        "[&\"house_a_1\"",
-        "&\"house_b_1\"]",
-        "reward_set); service.resolve_overflow_skip(s",
-        "reward_set); return s.players[0].silver_coin_count",
-        "1]); s.players[0].consumable_inventory.append({\"item_id\"",
-        "&\"test_extra_action\"",
-        "items); return result.success and s.players[0].consumable_inventory.is_empty() and s.movement_session.current_player().remaining_moves",
-        "&\"test_move_plus_1\"",
-        "items); var second",
-        "&\"test_extra_action\"",
-        "items); return first.success and not second.success and second.code",
-        "1]); s.movement_session.player_states[0].remaining_moves",
-        "&\"test_move_plus_1\"",
-        "items); service.continue_without_item(s); var action",
-        "map_definition",
-        "SequenceMovementRollSource.new([1])",
-        "rewards); return action!",
-        "&\"test_extra_action\"",
-        "items); s.movement_session.player_states[0].temporary_effects[0].duration",
-        "duration); return not s.movement_session.player_states[0].temporary_effects[0].active func _round_effect_contract()->bool",
-        "&\"test_extra_action\"",
-        "items); var effect",
-        "&\"test_extra_action\"",
-        "items); return s.movement_session.player_states[0].remaining_moves",
-        "&\"test_all_others_minus_1_move\"",
-        "items); return result.success and result.affected_player_ids",
-        "&\"test_extra_action\"",
-        "items) var diagnostic",
-        "[]) var mismatch_lines",
-        "false)) else \"Mismatch",
-        "\".join(mismatch_lines) return bool(diagnostic.get(\"matches\"",
-        "false)"
-      ],
+      "return_type": "bool",
+      "param_count": 0,
+      "params": [],
       "start_line": 62
+    },
+    {
+      "script_path": "tests/unit/gd2/Gd2M4TestSuite.gd",
+      "name": "_different_rng_changes",
+      "is_static": false,
+      "return_type": "bool",
+      "param_count": 0,
+      "params": [],
+      "start_line": 64
+    },
+    {
+      "script_path": "tests/unit/gd2/Gd2M4TestSuite.gd",
+      "name": "_trace_order",
+      "is_static": false,
+      "return_type": "bool",
+      "param_count": 0,
+      "params": [],
+      "start_line": 66
+    },
+    {
+      "script_path": "tests/unit/gd2/Gd2M4TestSuite.gd",
+      "name": "_reward_of_type",
+      "is_static": false,
+      "return_type": "RewardDefinition",
+      "param_count": 1,
+      "params": [
+        "type"
+      ],
+      "start_line": 68
+    },
+    {
+      "script_path": "tests/unit/gd2/Gd2M4TestSuite.gd",
+      "name": "_resource_grant",
+      "is_static": false,
+      "return_type": "bool",
+      "param_count": 2,
+      "params": [
+        "type",
+        "amount"
+      ],
+      "start_line": 72
+    },
+    {
+      "script_path": "tests/unit/gd2/Gd2M4TestSuite.gd",
+      "name": "_resources_do_not_fill_bag",
+      "is_static": false,
+      "return_type": "bool",
+      "param_count": 0,
+      "params": [],
+      "start_line": 81
+    },
+    {
+      "script_path": "tests/unit/gd2/Gd2M4TestSuite.gd",
+      "name": "_repeatable_revisit",
+      "is_static": false,
+      "return_type": "bool",
+      "param_count": 0,
+      "params": [],
+      "start_line": 83
+    },
+    {
+      "script_path": "tests/unit/gd2/Gd2M4TestSuite.gd",
+      "name": "_special_once",
+      "is_static": false,
+      "return_type": "bool",
+      "param_count": 0,
+      "params": [],
+      "start_line": 85
+    },
+    {
+      "script_path": "tests/unit/gd2/Gd2M4TestSuite.gd",
+      "name": "_item_session",
+      "is_static": false,
+      "return_type": "Dictionary",
+      "param_count": 1,
+      "params": [
+        "prefill"
+      ],
+      "start_line": 87
+    },
+    {
+      "script_path": "tests/unit/gd2/Gd2M4TestSuite.gd",
+      "name": "_item_below_capacity",
+      "is_static": false,
+      "return_type": "bool",
+      "param_count": 0,
+      "params": [],
+      "start_line": 95
+    },
+    {
+      "script_path": "tests/unit/gd2/Gd2M4TestSuite.gd",
+      "name": "_overflow_pending",
+      "is_static": false,
+      "return_type": "bool",
+      "param_count": 0,
+      "params": [],
+      "start_line": 97
+    },
+    {
+      "script_path": "tests/unit/gd2/Gd2M4TestSuite.gd",
+      "name": "_overflow_discard",
+      "is_static": false,
+      "return_type": "bool",
+      "param_count": 0,
+      "params": [],
+      "start_line": 99
+    },
+    {
+      "script_path": "tests/unit/gd2/Gd2M4TestSuite.gd",
+      "name": "_overflow_skip",
+      "is_static": false,
+      "return_type": "bool",
+      "param_count": 0,
+      "params": [],
+      "start_line": 101
+    },
+    {
+      "script_path": "tests/unit/gd2/Gd2M4TestSuite.gd",
+      "name": "_overflow_resumes",
+      "is_static": false,
+      "return_type": "bool",
+      "param_count": 0,
+      "params": [],
+      "start_line": 103
+    },
+    {
+      "script_path": "tests/unit/gd2/Gd2M4TestSuite.gd",
+      "name": "_item_ready",
+      "is_static": false,
+      "return_type": "LootRewardSession",
+      "param_count": 1,
+      "params": [
+        "item_id"
+      ],
+      "start_line": 105
+    },
+    {
+      "script_path": "tests/unit/gd2/Gd2M4TestSuite.gd",
+      "name": "_item_consumes_no_move",
+      "is_static": false,
+      "return_type": "bool",
+      "param_count": 0,
+      "params": [],
+      "start_line": 107
+    },
+    {
+      "script_path": "tests/unit/gd2/Gd2M4TestSuite.gd",
+      "name": "_item_limit",
+      "is_static": false,
+      "return_type": "bool",
+      "param_count": 0,
+      "params": [],
+      "start_line": 109
+    },
+    {
+      "script_path": "tests/unit/gd2/Gd2M4TestSuite.gd",
+      "name": "_continue_enters_movement",
+      "is_static": false,
+      "return_type": "bool",
+      "param_count": 0,
+      "params": [],
+      "start_line": 111
+    },
+    {
+      "script_path": "tests/unit/gd2/Gd2M4TestSuite.gd",
+      "name": "_zero_move_rotates",
+      "is_static": false,
+      "return_type": "bool",
+      "param_count": 0,
+      "params": [],
+      "start_line": 113
+    },
+    {
+      "script_path": "tests/unit/gd2/Gd2M4TestSuite.gd",
+      "name": "_this_move_expires",
+      "is_static": false,
+      "return_type": "bool",
+      "param_count": 0,
+      "params": [],
+      "start_line": 115
+    },
+    {
+      "script_path": "tests/unit/gd2/Gd2M4TestSuite.gd",
+      "name": "_duration_expires",
+      "is_static": false,
+      "return_type": "bool",
+      "param_count": 1,
+      "params": [
+        "duration"
+      ],
+      "start_line": 117
+    },
+    {
+      "script_path": "tests/unit/gd2/Gd2M4TestSuite.gd",
+      "name": "_round_effect_contract",
+      "is_static": false,
+      "return_type": "bool",
+      "param_count": 0,
+      "params": [],
+      "start_line": 119
+    },
+    {
+      "script_path": "tests/unit/gd2/Gd2M4TestSuite.gd",
+      "name": "_extra_action_runtime_only",
+      "is_static": false,
+      "return_type": "bool",
+      "param_count": 0,
+      "params": [],
+      "start_line": 121
+    },
+    {
+      "script_path": "tests/unit/gd2/Gd2M4TestSuite.gd",
+      "name": "_all_other_debuff",
+      "is_static": false,
+      "return_type": "bool",
+      "param_count": 0,
+      "params": [],
+      "start_line": 123
+    },
+    {
+      "script_path": "tests/unit/gd2/Gd2M4TestSuite.gd",
+      "name": "_round_trip",
+      "is_static": false,
+      "return_type": "bool",
+      "param_count": 0,
+      "params": [],
+      "start_line": 125
     },
     {
       "script_path": "tests/unit/gd2/Gd2M5TestSuite.gd",
       "name": "run",
       "is_static": false,
-      "return_type": "void",
-      "param_count": 38,
-      "params": [
-        ")->Array[Dictionary]",
-        "\"GĐ2-M5 scene loads\"",
-        "load(\"res",
-        "\"M5 Equipment fixture count\"",
-        "definitions.size()",
-        "\"M5 Perfect fixture entry count\"",
-        "perfect_entries.size()",
-        "\"M5 content validates\"",
-        "M5ContentValidator.new().validate(definitions",
-        "config",
-        "perfect_entries).is_valid) _add(rows",
-        "\"Basic rates locked 65/25/10\"",
-        "config.basic_rates",
-        "\"A\"",
-        "\"S\"",
-        "\"Rate Up rates locked 65/25/10\"",
-        "config.rate_up_rates",
-        "\"A\"",
-        "\"S\"",
-        "\"Featured conditional split locked 14/22/22/22/20\"",
-        "config.featured_s_split",
-        "\"A\"",
-        "\"B\"",
-        "\"C\"",
-        "\"OTHER_S\"",
-        "\"Rate Up pity scope explicitly TEST_ONLY\"",
-        "config.test_only_not_canon_locked) _add(rows",
-        "\"SS shop currency remains configurable\"",
-        "config.ss_shop_currency_type",
-        "name",
-        "passed",
-        "\"passed\"",
-        "\"detail\"",
-        "name",
-        "passed",
-        "detail",
-        "\"passed\"",
-        "\"detail\""
-      ],
+      "return_type": "Array[Dictionary]",
+      "param_count": 0,
+      "params": [],
       "start_line": 11
+    },
+    {
+      "script_path": "tests/unit/gd2/Gd2M5TestSuite.gd",
+      "name": "_add",
+      "is_static": false,
+      "return_type": "void",
+      "param_count": 3,
+      "params": [
+        "rows",
+        "name",
+        "passed"
+      ],
+      "start_line": 26
+    },
+    {
+      "script_path": "tests/unit/gd2/Gd2M5TestSuite.gd",
+      "name": "_add_detail",
+      "is_static": false,
+      "return_type": "void",
+      "param_count": 4,
+      "params": [
+        "rows",
+        "name",
+        "passed",
+        "detail"
+      ],
+      "start_line": 27
+    },
+    {
+      "script_path": "tests/unit/gd2/Gd2M5TestSuite.gd",
+      "name": "_player",
+      "is_static": false,
+      "return_type": "PlayerPhaseState",
+      "param_count": 1,
+      "params": [
+        "id"
+      ],
+      "start_line": 28
+    },
+    {
+      "script_path": "tests/unit/gd2/Gd2M5TestSuite.gd",
+      "name": "_management",
+      "is_static": false,
+      "return_type": "EquipmentManagementSession",
+      "param_count": 1,
+      "params": [
+        "count"
+      ],
+      "start_line": 30
     },
     {
       "script_path": "tests/unit/gd2/Gd2M5TestSuite.gd",
       "name": "_definition",
       "is_static": false,
-      "return_type": "void",
-      "param_count": 2,
+      "return_type": "EquipmentDefinition",
+      "param_count": 1,
       "params": [
-        "id",
-        "id) func _sum_hits(session"
+        "id"
       ],
       "start_line": 36
+    },
+    {
+      "script_path": "tests/unit/gd2/Gd2M5TestSuite.gd",
+      "name": "_sum_hits",
+      "is_static": false,
+      "return_type": "int",
+      "param_count": 1,
+      "params": [
+        "session"
+      ],
+      "start_line": 37
     },
     {
       "script_path": "tests/unit/gd2/Gd2M5TestSuite.gd",
       "name": "_test_confirmation",
       "is_static": false,
       "return_type": "void",
-      "param_count": 186,
+      "param_count": 1,
       "params": [
-        "rows",
-        "\"Cannot confirm while movement remains\"",
-        "not service.can_begin(reward)) movement.remaining_moves",
-        "\"Cannot confirm while reward pending\"",
-        "not service.can_begin(reward)) reward.pending_trace_index",
-        "\"Cannot confirm while overflow pending\"",
-        "not service.can_begin(reward)) reward.overflow.active",
-        "\"All exhausted enters Loot End Confirmation\"",
-        "service.can_begin(reward)) var session",
-        "\"Confirmation session preserves players\"",
-        "session!",
-        "\"Single required player confirms\"",
-        "service.confirm(session",
-        "&\"m5_p1\") and session.phase",
-        "\"Confirmation is idempotent\"",
-        "not service.confirm(session",
-        "&\"m5_p1\")) _add(rows",
-        "\"No return to movement state\"",
-        "session.phase!",
-        "\"One player cannot end Loot for table\"",
-        "service.confirm(multi",
-        "&\"m5_p1\") and multi.phase",
-        "\"All confirmations enter Equipment Management\"",
-        "service.confirm(multi",
-        "&\"m5_p2\") and multi.phase",
-        "\"One management done advances pass-device player\"",
-        "service.mark_management_done(multi",
-        "&\"m5_p1\") and multi.current_player_id()",
-        "\"Pending choice blocks management done\"",
-        "not service.mark_management_done(multi",
-        "&\"m5_p2\")) multi.pending_choice",
-        "\"All management done stops at READY_FOR_M6\"",
-        "service.mark_management_done(multi",
-        "&\"m5_p2\") and multi.phase",
-        "_definition(&\"m5_a_relic\")",
-        "&\"BASIC\");var a",
-        "_definition(&\"m5_s_stig_a\")",
-        "&\"RATE_UP\");var b",
-        "_definition(&\"m5_s_stig_b\")",
-        "&\"RATE_UP\");var c",
-        "_definition(&\"m5_s_stig_c\")",
-        "&\"RATE_UP\");var duplicate",
-        "_definition(&\"m5_s_stig_a\")",
-        "&\"RATE_UP\") _add(rows",
-        "\"Duplicate creates independent instance\"",
-        "a.instance_id!",
-        "\"Relic is ACTIVE metadata\"",
-        "_definition(relic.equipment_definition_id).skill_marker",
-        "\"Stigmata is PASSIVE metadata\"",
-        "_definition(a.equipment_definition_id).skill_marker",
-        "\"Equip Relic\"",
-        "equipment.equip(player",
-        "relic.instance_id).success and player.relic_instance_id",
-        "\"Equip Stigmata A\"",
-        "equipment.equip(player",
-        "a.instance_id).success and player.stigmata_a_instance_id",
-        "\"Equip Stigmata B\"",
-        "equipment.equip(player",
-        "b.instance_id).success and player.stigmata_b_instance_id",
-        "\"Equip Stigmata C\"",
-        "equipment.equip(player",
-        "c.instance_id).success and player.stigmata_c_instance_id",
-        "\"Full same set activates set passive\"",
-        "equipment.set_passive_active(player",
-        "definitions)) var mixed",
-        "_definition(&\"m5_a_stig_c\")",
-        "&\"BASIC\");equipment.equip(player",
-        "mixed.instance_id) _add(rows",
-        "\"Mixed set has no set passive\"",
-        "not equipment.set_passive_active(player",
-        "definitions)) _add(rows",
-        "\"Unequip clears slot\"",
-        "equipment.unequip(player",
-        "mixed.instance_id) and player.stigmata_c_instance_id.is_empty()) var stranger",
-        "\"Instance ownership enforced\"",
-        "not equipment.equip(stranger",
-        "relic.instance_id).success)  func _test_gold(rows",
-        "definition",
-        "&\"BASIC\") _add(rows",
-        "\"New Equipment starts Gold 0\"",
-        "instance.gold_star_level",
-        "instance",
-        "definition) _add(rows",
-        "\"Gold one-level succeeds\"",
-        "one.success and instance.gold_star_level",
-        "\"Gold consumes integer authored cost\"",
-        "player.equipment_exp_material_count",
-        "\"Authored stat row selected\"",
-        "int(definition.stat_row(2).get(\"power\"",
-        "0))",
-        "\"Insufficient Gold material fails\"",
-        "not progression.upgrade_gold_one(player",
-        "instance",
-        "definition).success) player.equipment_exp_material_count",
-        "instance",
-        "definition) _add(rows",
-        "\"Upgrade Max uses complete affordable levels\"",
-        "levels",
-        "\"Upgrade Max preserves remainder without partial XP\"",
-        "player.equipment_exp_material_count",
-        "\"Gold max is 6\"",
-        "progression.upgrade_gold_one(player",
-        "instance",
-        "definition).code",
-        "definition",
-        "&\"BASIC\");var duplicate",
-        "definition",
-        "&\"BASIC\") target.gold_star_level",
-        "target",
-        "duplicate",
-        "definition) _add_detail(rows",
-        "\"Purple P1 requires Gold target\"",
-        "prerequisite_result.code",
-        "duplicate.instance_id)!",
-        "_purple_diagnostic(player",
-        "target",
-        "duplicate",
-        "definition",
-        "prerequisite_result)) target.gold_star_level",
-        "\"Purple target cannot consume itself\"",
-        "progression.upgrade_purple(player",
-        "target",
-        "target",
-        "definition).code",
-        "_definition(&\"m5_a_stig_a\")",
-        "&\"BASIC\") _add(rows",
-        "\"Purple rejects wrong duplicate\"",
-        "progression.upgrade_purple(player",
-        "target",
-        "wrong",
-        "definition).code",
-        "target",
-        "duplicate",
-        "definition) var p1_detail",
-        "target",
-        "duplicate",
-        "definition",
-        "p1) _add_detail(rows",
-        "\"Purple valid duplicate succeeds\"",
-        "p1.success and target.purple_star_level",
-        "p1_detail) _add_detail(rows",
-        "\"Purple consumes duplicate instance\"",
-        "player.equipment_collection.size()",
-        "duplicate.instance_id)",
-        "p1_detail) _add_detail(rows",
-        "\"Purple consumes EXP\"",
-        "player.equipment_exp_material_count",
-        "definition)",
-        "p1_detail) _add_detail(rows",
-        "\"P1 stat milestone\"",
-        "p1.code",
-        "p1_detail) target.gold_star_level",
-        "\"P2 skill milestone\"",
-        "_purple_step_code(player",
-        "target",
-        "definition)",
-        "\"P3 stat milestone\"",
-        "_purple_step_code(player",
-        "target",
-        "definition)",
-        "\"P4 skill milestone\"",
-        "_purple_step_code(player",
-        "target",
-        "definition)",
-        "\"P5 stat milestone\"",
-        "_purple_step_code(player",
-        "target",
-        "definition)",
-        "\"P6 skill milestone\"",
-        "_purple_step_code(player",
-        "target",
-        "definition)",
-        "\"Purple costs floor half Gold\"",
-        "progression.purple_cost(1",
-        "definition)",
-        "definition)",
-        "\"P5 to P6 cost floors 1.5 times\"",
-        "progression.purple_cost(6",
-        "definition)",
-        "\"Purple max 6\"",
-        "target.purple_star_level",
-        "target",
-        "target",
-        "definition).code",
-        "\"Purple leaves Gold unchanged\"",
-        "target.gold_star_level"
+        "rows"
       ],
       "start_line": 42
     },
     {
       "script_path": "tests/unit/gd2/Gd2M5TestSuite.gd",
-      "name": "_purple_step_code",
+      "name": "_test_collection_loadout",
       "is_static": false,
       "return_type": "void",
-      "param_count": 43,
+      "param_count": 1,
+      "params": [
+        "rows"
+      ],
+      "start_line": 66
+    },
+    {
+      "script_path": "tests/unit/gd2/Gd2M5TestSuite.gd",
+      "name": "_test_gold",
+      "is_static": false,
+      "return_type": "void",
+      "param_count": 1,
+      "params": [
+        "rows"
+      ],
+      "start_line": 82
+    },
+    {
+      "script_path": "tests/unit/gd2/Gd2M5TestSuite.gd",
+      "name": "_test_purple",
+      "is_static": false,
+      "return_type": "void",
+      "param_count": 1,
+      "params": [
+        "rows"
+      ],
+      "start_line": 98
+    },
+    {
+      "script_path": "tests/unit/gd2/Gd2M5TestSuite.gd",
+      "name": "_test_equipment_upgrade_specification",
+      "is_static": false,
+      "return_type": "void",
+      "param_count": 1,
+      "params": [
+        "rows"
+      ],
+      "start_line": 125
+    },
+    {
+      "script_path": "tests/unit/gd2/Gd2M5TestSuite.gd",
+      "name": "_purple_step_code",
+      "is_static": false,
+      "return_type": "StringName",
+      "param_count": 3,
       "params": [
         "player",
         "target",
-        "definition",
-        "definition",
-        "&\"BASIC\");return progression.upgrade_purple(player",
-        "target",
-        "duplicate",
-        "definition).code func _purple_diagnostic(player",
-        "target",
-        "duplicate",
-        "definition",
-        "result",
-        "definition) return \"Gold",
-        "target.purple_star_level",
-        "target_level",
-        "duplicate.instance_id",
-        "player.equipment_exp_material_count",
-        "required",
-        "result.code]  func _test_basic(rows",
-        "p",
-        "definitions",
-        "SequenceGachaRollSource.new([0])) _add(rows",
-        "\"Basic costs one ticket\"",
-        "b.success and p.gacha_ticket_count",
-        "\"Basic B grants EXP not Equipment\"",
-        "b.result_category",
-        "\"Basic roll grants exchange material\"",
-        "b.exchange_material_delta",
-        "p",
-        "definitions",
-        "SequenceGachaRollSource.new([70",
-        "0])) _add(rows",
-        "\"Basic A grants A Equipment\"",
-        "a.result_category",
-        "p",
-        "definitions",
-        "SequenceGachaRollSource.new([95",
-        "0])) _add(rows",
-        "\"Basic S grants S Equipment\"",
-        "s.result_category",
-        "pity_player",
-        "definitions",
-        "SequenceGachaRollSource.new([0])"
+        "definition"
       ],
       "start_line": 137
+    },
+    {
+      "script_path": "tests/unit/gd2/Gd2M5TestSuite.gd",
+      "name": "_purple_diagnostic",
+      "is_static": false,
+      "return_type": "String",
+      "param_count": 5,
+      "params": [
+        "player",
+        "target",
+        "duplicate",
+        "definition",
+        "result"
+      ],
+      "start_line": 139
+    },
+    {
+      "script_path": "tests/unit/gd2/Gd2M5TestSuite.gd",
+      "name": "_test_basic",
+      "is_static": false,
+      "return_type": "void",
+      "param_count": 1,
+      "params": [
+        "rows"
+      ],
+      "start_line": 144
     },
     {
       "script_path": "tests/unit/gd2/Gd2M5TestSuite.gd",
       "name": "_test_rate_up",
       "is_static": false,
       "return_type": "void",
-      "param_count": 174,
+      "param_count": 1,
       "params": [
-        "rows",
-        "&\"m5_s_stig_a\"",
-        "&\"m5_s_stig_b\"",
-        "&\"m5_s_stig_c\"] var b",
-        "player",
-        "definitions",
-        "featured",
-        "config",
-        "SequenceGachaRollSource.new([0])) _add(rows",
-        "\"Rate Up B routing\"",
-        "b.result_category",
-        "player",
-        "definitions",
-        "featured",
-        "config",
-        "SequenceGachaRollSource.new([70",
-        "0])) _add(rows",
-        "\"Rate Up A routing\"",
-        "a.result_category",
-        "player",
-        "definitions",
-        "featured",
-        "config",
-        "SequenceGachaRollSource.new([95",
-        "0])) _add(rows",
-        "\"Rate Up featured Relic 14 split\"",
-        "relic.equipment_definition_id",
-        "player",
-        "definitions",
-        "featured",
-        "config",
-        "SequenceGachaRollSource.new([95",
-        "20])) _add(rows",
-        "\"Rate Up featured A 22 split\"",
-        "stig_a.equipment_definition_id",
-        "player",
-        "definitions",
-        "featured",
-        "config",
-        "SequenceGachaRollSource.new([95",
-        "40])) _add(rows",
-        "\"Rate Up featured B 22 split\"",
-        "stig_b.equipment_definition_id",
-        "player",
-        "definitions",
-        "featured",
-        "config",
-        "SequenceGachaRollSource.new([95",
-        "70])) _add(rows",
-        "\"Rate Up featured C 22 split\"",
-        "stig_c.equipment_definition_id",
-        "player",
-        "definitions",
-        "featured",
-        "config",
-        "SequenceGachaRollSource.new([95",
-        "90])) _add(rows",
-        "\"Rate Up off-featured S 20 split\"",
-        "other.equipment_definition_id",
-        "\"Rate Up pity independent from Basic\"",
-        "player.gacha_state.rate_up_consecutive_without_a_plus",
-        "\"Rate Up exchange grant remains config\"",
-        "not config.rate_up_grants_exchange_material and b.exchange_material_delta",
-        "perfect_entries) _add(rows",
-        "\"Perfect initial total is 25\"",
-        "_sum_hits(session)",
-        "\"Perfect core structure is 1 plus 3 plus 1\"",
-        "int(session.perfect_remaining_hits.get(\"core_ss_relic\"",
-        "0))",
-        "0))",
-        "0))",
-        "player",
-        "perfect_entries",
-        "SequenceGachaRollSource.new([10])) _add(rows",
-        "\"Perfect costs two tickets\"",
-        "regular.success and player.gacha_ticket_count",
-        "\"Perfect hit decrements remaining\"",
-        "_sum_hits(session)",
-        "\"Perfect weighted draw selects configured weight\"",
-        "regular.perfect_entry_id",
-        "\"Perfect amount means amount per hit\"",
-        "regular.resource_amount",
-        "perfect_entries) var choice",
-        "choice_player",
-        "perfect_entries",
-        "SequenceGachaRollSource.new([1])) _add(rows",
-        "\"SS Stigmata chest creates pending choice\"",
-        "choice.success and choice_session.pending_choice.kind",
-        "\"Each SS chest allows A B or C\"",
-        "choice_session.pending_choice.eligible_definition_ids",
-        "&\"m5_ss_stig_b\"",
-        "&\"m5_ss_stig_c\"]) var selected",
-        "choice_player",
-        "&\"m5_ss_stig_b\"",
-        "definitions) _add(rows",
-        "\"SS chest grants player-selected B\"",
-        "selected!",
-        "\"SS acquisition unlocks personal shop\"",
-        "choice_player.gacha_state.ss_unlocked_equipment_ids.has(&\"m5_ss_stig_b\")) choice_session.test_ss_shop_currency_by_player[String(choice_player.player_id)]",
-        "\"SS shop starts at configurable-currency price 30\"",
-        "gacha.ss_shop_price(choice_player",
-        "ss_def.equipment_definition_id)",
-        "choice_player",
-        "ss_def) _add(rows",
-        "\"SS shop purchase grants duplicate instance\"",
-        "purchase!",
-        "\"SS shop same item escalates by 6\"",
-        "gacha.ss_shop_price(choice_player",
-        "ss_def.equipment_definition_id)",
-        "\"Perfect has no pity interaction\"",
-        "choice_player.gacha_state.consecutive_without_a_plus",
-        "\"SS is not Character-element gated\"",
-        "purchase!",
-        "\"Partial Loot confirmation round-trip\"",
-        "serializer.round_trip(session)) session.phase",
-        "_definition(&\"m5_s_relic_featured\")",
-        "&\"RATE_UP\");equipment.equip(player",
-        "instance.instance_id) _add(rows",
-        "\"Management collection/loadout round-trip\"",
-        "serializer.round_trip(session)) instance.gold_star_level",
-        "_definition(&\"m5_s_relic_featured\")",
-        "&\"RATE_UP\");var purple_result",
-        "instance",
-        "duplicate",
-        "_definition(&\"m5_s_relic_featured\")",
-        "session);var progression_diagnostic",
-        "\"Gold Purple progression round-trip\"",
-        "purple_result.success and instance.purple_star_level",
-        "duplicate.instance_id)",
-        "false))",
-        "_round_trip_detail(progression_diagnostic)) session.pending_choice.kind",
-        "\"banner_type\"",
-        "\"player_id\"",
-        "\"ticket_cost\"",
-        "\"perfect_entry_id\"",
-        "\"Perfect pending choice round-trip\"",
-        "bool(choice_diagnostic.get(\"matches\"",
-        "false))",
-        "_round_trip_detail(choice_diagnostic)) session.pending_choice",
-        "\"Management ready state data round-trip\"",
-        "bool(ready_diagnostic.get(\"matches\"",
-        "false))",
-        "_round_trip_detail(ready_diagnostic))  func _test_ss_shop_guards(rows",
-        "\"SS shop null definition does not crash\"",
-        "gacha.purchase_ss(session",
-        "player",
-        "null)",
-        "player",
-        "null) _add(rows",
-        "\"SS shop no unlocked Equipment structured reject\"",
-        "StringName(String(no_unlock.get(\"code\"",
-        "&\"\")))",
-        "player",
-        "ss_definition) _add(rows",
-        "\"SS shop locked Equipment structured reject\"",
-        "StringName(String(locked.get(\"code\"",
-        "&\"\")))",
-        "player",
-        "ss_definition) _add(rows",
-        "\"SS shop insufficient currency structured reject\"",
-        "StringName(String(insufficient.get(\"code\"",
-        "&\"\")))",
-        "player",
-        "ss_definition) _add(rows",
-        "\"SS shop valid unlocked Equipment purchase succeeds\"",
-        "bool(first.get(\"success\"",
-        "false))) var second",
-        "player",
-        "ss_definition) var first_instance",
-        "\"SS shop duplicate purchases preserve unique instance IDs\"",
-        "first_instance!",
-        "[]);var mismatches",
-        "false)) else \"Mismatch",
-        "\".join(mismatches"
+        "rows"
       ],
       "start_line": 167
+    },
+    {
+      "script_path": "tests/unit/gd2/Gd2M5TestSuite.gd",
+      "name": "_test_perfect",
+      "is_static": false,
+      "return_type": "void",
+      "param_count": 1,
+      "params": [
+        "rows"
+      ],
+      "start_line": 187
+    },
+    {
+      "script_path": "tests/unit/gd2/Gd2M5TestSuite.gd",
+      "name": "_test_serialization",
+      "is_static": false,
+      "return_type": "void",
+      "param_count": 1,
+      "params": [
+        "rows"
+      ],
+      "start_line": 211
+    },
+    {
+      "script_path": "tests/unit/gd2/Gd2M5TestSuite.gd",
+      "name": "_test_ss_shop_guards",
+      "is_static": false,
+      "return_type": "void",
+      "param_count": 1,
+      "params": [
+        "rows"
+      ],
+      "start_line": 225
+    },
+    {
+      "script_path": "tests/unit/gd2/Gd2M5TestSuite.gd",
+      "name": "_round_trip_detail",
+      "is_static": false,
+      "return_type": "String",
+      "param_count": 1,
+      "params": [
+        "diagnostic"
+      ],
+      "start_line": 246
     },
     {
       "script_path": "tests/unit/gd2/Gd2M6TestSuite.gd",
@@ -48563,7 +48784,7 @@
       "signal": "finished",
       "from_node": "_tween",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 229
     },
     {
@@ -48610,6 +48831,24 @@
       "to_node": "callable",
       "method": "_on_reveal_history_pressed",
       "source_line": 82
+    },
+    {
+      "script_path": "scripts/presentation/case_gameplay/SuspectCardController.gd",
+      "kind": "dynamic_code",
+      "signal": "mouse_entered",
+      "from_node": "self",
+      "to_node": "callable",
+      "method": "_on_mouse_entered",
+      "source_line": 84
+    },
+    {
+      "script_path": "scripts/presentation/case_gameplay/SuspectCardController.gd",
+      "kind": "dynamic_code",
+      "signal": "mouse_exited",
+      "from_node": "self",
+      "to_node": "callable",
+      "method": "_on_mouse_exited",
+      "source_line": 86
     },
     {
       "script_path": "scripts/presentation/case_gameplay/VSCaseMainController.gd",
@@ -48743,7 +48982,7 @@
       "signal": "pressed",
       "from_node": "button",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 1471
     },
     {
@@ -48923,7 +49162,7 @@
       "signal": "gui_input",
       "from_node": "bg_overlay",
       "to_node": "callable",
-      "method": "func(ev: InputEvent",
+      "method": "<lambda>",
       "source_line": 90
     },
     {
@@ -48941,7 +49180,7 @@
       "signal": "pressed",
       "from_node": "r_reset_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 197
     },
     {
@@ -48950,7 +49189,7 @@
       "signal": "pressed",
       "from_node": "r_deselect_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 219
     },
     {
@@ -48959,7 +49198,7 @@
       "signal": "pressed",
       "from_node": "d_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 260
     },
     {
@@ -48968,7 +49207,7 @@
       "signal": "pressed",
       "from_node": "c_reset_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 305
     },
     {
@@ -48977,7 +49216,7 @@
       "signal": "pressed",
       "from_node": "c_deselect_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 327
     },
     {
@@ -48986,7 +49225,7 @@
       "signal": "pressed",
       "from_node": "c_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 368
     },
     {
@@ -48995,7 +49234,7 @@
       "signal": "pressed",
       "from_node": "s_reset_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 413
     },
     {
@@ -49004,7 +49243,7 @@
       "signal": "pressed",
       "from_node": "s_deselect_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 435
     },
     {
@@ -49013,7 +49252,7 @@
       "signal": "pressed",
       "from_node": "sh_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 476
     },
     {
@@ -49022,7 +49261,7 @@
       "signal": "mouse_entered",
       "from_node": "card",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 706
     },
     {
@@ -49031,7 +49270,7 @@
       "signal": "mouse_exited",
       "from_node": "card",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 709
     },
     {
@@ -49040,7 +49279,7 @@
       "signal": "draw",
       "from_node": "ctrl",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 864
     },
     {
@@ -49049,7 +49288,7 @@
       "signal": "pressed",
       "from_node": "enc_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 296
     },
     {
@@ -49076,7 +49315,7 @@
       "signal": "mouse_exited",
       "from_node": "_grid_draw_control",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 325
     },
     {
@@ -49094,7 +49333,7 @@
       "signal": "text_submitted",
       "from_node": "_bid_input",
       "to_node": "callable",
-      "method": "func(_t: String",
+      "method": "<lambda>",
       "source_line": 381
     },
     {
@@ -49148,7 +49387,7 @@
       "signal": "pressed",
       "from_node": "_solo_buy_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 463
     },
     {
@@ -49157,7 +49396,7 @@
       "signal": "pressed",
       "from_node": "_solo_pass_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 470
     },
     {
@@ -49184,7 +49423,7 @@
       "signal": "pressed",
       "from_node": "enc_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 760
     },
     {
@@ -49220,7 +49459,7 @@
       "signal": "mouse_exited",
       "from_node": "_settlement_grid_draw_control",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 827
     },
     {
@@ -49229,7 +49468,7 @@
       "signal": "timeout",
       "from_node": "timer",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 1813
     },
     {
@@ -49238,7 +49477,7 @@
       "signal": "gui_input",
       "from_node": "backdrop",
       "to_node": "callable",
-      "method": "func(event: InputEvent",
+      "method": "<lambda>",
       "source_line": 2398
     },
     {
@@ -49247,7 +49486,7 @@
       "signal": "pressed",
       "from_node": "confirm_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 2643
     },
     {
@@ -49265,7 +49504,7 @@
       "signal": "pressed",
       "from_node": "btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 2715
     },
     {
@@ -49274,7 +49513,7 @@
       "signal": "gui_input",
       "from_node": "backdrop",
       "to_node": "callable",
-      "method": "func(event: InputEvent",
+      "method": "<lambda>",
       "source_line": 2730
     },
     {
@@ -49319,7 +49558,7 @@
       "signal": "auction_finished",
       "from_node": "screen",
       "to_node": "callable",
-      "method": "func(_data: Dictionary",
+      "method": "<lambda>",
       "source_line": 230
     },
     {
@@ -49328,7 +49567,7 @@
       "signal": "pressed",
       "from_node": "btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 310
     },
     {
@@ -49337,7 +49576,7 @@
       "signal": "pressed",
       "from_node": "btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 334
     },
     {
@@ -49400,7 +49639,7 @@
       "signal": "pressed",
       "from_node": "btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 590
     },
     {
@@ -49409,7 +49648,7 @@
       "signal": "gui_input",
       "from_node": "dim_rect",
       "to_node": "callable",
-      "method": "func(ev: InputEvent",
+      "method": "<lambda>",
       "source_line": 605
     },
     {
@@ -49418,7 +49657,7 @@
       "signal": "pressed",
       "from_node": "close_x",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 651
     },
     {
@@ -49427,7 +49666,7 @@
       "signal": "gui_input",
       "from_node": "dim_rect",
       "to_node": "callable",
-      "method": "func(ev: InputEvent",
+      "method": "<lambda>",
       "source_line": 681
     },
     {
@@ -49436,7 +49675,7 @@
       "signal": "pressed",
       "from_node": "close_pop",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 731
     },
     {
@@ -49445,7 +49684,7 @@
       "signal": "pressed",
       "from_node": "cancel_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 827
     },
     {
@@ -49454,7 +49693,7 @@
       "signal": "pressed",
       "from_node": "confirm_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 847
     },
     {
@@ -49463,7 +49702,7 @@
       "signal": "gui_input",
       "from_node": "dim_rect",
       "to_node": "callable",
-      "method": "func(ev: InputEvent",
+      "method": "<lambda>",
       "source_line": 896
     },
     {
@@ -49472,7 +49711,7 @@
       "signal": "pressed",
       "from_node": "close_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 984
     },
     {
@@ -49481,7 +49720,7 @@
       "signal": "pressed",
       "from_node": "btn_up_gold_1",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 1193
     },
     {
@@ -49490,7 +49729,7 @@
       "signal": "pressed",
       "from_node": "btn_up_gold_max",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 1216
     },
     {
@@ -49499,7 +49738,7 @@
       "signal": "pressed",
       "from_node": "btn_up_purple",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 1369
     },
     {
@@ -49508,7 +49747,7 @@
       "signal": "pressed",
       "from_node": "btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 1579
     },
     {
@@ -49517,7 +49756,7 @@
       "signal": "pressed",
       "from_node": "mag_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 1855
     },
     {
@@ -49526,7 +49765,7 @@
       "signal": "pressed",
       "from_node": "attr_pill",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 1872
     },
     {
@@ -49535,7 +49774,7 @@
       "signal": "pressed",
       "from_node": "skill_pill",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 1884
     },
     {
@@ -49553,7 +49792,7 @@
       "signal": "pressed",
       "from_node": "btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 2094
     },
     {
@@ -49562,7 +49801,7 @@
       "signal": "pressed",
       "from_node": "sort_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 2443
     },
     {
@@ -49571,7 +49810,7 @@
       "signal": "gui_input",
       "from_node": "card_panel",
       "to_node": "callable",
-      "method": "func(ev: InputEvent",
+      "method": "<lambda>",
       "source_line": 2578
     },
     {
@@ -49580,7 +49819,7 @@
       "signal": "pressed",
       "from_node": "switch_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 2794
     },
     {
@@ -49589,7 +49828,7 @@
       "signal": "pressed",
       "from_node": "upgrade_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 2816
     },
     {
@@ -49598,7 +49837,7 @@
       "signal": "pressed",
       "from_node": "equip_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 3051
     },
     {
@@ -49607,7 +49846,7 @@
       "signal": "pressed",
       "from_node": "up_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 3078
     },
     {
@@ -49616,7 +49855,7 @@
       "signal": "draw",
       "from_node": "canvas",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 3213
     },
     {
@@ -49625,7 +49864,7 @@
       "signal": "pressed",
       "from_node": "btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 3334
     },
     {
@@ -49634,7 +49873,7 @@
       "signal": "pressed",
       "from_node": "f_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 3446
     },
     {
@@ -49643,7 +49882,7 @@
       "signal": "pressed",
       "from_node": "sort_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 3482
     },
     {
@@ -49652,7 +49891,7 @@
       "signal": "pressed",
       "from_node": "card_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 3594
     },
     {
@@ -49670,7 +49909,7 @@
       "signal": "pressed",
       "from_node": "switch_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 3859
     },
     {
@@ -49679,7 +49918,7 @@
       "signal": "pressed",
       "from_node": "upgrade_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 3892
     },
     {
@@ -49688,7 +49927,7 @@
       "signal": "pressed",
       "from_node": "equip_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 4116
     },
     {
@@ -49697,7 +49936,7 @@
       "signal": "pressed",
       "from_node": "up_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 4138
     },
     {
@@ -50102,7 +50341,7 @@
       "signal": "mouse_entered",
       "from_node": "tile_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 1036
     },
     {
@@ -50111,7 +50350,7 @@
       "signal": "mouse_exited",
       "from_node": "tile_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 1043
     },
     {
@@ -50120,7 +50359,7 @@
       "signal": "pressed",
       "from_node": "tile_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 1050
     },
     {
@@ -50129,7 +50368,7 @@
       "signal": "finished",
       "from_node": "tween",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 1333
     },
     {
@@ -50183,7 +50422,7 @@
       "signal": "finished",
       "from_node": "fade_tween",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 1920
     },
     {
@@ -50201,8 +50440,17 @@
       "signal": "gui_input",
       "from_node": "card",
       "to_node": "callable",
-      "method": "func(event: InputEvent",
+      "method": "<lambda>",
       "source_line": 2811
+    },
+    {
+      "script_path": "scripts/presentation/player_facing/PlayerFacingStartController.gd",
+      "kind": "dynamic_code",
+      "signal": "timeout",
+      "from_node": "create_timer(0.32)",
+      "to_node": "callable",
+      "method": "<lambda>",
+      "source_line": 2894
     },
     {
       "script_path": "scripts/presentation/player_facing/PlayerFacingStartController.gd",
@@ -50228,7 +50476,7 @@
       "signal": "pressed",
       "from_node": "close_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 4442
     },
     {
@@ -50237,7 +50485,7 @@
       "signal": "pressed",
       "from_node": "prev_player_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 4457
     },
     {
@@ -50246,7 +50494,7 @@
       "signal": "pressed",
       "from_node": "next_player_btn",
       "to_node": "callable",
-      "method": "func(",
+      "method": "<lambda>",
       "source_line": 4470
     },
     {
@@ -50300,7 +50548,7 @@
       "signal": "suspect_hold_progress_started",
       "from_node": "card",
       "to_node": "callable",
-      "method": "func(_suspect_id: int, _duration_sec: float",
+      "method": "<lambda>",
       "source_line": 8865
     },
     {
@@ -50318,7 +50566,7 @@
       "signal": "suspect_action",
       "from_node": "board",
       "to_node": "callable",
-      "method": "func(suspect_id: int, button_index: int, is_hold: bool",
+      "method": "<lambda>",
       "source_line": 13186
     },
     {
@@ -50327,7 +50575,7 @@
       "signal": "suspect_action",
       "from_node": "board",
       "to_node": "callable",
-      "method": "func(suspect_id: int, button_index: int, is_hold: bool",
+      "method": "<lambda>",
       "source_line": 13272
     },
     {
@@ -50336,7 +50584,7 @@
       "signal": "pressed",
       "from_node": "debug_solver_button",
       "to_node": "callable",
-      "method": "_on_debug_solver_pressed",
+      "method": "_on_debug_solver_pressed)\"",
       "source_line": 130
     }
   ],

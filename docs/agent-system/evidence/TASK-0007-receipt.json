@@ -1,12 +1,11 @@
 {
   "task_id": "TASK-0007",
-  "verified_at": "2026-10-20T17:03:07.002284+00:00",
+  "verified_at": "2026-10-20T17:13:27.015618+00:00",
   "contract_sha256": "4d895af180b1edf8ce87c2c497041bc55af1d14ea104f97fcf25a13b2f736621",
-  "diff_sha256": "75a63ef4f5dbaecbd3e120dacf0abc8d02ca93168a2cb4f9769a2407811f69a7",
+  "diff_sha256": "5c832f34c072ef5053afa6963da4b51a371f51668a072e4c46322080202257a8",
   "modified_files": [
     "scripts/agent/gdscript_parser.py",
     "scripts/agent/godot_parser.py",
-    "scripts/agent/tscn_parser.py",
     "tests/test_godot_parser.py"
   ],
   "scope_passed": true,
@@ -14,15 +13,15 @@
     {
       "command": "python -m unittest discover -s tests -p \"test_*.py\"",
       "exit_code": 0,
-      "duration_ms": 492.07,
+      "duration_ms": 487.38,
       "stdout_excerpt": "",
-      "stderr_excerpt": "...........\n----------------------------------------------------------------------\nRan 11 tests in 0.115s\n\nOK"
+      "stderr_excerpt": "...........\n----------------------------------------------------------------------\nRan 11 tests in 0.116s\n\nOK"
     },
     {
       "command": "python scripts/agent/godot_parser.py --verify",
       "exit_code": 0,
-      "duration_ms": 329.33,
-      "stdout_excerpt": "{\n  \"success\": true,\n  \"tool\": \"godot_parser\",\n  \"issues\": [],\n  \"data\": {\n    \"total_scenes\": 21,\n    \"total_nodes\": 1207,\n    \"total_static_ui_connections\": 204,\n    \"total_dynamic_code_connections\": 198,\n    \"total_connections\": 402,\n    \"total_scripts\": 293,\n    \"total_methods\": 4046,\n    \"total_signals\": 19,\n    \"scene_graph_sha256\": \"a3dd0be080b8c631a0f6d1041213193110b8af619f0188604ef6393a0ec79e09\",\n    \"code_symbols_sha256\": \"1749e0ec45b9b13181e05deeb865cadc7950b14725f7e24d1b57852a0d84a09d\"\n  }\n}",
+      "duration_ms": 330.7,
+      "stdout_excerpt": "{\n  \"success\": true,\n  \"tool\": \"godot_parser\",\n  \"issues\": [],\n  \"data\": {\n    \"total_scenes\": 21,\n    \"total_nodes\": 1207,\n    \"total_static_ui_connections\": 204,\n    \"total_dynamic_code_connections\": 201,\n    \"total_connections\": 405,\n    \"total_scripts\": 293,\n    \"total_methods\": 4145,\n    \"total_signals\": 19,\n    \"scene_graph_sha256\": \"0a1506579fc58314ce7e6123e100542427948eaf2d07ed5eb1df41fc656799b9\",\n    \"code_symbols_sha256\": \"7c5b69b9a3017858cb0844ba1385c1be666c94a5f1f9d6de1416384337e11456\"\n  }\n}",
       "stderr_excerpt": ""
     }
   ],
