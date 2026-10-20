@@ -1,0 +1,23 @@
+{
+  "task_id": "TASK-0002",
+  "verified_at": "2026-10-20T14:47:25.010515+00:00",
+  "contract_sha256": "339446af20b56ed32b4253cd7ffc2935cacbe6b3fa41ad9c9af41118b1c5f503",
+  "diff_sha256": "893f2eb8446e139ed92aac37af79a73dec331d17ea1146aca5d7f631a5a1f1d0",
+  "modified_files": [
+    "GEMINI.md",
+    "Than_Tham_Nua_Voi_Godot/CODEX_PROJECT_MAP.md",
+    "docs/agent-system/reference-registry.json",
+    "gemini.md"
+  ],
+  "scope_passed": true,
+  "commands": [
+    {
+      "command": "python scripts/agent/validate_registry.py",
+      "exit_code": 0,
+      "duration_ms": 1359.32,
+      "stdout_excerpt": "{\n  \"success\": true,\n  \"tool\": \"validate_registry\",\n  \"issues\": [],\n  \"data\": {\n    \"project\": \"Than_Tham_Nua_Voi_Godot\",\n    \"total_entries\": 30,\n    \"hashes_updated\": 0,\n    \"context_health\": {\n      \"rule_files_checked\": 4,\n      \"always_on_chars\": 10897,\n      \"estimated_always_on_tokens\": 2724,\n      \"context_health_pct\": 13.62\n    }\n  }\n}",
+      "stderr_excerpt": ""
+    }
+  ],
+  "all_passed": true
+}

@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "project": "AI-AGENTS-Starter",
+  "project": "Than_Tham_Nua_Voi_Godot",
   "entries": [
     {
       "id": "ARCH-CORE-001",
@@ -347,6 +347,43 @@
         "ADR-ARCH-012"
       ],
       "description": "Top-level README documentation and quickstart guide"
+    },
+    {
+      "id": "RULE-ENGINE-001",
+      "kind": "rule",
+      "path": "GEMINI.md",
+      "authority": "approved",
+      "status": "current",
+      "sha256": "bf36dc303698b4aa2ed5d5be861235d7972a60365eea44736a6e29ceb811cf3d",
+      "depends_on": [
+        "ARCH-CORE-001"
+      ],
+      "description": "GEMINI.md — Gemini & Antigravity Knowledge Base & Engine Rules"
+    },
+    {
+      "id": "ARCH-MAP-001",
+      "kind": "architecture",
+      "path": "Than_Tham_Nua_Voi_Godot/CODEX_PROJECT_MAP.md",
+      "authority": "approved",
+      "status": "current",
+      "sha256": "a13143dd4cf5f98354cff9c22c044a15063b7eb0c2363a77bb100edc3f9c4791",
+      "depends_on": [
+        "ARCH-CORE-001",
+        "RULE-ENGINE-001"
+      ],
+      "description": "Navigation map and technical layout for Than_Tham_Nua_Voi_Godot"
+    },
+    {
+      "id": "STATE-MEM-001",
+      "kind": "runbook",
+      "path": "PROJECT_MEMORY_CURRENT.md",
+      "authority": "approved",
+      "status": "current",
+      "sha256": "6cd74813d85c1a954bbb0394f7e4afee207f455ee8f365d1d64808385e3b9092",
+      "depends_on": [
+        "ARCH-MAP-001"
+      ],
+      "description": "Current project continuity and implementation status memory"
     }
   ]
 }

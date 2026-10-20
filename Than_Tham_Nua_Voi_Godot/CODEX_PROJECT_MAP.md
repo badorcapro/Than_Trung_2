@@ -10,9 +10,8 @@ This file is separate from `PROJECT_MEMORY.md`. It should stay short, practical,
 - Engine: Godot **4.6.2 stable**
 - Renderer: GL Compatibility
 - Language: GDScript
-- Runtime repo root last used by user/Codex:
-  - `D:\Game Maker\Đổi acc\Than_Tham_Nua_Voi_Godot_Runtime_Clean\Than_Tham_Nua_Voi_Godot`
-  - If shell/path rendering drops Vietnamese accents, use the actual local path from the user's machine.
+- Runtime repo root (workspace-relative):
+  - Than_Tham_Nua_Voi_Godot/ (relative to workspace root .)
 - Do **not** run Godot headless / CLI runtime tests.
 - Do **not** investigate Godot headless crashes.
 - User validates runtime through Godot GUI.
