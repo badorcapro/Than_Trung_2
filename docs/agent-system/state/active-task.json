@@ -1,8 +1,8 @@
 {
   "active_task_id": "TASK-0006",
-  "status": "verified",
-  "current_checkpoint": "CP-VERIFIED",
+  "status": "approved",
+  "current_checkpoint": "CP-APPROVED",
   "contract_path": "docs/agent-system/tasks/TASK-0006.md",
-  "contract_sha256": "de8bf99d4b8535eecdbd25b6f52c8cf410b641d4fe862024d61aee1a0202a1f0",
-  "updated_at": "2026-10-20T16:29:00.958000+00:00"
+  "contract_sha256": "ba0349daf96925b37f3dc7b786649a663d4f532e1490570be15781b781aa4e0a",
+  "updated_at": "2026-10-20T16:38:49.625605+00:00"
 }
