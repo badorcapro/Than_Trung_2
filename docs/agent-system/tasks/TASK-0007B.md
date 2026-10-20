@@ -3,7 +3,7 @@ id: TASK-0007B
 title: Fix Audit Defects (GEMINI.md, Dupery Classification) and Enforce Subagent Semantic
   Peer-Audit Gate
 domain: software
-status: verified
+status: approved
 phase: P1
 touches_gatekeeper: true
 goal: Fix the 2 residual defects discovered during the 6-task adversarial audit (broken
@@ -63,7 +63,7 @@ stop_conditions:
 - Any modified script in scripts/agent/ exceeds 300 LOC warning threshold.
 - Verification command fails after 1 fix attempt.
 line_budget_exceptions: []
-current_checkpoint: CP-VERIFIED
+current_checkpoint: CP-APPROVED
 evidence_receipt: docs/agent-system/evidence/TASK-0007B-receipt.json
 ---
 
