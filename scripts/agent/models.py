@@ -7,6 +7,7 @@ ActiveTaskPointer, and Tamper-Evident EvidenceReceipt.
 from __future__ import annotations
 
 import hashlib
+import json
 import re
 from enum import Enum
 from pathlib import Path
@@ -251,3 +252,22 @@ def compute_file_sha256(path: Path) -> str:
     raw = path.read_bytes()
     normalized = raw.replace(b"\r\n", b"\n")
     return hashlib.sha256(normalized).hexdigest()
+
+
+def compute_raw_sha256(path: Path) -> str:
+    """Compute exact byte-for-byte SHA-256 digest (sha256_raw_bytes) of a file on disk (DEC-15.1)."""
+    hasher = hashlib.sha256()
+    with open(path, "rb") as handle:
+        while chunk := handle.read(256 * 1024):
+            hasher.update(chunk)
+    return hasher.hexdigest()
+
+
+def write_canonical_json(path: Path, payload: Any) -> str:
+    """Write Layer 1 canonical 2-space indented UTF-8 JSON with LF line endings and return sha256_raw_bytes (DEC-15.1)."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    serialized = json.dumps(payload, indent=2, ensure_ascii=False) + "\n"
+    with open(path, "w", encoding="utf-8", newline="\n") as handle:
+        handle.write(serialized)
+    return compute_raw_sha256(path)
+

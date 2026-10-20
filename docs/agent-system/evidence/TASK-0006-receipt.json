@@ -1,0 +1,37 @@
+{
+  "task_id": "TASK-0006",
+  "verified_at": "2026-10-20T16:27:30.705355+00:00",
+  "contract_sha256": "de8bf99d4b8535eecdbd25b6f52c8cf410b641d4fe862024d61aee1a0202a1f0",
+  "diff_sha256": "c3830183c2d0c40b8b38d9090533369f72beb9d44187356a5734180ebf8d14f4",
+  "modified_files": [
+    "scripts/agent/godot_indexer.py",
+    "scripts/agent/models.py",
+    "scripts/agent/toon_projector.py",
+    "tests/test_toon_projector.py"
+  ],
+  "scope_passed": true,
+  "commands": [
+    {
+      "command": "python -m unittest discover -s tests -p \"test_*.py\"",
+      "exit_code": 0,
+      "duration_ms": 504.14,
+      "stdout_excerpt": "",
+      "stderr_excerpt": ".......\n----------------------------------------------------------------------\nRan 7 tests in 0.089s\n\nOK"
+    },
+    {
+      "command": "python scripts/agent/godot_indexer.py --verify",
+      "exit_code": 0,
+      "duration_ms": 323.73,
+      "stdout_excerpt": "{\n  \"success\": true,\n  \"tool\": \"godot_indexer\",\n  \"issues\": [],\n  \"data\": {\n    \"total_files_indexed\": 1735,\n    \"gdscript_files\": 293,\n    \"total_gdscript_loc\": 81442,\n    \"god_files_count\": 11,\n    \"sha256_raw_bytes\": \"36fc9d4badf957b29d22782b092fa324734db45e79dbff0699c611964f158890\"\n  }\n}",
+      "stderr_excerpt": ""
+    },
+    {
+      "command": "python scripts/agent/toon_projector.py --verify",
+      "exit_code": 0,
+      "duration_ms": 407.27,
+      "stdout_excerpt": "{\n  \"success\": true,\n  \"tool\": \"toon_projector\",\n  \"issues\": [],\n  \"data\": {\n    \"source\": \"docs/agent-system/evidence/godot/project_index.json\",\n    \"sha256_raw_bytes\": \"36fc9d4badf957b29d22782b092fa324734db45e79dbff0699c611964f158890\",\n    \"full_document_benchmark\": {\n      \"json_pretty_tokens\": 117228,\n      \"json_compact_tokens\": 117228,\n      \"toon_tokens\": 41669,\n      \"savings_vs_pretty_pct\": 64.45,\n      \"savings_vs_compact_pct\": 64.45\n    },\n    \"god_files_table_benchmark\": {\n      \"json_pretty_tokens\": 703,\n      \"toon_tokens\": 310,\n      \"savings_vs_pretty_pct\": 55.9\n    }\n  }\n}",
+      "stderr_excerpt": ""
+    }
+  ],
+  "all_passed": true
+}
