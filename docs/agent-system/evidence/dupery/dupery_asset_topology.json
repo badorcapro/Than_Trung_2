@@ -1,0 +1,594 @@
+{
+  "schema_version": "1.0",
+  "target_name": "Dupery",
+  "data_directory": "D:/Minh/Steam/steamapps/common/Dupery/Dupery_Data",
+  "scenes_count": 12,
+  "scenes": [
+    {
+      "build_index": 0,
+      "path": "Assets/Scenes/MainMenuScene.unity",
+      "name": "MainMenuScene"
+    },
+    {
+      "build_index": 1,
+      "path": "Assets/Scenes/GameScene.unity",
+      "name": "GameScene"
+    },
+    {
+      "build_index": 2,
+      "path": "Assets/Scenes/LevelTransitionScene.unity",
+      "name": "LevelTransitionScene"
+    },
+    {
+      "build_index": 3,
+      "path": "Assets/Scenes/LeadSelectionScene.unity",
+      "name": "LeadSelectionScene"
+    },
+    {
+      "build_index": 4,
+      "path": "Assets/Scenes/EventScene.unity",
+      "name": "EventScene"
+    },
+    {
+      "build_index": 5,
+      "path": "Assets/Scenes/StasisScene.unity",
+      "name": "StasisScene"
+    },
+    {
+      "build_index": 6,
+      "path": "Assets/Scenes/LineupScene.unity",
+      "name": "LineupScene"
+    },
+    {
+      "build_index": 7,
+      "path": "Assets/Scenes/SummaryScene.unity",
+      "name": "SummaryScene"
+    },
+    {
+      "build_index": 8,
+      "path": "Assets/Scenes/IntroCutscene.unity",
+      "name": "IntroCutscene"
+    },
+    {
+      "build_index": 9,
+      "path": "Assets/Scenes/CreditsScene.unity",
+      "name": "CreditsScene"
+    },
+    {
+      "build_index": 10,
+      "path": "Assets/Scenes/LevelEditorScene.unity",
+      "name": "LevelEditorScene"
+    },
+    {
+      "build_index": 11,
+      "path": "Assets/Scenes/CaseSelectionScene.unity",
+      "name": "CaseSelectionScene"
+    }
+  ],
+  "named_scriptable_objects_count": 16,
+  "named_scriptable_objects": [
+    "CaseFile",
+    "CasinoIcons",
+    "Default Style Sheet",
+    "EmojiOne",
+    "FMODStudioSettings",
+    "FMODStudioSettingsPlatform",
+    "GameIcons",
+    "LiberationSans SDF",
+    "LiberationSans SDF - Fallback",
+    "NeighbourIcons",
+    "NeighbourIcons 1",
+    "NotoSansCJK SDF",
+    "NotoSerifThai-VariableFont_wdth,wght SDF",
+    "Quirks",
+    "TMP Settings",
+    "inputs"
+  ],
+  "total_monoscripts_count": 2958,
+  "sample_monoscripts": [
+    {
+      "full_name": "Unity.Burst.Intrinsics.X86",
+      "class_name": "X86",
+      "namespace": "Unity.Burst.Intrinsics",
+      "assembly": "Unity.Burst",
+      "source_asset": "globalgamemanagers.assets"
+    },
+    {
+      "full_name": "UnityEngine.Rendering.UI.DebugUIHandlerIndirectToggle",
+      "class_name": "DebugUIHandlerIndirectToggle",
+      "namespace": "UnityEngine.Rendering.UI",
+      "assembly": "Unity.RenderPipelines.Core.Runtime",
+      "source_asset": "globalgamemanagers.assets"
+    },
+    {
+      "full_name": "Sniper",
+      "class_name": "Sniper",
+      "namespace": "",
+      "assembly": "Assembly-CSharp",
+      "source_asset": "globalgamemanagers.assets"
+    },
+    {
+      "full_name": "UnityEngine.InputSystem.XR.Haptics.GetCurrentHapticStateCommand",
+      "class_name": "GetCurrentHapticStateCommand",
+      "namespace": "UnityEngine.InputSystem.XR.Haptics",
+      "assembly": "Unity.InputSystem",
+      "source_asset": "globalgamemanagers.assets"
+    },
+    {
+      "full_name": "Visual.StringManager",
+      "class_name": "StringManager",
+      "namespace": "Visual",
+      "assembly": "Assembly-CSharp",
+      "source_asset": "globalgamemanagers.assets"
+    },
+    {
+      "full_name": "UnityEngine.UI.LayoutRebuilder",
+      "class_name": "LayoutRebuilder",
+      "namespace": "UnityEngine.UI",
+      "assembly": "UnityEngine.UI",
+      "source_asset": "globalgamemanagers.assets"
+    },
+    {
+      "full_name": "Unity.VisualScripting.CloningContext",
+      "class_name": "CloningContext",
+      "namespace": "Unity.VisualScripting",
+      "assembly": "Unity.VisualScripting.Core",
+      "source_asset": "globalgamemanagers.assets"
+    },
+    {
+      "full_name": "Unity.VisualScripting.ValueInput",
+      "class_name": "ValueInput",
+      "namespace": "Unity.VisualScripting",
+      "assembly": "Unity.VisualScripting.Flow",
+      "source_asset": "globalgamemanagers.assets"
+    },
+    {
+      "full_name": "BobberVisuals",
+      "class_name": "BobberVisuals",
+      "namespace": "",
+      "assembly": "Assembly-CSharp",
+      "source_asset": "globalgamemanagers.assets"
+    },
+    {
+      "full_name": "DocksCaseSnapshot",
+      "class_name": "DocksCaseSnapshot",
+      "namespace": "",
+      "assembly": "Assembly-CSharp",
+      "source_asset": "globalgamemanagers.assets"
+    },
+    {
+      "full_name": "UnityEngine.Rendering.Universal.MotionVectorsPersistentData",
+      "class_name": "MotionVectorsPersistentData",
+      "namespace": "UnityEngine.Rendering.Universal",
+      "assembly": "Unity.RenderPipelines.Universal.Runtime",
+      "source_asset": "globalgamemanagers.assets"
+    },
+    {
+      "full_name": "FuelMerchant",
+      "class_name": "FuelMerchant",
+      "namespace": "",
+      "assembly": "Assembly-CSharp",
+      "source_asset": "globalgamemanagers.assets"
+    },
+    {
+      "full_name": "LeadSelection.LeadSelectionSyndicateClueManager",
+      "class_name": "LeadSelectionSyndicateClueManager",
+      "namespace": "LeadSelection",
+      "assembly": "Assembly-CSharp",
+      "source_asset": "globalgamemanagers.assets"
+    },
+    {
+      "full_name": "Unity.VisualScripting.IApplicationVariableUnit",
+      "class_name": "IApplicationVariableUnit",
+      "namespace": "Unity.VisualScripting",
+      "assembly": "Unity.VisualScripting.Flow",
+      "source_asset": "globalgamemanagers.assets"
+    },
+    {
+      "full_name": "FMODUnity.ParamRef",
+      "class_name": "ParamRef",
+      "namespace": "FMODUnity",
+      "assembly": "FMODUnity",
+      "source_asset": "globalgamemanagers.assets"
+    },
+    {
+      "full_name": "DocksRoleData",
+      "class_name": "DocksRoleData",
+      "namespace": "",
+      "assembly": "Assembly-CSharp",
+      "source_asset": "globalgamemanagers.assets"
+    },
+    {
+      "full_name": "Save.SaveDatav0_2_51",
+      "class_name": "SaveDatav0_2_51",
+      "namespace": "Save",
+      "assembly": "Assembly-CSharp",
+      "source_asset": "globalgamemanagers.assets"
+    },
+    {
+      "full_name": "Unity.VisualScripting.Vector3DotProduct",
+      "class_name": "Vector3DotProduct",
+      "namespace": "Unity.VisualScripting",
+      "assembly": "Unity.VisualScripting.Flow",
+      "source_asset": "globalgamemanagers.assets"
+    },
+    {
+      "full_name": "Save.RoleDataSaveV0_3_12",
+      "class_name": "RoleDataSaveV0_3_12",
+      "namespace": "Save",
+      "assembly": "Assembly-CSharp",
+      "source_asset": "globalgamemanagers.assets"
+    },
+    {
+      "full_name": "UnityEngine.InputSystem.Editor.InputActionAssetIconLoader",
+      "class_name": "InputActionAssetIconLoader",
+      "namespace": "UnityEngine.InputSystem.Editor",
+      "assembly": "Unity.InputSystem",
+      "source_asset": "globalgamemanagers.assets"
+    },
+    {
+      "full_name": "UnityEngine.InputSystem.UI.InputSystemUIInputModule",
+      "class_name": "InputSystemUIInputModule",
+      "namespace": "UnityEngine.InputSystem.UI",
+      "assembly": "Unity.InputSystem",
+      "source_asset": "globalgamemanagers.assets"
+    },
+    {
+      "full_name": "Quirks.PublicFavour",
+      "class_name": "PublicFavour",
+      "namespace": "Quirks",
+      "assembly": "Assembly-CSharp",
+      "source_asset": "globalgamemanagers.assets"
+    },
+    {
+      "full_name": "Unity.VisualScripting.UnityOnBecameVisibleMessageListener",
+      "class_name": "UnityOnBecameVisibleMessageListener",
+      "namespace": "Unity.VisualScripting",
+      "assembly": "Unity.VisualScripting.Core",
+      "source_asset": "globalgamemanagers.assets"
+    },
+    {
+      "full_name": "UnityEngine.Timeline.AnimationPreviewUtilities",
+      "class_name": "AnimationPreviewUtilities",
+      "namespace": "UnityEngine.Timeline",
+      "assembly": "Unity.Timeline",
+      "source_asset": "globalgamemanagers.assets"
+    },
+    {
+      "full_name": "Steamworks.SteamRemoteStorage",
+      "class_name": "SteamRemoteStorage",
+      "namespace": "Steamworks",
+      "assembly": "com.rlabrecque.steamworks.net",
+      "source_asset": "globalgamemanagers.assets"
+    },
+    {
+      "full_name": "Nodes.StoryRerouteNode",
+      "class_name": "StoryRerouteNode",
+      "namespace": "Nodes",
+      "assembly": "Assembly-CSharp",
+      "source_asset": "globalgamemanagers.assets"
+    },
+    {
+      "full_name": "UnityEngine.UI.PositionAsUV1",
+      "class_name": "PositionAsUV1",
+      "namespace": "UnityEngine.UI",
+      "assembly": "UnityEngine.UI",
+      "source_asset": "globalgamemanagers.assets"
+    },
+    {
+      "full_name": "UnityEngine.InputSystem.Editor.ActionMapsView",
+      "class_name": "ActionMapsView",
+      "namespace": "UnityEngine.InputSystem.Editor",
+      "assembly": "Unity.InputSystem",
+      "source_asset": "globalgamemanagers.assets"
+    },
+    {
+      "full_name": "Unity.VisualScripting.GetStateGraph",
+      "class_name": "GetStateGraph",
+      "namespace": "Unity.VisualScripting",
+      "assembly": "Unity.VisualScripting.State",
+      "source_asset": "globalgamemanagers.assets"
+    },
+    {
+      "full_name": "Leads.LeadEvent",
+      "class_name": "LeadEvent",
+      "namespace": "Leads",
+      "assembly": "Assembly-CSharp",
+      "source_asset": "globalgamemanagers.assets"
+    },
+    {
+      "full_name": "Visual.ConnectionString",
+      "class_name": "ConnectionString",
+      "namespace": "Visual",
+      "assembly": "Assembly-CSharp",
+      "source_asset": "globalgamemanagers.assets"
+    },
+    {
+      "full_name": "Unity.VisualScripting.GreaterThanHandler",
+      "class_name": "GreaterThanHandler",
+      "namespace": "Unity.VisualScripting",
+      "assembly": "Unity.VisualScripting.Core",
+      "source_asset": "globalgamemanagers.assets"
+    },
+    {
+      "full_name": "CaseHelper",
+      "class_name": "CaseHelper",
+      "namespace": "",
+      "assembly": "Assembly-CSharp",
+      "source_asset": "globalgamemanagers.assets"
+    },
+    {
+      "full_name": "Lineup.LineupSuspectInfobox",
+      "class_name": "LineupSuspectInfobox",
+      "namespace": "Lineup",
+      "assembly": "Assembly-CSharp",
+      "source_asset": "globalgamemanagers.assets"
+    },
+    {
+      "full_name": "UnityEngine.InputSystem.LowLevel.IInputEventTypeInfo",
+      "class_name": "IInputEventTypeInfo",
+      "namespace": "UnityEngine.InputSystem.LowLevel",
+      "assembly": "Unity.InputSystem",
+      "source_asset": "globalgamemanagers.assets"
+    },
+    {
+      "full_name": "Leads.ReplaceOneQuirkEvent",
+      "class_name": "ReplaceOneQuirkEvent",
+      "namespace": "Leads",
+      "assembly": "Assembly-CSharp",
+      "source_asset": "globalgamemanagers.assets"
+    },
+    {
+      "full_name": "Unity.VisualScripting.RemoveListItemAt",
+      "class_name": "RemoveListItemAt",
+      "namespace": "Unity.VisualScripting",
+      "assembly": "Unity.VisualScripting.Flow",
+      "source_asset": "globalgamemanagers.assets"
+    },
+    {
+      "full_name": "Visual.SuspectListVisualManager",
+      "class_name": "SuspectListVisualManager",
+      "namespace": "Visual",
+      "assembly": "Assembly-CSharp",
+      "source_asset": "globalgamemanagers.assets"
+    },
+    {
+      "full_name": "UnityEngine.Rendering.DebugUI",
+      "class_name": "DebugUI",
+      "namespace": "UnityEngine.Rendering",
+      "assembly": "Unity.RenderPipelines.Core.Runtime",
+      "source_asset": "globalgamemanagers.assets"
+    },
+    {
+      "full_name": "Unity.VisualScripting.FullSerializer.Internal.fsCyclicReferenceManager",
+      "class_name": "fsCyclicReferenceManager",
+      "namespace": "Unity.VisualScripting.FullSerializer.Internal",
+      "assembly": "Unity.VisualScripting.Core",
+      "source_asset": "globalgamemanagers.assets"
+    },
+    {
+      "full_name": "UnityEngine.Timeline.AnimationPlayableAsset",
+      "class_name": "AnimationPlayableAsset",
+      "namespace": "UnityEngine.Timeline",
+      "assembly": "Unity.Timeline",
+      "source_asset": "globalgamemanagers.assets"
+    },
+    {
+      "full_name": "Unity.VisualScripting.InspectorLabelAttribute",
+      "class_name": "InspectorLabelAttribute",
+      "namespace": "Unity.VisualScripting",
+      "assembly": "Unity.VisualScripting.Core",
+      "source_asset": "globalgamemanagers.assets"
+    },
+    {
+      "full_name": "Unity.VisualScripting.ScalarNormalize",
+      "class_name": "ScalarNormalize",
+      "namespace": "Unity.VisualScripting",
+      "assembly": "Unity.VisualScripting.Flow",
+      "source_asset": "globalgamemanagers.assets"
+    },
+    {
+      "full_name": "UnityEngine.Rendering.IShaderVariantSettings",
+      "class_name": "IShaderVariantSettings",
+      "namespace": "UnityEngine.Rendering",
+      "assembly": "Unity.RenderPipelines.Core.Runtime",
+      "source_asset": "globalgamemanagers.assets"
+    },
+    {
+      "full_name": "Audio.AudioHelper",
+      "class_name": "AudioHelper",
+      "namespace": "Audio",
+      "assembly": "Assembly-CSharp",
+      "source_asset": "globalgamemanagers.assets"
+    },
+    {
+      "full_name": "UnityEngine.Rendering.Universal.TemporalAA",
+      "class_name": "TemporalAA",
+      "namespace": "UnityEngine.Rendering.Universal",
+      "assembly": "Unity.RenderPipelines.Universal.Runtime",
+      "source_asset": "globalgamemanagers.assets"
+    },
+    {
+      "full_name": "UnityEngine.TestRunner.TestLaunchers.RemoteTestResultData",
+      "class_name": "RemoteTestResultData",
+      "namespace": "UnityEngine.TestRunner.TestLaunchers",
+      "assembly": "UnityEngine.TestRunner",
+      "source_asset": "globalgamemanagers.assets"
+    },
+    {
+      "full_name": "Save.CaseBuildDataSave",
+      "class_name": "CaseBuildDataSave",
+      "namespace": "Save",
+      "assembly": "Assembly-CSharp",
+      "source_asset": "globalgamemanagers.assets"
+    },
+    {
+      "full_name": "Visual.RevealLine",
+      "class_name": "RevealLine",
+      "namespace": "Visual",
+      "assembly": "Assembly-CSharp",
+      "source_asset": "globalgamemanagers.assets"
+    },
+    {
+      "full_name": "Kingpin",
+      "class_name": "Kingpin",
+      "namespace": "",
+      "assembly": "Assembly-CSharp",
+      "source_asset": "globalgamemanagers.assets"
+    }
+  ],
+  "sprites_count": 208,
+  "sample_sprites": [
+    {
+      "name": "inputs_135",
+      "width": 100,
+      "height": 92
+    },
+    {
+      "name": "inputs_53",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "NeighbourIcons 1_1",
+      "width": 34,
+      "height": 34
+    },
+    {
+      "name": "inputs_142",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "inputs_64",
+      "width": 84,
+      "height": 92
+    },
+    {
+      "name": "quirks_spritesheet_14",
+      "width": 203,
+      "height": 204
+    },
+    {
+      "name": "CasinoIconsWhite_4",
+      "width": 97,
+      "height": 96
+    },
+    {
+      "name": "inputs_46",
+      "width": 100,
+      "height": 84
+    },
+    {
+      "name": "inputs_81",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "inputs_100",
+      "width": 100,
+      "height": 68
+    },
+    {
+      "name": "quirks_spritesheet_8",
+      "width": 203,
+      "height": 204
+    },
+    {
+      "name": "inputs_35",
+      "width": 100,
+      "height": 74
+    },
+    {
+      "name": "CasinoIconsWhite_2",
+      "width": 487,
+      "height": 449
+    },
+    {
+      "name": "inputs_132",
+      "width": 100,
+      "height": 68
+    },
+    {
+      "name": "inputs_0",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "quirks_spritesheet_24",
+      "width": 203,
+      "height": 204
+    },
+    {
+      "name": "inputs_141",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "quirks_spritesheet_15",
+      "width": 203,
+      "height": 204
+    },
+    {
+      "name": "inputs_17",
+      "width": 100,
+      "height": 60
+    },
+    {
+      "name": "inputs_29",
+      "width": 96,
+      "height": 64
+    },
+    {
+      "name": "inputs_27",
+      "width": 96,
+      "height": 64
+    },
+    {
+      "name": "quirks_spritesheet_11",
+      "width": 200,
+      "height": 200
+    },
+    {
+      "name": "inputs_105",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "inputs_47",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "inputs_72",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "inputs_113",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "CasinoIconsWhite_1",
+      "width": 421,
+      "height": 489
+    },
+    {
+      "name": "quirks_spritesheet_29",
+      "width": 201,
+      "height": 200
+    },
+    {
+      "name": "inputs_11",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "inputs_15",
+      "width": 100,
+      "height": 100
+    }
+  ],
+  "previews_exported": 3
+}

@@ -1,0 +1,20 @@
+{
+  "task_id": "TASK-0004",
+  "verified_at": "2026-10-20T15:09:29.503770+00:00",
+  "contract_sha256": "b9c4bfba6392a10aca58fea99f0081ca35431da38055342b227a33167d1aeb41",
+  "diff_sha256": "0dfeec4185ca9e59e70ca633f8c8e79b3a198f475449fa9f2a56fd487d6032da",
+  "modified_files": [
+    "scripts/agent/dupery_asset_probe.py"
+  ],
+  "scope_passed": true,
+  "commands": [
+    {
+      "command": "python scripts/agent/dupery_asset_probe.py --verify",
+      "exit_code": 0,
+      "duration_ms": 1280.51,
+      "stdout_excerpt": "{\n  \"success\": true,\n  \"tool\": \"dupery_asset_probe\",\n  \"issues\": [],\n  \"data\": {\n    \"scenes_count\": 12,\n    \"scriptable_objects_count\": 16,\n    \"sprites_count\": 208,\n    \"previews_verified\": 3\n  }\n}",
+      "stderr_excerpt": ""
+    }
+  ],
+  "all_passed": true
+}
