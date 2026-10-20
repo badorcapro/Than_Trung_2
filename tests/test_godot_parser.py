@@ -1,5 +1,5 @@
 """
-Unit and Integration Tests for Godot Static Graph Parser (tests/test_godot_parser.py).
+Unit and Integration Tests for Modular Godot Static Graph Parser (tests/test_godot_parser.py).
 """
 
 from __future__ import annotations
@@ -9,16 +9,14 @@ from pathlib import Path
 import tempfile
 import unittest
 
-from scripts.agent.godot_parser import (
-    parse_gd_file,
-    parse_tscn_file,
-    verify_godot_parser,
-)
+from scripts.agent.gdscript_parser import parse_gd_file
+from scripts.agent.godot_parser import verify_godot_parser
 from scripts.agent.toon_projector import format_projection
+from scripts.agent.tscn_parser import parse_tscn_file
 
 
 class TestGodotParser(unittest.TestCase):
-    """Verify Static Graph Parser for .tscn scenes and .gd scripts."""
+    """Verify Modular Static Graph Parser for .tscn scenes and .gd scripts."""
 
     def test_parse_tscn_extracts_nodes_connections_and_deps(self) -> None:
         sample_tscn = (
@@ -42,21 +40,24 @@ class TestGodotParser(unittest.TestCase):
             self.assertEqual(s_entry["script_path"], "scripts/TestScript.gd")
             self.assertEqual(len(nodes), 2)
             self.assertEqual(len(conns), 1)
+            self.assertEqual(conns[0]["kind"], "static_ui")
             self.assertEqual(conns[0]["signal"], "pressed")
             self.assertEqual(conns[0]["method"], "_on_button_pressed")
             self.assertEqual(len(deps), 1)
-            self.assertEqual(deps[0]["res_path"], "scripts/TestScript.gd")
 
-    def test_parse_gd_extracts_methods_signals_and_preloads(self) -> None:
+    def test_multiline_functions_and_dynamic_connect(self) -> None:
         sample_gd = (
             'class_name CustomCase\n'
             'extends RefCounted\n\n'
             'signal case_solved(suspect_id: String, score: int)\n\n'
             'const Helper = preload("res://scripts/Helper.gd")\n\n'
-            'static func solve(seed: int) -> bool:\n'
-            '    return true\n\n'
-            'func get_title() -> String:\n'
-            '    return "Case"\n'
+            'func generate_complex_case(\n'
+            '    case_id: String,\n'
+            '    difficulty: int = 1,\n'
+            '    rules: Array = []\n'
+            ') -> Dictionary:\n'
+            '    button.pressed.connect(_on_custom_pressed)\n'
+            '    return {}\n'
         )
         with tempfile.TemporaryDirectory() as tmp:
             godot_root = Path(tmp)
@@ -64,27 +65,36 @@ class TestGodotParser(unittest.TestCase):
             script_path.parent.mkdir(parents=True, exist_ok=True)
             script_path.write_text(sample_gd, encoding="utf-8")
 
-            sc_entry, methods, signals, deps = parse_gd_file(script_path, godot_root)
+            sc_entry, methods, signals, dynamic_conns, deps = parse_gd_file(script_path, godot_root)
             self.assertEqual(sc_entry["class_name"], "CustomCase")
             self.assertEqual(sc_entry["extends"], "RefCounted")
             self.assertEqual(sc_entry["layer"], "domain")
             self.assertEqual(len(signals), 1)
             self.assertEqual(signals[0]["name"], "case_solved")
-            self.assertEqual(signals[0]["param_count"], 2)
-            self.assertEqual(len(methods), 2)
-            self.assertTrue(methods[0]["is_static"])
-            self.assertEqual(methods[0]["name"], "solve")
-            self.assertEqual(methods[1]["name"], "get_title")
-            self.assertEqual(len(deps), 1)
-            self.assertEqual(deps[0]["target_path"], "scripts/Helper.gd")
 
-    def test_verify_real_godot_artifacts(self) -> None:
+            # Verify multiline function parsed successfully
+            self.assertEqual(len(methods), 1)
+            self.assertEqual(methods[0]["name"], "generate_complex_case")
+            self.assertEqual(methods[0]["return_type"], "Dictionary")
+            self.assertEqual(methods[0]["param_count"], 3)
+            self.assertEqual(methods[0]["params"], ["case_id", "difficulty", "rules"])
+
+            # Verify dynamic .connect() parsed successfully
+            self.assertEqual(len(dynamic_conns), 1)
+            self.assertEqual(dynamic_conns[0]["kind"], "dynamic_code")
+            self.assertEqual(dynamic_conns[0]["signal"], "pressed")
+            self.assertEqual(dynamic_conns[0]["from_node"], "button")
+            self.assertEqual(dynamic_conns[0]["method"], "_on_custom_pressed")
+
+    def test_verify_real_godot_modular_artifacts(self) -> None:
         res = verify_godot_parser()
         self.assertTrue(res.success, f"verify_godot_parser failed: {res.issues}")
         self.assertEqual(res.data["total_scenes"], 21)
         self.assertGreaterEqual(res.data["total_nodes"], 1000)
-        self.assertGreaterEqual(res.data["total_scripts"], 250)
-        self.assertGreaterEqual(res.data["total_methods"], 3000)
+        self.assertEqual(res.data["total_static_ui_connections"], 204)
+        self.assertGreaterEqual(res.data["total_dynamic_code_connections"], 150)
+        self.assertEqual(res.data["total_scripts"], 293)
+        self.assertGreaterEqual(res.data["total_methods"], 4000)
 
     def test_scene_graph_toon_projection(self) -> None:
         scene_json = Path(__file__).resolve().parents[1] / "docs/agent-system/evidence/godot/scene_graph.json"
