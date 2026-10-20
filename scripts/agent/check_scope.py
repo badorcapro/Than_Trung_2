@@ -2,6 +2,7 @@
 Git Scope Guard (scripts/agent/check_scope.py).
 Compares working tree changes (git status --porcelain -uall) against TaskContract.in_scope
 and TaskContract.out_of_scope. Computes a deterministic diff_sha256 fingerprint.
+Supports Godot 4 engine bookkeeping exemptions (.godot/**, *.import) and .uid sidecars.
 """
 
 from __future__ import annotations
@@ -36,6 +37,10 @@ BOOKKEEPING_EXEMPT_PATTERNS = [
     ".agent_scratchpad.md",
     "docs/agent-system/state/active-task.json",
     "docs/agent-system/evidence/*",
+    ".godot/**",
+    "**/.godot/**",
+    "*.import",
+    "**/*.import",
 ]
 
 
@@ -45,6 +50,10 @@ def matches_pattern(rel_path: str, pattern: str) -> bool:
     norm_pat = pattern.strip().replace("\\", "/")
     if norm_path == norm_pat:
         return True
+    if norm_pat.startswith("**/"):
+        suffix_pat = norm_pat[3:]
+        if matches_pattern(norm_path, suffix_pat):
+            return True
     if norm_pat.endswith("/**"):
         prefix = norm_pat[:-3].rstrip("/") + "/"
         if norm_path.startswith(prefix):
@@ -58,6 +67,31 @@ def matches_pattern(rel_path: str, pattern: str) -> bool:
 def matches_any(rel_path: str, patterns: List[str]) -> bool:
     """Return True if rel_path matches at least one pattern in patterns."""
     return any(matches_pattern(rel_path, pat) for pat in patterns)
+
+
+def is_authorized_uid_sidecar(
+    rel_path: str,
+    in_scope: List[str],
+    out_of_scope: List[str],
+) -> bool:
+    """Return True if rel_path is a Godot 4.4+ .uid sidecar whose base file is in_scope and not out_of_scope."""
+    norm_path = rel_path.strip().replace("\\", "/")
+    if not norm_path.endswith(".uid") or len(norm_path) <= 4:
+        return False
+    base_path = norm_path[:-4]
+    if matches_any(base_path, out_of_scope):
+        return False
+    return matches_any(base_path, in_scope)
+
+
+def is_forbidden_by_out_of_scope(rel_path: str, out_of_scope: List[str]) -> bool:
+    """Return True if rel_path or its .uid base path is explicitly forbidden by out_of_scope."""
+    norm_path = rel_path.strip().replace("\\", "/")
+    if matches_any(norm_path, out_of_scope):
+        return True
+    if norm_path.endswith(".uid") and len(norm_path) > 4:
+        return matches_any(norm_path[:-4], out_of_scope)
+    return False
 
 
 def get_git_changed_files(workspace_root: Path) -> Tuple[Optional[List[str]], Optional[str]]:
@@ -157,7 +191,10 @@ def check_scope(
     out_of_scope_files: List[str] = []
 
     for rel_file in changed_files:
-        if matches_any(rel_file, contract.out_of_scope):
+        if matches_any(rel_file, exempt_patterns):
+            continue
+
+        if is_forbidden_by_out_of_scope(rel_file, contract.out_of_scope):
             out_of_scope_files.append(rel_file)
             issues.append(Issue(
                 code="ERR_SCOPE_FORBIDDEN",
@@ -170,11 +207,11 @@ def check_scope(
             ))
             continue
 
-        if matches_any(rel_file, exempt_patterns):
-            continue
-
         evaluated_files.append(rel_file)
-        if not matches_any(rel_file, contract.in_scope):
+        in_declared_scope = matches_any(rel_file, contract.in_scope) or is_authorized_uid_sidecar(
+            rel_file, contract.in_scope, contract.out_of_scope
+        )
+        if not in_declared_scope:
             out_of_scope_files.append(rel_file)
             issues.append(Issue(
                 code="ERR_SCOPE_VIOLATION",

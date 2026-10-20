@@ -1,0 +1,8 @@
+{
+  "active_task_id": "TASK-0001",
+  "status": "verified",
+  "current_checkpoint": "CP-VERIFIED",
+  "contract_path": "docs/agent-system/tasks/TASK-0001.md",
+  "contract_sha256": "4ff7d3325cf1776ddfa351d7e5fe0e405697cf3ce443ff9afcf87a01e7729819",
+  "updated_at": "2026-10-20T14:35:54.499301+00:00"
+}
