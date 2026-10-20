@@ -50,6 +50,7 @@ AI-AGENTS-Template/
 │   ├── stage_learning.py            # Controlled /learn staging gate and rule authoring CLI
 │   ├── check_line_budget.py         # Deterministic role-based line budget checker
 │   ├── check_diff_guard.py          # Post-hoc git diff guard (placeholders, net deletion, hunk size)
+│   ├── check_peer_audit.py          # Subagent Semantic Peer-Audit receipt & diff_sha256 gatekeeper (DEC-17)
 │   ├── configure_project.py         # Workspace customization and project-config initialization CLI
 │   ├── export_template.py           # Clean starter template packager and distribution exporter
 │   └── run_verify.py                # Executes verification_commands, hashes git diff, writes receipt, gates 'verified'
@@ -65,9 +66,10 @@ AI-AGENTS-Template/
    - `docs/agent-system/tasks/TASK-XXXX.md` is the **sole authoritative Task Contract**.
    - `docs/agent-system/state/active-task.json` is a **derived read-only pointer** generated exclusively by `scripts/agent/validate_task.py` and `scripts/agent/run_verify.py`.
    - `.agent_scratchpad.md` tracks **turn-level working steps** and references the active `TASK-XXXX` ID without duplicating contract schemas.
-2. **Anti-Self-Grading Verification Gate**:
-   - The AI Agent is strictly prohibited from manually editing files in `docs/agent-system/evidence/` or manually setting `status: verified` in `TASK-XXXX.md`.
-   - Only `scripts/agent/run_verify.py` may transition a task to `verified` after confirming: (a) all `references` are `approved` + `current`, (b) `check_scope.py` passes with $0$ out-of-scope files, (c) all `verification_commands` exit with code `0`, and (d) line budget, cohesion notes, and post-hoc diff guard pass without errors.
+2. **Anti-Self-Grading & Subagent Semantic Peer-Audit Gate**:
+   - The AI Agent is strictly prohibited from manually editing `TASK-XXXX-receipt.json` or manually setting `status: verified` in `TASK-XXXX.md`.
+   - Before running `run_verify.py`, an independent Subagent must audit the Primary Agent's thought/decision log, `transcript.jsonl`, `GEMINI.md`, rules, skills, and code semantics, writing `docs/agent-system/evidence/TASK-XXXX-peer-audit.json` (`verdict: "PASS"`).
+   - Only `scripts/agent/run_verify.py` may transition a task to `verified` after confirming: (a) all `references` are `approved` + `current`, (b) `check_scope.py` passes with $0$ out-of-scope files, (c) `check_peer_audit.py` confirms a valid `PASS` peer-audit receipt matching the live `diff_sha256`, (d) all `verification_commands` exit with code `0`, and (e) line budget, cohesion notes, and post-hoc diff guard pass without errors.
 3. **Reference Authority Gate**:
    - Only documents with `authority: "approved"` and `status: "current"` in `reference-registry.json` may be used by `ready`/`in_progress` tasks.
 

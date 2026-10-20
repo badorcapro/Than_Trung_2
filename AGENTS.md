@@ -20,9 +20,10 @@ Upon session start, context reset, or `{{ CHECKPOINT N }}` compaction:
 1. **Contract-First Execution**: No production or test code may be modified without an active `TASK-XXXX.md` contract in `ready` or `in_progress` status validated by `python scripts/agent/validate_task.py`.
 2. **Strict Scope Containment**: Only modify files matching `in_scope` in the active `TASK-XXXX.md`. Touching any file outside `in_scope` (or inside `out_of_scope`) is a critical violation blocked by `scripts/agent/check_scope.py`.
 3. **Reference Authority Gate**: Treat only `authority: "approved"` and `status: "current"` entries in `docs/agent-system/reference-registry.json` as truth. If a required reference is missing, `stale`, or `proposal`, transition the task to `blocked` and escalate to the user.
-4. **Zero Self-Grading (Fail-Closed Verification)**:
-   - Never manually write files into `docs/agent-system/evidence/` or manually set `status: verified` in `TASK-XXXX.md`.
-   - State transition to `verified` is performed exclusively by running `python scripts/agent/run_verify.py --task TASK-XXXX`.
+4. **Zero Self-Grading & Mandatory Subagent Peer-Audit (Fail-Closed Verification)**:
+   - Never manually write `TASK-XXXX-receipt.json` or manually set `status: verified` in `TASK-XXXX.md`.
+   - Before calling `run_verify.py`, spawn an independent Subagent (`verify-task` skill) with your Thought/Decision Log, `transcript.jsonl`, `GEMINI.md`, rules, and skills to write `docs/agent-system/evidence/TASK-XXXX-peer-audit.json` (`verdict: "PASS"`).
+   - State transition to `verified` is performed exclusively by running `python scripts/agent/run_verify.py --task TASK-XXXX` (which enforces `check_peer_audit.py`).
 5. **Failure Discipline**: Attempt a maximum of **1 fix** per error/test failure. If the fix fails, STOP immediately, report the raw traceback, and await user decision.
 6. **Code Hygiene**: Hard cap of **400 lines/file** (target $\le 300$ lines/file), strong typing, guard clauses, and zero truncated placeholder blocks.
 

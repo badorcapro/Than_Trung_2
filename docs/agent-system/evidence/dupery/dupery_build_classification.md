@@ -28,8 +28,8 @@
 ## 3. Bản Đồ Phân Bổ Nhị Phân & Mã Nguồn (Binary & Assembly Layout)
 
 1. **Điểm nhập thực thi (Executable Entry):**
-   * `Dupery.exe` (677,888 bytes, SHA256: `91866380633c713b519c9e830ee77b4d8d179612c3f8582ca332c8fe5f134bb4`)
-   * `UnityPlayer.dll` (24,710,592 bytes)
+   * `Dupery.exe` (650,240 bytes, SHA256: `c3431334a4a8a344da65b2a81527d9cdfaec68cfc75c9b4dc99070a6f1a30505`)
+   * `UnityPlayer.dll` (23,147,952 bytes)
 2. **Hội tụ Logic Trò chơi Chính (Primary Gameplay Assembly):**
    * `Dupery_Data/Managed/Assembly-CSharp.dll` (1,999,360 bytes, SHA256: `14f9b85b27de66535b5baa13e845fd4df0983cee014f24af2f607cac0e3c037b`).
    * Chứa toàn bộ các module gameplay: `Lineup.*`, `CaseCreation.*`, `Loot.*`, `Cards.*`, `Suspects.*`.
@@ -50,9 +50,9 @@
   * Thư mục `Dupery_Data/StreamingAssets/` gồm **6 tập tin `.bank`**:
     * `Master.bank` & `Master.strings.bank`
     * `Music.bank`
-    * `SFX.bank`
-    * `Ambience.bank`
-    * `UI.bank`
+    * `Sfx.bank`
+    * `Atmosphere.bank`
+    * `Intro.bank`
 
 ---
 
@@ -66,4 +66,4 @@
   * Hoạt cảnh & Hiệu ứng UI: `jiggleClipboard`, `moveShadow`, `gunMove`.
   * Phán xử & Kết tội: `onBlame`, `getConvictString`.
   * Địa phương hóa (Localisation): `englishTitle`, `englishCliboard`, `englishConvict`, `get_loc_clipboard_key`, `get_localisation_asset`.
-* **Biên nhận chi tiết:** Lưu trữ tại [`docs/agent-system/evidence/dupery/probes/probe1_lineup_controller.json`](file:///D:/Minh/For_myself/my_own_tool/Than_Trung_2/docs/agent-system/evidence/dupery/probes/probe1_lineup_controller.json).
+* **Biên nhận chi tiết:** Lưu trữ tại [`docs/agent-system/evidence/dupery/probes/probe1_lineup_controller.json`](probes/probe1_lineup_controller.json).

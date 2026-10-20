@@ -36,7 +36,7 @@ from scripts.agent.validate_task import parse_task_markdown, resolve_task_path
 BOOKKEEPING_EXEMPT_PATTERNS = [
     ".agent_scratchpad.md",
     "docs/agent-system/state/active-task.json",
-    "docs/agent-system/evidence/*",
+    "docs/agent-system/evidence/TASK-*.json",
     ".godot/**",
     "**/.godot/**",
     "*.import",

@@ -5,7 +5,7 @@
 > **Status**: `current`  
 > **Target Branch**: `YukiiMin-Guideline-for-project` (Nhánh `main` được bảo toàn nguyên trạng làm mốc đối chiếu `[V]`)
 
-Tài liệu này lưu trữ toàn bộ kiến thức tổng quan, kiến trúc, quy ước bất khả xâm phạm và chỉ mục tham chiếu nhanh tới [`Than_Tham_Nua_Voi_Godot/CODEX_PROJECT_MAP.md`](file:///Than_Tham_Nua_Voi_Godot/CODEX_PROJECT_MAP.md) dành cho Google Antigravity (Gemini Agent) và các nhà phát triển.
+Tài liệu này lưu trữ toàn bộ kiến thức tổng quan, kiến trúc, quy ước bất khả xâm phạm và chỉ mục tham chiếu nhanh tới [`Than_Tham_Nua_Voi_Godot/CODEX_PROJECT_MAP.md`](Than_Tham_Nua_Voi_Godot/CODEX_PROJECT_MAP.md) dành cho Google Antigravity (Gemini Agent) và các nhà phát triển.
 
 ---
 

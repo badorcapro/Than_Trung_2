@@ -28,6 +28,7 @@ from scripts.agent.check_line_budget import (
     is_budgeted_file,
     load_project_config,
 )
+from scripts.agent.check_peer_audit import check_peer_audit
 from scripts.agent.check_scope import check_scope
 from scripts.agent.models import (
     ActiveTaskPointer,
@@ -186,11 +187,11 @@ def run_verify(
 
     # 3b. Line budget, cohesion note and post-hoc diff guard (ADR-ARCH-010)
     issues.extend(_run_budget_gates(workspace_root, contract, body, modified_files))
-
+    # 3c. Subagent Semantic Peer-Audit Gate (DEC-17)
+    issues.extend(check_peer_audit(workspace_root, contract.id, diff_sha256, explicit_files).issues)
     # 4. Execute verification_commands deterministically
     cmd_receipts: List[CommandReceipt] = []
     all_cmds_passed = True
-
     for cmd in contract.verification_commands:
         t0 = time.perf_counter()
         try:

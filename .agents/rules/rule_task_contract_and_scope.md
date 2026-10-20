@@ -20,9 +20,10 @@ description: Task Execution Contract governance, in_scope file boundary enforcem
 3. **Strict Scope Containment (`in_scope` / `out_of_scope`)**:
    - Only files matching patterns in `in_scope` may be created or modified.
    - If discovering a dependency outside `in_scope`, do NOT edit it silently; run `python scripts/agent/check_impact.py --target <REF_ID>` and ask the user to approve expanding `in_scope`.
-4. **Anti-Self-Grading Invariant**:
-   - Never manually create/edit files inside `docs/agent-system/evidence/`.
+4. **Anti-Self-Grading & Mandatory Subagent Peer-Audit Invariant**:
+   - Never manually create/edit `docs/agent-system/evidence/TASK-XXXX-receipt.json` or `TASK-XXXX-peer-audit.json`.
    - Never manually set `status: verified` in `TASK-XXXX.md`.
-   - Only `python scripts/agent/run_verify.py --task TASK-XXXX` is authorized to generate the tamper-evident receipt and transition the task to `verified`.
+   - Before running `run_verify.py`, you MUST spawn an independent Auditor Subagent (following `.agents/skills/verify-task/SKILL.md`) with your Thought/Decision Handover, `transcript.jsonl`, `GEMINI.md`, `.agents/rules/*`, and verification skills. The Subagent must independently audit code semantics, ADR-0010 compliance, and write `docs/agent-system/evidence/TASK-XXXX-peer-audit.json` (`verdict: "PASS"`).
+   - Only `python scripts/agent/run_verify.py --task TASK-XXXX` (which enforces `check_peer_audit.py`) is authorized to generate the tamper-evident receipt and transition the task to `verified`.
 5. **Single Source of Truth State Sync**:
    - Never manually edit `docs/agent-system/state/active-task.json`. Always synchronize it via `python scripts/agent/validate_task.py --task TASK-XXXX --sync-state`.

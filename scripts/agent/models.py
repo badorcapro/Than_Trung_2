@@ -16,7 +16,7 @@ from pydantic import BaseModel, ConfigDict, Field, field_validator, model_valida
 
 _SHA256_RE = re.compile(r"^[a-fA-F0-9]{64}$")
 _REF_ID_RE = re.compile(r"^[A-Z]+-[A-Z0-9-]+-[0-9]{3,4}$")
-_TASK_ID_RE = re.compile(r"^TASK-[0-9]{4}$")
+_TASK_ID_RE = re.compile(r"^TASK-[0-9]{4}[A-Z]?$")
 
 
 class Severity(str, Enum):
@@ -245,6 +245,45 @@ class EvidenceReceipt(BaseModel):
     scope_passed: bool
     commands: List[CommandReceipt]
     all_passed: bool
+
+
+class PeerAuditVerdict(str, Enum):
+    """Strict binary verdict for Subagent Semantic Peer-Audit Gate."""
+    PASS = "PASS"
+    FAIL = "FAIL"
+
+
+class PeerAuditReceipt(BaseModel):
+    """Semantic peer-audit receipt written by an independent Subagent before run_verify.py."""
+    model_config = ConfigDict(extra="forbid")
+
+    task_id: str = Field(..., description="Task ID matching TASK-XXXX")
+    subagent_conversation_id: str = Field(..., min_length=8, description="Unique conversationId of the Auditor Subagent")
+    audited_at: str = Field(..., min_length=10, description="ISO-8601 UTC timestamp")
+    diff_sha256: str = Field(..., description="Working tree diff_sha256 from check_scope.py at audit time")
+    transcript_reference: str = Field(..., min_length=5, description="Path or URI to the Primary Agent transcript.jsonl")
+    rules_and_docs_loaded: List[str] = Field(..., min_length=1, description="Workspace-relative POSIX paths of rules, skills, and GEMINI.md loaded")
+    decisions_made: List[str] = Field(..., min_length=1, description="Primary Agent architectural/implementation decisions reviewed")
+    omissions_and_simplifications: List[str] = Field(..., min_length=1, description="Explicit declaration of omitted edge cases or 100% coverage confirmation")
+    adr_0010_anti_cheat_check: str = Field(..., min_length=10, description="Verification of Single Responsibility Modularization and zero code-golfing")
+    semantic_checks_performed: List[str] = Field(..., min_length=1, description="Independent semantic and real-data verification checks executed by Subagent")
+    findings: List[str] = Field(default_factory=list, description="Defects found (must be empty when verdict is PASS)")
+    verdict: PeerAuditVerdict = Field(..., description="PASS | FAIL (only PASS unlocks run_verify.py)")
+
+    @field_validator("task_id")
+    @classmethod
+    def validate_audit_task_id(cls, v: str) -> str:
+        if not _TASK_ID_RE.match(v):
+            raise ValueError(f"Task ID '{v}' must match TASK-XXXX (e.g. TASK-0007B)")
+        return v
+
+    @field_validator("diff_sha256")
+    @classmethod
+    def validate_audit_diff_sha256(cls, v: str) -> str:
+        clean = v.strip().lower()
+        if not _SHA256_RE.match(clean):
+            raise ValueError(f"diff_sha256 must be 64 hex characters, got: '{v}'")
+        return clean
 
 
 def compute_file_sha256(path: Path) -> str:

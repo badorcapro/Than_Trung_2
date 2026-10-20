@@ -8,7 +8,7 @@
       "path": "ARCHITECTURE.md",
       "authority": "approved",
       "status": "current",
-      "sha256": "362ff5dbe0effc6c451b140a75a73d2a64b7ae3f91f1003e8be6e38165f6157b",
+      "sha256": "cf2ee3e328285da21a5b9d37ffd9ef1a43b29f716315f3df0f3795160b7dd743",
       "depends_on": [],
       "description": "5-Layer Context & 2-Tier Domain Architecture Specification"
     },
@@ -128,7 +128,7 @@
       "path": ".agents/rules/rule_task_contract_and_scope.md",
       "authority": "approved",
       "status": "current",
-      "sha256": "482687a02f059c0f7777977754e27007dfd797d3c39892516d4bac93899492b4",
+      "sha256": "8d22d8ca4d26bfb1f90ce3c54a9c1c2b2c4fc7e0276883ffa644ceceef1651a2",
       "depends_on": [
         "ARCH-CORE-001",
         "ADR-ARCH-003",
@@ -354,7 +354,7 @@
       "path": "GEMINI.md",
       "authority": "approved",
       "status": "current",
-      "sha256": "bf36dc303698b4aa2ed5d5be861235d7972a60365eea44736a6e29ceb811cf3d",
+      "sha256": "62e0c226f7505f5b6fe497f3952ec127134da63a4ccdebbd410b2675dbd63a0c",
       "depends_on": [
         "ARCH-CORE-001"
       ],
@@ -384,6 +384,20 @@
         "ARCH-MAP-001"
       ],
       "description": "Current project continuity and implementation status memory"
+    },
+    {
+      "id": "MOD-AUDIT-001",
+      "kind": "module",
+      "path": "scripts/agent/check_peer_audit.py",
+      "authority": "approved",
+      "status": "current",
+      "sha256": "3149492ed8bf662ab43c5f0b285b7d7019bc594d48dae4002b069f74d8589b8a",
+      "depends_on": [
+        "ARCH-CORE-001",
+        "ADR-ARCH-010",
+        "RULE-SCOPE-001"
+      ],
+      "description": "Subagent Semantic Peer-Audit Gatekeeper (DEC-17)"
     }
   ]
 }
