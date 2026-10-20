@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-10-20T15:03:00Z",
+  "environment": {
+    "os": "Windows_NT",
+    "architecture": "x64",
+    "node_version": "22.15.1",
+    "python_version": "3.13",
+    "dotnet_sdk_version": "9.0.306"
+  },
+  "tools": {
+    "rea": {
+      "name": "Reverse Engineer Anything (REA)",
+      "version": "6.7.0",
+      "status": "operational",
+      "installed_location": "C:/Users/Admin/AppData/Local/npm-cache/_npx/af752b90495482d7/node_modules/rea-agents",
+      "source_repository": "D:/Minh/For_myself/my_own_tool/rea",
+      "patches": [
+        {
+          "id": "PATCH-REA-WIN-ESTALE-001",
+          "component": "src/filesystem/RegularFile.ts",
+          "dist_component": "dist/filesystem/RegularFile.js",
+          "function": "sameRegularFileState",
+          "description": "On Windows (win32), libuv lstat returns st_dev=0 while handle fstat returns the drive volume serial number. Patched sameRegularFileState to treat dev as matching when process.platform === 'win32' and (expected.dev === 0 || observed.dev === 0), provided ino, size, mode, and timestamps match.",
+          "verified_turn": "TASK-0003"
+        }
+      ]
+    },
+    "ilspycmd": {
+      "name": "ILSpy CLI Decompiler",
+      "version": "9.0.0.7889",
+      "runtime": ".NET 9.0",
+      "status": "operational",
+      "command": "ilspycmd"
+    },
+    "unitypy": {
+      "name": "UnityPy Asset Extractor",
+      "version": "1.25.4",
+      "python_runtime": "3.13",
+      "status": "operational",
+      "module": "UnityPy"
+    },
+    "pefile": {
+      "name": "Python PE Parser",
+      "version": "2024.8.26",
+      "python_runtime": "3.13",
+      "status": "operational",
+      "module": "pefile"
+    }
+  }
+}

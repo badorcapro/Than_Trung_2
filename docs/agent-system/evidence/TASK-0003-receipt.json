@@ -1,0 +1,20 @@
+{
+  "task_id": "TASK-0003",
+  "verified_at": "2026-10-20T15:04:36.304123+00:00",
+  "contract_sha256": "d2904d16b41aa18bfa6058f26552ef035055d63b4bc2eeb65b28b80ec02ddb48",
+  "diff_sha256": "6eda5de900f9a6bcfb964db86d4c75e4f3c754982c8e149ca9b022139169c641",
+  "modified_files": [
+    "scripts/agent/verify_dupery_p2_prep.py"
+  ],
+  "scope_passed": true,
+  "commands": [
+    {
+      "command": "python scripts/agent/verify_dupery_p2_prep.py --task TASK-0003",
+      "exit_code": 0,
+      "duration_ms": 7480.88,
+      "stdout_excerpt": "{\n  \"success\": true,\n  \"tool\": \"verify_dupery_p2_prep\",\n  \"issues\": [],\n  \"data\": {\n    \"ilspycmd_available\": true,\n    \"manifests_verified\": true,\n    \"probe1_verified\": true\n  }\n}",
+      "stderr_excerpt": ""
+    }
+  ],
+  "all_passed": true
+}
