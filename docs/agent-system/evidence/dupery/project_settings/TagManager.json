@@ -1,0 +1,49 @@
+{
+  "tags": [
+    "UI_Character"
+  ],
+  "layers": [
+    "Default",
+    "TransparentFX",
+    "Ignore Raycast",
+    "",
+    "Water",
+    "UI",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "m_SortingLayers": [
+    {
+      "name": "Default",
+      "uniqueID": 0
+    },
+    {
+      "name": "Cursor",
+      "uniqueID": 478699247
+    }
+  ]
+}
