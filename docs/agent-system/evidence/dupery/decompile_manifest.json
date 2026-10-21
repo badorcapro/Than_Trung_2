@@ -13,7 +13,36 @@
       "total_cs_bytes": 3444324,
       "duration_ms": 6161,
       "status": "success",
-      "error": null
+      "error": null,
+      "namespaces": [
+        "AlternateModes",
+        "Audio",
+        "BackAlleyItems",
+        "CaseCreation",
+        "CaseSelection",
+        "Codex",
+        "ControllerSupport",
+        "Credits",
+        "Demo",
+        "GameStats",
+        "Hover",
+        "LeadSelection",
+        "Leads",
+        "LevelEditor",
+        "Lineup",
+        "Localisation",
+        "MainMenu",
+        "Marketting",
+        "Nodes",
+        "Quirks",
+        "RegionEvents",
+        "Save",
+        "SavePrint",
+        "Summary",
+        "TransitionScene",
+        "Tutorial",
+        "Visual"
+      ]
     },
     "gildedrunegames.grglib": {
       "dll_name": "gildedrunegames.grglib.dll",
@@ -24,7 +53,10 @@
       "total_cs_bytes": 434956,
       "duration_ms": 1864,
       "status": "success",
-      "error": null
+      "error": null,
+      "namespaces": [
+        "GRGLib"
+      ]
     },
     "gildedrunegames.grglocalisation": {
       "dll_name": "gildedrunegames.grglocalisation.dll",
@@ -35,7 +67,10 @@
       "total_cs_bytes": 30510,
       "duration_ms": 534,
       "status": "success",
-      "error": null
+      "error": null,
+      "namespaces": [
+        "GRGLocalisation"
+      ]
     },
     "XNode": {
       "dll_name": "XNode.dll",
@@ -46,7 +81,10 @@
       "total_cs_bytes": 41227,
       "duration_ms": 679,
       "status": "success",
-      "error": null
+      "error": null,
+      "namespaces": [
+        "XNode"
+      ]
     },
     "FMODUnity": {
       "dll_name": "FMODUnity.dll",
@@ -57,7 +95,11 @@
       "total_cs_bytes": 424788,
       "duration_ms": 1343,
       "status": "success",
-      "error": null
+      "error": null,
+      "namespaces": [
+        "FMOD",
+        "FMODUnity"
+      ]
     }
   },
   "summary": {

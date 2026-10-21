@@ -30,14 +30,6 @@ TARGET_ASSEMBLIES = [
     "FMODUnity.dll",
 ]
 
-KEY_NAMESPACES = {
-    "Assembly-CSharp": ["Visual", "Quirks", "Save", "Nodes", "Leads", "CaseCreation"],
-    "gildedrunegames.grglib": ["GRGLib"],
-    "XNode": ["XNode"],
-    "gildedrunegames.grglocalisation": ["GRGLocalisation"],
-    "FMODUnity": ["FMODUnity"],
-}
-
 
 def compute_file_sha256(path: Path) -> str:
     """Compute standard SHA-256 hex digest for a file."""
@@ -69,8 +61,8 @@ def decompile_single_assembly(
     dll_path: Path,
     managed_dir: Path,
     out_dir: Path,
-) -> Tuple[bool, int, int, str]:
-    """Decompile one assembly using ilspycmd into out_dir."""
+) -> Tuple[bool, int, int, List[str], str]:
+    """Decompile one assembly using ilspycmd into out_dir and return namespaces."""
     out_dir.mkdir(parents=True, exist_ok=True)
     cmd = [
         "ilspycmd",
@@ -89,11 +81,12 @@ def decompile_single_assembly(
 
     if proc.returncode != 0:
         err = proc.stderr.strip() or f"exited with code {proc.returncode}"
-        return False, 0, elapsed_ms, err
+        return False, 0, elapsed_ms, [], err
 
     cs_files = list(out_dir.rglob("*.cs"))
     total_bytes = sum(f.stat().st_size for f in cs_files)
-    return True, total_bytes, elapsed_ms, ""
+    namespaces = sorted(p.name for p in out_dir.iterdir() if p.is_dir() and p.name != "Properties")
+    return True, total_bytes, elapsed_ms, namespaces, ""
 
 
 def run_decompile_pipeline(
@@ -129,7 +122,7 @@ def run_decompile_pipeline(
         dll_sha = compute_file_sha256(dll_path)
         dll_size = dll_path.stat().st_size
 
-        success, cs_bytes, dur_ms, err_msg = decompile_single_assembly(
+        success, cs_bytes, dur_ms, namespaces, err_msg = decompile_single_assembly(
             dll_path, managed_dir, sub_out
         )
 
@@ -144,6 +137,7 @@ def run_decompile_pipeline(
             "cs_file_count": file_count,
             "total_cs_bytes": cs_bytes,
             "duration_ms": dur_ms,
+            "namespaces": namespaces,
             "status": "success" if success else "failed",
             "error": err_msg if not success else None,
         }
@@ -207,12 +201,14 @@ def verify_decompilation(
                 f"Assembly '{stem}' file count mismatch: actual {len(actual_cs)} != expected {expected_count}"
             )
 
-        # Check key namespaces presence
-        expected_ns = KEY_NAMESPACES.get(stem, [])
-        for ns in expected_ns:
+        # Check 100% of recorded namespaces presence
+        expected_namespaces = info.get("namespaces", [])
+        for ns in expected_namespaces:
             ns_dir = out_dir / ns
-            if not ns_dir.exists():
-                errors.append(f"Key namespace directory missing for '{stem}': {ns_dir}")
+            if not ns_dir.exists() or not ns_dir.is_dir():
+                errors.append(f"Namespace directory missing for '{stem}': {ns_dir}")
+            elif not list(ns_dir.rglob("*.cs")):
+                errors.append(f"Namespace directory has no C# files for '{stem}': {ns_dir}")
 
         # Check source DLL sha256
         dll_name = info.get("dll_name", "")
