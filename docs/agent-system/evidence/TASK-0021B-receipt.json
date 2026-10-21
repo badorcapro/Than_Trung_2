@@ -1,0 +1,43 @@
+{
+  "task_id": "TASK-0021B",
+  "verified_at": "2026-10-21T10:30:21.098342+00:00",
+  "contract_sha256": "360417fe45eacb92c0286fe6a08aa452622f67b9200dec4d542d0dccfdd62663",
+  "diff_sha256": "8c64176a36cde7509634909e1e17b53b6d2b4fc1be552c9021b6a35ea06a9961",
+  "modified_files": [
+    "scripts/agent/dupery_graph_resolver.py",
+    "scripts/agent/query_dupery_graph.py",
+    "tests/test_dupery_graph_resolver.py"
+  ],
+  "scope_passed": true,
+  "commands": [
+    {
+      "command": "python scripts/agent/query_dupery_graph.py inspect-scene --node \"PlayButton\" --format toon",
+      "exit_code": 0,
+      "duration_ms": 558.04,
+      "stdout_excerpt": "[30]:\n  - scene: CaseSelectionScene\n    name: GameplayButton\n    hierarchy_path: Canvas/PauseMenu/SettingsMenu/MainSection/Buttons/GameplayButton\n    components[2]: JiggleButton,UnityEngine.UI.Image\n    rect:\n      pos:\n        x: 0.0\n        y: 0.0\n      size:\n        x: 1047.0\n        y: 175.0\n  - scene: CaseSelectionScene\n    name: Jiggle\n    hierarchy_path: Canvas/PauseMenu/SettingsMenu/MainSection/Buttons/GameplayButton/Jiggle\n    components[2]: UnityEngine.UI.Image,JiggleTarget\n    rect:\n      pos:\n        x: 0.0\n        y: 0.0\n      size:\n        x: 1047.0\n        y: 175.0\n  - scene: CaseSelectionScene\n    name: Text (TMP)\n    hierarchy_path: Canvas/PauseMenu/SettingsMenu/MainSection/Buttons/GameplayButton/Jiggle/Text (TMP)\n    components[3]: TMPro.TextMeshProUGUI,GRGLocalisation.LocalisedStaticText,AdjustableText\n    rect:\n      pos:\n        x: 0.0\n        y: 0.0\n      size:\n        x: -200.0\n        y: -30.0\n  - scene: EventScene\n    name: GameplayButton\n    hierarchy_path: Canvas/PauseMenu/SettingsMenu/MainSection/Buttons/GameplayButton\n    components[2]: JiggleButton,UnityEngine.UI.Image\n    rect:\n      pos:\n        x: 0.0\n        y: 0.0\n      size:\n        x: 1047.0\n        y: 175.0\n  - scene: EventScene\n    name: Jiggle\n    hierarchy_path: Canvas/PauseMenu/SettingsMenu/MainSection/Buttons/GameplayButton/Jiggle\n    components[2]: UnityEngine.UI.Image,JiggleTarget\n    rect:\n      pos:\n        x: 0.0\n        y: 0.0\n      size:\n        x: 1047.0\n        y: 175.0\n  - \n...[truncated 7647 chars]",
+      "stderr_excerpt": ""
+    },
+    {
+      "command": "python scripts/agent/query_dupery_graph.py get-recipe \"LineupController\" --format json",
+      "exit_code": 0,
+      "duration_ms": 541.66,
+      "stdout_excerpt": "{\n  \"query\": \"LineupController\",\n  \"primary_class\": \"LineupController\",\n  \"full_name\": \"Lineup.LineupController\",\n  \"source_cs_path\": \"docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Lineup/LineupController.cs\",\n  \"metadata_token\": \"0x0200032D\",\n  \"tier\": 1,\n  \"target_depth\": \"L3\",\n  \"dissection_cycle\": \"V3\",\n  \"exact_scene_attachments\": [\n    {\n      \"scene\": \"LineupScene\",\n      \"game_object\": \"Canvas\",\n      \"hierarchy_path\": \"Canvas\",\n      \"class_name\": \"Lineup.LineupController\",\n      \"path_id\": 3573\n    }\n  ],\n  \"associated_scenes\": [\n    \"LineupScene\"\n  ],\n  \"exact_fmod_audio_calls\": [\n    {\n      \"enum_name\": \"F\",\n      \"enum_value\": 6,\n      \"guid\": \"{c4ce9734-5258-4a21-9a61-77833cec3f70}\",\n      \"fmod_path\": \"event:/mUSIC/f_FinalShowdown\",\n      \"target_bank\": \"Music.bank\"\n    },\n    {\n      \"enum_name\": \"GUNSHOT\",\n      \"enum_value\": 2005,\n      \"guid\": \"{3d0f4d95-2a40-4524-bd75-4f85a685caf9}\",\n      \"fmod_path\": \"event:/sFX/cases/gunShot\",\n      \"target_bank\": \"Sfx.bank\"\n    },\n    {\n      \"enum_name\": \"LINEUP_MOVE\",\n      \"enum_value\": 9001,\n      \"guid\": \"{79d48a6c-6df3-4903-887e-1cc81fc369f7}\",\n      \"fmod_path\": \"event:/sFX/uI/lineupMove\",\n      \"target_bank\": \"Sfx.bank\"\n    }\n  ],\n  \"fmod_audio_events\": [\n    {\n      \"enum_name\": \"F\",\n      \"enum_value\": 6,\n      \"guid\": \"{c4ce9734-5258-4a21-9a61-77833cec3f70}\",\n      \"fmod_path\": \"event:/mUSIC/f_FinalShowdown\",\n      \"target_bank\": \"Music.bank\"\n    },\n    {\n      \"enum_name\": \"GUNS\n...[truncated 837 chars]",
+      "stderr_excerpt": ""
+    },
+    {
+      "command": "python -m unittest tests/test_dupery_graph_resolver.py",
+      "exit_code": 0,
+      "duration_ms": 1356.92,
+      "stdout_excerpt": "",
+      "stderr_excerpt": ".....\n----------------------------------------------------------------------\nRan 5 tests in 0.912s\n\nOK"
+    },
+    {
+      "command": "python scripts/agent/check_peer_audit.py --task TASK-0021B",
+      "exit_code": 0,
+      "duration_ms": 400.84,
+      "stdout_excerpt": "{\n  \"success\": true,\n  \"tool\": \"check_peer_audit\",\n  \"issues\": [],\n  \"data\": {\n    \"task_id\": \"TASK-0021B\",\n    \"subagent_conversation_id\": \"358c0296-c401-4794-a55a-b24ed15b0b7a\",\n    \"verdict\": \"PASS\",\n    \"diff_sha256\": \"8c64176a36cde7509634909e1e17b53b6d2b4fc1be552c9021b6a35ea06a9961\",\n    \"audit_receipt\": \"docs/agent-system/evidence/TASK-0021B-peer-audit.json\"\n  }\n}",
+      "stderr_excerpt": ""
+    }
+  ],
+  "all_passed": true
+}

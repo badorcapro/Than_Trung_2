@@ -23,6 +23,15 @@ try:
 except ImportError:
     encode_toon = None
 
+try:
+    from scripts.agent.dupery_graph_resolver import (
+        resolve_deterministic_recipe,
+        search_scene_nodes,
+    )
+except ImportError:
+    search_scene_nodes = None
+    resolve_deterministic_recipe = None
+
 EV_DIR = ROOT_DIR / "docs/agent-system/evidence/dupery"
 LEDGER_JSON = EV_DIR / "reconstruction_obligation_ledger.json"
 SCENE_SUMMARY_JSON = EV_DIR / "scenes/scene_catalog_summary.json"
@@ -112,23 +121,22 @@ def get_fresh_context_recipe(
     query: str, ledger: Dict[str, Any], fmod_map: Dict[str, Any]
 ) -> Dict[str, Any]:
     matched_classes = inspect_classes(query, ledger)
+    primary = matched_classes[0] if matched_classes else {}
+    if resolve_deterministic_recipe and primary:
+        return resolve_deterministic_recipe(query, primary, fmod_map)
+
     matched_fmod = []
     q_lower = query.lower()
     for cat, items in fmod_map.get("cross_system_mappings", {}).items():
         for it in items:
             if q_lower in it.get("enum_name", "").lower() or q_lower in it.get("fmod_path", "").lower():
                 matched_fmod.append(it)
-    primary = matched_classes[0] if matched_classes else {}
     vong = primary.get("vong", "Unassigned")
     checklist_map = {
-        "V1": "REF_UI_CORE_1080P_60FPS",
-        "V2": "REF_LOOP_CASE_GEN_1080P_60FPS",
-        "V3": "REF_LOOP_MAIN_PLAY_1080P_60FPS",
-        "V4": "REF_REGION_OVERWORLD_1080P_60FPS",
-        "V5": "REF_LEADS_EVIDENCE_1080P_60FPS",
-        "V6": "REF_LINEUP_EVALUATION_1080P_60FPS",
-        "V7": "REF_CUTSCENE_TRANSITION_1080P_60FPS",
-        "V8": "REF_AUDIO_FMOD_SYNC_1080P_60FPS",
+        "V1": "REF_UI_CORE_1080P_60FPS", "V2": "REF_LOOP_CASE_GEN_1080P_60FPS",
+        "V3": "REF_LOOP_MAIN_PLAY_1080P_60FPS", "V4": "REF_REGION_OVERWORLD_1080P_60FPS",
+        "V5": "REF_LEADS_EVIDENCE_1080P_60FPS", "V6": "REF_LINEUP_EVALUATION_1080P_60FPS",
+        "V7": "REF_CUTSCENE_TRANSITION_1080P_60FPS", "V8": "REF_AUDIO_FMOD_SYNC_1080P_60FPS",
     }
     return {
         "query": query,
@@ -139,14 +147,11 @@ def get_fresh_context_recipe(
         "tier": primary.get("tier", 1),
         "target_depth": primary.get("target_depth", "L2"),
         "dissection_cycle": vong,
+        "exact_scene_attachments": [],
         "associated_scenes": [s for s in ["MainMenuScene", "GameScene", "LineupScene", "SummaryScene"] if q_lower in s.lower()] or ["GameScene"],
-        "fmod_audio_events": matched_fmod[:5],
+        "exact_fmod_audio_calls": matched_fmod[:5],
         "golden_reference_checklist": checklist_map.get(vong, "REF_POLISH_RECONSTRUCTION_1080P_60FPS"),
-        "context_files_to_read": [
-            primary.get("source_file", ""),
-            "docs/agent-system/evidence/dupery/data/data_catalog_summary.json",
-            "docs/agent-system/evidence/dupery/references/reference_capture_protocol.md",
-        ] if primary else [],
+        "context_files_to_read": [primary.get("source_file", "")] if primary else [],
     }
 
 
@@ -280,7 +285,8 @@ def main() -> int:
     p_class.add_argument("--format", choices=["json", "jsonl", "toon"], default="json")
 
     p_scene = subparsers.add_parser("inspect-scene")
-    p_scene.add_argument("pattern", help="Scene name pattern")
+    p_scene.add_argument("pattern", nargs="?", default=".*", help="Scene name pattern (default: all)")
+    p_scene.add_argument("--node", help="Deep search GameObject node name across scenes")
     p_scene.add_argument("--format", choices=["json", "jsonl", "toon"], default="json")
 
     p_asset = subparsers.add_parser("inspect-asset")
@@ -300,7 +306,11 @@ def main() -> int:
     if args.command == "inspect-class":
         output_results(inspect_classes(args.pattern, _load_json(LEDGER_JSON)), args.format)
     elif args.command == "inspect-scene":
-        output_results(inspect_scenes(args.pattern, _load_json(SCENE_SUMMARY_JSON)), args.format)
+        if getattr(args, "node", None) and search_scene_nodes:
+            s_filter = None if args.pattern in [".*", "all", ""] else args.pattern
+            output_results(search_scene_nodes(args.node, s_filter), args.format)
+        else:
+            output_results(inspect_scenes(args.pattern, _load_json(SCENE_SUMMARY_JSON)), args.format)
     elif args.command == "inspect-asset":
         output_results(inspect_assets(
             args.pattern,
