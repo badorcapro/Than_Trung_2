@@ -1,0 +1,37 @@
+{
+  "task_id": "TASK-0012",
+  "verified_at": "2026-10-21T06:43:12.292470+00:00",
+  "contract_sha256": "74cbd70fdbe86af6b3274a2d1daa25ebf9245ed722b49bc5e5c1515ba69c4e84",
+  "diff_sha256": "2e48709cd64057be13fb93ca2f899138a2b2fd43bb42d9ebe0d49a4817eeb9f5",
+  "modified_files": [
+    "docs/agent-system/evidence/dupery/typetree_failures.json",
+    "docs/agent-system/evidence/dupery/typetree_gate_report.json",
+    "scripts/agent/dupery_typetree_decoder.py",
+    "tests/test_dupery_typetree_decoder.py"
+  ],
+  "scope_passed": true,
+  "commands": [
+    {
+      "command": "python scripts/agent/dupery_typetree_decoder.py --verify",
+      "exit_code": 0,
+      "duration_ms": 112.45,
+      "stdout_excerpt": "OK: TypeTree Gate (DEC-22) verified. 12 Scene levels >=99%, XNode instances cataloged.",
+      "stderr_excerpt": ""
+    },
+    {
+      "command": "python -m unittest tests/test_dupery_typetree_decoder.py",
+      "exit_code": 0,
+      "duration_ms": 173.46,
+      "stdout_excerpt": "",
+      "stderr_excerpt": "......\n----------------------------------------------------------------------\nRan 6 tests in 0.008s\n\nOK"
+    },
+    {
+      "command": "python scripts/agent/check_peer_audit.py --task TASK-0012",
+      "exit_code": 0,
+      "duration_ms": 365.74,
+      "stdout_excerpt": "{\n  \"success\": true,\n  \"tool\": \"check_peer_audit\",\n  \"issues\": [],\n  \"data\": {\n    \"task_id\": \"TASK-0012\",\n    \"subagent_conversation_id\": \"4adba35b-8570-426f-86e7-7779530d0a1d\",\n    \"verdict\": \"PASS\",\n    \"diff_sha256\": \"2e48709cd64057be13fb93ca2f899138a2b2fd43bb42d9ebe0d49a4817eeb9f5\",\n    \"audit_receipt\": \"docs/agent-system/evidence/TASK-0012-peer-audit.json\"\n  }\n}",
+      "stderr_excerpt": ""
+    }
+  ],
+  "all_passed": true
+}
