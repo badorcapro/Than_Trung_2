@@ -1,0 +1,511 @@
+{
+  "total_shaders": 46,
+  "shaders": [
+    {
+      "name": "Hidden/Universal Render Pipeline/Sampling",
+      "asset_file": "globalgamemanagers.assets",
+      "path_id": 52,
+      "is_baked": true,
+      "platforms": [
+        4
+      ],
+      "source_status": "compiled_gpu_bytecode_only",
+      "source_note": "Original HLSL source code is not preserved in Unity binary asset files."
+    },
+    {
+      "name": "Hidden/Universal Render Pipeline/Stop NaN",
+      "asset_file": "globalgamemanagers.assets",
+      "path_id": 53,
+      "is_baked": true,
+      "platforms": [
+        4
+      ],
+      "source_status": "compiled_gpu_bytecode_only",
+      "source_note": "Original HLSL source code is not preserved in Unity binary asset files."
+    },
+    {
+      "name": "Hidden/Universal Render Pipeline/TemporalAA",
+      "asset_file": "globalgamemanagers.assets",
+      "path_id": 54,
+      "is_baked": true,
+      "platforms": [
+        4
+      ],
+      "source_status": "compiled_gpu_bytecode_only",
+      "source_note": "Original HLSL source code is not preserved in Unity binary asset files."
+    },
+    {
+      "name": "Hidden/Universal Render Pipeline/CameraMotionBlur",
+      "asset_file": "globalgamemanagers.assets",
+      "path_id": 55,
+      "is_baked": true,
+      "platforms": [
+        4
+      ],
+      "source_status": "compiled_gpu_bytecode_only",
+      "source_note": "Original HLSL source code is not preserved in Unity binary asset files."
+    },
+    {
+      "name": "Hidden/Universal Render Pipeline/BokehDepthOfField",
+      "asset_file": "globalgamemanagers.assets",
+      "path_id": 56,
+      "is_baked": true,
+      "platforms": [
+        4
+      ],
+      "source_status": "compiled_gpu_bytecode_only",
+      "source_note": "Original HLSL source code is not preserved in Unity binary asset files."
+    },
+    {
+      "name": "Hidden/Core/FallbackError",
+      "asset_file": "globalgamemanagers.assets",
+      "path_id": 57,
+      "is_baked": true,
+      "platforms": [
+        4
+      ],
+      "source_status": "compiled_gpu_bytecode_only",
+      "source_note": "Original HLSL source code is not preserved in Unity binary asset files."
+    },
+    {
+      "name": "Hidden/Shadow2DShadowSprite",
+      "asset_file": "globalgamemanagers.assets",
+      "path_id": 58,
+      "is_baked": true,
+      "platforms": [
+        4
+      ],
+      "source_status": "compiled_gpu_bytecode_only",
+      "source_note": "Original HLSL source code is not preserved in Unity binary asset files."
+    },
+    {
+      "name": "Hidden/Universal Render Pipeline/Edge Adaptive Spatial Upsampling",
+      "asset_file": "globalgamemanagers.assets",
+      "path_id": 59,
+      "is_baked": true,
+      "platforms": [
+        4
+      ],
+      "source_status": "compiled_gpu_bytecode_only",
+      "source_note": "Original HLSL source code is not preserved in Unity binary asset files."
+    },
+    {
+      "name": "Hidden/Universal/HDRDebugView",
+      "asset_file": "globalgamemanagers.assets",
+      "path_id": 60,
+      "is_baked": true,
+      "platforms": [
+        4
+      ],
+      "source_status": "compiled_gpu_bytecode_only",
+      "source_note": "Original HLSL source code is not preserved in Unity binary asset files."
+    },
+    {
+      "name": "Hidden/Universal Render Pipeline/GaussianDepthOfField",
+      "asset_file": "globalgamemanagers.assets",
+      "path_id": 61,
+      "is_baked": true,
+      "platforms": [
+        4
+      ],
+      "source_status": "compiled_gpu_bytecode_only",
+      "source_note": "Original HLSL source code is not preserved in Unity binary asset files."
+    },
+    {
+      "name": "Hidden/Universal Render Pipeline/Bloom",
+      "asset_file": "globalgamemanagers.assets",
+      "path_id": 62,
+      "is_baked": true,
+      "platforms": [
+        4
+      ],
+      "source_status": "compiled_gpu_bytecode_only",
+      "source_note": "Original HLSL source code is not preserved in Unity binary asset files."
+    },
+    {
+      "name": "Hidden/Universal Render Pipeline/SubpixelMorphologicalAntialiasing",
+      "asset_file": "globalgamemanagers.assets",
+      "path_id": 63,
+      "is_baked": true,
+      "platforms": [
+        4
+      ],
+      "source_status": "compiled_gpu_bytecode_only",
+      "source_note": "Original HLSL source code is not preserved in Unity binary asset files."
+    },
+    {
+      "name": "Hidden/Universal Render Pipeline/LutBuilderLdr",
+      "asset_file": "globalgamemanagers.assets",
+      "path_id": 64,
+      "is_baked": true,
+      "platforms": [
+        4
+      ],
+      "source_status": "compiled_gpu_bytecode_only",
+      "source_note": "Original HLSL source code is not preserved in Unity binary asset files."
+    },
+    {
+      "name": "Hidden/Universal Render Pipeline/LensFlareDataDriven",
+      "asset_file": "globalgamemanagers.assets",
+      "path_id": 65,
+      "is_baked": true,
+      "platforms": [
+        4
+      ],
+      "source_status": "compiled_gpu_bytecode_only",
+      "source_note": "Original HLSL source code is not preserved in Unity binary asset files."
+    },
+    {
+      "name": "Hidden/Shadow2DUnshadowGeometry",
+      "asset_file": "globalgamemanagers.assets",
+      "path_id": 66,
+      "is_baked": true,
+      "platforms": [
+        4
+      ],
+      "source_status": "compiled_gpu_bytecode_only",
+      "source_note": "Original HLSL source code is not preserved in Unity binary asset files."
+    },
+    {
+      "name": "Hidden/Light2D-Shape-Volumetric",
+      "asset_file": "globalgamemanagers.assets",
+      "path_id": 67,
+      "is_baked": true,
+      "platforms": [
+        4
+      ],
+      "source_status": "compiled_gpu_bytecode_only",
+      "source_note": "Original HLSL source code is not preserved in Unity binary asset files."
+    },
+    {
+      "name": "Hidden/Universal/CoreBlit",
+      "asset_file": "globalgamemanagers.assets",
+      "path_id": 68,
+      "is_baked": true,
+      "platforms": [
+        4
+      ],
+      "source_status": "compiled_gpu_bytecode_only",
+      "source_note": "Original HLSL source code is not preserved in Unity binary asset files."
+    },
+    {
+      "name": "Hidden/Universal Render Pipeline/PaniniProjection",
+      "asset_file": "globalgamemanagers.assets",
+      "path_id": 69,
+      "is_baked": true,
+      "platforms": [
+        4
+      ],
+      "source_status": "compiled_gpu_bytecode_only",
+      "source_note": "Original HLSL source code is not preserved in Unity binary asset files."
+    },
+    {
+      "name": "Hidden/Universal/BlitHDROverlay",
+      "asset_file": "globalgamemanagers.assets",
+      "path_id": 70,
+      "is_baked": true,
+      "platforms": [
+        4
+      ],
+      "source_status": "compiled_gpu_bytecode_only",
+      "source_note": "Original HLSL source code is not preserved in Unity binary asset files."
+    },
+    {
+      "name": "Hidden/Universal Render Pipeline/FinalPost",
+      "asset_file": "globalgamemanagers.assets",
+      "path_id": 71,
+      "is_baked": true,
+      "platforms": [
+        4
+      ],
+      "source_status": "compiled_gpu_bytecode_only",
+      "source_note": "Original HLSL source code is not preserved in Unity binary asset files."
+    },
+    {
+      "name": "Hidden/Light2d-Point-Volumetric",
+      "asset_file": "globalgamemanagers.assets",
+      "path_id": 72,
+      "is_baked": true,
+      "platforms": [
+        4
+      ],
+      "source_status": "compiled_gpu_bytecode_only",
+      "source_note": "Original HLSL source code is not preserved in Unity binary asset files."
+    },
+    {
+      "name": "Hidden/ShadowProjected2D",
+      "asset_file": "globalgamemanagers.assets",
+      "path_id": 73,
+      "is_baked": true,
+      "platforms": [
+        4
+      ],
+      "source_status": "compiled_gpu_bytecode_only",
+      "source_note": "Original HLSL source code is not preserved in Unity binary asset files."
+    },
+    {
+      "name": "Hidden/Universal Render Pipeline/Debug/DebugReplacement",
+      "asset_file": "globalgamemanagers.assets",
+      "path_id": 74,
+      "is_baked": true,
+      "platforms": [
+        4
+      ],
+      "source_status": "compiled_gpu_bytecode_only",
+      "source_note": "Original HLSL source code is not preserved in Unity binary asset files."
+    },
+    {
+      "name": "Hidden/Universal/CoreBlitColorAndDepth",
+      "asset_file": "globalgamemanagers.assets",
+      "path_id": 75,
+      "is_baked": true,
+      "platforms": [
+        4
+      ],
+      "source_status": "compiled_gpu_bytecode_only",
+      "source_note": "Original HLSL source code is not preserved in Unity binary asset files."
+    },
+    {
+      "name": "Hidden/Light2D-Shape",
+      "asset_file": "globalgamemanagers.assets",
+      "path_id": 76,
+      "is_baked": true,
+      "platforms": [
+        4
+      ],
+      "source_status": "compiled_gpu_bytecode_only",
+      "source_note": "Original HLSL source code is not preserved in Unity binary asset files."
+    },
+    {
+      "name": "Hidden/Shadow2DUnshadowSprite",
+      "asset_file": "globalgamemanagers.assets",
+      "path_id": 77,
+      "is_baked": true,
+      "platforms": [
+        4
+      ],
+      "source_status": "compiled_gpu_bytecode_only",
+      "source_note": "Original HLSL source code is not preserved in Unity binary asset files."
+    },
+    {
+      "name": "Hidden/Light2D-Point",
+      "asset_file": "globalgamemanagers.assets",
+      "path_id": 78,
+      "is_baked": true,
+      "platforms": [
+        4
+      ],
+      "source_status": "compiled_gpu_bytecode_only",
+      "source_note": "Original HLSL source code is not preserved in Unity binary asset files."
+    },
+    {
+      "name": "Hidden/Universal Render Pipeline/FallbackError",
+      "asset_file": "globalgamemanagers.assets",
+      "path_id": 79,
+      "is_baked": true,
+      "platforms": [
+        4
+      ],
+      "source_status": "compiled_gpu_bytecode_only",
+      "source_note": "Original HLSL source code is not preserved in Unity binary asset files."
+    },
+    {
+      "name": "Hidden/Universal Render Pipeline/UberPost",
+      "asset_file": "globalgamemanagers.assets",
+      "path_id": 80,
+      "is_baked": true,
+      "platforms": [
+        4
+      ],
+      "source_status": "compiled_gpu_bytecode_only",
+      "source_note": "Original HLSL source code is not preserved in Unity binary asset files."
+    },
+    {
+      "name": "Hidden/Universal Render Pipeline/Scaling Setup",
+      "asset_file": "globalgamemanagers.assets",
+      "path_id": 81,
+      "is_baked": true,
+      "platforms": [
+        4
+      ],
+      "source_status": "compiled_gpu_bytecode_only",
+      "source_note": "Original HLSL source code is not preserved in Unity binary asset files."
+    },
+    {
+      "name": "Hidden/Universal Render Pipeline/LutBuilderHdr",
+      "asset_file": "globalgamemanagers.assets",
+      "path_id": 82,
+      "is_baked": true,
+      "platforms": [
+        4
+      ],
+      "source_status": "compiled_gpu_bytecode_only",
+      "source_note": "Original HLSL source code is not preserved in Unity binary asset files."
+    },
+    {
+      "name": "TextMeshPro/Sprite",
+      "asset_file": "resources.assets",
+      "path_id": 43,
+      "is_baked": true,
+      "platforms": [
+        4
+      ],
+      "source_status": "compiled_gpu_bytecode_only",
+      "source_note": "Original HLSL source code is not preserved in Unity binary asset files."
+    },
+    {
+      "name": "Shader Graphs/Outline360",
+      "asset_file": "sharedassets0.assets",
+      "path_id": 395,
+      "is_baked": true,
+      "platforms": [
+        4
+      ],
+      "source_status": "compiled_gpu_bytecode_only",
+      "source_note": "Original HLSL source code is not preserved in Unity binary asset files."
+    },
+    {
+      "name": "Shader Graphs/ImageHole",
+      "asset_file": "sharedassets0.assets",
+      "path_id": 396,
+      "is_baked": true,
+      "platforms": [
+        4
+      ],
+      "source_status": "compiled_gpu_bytecode_only",
+      "source_note": "Original HLSL source code is not preserved in Unity binary asset files."
+    },
+    {
+      "name": "Shader Graphs/ContinuousWobble",
+      "asset_file": "sharedassets0.assets",
+      "path_id": 397,
+      "is_baked": true,
+      "platforms": [
+        4
+      ],
+      "source_status": "compiled_gpu_bytecode_only",
+      "source_note": "Original HLSL source code is not preserved in Unity binary asset files."
+    },
+    {
+      "name": "Shader Graphs/TopContinuousWobble",
+      "asset_file": "sharedassets0.assets",
+      "path_id": 398,
+      "is_baked": true,
+      "platforms": [
+        4
+      ],
+      "source_status": "compiled_gpu_bytecode_only",
+      "source_note": "Original HLSL source code is not preserved in Unity binary asset files."
+    },
+    {
+      "name": "TextMeshPro/Distance Field",
+      "asset_file": "sharedassets0.assets",
+      "path_id": 399,
+      "is_baked": true,
+      "platforms": [
+        4
+      ],
+      "source_status": "compiled_gpu_bytecode_only",
+      "source_note": "Original HLSL source code is not preserved in Unity binary asset files."
+    },
+    {
+      "name": "Hidden/Shader Graph/FallbackError",
+      "asset_file": "sharedassets0.assets",
+      "path_id": 400,
+      "is_baked": true,
+      "platforms": [
+        4
+      ],
+      "source_status": "compiled_gpu_bytecode_only",
+      "source_note": "Original HLSL source code is not preserved in Unity binary asset files."
+    },
+    {
+      "name": "Universal Render Pipeline/2D/Sprite-Lit-Default",
+      "asset_file": "sharedassets0.assets",
+      "path_id": 401,
+      "is_baked": true,
+      "platforms": [
+        4
+      ],
+      "source_status": "compiled_gpu_bytecode_only",
+      "source_note": "Original HLSL source code is not preserved in Unity binary asset files."
+    },
+    {
+      "name": "TextMeshPro/Mobile/Distance Field",
+      "asset_file": "sharedassets0.assets",
+      "path_id": 402,
+      "is_baked": true,
+      "platforms": [
+        4
+      ],
+      "source_status": "compiled_gpu_bytecode_only",
+      "source_note": "Original HLSL source code is not preserved in Unity binary asset files."
+    },
+    {
+      "name": "Shader Graphs/BloodSplatter",
+      "asset_file": "sharedassets1.assets",
+      "path_id": 198,
+      "is_baked": true,
+      "platforms": [
+        4
+      ],
+      "source_status": "compiled_gpu_bytecode_only",
+      "source_note": "Original HLSL source code is not preserved in Unity binary asset files."
+    },
+    {
+      "name": "Shader Graphs/AlphaObscured",
+      "asset_file": "sharedassets1.assets",
+      "path_id": 199,
+      "is_baked": true,
+      "platforms": [
+        4
+      ],
+      "source_status": "compiled_gpu_bytecode_only",
+      "source_note": "Original HLSL source code is not preserved in Unity binary asset files."
+    },
+    {
+      "name": "Custom/Obscured_Maskable",
+      "asset_file": "sharedassets1.assets",
+      "path_id": 200,
+      "is_baked": true,
+      "platforms": [
+        4
+      ],
+      "source_status": "compiled_gpu_bytecode_only",
+      "source_note": "Original HLSL source code is not preserved in Unity binary asset files."
+    },
+    {
+      "name": "Shader Graphs/ShrinkOutline360",
+      "asset_file": "sharedassets3.assets",
+      "path_id": 34,
+      "is_baked": true,
+      "platforms": [
+        4
+      ],
+      "source_status": "compiled_gpu_bytecode_only",
+      "source_note": "Original HLSL source code is not preserved in Unity binary asset files."
+    },
+    {
+      "name": "Custom/StampMaskable",
+      "asset_file": "sharedassets3.assets",
+      "path_id": 35,
+      "is_baked": true,
+      "platforms": [
+        4
+      ],
+      "source_status": "compiled_gpu_bytecode_only",
+      "source_note": "Original HLSL source code is not preserved in Unity binary asset files."
+    },
+    {
+      "name": "Shader Graphs/InvertColour",
+      "asset_file": "sharedassets4.assets",
+      "path_id": 5,
+      "is_baked": true,
+      "platforms": [
+        4
+      ],
+      "source_status": "compiled_gpu_bytecode_only",
+      "source_note": "Original HLSL source code is not preserved in Unity binary asset files."
+    }
+  ]
+}

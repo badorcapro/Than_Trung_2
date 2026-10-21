@@ -1,0 +1,48 @@
+{
+  "task_id": "TASK-0017",
+  "subagent_conversation_id": "484431bc-e00f-4da9-8e96-8b27eb50bed5",
+  "audited_at": "2026-10-21T07:56:00Z",
+  "diff_sha256": "5ce294d5cdac2e5ef6b0cb000a6756f39005fca65754d65cb3c38eca94bb24b1",
+  "transcript_reference": "file:///C:/Users/Admin/.gemini/antigravity/brain/5dc69d25-94eb-4e8a-9589-1420dc32d526/.system_generated/logs/transcript.jsonl",
+  "rules_and_docs_loaded": [
+    "GEMINI.md",
+    "AGENTS.md",
+    "ARCHITECTURE.md",
+    ".agents/rules/rule_anti_evasion.md",
+    ".agents/rules/rule_critical_engagement.md",
+    ".agents/rules/rule_task_contract_and_scope.md",
+    ".agents/skills/verify-task/SKILL.md",
+    ".agents/skills/critical-engagement/SKILL.md",
+    ".agents/skills/honest-execution/SKILL.md",
+    "docs/agent-system/tasks/TASK-0017.md",
+    ".agent_scratchpad.md"
+  ],
+  "decisions_made": [
+    "Xây dựng module điều phối scripts/agent/extract_dupery_materials.py (224 LOC, tier 'ok' per ADR-0010) quét toàn bộ 54 Materials, 46 Shaders, 2 VideoClips, và xác nhận 0 Animation/Particle từ game Dupery.",
+    "Trích xuất 54 Materials vào docs/agent-system/evidence/dupery/materials/materials_catalog.json kèm shader references (tra cứu từ PPtr hoặc m_ParsedForm), keywords, float properties, color vectors [r, g, b, a], và texture environments (scale, offset, path_id).",
+    "Trích xuất 46 Shaders vào docs/agent-system/evidence/dupery/materials/shaders_catalog.json bao gồm 13 custom Shader Graphs (Outline360, ImageHole, ContinuousWobble, BloodSplatter, StampMaskable, InvertColour...) và ghi chú rõ ràng rằng shader trong Unity asset nhị phân là compiled bytecode cho GPU, không thể khôi phục mã nguồn HLSL ban đầu.",
+    "Trích xuất 2 VideoClips (Dupery Intro English.mp4 và Dupery Intro Cutscene.mp4) vào docs/agent-system/evidence/dupery/materials/videoclips_catalog.json.",
+    "Lập văn bản chứng thực phát hiện âm tính docs/agent-system/evidence/dupery/materials/negative_findings.json xác nhận 0 AnimationClip, 0 Animator, 0 AnimatorController, và 0 ParticleSystem, củng cố quyết định kiến trúc DEC-23 về Behaviour Capture.",
+    "Xuất bản materials_summary.json tổng hợp toàn diện với thời gian quét ~0.435s.",
+    "Viết 7 unit tests trong tests/test_extract_dupery_materials.py (78 LOC, tier 'ok', passed 100%)."
+  ],
+  "omissions_and_simplifications": [
+    "Xác nhận đối kháng: Không có sự cắt xén hay lược bỏ vật liệu/shader/video nào. Cả 54 materials, 46 shaders, 2 videoclips và negative findings (0 Animation/Particle) đều được trích xuất và lưu trữ toàn vẹn 100%.",
+    "Lược bỏ cố ý theo thiết kế: Không cố khôi phục mã nguồn HLSL từ compiled binary shader bytecode vì thông tin HLSL gốc không tồn tại trong binary asset của Unity; thay vào đó lưu trữ toàn vẹn thuộc tính và tham số để hỗ trợ tái lập shader trên Godot 4."
+  ],
+  "adr_0010_anti_cheat_check": "Verified scripts/agent/extract_dupery_materials.py (224 LOC <= 300 budget) and tests/test_extract_dupery_materials.py (78 LOC <= 350 budget). Both files are strictly in tier 'ok'. No semicolon chaining (0 semicolons found), no placeholder truncation, no code golfing. Functions follow Single Responsibility Modularization with clean typing and early returns.",
+  "semantic_checks_performed": [
+    "Kiểm tra ngữ nghĩa và cấu trúc 54 Materials trong materials_catalog.json: đã bóc tách đầy đủ shader_name, keywords, float properties, color vectors [r, g, b, a], và texture environments (offset, scale, texture_path_id).",
+    "Kiểm tra ngữ nghĩa 46 Shaders trong shaders_catalog.json: 100% shader đều mang trường source_status='compiled_gpu_bytecode_only' kèm source_note giải trình chi tiết về việc không giữ lại HLSL source code.",
+    "Kiểm tra ngữ nghĩa 2 VideoClips trong videoclips_catalog.json: cả 2 file Dupery Intro English và Dupery Intro Cutscene đều nằm trong sharedassets8.assets với format=1.",
+    "Kiểm tra negative_findings.json: xác nhận đúng 0 AnimationClip, 0 Animator, 0 AnimatorController, 0 ParticleSystem; xác nhận cơ chế hoạt ảnh của Dupery là procedural coroutine via GRGLib.Coroutines.CoroutineLibrary per DEC-23.",
+    "Thực thi check_scope.py: xác nhận working tree diff_sha256 khớp chuẩn xác '5ce294d5cdac2e5ef6b0cb000a6756f39005fca65754d65cb3c38eca94bb24b1'.",
+    "Thực thi check_line_budget.py: extract_dupery_materials.py đạt 224 LOC (ok), test_extract_dupery_materials.py đạt 78 LOC (ok).",
+    "Thực thi check_diff_guard.py: 0 issues, không phát hiện placeholders hay hunk vi phạm.",
+    "Thực thi extract_dupery_materials.py --verify: xác thực tính toàn vẹn đạt PASSED (exit code 0).",
+    "Thực thi unittest tests/test_extract_dupery_materials.py: 7/7 tests passed (exit code 0).",
+    "Thực thi toàn bộ test suite (77 tests): 77/77 tests passed (exit code 0)."
+  ],
+  "findings": [],
+  "verdict": "PASS"
+}

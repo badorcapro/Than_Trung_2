@@ -1,0 +1,5195 @@
+{
+  "total_materials": 54,
+  "materials": [
+    {
+      "name": "Sprites-Default",
+      "asset_file": "globalgamemanagers.assets",
+      "path_id": 2,
+      "shader_name": "Sprites/Default",
+      "shader_keywords": null,
+      "properties": {
+        "floats": {
+          "PixelSnap": 0.0,
+          "_EnableExternalAlpha": 0.0
+        },
+        "colors": {
+          "_Color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "_Flip": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "_RendererColor": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "textures": [
+          {
+            "property": "_AlphaTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "_MainTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          }
+        ]
+      }
+    },
+    {
+      "name": "TextMeshPro/Sprite",
+      "asset_file": "resources.assets",
+      "path_id": 1,
+      "shader_name": "TextMeshPro/Sprite",
+      "shader_keywords": null,
+      "properties": {
+        "floats": {
+          "_ColorMask": 15.0,
+          "_CullMode": 0.0,
+          "_Stencil": 0.0,
+          "_StencilComp": 8.0,
+          "_StencilOp": 0.0,
+          "_StencilReadMask": 255.0,
+          "_StencilWriteMask": 255.0,
+          "_UseUIAlphaClip": 0.0
+        },
+        "colors": {
+          "_ClipRect": [
+            -32767.0,
+            -32767.0,
+            32767.0,
+            32767.0
+          ],
+          "_Color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "textures": [
+          {
+            "property": "_MainTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 33
+          }
+        ]
+      }
+    },
+    {
+      "name": "TextMeshPro/Sprite",
+      "asset_file": "resources.assets",
+      "path_id": 2,
+      "shader_name": "TextMeshPro/Sprite",
+      "shader_keywords": null,
+      "properties": {
+        "floats": {
+          "_ColorMask": 15.0,
+          "_CullMode": 0.0,
+          "_Stencil": 0.0,
+          "_StencilComp": 8.0,
+          "_StencilOp": 0.0,
+          "_StencilReadMask": 255.0,
+          "_StencilWriteMask": 255.0,
+          "_UseUIAlphaClip": 0.0
+        },
+        "colors": {
+          "_ClipRect": [
+            -32767.0,
+            -32767.0,
+            32767.0,
+            32767.0
+          ],
+          "_Color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "textures": [
+          {
+            "property": "_MainTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 25
+          }
+        ]
+      }
+    },
+    {
+      "name": "TextMeshPro/Sprite",
+      "asset_file": "resources.assets",
+      "path_id": 3,
+      "shader_name": "TextMeshPro/Sprite",
+      "shader_keywords": null,
+      "properties": {
+        "floats": {
+          "_ColorMask": 15.0,
+          "_CullMode": 0.0,
+          "_Stencil": 0.0,
+          "_StencilComp": 8.0,
+          "_StencilOp": 0.0,
+          "_StencilReadMask": 255.0,
+          "_StencilWriteMask": 255.0,
+          "_UseUIAlphaClip": 0.0
+        },
+        "colors": {
+          "_ClipRect": [
+            -32767.0,
+            -32767.0,
+            32767.0,
+            32767.0
+          ],
+          "_Color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "textures": [
+          {
+            "property": "_MainTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 29
+          }
+        ]
+      }
+    },
+    {
+      "name": "ManufacturingConsent-Regular SDF BlackOutline",
+      "asset_file": "resources.assets",
+      "path_id": 4,
+      "shader_name": "TextMeshPro/Distance Field",
+      "shader_keywords": null,
+      "properties": {
+        "floats": {
+          "_Ambient": 0.5,
+          "_Bevel": 0.5,
+          "_BevelClamp": 0.0,
+          "_BevelOffset": 0.0,
+          "_BevelRoundness": 0.0,
+          "_BevelWidth": 0.0,
+          "_BumpFace": 0.0,
+          "_BumpOutline": 0.0,
+          "_ColorMask": 15.0,
+          "_CullMode": 0.0,
+          "_Diffuse": 0.5,
+          "_FaceDilate": 0.2,
+          "_FaceUVSpeedX": 0.0,
+          "_FaceUVSpeedY": 0.0,
+          "_GlowInner": 0.05,
+          "_GlowOffset": 0.0,
+          "_GlowOuter": 0.05,
+          "_GlowPower": 0.75,
+          "_GradientScale": 10.0,
+          "_LightAngle": 3.1416,
+          "_MaskSoftnessX": 0.0,
+          "_MaskSoftnessY": 0.0,
+          "_OutlineSoftness": 0.0,
+          "_OutlineUVSpeedX": 0.0,
+          "_OutlineUVSpeedY": 0.0,
+          "_OutlineWidth": 0.3,
+          "_PerspectiveFilter": 0.875,
+          "_Reflectivity": 10.0,
+          "_ScaleRatioA": 0.9,
+          "_ScaleRatioB": 0.5512,
+          "_ScaleRatioC": 0.5512,
+          "_ScaleX": 1.0,
+          "_ScaleY": 1.0,
+          "_ShaderFlags": 0.0,
+          "_Sharpness": 0.0,
+          "_SpecularPower": 2.0,
+          "_Stencil": 0.0,
+          "_StencilComp": 8.0,
+          "_StencilOp": 0.0,
+          "_StencilReadMask": 255.0,
+          "_StencilWriteMask": 255.0,
+          "_TextureHeight": 1024.0,
+          "_TextureWidth": 1024.0,
+          "_UnderlayDilate": 0.0,
+          "_UnderlayOffsetX": 0.0,
+          "_UnderlayOffsetY": 0.0,
+          "_UnderlaySoftness": 0.0,
+          "_VertexOffsetX": 0.0,
+          "_VertexOffsetY": 0.0,
+          "_WeightBold": 0.75,
+          "_WeightNormal": 0.0
+        },
+        "colors": {
+          "_ClipRect": [
+            -32767.0,
+            -32767.0,
+            32767.0,
+            32767.0
+          ],
+          "_EnvMatrixRotation": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "_FaceColor": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "_GlowColor": [
+            0.0,
+            1.0,
+            0.0,
+            0.5
+          ],
+          "_MaskCoord": [
+            0.0,
+            0.0,
+            32767.0,
+            32767.0
+          ],
+          "_OutlineColor": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "_ReflectFaceColor": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "_ReflectOutlineColor": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "_SpecularColor": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "_UnderlayColor": [
+            0.0,
+            0.0,
+            0.0,
+            0.5
+          ]
+        },
+        "textures": [
+          {
+            "property": "_BumpMap",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "_Cube",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "_FaceTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "_MainTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 392
+          },
+          {
+            "property": "_OutlineTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          }
+        ]
+      }
+    },
+    {
+      "name": "ManufacturingConsent-Regular SDF WhiteOutline",
+      "asset_file": "resources.assets",
+      "path_id": 5,
+      "shader_name": "TextMeshPro/Distance Field",
+      "shader_keywords": null,
+      "properties": {
+        "floats": {
+          "_Ambient": 0.5,
+          "_Bevel": 0.5,
+          "_BevelClamp": 0.0,
+          "_BevelOffset": 0.0,
+          "_BevelRoundness": 0.0,
+          "_BevelWidth": 0.0,
+          "_BumpFace": 0.0,
+          "_BumpOutline": 0.0,
+          "_ColorMask": 15.0,
+          "_CullMode": 0.0,
+          "_Diffuse": 0.5,
+          "_FaceDilate": 0.2,
+          "_FaceUVSpeedX": 0.0,
+          "_FaceUVSpeedY": 0.0,
+          "_GlowInner": 0.05,
+          "_GlowOffset": 0.0,
+          "_GlowOuter": 0.05,
+          "_GlowPower": 0.75,
+          "_GradientScale": 10.0,
+          "_LightAngle": 3.1416,
+          "_MaskSoftnessX": 0.0,
+          "_MaskSoftnessY": 0.0,
+          "_OutlineSoftness": 0.0,
+          "_OutlineUVSpeedX": 0.0,
+          "_OutlineUVSpeedY": 0.0,
+          "_OutlineWidth": 0.2,
+          "_PerspectiveFilter": 0.875,
+          "_Reflectivity": 10.0,
+          "_ScaleRatioA": 0.9,
+          "_ScaleRatioB": 0.5512,
+          "_ScaleRatioC": 0.5512,
+          "_ScaleX": 1.0,
+          "_ScaleY": 1.0,
+          "_ShaderFlags": 0.0,
+          "_Sharpness": 0.0,
+          "_SpecularPower": 2.0,
+          "_Stencil": 0.0,
+          "_StencilComp": 8.0,
+          "_StencilOp": 0.0,
+          "_StencilReadMask": 255.0,
+          "_StencilWriteMask": 255.0,
+          "_TextureHeight": 1024.0,
+          "_TextureWidth": 1024.0,
+          "_UnderlayDilate": 0.0,
+          "_UnderlayOffsetX": 0.0,
+          "_UnderlayOffsetY": 0.0,
+          "_UnderlaySoftness": 0.0,
+          "_VertexOffsetX": 0.0,
+          "_VertexOffsetY": 0.0,
+          "_WeightBold": 0.75,
+          "_WeightNormal": 0.0
+        },
+        "colors": {
+          "_ClipRect": [
+            -32767.0,
+            -32767.0,
+            32767.0,
+            32767.0
+          ],
+          "_EnvMatrixRotation": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "_FaceColor": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "_GlowColor": [
+            0.0,
+            1.0,
+            0.0,
+            0.5
+          ],
+          "_MaskCoord": [
+            0.0,
+            0.0,
+            32767.0,
+            32767.0
+          ],
+          "_OutlineColor": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "_ReflectFaceColor": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "_ReflectOutlineColor": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "_SpecularColor": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "_UnderlayColor": [
+            0.0,
+            0.0,
+            0.0,
+            0.5
+          ]
+        },
+        "textures": [
+          {
+            "property": "_BumpMap",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "_Cube",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "_FaceTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "_MainTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 392
+          },
+          {
+            "property": "_OutlineTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          }
+        ]
+      }
+    },
+    {
+      "name": "veteran typewriter SDF WhiteOutline",
+      "asset_file": "resources.assets",
+      "path_id": 6,
+      "shader_name": "TextMeshPro/Distance Field",
+      "shader_keywords": null,
+      "properties": {
+        "floats": {
+          "_Ambient": 0.5,
+          "_Bevel": 0.5,
+          "_BevelClamp": 0.0,
+          "_BevelOffset": 0.0,
+          "_BevelRoundness": 0.0,
+          "_BevelWidth": 0.0,
+          "_BumpFace": 0.0,
+          "_BumpOutline": 0.0,
+          "_ColorMask": 15.0,
+          "_CullMode": 0.0,
+          "_Diffuse": 0.5,
+          "_FaceDilate": 0.394,
+          "_FaceUVSpeedX": 0.0,
+          "_FaceUVSpeedY": 0.0,
+          "_GlowInner": 0.05,
+          "_GlowOffset": 0.0,
+          "_GlowOuter": 0.05,
+          "_GlowPower": 0.75,
+          "_GradientScale": 9.0,
+          "_LightAngle": 3.1416,
+          "_MaskSoftnessX": 0.0,
+          "_MaskSoftnessY": 0.0,
+          "_OutlineSoftness": 0.0,
+          "_OutlineUVSpeedX": 0.0,
+          "_OutlineUVSpeedY": 0.0,
+          "_OutlineWidth": 0.345,
+          "_PerspectiveFilter": 0.875,
+          "_Reflectivity": 10.0,
+          "_ScaleRatioA": 0.8889,
+          "_ScaleRatioB": 0.372,
+          "_ScaleRatioC": 0.372,
+          "_ScaleX": 1.0,
+          "_ScaleY": 1.0,
+          "_ShaderFlags": 0.0,
+          "_Sharpness": 0.0,
+          "_SpecularPower": 2.0,
+          "_Stencil": 0.0,
+          "_StencilComp": 8.0,
+          "_StencilOp": 0.0,
+          "_StencilReadMask": 255.0,
+          "_StencilWriteMask": 255.0,
+          "_TextureHeight": 1024.0,
+          "_TextureWidth": 1024.0,
+          "_UnderlayDilate": 0.0,
+          "_UnderlayOffsetX": 0.0,
+          "_UnderlayOffsetY": 0.0,
+          "_UnderlaySoftness": 0.0,
+          "_VertexOffsetX": 0.0,
+          "_VertexOffsetY": 0.0,
+          "_WeightBold": 0.75,
+          "_WeightNormal": 0.0
+        },
+        "colors": {
+          "_ClipRect": [
+            -32767.0,
+            -32767.0,
+            32767.0,
+            32767.0
+          ],
+          "_EnvMatrixRotation": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "_FaceColor": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "_GlowColor": [
+            0.0,
+            1.0,
+            0.0,
+            0.5
+          ],
+          "_MaskCoord": [
+            0.0,
+            0.0,
+            32767.0,
+            32767.0
+          ],
+          "_OutlineColor": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "_ReflectFaceColor": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "_ReflectOutlineColor": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "_SpecularColor": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "_UnderlayColor": [
+            0.0,
+            0.0,
+            0.0,
+            0.5
+          ]
+        },
+        "textures": [
+          {
+            "property": "_BumpMap",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "_Cube",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "_FaceTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "_MainTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 394
+          },
+          {
+            "property": "_OutlineTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          }
+        ]
+      }
+    },
+    {
+      "name": "LiberationSans SDF - Drop Shadow",
+      "asset_file": "resources.assets",
+      "path_id": 7,
+      "shader_name": "TextMeshPro/Mobile/Distance Field",
+      "shader_keywords": null,
+      "properties": {
+        "floats": {
+          "_Ambient": 0.5,
+          "_Bevel": 0.5,
+          "_BevelClamp": 0.0,
+          "_BevelOffset": 0.0,
+          "_BevelRoundness": 0.0,
+          "_BevelWidth": 0.0,
+          "_BumpFace": 0.0,
+          "_BumpOutline": 0.0,
+          "_ColorMask": 15.0,
+          "_CullMode": 0.0,
+          "_Diffuse": 0.5,
+          "_DiffusePower": 1.0,
+          "_FaceDilate": 0.1,
+          "_FaceUVSpeedX": 0.0,
+          "_FaceUVSpeedY": 0.0,
+          "_GlowInner": 0.05,
+          "_GlowOffset": 0.0,
+          "_GlowOuter": 0.05,
+          "_GlowPower": 0.75,
+          "_GradientScale": 10.0,
+          "_LightAngle": 3.1416,
+          "_MaskSoftnessX": 0.0,
+          "_MaskSoftnessY": 0.0,
+          "_OutlineSoftness": 0.0,
+          "_OutlineUVSpeedX": 0.0,
+          "_OutlineUVSpeedY": 0.0,
+          "_OutlineWidth": 0.1,
+          "_PerspectiveFilter": 0.875,
+          "_Reflectivity": 10.0,
+          "_ScaleRatioA": 0.9,
+          "_ScaleRatioB": 0.7312,
+          "_ScaleRatioC": 0.6413,
+          "_ScaleX": 1.0,
+          "_ScaleY": 1.0,
+          "_ShaderFlags": 0.0,
+          "_Sharpness": 0.0,
+          "_SpecularPower": 2.0,
+          "_Stencil": 0.0,
+          "_StencilComp": 8.0,
+          "_StencilOp": 0.0,
+          "_StencilReadMask": 255.0,
+          "_StencilWriteMask": 255.0,
+          "_TextureHeight": 1024.0,
+          "_TextureWidth": 1024.0,
+          "_UnderlayDilate": 0.0,
+          "_UnderlayOffsetX": 0.5,
+          "_UnderlayOffsetY": -0.5,
+          "_UnderlaySoftness": 0.05,
+          "_VertexOffsetX": 0.0,
+          "_VertexOffsetY": 0.0,
+          "_WeightBold": 0.75,
+          "_WeightNormal": 0.0
+        },
+        "colors": {
+          "_ClipRect": [
+            -32767.0,
+            -32767.0,
+            32767.0,
+            32767.0
+          ],
+          "_Color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "_EnvMatrixRotation": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "_FaceColor": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "_GlowColor": [
+            0.0,
+            1.0,
+            0.0,
+            0.5
+          ],
+          "_MaskCoord": [
+            0.0,
+            0.0,
+            32767.0,
+            32767.0
+          ],
+          "_OutlineColor": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "_ReflectFaceColor": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "_ReflectOutlineColor": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "_SpecularColor": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "_UnderlayColor": [
+            0.0,
+            0.0,
+            0.0,
+            0.5
+          ]
+        },
+        "textures": [
+          {
+            "property": "_MainTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 41
+          }
+        ]
+      }
+    },
+    {
+      "name": "LiberationSans SDF - Outline",
+      "asset_file": "resources.assets",
+      "path_id": 8,
+      "shader_name": "TextMeshPro/Mobile/Distance Field",
+      "shader_keywords": null,
+      "properties": {
+        "floats": {
+          "_Ambient": 0.5,
+          "_Bevel": 0.5,
+          "_BevelClamp": 0.0,
+          "_BevelOffset": 0.0,
+          "_BevelRoundness": 0.0,
+          "_BevelWidth": 0.0,
+          "_BumpFace": 0.0,
+          "_BumpOutline": 0.0,
+          "_ColorMask": 15.0,
+          "_CullMode": 0.0,
+          "_Diffuse": 0.5,
+          "_FaceDilate": 0.1,
+          "_FaceUVSpeedX": 0.0,
+          "_FaceUVSpeedY": 0.0,
+          "_GlowInner": 0.05,
+          "_GlowOffset": 0.0,
+          "_GlowOuter": 0.05,
+          "_GlowPower": 0.75,
+          "_GradientScale": 10.0,
+          "_LightAngle": 3.1416,
+          "_MaskSoftnessX": 0.0,
+          "_MaskSoftnessY": 0.0,
+          "_OutlineSoftness": 0.0,
+          "_OutlineUVSpeedX": 0.0,
+          "_OutlineUVSpeedY": 0.0,
+          "_OutlineWidth": 0.1,
+          "_PerspectiveFilter": 0.875,
+          "_Reflectivity": 10.0,
+          "_ScaleRatioA": 0.9,
+          "_ScaleRatioB": 0.7312,
+          "_ScaleRatioC": 0.6413,
+          "_ScaleX": 1.0,
+          "_ScaleY": 1.0,
+          "_ShaderFlags": 0.0,
+          "_Sharpness": 0.0,
+          "_SpecularPower": 2.0,
+          "_Stencil": 0.0,
+          "_StencilComp": 8.0,
+          "_StencilOp": 0.0,
+          "_StencilReadMask": 255.0,
+          "_StencilWriteMask": 255.0,
+          "_TextureHeight": 1024.0,
+          "_TextureWidth": 1024.0,
+          "_UnderlayDilate": 0.0,
+          "_UnderlayOffsetX": 0.0,
+          "_UnderlayOffsetY": 0.0,
+          "_UnderlaySoftness": 0.0,
+          "_VertexOffsetX": 0.0,
+          "_VertexOffsetY": 0.0,
+          "_WeightBold": 0.75,
+          "_WeightNormal": 0.0
+        },
+        "colors": {
+          "_ClipRect": [
+            -32767.0,
+            -32767.0,
+            32767.0,
+            32767.0
+          ],
+          "_EnvMatrixRotation": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "_FaceColor": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "_GlowColor": [
+            0.0,
+            1.0,
+            0.0,
+            0.5
+          ],
+          "_MaskCoord": [
+            0.0,
+            0.0,
+            32767.0,
+            32767.0
+          ],
+          "_OutlineColor": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "_ReflectFaceColor": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "_ReflectOutlineColor": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "_SpecularColor": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "_UnderlayColor": [
+            0.0,
+            0.0,
+            0.0,
+            0.5
+          ]
+        },
+        "textures": [
+          {
+            "property": "_MainTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 41
+          }
+        ]
+      }
+    },
+    {
+      "name": "Font Material",
+      "asset_file": "resources.assets",
+      "path_id": 9,
+      "shader_name": "GUI/Text Shader",
+      "shader_keywords": null,
+      "properties": {
+        "floats": {},
+        "colors": {
+          "_Color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "textures": [
+          {
+            "property": "_MainTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 26
+          }
+        ]
+      }
+    },
+    {
+      "name": "Font Material",
+      "asset_file": "resources.assets",
+      "path_id": 10,
+      "shader_name": "GUI/Text Shader",
+      "shader_keywords": null,
+      "properties": {
+        "floats": {},
+        "colors": {
+          "_Color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "textures": [
+          {
+            "property": "_MainTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 30
+          }
+        ]
+      }
+    },
+    {
+      "name": "Font Material",
+      "asset_file": "resources.assets",
+      "path_id": 11,
+      "shader_name": "GUI/Text Shader",
+      "shader_keywords": null,
+      "properties": {
+        "floats": {},
+        "colors": {
+          "_Color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "textures": [
+          {
+            "property": "_MainTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 36
+          }
+        ]
+      }
+    },
+    {
+      "name": "Font Material",
+      "asset_file": "resources.assets",
+      "path_id": 12,
+      "shader_name": "GUI/Text Shader",
+      "shader_keywords": null,
+      "properties": {
+        "floats": {},
+        "colors": {
+          "_Color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "textures": [
+          {
+            "property": "_MainTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 39
+          }
+        ]
+      }
+    },
+    {
+      "name": "TextMeshPro/Sprite",
+      "asset_file": "resources.assets",
+      "path_id": 13,
+      "shader_name": "TextMeshPro/Sprite",
+      "shader_keywords": null,
+      "properties": {
+        "floats": {
+          "_ColorMask": 15.0,
+          "_CullMode": 0.0,
+          "_Stencil": 0.0,
+          "_StencilComp": 8.0,
+          "_StencilOp": 0.0,
+          "_StencilReadMask": 255.0,
+          "_StencilWriteMask": 255.0,
+          "_UseUIAlphaClip": 0.0
+        },
+        "colors": {
+          "_ClipRect": [
+            -32767.0,
+            -32767.0,
+            32767.0,
+            32767.0
+          ],
+          "_Color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "textures": [
+          {
+            "property": "_MainTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 38
+          }
+        ]
+      }
+    },
+    {
+      "name": "LiberationSans SDF Material",
+      "asset_file": "resources.assets",
+      "path_id": 14,
+      "shader_name": "TextMeshPro/Mobile/Distance Field",
+      "shader_keywords": null,
+      "properties": {
+        "floats": {
+          "_Ambient": 0.5,
+          "_Bevel": 0.5,
+          "_BevelClamp": 0.0,
+          "_BevelOffset": 0.0,
+          "_BevelRoundness": 0.0,
+          "_BevelWidth": 0.0,
+          "_BumpFace": 0.0,
+          "_BumpOutline": 0.0,
+          "_BumpScale": 1.0,
+          "_ColorMask": 15.0,
+          "_CullMode": 0.0,
+          "_Cutoff": 0.5,
+          "_DetailNormalMapScale": 1.0,
+          "_Diffuse": 0.5,
+          "_DstBlend": 0.0,
+          "_FaceDilate": 0.0,
+          "_FaceUVSpeedX": 0.0,
+          "_FaceUVSpeedY": 0.0,
+          "_GlossMapScale": 1.0,
+          "_Glossiness": 0.5,
+          "_GlossyReflections": 1.0,
+          "_GlowInner": 0.05,
+          "_GlowOffset": 0.0,
+          "_GlowOuter": 0.05,
+          "_GlowPower": 0.75,
+          "_GradientScale": 10.0,
+          "_LightAngle": 3.1416,
+          "_MaskSoftnessX": 0.0,
+          "_MaskSoftnessY": 0.0,
+          "_Metallic": 0.0,
+          "_Mode": 0.0,
+          "_OcclusionStrength": 1.0,
+          "_OutlineSoftness": 0.0,
+          "_OutlineUVSpeedX": 0.0,
+          "_OutlineUVSpeedY": 0.0,
+          "_OutlineWidth": 0.0,
+          "_Parallax": 0.02,
+          "_PerspectiveFilter": 0.875,
+          "_Reflectivity": 10.0,
+          "_ScaleRatioA": 0.9091,
+          "_ScaleRatioB": 0.7312,
+          "_ScaleRatioC": 0.7386,
+          "_ScaleX": 1.0,
+          "_ScaleY": 1.0,
+          "_ShaderFlags": 0.0,
+          "_Sharpness": 0.0,
+          "_SmoothnessTextureChannel": 0.0,
+          "_SpecularHighlights": 1.0,
+          "_SpecularPower": 2.0,
+          "_SrcBlend": 1.0,
+          "_Stencil": 0.0,
+          "_StencilComp": 8.0,
+          "_StencilOp": 0.0,
+          "_StencilReadMask": 255.0,
+          "_StencilWriteMask": 255.0,
+          "_TextureHeight": 512.0,
+          "_TextureWidth": 512.0,
+          "_UVSec": 0.0,
+          "_UnderlayDilate": 0.0,
+          "_UnderlayOffsetX": 0.0,
+          "_UnderlayOffsetY": 0.0,
+          "_UnderlaySoftness": 0.0,
+          "_VertexOffsetX": 0.0,
+          "_VertexOffsetY": 0.0,
+          "_WeightBold": 0.75,
+          "_WeightNormal": 0.0,
+          "_ZWrite": 1.0
+        },
+        "colors": {
+          "_ClipRect": [
+            -32767.0,
+            -32767.0,
+            32767.0,
+            32767.0
+          ],
+          "_Color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "_EmissionColor": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "_EnvMatrixRotation": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "_FaceColor": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "_GlowColor": [
+            0.0,
+            1.0,
+            0.0,
+            0.5
+          ],
+          "_MaskCoord": [
+            0.0,
+            0.0,
+            32767.0,
+            32767.0
+          ],
+          "_OutlineColor": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "_ReflectFaceColor": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "_ReflectOutlineColor": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "_SpecularColor": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "_UnderlayColor": [
+            0.0,
+            0.0,
+            0.0,
+            0.5
+          ]
+        },
+        "textures": [
+          {
+            "property": "_MainTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 40
+          }
+        ]
+      }
+    },
+    {
+      "name": "LiberationSans SDF Material",
+      "asset_file": "resources.assets",
+      "path_id": 15,
+      "shader_name": "TextMeshPro/Mobile/Distance Field",
+      "shader_keywords": null,
+      "properties": {
+        "floats": {
+          "_ColorMask": 15.0,
+          "_CullMode": 0.0,
+          "_FaceDilate": 0.0,
+          "_GradientScale": 10.0,
+          "_MaskSoftnessX": 0.0,
+          "_MaskSoftnessY": 0.0,
+          "_OutlineSoftness": 0.0,
+          "_OutlineWidth": 0.0,
+          "_PerspectiveFilter": 0.875,
+          "_ScaleRatioA": 0.9,
+          "_ScaleRatioB": 1.0,
+          "_ScaleRatioC": 0.7312,
+          "_ScaleX": 1.0,
+          "_ScaleY": 1.0,
+          "_ShaderFlags": 0.0,
+          "_Sharpness": 0.0,
+          "_Stencil": 0.0,
+          "_StencilComp": 8.0,
+          "_StencilOp": 0.0,
+          "_StencilReadMask": 255.0,
+          "_StencilWriteMask": 255.0,
+          "_TextureHeight": 1024.0,
+          "_TextureWidth": 1024.0,
+          "_UnderlayDilate": 0.0,
+          "_UnderlayOffsetX": 0.0,
+          "_UnderlayOffsetY": 0.0,
+          "_UnderlaySoftness": 0.0,
+          "_VertexOffsetX": 0.0,
+          "_VertexOffsetY": 0.0,
+          "_WeightBold": 0.75,
+          "_WeightNormal": 0.0
+        },
+        "colors": {
+          "_ClipRect": [
+            -32767.0,
+            -32767.0,
+            32767.0,
+            32767.0
+          ],
+          "_FaceColor": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "_OutlineColor": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "_UnderlayColor": [
+            0.0,
+            0.0,
+            0.0,
+            0.5
+          ]
+        },
+        "textures": [
+          {
+            "property": "_MainTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 41
+          }
+        ]
+      }
+    },
+    {
+      "name": "TextMeshPro/Sprite",
+      "asset_file": "resources.assets",
+      "path_id": 16,
+      "shader_name": "TextMeshPro/Sprite",
+      "shader_keywords": null,
+      "properties": {
+        "floats": {
+          "_ColorMask": 15.0,
+          "_CullMode": 0.0,
+          "_Stencil": 0.0,
+          "_StencilComp": 8.0,
+          "_StencilOp": 0.0,
+          "_StencilReadMask": 255.0,
+          "_StencilWriteMask": 255.0,
+          "_UseUIAlphaClip": 0.0
+        },
+        "colors": {
+          "_ClipRect": [
+            -32767.0,
+            -32767.0,
+            32767.0,
+            32767.0
+          ],
+          "_Color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "textures": [
+          {
+            "property": "_MainTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 24
+          }
+        ]
+      }
+    },
+    {
+      "name": "NotoSansCJK Atlas Material",
+      "asset_file": "resources.assets",
+      "path_id": 17,
+      "shader_name": "TextMeshPro/Distance Field",
+      "shader_keywords": null,
+      "properties": {
+        "floats": {
+          "_Ambient": 0.5,
+          "_Bevel": 0.5,
+          "_BevelClamp": 0.0,
+          "_BevelOffset": 0.0,
+          "_BevelRoundness": 0.0,
+          "_BevelWidth": 0.0,
+          "_BumpFace": 0.0,
+          "_BumpOutline": 0.0,
+          "_ColorMask": 15.0,
+          "_CullMode": 0.0,
+          "_Diffuse": 0.5,
+          "_FaceDilate": 0.0,
+          "_FaceUVSpeedX": 0.0,
+          "_FaceUVSpeedY": 0.0,
+          "_GlowInner": 0.05,
+          "_GlowOffset": 0.0,
+          "_GlowOuter": 0.05,
+          "_GlowPower": 0.75,
+          "_GradientScale": 10.0,
+          "_LightAngle": 3.1416,
+          "_MaskSoftnessX": 0.0,
+          "_MaskSoftnessY": 0.0,
+          "_OutlineSoftness": 0.0,
+          "_OutlineUVSpeedX": 0.0,
+          "_OutlineUVSpeedY": 0.0,
+          "_OutlineWidth": 0.0,
+          "_PerspectiveFilter": 0.875,
+          "_Reflectivity": 10.0,
+          "_ScaleRatioA": 1.0,
+          "_ScaleRatioB": 1.0,
+          "_ScaleRatioC": 1.0,
+          "_ScaleX": 1.0,
+          "_ScaleY": 1.0,
+          "_ShaderFlags": 0.0,
+          "_Sharpness": 0.0,
+          "_SpecularPower": 2.0,
+          "_Stencil": 0.0,
+          "_StencilComp": 8.0,
+          "_StencilOp": 0.0,
+          "_StencilReadMask": 255.0,
+          "_StencilWriteMask": 255.0,
+          "_TextureHeight": 1024.0,
+          "_TextureWidth": 1024.0,
+          "_UnderlayDilate": 0.0,
+          "_UnderlayOffsetX": 0.0,
+          "_UnderlayOffsetY": 0.0,
+          "_UnderlaySoftness": 0.0,
+          "_VertexOffsetX": 0.0,
+          "_VertexOffsetY": 0.0,
+          "_WeightBold": 0.75,
+          "_WeightNormal": 0.0
+        },
+        "colors": {
+          "_ClipRect": [
+            -32767.0,
+            -32767.0,
+            32767.0,
+            32767.0
+          ],
+          "_EnvMatrixRotation": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "_FaceColor": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "_GlowColor": [
+            0.0,
+            1.0,
+            0.0,
+            0.5
+          ],
+          "_MaskCoord": [
+            0.0,
+            0.0,
+            32767.0,
+            32767.0
+          ],
+          "_OutlineColor": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "_ReflectFaceColor": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "_ReflectOutlineColor": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "_SpecularColor": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "_UnderlayColor": [
+            0.0,
+            0.0,
+            0.0,
+            0.5
+          ]
+        },
+        "textures": [
+          {
+            "property": "_BumpMap",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "_Cube",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "_FaceTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "_MainTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 22
+          },
+          {
+            "property": "_OutlineTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          }
+        ]
+      }
+    },
+    {
+      "name": "NotoSerifThai-VariableFont_wdth,wght Atlas Material",
+      "asset_file": "resources.assets",
+      "path_id": 18,
+      "shader_name": "TextMeshPro/Distance Field",
+      "shader_keywords": null,
+      "properties": {
+        "floats": {
+          "_Ambient": 0.5,
+          "_Bevel": 0.5,
+          "_BevelClamp": 0.0,
+          "_BevelOffset": 0.0,
+          "_BevelRoundness": 0.0,
+          "_BevelWidth": 0.0,
+          "_BumpFace": 0.0,
+          "_BumpOutline": 0.0,
+          "_ColorMask": 15.0,
+          "_CullMode": 0.0,
+          "_Diffuse": 0.5,
+          "_FaceDilate": 0.0,
+          "_FaceUVSpeedX": 0.0,
+          "_FaceUVSpeedY": 0.0,
+          "_GlowInner": 0.05,
+          "_GlowOffset": 0.0,
+          "_GlowOuter": 0.05,
+          "_GlowPower": 0.75,
+          "_GradientScale": 9.0,
+          "_LightAngle": 3.1416,
+          "_MaskSoftnessX": 0.0,
+          "_MaskSoftnessY": 0.0,
+          "_OutlineSoftness": 0.0,
+          "_OutlineUVSpeedX": 0.0,
+          "_OutlineUVSpeedY": 0.0,
+          "_OutlineWidth": 0.0,
+          "_PerspectiveFilter": 0.875,
+          "_Reflectivity": 10.0,
+          "_ScaleRatioA": 1.0,
+          "_ScaleRatioB": 1.0,
+          "_ScaleRatioC": 1.0,
+          "_ScaleX": 1.0,
+          "_ScaleY": 1.0,
+          "_ShaderFlags": 0.0,
+          "_Sharpness": 0.0,
+          "_SpecularPower": 2.0,
+          "_Stencil": 0.0,
+          "_StencilComp": 8.0,
+          "_StencilOp": 0.0,
+          "_StencilReadMask": 255.0,
+          "_StencilWriteMask": 255.0,
+          "_TextureHeight": 1024.0,
+          "_TextureWidth": 1024.0,
+          "_UnderlayDilate": 0.0,
+          "_UnderlayOffsetX": 0.0,
+          "_UnderlayOffsetY": 0.0,
+          "_UnderlaySoftness": 0.0,
+          "_VertexOffsetX": 0.0,
+          "_VertexOffsetY": 0.0,
+          "_WeightBold": 0.75,
+          "_WeightNormal": 0.0
+        },
+        "colors": {
+          "_ClipRect": [
+            -32767.0,
+            -32767.0,
+            32767.0,
+            32767.0
+          ],
+          "_EnvMatrixRotation": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "_FaceColor": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "_GlowColor": [
+            0.0,
+            1.0,
+            0.0,
+            0.5
+          ],
+          "_MaskCoord": [
+            0.0,
+            0.0,
+            32767.0,
+            32767.0
+          ],
+          "_OutlineColor": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "_ReflectFaceColor": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "_ReflectOutlineColor": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "_SpecularColor": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "_UnderlayColor": [
+            0.0,
+            0.0,
+            0.0,
+            0.5
+          ]
+        },
+        "textures": [
+          {
+            "property": "_BumpMap",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "_Cube",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "_FaceTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "_MainTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 42
+          },
+          {
+            "property": "_OutlineTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          }
+        ]
+      }
+    },
+    {
+      "name": "TextMeshPro/Sprite",
+      "asset_file": "resources.assets",
+      "path_id": 19,
+      "shader_name": "TextMeshPro/Sprite",
+      "shader_keywords": null,
+      "properties": {
+        "floats": {
+          "_ColorMask": 15.0,
+          "_CullMode": 0.0,
+          "_Stencil": 0.0,
+          "_StencilComp": 8.0,
+          "_StencilOp": 0.0,
+          "_StencilReadMask": 255.0,
+          "_StencilWriteMask": 255.0,
+          "_UseUIAlphaClip": 0.0
+        },
+        "colors": {
+          "_ClipRect": [
+            -32767.0,
+            -32767.0,
+            32767.0,
+            32767.0
+          ],
+          "_Color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "textures": [
+          {
+            "property": "_MainTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 32
+          }
+        ]
+      }
+    },
+    {
+      "name": "TextMeshPro/Sprite",
+      "asset_file": "resources.assets",
+      "path_id": 20,
+      "shader_name": "TextMeshPro/Sprite",
+      "shader_keywords": null,
+      "properties": {
+        "floats": {
+          "_ColorMask": 15.0,
+          "_CullMode": 0.0,
+          "_Stencil": 0.0,
+          "_StencilComp": 8.0,
+          "_StencilOp": 0.0,
+          "_StencilReadMask": 255.0,
+          "_StencilWriteMask": 255.0,
+          "_UseUIAlphaClip": 0.0
+        },
+        "colors": {
+          "_ClipRect": [
+            -32767.0,
+            -32767.0,
+            32767.0,
+            32767.0
+          ],
+          "_Color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "textures": [
+          {
+            "property": "_MainTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 28
+          }
+        ]
+      }
+    },
+    {
+      "name": "TextMeshPro/Sprite",
+      "asset_file": "resources.assets",
+      "path_id": 21,
+      "shader_name": "TextMeshPro/Sprite",
+      "shader_keywords": null,
+      "properties": {
+        "floats": {
+          "_ColorMask": 15.0,
+          "_CullMode": 0.0,
+          "_Stencil": 0.0,
+          "_StencilComp": 8.0,
+          "_StencilOp": 0.0,
+          "_StencilReadMask": 255.0,
+          "_StencilWriteMask": 255.0,
+          "_UseUIAlphaClip": 0.0
+        },
+        "colors": {
+          "_ClipRect": [
+            -32767.0,
+            -32767.0,
+            32767.0,
+            32767.0
+          ],
+          "_Color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "textures": [
+          {
+            "property": "_MainTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 27
+          }
+        ]
+      }
+    },
+    {
+      "name": "SourceHanSans-Regular Atlas Material",
+      "asset_file": "sharedassets0.assets",
+      "path_id": 2,
+      "shader_name": "TextMeshPro/Distance Field",
+      "shader_keywords": null,
+      "properties": {
+        "floats": {
+          "_Ambient": 0.5,
+          "_Bevel": 0.5,
+          "_BevelClamp": 0.0,
+          "_BevelOffset": 0.0,
+          "_BevelRoundness": 0.0,
+          "_BevelWidth": 0.0,
+          "_BumpFace": 0.0,
+          "_BumpOutline": 0.0,
+          "_ColorMask": 15.0,
+          "_CullMode": 0.0,
+          "_Diffuse": 0.5,
+          "_FaceDilate": 0.0,
+          "_FaceUVSpeedX": 0.0,
+          "_FaceUVSpeedY": 0.0,
+          "_GlowInner": 0.05,
+          "_GlowOffset": 0.0,
+          "_GlowOuter": 0.05,
+          "_GlowPower": 0.75,
+          "_GradientScale": 9.0,
+          "_LightAngle": 3.1416,
+          "_MaskSoftnessX": 0.0,
+          "_MaskSoftnessY": 0.0,
+          "_OutlineSoftness": 0.0,
+          "_OutlineUVSpeedX": 0.0,
+          "_OutlineUVSpeedY": 0.0,
+          "_OutlineWidth": 0.0,
+          "_PerspectiveFilter": 0.875,
+          "_Reflectivity": 10.0,
+          "_ScaleRatioA": 1.0,
+          "_ScaleRatioB": 1.0,
+          "_ScaleRatioC": 1.0,
+          "_ScaleX": 1.0,
+          "_ScaleY": 1.0,
+          "_ShaderFlags": 0.0,
+          "_Sharpness": 0.0,
+          "_SpecularPower": 2.0,
+          "_Stencil": 0.0,
+          "_StencilComp": 8.0,
+          "_StencilOp": 0.0,
+          "_StencilReadMask": 255.0,
+          "_StencilWriteMask": 255.0,
+          "_TextureHeight": 1024.0,
+          "_TextureWidth": 1024.0,
+          "_UnderlayDilate": 0.0,
+          "_UnderlayOffsetX": 0.0,
+          "_UnderlayOffsetY": 0.0,
+          "_UnderlaySoftness": 0.0,
+          "_VertexOffsetX": 0.0,
+          "_VertexOffsetY": 0.0,
+          "_WeightBold": 0.75,
+          "_WeightNormal": 0.0
+        },
+        "colors": {
+          "_ClipRect": [
+            -32767.0,
+            -32767.0,
+            32767.0,
+            32767.0
+          ],
+          "_EnvMatrixRotation": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "_FaceColor": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "_GlowColor": [
+            0.0,
+            1.0,
+            0.0,
+            0.5
+          ],
+          "_MaskCoord": [
+            0.0,
+            0.0,
+            32767.0,
+            32767.0
+          ],
+          "_OutlineColor": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "_ReflectFaceColor": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "_ReflectOutlineColor": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "_SpecularColor": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "_UnderlayColor": [
+            0.0,
+            0.0,
+            0.0,
+            0.5
+          ]
+        },
+        "textures": [
+          {
+            "property": "_BumpMap",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "_Cube",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "_FaceTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "_MainTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 24
+          },
+          {
+            "property": "_OutlineTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          }
+        ]
+      }
+    },
+    {
+      "name": "SourceHanSansSC-Regular Atlas Material",
+      "asset_file": "sharedassets0.assets",
+      "path_id": 3,
+      "shader_name": "TextMeshPro/Distance Field",
+      "shader_keywords": null,
+      "properties": {
+        "floats": {
+          "_Ambient": 0.5,
+          "_Bevel": 0.5,
+          "_BevelClamp": 0.0,
+          "_BevelOffset": 0.0,
+          "_BevelRoundness": 0.0,
+          "_BevelWidth": 0.0,
+          "_BumpFace": 0.0,
+          "_BumpOutline": 0.0,
+          "_ColorMask": 15.0,
+          "_CullMode": 0.0,
+          "_Diffuse": 0.5,
+          "_FaceDilate": 0.0,
+          "_FaceUVSpeedX": 0.0,
+          "_FaceUVSpeedY": 0.0,
+          "_GlowInner": 0.05,
+          "_GlowOffset": 0.0,
+          "_GlowOuter": 0.05,
+          "_GlowPower": 0.75,
+          "_GradientScale": 9.0,
+          "_LightAngle": 3.1416,
+          "_MaskSoftnessX": 0.0,
+          "_MaskSoftnessY": 0.0,
+          "_OutlineSoftness": 0.0,
+          "_OutlineUVSpeedX": 0.0,
+          "_OutlineUVSpeedY": 0.0,
+          "_OutlineWidth": 0.0,
+          "_PerspectiveFilter": 0.875,
+          "_Reflectivity": 10.0,
+          "_ScaleRatioA": 1.0,
+          "_ScaleRatioB": 1.0,
+          "_ScaleRatioC": 1.0,
+          "_ScaleX": 1.0,
+          "_ScaleY": 1.0,
+          "_ShaderFlags": 0.0,
+          "_Sharpness": 0.0,
+          "_SpecularPower": 2.0,
+          "_Stencil": 0.0,
+          "_StencilComp": 8.0,
+          "_StencilOp": 0.0,
+          "_StencilReadMask": 255.0,
+          "_StencilWriteMask": 255.0,
+          "_TextureHeight": 1024.0,
+          "_TextureWidth": 1024.0,
+          "_UnderlayDilate": 0.0,
+          "_UnderlayOffsetX": 0.0,
+          "_UnderlayOffsetY": 0.0,
+          "_UnderlaySoftness": 0.0,
+          "_VertexOffsetX": 0.0,
+          "_VertexOffsetY": 0.0,
+          "_WeightBold": 0.75,
+          "_WeightNormal": 0.0
+        },
+        "colors": {
+          "_ClipRect": [
+            -32767.0,
+            -32767.0,
+            32767.0,
+            32767.0
+          ],
+          "_EnvMatrixRotation": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "_FaceColor": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "_GlowColor": [
+            0.0,
+            1.0,
+            0.0,
+            0.5
+          ],
+          "_MaskCoord": [
+            0.0,
+            0.0,
+            32767.0,
+            32767.0
+          ],
+          "_OutlineColor": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "_ReflectFaceColor": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "_ReflectOutlineColor": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "_SpecularColor": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "_UnderlayColor": [
+            0.0,
+            0.0,
+            0.0,
+            0.5
+          ]
+        },
+        "textures": [
+          {
+            "property": "_BumpMap",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "_Cube",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "_FaceTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "_MainTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 393
+          },
+          {
+            "property": "_OutlineTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          }
+        ]
+      }
+    },
+    {
+      "name": "ManufacturingConsent-Regular Atlas Material",
+      "asset_file": "sharedassets0.assets",
+      "path_id": 4,
+      "shader_name": "TextMeshPro/Distance Field",
+      "shader_keywords": null,
+      "properties": {
+        "floats": {
+          "_Ambient": 0.5,
+          "_Bevel": 0.5,
+          "_BevelClamp": 0.0,
+          "_BevelOffset": 0.0,
+          "_BevelRoundness": 0.0,
+          "_BevelWidth": 0.0,
+          "_BumpFace": 0.0,
+          "_BumpOutline": 0.0,
+          "_ColorMask": 15.0,
+          "_CullMode": 0.0,
+          "_Diffuse": 0.5,
+          "_FaceDilate": 0.0,
+          "_FaceUVSpeedX": 0.0,
+          "_FaceUVSpeedY": 0.0,
+          "_GlowInner": 0.05,
+          "_GlowOffset": 0.0,
+          "_GlowOuter": 0.05,
+          "_GlowPower": 0.75,
+          "_GradientScale": 10.0,
+          "_LightAngle": 3.1416,
+          "_MaskSoftnessX": 0.0,
+          "_MaskSoftnessY": 0.0,
+          "_OutlineSoftness": 0.0,
+          "_OutlineUVSpeedX": 0.0,
+          "_OutlineUVSpeedY": 0.0,
+          "_OutlineWidth": 0.0,
+          "_PerspectiveFilter": 0.875,
+          "_Reflectivity": 10.0,
+          "_ScaleRatioA": 0.9,
+          "_ScaleRatioB": 0.7312,
+          "_ScaleRatioC": 0.7312,
+          "_ScaleX": 1.0,
+          "_ScaleY": 1.0,
+          "_ShaderFlags": 0.0,
+          "_Sharpness": 0.0,
+          "_SpecularPower": 2.0,
+          "_Stencil": 0.0,
+          "_StencilComp": 8.0,
+          "_StencilOp": 0.0,
+          "_StencilReadMask": 255.0,
+          "_StencilWriteMask": 255.0,
+          "_TextureHeight": 1024.0,
+          "_TextureWidth": 1024.0,
+          "_UnderlayDilate": 0.0,
+          "_UnderlayOffsetX": 0.0,
+          "_UnderlayOffsetY": 0.0,
+          "_UnderlaySoftness": 0.0,
+          "_VertexOffsetX": 0.0,
+          "_VertexOffsetY": 0.0,
+          "_WeightBold": 0.75,
+          "_WeightNormal": 0.0
+        },
+        "colors": {
+          "_ClipRect": [
+            -32767.0,
+            -32767.0,
+            32767.0,
+            32767.0
+          ],
+          "_EnvMatrixRotation": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "_FaceColor": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "_GlowColor": [
+            0.0,
+            1.0,
+            0.0,
+            0.5
+          ],
+          "_MaskCoord": [
+            0.0,
+            0.0,
+            32767.0,
+            32767.0
+          ],
+          "_OutlineColor": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "_ReflectFaceColor": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "_ReflectOutlineColor": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "_SpecularColor": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "_UnderlayColor": [
+            0.0,
+            0.0,
+            0.0,
+            0.5
+          ]
+        },
+        "textures": [
+          {
+            "property": "_BumpMap",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "_Cube",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "_FaceTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "_MainTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 392
+          },
+          {
+            "property": "_OutlineTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          }
+        ]
+      }
+    },
+    {
+      "name": "veteran typewriter Atlas Material",
+      "asset_file": "sharedassets0.assets",
+      "path_id": 5,
+      "shader_name": "TextMeshPro/Distance Field",
+      "shader_keywords": null,
+      "properties": {
+        "floats": {
+          "_Ambient": 0.5,
+          "_Bevel": 0.5,
+          "_BevelClamp": 0.0,
+          "_BevelOffset": 0.0,
+          "_BevelRoundness": 0.0,
+          "_BevelWidth": 0.0,
+          "_BumpFace": 0.0,
+          "_BumpOutline": 0.0,
+          "_ColorMask": 15.0,
+          "_CullMode": 0.0,
+          "_Diffuse": 0.5,
+          "_FaceDilate": 0.0,
+          "_FaceUVSpeedX": 0.0,
+          "_FaceUVSpeedY": 0.0,
+          "_GlowInner": 0.05,
+          "_GlowOffset": 0.0,
+          "_GlowOuter": 0.05,
+          "_GlowPower": 0.75,
+          "_GradientScale": 9.0,
+          "_LightAngle": 3.1416,
+          "_MaskSoftnessX": 0.0,
+          "_MaskSoftnessY": 0.0,
+          "_OutlineSoftness": 0.0,
+          "_OutlineUVSpeedX": 0.0,
+          "_OutlineUVSpeedY": 0.0,
+          "_OutlineWidth": 0.0,
+          "_PerspectiveFilter": 0.875,
+          "_Reflectivity": 10.0,
+          "_ScaleRatioA": 0.8889,
+          "_ScaleRatioB": 0.7222,
+          "_ScaleRatioC": 0.7222,
+          "_ScaleX": 1.0,
+          "_ScaleY": 1.0,
+          "_ShaderFlags": 0.0,
+          "_Sharpness": 0.0,
+          "_SpecularPower": 2.0,
+          "_Stencil": 0.0,
+          "_StencilComp": 8.0,
+          "_StencilOp": 0.0,
+          "_StencilReadMask": 255.0,
+          "_StencilWriteMask": 255.0,
+          "_TextureHeight": 1024.0,
+          "_TextureWidth": 1024.0,
+          "_UnderlayDilate": 0.0,
+          "_UnderlayOffsetX": 0.0,
+          "_UnderlayOffsetY": 0.0,
+          "_UnderlaySoftness": 0.0,
+          "_VertexOffsetX": 0.0,
+          "_VertexOffsetY": 0.0,
+          "_WeightBold": 0.75,
+          "_WeightNormal": 0.0
+        },
+        "colors": {
+          "_ClipRect": [
+            -32767.0,
+            -32767.0,
+            32767.0,
+            32767.0
+          ],
+          "_EnvMatrixRotation": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "_FaceColor": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "_GlowColor": [
+            0.0,
+            1.0,
+            0.0,
+            0.5
+          ],
+          "_MaskCoord": [
+            0.0,
+            0.0,
+            32767.0,
+            32767.0
+          ],
+          "_OutlineColor": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "_ReflectFaceColor": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "_ReflectOutlineColor": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "_SpecularColor": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "_UnderlayColor": [
+            0.0,
+            0.0,
+            0.0,
+            0.5
+          ]
+        },
+        "textures": [
+          {
+            "property": "_BumpMap",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "_Cube",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "_FaceTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "_MainTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 394
+          },
+          {
+            "property": "_OutlineTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          }
+        ]
+      }
+    },
+    {
+      "name": "KeysearchBackground",
+      "asset_file": "sharedassets0.assets",
+      "path_id": 6,
+      "shader_name": "Shader Graphs/ImageHole",
+      "shader_keywords": null,
+      "properties": {
+        "floats": {
+          "_Alpha": 0.0,
+          "_QueueControl": 0.0,
+          "_QueueOffset": 0.0
+        },
+        "colors": {
+          "_CanvasSize": [
+            3840.0,
+            2160.0,
+            0.0,
+            0.0
+          ],
+          "_Color": [
+            0.502,
+            0.502,
+            0.502,
+            1.0
+          ],
+          "_Position": [
+            -1164.0681,
+            159.9078,
+            0.0,
+            0.0
+          ],
+          "_Size": [
+            188.8387,
+            82.9875,
+            0.0,
+            0.0
+          ]
+        },
+        "textures": [
+          {
+            "property": "_MainTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "unity_Lightmaps",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "unity_LightmapsInd",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "unity_ShadowMasks",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          }
+        ]
+      }
+    },
+    {
+      "name": "LockOutline",
+      "asset_file": "sharedassets0.assets",
+      "path_id": 7,
+      "shader_name": "Shader Graphs/Outline360",
+      "shader_keywords": null,
+      "properties": {
+        "floats": {
+          "AlphaCutoff": 0.05,
+          "Outline_Thickness": 1.0,
+          "_EnableExternalAlpha": 0.0
+        },
+        "colors": {
+          "Outline_Colour": [
+            0.7736,
+            0.7736,
+            0.7736,
+            1.0
+          ],
+          "_Color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "_Flip": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "_RendererColor": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "textures": [
+          {
+            "property": "_MainTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "unity_Lightmaps",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "unity_LightmapsInd",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "unity_ShadowMasks",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          }
+        ]
+      }
+    },
+    {
+      "name": "TopWobble",
+      "asset_file": "sharedassets0.assets",
+      "path_id": 8,
+      "shader_name": "Shader Graphs/TopContinuousWobble",
+      "shader_keywords": null,
+      "properties": {
+        "floats": {
+          "Intensity": 4.0,
+          "Speed": 0.5,
+          "_QueueControl": 0.0,
+          "_QueueOffset": 0.0
+        },
+        "colors": {},
+        "textures": [
+          {
+            "property": "_MainTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "unity_Lightmaps",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "unity_LightmapsInd",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "unity_ShadowMasks",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          }
+        ]
+      }
+    },
+    {
+      "name": "TopWobbleWeak",
+      "asset_file": "sharedassets0.assets",
+      "path_id": 9,
+      "shader_name": "Shader Graphs/TopContinuousWobble",
+      "shader_keywords": null,
+      "properties": {
+        "floats": {
+          "Intensity": 3.0,
+          "Speed": 0.5,
+          "_QueueControl": 0.0,
+          "_QueueOffset": 0.0
+        },
+        "colors": {},
+        "textures": [
+          {
+            "property": "_MainTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "unity_Lightmaps",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "unity_LightmapsInd",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "unity_ShadowMasks",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          }
+        ]
+      }
+    },
+    {
+      "name": "Wobble",
+      "asset_file": "sharedassets0.assets",
+      "path_id": 10,
+      "shader_name": "Shader Graphs/ContinuousWobble",
+      "shader_keywords": null,
+      "properties": {
+        "floats": {
+          "Intensity": 4.0,
+          "Speed": 0.5,
+          "_QueueControl": 0.0,
+          "_QueueOffset": 0.0
+        },
+        "colors": {},
+        "textures": [
+          {
+            "property": "_MainTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "unity_Lightmaps",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "unity_LightmapsInd",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "unity_ShadowMasks",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          }
+        ]
+      }
+    },
+    {
+      "name": "WobbleWeak",
+      "asset_file": "sharedassets0.assets",
+      "path_id": 11,
+      "shader_name": "Shader Graphs/ContinuousWobble",
+      "shader_keywords": null,
+      "properties": {
+        "floats": {
+          "Intensity": 3.0,
+          "Speed": 0.5,
+          "_QueueControl": 0.0,
+          "_QueueOffset": 0.0
+        },
+        "colors": {},
+        "textures": [
+          {
+            "property": "_MainTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "unity_Lightmaps",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "unity_LightmapsInd",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "unity_ShadowMasks",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          }
+        ]
+      }
+    },
+    {
+      "name": "veteran typewriter SDF BlackOutline",
+      "asset_file": "sharedassets0.assets",
+      "path_id": 12,
+      "shader_name": "TextMeshPro/Distance Field",
+      "shader_keywords": null,
+      "properties": {
+        "floats": {
+          "_Ambient": 0.5,
+          "_Bevel": 0.5,
+          "_BevelClamp": 0.0,
+          "_BevelOffset": 0.0,
+          "_BevelRoundness": 0.0,
+          "_BevelWidth": 0.0,
+          "_BumpFace": 0.0,
+          "_BumpOutline": 0.0,
+          "_ColorMask": 15.0,
+          "_CullMode": 0.0,
+          "_Diffuse": 0.5,
+          "_FaceDilate": 0.394,
+          "_FaceUVSpeedX": 0.0,
+          "_FaceUVSpeedY": 0.0,
+          "_GlowInner": 0.05,
+          "_GlowOffset": 0.0,
+          "_GlowOuter": 0.05,
+          "_GlowPower": 0.75,
+          "_GradientScale": 9.0,
+          "_LightAngle": 3.1416,
+          "_MaskSoftnessX": 0.0,
+          "_MaskSoftnessY": 0.0,
+          "_OutlineSoftness": 0.0,
+          "_OutlineUVSpeedX": 0.0,
+          "_OutlineUVSpeedY": 0.0,
+          "_OutlineWidth": 0.345,
+          "_PerspectiveFilter": 0.875,
+          "_Reflectivity": 10.0,
+          "_ScaleRatioA": 0.8889,
+          "_ScaleRatioB": 0.372,
+          "_ScaleRatioC": 0.372,
+          "_ScaleX": 1.0,
+          "_ScaleY": 1.0,
+          "_ShaderFlags": 0.0,
+          "_Sharpness": 0.0,
+          "_SpecularPower": 2.0,
+          "_Stencil": 0.0,
+          "_StencilComp": 8.0,
+          "_StencilOp": 0.0,
+          "_StencilReadMask": 255.0,
+          "_StencilWriteMask": 255.0,
+          "_TextureHeight": 1024.0,
+          "_TextureWidth": 1024.0,
+          "_UnderlayDilate": 0.0,
+          "_UnderlayOffsetX": 0.0,
+          "_UnderlayOffsetY": 0.0,
+          "_UnderlaySoftness": 0.0,
+          "_VertexOffsetX": 0.0,
+          "_VertexOffsetY": 0.0,
+          "_WeightBold": 0.75,
+          "_WeightNormal": 0.0
+        },
+        "colors": {
+          "_ClipRect": [
+            -32767.0,
+            -32767.0,
+            32767.0,
+            32767.0
+          ],
+          "_EnvMatrixRotation": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "_FaceColor": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "_GlowColor": [
+            0.0,
+            1.0,
+            0.0,
+            0.5
+          ],
+          "_MaskCoord": [
+            0.0,
+            0.0,
+            32767.0,
+            32767.0
+          ],
+          "_OutlineColor": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "_ReflectFaceColor": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "_ReflectOutlineColor": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "_SpecularColor": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "_UnderlayColor": [
+            0.0,
+            0.0,
+            0.0,
+            0.5
+          ]
+        },
+        "textures": [
+          {
+            "property": "_BumpMap",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "_Cube",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "_FaceTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "_MainTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 394
+          },
+          {
+            "property": "_OutlineTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          }
+        ]
+      }
+    },
+    {
+      "name": "veteran typewriter SDF BlackOutlineThicker",
+      "asset_file": "sharedassets0.assets",
+      "path_id": 13,
+      "shader_name": "TextMeshPro/Distance Field",
+      "shader_keywords": null,
+      "properties": {
+        "floats": {
+          "_Ambient": 0.5,
+          "_Bevel": 0.5,
+          "_BevelClamp": 0.0,
+          "_BevelOffset": 0.0,
+          "_BevelRoundness": 0.0,
+          "_BevelWidth": 0.0,
+          "_BumpFace": 0.0,
+          "_BumpOutline": 0.0,
+          "_ColorMask": 15.0,
+          "_CullMode": 0.0,
+          "_Diffuse": 0.5,
+          "_FaceDilate": 0.394,
+          "_FaceUVSpeedX": 0.0,
+          "_FaceUVSpeedY": 0.0,
+          "_GlowInner": 0.05,
+          "_GlowOffset": 0.0,
+          "_GlowOuter": 0.05,
+          "_GlowPower": 0.75,
+          "_GradientScale": 9.0,
+          "_LightAngle": 3.1416,
+          "_MaskSoftnessX": 0.0,
+          "_MaskSoftnessY": 0.0,
+          "_OutlineSoftness": 0.0,
+          "_OutlineUVSpeedX": 0.0,
+          "_OutlineUVSpeedY": 0.0,
+          "_OutlineWidth": 0.52,
+          "_PerspectiveFilter": 0.875,
+          "_Reflectivity": 10.0,
+          "_ScaleRatioA": 0.807,
+          "_ScaleRatioB": 0.372,
+          "_ScaleRatioC": 0.372,
+          "_ScaleX": 1.0,
+          "_ScaleY": 1.0,
+          "_ShaderFlags": 0.0,
+          "_Sharpness": 0.0,
+          "_SpecularPower": 2.0,
+          "_Stencil": 0.0,
+          "_StencilComp": 8.0,
+          "_StencilOp": 0.0,
+          "_StencilReadMask": 255.0,
+          "_StencilWriteMask": 255.0,
+          "_TextureHeight": 1024.0,
+          "_TextureWidth": 1024.0,
+          "_UnderlayDilate": 0.0,
+          "_UnderlayOffsetX": 0.0,
+          "_UnderlayOffsetY": 0.0,
+          "_UnderlaySoftness": 0.0,
+          "_VertexOffsetX": 0.0,
+          "_VertexOffsetY": 0.0,
+          "_WeightBold": 0.75,
+          "_WeightNormal": 0.0
+        },
+        "colors": {
+          "_ClipRect": [
+            -32767.0,
+            -32767.0,
+            32767.0,
+            32767.0
+          ],
+          "_EnvMatrixRotation": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "_FaceColor": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "_GlowColor": [
+            0.0,
+            1.0,
+            0.0,
+            0.5
+          ],
+          "_MaskCoord": [
+            0.0,
+            0.0,
+            32767.0,
+            32767.0
+          ],
+          "_OutlineColor": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "_ReflectFaceColor": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "_ReflectOutlineColor": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "_SpecularColor": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "_UnderlayColor": [
+            0.0,
+            0.0,
+            0.0,
+            0.5
+          ]
+        },
+        "textures": [
+          {
+            "property": "_BumpMap",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "_Cube",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "_FaceTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "_MainTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 394
+          },
+          {
+            "property": "_OutlineTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          }
+        ]
+      }
+    },
+    {
+      "name": "Sprite-Lit-Default",
+      "asset_file": "sharedassets0.assets",
+      "path_id": 14,
+      "shader_name": "Universal Render Pipeline/2D/Sprite-Lit-Default",
+      "shader_keywords": null,
+      "properties": {
+        "floats": {
+          "_EnableExternalAlpha": 0.0
+        },
+        "colors": {
+          "_Color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "_Flip": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "_RendererColor": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "textures": [
+          {
+            "property": "_AlphaTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "_MainTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "_MaskTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "_NormalMap",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          }
+        ]
+      }
+    },
+    {
+      "name": "Font Material",
+      "asset_file": "sharedassets0.assets",
+      "path_id": 15,
+      "shader_name": "GUI/Text Shader",
+      "shader_keywords": null,
+      "properties": {
+        "floats": {},
+        "colors": {
+          "_Color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "textures": [
+          {
+            "property": "_MainTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 116
+          }
+        ]
+      }
+    },
+    {
+      "name": "Font Material",
+      "asset_file": "sharedassets0.assets",
+      "path_id": 16,
+      "shader_name": "GUI/Text Shader",
+      "shader_keywords": null,
+      "properties": {
+        "floats": {},
+        "colors": {
+          "_Color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "textures": [
+          {
+            "property": "_MainTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 211
+          }
+        ]
+      }
+    },
+    {
+      "name": "Font Material",
+      "asset_file": "sharedassets0.assets",
+      "path_id": 17,
+      "shader_name": "GUI/Text Shader",
+      "shader_keywords": null,
+      "properties": {
+        "floats": {},
+        "colors": {
+          "_Color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "textures": [
+          {
+            "property": "_MainTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 260
+          }
+        ]
+      }
+    },
+    {
+      "name": "Font Material",
+      "asset_file": "sharedassets0.assets",
+      "path_id": 18,
+      "shader_name": "GUI/Text Shader",
+      "shader_keywords": null,
+      "properties": {
+        "floats": {},
+        "colors": {
+          "_Color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "textures": [
+          {
+            "property": "_MainTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 269
+          }
+        ]
+      }
+    },
+    {
+      "name": "Font Material",
+      "asset_file": "sharedassets0.assets",
+      "path_id": 19,
+      "shader_name": "GUI/Text Shader",
+      "shader_keywords": null,
+      "properties": {
+        "floats": {},
+        "colors": {
+          "_Color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "textures": [
+          {
+            "property": "_MainTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 326
+          }
+        ]
+      }
+    },
+    {
+      "name": "Font Material",
+      "asset_file": "sharedassets0.assets",
+      "path_id": 20,
+      "shader_name": "GUI/Text Shader",
+      "shader_keywords": null,
+      "properties": {
+        "floats": {},
+        "colors": {
+          "_Color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "textures": [
+          {
+            "property": "_MainTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 379
+          }
+        ]
+      }
+    },
+    {
+      "name": "SourceHanSansK-Regular Atlas Material",
+      "asset_file": "sharedassets0.assets",
+      "path_id": 21,
+      "shader_name": "TextMeshPro/Distance Field",
+      "shader_keywords": null,
+      "properties": {
+        "floats": {
+          "_Ambient": 0.5,
+          "_Bevel": 0.5,
+          "_BevelClamp": 0.0,
+          "_BevelOffset": 0.0,
+          "_BevelRoundness": 0.0,
+          "_BevelWidth": 0.0,
+          "_BumpFace": 0.0,
+          "_BumpOutline": 0.0,
+          "_ColorMask": 15.0,
+          "_CullMode": 0.0,
+          "_Diffuse": 0.5,
+          "_FaceDilate": 0.0,
+          "_FaceUVSpeedX": 0.0,
+          "_FaceUVSpeedY": 0.0,
+          "_GlowInner": 0.05,
+          "_GlowOffset": 0.0,
+          "_GlowOuter": 0.05,
+          "_GlowPower": 0.75,
+          "_GradientScale": 9.0,
+          "_LightAngle": 3.1416,
+          "_MaskSoftnessX": 0.0,
+          "_MaskSoftnessY": 0.0,
+          "_OutlineSoftness": 0.0,
+          "_OutlineUVSpeedX": 0.0,
+          "_OutlineUVSpeedY": 0.0,
+          "_OutlineWidth": 0.0,
+          "_PerspectiveFilter": 0.875,
+          "_Reflectivity": 10.0,
+          "_ScaleRatioA": 1.0,
+          "_ScaleRatioB": 1.0,
+          "_ScaleRatioC": 1.0,
+          "_ScaleX": 1.0,
+          "_ScaleY": 1.0,
+          "_ShaderFlags": 0.0,
+          "_Sharpness": 0.0,
+          "_SpecularPower": 2.0,
+          "_Stencil": 0.0,
+          "_StencilComp": 8.0,
+          "_StencilOp": 0.0,
+          "_StencilReadMask": 255.0,
+          "_StencilWriteMask": 255.0,
+          "_TextureHeight": 1024.0,
+          "_TextureWidth": 1024.0,
+          "_UnderlayDilate": 0.0,
+          "_UnderlayOffsetX": 0.0,
+          "_UnderlayOffsetY": 0.0,
+          "_UnderlaySoftness": 0.0,
+          "_VertexOffsetX": 0.0,
+          "_VertexOffsetY": 0.0,
+          "_WeightBold": 0.75,
+          "_WeightNormal": 0.0
+        },
+        "colors": {
+          "_ClipRect": [
+            -32767.0,
+            -32767.0,
+            32767.0,
+            32767.0
+          ],
+          "_EnvMatrixRotation": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "_FaceColor": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "_GlowColor": [
+            0.0,
+            1.0,
+            0.0,
+            0.5
+          ],
+          "_MaskCoord": [
+            0.0,
+            0.0,
+            32767.0,
+            32767.0
+          ],
+          "_OutlineColor": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "_ReflectFaceColor": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "_ReflectOutlineColor": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "_SpecularColor": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "_UnderlayColor": [
+            0.0,
+            0.0,
+            0.0,
+            0.5
+          ]
+        },
+        "textures": [
+          {
+            "property": "_BumpMap",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "_Cube",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "_FaceTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "_MainTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 391
+          },
+          {
+            "property": "_OutlineTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          }
+        ]
+      }
+    },
+    {
+      "name": "Mitr-Regular Atlas Material",
+      "asset_file": "sharedassets0.assets",
+      "path_id": 22,
+      "shader_name": "TextMeshPro/Distance Field",
+      "shader_keywords": null,
+      "properties": {
+        "floats": {
+          "_Ambient": 0.5,
+          "_Bevel": 0.5,
+          "_BevelClamp": 0.0,
+          "_BevelOffset": 0.0,
+          "_BevelRoundness": 0.0,
+          "_BevelWidth": 0.0,
+          "_BumpFace": 0.0,
+          "_BumpOutline": 0.0,
+          "_ColorMask": 15.0,
+          "_CullMode": 0.0,
+          "_Diffuse": 0.5,
+          "_FaceDilate": 0.0,
+          "_FaceUVSpeedX": 0.0,
+          "_FaceUVSpeedY": 0.0,
+          "_GlowInner": 0.05,
+          "_GlowOffset": 0.0,
+          "_GlowOuter": 0.05,
+          "_GlowPower": 0.75,
+          "_GradientScale": 10.0,
+          "_LightAngle": 3.1416,
+          "_MaskSoftnessX": 0.0,
+          "_MaskSoftnessY": 0.0,
+          "_OutlineSoftness": 0.0,
+          "_OutlineUVSpeedX": 0.0,
+          "_OutlineUVSpeedY": 0.0,
+          "_OutlineWidth": 0.0,
+          "_PerspectiveFilter": 0.875,
+          "_Reflectivity": 10.0,
+          "_ScaleRatioA": 1.0,
+          "_ScaleRatioB": 1.0,
+          "_ScaleRatioC": 1.0,
+          "_ScaleX": 1.0,
+          "_ScaleY": 1.0,
+          "_ShaderFlags": 0.0,
+          "_Sharpness": 0.0,
+          "_SpecularPower": 2.0,
+          "_Stencil": 0.0,
+          "_StencilComp": 8.0,
+          "_StencilOp": 0.0,
+          "_StencilReadMask": 255.0,
+          "_StencilWriteMask": 255.0,
+          "_TextureHeight": 1024.0,
+          "_TextureWidth": 1024.0,
+          "_UnderlayDilate": 0.0,
+          "_UnderlayOffsetX": 0.0,
+          "_UnderlayOffsetY": 0.0,
+          "_UnderlaySoftness": 0.0,
+          "_VertexOffsetX": 0.0,
+          "_VertexOffsetY": 0.0,
+          "_WeightBold": 0.75,
+          "_WeightNormal": 0.0
+        },
+        "colors": {
+          "_ClipRect": [
+            -32767.0,
+            -32767.0,
+            32767.0,
+            32767.0
+          ],
+          "_EnvMatrixRotation": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "_FaceColor": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "_GlowColor": [
+            0.0,
+            1.0,
+            0.0,
+            0.5
+          ],
+          "_MaskCoord": [
+            0.0,
+            0.0,
+            32767.0,
+            32767.0
+          ],
+          "_OutlineColor": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "_ReflectFaceColor": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "_ReflectOutlineColor": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "_SpecularColor": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "_UnderlayColor": [
+            0.0,
+            0.0,
+            0.0,
+            0.5
+          ]
+        },
+        "textures": [
+          {
+            "property": "_BumpMap",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "_Cube",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "_FaceTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "_MainTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 26
+          },
+          {
+            "property": "_OutlineTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          }
+        ]
+      }
+    },
+    {
+      "name": "SourceHanSansHC-Regular Atlas Material",
+      "asset_file": "sharedassets0.assets",
+      "path_id": 23,
+      "shader_name": "TextMeshPro/Distance Field",
+      "shader_keywords": null,
+      "properties": {
+        "floats": {
+          "_Ambient": 0.5,
+          "_Bevel": 0.5,
+          "_BevelClamp": 0.0,
+          "_BevelOffset": 0.0,
+          "_BevelRoundness": 0.0,
+          "_BevelWidth": 0.0,
+          "_BumpFace": 0.0,
+          "_BumpOutline": 0.0,
+          "_ColorMask": 15.0,
+          "_CullMode": 0.0,
+          "_Diffuse": 0.5,
+          "_FaceDilate": 0.0,
+          "_FaceUVSpeedX": 0.0,
+          "_FaceUVSpeedY": 0.0,
+          "_GlowInner": 0.05,
+          "_GlowOffset": 0.0,
+          "_GlowOuter": 0.05,
+          "_GlowPower": 0.75,
+          "_GradientScale": 9.0,
+          "_LightAngle": 3.1416,
+          "_MaskSoftnessX": 0.0,
+          "_MaskSoftnessY": 0.0,
+          "_OutlineSoftness": 0.0,
+          "_OutlineUVSpeedX": 0.0,
+          "_OutlineUVSpeedY": 0.0,
+          "_OutlineWidth": 0.0,
+          "_PerspectiveFilter": 0.875,
+          "_Reflectivity": 10.0,
+          "_ScaleRatioA": 1.0,
+          "_ScaleRatioB": 1.0,
+          "_ScaleRatioC": 1.0,
+          "_ScaleX": 1.0,
+          "_ScaleY": 1.0,
+          "_ShaderFlags": 0.0,
+          "_Sharpness": 0.0,
+          "_SpecularPower": 2.0,
+          "_Stencil": 0.0,
+          "_StencilComp": 8.0,
+          "_StencilOp": 0.0,
+          "_StencilReadMask": 255.0,
+          "_StencilWriteMask": 255.0,
+          "_TextureHeight": 1024.0,
+          "_TextureWidth": 1024.0,
+          "_UnderlayDilate": 0.0,
+          "_UnderlayOffsetX": 0.0,
+          "_UnderlayOffsetY": 0.0,
+          "_UnderlaySoftness": 0.0,
+          "_VertexOffsetX": 0.0,
+          "_VertexOffsetY": 0.0,
+          "_WeightBold": 0.75,
+          "_WeightNormal": 0.0
+        },
+        "colors": {
+          "_ClipRect": [
+            -32767.0,
+            -32767.0,
+            32767.0,
+            32767.0
+          ],
+          "_EnvMatrixRotation": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "_FaceColor": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "_GlowColor": [
+            0.0,
+            1.0,
+            0.0,
+            0.5
+          ],
+          "_MaskCoord": [
+            0.0,
+            0.0,
+            32767.0,
+            32767.0
+          ],
+          "_OutlineColor": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "_ReflectFaceColor": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "_ReflectOutlineColor": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "_SpecularColor": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "_UnderlayColor": [
+            0.0,
+            0.0,
+            0.0,
+            0.5
+          ]
+        },
+        "textures": [
+          {
+            "property": "_BumpMap",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "_Cube",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "_FaceTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "_MainTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 25
+          },
+          {
+            "property": "_OutlineTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          }
+        ]
+      }
+    },
+    {
+      "name": "AlphaObscured",
+      "asset_file": "sharedassets1.assets",
+      "path_id": 2,
+      "shader_name": "Shader Graphs/AlphaObscured",
+      "shader_keywords": null,
+      "properties": {
+        "floats": {
+          "_QueueControl": 0.0,
+          "_QueueOffset": 0.0
+        },
+        "colors": {
+          "_AlphaCutoff": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "_AlphaFadeoff": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "_Speed": [
+            5.0,
+            3.0,
+            0.0,
+            0.0
+          ]
+        },
+        "textures": [
+          {
+            "property": "_MainTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 53
+          },
+          {
+            "property": "unity_Lightmaps",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "unity_LightmapsInd",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "unity_ShadowMasks",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          }
+        ]
+      }
+    },
+    {
+      "name": "BloodSplatter",
+      "asset_file": "sharedassets1.assets",
+      "path_id": 3,
+      "shader_name": "Shader Graphs/BloodSplatter",
+      "shader_keywords": null,
+      "properties": {
+        "floats": {
+          "_Animate": 1.0,
+          "_AnimationTime": 0.0,
+          "_MaxSplatter": 2.5,
+          "_QueueControl": 0.0,
+          "_QueueOffset": 0.0,
+          "_Speed": 0.5
+        },
+        "colors": {},
+        "textures": [
+          {
+            "property": "_MainTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "unity_Lightmaps",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "unity_LightmapsInd",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "unity_ShadowMasks",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          }
+        ]
+      }
+    },
+    {
+      "name": "LeverOutline",
+      "asset_file": "sharedassets1.assets",
+      "path_id": 4,
+      "shader_name": "Shader Graphs/Outline360",
+      "shader_keywords": null,
+      "properties": {
+        "floats": {
+          "AlphaCutoff": 0.05,
+          "Outline_Thickness": 1.17,
+          "_EnableExternalAlpha": 0.0
+        },
+        "colors": {
+          "Outline_Colour": [
+            0.4,
+            1.0,
+            0.4902,
+            1.0
+          ],
+          "_Color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "_Flip": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "_RendererColor": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "textures": [
+          {
+            "property": "_MainTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "unity_Lightmaps",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "unity_LightmapsInd",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "unity_ShadowMasks",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          }
+        ]
+      }
+    },
+    {
+      "name": "ObscuredMaterial",
+      "asset_file": "sharedassets1.assets",
+      "path_id": 5,
+      "shader_name": "Custom/Obscured_Maskable",
+      "shader_keywords": null,
+      "properties": {
+        "floats": {
+          "_ColorMask": 15.0,
+          "_QueueControl": 0.0,
+          "_QueueOffset": 0.0,
+          "_Stencil": 0.0,
+          "_StencilComp": 8.0,
+          "_StencilOp": 0.0,
+          "_StencilReadMask": 255.0,
+          "_StencilWriteMask": 255.0
+        },
+        "colors": {
+          "_AlphaCutoff": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "_AlphaFadeoff": [
+            0.1,
+            0.1,
+            0.0,
+            0.0
+          ],
+          "_Speed": [
+            5.0,
+            3.0,
+            0.0,
+            0.0
+          ]
+        },
+        "textures": [
+          {
+            "property": "_MainTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "unity_Lightmaps",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "unity_LightmapsInd",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "unity_ShadowMasks",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          }
+        ]
+      }
+    },
+    {
+      "name": "String Mat",
+      "asset_file": "sharedassets1.assets",
+      "path_id": 6,
+      "shader_name": "Universal Render Pipeline/2D/Sprite-Lit-Default",
+      "shader_keywords": null,
+      "properties": {
+        "floats": {
+          "_EnableExternalAlpha": 0.0
+        },
+        "colors": {
+          "_Color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "_Flip": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "_RendererColor": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "textures": [
+          {
+            "property": "_AlphaTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "_MainTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 49
+          },
+          {
+            "property": "_MaskTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "_NormalMap",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          }
+        ]
+      }
+    },
+    {
+      "name": "TutorialBackground",
+      "asset_file": "sharedassets1.assets",
+      "path_id": 7,
+      "shader_name": "Shader Graphs/ImageHole",
+      "shader_keywords": null,
+      "properties": {
+        "floats": {
+          "_Alpha": 0.65,
+          "_QueueControl": 0.0,
+          "_QueueOffset": 0.0
+        },
+        "colors": {
+          "_CanvasSize": [
+            3840.0,
+            2160.0,
+            0.0,
+            0.0
+          ],
+          "_Color": [
+            0.2392,
+            0.2392,
+            0.2392,
+            1.0
+          ],
+          "_Position": [
+            150.0,
+            150.0,
+            0.0,
+            0.0
+          ],
+          "_Size": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "textures": [
+          {
+            "property": "_MainTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "unity_Lightmaps",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "unity_LightmapsInd",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "unity_ShadowMasks",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          }
+        ]
+      }
+    },
+    {
+      "name": "WobbleSlow",
+      "asset_file": "sharedassets1.assets",
+      "path_id": 8,
+      "shader_name": "Shader Graphs/ContinuousWobble",
+      "shader_keywords": null,
+      "properties": {
+        "floats": {
+          "Intensity": 5.0,
+          "Speed": 0.1,
+          "_QueueControl": 0.0,
+          "_QueueOffset": 0.0
+        },
+        "colors": {},
+        "textures": [
+          {
+            "property": "_MainTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "unity_Lightmaps",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "unity_LightmapsInd",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "unity_ShadowMasks",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          }
+        ]
+      }
+    },
+    {
+      "name": "StampMat",
+      "asset_file": "sharedassets3.assets",
+      "path_id": 2,
+      "shader_name": "Custom/StampMaskable",
+      "shader_keywords": null,
+      "properties": {
+        "floats": {
+          "_ColorMask": 15.0,
+          "_Cutoff": 0.1,
+          "_GranularAlpha": 0.0,
+          "_InverseAlpha": 0.0,
+          "_QueueControl": 0.0,
+          "_QueueOffset": 0.0,
+          "_Stencil": 0.0,
+          "_StencilComp": 8.0,
+          "_StencilOp": 0.0,
+          "_StencilReadMask": 255.0,
+          "_StencilWriteMask": 255.0
+        },
+        "colors": {},
+        "textures": [
+          {
+            "property": "_MainTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 43
+          },
+          {
+            "property": "unity_Lightmaps",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "unity_LightmapsInd",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "unity_ShadowMasks",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          }
+        ]
+      }
+    },
+    {
+      "name": "M_ShrinkOutline360",
+      "asset_file": "sharedassets3.assets",
+      "path_id": 3,
+      "shader_name": "Shader Graphs/ShrinkOutline360",
+      "shader_keywords": null,
+      "properties": {
+        "floats": {
+          "AlphaCutoff": 0.03,
+          "Outline_Thickness": 2.0,
+          "Shrink": 0.1
+        },
+        "colors": {
+          "Outline_Colour": [
+            1.0,
+            1.0,
+            1.0,
+            0.0
+          ]
+        },
+        "textures": [
+          {
+            "property": "_MainTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "unity_Lightmaps",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "unity_LightmapsInd",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "unity_ShadowMasks",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          }
+        ]
+      }
+    },
+    {
+      "name": "Mat_InvertColour",
+      "asset_file": "sharedassets4.assets",
+      "path_id": 2,
+      "shader_name": "Shader Graphs/InvertColour",
+      "shader_keywords": null,
+      "properties": {
+        "floats": {},
+        "colors": {},
+        "textures": [
+          {
+            "property": "_MainTex",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "unity_Lightmaps",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "unity_LightmapsInd",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          },
+          {
+            "property": "unity_ShadowMasks",
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "texture_path_id": 0
+          }
+        ]
+      }
+    }
+  ]
+}
