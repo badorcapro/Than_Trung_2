@@ -1,0 +1,46 @@
+{
+  "task_id": "TASK-0021C",
+  "verified_at": "2026-10-21T10:38:52.316117+00:00",
+  "contract_sha256": "a47eab619e1ad7917f1ab35036e6b61db83b36fa5640766a1c871f84314875d3",
+  "diff_sha256": "4cff48276e97a267d7773c25903a3285f02b1b3cf9a7d14dacf4350ac5dfe431",
+  "modified_files": [
+    ".gitignore",
+    "docs/agent-system/evidence/dupery/audio/fmod_audio_architecture_lessons.md",
+    "docs/agent-system/evidence/dupery/vault/audio/fmod_samples_vault_manifest.json",
+    "scripts/agent/check_scope.py",
+    "scripts/agent/extract_fmod_samples_vault.py",
+    "tests/test_extract_fmod_samples_vault.py"
+  ],
+  "scope_passed": true,
+  "commands": [
+    {
+      "command": "python scripts/agent/extract_fmod_samples_vault.py --verify",
+      "exit_code": 0,
+      "duration_ms": 1770.44,
+      "stdout_excerpt": "VERIFY PASS: All 155 samples exist, sizes match, and SHA-256 hashes are verified.",
+      "stderr_excerpt": ""
+    },
+    {
+      "command": "python scripts/agent/extract_fmod_samples_vault.py --stats",
+      "exit_code": 0,
+      "duration_ms": 128.33,
+      "stdout_excerpt": "=== Dupery FMOD Audio Samples Vault Summary ===\nTotal Samples: 155 across 4 banks\nTotal PCM Size: 1615.00 MB\nTotal WAV Size: 1615.01 MB\nTotal Duration: 8928.9 s (148.8 min)\n--- Bank Breakdown ---\n  - Atmosphere: 21 samples\n  - Intro: 2 samples\n  - Music: 79 samples\n  - Sfx: 53 samples",
+      "stderr_excerpt": ""
+    },
+    {
+      "command": "python -m unittest tests/test_extract_fmod_samples_vault.py",
+      "exit_code": 0,
+      "duration_ms": 1820.31,
+      "stdout_excerpt": "",
+      "stderr_excerpt": ".....\n----------------------------------------------------------------------\nRan 5 tests in 1.635s\n\nOK"
+    },
+    {
+      "command": "python scripts/agent/check_peer_audit.py --task TASK-0021C",
+      "exit_code": 0,
+      "duration_ms": 374.96,
+      "stdout_excerpt": "{\n  \"success\": true,\n  \"tool\": \"check_peer_audit\",\n  \"issues\": [],\n  \"data\": {\n    \"task_id\": \"TASK-0021C\",\n    \"subagent_conversation_id\": \"3fbeffea-5b3b-4657-8e36-7c14fcec8a07\",\n    \"verdict\": \"PASS\",\n    \"diff_sha256\": \"4cff48276e97a267d7773c25903a3285f02b1b3cf9a7d14dacf4350ac5dfe431\",\n    \"audit_receipt\": \"docs/agent-system/evidence/TASK-0021C-peer-audit.json\"\n  }\n}",
+      "stderr_excerpt": ""
+    }
+  ],
+  "all_passed": true
+}

@@ -38,6 +38,7 @@ BOOKKEEPING_EXEMPT_PATTERNS = [
     "docs/agent-system/state/active-task.json",
     "docs/agent-system/evidence/TASK-*.json",
     "docs/agent-system/evidence/dupery/vault/raw/**",
+    "docs/agent-system/evidence/dupery/vault/audio/samples/**",
     ".godot/**",
     "**/.godot/**",
     "*.import",
