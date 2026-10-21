@@ -64,10 +64,17 @@ Hai script scratch (`scratch/probe_dupery_depth.py`, `probe_dupery_monobehaviour
 - **DEC-23 — Behaviour Capture là lớp hạng nhất**: vì chuyển động nằm trong code (`CoroutineLibrary`, P2) và shader chỉ có tham số, độ giống phải được đo bằng quan sát: Reference Capture (screenshot/video bản gốc) và Runtime Probe (thứ tự gọi, giá trị tween, cặp seed → vụ án).
 - **DEC-24 — Ranh giới Chặng 3**: Chặng 3 kết thúc ở giải phẫu (L1/L2/L3) + golden reference + checklist so sánh. Port sang Godot và L4 chạy ở Chặng 4+ theo mã vòng V1–V8.
 - **DEC-25 — LAN ngoài phạm vi Chặng 3**: *Dupery* không có LAN; thiết kế LAN (ENet/MultiplayerAPI của Godot, master plan đã nhắc `ENetMultiplayerPeer`) là chặng thiết kế riêng sau V3. Nếu generator tất định theo seed, LAN chỉ cần đồng bộ seed và hành động (`[I]`, kiểm chứng bằng cặp seed → vụ án từ `TASK-0020`).
+- **DEC-26 — Cổng Thẩm Định Thực Nghiệm 60fps (Empirical Validation Gate)**: Áp dụng bắt buộc cho từng vòng V1–V8 ở Tầng B. Khi có video gameplay 60fps do người dùng cung cấp theo `reference_capture_protocol.md` (TASK-0019), mỗi task vòng giải phẫu phải đối chiếu thực nghiệm:
+  - *V2 Sinh vụ án*: Chạy seed tương ứng trên engine tái thiết và so sánh kết quả sinh vụ án (nghi phạm, đặc điểm, vị trí) với thực tế trên video, kiểm chứng tính tất định 100%.
+  - *V1, V3, V8*: Đo lường đường cong chuyển dịch pixel frame-by-frame 60fps để kiểm chứng 7 công thức Easing và thứ tự coroutine thực tế.
+- **DEC-27 — Giải Quyết Triệt Để Các Đánh Đổi Kỹ Thuật Tầng A (Resolving Layer A Trade-Offs)**:
+  1. *FMOD Audio Samples Vault Extraction (`TASK-0021C`)*: Dùng công cụ chuyên dụng bung toàn bộ 155 file âm thanh FSB5 ra đĩa dạng `.wav` tại `evidence/dupery/vault/audio/samples/`, lập manifest SHA-256 và tài liệu `fmod_audio_architecture_lessons.md` để người dùng học hỏi và tái sử dụng thực tế (giải quyết triệt để Trade-off 1 của TASK-0018).
+  2. *Interactive Audio System Reconstruction (`TASK-0027`)*: Tái thiết hệ thống âm thanh tương tác trong Godot 4 (`AudioServer` buses, dynamic cross-fade curves, ducking, snapshot parameters `/GamePause`, `/SfxParameters/PopPitch`) dựa trên căn chỉnh thực nghiệm từ video gameplay 60fps thực tế thay vì suy diễn thuần lý thuyết (giải quyết triệt để Trade-off 2 của TASK-0018).
+  3. *Deep Scene Node Traversal & Exact Dependency Linkage (`TASK-0021B`)*: Xây dựng module `scripts/agent/dupery_graph_resolver.py` duyệt đệ quy 100% toàn bộ 5.279 GameObjects đã lưu trữ tại 12 file `scenes/*.json`, đồng thời bóc tách liên kết chính xác (deterministic code & scene linkage) trong `get-recipe` (quét AST/regex file `.cs` để tìm chính xác lệnh gọi âm thanh FMOD và định vị chính xác GameObject/Scene gắn component đó) thay vì đoán mò theo từ khóa (giải quyết triệt để Trade-off 1 & 2 của TASK-0021).
 
 ---
 
-## 3. Cấu Trúc Task (23 task: `TASK-0010` → `TASK-0032`)
+## 3. Cấu Trúc Task (25 task: `TASK-0010` → `TASK-0032` kèm `0021B`, `0021C`)
 
 Quy ước mã: tuần tự 4 chữ số (regex `^TASK-[0-9]{4}[A-Z]?$` chỉ nhận hậu tố chữ **hoa**). Chặng Godot cũ dịch xuống từ `TASK-0033`.
 
@@ -95,13 +102,21 @@ flowchart TD
         A14 --> A21
         A15 --> A21
     end
-    subgraph B["TẦNG B: VÒNG GIẢI PHẪU V1-V8 (đến L3, chưa port)"]
-        B1["0022 V1 Bảng thám tử"] --> B2["0023 V2 Sinh vụ án"] --> B3["0024 V3 Vòng chơi"] --> B4["0025 V4 Vật phẩm/Quirks"] --> B5["0026 V5 Roles"] --> B6["0027 V6 Hạ tầng"] --> B7["0028 V7 Menu/Tutorial/Intro"] --> B8["0029 V8 LevelEditor"]
+    subgraph AB["CẦU NỐI GIẢI QUYẾT TRADE-OFF TẦNG A"]
+        A21B["0021B Deep Scene Node & Exact Recipe Resolver"]
+        A21C["0021C FMOD Audio Samples Vault (.wav) & Lessons"]
+        A21 --> A21B
+        A18 --> A21C
+    end
+    subgraph B["TẦNG B: VÒNG GIẢI PHẪU V1-V8 (đến L3, có Cổng Thẩm Định Thực Nghiệm 60fps)"]
+        B1["0022 V1 Bảng thám tử"] --> B2["0023 V2 Sinh vụ án"] --> B3["0024 V3 Vòng chơi"] --> B4["0025 V4 Vật phẩm/Quirks"] --> B5["0026 V5 Roles"] --> B6["0027 V6 Hạ tầng (Audio tương tác)"] --> B7["0028 V7 Menu/Tutorial/Intro"] --> B8["0029 V8 LevelEditor"]
+        A21B --> B1
+        A21C --> B6
     end
     subgraph C["TẦNG C: KIỂM TOÁN & CẨM NANG"]
         C30["0030 Coverage theo độ sâu"] --> C31["0031 Bách khoa + Unity→Godot"] --> C32["0032 cross_project_mapping + recipes"]
     end
-    A --> B --> C
+    B --> C
 ```
 
 ### Tầng A — Nền
@@ -121,20 +136,27 @@ flowchart TD
 | **0020** | **Runtime Probe — spike go/no-go, giới hạn thời gian**: thử hook bản Mono (BepInEx hoặc MelonLoader, x86). Nếu go: ghi thứ tự gọi, giá trị tween, cặp `seed → vụ án`. Nếu no-go (anti-tamper, lỗi tương thích): ghi lý do, quay về Reference Capture + so sánh bằng quan sát. **Cần duyệt trước khi cài/chạy công cụ hook** | báo cáo spike, (nếu go) `runtime_traces/*.json`, `seed_case_pairs.json` | báo cáo go/no-go có bằng chứng; nếu go, chạy lại 2 lần cùng seed cho kết quả trùng (kiểm tính tất định) | 0011, 0019 |
 | **0021** | CLI `query_dupery_graph.py` (`inspect-class`, `inspect-scene`, `inspect-asset`, `get-recipe`, `coverage-stats`, `--format toon\|json\|jsonl`). Dùng lại mẫu của `query_godot_graph.py` | `scripts/agent/query_dupery_graph.py`, test | test CLI + `coverage-stats` khớp ledger | 0011, 0014, 0015 |
 
-### Tầng B — Vòng giải phẫu V1–V8 (đến L3, chưa port Godot)
+### Cầu Nối Giải Quyết Triệt Để Trade-off Tầng A
 
-Mỗi vòng: REA + file `.cs` + scene JSON + dữ liệu → ghi sổ cái vòng (`ledger/vong_Vn.json`) → viết `handbook/Vn_*.md` có `rea_live_lookup_recipe` → soạn **checklist so sánh** cho vòng (bố cục, thời lượng/đường cong, âm thanh, hover/click, hành vi lỗi) tham chiếu golden reference → Peer-Audit. Một vòng lớn được tách thành nhiều task con theo namespace khi vượt ngân sách context.
+| Task | Mục tiêu | Đầu ra (`in_scope` dự kiến) | Kiểm chứng | Phụ thuộc |
+| :-: | :--- | :--- | :--- | :--- |
+| **0021B** | **Deep Scene Node & Exact Recipe Resolver (DEC-27.3)**: Xây dựng `dupery_graph_resolver.py` giải quyết triệt để 2 trade-off của TASK-0021. Duyệt đệ quy toàn bộ 5.279 GameObjects từ 12 scene JSONs (`inspect-scene --node <name>`). Nâng cấp `get-recipe` tra cứu liên kết chính xác (deterministic linkage) bằng cách phân tích AST/regex file `.cs` (các hằng số `Sfx`/`Music`/`Atmo`, ScriptableObjects) và định vị chính xác GameObject/Scene gắn component đó thay vì đoán mò. | `scripts/agent/dupery_graph_resolver.py`, `scripts/agent/query_dupery_graph.py`, test | Quét đúng 5.279 nodes; `get-recipe` trả về chính xác FMOD enum và Scene GameObject path | 0021 |
+| **0021C** | **FMOD Audio Samples Vault (.wav) & Lessons Learned (DEC-27.1)**: Sử dụng công cụ chuyên dụng bung toàn bộ 155 mẫu FSB5 Vorbis từ 6 Bank ra file âm thanh `.wav` chuẩn vào `evidence/dupery/vault/audio/samples/`. Lập manifest SHA-256 `fmod_samples_vault_manifest.json` và biên dịch tài liệu phân tích cấu trúc FMOD `fmod_audio_architecture_lessons.md` làm bằng chứng và tài liệu tham khảo cho người dùng học hỏi/tái sử dụng (giải quyết Trade-off 1 của TASK-0018). | `scripts/agent/extract_fmod_samples_vault.py`, `evidence/dupery/vault/audio/samples/*.wav`, `fmod_samples_vault_manifest.json`, `fmod_audio_architecture_lessons.md`, test | 155 file .wav có dung lượng > 0 và SHA-256 khớp manifest | 0018 |
+
+### Tầng B — Vòng giải phẫu V1–V8 (đến L3, có Cổng Thẩm Định Thực Nghiệm 60fps)
+
+Mỗi vòng: REA + file `.cs` + scene JSON + dữ liệu → ghi sổ cái vòng (`ledger/vong_Vn.json`) → viết `handbook/Vn_*.md` có `rea_live_lookup_recipe` → soạn **checklist so sánh** cho vòng (bố cục, thời lượng/đường cong, âm thanh, hover/click, hành vi lỗi) tham chiếu golden reference → **Thực thi Cổng Thẩm Định Thực Nghiệm 60fps (DEC-26)** khi có video gameplay → Peer-Audit. Một vòng lớn được tách thành nhiều task con theo namespace khi vượt ngân sách context.
 
 | Task | Vòng | Phạm vi (số đo P6) | Đích |
-| :-: | :-: | :--- | :-: |
-| **0022** | V1 Bảng thám tử | `Visual` (68+4), `StringManager`, `MagnifyingGlassManager`, camera, ánh sáng; chỉ phần cần của `GRGLib` (easing, hằng số, `CoroutineLibrary`, `UILineRenderer`, `WorldLayoutGroup`) | L3 |
-| **0023** | V2 Sinh vụ án | `CaseCreation` (8), `Nodes` (39+18), seed và tính tất định; đối chiếu cặp seed từ 0020 nếu có | L3 |
-| **0024** | V3 Vòng chơi | `CaseSelection` (14), `Leads` (32), `LeadSelection` (6), `RegionEvents` (7), `Lineup` (11), `Summary` (3), `PieChart` | L3 |
-| **0025** | V4 Vật phẩm | `Quirks` (59), `BackAlleyItems` (11), `ItemFanManager`, cửa hàng | L3 |
-| **0026** | V5 Roles | 451 class ở `<Root>`: gom theo mẫu, phân tích sâu một đại diện mỗi nhóm (L3), phần còn lại ghi khác biệt dữ liệu (L2) | L3 đại diện / L2 còn lại |
-| **0027** | V6 Hạ tầng | `Save` (45) + `SavePrint`, `Audio` (8), `Localisation` + `GRGLocalisation`, `Hover` (11), `ControllerSupport` (9), `InputShortcutsSO`, `GameStats` (8) | L2 |
-| **0028** | V7 Màn hình phụ | `MainMenu` (14), `Tutorial` (6), `TransitionScene` (9), Intro, `Credits`, `Codex` (13), `AlternateModes` (11) | L2 |
-| **0029** | V8 LevelEditor | `LevelEditor` (17); cuối cùng, tùy chọn | L2 |
+| :-: | :-: | :--- | :--- |
+| **0022** | V1 Bảng thám tử | `Visual` (68+4), `StringManager`, `MagnifyingGlassManager`, camera, ánh sáng; `GRGLib` (easing, hằng số, `CoroutineLibrary`, `UILineRenderer`, `WorldLayoutGroup`). **Thẩm định 60fps**: đối chiếu pixel displacement và coroutine snap grid | L3 |
+| **0023** | V2 Sinh vụ án | `CaseCreation` (8), `Nodes` (39+18), seed và tính tất định; **Thẩm định 60fps**: đối chiếu cặp seed vụ án thực tế với giải thuật `System.Random` offline | L3 |
+| **0024** | V3 Vòng chơi | `CaseSelection` (14), `Leads` (32), `LeadSelection` (6), `RegionEvents` (7), `Lineup` (11), `Summary` (3), `PieChart`. **Thẩm định 60fps**: đối chiếu luồng chuyển cảnh và lượt chơi | L3 |
+| **0025** | V4 Vật phẩm | `Quirks` (59), `BackAlleyItems` (11), `ItemFanManager`, cửa hàng. **Thẩm định 60fps**: đối chiếu logic trừ tiền cược, mở khóa quirk và tương tác hover | L3 |
+| **0026** | V5 Roles | 451 class ở `<Root>`: gom theo mẫu, phân tích sâu một đại diện mỗi nhóm (L3), phần còn lại ghi khác biệt dữ liệu (L2). **Thẩm định 60fps**: đối chiếu hội thoại và điều kiện kích hoạt | L3 đại diện / L2 còn lại |
+| **0027** | V6 Hạ tầng (Audio tương tác) | `Save` (45) + `SavePrint`, `Localisation` + `GRGLocalisation`, `Hover` (11), `ControllerSupport` (9), `InputShortcutsSO`, `GameStats` (8). **Tái thiết Audio Tương tác (DEC-27.2)**: dựng `AudioServer` buses, snapshot parameters, và căn chỉnh thực nghiệm các đường cong chuyển bài động từ video gameplay | L2 / L3 Audio |
+| **0028** | V7 Màn hình phụ | `MainMenu` (14), `Tutorial` (6), `TransitionScene` (9), Intro, `Credits`, `Codex` (13), `AlternateModes` (11). **Thẩm định 60fps**: đối chiếu timing chuyển cảnh và 2 video clips gốc | L2 |
+| **0029** | V8 LevelEditor & Polish | `LevelEditor` (17); Tinh chỉnh Easing curves và shader parameters (ContinuousWobble). **Thẩm định 60fps**: đối chiếu frame-by-frame 7 đường cong Tweening giải tích với chuyển động thực tế | L2 / L3 Polish |
 
 ### Tầng C — Kiểm toán và cẩm nang
 

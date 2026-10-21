@@ -1,0 +1,46 @@
+{
+  "task_id": "TASK-0021",
+  "subagent_conversation_id": "1e851e4e-c327-4771-94a5-a019ffbf6571",
+  "audited_at": "2026-10-21T08:57:00Z",
+  "diff_sha256": "cecf093ba2c1845ed055778543b88152a7c88758133a6648d7551c56adc76cbc",
+  "transcript_reference": "file:///C:/Users/Admin/.gemini/antigravity/brain/5dc69d25-94eb-4e8a-9589-1420dc32d526/.system_generated/logs/transcript.jsonl",
+  "rules_and_docs_loaded": [
+    "GEMINI.md",
+    "AGENTS.md",
+    "ARCHITECTURE.md",
+    ".agents/rules/rule_anti_evasion.md",
+    ".agents/rules/rule_critical_engagement.md",
+    ".agents/rules/rule_task_contract_and_scope.md",
+    ".agents/skills/verify-task/SKILL.md",
+    ".agents/skills/critical-engagement/SKILL.md",
+    ".agents/skills/honest-execution/SKILL.md",
+    "docs/agent-system/tasks/TASK-0021.md",
+    ".agent_scratchpad.md"
+  ],
+  "decisions_made": [
+    "T\u00edch h\u1ee3p Unified Reverse Engineering Graph Query CLI trong scripts/agent/query_dupery_graph.py v\u1edbi 5 subcommands (inspect-class, inspect-scene, inspect-asset, get-recipe, coverage-stats) v\u00e0 c\u1edd --generate-report.",
+    "H\u1ed7 tr\u1ee3 chi\u1ebfu ng\u1eef c\u1ea3nh t\u01b0\u01a1i theo DEC-19: subcommand get-recipe tr\u1ea3 v\u1ec1 g\u00f3i th\u00f4ng tin to\u00e0n di\u1ec7n (m\u00e3 C#, scene hierarchy, ScriptableObject summary, FMOD audio events, checklist V1-V8).",
+    "H\u1ed7 tr\u1ee3 xu\u1ea5t 3 \u0111\u1ecbnh d\u1ea1ng (--format json|jsonl|toon) qua scripts.agent.toon_projector.encode_toon(), n\u00e9n token t\u1ed1i \u01b0u tr\u00ean d\u1eef li\u1ec7u b\u1ea3ng/danh s\u00e1ch t\u00e0i nguy\u00ean.",
+    "Kh\u1edbp n\u1ed1i ch\u00ednh x\u00e1c 100% s\u1ed1 li\u1ec7u kho b\u1eb1ng ch\u1ee9ng T\u1ea7ng A trong get_coverage_stats(): 1.532 classes (Tier 1: 1.101, Tier 2: 431, with_token: 1.532, unaccounted: 0), 12 scenes (5.279 GameObjects, 7.365 MonoBehaviours), 879 sprites, 10 fonts, 752 textures, 54 materials, 46 shaders, 2 videoclips, 0 animations, 6 FMOD banks (155 samples), 50 mapped enums (62 GUIDs), 9 reference categories, 2 baseline videos, quy\u1ebft \u0111\u1ecbnh NO-GO v\u00e0 seed determinism verified.",
+    "Sinh b\u00e1o c\u00e1o ki\u1ebfn tr\u00fac to\u00e0n di\u1ec7n T\u1ea7ng A docs/agent-system/evidence/dupery/dupery_architecture_report.md t\u1ed5ng k\u1ebft 11 tasks v\u00e0 chu\u1ea9n b\u1ecb chuy\u1ec3n ti\u1ebfp sang T\u1ea7ng B.",
+    "Tu\u00e2n th\u1ee7 nghi\u00eam ng\u1eb7t ADR-0010 Line Budget: query_dupery_graph.py (275 LOC, tier ok) v\u00e0 test_query_dupery_graph.py (130 LOC, tier ok), 0 d\u1ea5u ch\u1ea5m ph\u1ea9y g\u1ed9p d\u00f2ng, kh\u00f4ng placeholder comment."
+  ],
+  "omissions_and_simplifications": [
+    "\u0110\u00e3 x\u00e1c minh \u0111\u1ed9c l\u1eadp: Kh\u00f4ng c\u00f3 b\u1ea5t k\u1ef3 s\u1ef1 c\u1eaft x\u00e9n hay l\u01b0\u1ee3c b\u1ecf nghi\u1ec7p v\u1ee5 n\u00e0o. C\u1ea3 5 subcommands v\u00e0 3 \u0111\u1ecbnh d\u1ea1ng format \u0111\u1ec1u ho\u1ea1t \u0111\u1ed9ng ho\u00e0n ch\u1ec9nh, \u0111\u1ea1t 100/100 tests pass trong workspace."
+  ],
+  "adr_0010_anti_cheat_check": "\u0110\u00e3 ki\u1ec3m tra \u0111\u1ed9c l\u1eadp: query_dupery_graph.py \u0111\u1ea1t 275 LOC (tier ok, gi\u1edbi h\u1ea1n < 300 LOC), test_query_dupery_graph.py \u0111\u1ea1t 130 LOC (tier ok, gi\u1edbi h\u1ea1n < 400 LOC). Kh\u00f4ng ph\u00e1t hi\u1ec7n b\u1ea5t k\u1ef3 d\u1ea5u ch\u1ea5m ph\u1ea9y (;) g\u1ed9p d\u00f2ng n\u00e0o, kh\u00f4ng c\u00f3 placeholder comment hay code-golfing.",
+  "semantic_checks_performed": [
+    "check_scope.py --task TASK-0021: 0 out-of-scope files, diff_sha256 kh\u1edbp 100% (1281a832a99c031ad6635c8d4eef410fa5dc8ff4a4e958885d789f016b55aeb1).",
+    "check_line_budget.py: c\u1ea3 2 files scripts/agent/query_dupery_graph.py (275 LOC) v\u00e0 tests/test_query_dupery_graph.py (130 LOC) \u0111\u1ec1u \u0111\u1ea1t tier ok.",
+    "check_diff_guard.py --task TASK-0021: 0 issues.",
+    "query_dupery_graph.py coverage-stats: Kh\u1edbp ch\u00ednh x\u00e1c 100% to\u00e0n b\u1ed9 s\u1ed1 li\u1ec7u T\u1ea7ng A (1.532 classes, 12 scenes, 879 sprites, 10 fonts, 752 textures, 54 materials, 46 shaders, 2 videoclips, 6 banks, 155 samples, 50 enums, 62 GUIDs, 9 categories, 2 videos, NO-GO, determinism=true).",
+    "query_dupery_graph.py inspect-class 'LineupController' --format toon: Tr\u1ea3 v\u1ec1 \u0111\u00fang metadata token 0x0200032D, tier 1, target_depth L3, vong V3 d\u01b0\u1edbi \u0111\u1ecbnh d\u1ea1ng TOON.",
+    "query_dupery_graph.py inspect-scene 'MainMenu' --format json: Tr\u1ea3 v\u1ec1 \u0111\u00fang MainMenuScene build_index 0, 795 GameObjects, 1132 MonoBehaviours.",
+    "query_dupery_graph.py inspect-asset 'Wobble' --format toon: Tr\u1ea3 v\u1ec1 \u0111\u00fang danh s\u00e1ch 7 t\u00e0i nguy\u00ean cross-category (5 Materials, 2 Shaders).",
+    "query_dupery_graph.py get-recipe 'Lineup' --format json: Tr\u1ea3 v\u1ec1 \u0111\u00fang DEC-19 Fresh Context Recipe v\u1edbi class C#, FMOD audio event ({79d48a6c-6df3-4903-887e-1cc81fc369f7}), checklist REF_LINEUP_EVALUATION_1080P_60FPS.",
+    "unittest test_query_dupery_graph.py: 7/7 tests passed in 0.141s.",
+    "unittest discover: 100/100 tests passed in 1.248s."
+  ],
+  "findings": [],
+  "verdict": "PASS"
+}

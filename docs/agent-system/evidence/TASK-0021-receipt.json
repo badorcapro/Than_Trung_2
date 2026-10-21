@@ -1,0 +1,38 @@
+{
+  "task_id": "TASK-0021",
+  "verified_at": "2026-10-21T10:18:52.362978+00:00",
+  "contract_sha256": "bc95eba1b4f434ee641e5c454a8266ee0a9a5ed2957d58caf1cba49044e326e3",
+  "diff_sha256": "cecf093ba2c1845ed055778543b88152a7c88758133a6648d7551c56adc76cbc",
+  "modified_files": [
+    "docs/agent-system/evidence/dupery/dupery_architecture_report.md",
+    "docs/agent-system/plans/PLAN-CHANG-3-DUPERY-RECONSTRUCTION.md",
+    "docs/agent-system/reference-registry.json",
+    "scripts/agent/query_dupery_graph.py",
+    "tests/test_query_dupery_graph.py"
+  ],
+  "scope_passed": true,
+  "commands": [
+    {
+      "command": "python scripts/agent/query_dupery_graph.py coverage-stats",
+      "exit_code": 0,
+      "duration_ms": 309.44,
+      "stdout_excerpt": "{\n  \"code_catalog\": {\n    \"total_classes\": 1532,\n    \"tier_1_classes\": 1101,\n    \"tier_2_classes\": 431,\n    \"with_metadata_token\": 1532,\n    \"unaccounted\": 0\n  },\n  \"scenes_hierarchy\": {\n    \"total_scenes\": 12,\n    \"total_game_objects\": 5279,\n    \"total_monobehaviours\": 7365\n  },\n  \"visual_vault\": {\n    \"sprites_count\": 879,\n    \"fonts_count\": 10,\n    \"textures_count\": 752\n  },\n  \"materials_and_shaders\": {\n    \"materials_count\": 54,\n    \"shaders_count\": 46,\n    \"videoclips_count\": 2,\n    \"negative_findings_animations\": 0\n  },\n  \"fmod_audio\": {\n    \"banks_count\": 6,\n    \"sound_samples_count\": 155,\n    \"mapped_enums\": 50,\n    \"total_guids\": 62\n  },\n  \"reference_and_probes\": {\n    \"checklist_categories\": 9,\n    \"baseline_videos\": 2,\n    \"runtime_probe_verdict\": \"NO-GO\",\n    \"determinism_verified\": true\n  }\n}",
+      "stderr_excerpt": ""
+    },
+    {
+      "command": "python -m unittest tests/test_query_dupery_graph.py",
+      "exit_code": 0,
+      "duration_ms": 550.18,
+      "stdout_excerpt": "Generated architecture report: D:\\Minh\\For_myself\\my_own_tool\\Than_Trung_2\\docs\\agent-system\\evidence\\dupery\\dupery_architecture_report.md",
+      "stderr_excerpt": ".......\n----------------------------------------------------------------------\nRan 7 tests in 0.121s\n\nOK"
+    },
+    {
+      "command": "python scripts/agent/check_peer_audit.py --task TASK-0021",
+      "exit_code": 0,
+      "duration_ms": 416.41,
+      "stdout_excerpt": "{\n  \"success\": true,\n  \"tool\": \"check_peer_audit\",\n  \"issues\": [],\n  \"data\": {\n    \"task_id\": \"TASK-0021\",\n    \"subagent_conversation_id\": \"1e851e4e-c327-4771-94a5-a019ffbf6571\",\n    \"verdict\": \"PASS\",\n    \"diff_sha256\": \"cecf093ba2c1845ed055778543b88152a7c88758133a6648d7551c56adc76cbc\",\n    \"audit_receipt\": \"docs/agent-system/evidence/TASK-0021-peer-audit.json\"\n  }\n}",
+      "stderr_excerpt": ""
+    }
+  ],
+  "all_passed": true
+}
