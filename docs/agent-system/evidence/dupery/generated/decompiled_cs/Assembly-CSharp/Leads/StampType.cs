@@ -1,0 +1,14 @@
+namespace Leads;
+
+public enum StampType
+{
+	QUIRK = 0,
+	ROLE_IN_PLAY = 1,
+	ROLE_SUSPECTED = 2,
+	ROLE_NOT_IN_PLAY = 3,
+	PLUS_ONE_CASE = 4,
+	INCREASE_BOARD_SIZE = 5,
+	REP_GAIN = 6,
+	PUBLIC_UNREST = 7,
+	CHIPS_GAIN = 101
+}

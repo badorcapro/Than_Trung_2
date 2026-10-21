@@ -1,0 +1,25 @@
+public enum TextAssetsXBInputs
+{
+	A_ON = 126,
+	A_OFF = 127,
+	B_ON = 128,
+	B_OFF = 129,
+	X_ON = 130,
+	X_OFF = 131,
+	Y_ON = 132,
+	Y_OFF = 133,
+	LB_ON = 134,
+	LB_OFF = 135,
+	LT_ON = 136,
+	LT_OFF = 137,
+	RB_ON = 138,
+	RB_OFF = 139,
+	RT_ON = 140,
+	RT_OFF = 141,
+	MENU_ON = 142,
+	MENU_OFF = 143,
+	VIEW_ON = 144,
+	VIEW_OFF = 145,
+	LEFT_JOYSTICK = 148,
+	RIGHT_JOYSTICK = 149
+}

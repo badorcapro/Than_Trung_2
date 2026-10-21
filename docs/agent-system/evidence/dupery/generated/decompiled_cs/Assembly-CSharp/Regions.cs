@@ -1,0 +1,17 @@
+public enum Regions
+{
+	DEMO = -1,
+	NONE = 0,
+	TEST_1 = 1,
+	QUIRK_I = 2,
+	QUIRK_II = 3,
+	QUIRK_III = 4,
+	PLAYTEST = 11,
+	PLAYTEST_QUIRKS = 12,
+	CUSTOM = 99,
+	OFFICE = 101,
+	CASINO = 111,
+	DOCKS = 121,
+	SYNDICATE = 131,
+	BACK_ALLEYS = 201
+}

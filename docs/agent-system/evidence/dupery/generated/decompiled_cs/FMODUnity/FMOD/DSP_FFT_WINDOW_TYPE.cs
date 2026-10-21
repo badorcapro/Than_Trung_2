@@ -1,0 +1,11 @@
+namespace FMOD;
+
+public enum DSP_FFT_WINDOW_TYPE
+{
+	RECT,
+	TRIANGLE,
+	HAMMING,
+	HANNING,
+	BLACKMAN,
+	BLACKMANHARRIS
+}

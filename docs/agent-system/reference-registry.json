@@ -398,6 +398,19 @@
         "RULE-SCOPE-001"
       ],
       "description": "Subagent Semantic Peer-Audit Gatekeeper (DEC-17)"
+    },
+    {
+      "id": "PLAN-CHANG-003",
+      "kind": "requirement",
+      "path": "docs/agent-system/plans/PLAN-CHANG-3-DUPERY-RECONSTRUCTION.md",
+      "authority": "approved",
+      "status": "current",
+      "sha256": "1f6a408e4465c9426f65f63deac609af51dacec0960b99604e0b5f1331c539b5",
+      "depends_on": [
+        "ARCH-CORE-001",
+        "ADR-ARCH-010"
+      ],
+      "description": "Plan Chặng 3 v2.0: Giải phẫu toàn diện 100% tựa game gốc Dupery (23 tasks, TASK-0010..0032)"
     }
   ]
 }

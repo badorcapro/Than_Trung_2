@@ -1,0 +1,6 @@
+public enum RegionEventsType
+{
+	ROLE_SET_CHOICE = 100,
+	ROLE_REMOVAL_CHOICE,
+	QUIRK_CHOICE
+}
