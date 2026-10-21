@@ -23,3 +23,7 @@ __pycache__/
 *.py[cod]
 *$py.class
 .pytest_cache/
+
+# Dupery asset vault (heavy raw binary sprites and fonts)
+docs/agent-system/evidence/dupery/vault/raw/**
+!docs/agent-system/evidence/dupery/vault/dupery_vault_manifest.json

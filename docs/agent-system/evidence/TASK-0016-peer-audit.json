@@ -1,0 +1,41 @@
+{
+  "task_id": "TASK-0016",
+  "subagent_conversation_id": "7ca8ca00-df0e-4bc4-a486-0ae3ebdef641",
+  "audited_at": "2026-10-21T07:38:30Z",
+  "diff_sha256": "4f2a995bd756080898f2e3373bff60f54013b05831b38ac0071afa405dc6e1a1",
+  "transcript_reference": "file:///C:/Users/Admin/.gemini/antigravity/brain/5dc69d25-94eb-4e8a-9589-1420dc32d526/.system_generated/logs/transcript.jsonl",
+  "rules_and_docs_loaded": [
+    "GEMINI.md",
+    "AGENTS.md",
+    "ARCHITECTURE.md",
+    ".agents/rules/rule_anti_evasion.md",
+    ".agents/rules/rule_critical_engagement.md",
+    ".agents/rules/rule_task_contract_and_scope.md",
+    ".agents/skills/verify-task/SKILL.md",
+    ".agents/skills/critical-engagement/SKILL.md",
+    ".agents/skills/honest-execution/SKILL.md"
+  ],
+  "decisions_made": [
+    "Xây dựng module điều phối scripts/agent/extract_dupery_vault.py (202 LOC, tier 'ok' per ADR-0010) quét toàn bộ 879 Sprites, 10 Fonts, và 752 Texture2D từ game Dupery, xuất SSOT manifest docs/agent-system/evidence/dupery/vault/dupery_vault_manifest.json (1.3 MB).",
+    "Đối với 879 Sprites: trích xuất toàn bộ rect (x, y, w, h), pivot (x, y), border (Nine-Slice l, b, r, t), pixels_per_unit, size, và tính băm SHA-256 của ảnh PNG sau khi crop atlas.",
+    "Đối với 10 Fonts: trích xuất name, asset_file, size_bytes, extension (.ttf/.otf), và SHA-256 của font data.",
+    "Đối với 752 Texture2D: trích xuất name, asset_file, width, height, format.",
+    "Cập nhật .gitignore và BOOKKEEPING_EXEMPT_PATTERNS trong scripts/agent/check_scope.py để miễn trừ vùng cache nhị phân thô docs/agent-system/evidence/dupery/vault/raw/**, bảo đảm repository không bị phình to trong khi manifest mật mã được quản lý chặt chẽ trong Git.",
+    "Cung cấp CLI với 4 chế độ: mặc định (sinh manifest), --verify (kiểm tra tính toàn vẹn), --stats (báo cáo), --extract-all / --vault-dir (bung toàn bộ binary PNG và font ra đĩa).",
+    "Viết 6 unit tests trong tests/test_extract_dupery_vault.py (76 LOC, tier 'ok', passed 100%)."
+  ],
+  "omissions_and_simplifications": [
+    "Không có bất kỳ sự cắt xén hay lược bỏ sprite/font/texture nào. Cả 879 sprites, 10 fonts và 752 textures đều được lập chỉ mục đầy đủ với SHA-256 hash và thông số hình học chi tiết.",
+    "Thư mục cache nhị phân thô docs/agent-system/evidence/dupery/vault/raw/** được miễn trừ khỏi Git tracking theo đúng hợp đồng thiết kế để tối ưu kích thước repo, trong khi manifest JSON lưu giữ đầy đủ dấu vết mật mã và toạ độ atlas."
+  ],
+  "adr_0010_anti_cheat_check": "Xác thực 100% tuân thủ ADR-0010: scripts/agent/extract_dupery_vault.py đạt 202 LOC (tier ok, < 300 LOC), check_scope.py đạt 226 LOC (tier ok), tests/test_extract_dupery_vault.py đạt 76 LOC (tier ok). Không có hiện tượng gộp dòng bằng dấu chấm phẩy (;), không có code-golfing, không có placeholder cắt xén hay che giấu lỗi.",
+  "semantic_checks_performed": [
+    "Kiểm tra tính toàn vẹn và số lượng trong docs/agent-system/evidence/dupery/vault/dupery_vault_manifest.json: chính xác 879 Sprites, 10 Fonts, 752 Textures.",
+    "Kiểm tra thuộc tính hình học của 879 Sprites: rect (x, y, width, height), pivot (x, y), border Nine-Slice (left, bottom, right, top), pixels_per_unit, size [w, h], và SHA-256 digest của ảnh PNG sau khi crop atlas.",
+    "Kiểm tra danh sách 10 Fonts: NotoSansCJK (.ttf), PerfectDOSVGA437 (.ttf), NotoSerifThai-VariableFont_wdth,wght (.ttf), LiberationSans (.ttf), SourceHanSansK-Regular (.otf), SourceHanSans-Regular (.otf), veteran typewriter (.ttf), SourceHanSansHC-Regular (.otf), ManufacturingConsent-Regular (.ttf), SourceHanSansSC-Regular (.otf) đều có size_bytes > 0 và SHA-256 hash 64-hex đầy đủ.",
+    "Kiểm tra cấu hình miễn trừ: .gitignore và scripts/agent/check_scope.py đều có docs/agent-system/evidence/dupery/vault/raw/**.",
+    "Thực thi bộ công cụ kiểm định tất định: check_scope.py (diff_sha256 khớp 100%), check_line_budget.py (100% files tier ok), check_diff_guard.py (0 issues), extract_dupery_vault.py --verify (PASSED), và unit tests (6/6 tests passed, full suite 70/70 tests passed)."
+  ],
+  "findings": [],
+  "verdict": "PASS"
+}

@@ -37,6 +37,7 @@ BOOKKEEPING_EXEMPT_PATTERNS = [
     ".agent_scratchpad.md",
     "docs/agent-system/state/active-task.json",
     "docs/agent-system/evidence/TASK-*.json",
+    "docs/agent-system/evidence/dupery/vault/raw/**",
     ".godot/**",
     "**/.godot/**",
     "*.import",
