@@ -9025,9 +9025,10 @@
       "tier": 1,
       "vong": "V1",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/LocationVisualDataSO.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented",
+      "documented_in": "docs/agent-system/evidence/dupery/handbook/V1A_Detective_Board_and_Suspect_Cards.md"
     },
     {
       "id": "DUP-CS-0532",
@@ -12051,9 +12052,10 @@
       "tier": 1,
       "vong": "V1",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/PrimeSuspectVisual.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented",
+      "documented_in": "docs/agent-system/evidence/dupery/handbook/V1A_Detective_Board_and_Suspect_Cards.md"
     },
     {
       "id": "DUP-CS-0710",
@@ -14006,9 +14008,10 @@
       "tier": 1,
       "vong": "V1",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/RoleVisualDataSO.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented",
+      "documented_in": "docs/agent-system/evidence/dupery/handbook/V1A_Detective_Board_and_Suspect_Cards.md"
     },
     {
       "id": "DUP-CS-0825",
@@ -14023,9 +14026,10 @@
       "tier": 1,
       "vong": "V1",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/RoleVisualDataSO.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented",
+      "documented_in": "docs/agent-system/evidence/dupery/handbook/V1A_Detective_Board_and_Suspect_Cards.md"
     },
     {
       "id": "DUP-CS-0826",
@@ -17202,9 +17206,10 @@
       "tier": 1,
       "vong": "V1",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Visual/BackAlleysHealthVisualManager.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented",
+      "documented_in": "docs/agent-system/evidence/dupery/handbook/V1A_Detective_Board_and_Suspect_Cards.md"
     },
     {
       "id": "DUP-CS-1013",
@@ -17338,9 +17343,10 @@
       "tier": 1,
       "vong": "V1",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Visual/BoardVisualManager.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented",
+      "documented_in": "docs/agent-system/evidence/dupery/handbook/V1A_Detective_Board_and_Suspect_Cards.md"
     },
     {
       "id": "DUP-CS-1021",
@@ -17389,9 +17395,10 @@
       "tier": 1,
       "vong": "V1",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Visual/CardShufflerVisual.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented",
+      "documented_in": "docs/agent-system/evidence/dupery/handbook/V1A_Detective_Board_and_Suspect_Cards.md"
     },
     {
       "id": "DUP-CS-1024",
@@ -17406,9 +17413,10 @@
       "tier": 1,
       "vong": "V1",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Visual/CaseEndVisualManager.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented",
+      "documented_in": "docs/agent-system/evidence/dupery/handbook/V1A_Detective_Board_and_Suspect_Cards.md"
     },
     {
       "id": "DUP-CS-1025",
@@ -17610,9 +17618,10 @@
       "tier": 1,
       "vong": "V1",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Visual/CharacterAbilityVisual.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented",
+      "documented_in": "docs/agent-system/evidence/dupery/handbook/V1A_Detective_Board_and_Suspect_Cards.md"
     },
     {
       "id": "DUP-CS-1037",
@@ -17627,9 +17636,10 @@
       "tier": 1,
       "vong": "V1",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Visual/CharacterDeathAnimationController.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented",
+      "documented_in": "docs/agent-system/evidence/dupery/handbook/V1A_Detective_Board_and_Suspect_Cards.md"
     },
     {
       "id": "DUP-CS-1038",
@@ -17644,9 +17654,10 @@
       "tier": 1,
       "vong": "V1",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Visual/CharacterVisual.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented",
+      "documented_in": "docs/agent-system/evidence/dupery/handbook/V1A_Detective_Board_and_Suspect_Cards.md"
     },
     {
       "id": "DUP-CS-1039",
@@ -17695,9 +17706,10 @@
       "tier": 1,
       "vong": "V1",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Visual/ClueObtainedMenu.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented",
+      "documented_in": "docs/agent-system/evidence/dupery/handbook/V1A_Detective_Board_and_Suspect_Cards.md"
     },
     {
       "id": "DUP-CS-1042",
@@ -17729,9 +17741,10 @@
       "tier": 1,
       "vong": "V1",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Visual/ControllerSuspectLineTypes.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented",
+      "documented_in": "docs/agent-system/evidence/dupery/handbook/V1A_Detective_Board_and_Suspect_Cards.md"
     },
     {
       "id": "DUP-CS-1044",
@@ -17746,9 +17759,10 @@
       "tier": 1,
       "vong": "V1",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Visual/CreditCharacterVisual.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented",
+      "documented_in": "docs/agent-system/evidence/dupery/handbook/V1A_Detective_Board_and_Suspect_Cards.md"
     },
     {
       "id": "DUP-CS-1045",
@@ -17780,9 +17794,10 @@
       "tier": 1,
       "vong": "V1",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Visual/DragPin.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented",
+      "documented_in": "docs/agent-system/evidence/dupery/handbook/V1A_Detective_Board_and_Suspect_Cards.md"
     },
     {
       "id": "DUP-CS-1047",
@@ -17865,9 +17880,10 @@
       "tier": 1,
       "vong": "V1",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Visual/EmptySlot.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented",
+      "documented_in": "docs/agent-system/evidence/dupery/handbook/V1A_Detective_Board_and_Suspect_Cards.md"
     },
     {
       "id": "DUP-CS-1052",
@@ -17882,9 +17898,10 @@
       "tier": 1,
       "vong": "V1",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Visual/FakeSuspectVisual.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented",
+      "documented_in": "docs/agent-system/evidence/dupery/handbook/V1A_Detective_Board_and_Suspect_Cards.md"
     },
     {
       "id": "DUP-CS-1053",
@@ -17967,9 +17984,10 @@
       "tier": 1,
       "vong": "V1",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Visual/InteractionType.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented",
+      "documented_in": "docs/agent-system/evidence/dupery/handbook/V1A_Detective_Board_and_Suspect_Cards.md"
     },
     {
       "id": "DUP-CS-1058",
@@ -18035,9 +18053,10 @@
       "tier": 1,
       "vong": "V1",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Visual/LocationVisual.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented",
+      "documented_in": "docs/agent-system/evidence/dupery/handbook/V1A_Detective_Board_and_Suspect_Cards.md"
     },
     {
       "id": "DUP-CS-1062",
@@ -18069,9 +18088,10 @@
       "tier": 1,
       "vong": "V1",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Visual/MagnifyingGlassManager.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented",
+      "documented_in": "docs/agent-system/evidence/dupery/handbook/V1A_Detective_Board_and_Suspect_Cards.md"
     },
     {
       "id": "DUP-CS-1064",
@@ -18154,9 +18174,10 @@
       "tier": 1,
       "vong": "V1",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Visual/Newspaper.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented",
+      "documented_in": "docs/agent-system/evidence/dupery/handbook/V1A_Detective_Board_and_Suspect_Cards.md"
     },
     {
       "id": "DUP-CS-1069",
@@ -18239,9 +18260,10 @@
       "tier": 1,
       "vong": "V1",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Visual/PinsController.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented",
+      "documented_in": "docs/agent-system/evidence/dupery/handbook/V1A_Detective_Board_and_Suspect_Cards.md"
     },
     {
       "id": "DUP-CS-1074",
@@ -18375,9 +18397,10 @@
       "tier": 1,
       "vong": "V1",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Visual/SuspectExplanationManager.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented",
+      "documented_in": "docs/agent-system/evidence/dupery/handbook/V1A_Detective_Board_and_Suspect_Cards.md"
     },
     {
       "id": "DUP-CS-1082",
@@ -18392,9 +18415,10 @@
       "tier": 1,
       "vong": "V1",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Visual/SuspectExplanationManager.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented",
+      "documented_in": "docs/agent-system/evidence/dupery/handbook/V1A_Detective_Board_and_Suspect_Cards.md"
     },
     {
       "id": "DUP-CS-1083",
@@ -18409,9 +18433,10 @@
       "tier": 1,
       "vong": "V1",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Visual/SuspectListVisualManager.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented",
+      "documented_in": "docs/agent-system/evidence/dupery/handbook/V1A_Detective_Board_and_Suspect_Cards.md"
     },
     {
       "id": "DUP-CS-1084",
@@ -18426,9 +18451,10 @@
       "tier": 1,
       "vong": "V1",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Visual/SuspectVisual.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented",
+      "documented_in": "docs/agent-system/evidence/dupery/handbook/V1A_Detective_Board_and_Suspect_Cards.md"
     },
     {
       "id": "DUP-CS-1085",
@@ -18443,9 +18469,10 @@
       "tier": 1,
       "vong": "V1",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Visual/TextBox.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented",
+      "documented_in": "docs/agent-system/evidence/dupery/handbook/V1A_Detective_Board_and_Suspect_Cards.md"
     },
     {
       "id": "DUP-CS-1086",
@@ -18562,9 +18589,10 @@
       "tier": 1,
       "vong": "V1",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/VisualClassificationRatioGC.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented",
+      "documented_in": "docs/agent-system/evidence/dupery/handbook/V1A_Detective_Board_and_Suspect_Cards.md"
     },
     {
       "id": "DUP-CS-1093",

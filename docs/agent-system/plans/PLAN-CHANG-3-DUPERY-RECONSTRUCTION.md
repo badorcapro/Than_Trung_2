@@ -1,6 +1,6 @@
-# Kế Hoạch Chi Tiết Chặng 3 (Spec v2.0): Giải Phẫu Toàn Diện Game Gốc *Dupery*
+# Kế Hoạch Chi Tiết Chặng 3 (Spec v2.2): Giải Phẫu Toàn Diện Game Gốc *Dupery*
 
-> **Mã tài liệu**: `PLAN-CHANG-3-DUPERY-RECONSTRUCTION` v2.0  
+> **Mã tài liệu**: `PLAN-CHANG-3-DUPERY-RECONSTRUCTION` v2.2  
 > **Trạng thái**: APPROVED bởi người dùng (2026-10-21). Bắt đầu thực thi từ `TASK-0010`.  
 > **Đối tượng**: bản dựng *Dupery* (Unity `2022.3.62f3`, Mono CIL, PE32 x86) `[V]`  
 > **Nguồn phản biện**: nhận định bên ngoài (Claude) + thực nghiệm đối chiếu trong phiên này (mục 1).  
@@ -74,7 +74,7 @@ Hai script scratch (`scratch/probe_dupery_depth.py`, `probe_dupery_monobehaviour
 
 ---
 
-## 3. Cấu Trúc Task (25 task: `TASK-0010` → `TASK-0032` kèm `0021B`, `0021C`)
+## 3. Cấu Trúc Task (27 task: `TASK-0010` → `TASK-0032` kèm `0021B`, `0021C`, `0022A`, `0022B`, `0022C`)
 
 Quy ước mã: tuần tự 4 chữ số (regex `^TASK-[0-9]{4}[A-Z]?$` chỉ nhận hậu tố chữ **hoa**). Chặng Godot cũ dịch xuống từ `TASK-0033`.
 
@@ -109,8 +109,8 @@ flowchart TD
         A18 --> A21C
     end
     subgraph B["TẦNG B: VÒNG GIẢI PHẪU V1-V8 (đến L3, có Cổng Thẩm Định Thực Nghiệm 60fps)"]
-        B1["0022 V1 Bảng thám tử"] --> B2["0023 V2 Sinh vụ án"] --> B3["0024 V3 Vòng chơi"] --> B4["0025 V4 Vật phẩm/Quirks"] --> B5["0026 V5 Roles"] --> B6["0027 V6 Hạ tầng (Audio tương tác)"] --> B7["0028 V7 Menu/Tutorial/Intro"] --> B8["0029 V8 LevelEditor"]
-        A21B --> B1
+        B1A["0022A V1.1 Bảng điều tra & Thẻ bài (28 classes)"] --> B1B["0022B V1.2 Dây nối & Kính lúp (22 classes)"] --> B1C["0022C V1.3 Easing & World Visuals (45 classes)"] --> B2["0023 V2 Sinh vụ án"] --> B3["0024 V3 Vòng chơi"] --> B4["0025 V4 Vật phẩm/Quirks"] --> B5["0026 V5 Roles"] --> B6["0027 V6 Hạ tầng (Audio tương tác)"] --> B7["0028 V7 Menu/Tutorial/Intro"] --> B8["0029 V8 LevelEditor"]
+        A21B --> B1A
         A21C --> B6
     end
     subgraph C["TẦNG C: KIỂM TOÁN & CẨM NANG"]
@@ -145,11 +145,13 @@ flowchart TD
 
 ### Tầng B — Vòng giải phẫu V1–V8 (đến L3, có Cổng Thẩm Định Thực Nghiệm 60fps)
 
-Mỗi vòng: REA + file `.cs` + scene JSON + dữ liệu → ghi sổ cái vòng (`ledger/vong_Vn.json`) → viết `handbook/Vn_*.md` có `rea_live_lookup_recipe` → soạn **checklist so sánh** cho vòng (bố cục, thời lượng/đường cong, âm thanh, hover/click, hành vi lỗi) tham chiếu golden reference → **Thực thi Cổng Thẩm Định Thực Nghiệm 60fps (DEC-26)** khi có video gameplay → Peer-Audit. Một vòng lớn được tách thành nhiều task con theo namespace khi vượt ngân sách context.
+Mỗi vòng: REA + file `.cs` + scene JSON + dữ liệu → ghi sổ cái vòng (`ledger/vong_Vn.json` hoặc cập nhật trạng thái ledger tổng) → viết `handbook/Vn_*.md` có `rea_live_lookup_recipe` → soạn **checklist so sánh** cho vòng (bố cục, thời lượng/đường cong, âm thanh, hover/click, hành vi lỗi) tham chiếu golden reference → **Thực thi Cổng Thẩm Định Thực Nghiệm 60fps (DEC-26)** khi có video gameplay → Peer-Audit. Vòng V1 được chia thành 3 task chức năng nhỏ hơn (0022A, 0022B, 0022C) để bao phủ đầy đủ 95 classes mà không vượt ngân sách dòng/context.
 
-| Task | Vòng | Phạm vi (số đo P6) | Đích |
+| Task | Vòng | Phạm vi (số đo P6 & ledger thực tế) | Đích |
 | :-: | :-: | :--- | :--- |
-| **0022** | V1 Bảng thám tử | `Visual` (68+4), `StringManager`, `MagnifyingGlassManager`, camera, ánh sáng; `GRGLib` (easing, hằng số, `CoroutineLibrary`, `UILineRenderer`, `WorldLayoutGroup`). **Thẩm định 60fps**: đối chiếu pixel displacement và coroutine snap grid | L3 |
+| **0022A** | V1.1 Bảng điều tra & Thẻ bài | 28 classes: `BoardVisualManager`, `PinsController`, `DragPin`, `HealthPins`, `CharacterVisual`, `SuspectVisual`, `PrimeSuspectVisual`, `FakeSuspectVisual`, `SuspectListVisualManager`, `SuspectExplanationManager`, `VisualClassificationRatioGC`, `ClassificationVisualData`, `CharacterAbilityVisual`, `CharacterDeathAnimationController`, `CreditCharacterVisual`, `ControllerSuspectLineTypes`, `CaseEndVisualManager`, `EmptySlot`, `CardShufflerVisual`, `ClueObtainedMenu`, `Newspaper`, `TextBox`, `MenuingAnimation`, `MenuState`, `InteractionType`, `RoleVisualDataSO`, `LocationVisual`, `LocationVisualDataSO`. **Đầu ra**: `handbook/V1A_Detective_Board_and_Suspect_Cards.md`, `scripts/agent/simulate_board_layout.py`, test, cập nhật 28 classes lên L3 trong ledger. **Thẩm định 60fps**: đối chiếu pixel displacement và coroutine snap grid | L3 |
+| **0022B** | V1.2 Dây nối & Kính lúp | 22 classes: `StringManager`, `ConnectionString`, `LRBrush`, `RTBrush`, `RTDrawer`, `RTDrawingHelper`, `PenManager`, `PenState`, `MarkerVisual`, `NotesToolManager`, `NoteToolsInputsCallback`, `MagnifyingGlassManager`, `MagnifyingGlassMenuingAnimation`, `RevealLine`, `RevealLinesManager`, `UILineRenderer`, v.v. **Đầu ra**: `handbook/V1B_Yarn_Strings_and_Tools.md`, test, cập nhật 22 classes lên L3 trong ledger. **Thẩm định 60fps**: đối chiếu độ trễ kéo dây nối, tương tác cọ vẽ, và mask kính lúp | L3 |
+| **0022C** | V1.3 Easing & Môi trường trực quan | 45 classes: `CoroutineLibrary`, `WorldVisualManager`, `WorldDecorManager`, `WorldAnimationEffect`, Region Worlds (`BackAlleys`, `Casino`, `Clock`, `Docks`), Region Minigame Visuals (`CasinoCardManager`, `CasinoChipsManager`, `SlotMachineVisual`, `BoatVisual`, `ClockTowerVisual`), Visual Data SOs (`CaseQuirksVisualDataSO`, `CodexVisualDataSO`, `RegionsVisualsDataSO`, `StampVisualDataSO`). **Đầu ra**: `handbook/V1C_Easing_Curves_and_World_Visuals.md`, test, cập nhật 45 classes lên L3 trong ledger. **Thẩm định 60fps**: đối chiếu 7 đường cong easing giải tích và hiệu ứng đèn/sóng/khói | L3 |
 | **0023** | V2 Sinh vụ án | `CaseCreation` (8), `Nodes` (39+18), seed và tính tất định; **Thẩm định 60fps**: đối chiếu cặp seed vụ án thực tế với giải thuật `System.Random` offline | L3 |
 | **0024** | V3 Vòng chơi | `CaseSelection` (14), `Leads` (32), `LeadSelection` (6), `RegionEvents` (7), `Lineup` (11), `Summary` (3), `PieChart`. **Thẩm định 60fps**: đối chiếu luồng chuyển cảnh và lượt chơi | L3 |
 | **0025** | V4 Vật phẩm | `Quirks` (59), `BackAlleyItems` (11), `ItemFanManager`, cửa hàng. **Thẩm định 60fps**: đối chiếu logic trừ tiền cược, mở khóa quirk và tương tác hover | L3 |
