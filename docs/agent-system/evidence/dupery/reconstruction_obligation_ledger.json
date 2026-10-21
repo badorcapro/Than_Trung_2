@@ -17361,9 +17361,10 @@
       "tier": 1,
       "vong": "V1",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Visual/BoatMarkerVisualManager.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented",
+      "documented_in": "docs/agent-system/evidence/dupery/handbook/V1B_Yarn_Strings_and_Tools.md"
     },
     {
       "id": "DUP-CS-1022",
@@ -17533,9 +17534,10 @@
       "tier": 1,
       "vong": "V1",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Visual/CasinoChipsChangeMarker.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented",
+      "documented_in": "docs/agent-system/evidence/dupery/handbook/V1B_Yarn_Strings_and_Tools.md"
     },
     {
       "id": "DUP-CS-1032",
@@ -17724,9 +17726,10 @@
       "tier": 1,
       "vong": "V1",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Visual/ConnectionString.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented",
+      "documented_in": "docs/agent-system/evidence/dupery/handbook/V1B_Yarn_Strings_and_Tools.md"
     },
     {
       "id": "DUP-CS-1043",
@@ -17812,9 +17815,10 @@
       "tier": 1,
       "vong": "V1",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Visual/Drawing/LRBrush.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented",
+      "documented_in": "docs/agent-system/evidence/dupery/handbook/V1B_Yarn_Strings_and_Tools.md"
     },
     {
       "id": "DUP-CS-1048",
@@ -17829,9 +17833,10 @@
       "tier": 1,
       "vong": "V1",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Visual/Drawing/RTBrush.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented",
+      "documented_in": "docs/agent-system/evidence/dupery/handbook/V1B_Yarn_Strings_and_Tools.md"
     },
     {
       "id": "DUP-CS-1049",
@@ -17846,9 +17851,10 @@
       "tier": 1,
       "vong": "V1",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Visual/Drawing/RTDrawer.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented",
+      "documented_in": "docs/agent-system/evidence/dupery/handbook/V1B_Yarn_Strings_and_Tools.md"
     },
     {
       "id": "DUP-CS-1050",
@@ -17863,9 +17869,10 @@
       "tier": 1,
       "vong": "V1",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Visual/Drawing/RTDrawingHelper.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented",
+      "documented_in": "docs/agent-system/evidence/dupery/handbook/V1B_Yarn_Strings_and_Tools.md"
     },
     {
       "id": "DUP-CS-1051",
@@ -18071,9 +18078,10 @@
       "tier": 1,
       "vong": "V1",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Visual/MagnifyingGlassManager.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented",
+      "documented_in": "docs/agent-system/evidence/dupery/handbook/V1B_Yarn_Strings_and_Tools.md"
     },
     {
       "id": "DUP-CS-1063",
@@ -18106,9 +18114,10 @@
       "tier": 1,
       "vong": "V1",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Visual/MagnifyingGlassManager.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented",
+      "documented_in": "docs/agent-system/evidence/dupery/handbook/V1B_Yarn_Strings_and_Tools.md"
     },
     {
       "id": "DUP-CS-1065",
@@ -18140,9 +18149,10 @@
       "tier": 1,
       "vong": "V1",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Visual/NavigationVisualHelper.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented",
+      "documented_in": "docs/agent-system/evidence/dupery/handbook/V1B_Yarn_Strings_and_Tools.md"
     },
     {
       "id": "DUP-CS-1067",
@@ -18157,9 +18167,10 @@
       "tier": 1,
       "vong": "V1",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Visual/NavigationVisualManager.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented",
+      "documented_in": "docs/agent-system/evidence/dupery/handbook/V1B_Yarn_Strings_and_Tools.md"
     },
     {
       "id": "DUP-CS-1068",
@@ -18192,9 +18203,10 @@
       "tier": 1,
       "vong": "V1",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Visual/NotesToolManager.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented",
+      "documented_in": "docs/agent-system/evidence/dupery/handbook/V1B_Yarn_Strings_and_Tools.md"
     },
     {
       "id": "DUP-CS-1070",
@@ -18209,9 +18221,10 @@
       "tier": 1,
       "vong": "V1",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Visual/NoteToolsInputsCallback.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented",
+      "documented_in": "docs/agent-system/evidence/dupery/handbook/V1B_Yarn_Strings_and_Tools.md"
     },
     {
       "id": "DUP-CS-1071",
@@ -18226,9 +18239,10 @@
       "tier": 1,
       "vong": "V1",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Visual/PenManager.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented",
+      "documented_in": "docs/agent-system/evidence/dupery/handbook/V1B_Yarn_Strings_and_Tools.md"
     },
     {
       "id": "DUP-CS-1072",
@@ -18243,9 +18257,10 @@
       "tier": 1,
       "vong": "V1",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Visual/PenManager.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented",
+      "documented_in": "docs/agent-system/evidence/dupery/handbook/V1B_Yarn_Strings_and_Tools.md"
     },
     {
       "id": "DUP-CS-1073",
@@ -18278,9 +18293,10 @@
       "tier": 1,
       "vong": "V1",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Visual/RatioVisualManager.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented",
+      "documented_in": "docs/agent-system/evidence/dupery/handbook/V1B_Yarn_Strings_and_Tools.md"
     },
     {
       "id": "DUP-CS-1075",
@@ -18295,9 +18311,10 @@
       "tier": 1,
       "vong": "V1",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Visual/ReputationVisualManager.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented",
+      "documented_in": "docs/agent-system/evidence/dupery/handbook/V1B_Yarn_Strings_and_Tools.md"
     },
     {
       "id": "DUP-CS-1076",
@@ -18312,9 +18329,10 @@
       "tier": 1,
       "vong": "V1",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Visual/RevealLine.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented",
+      "documented_in": "docs/agent-system/evidence/dupery/handbook/V1B_Yarn_Strings_and_Tools.md"
     },
     {
       "id": "DUP-CS-1077",
@@ -18329,9 +18347,10 @@
       "tier": 1,
       "vong": "V1",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Visual/RevealLinesManager.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented",
+      "documented_in": "docs/agent-system/evidence/dupery/handbook/V1B_Yarn_Strings_and_Tools.md"
     },
     {
       "id": "DUP-CS-1078",
@@ -18363,9 +18382,10 @@
       "tier": 1,
       "vong": "V1",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Visual/SpecialAbilityVisualManager.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented",
+      "documented_in": "docs/agent-system/evidence/dupery/handbook/V1B_Yarn_Strings_and_Tools.md"
     },
     {
       "id": "DUP-CS-1080",
@@ -18380,9 +18400,10 @@
       "tier": 1,
       "vong": "V1",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Visual/StringManager.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented",
+      "documented_in": "docs/agent-system/evidence/dupery/handbook/V1B_Yarn_Strings_and_Tools.md"
     },
     {
       "id": "DUP-CS-1081",
@@ -18487,9 +18508,10 @@
       "tier": 1,
       "vong": "V1",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Visual/TimeVisualManager.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented",
+      "documented_in": "docs/agent-system/evidence/dupery/handbook/V1B_Yarn_Strings_and_Tools.md"
     },
     {
       "id": "DUP-CS-1087",
