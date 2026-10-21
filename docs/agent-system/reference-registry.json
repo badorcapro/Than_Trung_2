@@ -405,7 +405,7 @@
       "path": "docs/agent-system/plans/PLAN-CHANG-3-DUPERY-RECONSTRUCTION.md",
       "authority": "approved",
       "status": "current",
-      "sha256": "0ebc777d620f07e35cdace37e68479ab5f017e06be6fd410b7d9dfea2427f33b",
+      "sha256": "24ac711a92a51e3b56ea2244165b3652a14253396f1934d003d786105e6392c3",
       "depends_on": [
         "ARCH-CORE-001",
         "ADR-ARCH-010"
