@@ -644,9 +644,9 @@
       "tier": 1,
       "vong": "V6",
       "target_depth": "L2",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Audio/Atmo.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0039",
@@ -661,9 +661,9 @@
       "tier": 1,
       "vong": "V6",
       "target_depth": "L2",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Audio/AudioAtmoPlayer.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0040",
@@ -678,9 +678,9 @@
       "tier": 1,
       "vong": "V6",
       "target_depth": "L2",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Audio/AudioAtmoPlayer.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0041",
@@ -695,9 +695,9 @@
       "tier": 1,
       "vong": "V6",
       "target_depth": "L2",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Audio/AudioBanks.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0042",
@@ -712,9 +712,9 @@
       "tier": 1,
       "vong": "V6",
       "target_depth": "L2",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Audio/AudioCutscenePlayer.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0043",
@@ -729,9 +729,9 @@
       "tier": 1,
       "vong": "V6",
       "target_depth": "L2",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Audio/AudioHandler.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0044",
@@ -746,9 +746,9 @@
       "tier": 1,
       "vong": "V6",
       "target_depth": "L2",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Audio/AudioHelper.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0045",
@@ -763,9 +763,9 @@
       "tier": 1,
       "vong": "V6",
       "target_depth": "L2",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Audio/AudioMusicPlayer.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0046",
@@ -780,9 +780,9 @@
       "tier": 1,
       "vong": "V6",
       "target_depth": "L2",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Audio/AudioReferencesSO.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0047",
@@ -797,9 +797,9 @@
       "tier": 1,
       "vong": "V6",
       "target_depth": "L2",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Audio/AudioSfxPlayer.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0048",
@@ -814,9 +814,9 @@
       "tier": 1,
       "vong": "V6",
       "target_depth": "L2",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Audio/AudioSfxQueuer.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0049",
@@ -831,9 +831,9 @@
       "tier": 1,
       "vong": "V6",
       "target_depth": "L2",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Audio/GlobalParams.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0050",
@@ -848,9 +848,9 @@
       "tier": 1,
       "vong": "V6",
       "target_depth": "L2",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Audio/Music.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0051",
@@ -865,9 +865,9 @@
       "tier": 1,
       "vong": "V6",
       "target_depth": "L2",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Audio/Sfx.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0052",
@@ -18782,9 +18782,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/ADVANCEDSETTINGS.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1103",
@@ -18799,9 +18799,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/ASYNCREADINFO.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1104",
@@ -18816,9 +18816,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/ATTRIBUTES_3D.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1105",
@@ -18833,9 +18833,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/Channel.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1106",
@@ -18850,9 +18850,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/CHANNELCONTROL_CALLBACK_TYPE.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1107",
@@ -18867,9 +18867,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/CHANNELCONTROL_DSP_INDEX.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1108",
@@ -18884,9 +18884,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/CHANNELCONTROL_TYPE.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1109",
@@ -18901,9 +18901,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/ChannelGroup.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1110",
@@ -18918,9 +18918,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/CHANNELMASK.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1111",
@@ -18935,9 +18935,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/CHANNELORDER.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1112",
@@ -18952,9 +18952,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/COMPLEX.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1113",
@@ -18969,9 +18969,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/CONSTANTS.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1114",
@@ -18986,9 +18986,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/CPU_USAGE.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1115",
@@ -19003,9 +19003,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/CREATESOUNDEXINFO.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1116",
@@ -19020,9 +19020,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/Debug.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1117",
@@ -19037,9 +19037,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DEBUG_FLAGS.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1118",
@@ -19054,9 +19054,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DEBUG_MODE.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1119",
@@ -19071,9 +19071,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DRIVER_STATE.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1120",
@@ -19088,9 +19088,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1121",
@@ -19105,9 +19105,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_BUFFER_ARRAY.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1122",
@@ -19122,9 +19122,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_CALLBACK_TYPE.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1123",
@@ -19139,9 +19139,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_CHANNELMIX.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1124",
@@ -19156,9 +19156,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_CHANNELMIX_OUTPUT.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1125",
@@ -19173,9 +19173,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_CHORUS.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1126",
@@ -19190,9 +19190,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_COMPRESSOR.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1127",
@@ -19207,9 +19207,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_CONVOLUTION_REVERB.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1128",
@@ -19224,9 +19224,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_DATA_PARAMETER_INFO.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1129",
@@ -19241,9 +19241,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_DELAY.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1130",
@@ -19258,9 +19258,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_DESCRIPTION.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1131",
@@ -19275,9 +19275,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_DISTORTION.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1132",
@@ -19292,9 +19292,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_ECHO.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1133",
@@ -19309,9 +19309,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_ECHO_DELAYCHANGEMODE_TYPE.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1134",
@@ -19326,9 +19326,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_FADER.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1135",
@@ -19343,9 +19343,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_FFT.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1136",
@@ -19360,9 +19360,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_FFT_DOWNMIX_TYPE.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1137",
@@ -19377,9 +19377,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_FFT_WINDOW_TYPE.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1138",
@@ -19394,9 +19394,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_FLANGE.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1139",
@@ -19411,9 +19411,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_HIGHPASS.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1140",
@@ -19428,9 +19428,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_HIGHPASS_SIMPLE.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1141",
@@ -19445,9 +19445,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_ITECHO.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1142",
@@ -19462,9 +19462,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_ITLOWPASS.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1143",
@@ -19479,9 +19479,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_LIMITER.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1144",
@@ -19496,9 +19496,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_LOUDNESS_METER.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1145",
@@ -19513,9 +19513,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_LOUDNESS_METER_INFO_TYPE.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1146",
@@ -19530,9 +19530,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_LOUDNESS_METER_STATE_TYPE.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1147",
@@ -19547,9 +19547,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_LOUDNESS_METER_WEIGHTING_TYPE.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1148",
@@ -19564,9 +19564,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_LOWPASS.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1149",
@@ -19581,9 +19581,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_LOWPASS_SIMPLE.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1150",
@@ -19598,9 +19598,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_METERING_INFO.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1151",
@@ -19615,9 +19615,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_MULTIBAND_DYNAMICS.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1152",
@@ -19632,9 +19632,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_MULTIBAND_DYNAMICS_MODE_TYPE.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1153",
@@ -19649,9 +19649,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_MULTIBAND_EQ.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1154",
@@ -19666,9 +19666,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_MULTIBAND_EQ_FILTER_TYPE.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1155",
@@ -19683,9 +19683,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_NORMALIZE.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1156",
@@ -19700,9 +19700,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_OBJECTPAN.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1157",
@@ -19717,9 +19717,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_OSCILLATOR.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1158",
@@ -19734,9 +19734,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_PAN.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1159",
@@ -19751,9 +19751,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_PAN_2D_STEREO_MODE_TYPE.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1160",
@@ -19768,9 +19768,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_PAN_3D_EXTENT_MODE_TYPE.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1161",
@@ -19785,9 +19785,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_PAN_3D_ROLLOFF_TYPE.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1162",
@@ -19802,9 +19802,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_PAN_MODE_TYPE.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1163",
@@ -19819,9 +19819,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_PAN_SURROUND_FLAGS.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1164",
@@ -19836,9 +19836,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_PARAMEQ.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1165",
@@ -19853,9 +19853,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_PARAMETER_3DATTRIBUTES.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1166",
@@ -19870,9 +19870,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_PARAMETER_3DATTRIBUTES_MULTI.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1167",
@@ -19887,9 +19887,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_PARAMETER_ATTENUATION_RANGE.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1168",
@@ -19904,9 +19904,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_PARAMETER_DATA_TYPE.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1169",
@@ -19921,9 +19921,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_PARAMETER_DESC.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1170",
@@ -19938,9 +19938,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_PARAMETER_DESC_BOOL.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1171",
@@ -19955,9 +19955,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_PARAMETER_DESC_DATA.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1172",
@@ -19972,9 +19972,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_PARAMETER_DESC_FLOAT.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1173",
@@ -19989,9 +19989,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_PARAMETER_DESC_INT.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1174",
@@ -20006,9 +20006,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_PARAMETER_DESC_UNION.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1175",
@@ -20023,9 +20023,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_PARAMETER_DYNAMIC_RESPONSE.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1176",
@@ -20040,9 +20040,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_PARAMETER_FFT.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1177",
@@ -20057,9 +20057,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_PARAMETER_FLOAT_MAPPING.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1178",
@@ -20074,9 +20074,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_PARAMETER_FLOAT_MAPPING_PIECEWISE_LINEAR.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1179",
@@ -20091,9 +20091,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_PARAMETER_FLOAT_MAPPING_TYPE.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1180",
@@ -20108,9 +20108,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_PARAMETER_OVERALLGAIN.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1181",
@@ -20125,9 +20125,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_PARAMETER_SIDECHAIN.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1182",
@@ -20142,9 +20142,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_PARAMETER_TYPE.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1183",
@@ -20159,9 +20159,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_PITCHSHIFT.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1184",
@@ -20176,9 +20176,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_PROCESS_OPERATION.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1185",
@@ -20193,9 +20193,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_RESAMPLER.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1186",
@@ -20210,9 +20210,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_RETURN.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1187",
@@ -20227,9 +20227,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_SEND.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1188",
@@ -20244,9 +20244,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_SFXREVERB.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1189",
@@ -20261,9 +20261,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_STATE.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1190",
@@ -20278,9 +20278,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_STATE_DFT_FUNCTIONS.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1191",
@@ -20295,9 +20295,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_STATE_FUNCTIONS.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1192",
@@ -20312,9 +20312,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_STATE_PAN_FUNCTIONS.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1193",
@@ -20329,9 +20329,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_THREE_EQ.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1194",
@@ -20346,9 +20346,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_THREE_EQ_CROSSOVERSLOPE_TYPE.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1195",
@@ -20363,9 +20363,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_TRANSCEIVER.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1196",
@@ -20380,9 +20380,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_TRANSCEIVER_SPEAKERMODE.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1197",
@@ -20397,9 +20397,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_TREMOLO.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1198",
@@ -20414,9 +20414,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSP_TYPE.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1199",
@@ -20431,9 +20431,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSPConnection.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1200",
@@ -20448,9 +20448,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/DSPCONNECTION_TYPE.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1201",
@@ -20465,9 +20465,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/Error.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1202",
@@ -20482,9 +20482,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/ERRORCALLBACK_INFO.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1203",
@@ -20499,9 +20499,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/ERRORCALLBACK_INSTANCETYPE.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1204",
@@ -20516,9 +20516,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/Factory.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1205",
@@ -20533,9 +20533,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/Geometry.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1206",
@@ -20550,9 +20550,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/GUID.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1207",
@@ -20567,9 +20567,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/IChannelControl.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1208",
@@ -20584,9 +20584,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/INITFLAGS.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1209",
@@ -20601,9 +20601,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/Memory.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1210",
@@ -20618,9 +20618,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/MEMORY_TYPE.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1211",
@@ -20635,9 +20635,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/MODE.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1212",
@@ -20652,9 +20652,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/OPENSTATE.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1213",
@@ -20669,9 +20669,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/OUTPUTTYPE.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1214",
@@ -20686,9 +20686,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/PLUGINLIST.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1215",
@@ -20703,9 +20703,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/PLUGINTYPE.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1216",
@@ -20720,9 +20720,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/PORT_INDEX.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1217",
@@ -20737,9 +20737,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/PORT_TYPE.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1218",
@@ -20754,9 +20754,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/PRESET.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1219",
@@ -20771,9 +20771,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/RESULT.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1220",
@@ -20788,9 +20788,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/Reverb3D.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1221",
@@ -20805,9 +20805,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/REVERB_PROPERTIES.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1222",
@@ -20822,9 +20822,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/Sound.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1223",
@@ -20839,9 +20839,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/SOUND_FORMAT.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1224",
@@ -20856,9 +20856,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/SOUND_TYPE.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1225",
@@ -20873,9 +20873,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/SoundGroup.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1226",
@@ -20890,9 +20890,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/SOUNDGROUP_BEHAVIOR.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1227",
@@ -20907,9 +20907,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/SPEAKER.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1228",
@@ -20924,9 +20924,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/SPEAKERMODE.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1229",
@@ -20941,9 +20941,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/StringHelper.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1230",
@@ -20958,9 +20958,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/StringHelper.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1231",
@@ -20975,9 +20975,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/StringWrapper.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1232",
@@ -20992,9 +20992,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/Studio/ADVANCEDSETTINGS.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1233",
@@ -21009,9 +21009,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/Studio/Bank.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1234",
@@ -21026,9 +21026,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/Studio/BANK_INFO.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1235",
@@ -21043,9 +21043,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/Studio/BUFFER_INFO.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1236",
@@ -21060,9 +21060,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/Studio/BUFFER_USAGE.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1237",
@@ -21077,9 +21077,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/Studio/Bus.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1238",
@@ -21094,9 +21094,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/Studio/COMMAND_INFO.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1239",
@@ -21111,9 +21111,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/Studio/COMMANDCAPTURE_FLAGS.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1240",
@@ -21128,9 +21128,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/Studio/CommandReplay.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1241",
@@ -21145,9 +21145,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/Studio/COMMANDREPLAY_FLAGS.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1242",
@@ -21162,9 +21162,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/Studio/CPU_USAGE.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1243",
@@ -21179,9 +21179,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/Studio/EVENT_CALLBACK_TYPE.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1244",
@@ -21196,9 +21196,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/Studio/EVENT_PROPERTY.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1245",
@@ -21213,9 +21213,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/Studio/EventDescription.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1246",
@@ -21230,9 +21230,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/Studio/EventInstance.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1247",
@@ -21247,9 +21247,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/Studio/INITFLAGS.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1248",
@@ -21264,9 +21264,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/Studio/INSTANCETYPE.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1249",
@@ -21281,9 +21281,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/Studio/LOAD_BANK_FLAGS.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1250",
@@ -21298,9 +21298,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/Studio/LOAD_MEMORY_ALIGNMENT.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1251",
@@ -21315,9 +21315,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/Studio/LOAD_MEMORY_MODE.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1252",
@@ -21332,9 +21332,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/Studio/LOADING_STATE.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1253",
@@ -21349,9 +21349,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/Studio/MEMORY_USAGE.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1254",
@@ -21366,9 +21366,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/Studio/PARAMETER_DESCRIPTION.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1255",
@@ -21383,9 +21383,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/Studio/PARAMETER_FLAGS.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1256",
@@ -21400,9 +21400,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/Studio/PARAMETER_ID.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1257",
@@ -21417,9 +21417,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/Studio/PARAMETER_TYPE.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1258",
@@ -21434,9 +21434,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/Studio/PLAYBACK_STATE.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1259",
@@ -21451,9 +21451,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/Studio/PLUGIN_INSTANCE_PROPERTIES.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1260",
@@ -21468,9 +21468,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/Studio/PROGRAMMER_SOUND_PROPERTIES.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1261",
@@ -21485,9 +21485,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/Studio/SOUND_INFO.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1262",
@@ -21502,9 +21502,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/Studio/STOP_MODE.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1263",
@@ -21519,9 +21519,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/Studio/STUDIO_VERSION.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1264",
@@ -21536,9 +21536,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/Studio/System.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1265",
@@ -21553,9 +21553,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/Studio/SYSTEM_CALLBACK_TYPE.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1266",
@@ -21570,9 +21570,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/Studio/TIMELINE_BEAT_PROPERTIES.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1267",
@@ -21587,9 +21587,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/Studio/TIMELINE_MARKER_PROPERTIES.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1268",
@@ -21604,9 +21604,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/Studio/TIMELINE_NESTED_BEAT_PROPERTIES.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1269",
@@ -21621,9 +21621,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/Studio/Union_IntBoolFloatString.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1270",
@@ -21638,9 +21638,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/Studio/USER_PROPERTY.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1271",
@@ -21655,9 +21655,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/Studio/USER_PROPERTY_TYPE.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1272",
@@ -21672,9 +21672,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/Studio/Util.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1273",
@@ -21689,9 +21689,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/Studio/VCA.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1274",
@@ -21706,9 +21706,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/System.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1275",
@@ -21723,9 +21723,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/SYSTEM_CALLBACK_TYPE.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1276",
@@ -21740,9 +21740,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/TAG.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1277",
@@ -21757,9 +21757,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/TAGDATATYPE.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1278",
@@ -21774,9 +21774,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/TAGTYPE.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1279",
@@ -21791,9 +21791,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/Thread.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1280",
@@ -21808,9 +21808,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/THREAD_AFFINITY.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1281",
@@ -21825,9 +21825,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/THREAD_PRIORITY.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1282",
@@ -21842,9 +21842,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/THREAD_STACK_SIZE.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1283",
@@ -21859,9 +21859,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/THREAD_TYPE.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1284",
@@ -21876,9 +21876,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/TIMEUNIT.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1285",
@@ -21893,9 +21893,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/VECTOR.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1286",
@@ -21910,9 +21910,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMOD/VERSION.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1287",
@@ -21927,9 +21927,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/AutomatableSlots.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1288",
@@ -21944,9 +21944,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/BankLoadException.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1289",
@@ -21961,9 +21961,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/BankLoadType.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1290",
@@ -21978,9 +21978,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/BankRefAttribute.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1291",
@@ -21995,9 +21995,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/BusNotFoundException.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1292",
@@ -22012,9 +22012,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/CodecChannelCount.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1293",
@@ -22029,9 +22029,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/CodecType.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1294",
@@ -22046,9 +22046,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/EmitterGameEvent.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1295",
@@ -22063,9 +22063,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/EmitterRef.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1296",
@@ -22080,9 +22080,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/EventHandler.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1297",
@@ -22097,9 +22097,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/EventLinkage.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1298",
@@ -22114,9 +22114,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/EventNotFoundException.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1299",
@@ -22131,9 +22131,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/EventRefAttribute.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1300",
@@ -22148,9 +22148,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/EventReference.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1301",
@@ -22165,9 +22165,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/FMODEventMixerBehaviour.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1302",
@@ -22182,9 +22182,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/FMODEventPlayable.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1303",
@@ -22199,9 +22199,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/FMODEventPlayableBehavior.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1304",
@@ -22216,9 +22216,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/FMODEventPlayableBehavior.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1305",
@@ -22233,9 +22233,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/FMODEventTrack.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1306",
@@ -22250,9 +22250,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/FMODRuntimeManagerOnGUIHelper.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1307",
@@ -22267,9 +22267,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/IEditorSettings.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1308",
@@ -22284,9 +22284,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/ImportType.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1309",
@@ -22301,9 +22301,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/Legacy.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1310",
@@ -22318,9 +22318,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/Legacy.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1311",
@@ -22335,9 +22335,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/Legacy.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1312",
@@ -22352,9 +22352,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/Legacy.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1313",
@@ -22369,9 +22369,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/Legacy.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1314",
@@ -22386,9 +22386,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/Legacy.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1315",
@@ -22403,9 +22403,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/Legacy.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1316",
@@ -22420,9 +22420,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/LoaderGameEvent.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1317",
@@ -22437,9 +22437,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/MeterChannelOrderingType.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1318",
@@ -22454,9 +22454,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/ParameterAutomationLink.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1319",
@@ -22471,9 +22471,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/ParamRef.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1320",
@@ -22488,9 +22488,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/ParamRefAttribute.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1321",
@@ -22505,9 +22505,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/Platform.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1322",
@@ -22522,9 +22522,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/Platform.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1323",
@@ -22539,9 +22539,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/Platform.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1324",
@@ -22556,9 +22556,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/Platform.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1325",
@@ -22573,9 +22573,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/Platform.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1326",
@@ -22590,9 +22590,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/Platform.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1327",
@@ -22607,9 +22607,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/Platform.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1328",
@@ -22624,9 +22624,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/Platform.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1329",
@@ -22641,9 +22641,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/Platform.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1330",
@@ -22658,9 +22658,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/Platform.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1331",
@@ -22675,9 +22675,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/Platform.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1332",
@@ -22692,9 +22692,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/Platform.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1333",
@@ -22709,9 +22709,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/Platform.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1334",
@@ -22726,9 +22726,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/Platform.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1335",
@@ -22743,9 +22743,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/Platform.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1336",
@@ -22760,9 +22760,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/PlatformAndroid.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1337",
@@ -22777,9 +22777,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/PlatformAppleTV.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1338",
@@ -22794,9 +22794,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/PlatformCallbackHandler.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1339",
@@ -22811,9 +22811,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/PlatformDefault.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1340",
@@ -22828,9 +22828,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/PlatformGroup.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1341",
@@ -22845,9 +22845,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/PlatformIOS.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1342",
@@ -22862,9 +22862,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/PlatformLinux.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1343",
@@ -22879,9 +22879,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/PlatformMac.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1344",
@@ -22896,9 +22896,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/PlatformMobileHigh.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1345",
@@ -22913,9 +22913,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/PlatformMobileLow.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1346",
@@ -22930,9 +22930,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/PlatformPlayInEditor.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1347",
@@ -22947,9 +22947,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/PlatformVisionOS.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1348",
@@ -22964,9 +22964,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/PlatformWebGL.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1349",
@@ -22981,9 +22981,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/PlatformWindows.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1350",
@@ -22998,9 +22998,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/RuntimeManager.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1351",
@@ -23015,9 +23015,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/RuntimeManager.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1352",
@@ -23032,9 +23032,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/RuntimeManager.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1353",
@@ -23049,9 +23049,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/RuntimeManager.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1354",
@@ -23066,9 +23066,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/RuntimeUtils.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1355",
@@ -23083,9 +23083,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/ScreenPosition.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1356",
@@ -23100,9 +23100,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/Settings.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1357",
@@ -23117,9 +23117,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/Settings.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1358",
@@ -23134,9 +23134,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/Settings.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1359",
@@ -23151,9 +23151,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/STOP_MODE.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1360",
@@ -23168,9 +23168,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/StudioBankLoader.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1361",
@@ -23185,9 +23185,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/StudioEventEmitter.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1362",
@@ -23202,9 +23202,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/StudioGlobalParameterTrigger.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1363",
@@ -23219,9 +23219,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/StudioListener.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1364",
@@ -23236,9 +23236,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/StudioParameterTrigger.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1365",
@@ -23253,9 +23253,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/SystemNotInitializedException.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1366",
@@ -23270,9 +23270,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/ThreadAffinity.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1367",
@@ -23287,9 +23287,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/ThreadAffinityGroup.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1368",
@@ -23304,9 +23304,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/ThreadType.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1369",
@@ -23321,9 +23321,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/TriStateBool.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1370",
@@ -23338,9 +23338,9 @@
       "tier": 2,
       "vong": "audio_bridge",
       "target_depth": "L1",
-      "current_depth": "L1",
+      "current_depth": "L2",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/VCANotFoundException.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1371",
