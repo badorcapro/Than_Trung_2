@@ -1,8 +1,8 @@
 {
-  "active_task_id": "TASK-0024",
+  "active_task_id": "TASK-0025",
   "status": "verified",
   "current_checkpoint": "CP-VERIFIED",
-  "contract_path": "docs/agent-system/tasks/TASK-0024.md",
-  "contract_sha256": "cba4d2bac915620549f750d749ab7899b4d49ccb236a81fae6352d155d7d502c",
-  "updated_at": "2026-10-21T12:50:41.838225+00:00"
+  "contract_path": "docs/agent-system/tasks/TASK-0025.md",
+  "contract_sha256": "d4a43f12a8fb396fd1fae7c4c386dcd7501c530c6278056e8a8521b96ee2be33",
+  "updated_at": "2026-10-21T13:17:24.272899+00:00"
 }
