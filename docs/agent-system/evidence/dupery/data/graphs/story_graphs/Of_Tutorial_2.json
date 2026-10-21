@@ -1,0 +1,1544 @@
+{
+  "graph_id": 3157,
+  "name": "Of_Tutorial_2",
+  "asset_file": "sharedassets1.assets",
+  "node_count": 37,
+  "nodes": [
+    {
+      "name": "Story Start",
+      "graph_id": 3157,
+      "position": [
+        -504.0,
+        152.0
+      ],
+      "keys": [
+        "exit"
+      ],
+      "ports": [
+        {
+          "field_name": "exit",
+          "direction": "output",
+          "type": "Nodes.StoryNodeBase",
+          "connections": [
+            {
+              "target_node": 2758,
+              "target_port": "enter",
+              "reroute_points": []
+            }
+          ]
+        }
+      ],
+      "class_name": "StoryStartNode",
+      "path_id": 2902
+    },
+    {
+      "name": "Story Dialogue",
+      "graph_id": 3157,
+      "position": [
+        56.0,
+        88.0
+      ],
+      "keys": [
+        "content",
+        "events",
+        "enter",
+        "exit"
+      ],
+      "ports": [
+        {
+          "field_name": "content",
+          "direction": "input",
+          "type": "Nodes.StringNodeBase",
+          "connections": [
+            {
+              "target_node": 2759,
+              "target_port": "exit",
+              "reroute_points": []
+            }
+          ]
+        },
+        {
+          "field_name": "events",
+          "direction": "input",
+          "type": "Nodes.StoryEventNodeBase",
+          "connections": []
+        },
+        {
+          "field_name": "enter",
+          "direction": "input",
+          "type": "Nodes.StoryNodeBase",
+          "connections": [
+            {
+              "target_node": 2902,
+              "target_port": "exit",
+              "reroute_points": []
+            }
+          ]
+        },
+        {
+          "field_name": "exit",
+          "direction": "output",
+          "type": "Nodes.StoryNodeBase",
+          "connections": [
+            {
+              "target_node": 3466,
+              "target_port": "enter",
+              "reroute_points": []
+            }
+          ]
+        }
+      ],
+      "class_name": "StoryDialogueNode",
+      "path_id": 2758
+    },
+    {
+      "name": "Story Dialogue",
+      "graph_id": 3157,
+      "position": [
+        328.0,
+        88.0
+      ],
+      "keys": [
+        "content",
+        "events",
+        "enter",
+        "exit"
+      ],
+      "ports": [
+        {
+          "field_name": "content",
+          "direction": "input",
+          "type": "Nodes.StringNodeBase",
+          "connections": [
+            {
+              "target_node": 2947,
+              "target_port": "exit",
+              "reroute_points": []
+            }
+          ]
+        },
+        {
+          "field_name": "events",
+          "direction": "input",
+          "type": "Nodes.StoryEventNodeBase",
+          "connections": []
+        },
+        {
+          "field_name": "enter",
+          "direction": "input",
+          "type": "Nodes.StoryNodeBase",
+          "connections": [
+            {
+              "target_node": 2758,
+              "target_port": "exit",
+              "reroute_points": []
+            }
+          ]
+        },
+        {
+          "field_name": "exit",
+          "direction": "output",
+          "type": "Nodes.StoryNodeBase",
+          "connections": [
+            {
+              "target_node": 2823,
+              "target_port": "enter",
+              "reroute_points": []
+            }
+          ]
+        }
+      ],
+      "class_name": "StoryDialogueNode",
+      "path_id": 3466
+    },
+    {
+      "name": "Story Dialogue",
+      "graph_id": 3157,
+      "position": [
+        584.0,
+        88.0
+      ],
+      "keys": [
+        "content",
+        "events",
+        "enter",
+        "exit"
+      ],
+      "ports": [
+        {
+          "field_name": "content",
+          "direction": "input",
+          "type": "Nodes.StringNodeBase",
+          "connections": [
+            {
+              "target_node": 3538,
+              "target_port": "exit",
+              "reroute_points": []
+            }
+          ]
+        },
+        {
+          "field_name": "events",
+          "direction": "input",
+          "type": "Nodes.StoryEventNodeBase",
+          "connections": []
+        },
+        {
+          "field_name": "enter",
+          "direction": "input",
+          "type": "Nodes.StoryNodeBase",
+          "connections": [
+            {
+              "target_node": 3466,
+              "target_port": "exit",
+              "reroute_points": []
+            }
+          ]
+        },
+        {
+          "field_name": "exit",
+          "direction": "output",
+          "type": "Nodes.StoryNodeBase",
+          "connections": [
+            {
+              "target_node": 3419,
+              "target_port": "enter",
+              "reroute_points": []
+            }
+          ]
+        }
+      ],
+      "class_name": "StoryDialogueNode",
+      "path_id": 2823
+    },
+    {
+      "name": "Story Dialogue",
+      "graph_id": 3157,
+      "position": [
+        1368.0,
+        88.0
+      ],
+      "keys": [
+        "content",
+        "events",
+        "enter",
+        "exit"
+      ],
+      "ports": [
+        {
+          "field_name": "content",
+          "direction": "input",
+          "type": "Nodes.StringNodeBase",
+          "connections": [
+            {
+              "target_node": 2875,
+              "target_port": "exit",
+              "reroute_points": []
+            }
+          ]
+        },
+        {
+          "field_name": "events",
+          "direction": "input",
+          "type": "Nodes.StoryEventNodeBase",
+          "connections": []
+        },
+        {
+          "field_name": "enter",
+          "direction": "input",
+          "type": "Nodes.StoryNodeBase",
+          "connections": [
+            {
+              "target_node": 2823,
+              "target_port": "exit",
+              "reroute_points": []
+            }
+          ]
+        },
+        {
+          "field_name": "exit",
+          "direction": "output",
+          "type": "Nodes.StoryNodeBase",
+          "connections": [
+            {
+              "target_node": 3195,
+              "target_port": "enter",
+              "reroute_points": []
+            }
+          ]
+        }
+      ],
+      "class_name": "StoryDialogueNode",
+      "path_id": 3419
+    },
+    {
+      "name": "Story Dialogue",
+      "graph_id": 3157,
+      "position": [
+        2728.0,
+        -632.0
+      ],
+      "keys": [
+        "content",
+        "events",
+        "enter",
+        "exit"
+      ],
+      "ports": [
+        {
+          "field_name": "content",
+          "direction": "input",
+          "type": "Nodes.StringNodeBase",
+          "connections": [
+            {
+              "target_node": 3366,
+              "target_port": "exit",
+              "reroute_points": []
+            }
+          ]
+        },
+        {
+          "field_name": "events",
+          "direction": "input",
+          "type": "Nodes.StoryEventNodeBase",
+          "connections": [
+            {
+              "target_node": 3189,
+              "target_port": "exit",
+              "reroute_points": []
+            },
+            {
+              "target_node": 3439,
+              "target_port": "exit",
+              "reroute_points": []
+            }
+          ]
+        },
+        {
+          "field_name": "enter",
+          "direction": "input",
+          "type": "Nodes.StoryNodeBase",
+          "connections": [
+            {
+              "target_node": 3419,
+              "target_port": "exit",
+              "reroute_points": []
+            }
+          ]
+        },
+        {
+          "field_name": "exit",
+          "direction": "output",
+          "type": "Nodes.StoryNodeBase",
+          "connections": [
+            {
+              "target_node": 2847,
+              "target_port": "enter",
+              "reroute_points": []
+            }
+          ]
+        }
+      ],
+      "class_name": "StoryDialogueNode",
+      "path_id": 3195
+    },
+    {
+      "name": "Story Dialogue",
+      "graph_id": 3157,
+      "position": [
+        3000.0,
+        -632.0
+      ],
+      "keys": [
+        "content",
+        "events",
+        "enter",
+        "exit"
+      ],
+      "ports": [
+        {
+          "field_name": "content",
+          "direction": "input",
+          "type": "Nodes.StringNodeBase",
+          "connections": [
+            {
+              "target_node": 3405,
+              "target_port": "exit",
+              "reroute_points": []
+            }
+          ]
+        },
+        {
+          "field_name": "events",
+          "direction": "input",
+          "type": "Nodes.StoryEventNodeBase",
+          "connections": [
+            {
+              "target_node": 3237,
+              "target_port": "exit",
+              "reroute_points": []
+            },
+            {
+              "target_node": 3126,
+              "target_port": "exit",
+              "reroute_points": []
+            }
+          ]
+        },
+        {
+          "field_name": "enter",
+          "direction": "input",
+          "type": "Nodes.StoryNodeBase",
+          "connections": [
+            {
+              "target_node": 3195,
+              "target_port": "exit",
+              "reroute_points": []
+            }
+          ]
+        },
+        {
+          "field_name": "exit",
+          "direction": "output",
+          "type": "Nodes.StoryNodeBase",
+          "connections": [
+            {
+              "target_node": 2843,
+              "target_port": "enter",
+              "reroute_points": []
+            }
+          ]
+        }
+      ],
+      "class_name": "StoryDialogueNode",
+      "path_id": 2847
+    },
+    {
+      "name": "Story Dialogue",
+      "graph_id": 3157,
+      "position": [
+        3256.0,
+        -632.0
+      ],
+      "keys": [
+        "content",
+        "events",
+        "enter",
+        "exit"
+      ],
+      "ports": [
+        {
+          "field_name": "content",
+          "direction": "input",
+          "type": "Nodes.StringNodeBase",
+          "connections": [
+            {
+              "target_node": 2994,
+              "target_port": "exit",
+              "reroute_points": []
+            }
+          ]
+        },
+        {
+          "field_name": "events",
+          "direction": "input",
+          "type": "Nodes.StoryEventNodeBase",
+          "connections": []
+        },
+        {
+          "field_name": "enter",
+          "direction": "input",
+          "type": "Nodes.StoryNodeBase",
+          "connections": [
+            {
+              "target_node": 2847,
+              "target_port": "exit",
+              "reroute_points": []
+            }
+          ]
+        },
+        {
+          "field_name": "exit",
+          "direction": "output",
+          "type": "Nodes.StoryNodeBase",
+          "connections": [
+            {
+              "target_node": 3145,
+              "target_port": "enter",
+              "reroute_points": []
+            }
+          ]
+        }
+      ],
+      "class_name": "StoryDialogueNode",
+      "path_id": 2843
+    },
+    {
+      "name": "Story Dialogue",
+      "graph_id": 3157,
+      "position": [
+        4440.0,
+        -632.0
+      ],
+      "keys": [
+        "content",
+        "events",
+        "enter",
+        "exit"
+      ],
+      "ports": [
+        {
+          "field_name": "content",
+          "direction": "input",
+          "type": "Nodes.StringNodeBase",
+          "connections": [
+            {
+              "target_node": 3108,
+              "target_port": "exit",
+              "reroute_points": []
+            }
+          ]
+        },
+        {
+          "field_name": "events",
+          "direction": "input",
+          "type": "Nodes.StoryEventNodeBase",
+          "connections": []
+        },
+        {
+          "field_name": "enter",
+          "direction": "input",
+          "type": "Nodes.StoryNodeBase",
+          "connections": [
+            {
+              "target_node": 2843,
+              "target_port": "exit",
+              "reroute_points": []
+            }
+          ]
+        },
+        {
+          "field_name": "exit",
+          "direction": "output",
+          "type": "Nodes.StoryNodeBase",
+          "connections": [
+            {
+              "target_node": 3173,
+              "target_port": "enter",
+              "reroute_points": []
+            }
+          ]
+        }
+      ],
+      "class_name": "StoryDialogueNode",
+      "path_id": 3145
+    },
+    {
+      "name": "Advanced String",
+      "graph_id": 3157,
+      "position": [
+        -488.0,
+        -360.0
+      ],
+      "keys": [
+        "enter",
+        "exit"
+      ],
+      "ports": [
+        {
+          "field_name": "enter",
+          "direction": "input",
+          "type": "Nodes.StringNodeBase",
+          "connections": []
+        },
+        {
+          "field_name": "exit",
+          "direction": "output",
+          "type": "Nodes.NodeBase",
+          "connections": [
+            {
+              "target_node": 2758,
+              "target_port": "content",
+              "reroute_points": []
+            }
+          ]
+        }
+      ],
+      "class_name": "AdvancedStringNode",
+      "path_id": 2759
+    },
+    {
+      "name": "Advanced String",
+      "graph_id": 3157,
+      "position": [
+        280.0,
+        -648.0
+      ],
+      "keys": [
+        "enter",
+        "exit"
+      ],
+      "ports": [
+        {
+          "field_name": "enter",
+          "direction": "input",
+          "type": "Nodes.StringNodeBase",
+          "connections": []
+        },
+        {
+          "field_name": "exit",
+          "direction": "output",
+          "type": "Nodes.NodeBase",
+          "connections": [
+            {
+              "target_node": 2823,
+              "target_port": "content",
+              "reroute_points": []
+            }
+          ]
+        }
+      ],
+      "class_name": "AdvancedStringNode",
+      "path_id": 3538
+    },
+    {
+      "name": "Basic String",
+      "graph_id": 3157,
+      "position": [
+        584.0,
+        -456.0
+      ],
+      "keys": [
+        "enter",
+        "exit"
+      ],
+      "ports": [
+        {
+          "field_name": "enter",
+          "direction": "input",
+          "type": "Nodes.StringNodeBase",
+          "connections": []
+        },
+        {
+          "field_name": "exit",
+          "direction": "output",
+          "type": "Nodes.NodeBase",
+          "connections": [
+            {
+              "target_node": 2776,
+              "target_port": "enter",
+              "reroute_points": []
+            }
+          ]
+        }
+      ],
+      "class_name": "BasicStringNode",
+      "path_id": 3212
+    },
+    {
+      "name": "Basic String",
+      "graph_id": 3157,
+      "position": [
+        -1096.0,
+        -712.0
+      ],
+      "keys": [
+        "enter",
+        "exit"
+      ],
+      "ports": [
+        {
+          "field_name": "enter",
+          "direction": "input",
+          "type": "Nodes.StringNodeBase",
+          "connections": []
+        },
+        {
+          "field_name": "exit",
+          "direction": "output",
+          "type": "Nodes.NodeBase",
+          "connections": [
+            {
+              "target_node": 2922,
+              "target_port": "enter",
+              "reroute_points": []
+            }
+          ]
+        }
+      ],
+      "class_name": "BasicStringNode",
+      "path_id": 3133
+    },
+    {
+      "name": "Advanced String",
+      "graph_id": 3157,
+      "position": [
+        -808.0,
+        -728.0
+      ],
+      "keys": [
+        "enter",
+        "exit"
+      ],
+      "ports": [
+        {
+          "field_name": "enter",
+          "direction": "input",
+          "type": "Nodes.StringNodeBase",
+          "connections": [
+            {
+              "target_node": 3133,
+              "target_port": "exit",
+              "reroute_points": []
+            }
+          ]
+        },
+        {
+          "field_name": "exit",
+          "direction": "output",
+          "type": "Nodes.NodeBase",
+          "connections": [
+            {
+              "target_node": 3053,
+              "target_port": "enter",
+              "reroute_points": []
+            }
+          ]
+        }
+      ],
+      "class_name": "AdvancedStringNode",
+      "path_id": 2922
+    },
+    {
+      "name": "Basic String",
+      "graph_id": 3157,
+      "position": [
+        -584.0,
+        -712.0
+      ],
+      "keys": [
+        "enter",
+        "exit"
+      ],
+      "ports": [
+        {
+          "field_name": "enter",
+          "direction": "input",
+          "type": "Nodes.StringNodeBase",
+          "connections": [
+            {
+              "target_node": 2922,
+              "target_port": "exit",
+              "reroute_points": []
+            }
+          ]
+        },
+        {
+          "field_name": "exit",
+          "direction": "output",
+          "type": "Nodes.NodeBase",
+          "connections": [
+            {
+              "target_node": 3252,
+              "target_port": "enter",
+              "reroute_points": []
+            }
+          ]
+        }
+      ],
+      "class_name": "BasicStringNode",
+      "path_id": 3053
+    },
+    {
+      "name": "Keyword String",
+      "graph_id": 3157,
+      "position": [
+        856.0,
+        -456.0
+      ],
+      "keys": [
+        "enter",
+        "exit"
+      ],
+      "ports": [
+        {
+          "field_name": "enter",
+          "direction": "input",
+          "type": "Nodes.StringNodeBase",
+          "connections": [
+            {
+              "target_node": 3212,
+              "target_port": "exit",
+              "reroute_points": []
+            }
+          ]
+        },
+        {
+          "field_name": "exit",
+          "direction": "output",
+          "type": "Nodes.NodeBase",
+          "connections": [
+            {
+              "target_node": 2875,
+              "target_port": "enter",
+              "reroute_points": []
+            }
+          ]
+        }
+      ],
+      "class_name": "KeywordStringNode",
+      "path_id": 2776
+    },
+    {
+      "name": "Basic String",
+      "graph_id": 3157,
+      "position": [
+        1112.0,
+        -408.0
+      ],
+      "keys": [
+        "enter",
+        "exit"
+      ],
+      "ports": [
+        {
+          "field_name": "enter",
+          "direction": "input",
+          "type": "Nodes.StringNodeBase",
+          "connections": [
+            {
+              "target_node": 2776,
+              "target_port": "exit",
+              "reroute_points": []
+            }
+          ]
+        },
+        {
+          "field_name": "exit",
+          "direction": "output",
+          "type": "Nodes.NodeBase",
+          "connections": [
+            {
+              "target_node": 3419,
+              "target_port": "content",
+              "reroute_points": []
+            }
+          ]
+        }
+      ],
+      "class_name": "BasicStringNode",
+      "path_id": 2875
+    },
+    {
+      "name": "Keyword String",
+      "graph_id": 3157,
+      "position": [
+        1144.0,
+        -920.0
+      ],
+      "keys": [
+        "enter",
+        "exit"
+      ],
+      "ports": [
+        {
+          "field_name": "enter",
+          "direction": "input",
+          "type": "Nodes.StringNodeBase",
+          "connections": []
+        },
+        {
+          "field_name": "exit",
+          "direction": "output",
+          "type": "Nodes.NodeBase",
+          "connections": [
+            {
+              "target_node": 3094,
+              "target_port": "enter",
+              "reroute_points": []
+            }
+          ]
+        }
+      ],
+      "class_name": "KeywordStringNode",
+      "path_id": 3030
+    },
+    {
+      "name": "Keyword String",
+      "graph_id": 3157,
+      "position": [
+        1368.0,
+        -920.0
+      ],
+      "keys": [
+        "enter",
+        "exit"
+      ],
+      "ports": [
+        {
+          "field_name": "enter",
+          "direction": "input",
+          "type": "Nodes.StringNodeBase",
+          "connections": [
+            {
+              "target_node": 3030,
+              "target_port": "exit",
+              "reroute_points": []
+            }
+          ]
+        },
+        {
+          "field_name": "exit",
+          "direction": "output",
+          "type": "Nodes.NodeBase",
+          "connections": [
+            {
+              "target_node": 3218,
+              "target_port": "enter",
+              "reroute_points": []
+            }
+          ]
+        }
+      ],
+      "class_name": "KeywordStringNode",
+      "path_id": 3094
+    },
+    {
+      "name": "Keyword String",
+      "graph_id": 3157,
+      "position": [
+        1624.0,
+        -936.0
+      ],
+      "keys": [
+        "enter",
+        "exit"
+      ],
+      "ports": [
+        {
+          "field_name": "enter",
+          "direction": "input",
+          "type": "Nodes.StringNodeBase",
+          "connections": [
+            {
+              "target_node": 3094,
+              "target_port": "exit",
+              "reroute_points": []
+            }
+          ]
+        },
+        {
+          "field_name": "exit",
+          "direction": "output",
+          "type": "Nodes.NodeBase",
+          "connections": [
+            {
+              "target_node": 3425,
+              "target_port": "enter",
+              "reroute_points": []
+            }
+          ]
+        }
+      ],
+      "class_name": "KeywordStringNode",
+      "path_id": 3218
+    },
+    {
+      "name": "Basic String",
+      "graph_id": 3157,
+      "position": [
+        1864.0,
+        -920.0
+      ],
+      "keys": [
+        "enter",
+        "exit"
+      ],
+      "ports": [
+        {
+          "field_name": "enter",
+          "direction": "input",
+          "type": "Nodes.StringNodeBase",
+          "connections": [
+            {
+              "target_node": 3218,
+              "target_port": "exit",
+              "reroute_points": []
+            }
+          ]
+        },
+        {
+          "field_name": "exit",
+          "direction": "output",
+          "type": "Nodes.NodeBase",
+          "connections": [
+            {
+              "target_node": 3139,
+              "target_port": "enter",
+              "reroute_points": []
+            }
+          ]
+        }
+      ],
+      "class_name": "BasicStringNode",
+      "path_id": 3425
+    },
+    {
+      "name": "Keyword String",
+      "graph_id": 3157,
+      "position": [
+        2088.0,
+        -920.0
+      ],
+      "keys": [
+        "enter",
+        "exit"
+      ],
+      "ports": [
+        {
+          "field_name": "enter",
+          "direction": "input",
+          "type": "Nodes.StringNodeBase",
+          "connections": [
+            {
+              "target_node": 3425,
+              "target_port": "exit",
+              "reroute_points": []
+            }
+          ]
+        },
+        {
+          "field_name": "exit",
+          "direction": "output",
+          "type": "Nodes.NodeBase",
+          "connections": [
+            {
+              "target_node": 3366,
+              "target_port": "enter",
+              "reroute_points": []
+            }
+          ]
+        }
+      ],
+      "class_name": "KeywordStringNode",
+      "path_id": 3139
+    },
+    {
+      "name": "Basic String",
+      "graph_id": 3157,
+      "position": [
+        2392.0,
+        -984.0
+      ],
+      "keys": [
+        "enter",
+        "exit"
+      ],
+      "ports": [
+        {
+          "field_name": "enter",
+          "direction": "input",
+          "type": "Nodes.StringNodeBase",
+          "connections": [
+            {
+              "target_node": 3139,
+              "target_port": "exit",
+              "reroute_points": []
+            }
+          ]
+        },
+        {
+          "field_name": "exit",
+          "direction": "output",
+          "type": "Nodes.NodeBase",
+          "connections": [
+            {
+              "target_node": 3195,
+              "target_port": "content",
+              "reroute_points": []
+            }
+          ]
+        }
+      ],
+      "class_name": "BasicStringNode",
+      "path_id": 3366
+    },
+    {
+      "name": "Basic String",
+      "graph_id": 3157,
+      "position": [
+        2616.0,
+        -1368.0
+      ],
+      "keys": [
+        "enter",
+        "exit"
+      ],
+      "ports": [
+        {
+          "field_name": "enter",
+          "direction": "input",
+          "type": "Nodes.StringNodeBase",
+          "connections": []
+        },
+        {
+          "field_name": "exit",
+          "direction": "output",
+          "type": "Nodes.NodeBase",
+          "connections": [
+            {
+              "target_node": 2847,
+              "target_port": "content",
+              "reroute_points": []
+            }
+          ]
+        }
+      ],
+      "class_name": "BasicStringNode",
+      "path_id": 3405
+    },
+    {
+      "name": "Basic String",
+      "graph_id": 3157,
+      "position": [
+        3016.0,
+        -1192.0
+      ],
+      "keys": [
+        "enter",
+        "exit"
+      ],
+      "ports": [
+        {
+          "field_name": "enter",
+          "direction": "input",
+          "type": "Nodes.StringNodeBase",
+          "connections": []
+        },
+        {
+          "field_name": "exit",
+          "direction": "output",
+          "type": "Nodes.NodeBase",
+          "connections": [
+            {
+              "target_node": 2972,
+              "target_port": "enter",
+              "reroute_points": []
+            }
+          ]
+        }
+      ],
+      "class_name": "BasicStringNode",
+      "path_id": 3271
+    },
+    {
+      "name": "Keyword String",
+      "graph_id": 3157,
+      "position": [
+        3256.0,
+        -1176.0
+      ],
+      "keys": [
+        "enter",
+        "exit"
+      ],
+      "ports": [
+        {
+          "field_name": "enter",
+          "direction": "input",
+          "type": "Nodes.StringNodeBase",
+          "connections": [
+            {
+              "target_node": 3271,
+              "target_port": "exit",
+              "reroute_points": []
+            }
+          ]
+        },
+        {
+          "field_name": "exit",
+          "direction": "output",
+          "type": "Nodes.NodeBase",
+          "connections": [
+            {
+              "target_node": 2994,
+              "target_port": "enter",
+              "reroute_points": []
+            }
+          ]
+        }
+      ],
+      "class_name": "KeywordStringNode",
+      "path_id": 2972
+    },
+    {
+      "name": "Basic String",
+      "graph_id": 3157,
+      "position": [
+        3512.0,
+        -1160.0
+      ],
+      "keys": [
+        "enter",
+        "exit"
+      ],
+      "ports": [
+        {
+          "field_name": "enter",
+          "direction": "input",
+          "type": "Nodes.StringNodeBase",
+          "connections": [
+            {
+              "target_node": 2972,
+              "target_port": "exit",
+              "reroute_points": []
+            }
+          ]
+        },
+        {
+          "field_name": "exit",
+          "direction": "output",
+          "type": "Nodes.NodeBase",
+          "connections": [
+            {
+              "target_node": 2843,
+              "target_port": "content",
+              "reroute_points": []
+            }
+          ]
+        }
+      ],
+      "class_name": "BasicStringNode",
+      "path_id": 2994
+    },
+    {
+      "name": "Basic String",
+      "graph_id": 3157,
+      "position": [
+        3640.0,
+        -840.0
+      ],
+      "keys": [
+        "enter",
+        "exit"
+      ],
+      "ports": [
+        {
+          "field_name": "enter",
+          "direction": "input",
+          "type": "Nodes.StringNodeBase",
+          "connections": []
+        },
+        {
+          "field_name": "exit",
+          "direction": "output",
+          "type": "Nodes.NodeBase",
+          "connections": [
+            {
+              "target_node": 2842,
+              "target_port": "enter",
+              "reroute_points": []
+            }
+          ]
+        }
+      ],
+      "class_name": "BasicStringNode",
+      "path_id": 3441
+    },
+    {
+      "name": "Waiting String",
+      "graph_id": 3157,
+      "position": [
+        3896.0,
+        -856.0
+      ],
+      "keys": [
+        "enter",
+        "exit"
+      ],
+      "ports": [
+        {
+          "field_name": "enter",
+          "direction": "input",
+          "type": "Nodes.StringNodeBase",
+          "connections": [
+            {
+              "target_node": 3441,
+              "target_port": "exit",
+              "reroute_points": []
+            }
+          ]
+        },
+        {
+          "field_name": "exit",
+          "direction": "output",
+          "type": "Nodes.NodeBase",
+          "connections": [
+            {
+              "target_node": 3108,
+              "target_port": "enter",
+              "reroute_points": []
+            }
+          ]
+        }
+      ],
+      "class_name": "WaitingStringNode",
+      "path_id": 2842
+    },
+    {
+      "name": "Basic String",
+      "graph_id": 3157,
+      "position": [
+        4152.0,
+        -968.0
+      ],
+      "keys": [
+        "enter",
+        "exit"
+      ],
+      "ports": [
+        {
+          "field_name": "enter",
+          "direction": "input",
+          "type": "Nodes.StringNodeBase",
+          "connections": [
+            {
+              "target_node": 2842,
+              "target_port": "exit",
+              "reroute_points": []
+            }
+          ]
+        },
+        {
+          "field_name": "exit",
+          "direction": "output",
+          "type": "Nodes.NodeBase",
+          "connections": [
+            {
+              "target_node": 3145,
+              "target_port": "content",
+              "reroute_points": []
+            }
+          ]
+        }
+      ],
+      "class_name": "BasicStringNode",
+      "path_id": 3108
+    },
+    {
+      "name": "Story End",
+      "graph_id": 3157,
+      "position": [
+        4808.0,
+        -568.0
+      ],
+      "keys": [
+        "enter"
+      ],
+      "ports": [
+        {
+          "field_name": "enter",
+          "direction": "input",
+          "type": "Nodes.StoryNodeBase",
+          "connections": [
+            {
+              "target_node": 3145,
+              "target_port": "exit",
+              "reroute_points": []
+            }
+          ]
+        }
+      ],
+      "class_name": "StoryEndNode",
+      "path_id": 3173
+    },
+    {
+      "name": "Put Section Above Tutorial Event",
+      "graph_id": 3157,
+      "position": [
+        2376.0,
+        -616.0
+      ],
+      "keys": [
+        "exit"
+      ],
+      "ports": [
+        {
+          "field_name": "exit",
+          "direction": "output",
+          "type": "Nodes.StoryNodeBase",
+          "connections": [
+            {
+              "target_node": 3195,
+              "target_port": "events",
+              "reroute_points": []
+            }
+          ]
+        }
+      ],
+      "class_name": "PutSectionAboveTutorialEventNode",
+      "path_id": 3189
+    },
+    {
+      "name": "Put Section Above Tutorial Event",
+      "graph_id": 3157,
+      "position": [
+        2632.0,
+        -344.0
+      ],
+      "keys": [
+        "exit"
+      ],
+      "ports": [
+        {
+          "field_name": "exit",
+          "direction": "output",
+          "type": "Nodes.StoryNodeBase",
+          "connections": [
+            {
+              "target_node": 2847,
+              "target_port": "events",
+              "reroute_points": []
+            }
+          ]
+        }
+      ],
+      "class_name": "PutSectionAboveTutorialEventNode",
+      "path_id": 3237
+    },
+    {
+      "name": "Keyword String",
+      "graph_id": 3157,
+      "position": [
+        -360.0,
+        -712.0
+      ],
+      "keys": [
+        "enter",
+        "exit"
+      ],
+      "ports": [
+        {
+          "field_name": "enter",
+          "direction": "input",
+          "type": "Nodes.StringNodeBase",
+          "connections": [
+            {
+              "target_node": 3053,
+              "target_port": "exit",
+              "reroute_points": []
+            }
+          ]
+        },
+        {
+          "field_name": "exit",
+          "direction": "output",
+          "type": "Nodes.NodeBase",
+          "connections": [
+            {
+              "target_node": 2947,
+              "target_port": "enter",
+              "reroute_points": []
+            }
+          ]
+        }
+      ],
+      "class_name": "KeywordStringNode",
+      "path_id": 3252
+    },
+    {
+      "name": "Keyword String",
+      "graph_id": 3157,
+      "position": [
+        -136.0,
+        -712.0
+      ],
+      "keys": [
+        "enter",
+        "exit"
+      ],
+      "ports": [
+        {
+          "field_name": "enter",
+          "direction": "input",
+          "type": "Nodes.StringNodeBase",
+          "connections": [
+            {
+              "target_node": 3252,
+              "target_port": "exit",
+              "reroute_points": []
+            }
+          ]
+        },
+        {
+          "field_name": "exit",
+          "direction": "output",
+          "type": "Nodes.NodeBase",
+          "connections": [
+            {
+              "target_node": 3466,
+              "target_port": "content",
+              "reroute_points": []
+            }
+          ]
+        }
+      ],
+      "class_name": "KeywordStringNode",
+      "path_id": 2947
+    },
+    {
+      "name": "Fade Speaker Tutorial Event",
+      "graph_id": 3157,
+      "position": [
+        2376.0,
+        -456.0
+      ],
+      "keys": [
+        "exit"
+      ],
+      "ports": [
+        {
+          "field_name": "exit",
+          "direction": "output",
+          "type": "Nodes.StoryNodeBase",
+          "connections": [
+            {
+              "target_node": 3195,
+              "target_port": "events",
+              "reroute_points": []
+            }
+          ]
+        }
+      ],
+      "class_name": "FadeSpeakerTutorialEventNode",
+      "path_id": 3439
+    },
+    {
+      "name": "Fade Speaker Tutorial Event",
+      "graph_id": 3157,
+      "position": [
+        2632.0,
+        -200.0
+      ],
+      "keys": [
+        "exit"
+      ],
+      "ports": [
+        {
+          "field_name": "exit",
+          "direction": "output",
+          "type": "Nodes.StoryNodeBase",
+          "connections": [
+            {
+              "target_node": 2847,
+              "target_port": "events",
+              "reroute_points": []
+            }
+          ]
+        }
+      ],
+      "class_name": "FadeSpeakerTutorialEventNode",
+      "path_id": 3126
+    }
+  ]
+}

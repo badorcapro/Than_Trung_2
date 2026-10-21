@@ -1,0 +1,436 @@
+{
+  "graph_id": 79,
+  "name": "SyndicateIntro",
+  "asset_file": "sharedassets2.assets",
+  "node_count": 11,
+  "nodes": [
+    {
+      "name": "Story Start",
+      "graph_id": 79,
+      "position": [
+        -328.0,
+        -8.0
+      ],
+      "keys": [
+        "exit"
+      ],
+      "ports": [
+        {
+          "field_name": "exit",
+          "direction": "output",
+          "type": "Nodes.StoryNodeBase",
+          "connections": [
+            {
+              "target_node": 62,
+              "target_port": "enter",
+              "reroute_points": []
+            }
+          ]
+        }
+      ],
+      "class_name": "StoryStartNode",
+      "path_id": 64
+    },
+    {
+      "name": "Basic String",
+      "graph_id": 79,
+      "position": [
+        -840.0,
+        -328.0
+      ],
+      "keys": [
+        "enter",
+        "exit"
+      ],
+      "ports": [
+        {
+          "field_name": "enter",
+          "direction": "input",
+          "type": "Nodes.StringNodeBase",
+          "connections": []
+        },
+        {
+          "field_name": "exit",
+          "direction": "output",
+          "type": "Nodes.NodeBase",
+          "connections": [
+            {
+              "target_node": 83,
+              "target_port": "enter",
+              "reroute_points": []
+            }
+          ]
+        }
+      ],
+      "class_name": "BasicStringNode",
+      "path_id": 61
+    },
+    {
+      "name": "Advanced String",
+      "graph_id": 79,
+      "position": [
+        -392.0,
+        -392.0
+      ],
+      "keys": [
+        "enter",
+        "exit"
+      ],
+      "ports": [
+        {
+          "field_name": "enter",
+          "direction": "input",
+          "type": "Nodes.StringNodeBase",
+          "connections": [
+            {
+              "target_node": 83,
+              "target_port": "exit",
+              "reroute_points": []
+            }
+          ]
+        },
+        {
+          "field_name": "exit",
+          "direction": "output",
+          "type": "Nodes.NodeBase",
+          "connections": [
+            {
+              "target_node": 58,
+              "target_port": "enter",
+              "reroute_points": []
+            }
+          ]
+        }
+      ],
+      "class_name": "AdvancedStringNode",
+      "path_id": 90
+    },
+    {
+      "name": "Waiting String",
+      "graph_id": 79,
+      "position": [
+        -616.0,
+        -392.0
+      ],
+      "keys": [
+        "enter",
+        "exit"
+      ],
+      "ports": [
+        {
+          "field_name": "enter",
+          "direction": "input",
+          "type": "Nodes.StringNodeBase",
+          "connections": [
+            {
+              "target_node": 61,
+              "target_port": "exit",
+              "reroute_points": []
+            }
+          ]
+        },
+        {
+          "field_name": "exit",
+          "direction": "output",
+          "type": "Nodes.NodeBase",
+          "connections": [
+            {
+              "target_node": 90,
+              "target_port": "enter",
+              "reroute_points": []
+            }
+          ]
+        }
+      ],
+      "class_name": "WaitingStringNode",
+      "path_id": 83
+    },
+    {
+      "name": "Basic String",
+      "graph_id": 79,
+      "position": [
+        56.0,
+        -392.0
+      ],
+      "keys": [
+        "enter",
+        "exit"
+      ],
+      "ports": [
+        {
+          "field_name": "enter",
+          "direction": "input",
+          "type": "Nodes.StringNodeBase",
+          "connections": [
+            {
+              "target_node": 58,
+              "target_port": "exit",
+              "reroute_points": []
+            }
+          ]
+        },
+        {
+          "field_name": "exit",
+          "direction": "output",
+          "type": "Nodes.NodeBase",
+          "connections": [
+            {
+              "target_node": 74,
+              "target_port": "enter",
+              "reroute_points": []
+            }
+          ]
+        }
+      ],
+      "class_name": "BasicStringNode",
+      "path_id": 70
+    },
+    {
+      "name": "Waiting String",
+      "graph_id": 79,
+      "position": [
+        -168.0,
+        -392.0
+      ],
+      "keys": [
+        "enter",
+        "exit"
+      ],
+      "ports": [
+        {
+          "field_name": "enter",
+          "direction": "input",
+          "type": "Nodes.StringNodeBase",
+          "connections": [
+            {
+              "target_node": 90,
+              "target_port": "exit",
+              "reroute_points": []
+            }
+          ]
+        },
+        {
+          "field_name": "exit",
+          "direction": "output",
+          "type": "Nodes.NodeBase",
+          "connections": [
+            {
+              "target_node": 70,
+              "target_port": "enter",
+              "reroute_points": []
+            }
+          ]
+        }
+      ],
+      "class_name": "WaitingStringNode",
+      "path_id": 58
+    },
+    {
+      "name": "Advanced String",
+      "graph_id": 79,
+      "position": [
+        312.0,
+        -392.0
+      ],
+      "keys": [
+        "enter",
+        "exit"
+      ],
+      "ports": [
+        {
+          "field_name": "enter",
+          "direction": "input",
+          "type": "Nodes.StringNodeBase",
+          "connections": [
+            {
+              "target_node": 70,
+              "target_port": "exit",
+              "reroute_points": []
+            }
+          ]
+        },
+        {
+          "field_name": "exit",
+          "direction": "output",
+          "type": "Nodes.NodeBase",
+          "connections": [
+            {
+              "target_node": 55,
+              "target_port": "enter",
+              "reroute_points": []
+            }
+          ]
+        }
+      ],
+      "class_name": "AdvancedStringNode",
+      "path_id": 74
+    },
+    {
+      "name": "Waiting String",
+      "graph_id": 79,
+      "position": [
+        536.0,
+        -392.0
+      ],
+      "keys": [
+        "enter",
+        "exit"
+      ],
+      "ports": [
+        {
+          "field_name": "enter",
+          "direction": "input",
+          "type": "Nodes.StringNodeBase",
+          "connections": [
+            {
+              "target_node": 74,
+              "target_port": "exit",
+              "reroute_points": []
+            }
+          ]
+        },
+        {
+          "field_name": "exit",
+          "direction": "output",
+          "type": "Nodes.NodeBase",
+          "connections": [
+            {
+              "target_node": 89,
+              "target_port": "enter",
+              "reroute_points": []
+            }
+          ]
+        }
+      ],
+      "class_name": "WaitingStringNode",
+      "path_id": 55
+    },
+    {
+      "name": "Advanced String",
+      "graph_id": 79,
+      "position": [
+        760.0,
+        -392.0
+      ],
+      "keys": [
+        "enter",
+        "exit"
+      ],
+      "ports": [
+        {
+          "field_name": "enter",
+          "direction": "input",
+          "type": "Nodes.StringNodeBase",
+          "connections": [
+            {
+              "target_node": 55,
+              "target_port": "exit",
+              "reroute_points": []
+            }
+          ]
+        },
+        {
+          "field_name": "exit",
+          "direction": "output",
+          "type": "Nodes.NodeBase",
+          "connections": [
+            {
+              "target_node": 62,
+              "target_port": "content",
+              "reroute_points": []
+            }
+          ]
+        }
+      ],
+      "class_name": "AdvancedStringNode",
+      "path_id": 89
+    },
+    {
+      "name": "Story Dialogue",
+      "graph_id": 79,
+      "position": [
+        1080.0,
+        -72.0
+      ],
+      "keys": [
+        "content",
+        "events",
+        "enter",
+        "exit"
+      ],
+      "ports": [
+        {
+          "field_name": "content",
+          "direction": "input",
+          "type": "Nodes.StringNodeBase",
+          "connections": [
+            {
+              "target_node": 89,
+              "target_port": "exit",
+              "reroute_points": []
+            }
+          ]
+        },
+        {
+          "field_name": "events",
+          "direction": "input",
+          "type": "Nodes.StoryEventNodeBase",
+          "connections": []
+        },
+        {
+          "field_name": "enter",
+          "direction": "input",
+          "type": "Nodes.StoryNodeBase",
+          "connections": [
+            {
+              "target_node": 64,
+              "target_port": "exit",
+              "reroute_points": []
+            }
+          ]
+        },
+        {
+          "field_name": "exit",
+          "direction": "output",
+          "type": "Nodes.StoryNodeBase",
+          "connections": [
+            {
+              "target_node": 73,
+              "target_port": "enter",
+              "reroute_points": []
+            }
+          ]
+        }
+      ],
+      "class_name": "StoryDialogueNode",
+      "path_id": 62
+    },
+    {
+      "name": "Story End",
+      "graph_id": 79,
+      "position": [
+        1400.0,
+        -72.0
+      ],
+      "keys": [
+        "enter"
+      ],
+      "ports": [
+        {
+          "field_name": "enter",
+          "direction": "input",
+          "type": "Nodes.StoryNodeBase",
+          "connections": [
+            {
+              "target_node": 62,
+              "target_port": "exit",
+              "reroute_points": []
+            }
+          ]
+        }
+      ],
+      "class_name": "StoryEndNode",
+      "path_id": 73
+    }
+  ]
+}

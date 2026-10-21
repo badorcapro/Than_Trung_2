@@ -1,0 +1,27 @@
+{
+  "description_symbols": {
+    "list": [
+      {
+        "Key": 0,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 701
+        }
+      },
+      {
+        "Key": 1,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 626
+        }
+      },
+      {
+        "Key": 2,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 486
+        }
+      }
+    ]
+  }
+}

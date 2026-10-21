@@ -1,0 +1,47 @@
+{
+  "text_asset_name": "AllLanguagesv1.0.2",
+  "total_languages": 10,
+  "total_keys": 1908,
+  "languages": [
+    {
+      "name": "ChineseSimplified",
+      "translation_column": 2
+    },
+    {
+      "name": "ChineseTraditional",
+      "translation_column": 3
+    },
+    {
+      "name": "Japanese",
+      "translation_column": 4
+    },
+    {
+      "name": "Korean",
+      "translation_column": 5
+    },
+    {
+      "name": "Thai",
+      "translation_column": 6
+    },
+    {
+      "name": "French",
+      "translation_column": 7
+    },
+    {
+      "name": "German",
+      "translation_column": 8
+    },
+    {
+      "name": "Spanish",
+      "translation_column": 9
+    },
+    {
+      "name": "Russian",
+      "translation_column": 10
+    },
+    {
+      "name": "BrazillianPortugese",
+      "translation_column": 11
+    }
+  ]
+}

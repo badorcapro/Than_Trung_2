@@ -1,0 +1,122 @@
+{
+  "total_story_graphs": 18,
+  "total_role_sets_graphs": 68,
+  "cutscene_graphs_sharedassets2": [
+    "CasinoIntro",
+    "DocksIntro",
+    "SyndicateIntro",
+    "TemplateTransition"
+  ],
+  "of_tutorial_6_nodes": 53,
+  "p7_resolution": "Of_Tutorial_6 contains exactly 53 nodes matching P7 investigation",
+  "story_graphs": [
+    {
+      "name": "CasinoIntro",
+      "graph_id": 77,
+      "asset_file": "sharedassets2.assets",
+      "node_count": 14
+    },
+    {
+      "name": "Cs_Tutorial_1",
+      "graph_id": 3150,
+      "asset_file": "sharedassets1.assets",
+      "node_count": 41
+    },
+    {
+      "name": "Cs_Tutorial_2",
+      "graph_id": 3151,
+      "asset_file": "sharedassets1.assets",
+      "node_count": 21
+    },
+    {
+      "name": "Dc_Tutorial_1",
+      "graph_id": 3152,
+      "asset_file": "sharedassets1.assets",
+      "node_count": 99
+    },
+    {
+      "name": "Dc_Tutorial_2",
+      "graph_id": 3153,
+      "asset_file": "sharedassets1.assets",
+      "node_count": 31
+    },
+    {
+      "name": "Dc_Tutorial_3",
+      "graph_id": 3154,
+      "asset_file": "sharedassets1.assets",
+      "node_count": 22
+    },
+    {
+      "name": "Dc_Tutorial_4",
+      "graph_id": 3155,
+      "asset_file": "sharedassets1.assets",
+      "node_count": 23
+    },
+    {
+      "name": "DocksIntro",
+      "graph_id": 78,
+      "asset_file": "sharedassets2.assets",
+      "node_count": 10
+    },
+    {
+      "name": "Of_Tutorial_1",
+      "graph_id": 3156,
+      "asset_file": "sharedassets1.assets",
+      "node_count": 191
+    },
+    {
+      "name": "Of_Tutorial_2",
+      "graph_id": 3157,
+      "asset_file": "sharedassets1.assets",
+      "node_count": 37
+    },
+    {
+      "name": "Of_Tutorial_3",
+      "graph_id": 3158,
+      "asset_file": "sharedassets1.assets",
+      "node_count": 78
+    },
+    {
+      "name": "Of_Tutorial_4",
+      "graph_id": 3159,
+      "asset_file": "sharedassets1.assets",
+      "node_count": 50
+    },
+    {
+      "name": "Of_Tutorial_5",
+      "graph_id": 3160,
+      "asset_file": "sharedassets1.assets",
+      "node_count": 44
+    },
+    {
+      "name": "Of_Tutorial_6",
+      "graph_id": 3161,
+      "asset_file": "sharedassets1.assets",
+      "node_count": 53
+    },
+    {
+      "name": "Of_Tutorial_7",
+      "graph_id": 3162,
+      "asset_file": "sharedassets1.assets",
+      "node_count": 39
+    },
+    {
+      "name": "Of_Tutorial_8",
+      "graph_id": 3163,
+      "asset_file": "sharedassets1.assets",
+      "node_count": 42
+    },
+    {
+      "name": "SyndicateIntro",
+      "graph_id": 79,
+      "asset_file": "sharedassets2.assets",
+      "node_count": 11
+    },
+    {
+      "name": "TemplateTransition",
+      "graph_id": 80,
+      "asset_file": "sharedassets2.assets",
+      "node_count": 10
+    }
+  ]
+}

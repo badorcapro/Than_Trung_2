@@ -1,0 +1,274 @@
+{
+  "investigate": {
+    "inputs": [
+      {
+        "kbm": 25,
+        "psController": 38,
+        "steamdeck": 68,
+        "switchController": 100,
+        "xboxController": 126,
+        "controller_fallback": 0,
+        "action_word": 0,
+        "action_type": 0
+      }
+    ]
+  },
+  "arrest": {
+    "inputs": [
+      {
+        "kbm": 27,
+        "psController": 36,
+        "steamdeck": 72,
+        "switchController": 106,
+        "xboxController": 130,
+        "controller_fallback": 2,
+        "action_word": 0,
+        "action_type": 0
+      }
+    ]
+  },
+  "toggle_pen": {
+    "inputs": [
+      41,
+      85
+    ]
+  },
+  "toggle_rubber": {
+    "inputs": [
+      42,
+      86
+    ]
+  },
+  "kbm_colour_tool": {
+    "main": {
+      "kbm": 146,
+      "psController": 0,
+      "steamdeck": 0,
+      "switchController": 0,
+      "xboxController": 0,
+      "controller_fallback": 9,
+      "action_word": 0,
+      "action_type": 0
+    },
+    "keyboard_inputs": [
+      {
+        "Item1": 31,
+        "Item2": 19
+      },
+      {
+        "Item1": 40,
+        "Item2": 38
+      },
+      {
+        "Item1": 11,
+        "Item2": 12
+      }
+    ],
+    "other_inputs": [
+      {
+        "Item1": {
+          "kbm": 31,
+          "psController": 0,
+          "steamdeck": 0,
+          "switchController": 0,
+          "xboxController": 0,
+          "controller_fallback": 0,
+          "action_word": 0,
+          "action_type": 0
+        },
+        "Item2": {
+          "kbm": 35,
+          "psController": 0,
+          "steamdeck": 0,
+          "switchController": 0,
+          "xboxController": 0,
+          "controller_fallback": 0,
+          "action_word": 0,
+          "action_type": 0
+        }
+      }
+    ]
+  },
+  "controller_colour": {
+    "main": {
+      "kbm": 0,
+      "psController": 149,
+      "steamdeck": 149,
+      "switchController": 149,
+      "xboxController": 149,
+      "controller_fallback": 149,
+      "action_word": 0,
+      "action_type": 0
+    },
+    "other_inputs": [
+      {
+        "Item1": {
+          "kbm": 0,
+          "psController": 44,
+          "steamdeck": 76,
+          "switchController": 108,
+          "xboxController": 134,
+          "controller_fallback": 9,
+          "action_word": 0,
+          "action_type": 0
+        },
+        "Item2": {
+          "kbm": 0,
+          "psController": 52,
+          "steamdeck": 84,
+          "switchController": 114,
+          "xboxController": 138,
+          "controller_fallback": 9,
+          "action_word": 0,
+          "action_type": 0
+        }
+      }
+    ]
+  },
+  "lock_keyword": {
+    "inputs": [
+      {
+        "kbm": 22,
+        "psController": 0,
+        "steamdeck": 0,
+        "switchController": 0,
+        "xboxController": 0,
+        "controller_fallback": 0,
+        "action_word": 0,
+        "action_type": 0
+      }
+    ]
+  },
+  "rotate_stamp": {
+    "inputs": [
+      {
+        "kbm": 146,
+        "psController": 149,
+        "steamdeck": 149,
+        "switchController": 149,
+        "xboxController": 149,
+        "controller_fallback": 149,
+        "action_word": 0,
+        "action_type": 0
+      }
+    ]
+  },
+  "boat_lever": {
+    "inputs": [
+      {
+        "kbm": 16,
+        "psController": 48,
+        "steamdeck": 78,
+        "switchController": 112,
+        "xboxController": 136,
+        "controller_fallback": 0,
+        "action_word": 0,
+        "action_type": 0
+      }
+    ]
+  },
+  "pause": {
+    "inputs": [
+      {
+        "kbm": 14,
+        "psController": 60,
+        "steamdeck": 94,
+        "switchController": 120,
+        "xboxController": 142,
+        "controller_fallback": 0,
+        "action_word": 0,
+        "action_type": 0
+      }
+    ]
+  },
+  "cross_out_suspect": {
+    "inputs": [
+      {
+        "kbm": 27,
+        "psController": 40,
+        "steamdeck": 72,
+        "switchController": 106,
+        "xboxController": 130,
+        "controller_fallback": 0,
+        "action_word": 0,
+        "action_type": 0
+      }
+    ]
+  },
+  "tick_suspect": {
+    "inputs": [
+      {
+        "kbm": 0,
+        "psController": 42,
+        "steamdeck": 74,
+        "switchController": 104,
+        "xboxController": 132,
+        "controller_fallback": 0,
+        "action_word": 0,
+        "action_type": 0
+      }
+    ]
+  },
+  "select_suspect": {
+    "inputs": [
+      {
+        "kbm": 0,
+        "psController": 60,
+        "steamdeck": 92,
+        "switchController": 122,
+        "xboxController": 144,
+        "controller_fallback": 0,
+        "action_word": 0,
+        "action_type": 0
+      }
+    ]
+  },
+  "place_pin_kbm": {
+    "inputs": [
+      43,
+      87
+    ]
+  },
+  "place_pin": {
+    "inputs": [
+      {
+        "kbm": 0,
+        "psController": 42,
+        "steamdeck": 74,
+        "switchController": 104,
+        "xboxController": 132,
+        "controller_fallback": 4,
+        "action_word": 0,
+        "action_type": 0
+      }
+    ]
+  },
+  "inspect_keywords": {
+    "inputs": [
+      {
+        "kbm": 0,
+        "psController": 60,
+        "steamdeck": 92,
+        "switchController": 122,
+        "xboxController": 144,
+        "controller_fallback": 0,
+        "action_word": 0,
+        "action_type": 0
+      }
+    ]
+  },
+  "connect_pins": {
+    "inputs": [
+      {
+        "kbm": 0,
+        "psController": 56,
+        "steamdeck": 86,
+        "switchController": 118,
+        "xboxController": 140,
+        "controller_fallback": 0,
+        "action_word": 0,
+        "action_type": 0
+      }
+    ]
+  }
+}

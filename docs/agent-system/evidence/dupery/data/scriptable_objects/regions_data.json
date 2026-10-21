@@ -1,0 +1,618 @@
+{
+  "regions": [
+    {
+      "region": 111,
+      "english_region_name": "Casino",
+      "english_fired_end_text": "Detective Bankrupt!",
+      "roles_in_lead": 39,
+      "roles_from_sets": 22,
+      "initial_sets": [
+        {
+          "m_FileID": 0,
+          "m_PathID": 1421
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 1432
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 1434
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 1435
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 1436
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 1437
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 1438
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 1439
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 1440
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 1422
+        }
+      ],
+      "none_prime_sets": [],
+      "tier_up_sets": [
+        {
+          "list": [
+            {
+              "m_FileID": 0,
+              "m_PathID": 1423
+            },
+            {
+              "m_FileID": 0,
+              "m_PathID": 1488
+            }
+          ]
+        },
+        {
+          "list": [
+            {
+              "m_FileID": 0,
+              "m_PathID": 1424
+            }
+          ]
+        },
+        {
+          "list": [
+            {
+              "m_FileID": 0,
+              "m_PathID": 1427
+            }
+          ]
+        },
+        {
+          "list": [
+            {
+              "m_FileID": 0,
+              "m_PathID": 1426
+            },
+            {
+              "m_FileID": 0,
+              "m_PathID": 1430
+            }
+          ]
+        },
+        {
+          "list": [
+            {
+              "m_FileID": 0,
+              "m_PathID": 1428
+            }
+          ]
+        },
+        {
+          "list": [
+            {
+              "m_FileID": 0,
+              "m_PathID": 1433
+            }
+          ]
+        },
+        {
+          "list": [
+            {
+              "m_FileID": 0,
+              "m_PathID": 1425
+            },
+            {
+              "m_FileID": 0,
+              "m_PathID": 1429
+            }
+          ]
+        },
+        {
+          "list": [
+            {
+              "m_FileID": 0,
+              "m_PathID": 1431
+            }
+          ]
+        }
+      ],
+      "initial_quirks": [
+        0,
+        10002,
+        10005,
+        10026,
+        1000,
+        1001,
+        1002,
+        1003,
+        11000,
+        11001,
+        11002,
+        11004,
+        11006,
+        11008
+      ],
+      "tier_up_quirks": [
+        {
+          "list": [
+            11007
+          ]
+        },
+        {
+          "list": [
+            11003,
+            10027
+          ]
+        },
+        {
+          "list": [
+            11005
+          ]
+        },
+        {
+          "list": [
+            1004,
+            1003
+          ]
+        },
+        {
+          "list": [
+            10015
+          ]
+        },
+        {
+          "list": [
+            10023
+          ]
+        },
+        {
+          "list": [
+            10004
+          ]
+        },
+        {
+          "list": [
+            10022
+          ]
+        }
+      ]
+    },
+    {
+      "region": 121,
+      "english_region_name": "Docks",
+      "english_fired_end_text": "Detective Lost At Sea!",
+      "roles_in_lead": 39,
+      "roles_from_sets": 22,
+      "initial_sets": [
+        {
+          "m_FileID": 0,
+          "m_PathID": 1441
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 1456
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 1457
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 1458
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 1459
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 1460
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 1461
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 1462
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 1453
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 1455
+        }
+      ],
+      "none_prime_sets": [],
+      "tier_up_sets": [
+        {
+          "list": [
+            {
+              "m_FileID": 0,
+              "m_PathID": 1450
+            },
+            {
+              "m_FileID": 0,
+              "m_PathID": 1488
+            }
+          ]
+        },
+        {
+          "list": [
+            {
+              "m_FileID": 0,
+              "m_PathID": 1442
+            },
+            {
+              "m_FileID": 0,
+              "m_PathID": 1446
+            }
+          ]
+        },
+        {
+          "list": [
+            {
+              "m_FileID": 0,
+              "m_PathID": 1444
+            },
+            {
+              "m_FileID": 0,
+              "m_PathID": 1449
+            }
+          ]
+        },
+        {
+          "list": [
+            {
+              "m_FileID": 0,
+              "m_PathID": 1443
+            }
+          ]
+        },
+        {
+          "list": [
+            {
+              "m_FileID": 0,
+              "m_PathID": 1445
+            },
+            {
+              "m_FileID": 0,
+              "m_PathID": 1447
+            }
+          ]
+        },
+        {
+          "list": [
+            {
+              "m_FileID": 0,
+              "m_PathID": 1448
+            },
+            {
+              "m_FileID": 0,
+              "m_PathID": 1454
+            }
+          ]
+        },
+        {
+          "list": [
+            {
+              "m_FileID": 0,
+              "m_PathID": 1451
+            }
+          ]
+        },
+        {
+          "list": [
+            {
+              "m_FileID": 0,
+              "m_PathID": 1452
+            }
+          ]
+        }
+      ],
+      "initial_quirks": [
+        10002,
+        5,
+        10005,
+        10026,
+        4,
+        10019,
+        2000,
+        2001,
+        2002,
+        12000,
+        12001,
+        12003,
+        6
+      ],
+      "tier_up_quirks": [
+        {
+          "list": [
+            12002,
+            10016,
+            10017
+          ]
+        },
+        {
+          "list": [
+            10023,
+            12005
+          ]
+        },
+        {
+          "list": [
+            10009
+          ]
+        },
+        {
+          "list": [
+            10021
+          ]
+        },
+        {
+          "list": [
+            10015,
+            10027
+          ]
+        },
+        {
+          "list": [
+            12004
+          ]
+        },
+        {
+          "list": [
+            10006
+          ]
+        },
+        {
+          "list": [
+            10022
+          ]
+        }
+      ]
+    },
+    {
+      "region": 101,
+      "english_region_name": "Office",
+      "english_fired_end_text": "Detective Fired!",
+      "roles_in_lead": 39,
+      "roles_from_sets": 22,
+      "initial_sets": [
+        {
+          "m_FileID": 0,
+          "m_PathID": 1474
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 1481
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 1482
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 1483
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 1485
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 1486
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 1487
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 1464
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 1465
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 1466
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 1467
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 1479
+        }
+      ],
+      "none_prime_sets": [],
+      "tier_up_sets": [
+        {
+          "list": [
+            {
+              "m_FileID": 0,
+              "m_PathID": 1469
+            },
+            {
+              "m_FileID": 0,
+              "m_PathID": 1488
+            }
+          ]
+        },
+        {
+          "list": [
+            {
+              "m_FileID": 0,
+              "m_PathID": 1463
+            },
+            {
+              "m_FileID": 0,
+              "m_PathID": 1484
+            }
+          ]
+        },
+        {
+          "list": [
+            {
+              "m_FileID": 0,
+              "m_PathID": 1472
+            }
+          ]
+        },
+        {
+          "list": [
+            {
+              "m_FileID": 0,
+              "m_PathID": 1470
+            },
+            {
+              "m_FileID": 0,
+              "m_PathID": 1480
+            }
+          ]
+        },
+        {
+          "list": [
+            {
+              "m_FileID": 0,
+              "m_PathID": 1468
+            },
+            {
+              "m_FileID": 0,
+              "m_PathID": 1471
+            },
+            {
+              "m_FileID": 0,
+              "m_PathID": 1478
+            }
+          ]
+        },
+        {
+          "list": [
+            {
+              "m_FileID": 0,
+              "m_PathID": 1475
+            },
+            {
+              "m_FileID": 0,
+              "m_PathID": 1476
+            }
+          ]
+        },
+        {
+          "list": [
+            {
+              "m_FileID": 0,
+              "m_PathID": 1473
+            }
+          ]
+        },
+        {
+          "list": [
+            {
+              "m_FileID": 0,
+              "m_PathID": 1477
+            }
+          ]
+        }
+      ],
+      "initial_quirks": [
+        0,
+        1,
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10000,
+        10002,
+        10003,
+        10005,
+        10012,
+        10013,
+        10014,
+        10018,
+        10019,
+        10020,
+        10025
+      ],
+      "tier_up_quirks": [
+        {
+          "list": [
+            10016,
+            10017
+          ]
+        },
+        {
+          "list": [
+            10024,
+            10026
+          ]
+        },
+        {
+          "list": [
+            10009,
+            10027
+          ]
+        },
+        {
+          "list": [
+            10021,
+            10011,
+            10001
+          ]
+        },
+        {
+          "list": [
+            10015,
+            10023
+          ]
+        },
+        {
+          "list": [
+            10006
+          ]
+        },
+        {
+          "list": [
+            10004
+          ]
+        },
+        {
+          "list": [
+            10022
+          ]
+        }
+      ]
+    },
+    {
+      "region": 131,
+      "english_region_name": "Syndicate",
+      "english_fired_end_text": "Detective Defeated!",
+      "roles_in_lead": 40,
+      "roles_from_sets": 25,
+      "initial_sets": [],
+      "none_prime_sets": [],
+      "tier_up_sets": [],
+      "initial_quirks": [],
+      "tier_up_quirks": []
+    }
+  ]
+}
