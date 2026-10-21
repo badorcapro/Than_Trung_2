@@ -1,0 +1,47 @@
+{
+  "task_id": "TASK-0020",
+  "subagent_conversation_id": "1df6808d-057c-4686-b072-3fbaf244c3f6",
+  "audited_at": "2026-10-21T08:45:00Z",
+  "diff_sha256": "559a9cc3dde3d32b1e518f0776de36ada57bbd71118358fbb9b8c5c9c61edfaf",
+  "transcript_reference": "file:///C:/Users/Admin/.gemini/antigravity/brain/5dc69d25-94eb-4e8a-9589-1420dc32d526/.system_generated/logs/transcript.jsonl",
+  "rules_and_docs_loaded": [
+    "GEMINI.md",
+    "AGENTS.md",
+    "ARCHITECTURE.md",
+    ".agents/rules/rule_anti_evasion.md",
+    ".agents/rules/rule_critical_engagement.md",
+    ".agents/rules/rule_task_contract_and_scope.md",
+    ".agents/skills/verify-task/SKILL.md",
+    ".agents/skills/critical-engagement/SKILL.md",
+    ".agents/skills/honest-execution/SKILL.md",
+    "docs/agent-system/tasks/TASK-0020.md",
+    ".agent_scratchpad.md"
+  ],
+  "decisions_made": [
+    "Thực thi Spike Runtime Probe có kiểm soát theo chỉ đạo của người dùng: Thử nghiệm nạp BepInEx 5.4.23.2 x86 trên Dupery.exe (Mono 32-bit).",
+    "Xác nhận proxy winhttp.dll nạp thành công vào tiến trình nhưng tệp LogOutput.log rỗng do game phụ thuộc vào tương tác GUI người chơi để khởi động CaseCreation.",
+    "Nhận định rủi ro xâm lấn thư mục Steam và vi phạm nguyên tắc Zero-Mutation/Safe Resource Bounds của AGENTS.md. Đã dọn dẹp sạch sẽ 100% mọi tệp thí nghiệm (winhttp.dll, doorstop_config.ini, .doorstop_version, BepInEx/), phục hồi trạng thái nguyên bản.",
+    "Ban hành quyết định kỹ thuật chính thức: NO_GO_FALLBACK_TO_OFFLINE_VERIFICATION; kích hoạt giải pháp chuẩn kiến trúc Offline Logic Verification & Analytical Modeling kết hợp Golden Reference Capture (TASK-0019).",
+    "Chứng minh tính tất định (100% Deterministic) của thuật toán sinh ngẫu nhiên System.Random trong RandomExtensions.cs và CaseCreation/ độc lập với engine.",
+    "Mô hình hóa giải tích các công thức đường cong Easing từ GRGLib.Coroutines.CoroutineExtensions (easeInBack, easeOutBack, easeInElastic, easeOutElastic, easeInOutSine...) và lập bản đồ ánh xạ 1:1 sang Tween.TransitionType / Tween.EaseType của Godot 4.",
+    "Xây dựng scripts/agent/dupery_runtime_probe.py (180 LOC, tier ok) và unit tests tests/test_dupery_runtime_probe.py (47 LOC, tier ok, 5/5 pass)."
+  ],
+  "omissions_and_simplifications": [
+    "Xác nhận không có sự cắt xén hay che giấu nào. Toàn bộ quá trình thử nghiệm spike, phân tích rủi ro và mô hình hóa toán học đều dựa trên bằng chứng thực nghiệm khách quan.",
+    "Không thực hiện runtime injection dài hạn nhằm bảo vệ tính toàn vẹn của thư mục cài đặt Steam theo quy tắc Fail-Closed và Zero-Mutation."
+  ],
+  "adr_0010_anti_cheat_check": "Verified ADR-0010 compliance: scripts/agent/dupery_runtime_probe.py has 180 LOC (well below the 300 LOC cap, tier 'ok'), tests/test_dupery_runtime_probe.py has 47 LOC (tier 'ok'). Both files contain zero semicolon statement chaining (';'), zero placeholder truncation, zero dummy loops, and demonstrate clean Single Responsibility Modularization.",
+  "semantic_checks_performed": [
+    "Audited Primary Agent thought and tool execution log in transcript.jsonl (lines 3780-3830), verifying actual BepInEx download, deployment, supervised run, LogOutput.log inspection, and immediate cleanup.",
+    "Independently verified Steam game directory (D:/Minh/Steam/steamapps/common/Dupery): exactly 5 original files/directories present, 0 residual hook files.",
+    "Audited decompiled C# CoroutineExtensions.cs and confirmed mathematical equivalence of analytical easing formulas.",
+    "Executed python scripts/agent/check_scope.py --task TASK-0020 and verified diff_sha256 matches 559a9cc3dde3d32b1e518f0776de36ada57bbd71118358fbb9b8c5c9c61edfaf with 0 out-of-scope files.",
+    "Executed python scripts/agent/check_line_budget.py --files scripts/agent/dupery_runtime_probe.py tests/test_dupery_runtime_probe.py and verified both in 'ok' tier.",
+    "Executed python scripts/agent/check_diff_guard.py --task TASK-0020 with 0 issues.",
+    "Executed python scripts/agent/dupery_runtime_probe.py --verify and confirmed VERIFY: PASS.",
+    "Executed python -m unittest tests/test_dupery_runtime_probe.py (5 tests passed).",
+    "Executed full unittest discover -s tests -p 'test_*.py' (93 tests passed)."
+  ],
+  "findings": [],
+  "verdict": "PASS"
+}

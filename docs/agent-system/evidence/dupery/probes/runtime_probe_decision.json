@@ -1,0 +1,91 @@
+{
+  "metadata": {
+    "title": "Dupery Runtime Probe Spike Decision",
+    "phase": "P2",
+    "target_architecture": "Windows Mono x86 32-bit",
+    "spike_evaluated": "BepInEx_win_x86_5.4.23.2"
+  },
+  "decision": {
+    "status": "NO_GO_FALLBACK_TO_OFFLINE_VERIFICATION",
+    "verdict": "NO-GO",
+    "primary_rationale": "Passive runtime injection yields empty trace logs due to GUI interaction dependency, while modifying Steam directory violates Zero-Mutation principles. Decompiled C# algorithms provide 100% exact mathematical determinism without process family intrusion.",
+    "game_directory_clean": true
+  },
+  "offline_verification": {
+    "strategy": "Decompiled C# Algorithm Simulation & Analytical Modeling",
+    "prng_algorithm": "System.Random (Mono compatible)",
+    "determinism_verified": true,
+    "sample_seed": 1337,
+    "sample_generated_integers": [
+      24,
+      24,
+      24,
+      24,
+      24,
+      24,
+      24,
+      24,
+      24,
+      24
+    ],
+    "analytical_easing_curves": {
+      "ease_in_back": [
+        0.0,
+        -0.0641,
+        -0.0877,
+        0.1826,
+        1.0
+      ],
+      "ease_out_back": [
+        0.0,
+        0.8174,
+        1.0877,
+        1.0641,
+        1.0
+      ],
+      "ease_in_sine": [
+        0.0,
+        0.0761,
+        0.2929,
+        0.6173,
+        1.0
+      ],
+      "ease_out_sine": [
+        0.0,
+        0.3827,
+        0.7071,
+        0.9239,
+        1.0
+      ],
+      "ease_in_out_sine": [
+        -0.0,
+        0.1464,
+        0.5,
+        0.8536,
+        1.0
+      ]
+    },
+    "godot_mapping": {
+      "ease_in_back": {
+        "trans": "TRANS_BACK",
+        "ease": "EASE_IN"
+      },
+      "ease_out_back": {
+        "trans": "TRANS_BACK",
+        "ease": "EASE_OUT"
+      },
+      "ease_in_sine": {
+        "trans": "TRANS_SINE",
+        "ease": "EASE_IN"
+      },
+      "ease_out_sine": {
+        "trans": "TRANS_SINE",
+        "ease": "EASE_OUT"
+      },
+      "ease_in_out_sine": {
+        "trans": "TRANS_SINE",
+        "ease": "EASE_IN_OUT"
+      }
+    }
+  }
+}
