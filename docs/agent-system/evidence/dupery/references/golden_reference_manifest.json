@@ -1,0 +1,119 @@
+{
+  "metadata": {
+    "title": "Dupery Golden Reference Manifest",
+    "phase": "P2",
+    "protocol_defined": true,
+    "target_resolution": "1920x1080",
+    "target_fps": 60.0,
+    "total_checklist_categories": 9,
+    "baseline_videos_count": 2,
+    "user_captures_count": 0,
+    "resource_streams_verified": true
+  },
+  "baseline_videos": [
+    {
+      "name": "Dupery Intro English.mp4",
+      "category": "CUTSCENE",
+      "offset": 0,
+      "size_bytes": 93707625,
+      "sha256": "fe703760bee3498583c1aca85dd40928a588e7e95649d5f8c95b53c242b670fe",
+      "frame_rate": 24.0,
+      "frame_count": 1113,
+      "audio_channels": 2
+    },
+    {
+      "name": "Dupery Intro Cutscene.mp4",
+      "category": "CUTSCENE",
+      "offset": 93707625,
+      "size_bytes": 92225522,
+      "sha256": "8a9807546b9b68bc61076d6a5fca956b4577468dca42c332bf3c9cfcb9eda003",
+      "frame_rate": 24.0,
+      "frame_count": 1113,
+      "audio_channels": 2
+    }
+  ],
+  "checklist": [
+    {
+      "code": "MENU",
+      "name": "Main Menu & Settings",
+      "focus": "Button hover, clocktower bell, audio pause parameter",
+      "status": "protocol_ready",
+      "baseline_present": false,
+      "user_captures_count": 0,
+      "files": []
+    },
+    {
+      "code": "CUTSCENE",
+      "name": "Intro Cutscenes",
+      "focus": "Original intro video playback, transition to game",
+      "status": "covered",
+      "baseline_present": true,
+      "user_captures_count": 0,
+      "files": []
+    },
+    {
+      "code": "V1_BOARD",
+      "name": "Detective Board & String",
+      "focus": "Note movement, red string tension, magnifying glass",
+      "status": "protocol_ready",
+      "baseline_present": false,
+      "user_captures_count": 0,
+      "files": []
+    },
+    {
+      "code": "V2_CASEGEN",
+      "name": "Case Selection & Stasis",
+      "focus": "Card flip duration, case card inspection, seed",
+      "status": "protocol_ready",
+      "baseline_present": false,
+      "user_captures_count": 0,
+      "files": []
+    },
+    {
+      "code": "V3_LOOP",
+      "name": "Leads & Lineup Loop",
+      "focus": "District navigation, lineup move, suspect inspection",
+      "status": "protocol_ready",
+      "baseline_present": false,
+      "user_captures_count": 0,
+      "files": []
+    },
+    {
+      "code": "V4_ITEMS",
+      "name": "Item Fan & Quirks",
+      "focus": "Fan opening easing curve, quirk card drag and drop",
+      "status": "protocol_ready",
+      "baseline_present": false,
+      "user_captures_count": 0,
+      "files": []
+    },
+    {
+      "code": "V5_ROLES",
+      "name": "Roles & Suspect States",
+      "focus": "Suspect portrait states, clear/arrest stamps",
+      "status": "protocol_ready",
+      "baseline_present": false,
+      "user_captures_count": 0,
+      "files": []
+    },
+    {
+      "code": "V6_INFRA",
+      "name": "Infrastructure & Shortcuts",
+      "focus": "Input shortcuts, save system, localization font",
+      "status": "protocol_ready",
+      "baseline_present": false,
+      "user_captures_count": 0,
+      "files": []
+    },
+    {
+      "code": "V7_SUB",
+      "name": "Summary & Pie Chart",
+      "focus": "Pie chart fill animation, judge gavel impact sound",
+      "status": "protocol_ready",
+      "baseline_present": false,
+      "user_captures_count": 0,
+      "files": []
+    }
+  ],
+  "user_captures": []
+}
