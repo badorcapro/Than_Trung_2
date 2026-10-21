@@ -1,0 +1,2250 @@
+{
+  "scene_name": "IntroCutscene",
+  "build_index": 8,
+  "source_file": "level8",
+  "total_game_objects": 18,
+  "total_root_objects": 12,
+  "total_monobehaviours": 26,
+  "root_game_objects": [
+    {
+      "name": "LocalisationHandler",
+      "path_id": 1,
+      "is_active": true,
+      "layer": 0,
+      "tag": 0,
+      "transform": {
+        "is_rect_transform": false,
+        "local_position": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "local_scale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        },
+        "local_rotation": {
+          "x": -0.0,
+          "y": -0.0,
+          "z": -0.0,
+          "w": 1.0
+        }
+      },
+      "components": [
+        {
+          "type": "MonoBehaviour",
+          "path_id": 53,
+          "class_name": "Localisation.LocalisationHandler",
+          "assembly": "Assembly-CSharp",
+          "custom_properties": {
+            "data": {
+              "m_FileID": 4,
+              "m_PathID": 1409
+            },
+            "main_font": {
+              "m_FileID": 4,
+              "m_PathID": 1396
+            },
+            "language_fonts": {
+              "list": [
+                {
+                  "Key": 22,
+                  "Value": {
+                    "m_FileID": 4,
+                    "m_PathID": 1395
+                  }
+                },
+                {
+                  "Key": 23,
+                  "Value": {
+                    "m_FileID": 4,
+                    "m_PathID": 1393
+                  }
+                },
+                {
+                  "Key": 27,
+                  "Value": {
+                    "m_FileID": 4,
+                    "m_PathID": 1391
+                  }
+                },
+                {
+                  "Key": 25,
+                  "Value": {
+                    "m_FileID": 4,
+                    "m_PathID": 1392
+                  }
+                },
+                {
+                  "Key": 26,
+                  "Value": {
+                    "m_FileID": 4,
+                    "m_PathID": 1394
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "children": []
+    },
+    {
+      "name": "Background Camera",
+      "path_id": 2,
+      "is_active": true,
+      "layer": 0,
+      "tag": 0,
+      "transform": {
+        "is_rect_transform": false,
+        "local_position": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "local_scale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        },
+        "local_rotation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 1.0
+        }
+      },
+      "components": [
+        {
+          "type": "Camera",
+          "path_id": 29,
+          "orthographic": true,
+          "ortho_size": 5.0,
+          "clear_flags": 2,
+          "background_color": {
+            "r": 0.0,
+            "g": 0.0,
+            "b": 0.0,
+            "a": 1.0
+          },
+          "culling_mask": {
+            "m_Bits": 4294967295
+          }
+        },
+        {
+          "type": "MonoBehaviour",
+          "path_id": 57,
+          "class_name": "UnityEngine.Rendering.Universal.UniversalAdditionalCameraData",
+          "assembly": "Unity.RenderPipelines.Universal.Runtime",
+          "custom_properties": {
+            "m_RenderShadows": 1,
+            "m_RequiresDepthTextureOption": 2,
+            "m_RequiresOpaqueTextureOption": 2,
+            "m_CameraType": 0,
+            "m_Cameras": [],
+            "m_RendererIndex": -1,
+            "m_VolumeLayerMask": {
+              "m_Bits": 1
+            },
+            "m_VolumeTrigger": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "m_VolumeFrameworkUpdateModeOption": 2,
+            "m_RenderPostProcessing": 0,
+            "m_Antialiasing": 0,
+            "m_AntialiasingQuality": 2,
+            "m_StopNaN": 0,
+            "m_Dithering": 0,
+            "m_ClearDepth": 1,
+            "m_AllowXRRendering": 1,
+            "m_AllowHDROutput": 1,
+            "m_UseScreenCoordOverride": 0,
+            "m_ScreenSizeOverride": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0,
+              "w": 0.0
+            },
+            "m_ScreenCoordScaleBias": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0,
+              "w": 0.0
+            },
+            "m_RequiresDepthTexture": 0,
+            "m_RequiresColorTexture": 0,
+            "m_Version": 2.0,
+            "m_TaaSettings": {
+              "m_Quality": 3,
+              "m_FrameInfluence": 0.10000000149011612,
+              "m_JitterScale": 1.0,
+              "m_MipBias": 0.0,
+              "m_VarianceClampScale": 0.8999999761581421,
+              "m_ContrastAdaptiveSharpening": 0.0
+            }
+          }
+        }
+      ],
+      "children": []
+    },
+    {
+      "name": "SettingsHandler",
+      "path_id": 3,
+      "is_active": true,
+      "layer": 0,
+      "tag": 0,
+      "transform": {
+        "is_rect_transform": false,
+        "local_position": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "local_scale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        },
+        "local_rotation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 1.0
+        }
+      },
+      "components": [
+        {
+          "type": "MonoBehaviour",
+          "path_id": 51,
+          "class_name": "SettingsHandler",
+          "assembly": "Assembly-CSharp",
+          "custom_properties": {}
+        }
+      ],
+      "children": []
+    },
+    {
+      "name": "AudioHandler",
+      "path_id": 5,
+      "is_active": true,
+      "layer": 0,
+      "tag": 0,
+      "transform": {
+        "is_rect_transform": false,
+        "local_position": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "local_scale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        },
+        "local_rotation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 1.0
+        }
+      },
+      "components": [
+        {
+          "type": "MonoBehaviour",
+          "path_id": 58,
+          "class_name": "Audio.AudioHandler",
+          "assembly": "Assembly-CSharp",
+          "custom_properties": {
+            "audio_references": {
+              "m_FileID": 4,
+              "m_PathID": 1398
+            }
+          }
+        }
+      ],
+      "children": []
+    },
+    {
+      "name": "Global Light 2D",
+      "path_id": 7,
+      "is_active": true,
+      "layer": 0,
+      "tag": 0,
+      "transform": {
+        "is_rect_transform": false,
+        "local_position": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "local_scale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        },
+        "local_rotation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 1.0
+        }
+      },
+      "components": [
+        {
+          "type": "MonoBehaviour",
+          "path_id": 62,
+          "class_name": "UnityEngine.Rendering.Universal.Light2D",
+          "assembly": "Unity.RenderPipelines.Universal.Runtime",
+          "custom_properties": {
+            "m_ComponentVersion": 1,
+            "m_LightType": 4,
+            "m_BlendStyleIndex": 0,
+            "m_FalloffIntensity": 0.5,
+            "m_Color": {
+              "r": 1.0,
+              "g": 1.0,
+              "b": 1.0,
+              "a": 1.0
+            },
+            "m_Intensity": 1.0,
+            "m_LightVolumeIntensity": 1.0,
+            "m_LightVolumeIntensityEnabled": 0,
+            "m_ApplyToSortingLayers": [
+              0,
+              478699247
+            ],
+            "m_LightCookieSprite": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "m_DeprecatedPointLightCookieSprite": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "m_LightOrder": 0,
+            "m_AlphaBlendOnOverlap": 0,
+            "m_OverlapOperation": 0,
+            "m_NormalMapDistance": 3.0,
+            "m_NormalMapQuality": 2,
+            "m_UseNormalMap": 0,
+            "m_ShadowIntensityEnabled": 0,
+            "m_ShadowIntensity": 0.75,
+            "m_ShadowVolumeIntensityEnabled": 0,
+            "m_ShadowVolumeIntensity": 0.75,
+            "m_LocalBounds": {
+              "m_Center": {
+                "x": 0.0,
+                "y": -1.1920928955078125e-07,
+                "z": 0.0
+              },
+              "m_Extent": {
+                "x": 0.9985302090644836,
+                "y": 0.9985302686691284,
+                "z": 0.0
+              }
+            },
+            "m_PointLightInnerAngle": 360.0,
+            "m_PointLightOuterAngle": 360.0,
+            "m_PointLightInnerRadius": 0.0,
+            "m_PointLightOuterRadius": 1.0,
+            "m_ShapeLightParametricSides": 5,
+            "m_ShapeLightParametricAngleOffset": 0.0,
+            "m_ShapeLightParametricRadius": 1.0,
+            "m_ShapeLightFalloffSize": 0.5,
+            "m_ShapeLightFalloffOffset": {
+              "x": 0.0,
+              "y": 0.0
+            },
+            "m_ShapePath": [
+              {
+                "x": -0.5,
+                "y": -0.5,
+                "z": 0.0
+              },
+              {
+                "x": 0.5,
+                "y": -0.5,
+                "z": 0.0
+              },
+              {
+                "x": 0.5,
+                "y": 0.5,
+                "z": 0.0
+              },
+              {
+                "x": -0.5,
+                "y": 0.5,
+                "z": 0.0
+              }
+            ]
+          }
+        }
+      ],
+      "children": []
+    },
+    {
+      "name": "UniversalInputHandler",
+      "path_id": 9,
+      "is_active": true,
+      "layer": 0,
+      "tag": 0,
+      "transform": {
+        "is_rect_transform": false,
+        "local_position": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "local_scale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        },
+        "local_rotation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 1.0
+        }
+      },
+      "components": [
+        {
+          "type": "MonoBehaviour",
+          "path_id": 65,
+          "class_name": "UniversalInputHandler",
+          "assembly": "Assembly-CSharp",
+          "custom_properties": {}
+        }
+      ],
+      "children": []
+    },
+    {
+      "name": "Main Camera",
+      "path_id": 10,
+      "is_active": true,
+      "layer": 0,
+      "tag": 5,
+      "transform": {
+        "is_rect_transform": false,
+        "local_position": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": -10.0
+        },
+        "local_scale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        },
+        "local_rotation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 1.0
+        }
+      },
+      "components": [
+        {
+          "type": "Camera",
+          "path_id": 30,
+          "orthographic": true,
+          "ortho_size": 5.0,
+          "clear_flags": 2,
+          "background_color": {
+            "r": 0.0,
+            "g": 0.0,
+            "b": 0.0,
+            "a": 0.0
+          },
+          "culling_mask": {
+            "m_Bits": 4294967295
+          }
+        },
+        {
+          "type": "MonoBehaviour",
+          "path_id": 66,
+          "class_name": "GRGLib.Resolution.CameraResolution",
+          "assembly": "gildedrunegames.grglib",
+          "custom_properties": {
+            "main_camera": {
+              "m_FileID": 0,
+              "m_PathID": 30
+            },
+            "template_resolution": {
+              "x": 16.0,
+              "y": 9.0
+            },
+            "leway": 0.004999999888241291,
+            "force_ratio_on_wider": 1,
+            "force_ratio_on_taller": 1
+          }
+        },
+        {
+          "type": "MonoBehaviour",
+          "path_id": 67,
+          "class_name": "UnityEngine.Rendering.Universal.UniversalAdditionalCameraData",
+          "assembly": "Unity.RenderPipelines.Universal.Runtime",
+          "custom_properties": {
+            "m_RenderShadows": 1,
+            "m_RequiresDepthTextureOption": 2,
+            "m_RequiresOpaqueTextureOption": 2,
+            "m_CameraType": 0,
+            "m_Cameras": [],
+            "m_RendererIndex": -1,
+            "m_VolumeLayerMask": {
+              "m_Bits": 1
+            },
+            "m_VolumeTrigger": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "m_VolumeFrameworkUpdateModeOption": 2,
+            "m_RenderPostProcessing": 1,
+            "m_Antialiasing": 0,
+            "m_AntialiasingQuality": 2,
+            "m_StopNaN": 0,
+            "m_Dithering": 0,
+            "m_ClearDepth": 1,
+            "m_AllowXRRendering": 1,
+            "m_AllowHDROutput": 1,
+            "m_UseScreenCoordOverride": 0,
+            "m_ScreenSizeOverride": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0,
+              "w": 0.0
+            },
+            "m_ScreenCoordScaleBias": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0,
+              "w": 0.0
+            },
+            "m_RequiresDepthTexture": 0,
+            "m_RequiresColorTexture": 0,
+            "m_Version": 2.0,
+            "m_TaaSettings": {
+              "m_Quality": 3,
+              "m_FrameInfluence": 0.10000000149011612,
+              "m_JitterScale": 1.0,
+              "m_MipBias": 0.0,
+              "m_VarianceClampScale": 0.8999999761581421,
+              "m_ContrastAdaptiveSharpening": 0.0
+            }
+          }
+        },
+        {
+          "type": "MonoBehaviour",
+          "path_id": 76,
+          "class_name": "FMODUnity.StudioListener",
+          "assembly": "FMODUnity",
+          "custom_properties": {
+            "nonRigidbodyVelocity": 0,
+            "attenuationObject": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            }
+          }
+        }
+      ],
+      "children": []
+    },
+    {
+      "name": "EventSystem",
+      "path_id": 11,
+      "is_active": true,
+      "layer": 0,
+      "tag": 0,
+      "transform": {
+        "is_rect_transform": false,
+        "local_position": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "local_scale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        },
+        "local_rotation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 1.0
+        }
+      },
+      "components": [
+        {
+          "type": "MonoBehaviour",
+          "path_id": 54,
+          "class_name": "UnityEngine.EventSystems.EventSystem",
+          "assembly": "UnityEngine.UI",
+          "custom_properties": {
+            "m_FirstSelected": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "m_sendNavigationEvents": 1,
+            "m_DragThreshold": 10
+          }
+        },
+        {
+          "type": "MonoBehaviour",
+          "path_id": 55,
+          "class_name": "UnityEngine.InputSystem.PlayerInput",
+          "assembly": "Unity.InputSystem",
+          "custom_properties": {
+            "m_Actions": {
+              "m_FileID": 1,
+              "m_PathID": 3119
+            },
+            "m_NotificationBehavior": 2,
+            "m_UIInputModule": {
+              "m_FileID": 0,
+              "m_PathID": 68
+            },
+            "m_DeviceLostEvent": {
+              "m_PersistentCalls": {
+                "m_Calls": []
+              }
+            },
+            "m_DeviceRegainedEvent": {
+              "m_PersistentCalls": {
+                "m_Calls": []
+              }
+            },
+            "m_ControlsChangedEvent": {
+              "m_PersistentCalls": {
+                "m_Calls": []
+              }
+            },
+            "m_ActionEvents": [
+              {
+                "m_PersistentCalls": {
+                  "m_Calls": []
+                },
+                "m_ActionId": "7508dfbe-16c1-449b-8128-419ea94fef74",
+                "m_ActionName": "Player/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]"
+              },
+              {
+                "m_PersistentCalls": {
+                  "m_Calls": []
+                },
+                "m_ActionId": "823e9502-577a-4e28-b54f-2b7a0a945dda",
+                "m_ActionName": "Player/Look[/Mouse/delta]"
+              },
+              {
+                "m_PersistentCalls": {
+                  "m_Calls": []
+                },
+                "m_ActionId": "63575866-3069-4fb4-a03e-31b0669aa906",
+                "m_ActionName": "Player/Fire[/Mouse/leftButton]"
+              },
+              {
+                "m_PersistentCalls": {
+                  "m_Calls": [
+                    {
+                      "m_Target": {
+                        "m_FileID": 0,
+                        "m_PathID": 61
+                      },
+                      "m_TargetAssemblyTypeName": "IntroCutsceneManager, Assembly-CSharp",
+                      "m_MethodName": "onSkip",
+                      "m_Mode": 0,
+                      "m_Arguments": {
+                        "m_ObjectArgument": {
+                          "m_FileID": 0,
+                          "m_PathID": 0
+                        },
+                        "m_ObjectArgumentAssemblyTypeName": "UnityEngine.Object, UnityEngine",
+                        "m_IntArgument": 0,
+                        "m_FloatArgument": 0.0,
+                        "m_StringArgument": "",
+                        "m_BoolArgument": 0
+                      },
+                      "m_CallState": 2
+                    }
+                  ]
+                },
+                "m_ActionId": "dcec5102-25d2-4c14-b692-047a4bd78632",
+                "m_ActionName": "Player/Cancel[/Keyboard/escape]"
+              },
+              {
+                "m_PersistentCalls": {
+                  "m_Calls": [
+                    {
+                      "m_Target": {
+                        "m_FileID": 0,
+                        "m_PathID": 61
+                      },
+                      "m_TargetAssemblyTypeName": "IntroCutsceneManager, Assembly-CSharp",
+                      "m_MethodName": "onSkip",
+                      "m_Mode": 0,
+                      "m_Arguments": {
+                        "m_ObjectArgument": {
+                          "m_FileID": 0,
+                          "m_PathID": 0
+                        },
+                        "m_ObjectArgumentAssemblyTypeName": "UnityEngine.Object, UnityEngine",
+                        "m_IntArgument": 0,
+                        "m_FloatArgument": 0.0,
+                        "m_StringArgument": "",
+                        "m_BoolArgument": 0
+                      },
+                      "m_CallState": 2
+                    }
+                  ]
+                },
+                "m_ActionId": "fcde3dfc-4e9c-47a2-8627-8c4dafac82f0",
+                "m_ActionName": "Player/C_South"
+              },
+              {
+                "m_PersistentCalls": {
+                  "m_Calls": [
+                    {
+                      "m_Target": {
+                        "m_FileID": 0,
+                        "m_PathID": 61
+                      },
+                      "m_TargetAssemblyTypeName": "IntroCutsceneManager, Assembly-CSharp",
+                      "m_MethodName": "onSkip",
+                      "m_Mode": 0,
+                      "m_Arguments": {
+                        "m_ObjectArgument": {
+                          "m_FileID": 0,
+                          "m_PathID": 0
+                        },
+                        "m_ObjectArgumentAssemblyTypeName": "UnityEngine.Object, UnityEngine",
+                        "m_IntArgument": 0,
+                        "m_FloatArgument": 0.0,
+                        "m_StringArgument": "",
+                        "m_BoolArgument": 0
+                      },
+                      "m_CallState": 2
+                    }
+                  ]
+                },
+                "m_ActionId": "293e2bd1-f3f5-4b57-9374-598fda185e77",
+                "m_ActionName": "Player/C_West"
+              },
+              {
+                "m_PersistentCalls": {
+                  "m_Calls": [
+                    {
+                      "m_Target": {
+                        "m_FileID": 0,
+                        "m_PathID": 61
+                      },
+                      "m_TargetAssemblyTypeName": "IntroCutsceneManager, Assembly-CSharp",
+                      "m_MethodName": "onSkip",
+                      "m_Mode": 0,
+                      "m_Arguments": {
+                        "m_ObjectArgument": {
+                          "m_FileID": 0,
+                          "m_PathID": 0
+                        },
+                        "m_ObjectArgumentAssemblyTypeName": "UnityEngine.Object, UnityEngine",
+                        "m_IntArgument": 0,
+                        "m_FloatArgument": 0.0,
+                        "m_StringArgument": "",
+                        "m_BoolArgument": 0
+                      },
+                      "m_CallState": 2
+                    }
+                  ]
+                },
+                "m_ActionId": "c6412d0d-f054-4bd4-83a3-e27aaeb68f27",
+                "m_ActionName": "Player/C_East"
+              },
+              {
+                "m_PersistentCalls": {
+                  "m_Calls": [
+                    {
+                      "m_Target": {
+                        "m_FileID": 0,
+                        "m_PathID": 61
+                      },
+                      "m_TargetAssemblyTypeName": "IntroCutsceneManager, Assembly-CSharp",
+                      "m_MethodName": "onSkip",
+                      "m_Mode": 0,
+                      "m_Arguments": {
+                        "m_ObjectArgument": {
+                          "m_FileID": 0,
+                          "m_PathID": 0
+                        },
+                        "m_ObjectArgumentAssemblyTypeName": "UnityEngine.Object, UnityEngine",
+                        "m_IntArgument": 0,
+                        "m_FloatArgument": 0.0,
+                        "m_StringArgument": "",
+                        "m_BoolArgument": 0
+                      },
+                      "m_CallState": 2
+                    }
+                  ]
+                },
+                "m_ActionId": "aab8f4d1-d71e-423a-bacc-d5965864b70f",
+                "m_ActionName": "Player/C_North"
+              },
+              {
+                "m_PersistentCalls": {
+                  "m_Calls": []
+                },
+                "m_ActionId": "2d27b179-a0ea-44da-92fa-3d74226bcff2",
+                "m_ActionName": "Player/C_ShoulderWest"
+              },
+              {
+                "m_PersistentCalls": {
+                  "m_Calls": []
+                },
+                "m_ActionId": "73409a38-a602-4cd2-a3f5-c9beb14279ff",
+                "m_ActionName": "Player/C_ShoulderEast"
+              },
+              {
+                "m_PersistentCalls": {
+                  "m_Calls": []
+                },
+                "m_ActionId": "29f85d15-bbea-4ab3-ac56-db0bcc2ad3a3",
+                "m_ActionName": "UI/Navigate[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]"
+              },
+              {
+                "m_PersistentCalls": {
+                  "m_Calls": []
+                },
+                "m_ActionId": "92283c59-ef89-4c52-9279-d1e618d01e1f",
+                "m_ActionName": "UI/Submit[/Keyboard/enter]"
+              },
+              {
+                "m_PersistentCalls": {
+                  "m_Calls": []
+                },
+                "m_ActionId": "5afa0ffd-56e2-49a8-912e-3c48f5446e4b",
+                "m_ActionName": "UI/Cancel[/Keyboard/escape]"
+              },
+              {
+                "m_PersistentCalls": {
+                  "m_Calls": []
+                },
+                "m_ActionId": "bbc66c67-4a7a-4d3d-ad6f-ece33a1a5c9f",
+                "m_ActionName": "UI/Point[/Mouse/position]"
+              },
+              {
+                "m_PersistentCalls": {
+                  "m_Calls": []
+                },
+                "m_ActionId": "263a162b-5f68-4d7a-8ad3-fecbce81c87f",
+                "m_ActionName": "UI/Click[/Mouse/leftButton]"
+              },
+              {
+                "m_PersistentCalls": {
+                  "m_Calls": []
+                },
+                "m_ActionId": "b2e8d05f-2a98-4207-8b98-ea46729ec119",
+                "m_ActionName": "UI/ScrollWheel[/Mouse/scroll]"
+              },
+              {
+                "m_PersistentCalls": {
+                  "m_Calls": []
+                },
+                "m_ActionId": "e320b9b8-1bbe-491b-920b-0e1654b7fba6",
+                "m_ActionName": "UI/MiddleClick[/Mouse/middleButton]"
+              },
+              {
+                "m_PersistentCalls": {
+                  "m_Calls": []
+                },
+                "m_ActionId": "366877e8-59d4-4ccb-a793-e0efe59e933f",
+                "m_ActionName": "UI/RightClick[/Mouse/rightButton]"
+              },
+              {
+                "m_PersistentCalls": {
+                  "m_Calls": []
+                },
+                "m_ActionId": "955bcd08-9483-49b4-b189-e6347a8df13f",
+                "m_ActionName": "UI/TrackedDevicePosition"
+              },
+              {
+                "m_PersistentCalls": {
+                  "m_Calls": []
+                },
+                "m_ActionId": "76fe0ee6-9a80-4b9f-bd6b-dbb5630b4143",
+                "m_ActionName": "UI/TrackedDeviceOrientation"
+              },
+              {
+                "m_PersistentCalls": {
+                  "m_Calls": [
+                    {
+                      "m_Target": {
+                        "m_FileID": 0,
+                        "m_PathID": 61
+                      },
+                      "m_TargetAssemblyTypeName": "IntroCutsceneManager, Assembly-CSharp",
+                      "m_MethodName": "onSkip",
+                      "m_Mode": 0,
+                      "m_Arguments": {
+                        "m_ObjectArgument": {
+                          "m_FileID": 0,
+                          "m_PathID": 0
+                        },
+                        "m_ObjectArgumentAssemblyTypeName": "UnityEngine.Object, UnityEngine",
+                        "m_IntArgument": 0,
+                        "m_FloatArgument": 0.0,
+                        "m_StringArgument": "",
+                        "m_BoolArgument": 0
+                      },
+                      "m_CallState": 2
+                    }
+                  ]
+                },
+                "m_ActionId": "7af78f81-fc27-4c62-849a-ebff178bc967",
+                "m_ActionName": "Player/C_Start[/XInputControllerWindows/start]"
+              },
+              {
+                "m_PersistentCalls": {
+                  "m_Calls": []
+                },
+                "m_ActionId": "aa57e06e-5902-475f-9c0e-51a92f5523a5",
+                "m_ActionName": "Player/C_LeftStart[/XInputControllerWindows/select]"
+              },
+              {
+                "m_PersistentCalls": {
+                  "m_Calls": []
+                },
+                "m_ActionId": "eb647d44-27b5-4f66-a5c0-37c380cf2362",
+                "m_ActionName": "Player/C_TriggerWest"
+              },
+              {
+                "m_PersistentCalls": {
+                  "m_Calls": []
+                },
+                "m_ActionId": "0a2a4a65-9b3d-478b-932e-7ba0734da86c",
+                "m_ActionName": "Player/C_TriggerEast"
+              },
+              {
+                "m_PersistentCalls": {
+                  "m_Calls": []
+                },
+                "m_ActionId": "a3cd8934-99d3-4d76-bdc0-6b1ca8a2213e",
+                "m_ActionName": "Player/C_RightJoystick"
+              },
+              {
+                "m_PersistentCalls": {
+                  "m_Calls": []
+                },
+                "m_ActionId": "e8e38228-317a-43c9-8fd5-98b6f9211b36",
+                "m_ActionName": "Player/K_ChangeColourLeft[/Keyboard/q,/Keyboard/z,/Keyboard/leftArrow,/Keyboard/leftBracket]"
+              },
+              {
+                "m_PersistentCalls": {
+                  "m_Calls": []
+                },
+                "m_ActionId": "a1d71307-c8cc-4e4c-a6a7-e42a10e2a73a",
+                "m_ActionName": "Player/K_ChangeColourRight[/Keyboard/e,/Keyboard/x,/Keyboard/rightArrow,/Keyboard/rightBracket]"
+              },
+              {
+                "m_PersistentCalls": {
+                  "m_Calls": []
+                },
+                "m_ActionId": "1123954d-f2e6-4de1-8ce2-a7cec8270193",
+                "m_ActionName": "Player/K_RightClick[/Mouse/rightButton]"
+              },
+              {
+                "m_PersistentCalls": {
+                  "m_Calls": []
+                },
+                "m_ActionId": "8f878af9-594a-41c4-8cec-9eb2afb1afcd",
+                "m_ActionName": "Player/C_LeftJoystick"
+              },
+              {
+                "m_PersistentCalls": {
+                  "m_Calls": []
+                },
+                "m_ActionId": "5861659d-78ab-4152-8c66-88d2b9cba642",
+                "m_ActionName": "Player/C_Dpad[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]"
+              },
+              {
+                "m_PersistentCalls": {
+                  "m_Calls": []
+                },
+                "m_ActionId": "6bc0f0cc-56bb-4be2-a467-5da9d03e37cf",
+                "m_ActionName": "Player/LockHovering[/Keyboard/shift,/Keyboard/ctrl]"
+              },
+              {
+                "m_PersistentCalls": {
+                  "m_Calls": []
+                },
+                "m_ActionId": "98de1608-9fed-42de-a5aa-3696a541a52d",
+                "m_ActionName": "Player/K_RubberToggle[/Keyboard/2,/Keyboard/numpad2]"
+              },
+              {
+                "m_PersistentCalls": {
+                  "m_Calls": []
+                },
+                "m_ActionId": "b1542e20-4d1a-4aa6-8528-f69c0f1372ee",
+                "m_ActionName": "Player/K_Shift[/Keyboard/shift]"
+              },
+              {
+                "m_PersistentCalls": {
+                  "m_Calls": []
+                },
+                "m_ActionId": "319d606a-2408-4fad-a6b9-f62230efe601",
+                "m_ActionName": "Player/K_PenToggle[/Keyboard/1,/Keyboard/numpad1]"
+              },
+              {
+                "m_PersistentCalls": {
+                  "m_Calls": []
+                },
+                "m_ActionId": "176352ff-f0b0-4def-bd1c-14d07213a883",
+                "m_ActionName": "Player/K_Space[/Keyboard/space]"
+              },
+              {
+                "m_PersistentCalls": {
+                  "m_Calls": []
+                },
+                "m_ActionId": "5ce0d4e5-2114-4603-a22e-f86ec1596490",
+                "m_ActionName": "Player/K_PinToggle[/Keyboard/3,/Keyboard/numpad3]"
+              }
+            ],
+            "m_NeverAutoSwitchControlSchemes": 0,
+            "m_DefaultControlScheme": "",
+            "m_DefaultActionMap": "Player",
+            "m_SplitScreenIndex": -1,
+            "m_Camera": {
+              "m_FileID": 0,
+              "m_PathID": 30
+            }
+          }
+        },
+        {
+          "type": "MonoBehaviour",
+          "path_id": 68,
+          "class_name": "UnityEngine.InputSystem.UI.InputSystemUIInputModule",
+          "assembly": "Unity.InputSystem",
+          "custom_properties": {
+            "m_SendPointerHoverToParent": 1,
+            "m_MoveRepeatDelay": 0.5,
+            "m_MoveRepeatRate": 0.10000000149011612,
+            "m_XRTrackingOrigin": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "m_ActionsAsset": {
+              "m_FileID": 1,
+              "m_PathID": 3119
+            },
+            "m_PointAction": {
+              "m_FileID": 4,
+              "m_PathID": 1659
+            },
+            "m_MoveAction": {
+              "m_FileID": 4,
+              "m_PathID": 1217
+            },
+            "m_SubmitAction": {
+              "m_FileID": 4,
+              "m_PathID": 1620
+            },
+            "m_CancelAction": {
+              "m_FileID": 4,
+              "m_PathID": 1638
+            },
+            "m_LeftClickAction": {
+              "m_FileID": 4,
+              "m_PathID": 1500
+            },
+            "m_MiddleClickAction": {
+              "m_FileID": 4,
+              "m_PathID": 1254
+            },
+            "m_RightClickAction": {
+              "m_FileID": 4,
+              "m_PathID": 1650
+            },
+            "m_ScrollWheelAction": {
+              "m_FileID": 4,
+              "m_PathID": 1635
+            },
+            "m_TrackedDevicePositionAction": {
+              "m_FileID": 4,
+              "m_PathID": 1360
+            },
+            "m_TrackedDeviceOrientationAction": {
+              "m_FileID": 4,
+              "m_PathID": 1502
+            },
+            "m_DeselectOnBackgroundClick": 1,
+            "m_PointerBehavior": 0,
+            "m_CursorLockBehavior": 0,
+            "m_ScrollDeltaPerTick": 6.0
+          }
+        }
+      ],
+      "children": []
+    },
+    {
+      "name": "Global Volume",
+      "path_id": 13,
+      "is_active": true,
+      "layer": 0,
+      "tag": 0,
+      "transform": {
+        "is_rect_transform": false,
+        "local_position": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "local_scale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        },
+        "local_rotation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 1.0
+        }
+      },
+      "components": [
+        {
+          "type": "MonoBehaviour",
+          "path_id": 69,
+          "class_name": "GlobalVolumeHandler",
+          "assembly": "Assembly-CSharp",
+          "custom_properties": {
+            "global_volume": {
+              "m_FileID": 0,
+              "m_PathID": 70
+            }
+          }
+        },
+        {
+          "type": "MonoBehaviour",
+          "path_id": 70,
+          "class_name": "UnityEngine.Rendering.Volume",
+          "assembly": "Unity.RenderPipelines.Core.Runtime",
+          "custom_properties": {
+            "m_IsGlobal": 1,
+            "priority": 0.0,
+            "blendDistance": 0.0,
+            "weight": 1.0,
+            "sharedProfile": {
+              "m_FileID": 4,
+              "m_PathID": 1397
+            }
+          }
+        }
+      ],
+      "children": []
+    },
+    {
+      "name": "GameHandler",
+      "path_id": 16,
+      "is_active": true,
+      "layer": 0,
+      "tag": 0,
+      "transform": {
+        "is_rect_transform": false,
+        "local_position": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "local_scale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        },
+        "local_rotation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 1.0
+        }
+      },
+      "components": [
+        {
+          "type": "MonoBehaviour",
+          "path_id": 52,
+          "class_name": "GameHandler",
+          "assembly": "Assembly-CSharp",
+          "custom_properties": {
+            "m_text_handler": {
+              "roles_visual_data": {
+                "m_FileID": 4,
+                "m_PathID": 1491
+              },
+              "quirks_visual_data": {
+                "m_FileID": 4,
+                "m_PathID": 1417
+              },
+              "item_visual_data": {
+                "m_FileID": 4,
+                "m_PathID": 1401
+              },
+              "neutral_keyword_colour": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 1.0
+              },
+              "red_keyword_colour": {
+                "r": 0.7452830076217651,
+                "g": 0.08788713812828064,
+                "b": 0.08788713812828064,
+                "a": 1.0
+              },
+              "purple_keyword_colour": {
+                "r": 0.46069902181625366,
+                "g": 0.05473477393388748,
+                "b": 0.7735849022865295,
+                "a": 1.0
+              }
+            },
+            "regions_data": {
+              "m_FileID": 4,
+              "m_PathID": 1490
+            },
+            "transition_handler": {
+              "m_FileID": 0,
+              "m_PathID": 73
+            }
+          }
+        }
+      ],
+      "children": []
+    },
+    {
+      "name": "Canvas",
+      "path_id": 6,
+      "is_active": true,
+      "layer": 5,
+      "tag": 0,
+      "transform": {
+        "is_rect_transform": true,
+        "local_position": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "local_scale": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "local_rotation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 1.0
+        },
+        "anchor_min": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "anchor_max": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "pivot": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "size_delta": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "anchored_position": {
+          "x": 0.0,
+          "y": 0.0
+        }
+      },
+      "components": [
+        {
+          "type": "Canvas",
+          "path_id": 38,
+          "render_mode": 1,
+          "sorting_order": 0,
+          "plane_distance": 100.0
+        },
+        {
+          "type": "MonoBehaviour",
+          "path_id": 59,
+          "class_name": "UnityEngine.UI.GraphicRaycaster",
+          "assembly": "UnityEngine.UI",
+          "custom_properties": {
+            "m_IgnoreReversedGraphics": 1,
+            "m_BlockingObjects": 0,
+            "m_BlockingMask": {
+              "m_Bits": 4294967295
+            }
+          }
+        },
+        {
+          "type": "MonoBehaviour",
+          "path_id": 60,
+          "class_name": "UnityEngine.UI.CanvasScaler",
+          "assembly": "UnityEngine.UI",
+          "custom_properties": {
+            "m_UiScaleMode": 1,
+            "m_ReferencePixelsPerUnit": 100.0,
+            "m_ScaleFactor": 1.0,
+            "m_ReferenceResolution": {
+              "x": 3840.0,
+              "y": 2160.0
+            },
+            "m_ScreenMatchMode": 0,
+            "m_MatchWidthOrHeight": 0.0,
+            "m_PhysicalUnit": 3,
+            "m_FallbackScreenDPI": 96.0,
+            "m_DefaultSpriteDPI": 96.0,
+            "m_DynamicPixelsPerUnit": 1.0,
+            "m_PresetInfoIsWorld": 0
+          }
+        },
+        {
+          "type": "MonoBehaviour",
+          "path_id": 61,
+          "class_name": "IntroCutsceneManager",
+          "assembly": "Assembly-CSharp",
+          "custom_properties": {
+            "video_player": {
+              "m_FileID": 0,
+              "m_PathID": 50
+            },
+            "clips": {
+              "list": [
+                {
+                  "Key": 0,
+                  "Value": {
+                    "video": {
+                      "m_FileID": 3,
+                      "m_PathID": 2
+                    },
+                    "audio_track": {
+                      "Guid": {
+                        "Data1": 1316654174,
+                        "Data2": 1205292388,
+                        "Data3": -15448171,
+                        "Data4": 349758829
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            "backup_clip": {
+              "video": {
+                "m_FileID": 3,
+                "m_PathID": 3
+              },
+              "audio_track": {
+                "Guid": {
+                  "Data1": -949895153,
+                  "Data2": 1219821292,
+                  "Data3": 513511083,
+                  "Data4": 919328936
+                }
+              }
+            },
+            "skip_circle": {
+              "m_FileID": 0,
+              "m_PathID": 71
+            }
+          }
+        }
+      ],
+      "children": [
+        {
+          "name": "Video Player",
+          "path_id": 4,
+          "is_active": true,
+          "layer": 5,
+          "tag": 0,
+          "transform": {
+            "is_rect_transform": true,
+            "local_position": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "local_scale": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0
+            },
+            "local_rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0,
+              "w": 1.0
+            },
+            "anchor_min": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "anchor_max": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "pivot": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "size_delta": {
+              "x": 100.0,
+              "y": 100.0
+            },
+            "anchored_position": {
+              "x": 0.0,
+              "y": 0.0
+            }
+          },
+          "components": [],
+          "children": []
+        },
+        {
+          "name": "Image",
+          "path_id": 8,
+          "is_active": true,
+          "layer": 5,
+          "tag": 0,
+          "transform": {
+            "is_rect_transform": true,
+            "local_position": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "local_scale": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0
+            },
+            "local_rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0,
+              "w": 1.0
+            },
+            "anchor_min": {
+              "x": 0.0,
+              "y": 0.0
+            },
+            "anchor_max": {
+              "x": 1.0,
+              "y": 1.0
+            },
+            "pivot": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "size_delta": {
+              "x": 0.0,
+              "y": 0.0
+            },
+            "anchored_position": {
+              "x": 0.0,
+              "y": 0.0
+            }
+          },
+          "components": [
+            {
+              "type": "MonoBehaviour",
+              "path_id": 63,
+              "class_name": "GRGLib.UI.AdvancedButton",
+              "assembly": "gildedrunegames.grglib",
+              "custom_properties": {
+                "m_Navigation": {
+                  "m_Mode": 0,
+                  "m_WrapAround": 0,
+                  "m_SelectOnUp": {
+                    "m_FileID": 0,
+                    "m_PathID": 0
+                  },
+                  "m_SelectOnDown": {
+                    "m_FileID": 0,
+                    "m_PathID": 0
+                  },
+                  "m_SelectOnLeft": {
+                    "m_FileID": 0,
+                    "m_PathID": 0
+                  },
+                  "m_SelectOnRight": {
+                    "m_FileID": 0,
+                    "m_PathID": 0
+                  }
+                },
+                "m_Transition": 0,
+                "m_Colors": {
+                  "m_NormalColor": {
+                    "r": 1.0,
+                    "g": 1.0,
+                    "b": 1.0,
+                    "a": 1.0
+                  },
+                  "m_HighlightedColor": {
+                    "r": 0.9607843160629272,
+                    "g": 0.9607843160629272,
+                    "b": 0.9607843160629272,
+                    "a": 1.0
+                  },
+                  "m_PressedColor": {
+                    "r": 0.7843137383460999,
+                    "g": 0.7843137383460999,
+                    "b": 0.7843137383460999,
+                    "a": 1.0
+                  },
+                  "m_SelectedColor": {
+                    "r": 0.9607843160629272,
+                    "g": 0.9607843160629272,
+                    "b": 0.9607843160629272,
+                    "a": 1.0
+                  },
+                  "m_DisabledColor": {
+                    "r": 0.7843137383460999,
+                    "g": 0.7843137383460999,
+                    "b": 0.7843137383460999,
+                    "a": 0.501960813999176
+                  },
+                  "m_ColorMultiplier": 1.0,
+                  "m_FadeDuration": 0.10000000149011612
+                },
+                "m_SpriteState": {
+                  "m_HighlightedSprite": {
+                    "m_FileID": 0,
+                    "m_PathID": 0
+                  },
+                  "m_PressedSprite": {
+                    "m_FileID": 0,
+                    "m_PathID": 0
+                  },
+                  "m_SelectedSprite": {
+                    "m_FileID": 0,
+                    "m_PathID": 0
+                  },
+                  "m_DisabledSprite": {
+                    "m_FileID": 0,
+                    "m_PathID": 0
+                  }
+                },
+                "m_AnimationTriggers": {
+                  "m_NormalTrigger": "Normal",
+                  "m_HighlightedTrigger": "Highlighted",
+                  "m_PressedTrigger": "Pressed",
+                  "m_SelectedTrigger": "Selected",
+                  "m_DisabledTrigger": "Disabled"
+                },
+                "m_Interactable": 1,
+                "m_TargetGraphic": {
+                  "m_FileID": 0,
+                  "m_PathID": 64
+                },
+                "m_OnClick": {
+                  "m_PersistentCalls": {
+                    "m_Calls": []
+                  }
+                },
+                "up_selectable": [],
+                "down_selectable": [],
+                "left_selectable": [],
+                "right_selectable": [],
+                "pointer_enter_on_select": 0,
+                "use_pointer_down_up_callbacks": 1,
+                "on_pointer_down": {
+                  "m_PersistentCalls": {
+                    "m_Calls": [
+                      {
+                        "m_Target": {
+                          "m_FileID": 0,
+                          "m_PathID": 61
+                        },
+                        "m_TargetAssemblyTypeName": "IntroCutsceneManager, Assembly-CSharp",
+                        "m_MethodName": "startSkip",
+                        "m_Mode": 1,
+                        "m_Arguments": {
+                          "m_ObjectArgument": {
+                            "m_FileID": 0,
+                            "m_PathID": 0
+                          },
+                          "m_ObjectArgumentAssemblyTypeName": "UnityEngine.Object, UnityEngine",
+                          "m_IntArgument": 0,
+                          "m_FloatArgument": 0.0,
+                          "m_StringArgument": "",
+                          "m_BoolArgument": 0
+                        },
+                        "m_CallState": 2
+                      }
+                    ]
+                  }
+                },
+                "on_pointer_up": {
+                  "m_PersistentCalls": {
+                    "m_Calls": [
+                      {
+                        "m_Target": {
+                          "m_FileID": 0,
+                          "m_PathID": 61
+                        },
+                        "m_TargetAssemblyTypeName": "IntroCutsceneManager, Assembly-CSharp",
+                        "m_MethodName": "endSkip",
+                        "m_Mode": 1,
+                        "m_Arguments": {
+                          "m_ObjectArgument": {
+                            "m_FileID": 0,
+                            "m_PathID": 0
+                          },
+                          "m_ObjectArgumentAssemblyTypeName": "UnityEngine.Object, UnityEngine",
+                          "m_IntArgument": 0,
+                          "m_FloatArgument": 0.0,
+                          "m_StringArgument": "",
+                          "m_BoolArgument": 0
+                        },
+                        "m_CallState": 2
+                      }
+                    ]
+                  }
+                },
+                "on_pointer_enter": {
+                  "m_PersistentCalls": {
+                    "m_Calls": []
+                  }
+                },
+                "on_pointer_exit": {
+                  "m_PersistentCalls": {
+                    "m_Calls": []
+                  }
+                },
+                "on_select": {
+                  "m_PersistentCalls": {
+                    "m_Calls": []
+                  }
+                },
+                "on_deselect": {
+                  "m_PersistentCalls": {
+                    "m_Calls": []
+                  }
+                }
+              }
+            },
+            {
+              "type": "MonoBehaviour",
+              "path_id": 64,
+              "class_name": "UnityEngine.UI.Image",
+              "assembly": "UnityEngine.UI",
+              "custom_properties": {
+                "m_Material": {
+                  "m_FileID": 0,
+                  "m_PathID": 0
+                },
+                "m_Color": {
+                  "r": 1.0,
+                  "g": 1.0,
+                  "b": 1.0,
+                  "a": 0.0
+                },
+                "m_RaycastTarget": 1,
+                "m_RaycastPadding": {
+                  "x": 0.0,
+                  "y": 0.0,
+                  "z": 0.0,
+                  "w": 0.0
+                },
+                "m_Maskable": 1,
+                "m_OnCullStateChanged": {
+                  "m_PersistentCalls": {
+                    "m_Calls": []
+                  }
+                },
+                "m_Sprite": {
+                  "m_FileID": 0,
+                  "m_PathID": 0
+                },
+                "m_Type": 0,
+                "m_PreserveAspect": 0,
+                "m_FillCenter": 1,
+                "m_FillMethod": 4,
+                "m_FillAmount": 1.0,
+                "m_FillClockwise": 1,
+                "m_FillOrigin": 0,
+                "m_UseSpriteMesh": 0,
+                "m_PixelsPerUnitMultiplier": 1.0
+              }
+            }
+          ],
+          "children": []
+        },
+        {
+          "name": "SkipCanvasGroup",
+          "path_id": 12,
+          "is_active": true,
+          "layer": 5,
+          "tag": 0,
+          "transform": {
+            "is_rect_transform": true,
+            "local_position": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "local_scale": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0
+            },
+            "local_rotation": {
+              "x": -0.0,
+              "y": -0.0,
+              "z": -0.0,
+              "w": 1.0
+            },
+            "anchor_min": {
+              "x": 0.0,
+              "y": 0.0
+            },
+            "anchor_max": {
+              "x": 1.0,
+              "y": 1.0
+            },
+            "pivot": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "size_delta": {
+              "x": 0.0,
+              "y": 0.0
+            },
+            "anchored_position": {
+              "x": 0.0,
+              "y": 0.0
+            }
+          },
+          "components": [],
+          "children": [
+            {
+              "name": "SkipCircle",
+              "path_id": 14,
+              "is_active": true,
+              "layer": 5,
+              "tag": 0,
+              "transform": {
+                "is_rect_transform": true,
+                "local_position": {
+                  "x": 0.0,
+                  "y": 0.0,
+                  "z": 0.0
+                },
+                "local_scale": {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                "local_rotation": {
+                  "x": -0.0,
+                  "y": -0.0,
+                  "z": -0.0,
+                  "w": 1.0
+                },
+                "anchor_min": {
+                  "x": 1.0,
+                  "y": 0.0
+                },
+                "anchor_max": {
+                  "x": 1.0,
+                  "y": 0.0
+                },
+                "pivot": {
+                  "x": 1.0,
+                  "y": 0.0
+                },
+                "size_delta": {
+                  "x": 250.0,
+                  "y": 250.0
+                },
+                "anchored_position": {
+                  "x": -100.0,
+                  "y": 100.0
+                }
+              },
+              "components": [
+                {
+                  "type": "MonoBehaviour",
+                  "path_id": 71,
+                  "class_name": "UnityEngine.UI.Image",
+                  "assembly": "UnityEngine.UI",
+                  "custom_properties": {
+                    "m_Material": {
+                      "m_FileID": 0,
+                      "m_PathID": 0
+                    },
+                    "m_Color": {
+                      "r": 1.0,
+                      "g": 1.0,
+                      "b": 1.0,
+                      "a": 1.0
+                    },
+                    "m_RaycastTarget": 1,
+                    "m_RaycastPadding": {
+                      "x": 0.0,
+                      "y": 0.0,
+                      "z": 0.0,
+                      "w": 0.0
+                    },
+                    "m_Maskable": 1,
+                    "m_OnCullStateChanged": {
+                      "m_PersistentCalls": {
+                        "m_Calls": []
+                      }
+                    },
+                    "m_Sprite": {
+                      "m_FileID": 5,
+                      "m_PathID": 362
+                    },
+                    "m_Type": 3,
+                    "m_PreserveAspect": 0,
+                    "m_FillCenter": 1,
+                    "m_FillMethod": 4,
+                    "m_FillAmount": 0.0,
+                    "m_FillClockwise": 1,
+                    "m_FillOrigin": 2,
+                    "m_UseSpriteMesh": 0,
+                    "m_PixelsPerUnitMultiplier": 1.0
+                  }
+                }
+              ],
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "TransitionHandler (Canvas)",
+      "path_id": 15,
+      "is_active": true,
+      "layer": 5,
+      "tag": 0,
+      "transform": {
+        "is_rect_transform": true,
+        "local_position": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "local_scale": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "local_rotation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 1.0
+        },
+        "anchor_min": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "anchor_max": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "pivot": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "size_delta": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "anchored_position": {
+          "x": 0.0,
+          "y": 0.0
+        }
+      },
+      "components": [
+        {
+          "type": "Canvas",
+          "path_id": 39,
+          "render_mode": 0,
+          "sorting_order": 0,
+          "plane_distance": 100.0
+        },
+        {
+          "type": "MonoBehaviour",
+          "path_id": 72,
+          "class_name": "UnityEngine.UI.GraphicRaycaster",
+          "assembly": "UnityEngine.UI",
+          "custom_properties": {
+            "m_IgnoreReversedGraphics": 1,
+            "m_BlockingObjects": 0,
+            "m_BlockingMask": {
+              "m_Bits": 4294967295
+            }
+          }
+        },
+        {
+          "type": "MonoBehaviour",
+          "path_id": 73,
+          "class_name": "TransitionHandler",
+          "assembly": "Assembly-CSharp",
+          "custom_properties": {
+            "load_group": {
+              "m_FileID": 0,
+              "m_PathID": 49
+            },
+            "loading_progress_text": {
+              "m_FileID": 0,
+              "m_PathID": 56
+            },
+            "save_group": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "fill_image": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "save_text": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            }
+          }
+        },
+        {
+          "type": "MonoBehaviour",
+          "path_id": 74,
+          "class_name": "UnityEngine.UI.CanvasScaler",
+          "assembly": "UnityEngine.UI",
+          "custom_properties": {
+            "m_UiScaleMode": 2,
+            "m_ReferencePixelsPerUnit": 100.0,
+            "m_ScaleFactor": 1.0,
+            "m_ReferenceResolution": {
+              "x": 800.0,
+              "y": 600.0
+            },
+            "m_ScreenMatchMode": 0,
+            "m_MatchWidthOrHeight": 0.0,
+            "m_PhysicalUnit": 3,
+            "m_FallbackScreenDPI": 96.0,
+            "m_DefaultSpriteDPI": 96.0,
+            "m_DynamicPixelsPerUnit": 1.0,
+            "m_PresetInfoIsWorld": 0
+          }
+        }
+      ],
+      "children": [
+        {
+          "name": "Image",
+          "path_id": 18,
+          "is_active": true,
+          "layer": 5,
+          "tag": 0,
+          "transform": {
+            "is_rect_transform": true,
+            "local_position": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "local_scale": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0
+            },
+            "local_rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0,
+              "w": 1.0
+            },
+            "anchor_min": {
+              "x": 0.0,
+              "y": 0.0
+            },
+            "anchor_max": {
+              "x": 1.0,
+              "y": 1.0
+            },
+            "pivot": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "size_delta": {
+              "x": 0.0,
+              "y": 0.0
+            },
+            "anchored_position": {
+              "x": 0.0,
+              "y": 0.0
+            }
+          },
+          "components": [
+            {
+              "type": "MonoBehaviour",
+              "path_id": 75,
+              "class_name": "UnityEngine.UI.Image",
+              "assembly": "UnityEngine.UI",
+              "custom_properties": {
+                "m_Material": {
+                  "m_FileID": 0,
+                  "m_PathID": 0
+                },
+                "m_Color": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 1.0
+                },
+                "m_RaycastTarget": 1,
+                "m_RaycastPadding": {
+                  "x": 0.0,
+                  "y": 0.0,
+                  "z": 0.0,
+                  "w": 0.0
+                },
+                "m_Maskable": 1,
+                "m_OnCullStateChanged": {
+                  "m_PersistentCalls": {
+                    "m_Calls": []
+                  }
+                },
+                "m_Sprite": {
+                  "m_FileID": 0,
+                  "m_PathID": 0
+                },
+                "m_Type": 0,
+                "m_PreserveAspect": 0,
+                "m_FillCenter": 1,
+                "m_FillMethod": 4,
+                "m_FillAmount": 1.0,
+                "m_FillClockwise": 1,
+                "m_FillOrigin": 0,
+                "m_UseSpriteMesh": 0,
+                "m_PixelsPerUnitMultiplier": 1.0
+              }
+            }
+          ],
+          "children": []
+        },
+        {
+          "name": "Text (TMP)",
+          "path_id": 17,
+          "is_active": false,
+          "layer": 5,
+          "tag": 0,
+          "transform": {
+            "is_rect_transform": true,
+            "local_position": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "local_scale": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0
+            },
+            "local_rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0,
+              "w": 1.0
+            },
+            "anchor_min": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "anchor_max": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "pivot": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "size_delta": {
+              "x": 200.0,
+              "y": 50.0
+            },
+            "anchored_position": {
+              "x": 0.0,
+              "y": 0.0
+            }
+          },
+          "components": [
+            {
+              "type": "MonoBehaviour",
+              "path_id": 56,
+              "class_name": "TMPro.TextMeshProUGUI",
+              "assembly": "Unity.TextMeshPro",
+              "custom_properties": {
+                "m_Material": {
+                  "m_FileID": 0,
+                  "m_PathID": 0
+                },
+                "m_Color": {
+                  "r": 1.0,
+                  "g": 1.0,
+                  "b": 1.0,
+                  "a": 1.0
+                },
+                "m_RaycastTarget": 1,
+                "m_RaycastPadding": {
+                  "x": 0.0,
+                  "y": 0.0,
+                  "z": 0.0,
+                  "w": 0.0
+                },
+                "m_Maskable": 1,
+                "m_OnCullStateChanged": {
+                  "m_PersistentCalls": {
+                    "m_Calls": []
+                  }
+                },
+                "m_text": "5%",
+                "m_isRightToLeft": 0,
+                "m_fontAsset": {
+                  "m_FileID": 4,
+                  "m_PathID": 1396
+                },
+                "m_sharedMaterial": {
+                  "m_FileID": 4,
+                  "m_PathID": 5
+                },
+                "m_fontSharedMaterials": [],
+                "m_fontMaterial": {
+                  "m_FileID": 0,
+                  "m_PathID": 0
+                },
+                "m_fontMaterials": [],
+                "m_fontColor32": {
+                  "rgba": 4294967295
+                },
+                "m_fontColor": {
+                  "r": 1.0,
+                  "g": 1.0,
+                  "b": 1.0,
+                  "a": 1.0
+                },
+                "m_enableVertexGradient": 0,
+                "m_colorMode": 3,
+                "m_fontColorGradient": {
+                  "topLeft": {
+                    "r": 1.0,
+                    "g": 1.0,
+                    "b": 1.0,
+                    "a": 1.0
+                  },
+                  "topRight": {
+                    "r": 1.0,
+                    "g": 1.0,
+                    "b": 1.0,
+                    "a": 1.0
+                  },
+                  "bottomLeft": {
+                    "r": 1.0,
+                    "g": 1.0,
+                    "b": 1.0,
+                    "a": 1.0
+                  },
+                  "bottomRight": {
+                    "r": 1.0,
+                    "g": 1.0,
+                    "b": 1.0,
+                    "a": 1.0
+                  }
+                },
+                "m_fontColorGradientPreset": {
+                  "m_FileID": 0,
+                  "m_PathID": 0
+                },
+                "m_spriteAsset": {
+                  "m_FileID": 0,
+                  "m_PathID": 0
+                },
+                "m_tintAllSprites": 0,
+                "m_StyleSheet": {
+                  "m_FileID": 0,
+                  "m_PathID": 0
+                },
+                "m_TextStyleHashCode": -1183493901,
+                "m_overrideHtmlColors": 0,
+                "m_faceColor": {
+                  "rgba": 4294967295
+                },
+                "m_fontSize": 64.0,
+                "m_fontSizeBase": 64.0,
+                "m_fontWeight": 400,
+                "m_enableAutoSizing": 0,
+                "m_fontSizeMin": 18.0,
+                "m_fontSizeMax": 72.0,
+                "m_fontStyle": 0,
+                "m_HorizontalAlignment": 2,
+                "m_VerticalAlignment": 512,
+                "m_textAlignment": 65535,
+                "m_characterSpacing": 0.0,
+                "m_wordSpacing": 0.0,
+                "m_lineSpacing": 0.0,
+                "m_lineSpacingMax": 0.0,
+                "m_paragraphSpacing": 0.0,
+                "m_charWidthMaxAdj": 0.0,
+                "m_enableWordWrapping": 0,
+                "m_wordWrappingRatios": 0.4000000059604645,
+                "m_overflowMode": 0,
+                "m_linkedTextComponent": {
+                  "m_FileID": 0,
+                  "m_PathID": 0
+                },
+                "parentLinkedComponent": {
+                  "m_FileID": 0,
+                  "m_PathID": 0
+                },
+                "m_enableKerning": 1,
+                "m_enableExtraPadding": 0,
+                "checkPaddingRequired": 0,
+                "m_isRichText": 1,
+                "m_parseCtrlCharacters": 1,
+                "m_isOrthographic": 1,
+                "m_isCullingEnabled": 0,
+                "m_horizontalMapping": 0,
+                "m_verticalMapping": 0,
+                "m_uvLineOffset": 0.0,
+                "m_geometrySortingOrder": 0,
+                "m_IsTextObjectScaleStatic": 0,
+                "m_VertexBufferAutoSizeReduction": 0,
+                "m_useMaxVisibleDescender": 1,
+                "m_pageToDisplay": 1,
+                "m_margin": {
+                  "x": 0.0,
+                  "y": 0.0,
+                  "z": 0.0,
+                  "w": 0.0
+                },
+                "m_isUsingLegacyAnimationComponent": 0,
+                "m_isVolumetricText": 0,
+                "m_hasFontAssetChanged": 0,
+                "m_baseMaterial": {
+                  "m_FileID": 0,
+                  "m_PathID": 0
+                },
+                "m_maskOffset": {
+                  "x": 0.0,
+                  "y": 0.0,
+                  "z": 0.0,
+                  "w": 0.0
+                }
+              }
+            }
+          ],
+          "children": []
+        }
+      ]
+    }
+  ]
+}

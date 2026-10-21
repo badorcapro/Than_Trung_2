@@ -1,0 +1,48 @@
+{
+  "task_id": "TASK-0014",
+  "verified_at": "2026-10-21T07:06:47.077592+00:00",
+  "contract_sha256": "652e116602b131ee332a830e28b6216da30c8969f5ea4b43197b9df117054c30",
+  "diff_sha256": "5e2558bc9f7c59c2c5bc3cc3e8f5677d77b188779f16c8f6bcaa4961eb0c3c23",
+  "modified_files": [
+    "docs/agent-system/evidence/dupery/scenes/CaseSelectionScene.json",
+    "docs/agent-system/evidence/dupery/scenes/CreditsScene.json",
+    "docs/agent-system/evidence/dupery/scenes/EventScene.json",
+    "docs/agent-system/evidence/dupery/scenes/GameScene.json",
+    "docs/agent-system/evidence/dupery/scenes/IntroCutscene.json",
+    "docs/agent-system/evidence/dupery/scenes/LeadSelectionScene.json",
+    "docs/agent-system/evidence/dupery/scenes/LevelEditorScene.json",
+    "docs/agent-system/evidence/dupery/scenes/LevelTransitionScene.json",
+    "docs/agent-system/evidence/dupery/scenes/LineupScene.json",
+    "docs/agent-system/evidence/dupery/scenes/MainMenuScene.json",
+    "docs/agent-system/evidence/dupery/scenes/StasisScene.json",
+    "docs/agent-system/evidence/dupery/scenes/SummaryScene.json",
+    "docs/agent-system/evidence/dupery/scenes/scene_catalog_summary.json",
+    "scripts/agent/dupery_scene_inspector.py",
+    "tests/test_dupery_scene_inspector.py"
+  ],
+  "scope_passed": true,
+  "commands": [
+    {
+      "command": "python scripts/agent/dupery_scene_inspector.py --verify",
+      "exit_code": 0,
+      "duration_ms": 342.96,
+      "stdout_excerpt": "OK: Scene inspection verified. All 12 scenes and catalog summary present and valid.",
+      "stderr_excerpt": ""
+    },
+    {
+      "command": "python -m unittest tests/test_dupery_scene_inspector.py",
+      "exit_code": 0,
+      "duration_ms": 434.08,
+      "stdout_excerpt": "",
+      "stderr_excerpt": ".....\n----------------------------------------------------------------------\nRan 5 tests in 0.260s\n\nOK"
+    },
+    {
+      "command": "python scripts/agent/check_peer_audit.py --task TASK-0014",
+      "exit_code": 0,
+      "duration_ms": 492.91,
+      "stdout_excerpt": "{\n  \"success\": true,\n  \"tool\": \"check_peer_audit\",\n  \"issues\": [],\n  \"data\": {\n    \"task_id\": \"TASK-0014\",\n    \"subagent_conversation_id\": \"c9ed69ec-9802-4eb0-9bbc-24456ee892f7\",\n    \"verdict\": \"PASS\",\n    \"diff_sha256\": \"5e2558bc9f7c59c2c5bc3cc3e8f5677d77b188779f16c8f6bcaa4961eb0c3c23\",\n    \"audit_receipt\": \"docs/agent-system/evidence/TASK-0014-peer-audit.json\"\n  }\n}",
+      "stderr_excerpt": ""
+    }
+  ],
+  "all_passed": true
+}

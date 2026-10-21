@@ -1,0 +1,130 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-10-21T07:03:05.015477+00:00",
+  "total_scenes_extracted": 12,
+  "total_game_objects_all_scenes": 5279,
+  "total_monobehaviours_all_scenes": 7365,
+  "duration_seconds": 1.003,
+  "scenes": [
+    {
+      "build_index": 0,
+      "scene_name": "MainMenuScene",
+      "level_file": "level0",
+      "scene_path": "Assets/Scenes/MainMenuScene.unity",
+      "json_artifact": "MainMenuScene.json",
+      "total_game_objects": 795,
+      "total_root_objects": 17,
+      "total_monobehaviours": 1132
+    },
+    {
+      "build_index": 1,
+      "scene_name": "GameScene",
+      "level_file": "level1",
+      "scene_path": "Assets/Scenes/GameScene.unity",
+      "json_artifact": "GameScene.json",
+      "total_game_objects": 418,
+      "total_root_objects": 16,
+      "total_monobehaviours": 615
+    },
+    {
+      "build_index": 2,
+      "scene_name": "LevelTransitionScene",
+      "level_file": "level2",
+      "scene_path": "Assets/Scenes/LevelTransitionScene.unity",
+      "json_artifact": "LevelTransitionScene.json",
+      "total_game_objects": 371,
+      "total_root_objects": 11,
+      "total_monobehaviours": 548
+    },
+    {
+      "build_index": 3,
+      "scene_name": "LeadSelectionScene",
+      "level_file": "level3",
+      "scene_path": "Assets/Scenes/LeadSelectionScene.unity",
+      "json_artifact": "LeadSelectionScene.json",
+      "total_game_objects": 369,
+      "total_root_objects": 13,
+      "total_monobehaviours": 544
+    },
+    {
+      "build_index": 4,
+      "scene_name": "EventScene",
+      "level_file": "level4",
+      "scene_path": "Assets/Scenes/EventScene.unity",
+      "json_artifact": "EventScene.json",
+      "total_game_objects": 411,
+      "total_root_objects": 6,
+      "total_monobehaviours": 591
+    },
+    {
+      "build_index": 5,
+      "scene_name": "StasisScene",
+      "level_file": "level5",
+      "scene_path": "Assets/Scenes/StasisScene.unity",
+      "json_artifact": "StasisScene.json",
+      "total_game_objects": 412,
+      "total_root_objects": 6,
+      "total_monobehaviours": 596
+    },
+    {
+      "build_index": 6,
+      "scene_name": "LineupScene",
+      "level_file": "level6",
+      "scene_path": "Assets/Scenes/LineupScene.unity",
+      "json_artifact": "LineupScene.json",
+      "total_game_objects": 1108,
+      "total_root_objects": 13,
+      "total_monobehaviours": 1347
+    },
+    {
+      "build_index": 7,
+      "scene_name": "SummaryScene",
+      "level_file": "level7",
+      "scene_path": "Assets/Scenes/SummaryScene.unity",
+      "json_artifact": "SummaryScene.json",
+      "total_game_objects": 444,
+      "total_root_objects": 14,
+      "total_monobehaviours": 646
+    },
+    {
+      "build_index": 8,
+      "scene_name": "IntroCutscene",
+      "level_file": "level8",
+      "scene_path": "Assets/Scenes/IntroCutscene.unity",
+      "json_artifact": "IntroCutscene.json",
+      "total_game_objects": 18,
+      "total_root_objects": 12,
+      "total_monobehaviours": 26
+    },
+    {
+      "build_index": 9,
+      "scene_name": "CreditsScene",
+      "level_file": "level9",
+      "scene_path": "Assets/Scenes/CreditsScene.unity",
+      "json_artifact": "CreditsScene.json",
+      "total_game_objects": 140,
+      "total_root_objects": 11,
+      "total_monobehaviours": 167
+    },
+    {
+      "build_index": 10,
+      "scene_name": "LevelEditorScene",
+      "level_file": "level10",
+      "scene_path": "Assets/Scenes/LevelEditorScene.unity",
+      "json_artifact": "LevelEditorScene.json",
+      "total_game_objects": 427,
+      "total_root_objects": 12,
+      "total_monobehaviours": 613
+    },
+    {
+      "build_index": 11,
+      "scene_name": "CaseSelectionScene",
+      "level_file": "level11",
+      "scene_path": "Assets/Scenes/CaseSelectionScene.unity",
+      "json_artifact": "CaseSelectionScene.json",
+      "total_game_objects": 366,
+      "total_root_objects": 13,
+      "total_monobehaviours": 540
+    }
+  ]
+}

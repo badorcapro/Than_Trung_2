@@ -1,8 +1,8 @@
 {
-  "active_task_id": "TASK-0013",
+  "active_task_id": "TASK-0014",
   "status": "approved",
   "current_checkpoint": "CP-APPROVED",
-  "contract_path": "docs/agent-system/tasks/TASK-0013.md",
-  "contract_sha256": "dcda84378f353e7db522f71ee5cc6cc9035043a94c111e34aee62c6cc2b17b5a",
-  "updated_at": "2026-10-21T07:01:06.076595+00:00"
+  "contract_path": "docs/agent-system/tasks/TASK-0014.md",
+  "contract_sha256": "26ee516fb059033c20af16044823b0cb71eb2cc2d6daad088f6bb5287c7e396b",
+  "updated_at": "2026-10-21T07:12:48.371045+00:00"
 }
