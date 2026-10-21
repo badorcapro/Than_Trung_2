@@ -117,9 +117,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/AbilityData.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0008",
@@ -151,9 +151,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L2",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Accountant.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0010",
@@ -219,9 +219,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/AddressAbilityData.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0014",
@@ -287,9 +287,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L2",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Alerter.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0018",
@@ -1494,9 +1494,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L2",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Barista.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0089",
@@ -1715,9 +1715,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L2",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Bouncer.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0102",
@@ -1902,9 +1902,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L2",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Cardiologist.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0113",
@@ -1919,9 +1919,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L2",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/CardPsychic.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0114",
@@ -1953,9 +1953,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L2",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/CardShuffler.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0116",
@@ -2939,9 +2939,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/CasinoCardAbilityData.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0174",
@@ -3177,9 +3177,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L2",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Chauffeur.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0188",
@@ -3245,9 +3245,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L2",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Clairvoyant.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0192",
@@ -4163,9 +4163,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L2",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Craber.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0246",
@@ -4180,9 +4180,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L2",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/CrackPot.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0247",
@@ -4333,9 +4333,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L2",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Cultist.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0256",
@@ -4384,9 +4384,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L2",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Dealer.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0259",
@@ -4554,9 +4554,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L2",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Devil.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0269",
@@ -4673,9 +4673,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L2",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/DJ.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0276",
@@ -4877,9 +4877,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L2",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Doppelganger.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0288",
@@ -5047,9 +5047,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L2",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Empath.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0298",
@@ -5064,9 +5064,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/EmptySlotAbilityData.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0299",
@@ -5591,9 +5591,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L2",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/GoodCop.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0330",
@@ -5710,9 +5710,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L2",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/HiredGun.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0337",
@@ -5761,9 +5761,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L2",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/HotShot.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0340",
@@ -5982,9 +5982,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L2",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Hunter.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0353",
@@ -5999,9 +5999,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Hunter.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0354",
@@ -6016,9 +6016,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Hunter.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0355",
@@ -6050,9 +6050,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/IAmCasinoRole.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0357",
@@ -6067,9 +6067,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L2",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/IAmClockLocation.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0358",
@@ -6084,9 +6084,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/IAmClockRole.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0359",
@@ -6101,9 +6101,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L2",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/IAmDocksLocation.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0360",
@@ -6118,9 +6118,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/IAmDocksRole.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0361",
@@ -6152,9 +6152,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/IChangeAbilityTargets.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0363",
@@ -6237,9 +6237,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/IHaveAbility.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0368",
@@ -6305,9 +6305,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/IHaveMultiAbility.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0372",
@@ -6322,9 +6322,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/IHaveRoleAbility.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0373",
@@ -6339,9 +6339,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/IHaveSpecialAbility.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0374",
@@ -6356,9 +6356,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/IHaveSpecialSpecificAbility.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0375",
@@ -7070,9 +7070,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/LeadClueFacade.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0417",
@@ -7087,9 +7087,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/LeadEndManager.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0418",
@@ -7104,9 +7104,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/LeadEventFacade.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0419",
@@ -7121,9 +7121,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/LeadEventManager.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0420",
@@ -7138,9 +7138,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/LeadFacade.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0421",
@@ -8107,9 +8107,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/LeadStampManager.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0478",
@@ -8124,9 +8124,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/LeadStasisManager.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0479",
@@ -8141,9 +8141,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/LeadStasisRegionManager.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0480",
@@ -8974,9 +8974,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/LocationAbilityData.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0529",
@@ -9077,9 +9077,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L2",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/LottoScratcher.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0535",
@@ -9111,9 +9111,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L2",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Magician.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0537",
@@ -9128,9 +9128,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Magician.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0538",
@@ -9145,9 +9145,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Magician.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0539",
@@ -9570,9 +9570,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L2",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Marine.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0564",
@@ -9927,9 +9927,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L2",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Mythomaniac.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0585",
@@ -11491,9 +11491,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L2",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Offeror.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0677",
@@ -11576,9 +11576,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L2",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Opportunist.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0682",
@@ -11899,9 +11899,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L2",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Politician.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0701",
@@ -12104,9 +12104,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L2",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Producer.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0713",
@@ -12155,9 +12155,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L2",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Psychic.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0716",
@@ -12172,9 +12172,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Psychic.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0717",
@@ -12189,9 +12189,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Psychic.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0718",
@@ -13362,9 +13362,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L2",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Receptionist.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0787",
@@ -13787,9 +13787,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L2",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Researcher.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0812",
@@ -15285,9 +15285,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L2",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Scrambler.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0900",
@@ -15523,9 +15523,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L2",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Siren.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0914",
@@ -15557,9 +15557,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L2",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/SlotMachine.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0916",
@@ -15625,9 +15625,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L2",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Snitch.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0920",
@@ -15642,9 +15642,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/SpecialAbilityType.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0921",
@@ -15710,9 +15710,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L2",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Spotter.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0925",
@@ -15727,9 +15727,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Spotter.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0926",
@@ -15744,9 +15744,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Spotter.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0927",
@@ -15795,9 +15795,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L2",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Stalker.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0930",
@@ -16118,9 +16118,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L2",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Supplier.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0949",
@@ -16152,9 +16152,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L3",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/SuspectAbilityData.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0951",
@@ -16237,9 +16237,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L2",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Tailor.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0956",
@@ -16798,9 +16798,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L2",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Trickster.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-0989",
@@ -17019,9 +17019,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L2",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Valet.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1002",
@@ -17104,9 +17104,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L2",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Vigilante.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1007",
@@ -17155,9 +17155,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L2",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Visionary.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1010",
@@ -18629,9 +18629,9 @@
       "tier": 1,
       "vong": "V5",
       "target_depth": "L2",
-      "current_depth": "L1",
+      "current_depth": "L3",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Waiter.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1094",
