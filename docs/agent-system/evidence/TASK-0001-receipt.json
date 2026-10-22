@@ -1,0 +1,21 @@
+{
+  "task_id": "TASK-0001",
+  "verified_at": "2026-10-20T14:35:54.485327+00:00",
+  "contract_sha256": "4ff7d3325cf1776ddfa351d7e5fe0e405697cf3ce443ff9afcf87a01e7729819",
+  "diff_sha256": "c404a2d068527159cb49cf829a3b4245f7e184cdf9dfa082e09680a28714caa9",
+  "modified_files": [
+    "scripts/agent/check_scope.py",
+    "tests/test_check_scope_godot.py"
+  ],
+  "scope_passed": true,
+  "commands": [
+    {
+      "command": "python -m unittest discover -s tests -p \"test_*.py\" -v",
+      "exit_code": 0,
+      "duration_ms": 447.4,
+      "stdout_excerpt": "",
+      "stderr_excerpt": "test_bookkeeping_exempts_godot_cache_and_import_files (test_check_scope_godot.TestCheckScopeGodot.test_bookkeeping_exempts_godot_cache_and_import_files) ... ok\ntest_check_scope_end_to_end_with_godot_files (test_check_scope_godot.TestCheckScopeGodot.test_check_scope_end_to_end_with_godot_files) ... ok\ntest_uid_sidecar_authorization_helper (test_check_scope_godot.TestCheckScopeGodot.test_uid_sidecar_authorization_helper) ... ok\n\n----------------------------------------------------------------------\nRan 3 tests in 0.019s\n\nOK"
+    }
+  ],
+  "all_passed": true
+}

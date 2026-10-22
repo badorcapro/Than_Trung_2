@@ -1,0 +1,7 @@
+namespace FMOD;
+
+public enum DSP_CALLBACK_TYPE
+{
+	DATAPARAMETERRELEASE,
+	MAX
+}

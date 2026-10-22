@@ -1,0 +1,13 @@
+{
+  "generated_at": "2026-10-21T07:52:25Z",
+  "duration_sec": 0.435,
+  "total_materials": 54,
+  "total_shaders": 46,
+  "total_videoclips": 2,
+  "negative_findings": {
+    "AnimationClip": 0,
+    "Animator": 0,
+    "AnimatorController": 0,
+    "ParticleSystem": 0
+  }
+}

@@ -1,0 +1,9 @@
+public enum BackAlleysItemCost
+{
+	VERY_CHEAP,
+	CHEAP,
+	NORMAL,
+	PRICEY,
+	EXPENSIVE,
+	ULTRA_EXPENSIVE
+}

@@ -1,0 +1,429 @@
+{
+  "quirk_icons": {
+    "list": [
+      {
+        "Key": 0,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 426
+        }
+      },
+      {
+        "Key": 1,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 699
+        }
+      },
+      {
+        "Key": 2,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 741
+        }
+      },
+      {
+        "Key": 4,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 524
+        }
+      },
+      {
+        "Key": 5,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 648
+        }
+      },
+      {
+        "Key": 6,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 563
+        }
+      },
+      {
+        "Key": 7,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 509
+        }
+      },
+      {
+        "Key": 8,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 679
+        }
+      },
+      {
+        "Key": 10000,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 663
+        }
+      },
+      {
+        "Key": 10001,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 460
+        }
+      },
+      {
+        "Key": 10002,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 725
+        }
+      },
+      {
+        "Key": 10003,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 540
+        }
+      },
+      {
+        "Key": 10004,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 561
+        }
+      },
+      {
+        "Key": 10005,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 731
+        }
+      },
+      {
+        "Key": 10006,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 734
+        }
+      },
+      {
+        "Key": 10009,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 692
+        }
+      },
+      {
+        "Key": 10011,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 483
+        }
+      },
+      {
+        "Key": 10012,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 474
+        }
+      },
+      {
+        "Key": 10013,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 418
+        }
+      },
+      {
+        "Key": 10014,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 759
+        }
+      },
+      {
+        "Key": 10015,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 719
+        }
+      },
+      {
+        "Key": 10016,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 672
+        }
+      },
+      {
+        "Key": 10017,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 578
+        }
+      },
+      {
+        "Key": 10018,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 416
+        }
+      },
+      {
+        "Key": 10019,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 513
+        }
+      },
+      {
+        "Key": 10020,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 575
+        }
+      },
+      {
+        "Key": 10021,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 711
+        }
+      },
+      {
+        "Key": 10022,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 723
+        }
+      },
+      {
+        "Key": 10023,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 448
+        }
+      },
+      {
+        "Key": 10024,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 696
+        }
+      },
+      {
+        "Key": 10025,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 630
+        }
+      },
+      {
+        "Key": 10026,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 584
+        }
+      },
+      {
+        "Key": 11000,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 424
+        }
+      },
+      {
+        "Key": 11001,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 715
+        }
+      },
+      {
+        "Key": 11002,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 545
+        }
+      },
+      {
+        "Key": 11003,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 628
+        }
+      },
+      {
+        "Key": 11004,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 530
+        }
+      },
+      {
+        "Key": 11005,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 743
+        }
+      },
+      {
+        "Key": 11006,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 651
+        }
+      },
+      {
+        "Key": 1000,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 489
+        }
+      },
+      {
+        "Key": 1001,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 640
+        }
+      },
+      {
+        "Key": 1002,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 761
+        }
+      },
+      {
+        "Key": 1003,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 613
+        }
+      },
+      {
+        "Key": 2000,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 629
+        }
+      },
+      {
+        "Key": 2001,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 681
+        }
+      },
+      {
+        "Key": 12001,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 488
+        }
+      },
+      {
+        "Key": 12000,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 503
+        }
+      },
+      {
+        "Key": 20001,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 548
+        }
+      },
+      {
+        "Key": 11008,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 527
+        }
+      },
+      {
+        "Key": 11007,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 583
+        }
+      },
+      {
+        "Key": 10027,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 493
+        }
+      },
+      {
+        "Key": 12003,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 600
+        }
+      },
+      {
+        "Key": 12002,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 598
+        }
+      },
+      {
+        "Key": 12004,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 708
+        }
+      },
+      {
+        "Key": 1004,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 476
+        }
+      },
+      {
+        "Key": 2002,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 730
+        }
+      },
+      {
+        "Key": 12005,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 525
+        }
+      },
+      {
+        "Key": 21000,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 520
+        }
+      },
+      {
+        "Key": 21001,
+        "Value": {
+          "m_FileID": 0,
+          "m_PathID": 639
+        }
+      }
+    ]
+  },
+  "quirk_text_colour": {
+    "r": 0.7490196228027344,
+    "g": 0.1921568661928177,
+    "b": 0.8980392217636108,
+    "a": 1.0
+  },
+  "backup": {
+    "m_FileID": 0,
+    "m_PathID": 537
+  }
+}

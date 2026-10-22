@@ -1,0 +1,28 @@
+Khởi động 1 trận đấu: Chọn nhân vật --> (Chọn 1 trong 3 câu đố để giải - các câu đố này cơ chế 100% giống Dupery --> Xét kết quả giải đố, người chơi nào giải được nhận điểm Công Danh (điều kiện thắng cả trận là đạt đủ điểm Công Danh) --> Looting phase - đi gom tài nguyên tăng chỉ số, có những item hỗ trợ giải đố, kỹ năng tăng các loại điểm hỗ trợ đạt điều kiện thắng,.... --> [Nếu ở Looting phase có người chơi đạt đủ điều kiện, vào đấu giá, đây là tính năng phụ] --> Tổng kết round, trang bị kỷ vật/vết thánh cung cấp chỉ số và nội tại. --> Qua round mới, quay về chọn 1 trong 3 câu đố) --> Khi kết thúc round có ít nhất một người chơi đạt điều kiện thắng, xét tie break nếu có hơn 1 người chơi đạt điều kiện thắng trong cùng round.
+
+Vấn đề khiến game chưa chơi được cho tới cuối ở hiện tại:
+- Khởi đầu ý tưởng là chơi game trên cùng 1 máy, nhưng khi phát triển các ý tưởng cụ thể lên game thì càng ngày càng ngày chơi cùng 1 máy không khả thi, hoặc có thể nhưng rất nhiều cơ chế game sẽ bị hạn chế.
+Giải pháp đang hướng tới: Đổi sang game chơi kết nối mạng LAN để vào chung
+
+- Hệ thống chọn câu đố trước khi giải chưa hoàn thiện
+Giải pháp đang hướng tới: Đào source game gốc để lấy cơ chế "chọn" câu đố ở mỗi vòng chơi của họ, mang qua game ta (đang chờ cố vấn xử lý, đưa ra ý kiến)
+
+- Về "giải đố" phase, hệ thống xây dựng câu đố tự động của game đang hoạt động được, tuy nhiên chưa được test đủ nhiều về tính logic của câu đố, lúc chơi cảm giác giải đố đôi lúc hơi sượng so với game gốc.
+Giải pháp đang hướng tới: Đào source game gốc để dùng FULL logic xây dựng câu đố của họ đắp qua game ta (đang chờ cố vấn xử lý, đưa ra ý kiến)
+
+- Layout và asset của màn hình giải đố đang không hoạt động hoặc hoạt động sai so với dự kiến đã bàn với antigravity (mất chữ, thay đổi tính năng tùy ý, asset che mất nội dung,...), đồng thời trước đó đang tích hợp các phím bấm bàn phím cũng lỗi
+Giải pháp đang hướng tới: Có thể là phải rollback lại trước khi sửa layout (đã qua kha khá đoạn chat, không biết có khả thi không....), hoặc đập đi xây lại layout (bằng asset của game gốc, không chế linh tinh nữa)
+
+- Các tài nguyên để người chơi tăng sức mạnh theo thời gian chưa được xây dựng
+Giải pháp đang hướng tới: Làm xong cơ chế game và chơi được thì sẽ làm tài nguyên, vì cơ chế này cần đảm bảo một mức độ cân bằng cụ thể - do đó cần test nhiều vòng chơi.
+
+Vấn đề không ảnh hưởng tới vận hành game, ảnh hưởng tới người chơi:
+- Màn hình thay phiên người chơi giải đố chưa được trực quan, lúc test hay bị nhầm lượt của người chơi này với người chơi kia.
+Giải pháp ban đầu là hiện thông báo mỗi khi chuyển lượt (đôi khi không phù hợp với những round về sau của game, nhìn dòng thông báo mỗi lần chuyển lượt có thể gây chán, lâu...)
+Giải pháp đang hướng tới là đổi sang game chơi bằng nhiều thiết bị, kết nối mạng LAN
+
+- Màn hình looting phase CỰC KÌ RỐI MẮT, hiện tại KHÔNG CÓ GIẢI PHÁP để hướng tới, bí idea....
+
+- Đấu giá ẩn cũng bị giới hạn một số chức năng khi nhiều người chơi cùng một thiết bị, đang xem xét đổi sang nhiều thiết bị để tận dụng được nhiều chức năng hơn.
+
+

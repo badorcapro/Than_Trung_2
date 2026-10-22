@@ -1,0 +1,43 @@
+{
+  "task_id": "TASK-0032",
+  "verified_at": "2026-10-22T05:05:30.685991+00:00",
+  "contract_sha256": "86f6562d7c8f12df29caad9b392ad1610ce658769d02252afd3ac4c4eb9afba7",
+  "diff_sha256": "c8a604ccfc35f01fa5f36a35e26744c2ff0f8cac1c4c1083b2c6a43d9b486099",
+  "modified_files": [
+    "docs/agent-system/evidence/dupery/cross_project_mapping.json",
+    "scripts/agent/query_cross_project_mapping.py",
+    "tests/test_query_cross_project_mapping.py"
+  ],
+  "scope_passed": true,
+  "commands": [
+    {
+      "command": "python scripts/agent/query_cross_project_mapping.py --verify",
+      "exit_code": 0,
+      "duration_ms": 118.8,
+      "stdout_excerpt": "=== Cross-Project Mapping Verification ===\nStatus: PASS\nTotal Mappings: 12/12\nVerified C# Sources: 24\nVerified Handbooks: 12\nVerified Golden Videos: 12",
+      "stderr_excerpt": ""
+    },
+    {
+      "command": "python -m unittest tests/test_query_cross_project_mapping.py",
+      "exit_code": 0,
+      "duration_ms": 187.8,
+      "stdout_excerpt": "",
+      "stderr_excerpt": "....\n----------------------------------------------------------------------\nRan 4 tests in 0.005s\n\nOK"
+    },
+    {
+      "command": "python scripts/agent/validate_registry.py",
+      "exit_code": 0,
+      "duration_ms": 335.58,
+      "stdout_excerpt": "{\n  \"success\": true,\n  \"tool\": \"validate_registry\",\n  \"issues\": [],\n  \"data\": {\n    \"project\": \"Than_Tham_Nua_Voi_Godot\",\n    \"total_entries\": 32,\n    \"hashes_updated\": 0,\n    \"context_health\": {\n      \"rule_files_checked\": 4,\n      \"always_on_chars\": 11504,\n      \"estimated_always_on_tokens\": 2876,\n      \"context_health_pct\": 14.38\n    }\n  }\n}",
+      "stderr_excerpt": ""
+    },
+    {
+      "command": "python scripts/agent/check_peer_audit.py --task TASK-0032",
+      "exit_code": 0,
+      "duration_ms": 421.45,
+      "stdout_excerpt": "{\n  \"success\": true,\n  \"tool\": \"check_peer_audit\",\n  \"issues\": [],\n  \"data\": {\n    \"task_id\": \"TASK-0032\",\n    \"subagent_conversation_id\": \"5a382ac3-6468-40a7-90fd-c2c54ed13b01\",\n    \"verdict\": \"PASS\",\n    \"diff_sha256\": \"c8a604ccfc35f01fa5f36a35e26744c2ff0f8cac1c4c1083b2c6a43d9b486099\",\n    \"audit_receipt\": \"docs/agent-system/evidence/TASK-0032-peer-audit.json\"\n  }\n}",
+      "stderr_excerpt": ""
+    }
+  ],
+  "all_passed": true
+}

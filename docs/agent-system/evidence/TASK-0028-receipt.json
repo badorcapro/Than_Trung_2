@@ -1,0 +1,44 @@
+{
+  "task_id": "TASK-0028",
+  "verified_at": "2026-10-21T16:40:33.266941+00:00",
+  "contract_sha256": "85a296648f9dbd866effac7674f72f2b20c6121d45f9c9cf97d689033d346464",
+  "diff_sha256": "6f725d721ba3abbb20424bc8246866a548c7867907d16ea0823105080c567f94",
+  "modified_files": [
+    "docs/agent-system/evidence/dupery/handbook/V7_Secondary_Screens_Codex_and_Alternate_Modes.md",
+    "docs/agent-system/evidence/dupery/reconstruction_obligation_ledger.json",
+    "scripts/agent/simulate_secondary_screens.py",
+    "tests/test_simulate_secondary_screens.py"
+  ],
+  "scope_passed": true,
+  "commands": [
+    {
+      "command": "python scripts/agent/simulate_secondary_screens.py --verify",
+      "exit_code": 0,
+      "duration_ms": 224.53,
+      "stdout_excerpt": "{\n  \"success\": true,\n  \"tool\": \"simulate_secondary_screens\",\n  \"verified_features\": [\n    \"SceneRouter async loading and transition overlay\",\n    \"Codex dynamic catalog querying by region and tag\",\n    \"6 Alternate Modes parameter computation\",\n    \"Tutorial state machine progression\"\n  ],\n  \"router_transition\": {\n    \"loading_progress\": 0.5,\n    \"final_scene\": \"BoardScene\"\n  },\n  \"codex_docks_count\": 2,\n  \"survival_max_strikes\": 1,\n  \"countdown_timer\": 300,\n  \"tutorial_step_2\": \"INSPECT_CARD\"\n}",
+      "stderr_excerpt": ""
+    },
+    {
+      "command": "python -m unittest tests/test_simulate_secondary_screens.py",
+      "exit_code": 0,
+      "duration_ms": 260.05,
+      "stdout_excerpt": "",
+      "stderr_excerpt": ".....\n----------------------------------------------------------------------\nRan 5 tests in 0.000s\n\nOK"
+    },
+    {
+      "command": "python scripts/agent/validate_registry.py",
+      "exit_code": 0,
+      "duration_ms": 481.63,
+      "stdout_excerpt": "{\n  \"success\": true,\n  \"tool\": \"validate_registry\",\n  \"issues\": [],\n  \"data\": {\n    \"project\": \"Than_Tham_Nua_Voi_Godot\",\n    \"total_entries\": 32,\n    \"hashes_updated\": 0,\n    \"context_health\": {\n      \"rule_files_checked\": 4,\n      \"always_on_chars\": 11209,\n      \"estimated_always_on_tokens\": 2802,\n      \"context_health_pct\": 14.01\n    }\n  }\n}",
+      "stderr_excerpt": ""
+    },
+    {
+      "command": "python scripts/agent/check_peer_audit.py --task TASK-0028",
+      "exit_code": 0,
+      "duration_ms": 615.26,
+      "stdout_excerpt": "{\n  \"success\": true,\n  \"tool\": \"check_peer_audit\",\n  \"issues\": [],\n  \"data\": {\n    \"task_id\": \"TASK-0028\",\n    \"subagent_conversation_id\": \"4a1599a0-b023-4b32-82a6-f9d5f5a56469\",\n    \"verdict\": \"PASS\",\n    \"diff_sha256\": \"6f725d721ba3abbb20424bc8246866a548c7867907d16ea0823105080c567f94\",\n    \"audit_receipt\": \"docs/agent-system/evidence/TASK-0028-peer-audit.json\"\n  }\n}",
+      "stderr_excerpt": ""
+    }
+  ],
+  "all_passed": true
+}

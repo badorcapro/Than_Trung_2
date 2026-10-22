@@ -1,0 +1,19 @@
+{
+  "total_videoclips": 2,
+  "videoclips": [
+    {
+      "name": "Dupery Intro English",
+      "asset_file": "sharedassets8.assets",
+      "path_id": 2,
+      "original_path": "Assets/Cutscene/Dupery Intro English.mp4",
+      "format": 1
+    },
+    {
+      "name": "Dupery Intro Cutscene",
+      "asset_file": "sharedassets8.assets",
+      "path_id": 3,
+      "original_path": "Assets/Cutscene/Dupery Intro Cutscene.mp4",
+      "format": 1
+    }
+  ]
+}

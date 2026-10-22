@@ -1,0 +1,38 @@
+{
+  "scenes": [
+    "Assets/Scenes/MainMenuScene.unity",
+    "Assets/Scenes/GameScene.unity",
+    "Assets/Scenes/LevelTransitionScene.unity",
+    "Assets/Scenes/LeadSelectionScene.unity",
+    "Assets/Scenes/EventScene.unity",
+    "Assets/Scenes/StasisScene.unity",
+    "Assets/Scenes/LineupScene.unity",
+    "Assets/Scenes/SummaryScene.unity",
+    "Assets/Scenes/IntroCutscene.unity",
+    "Assets/Scenes/CreditsScene.unity",
+    "Assets/Scenes/LevelEditorScene.unity",
+    "Assets/Scenes/CaseSelectionScene.unity"
+  ],
+  "preloadedPlugins": [],
+  "enabledVRDevices": [],
+  "buildTags": [],
+  "hasPROVersion": false,
+  "isNoWatermarkBuild": false,
+  "isPrototypingBuild": false,
+  "isEducationalBuild": false,
+  "isEmbedded": false,
+  "isTrial": false,
+  "hasPublishingRights": true,
+  "hasShadows": true,
+  "hasSoftShadows": true,
+  "hasLocalLightShadows": true,
+  "hasAdvancedVersion": false,
+  "enableDynamicBatching": true,
+  "usesOnMouseEvents": true,
+  "hasClusterRendering": false,
+  "m_Version": "2022.3.62f3",
+  "m_AuthToken": "29171484ec3ee0261369f4801cc42f491c66ba4a8302f816f92cb79d5899910aa249403a4062ed62",
+  "m_GraphicsAPIs": [
+    2
+  ]
+}

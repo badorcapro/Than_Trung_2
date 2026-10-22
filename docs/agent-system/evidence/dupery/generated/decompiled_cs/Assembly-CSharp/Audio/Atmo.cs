@@ -1,0 +1,14 @@
+namespace Audio;
+
+public enum Atmo
+{
+	RAIN = 0,
+	RAIN_WINDOW = 1,
+	CASINO = 1000,
+	WAVES = 2000,
+	DOCKS = 2001,
+	CHAINS = 9000,
+	PEN_SCRIBLLES = 9001,
+	RUBBER_ERASING = 9002,
+	GATE_CLOSE = 9003
+}

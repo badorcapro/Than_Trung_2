@@ -1,0 +1,405 @@
+{
+  "metadata": {
+    "title": "Dupery Cross-System FMOD Event Map",
+    "phase": "P2",
+    "total_mapped_enums": 50,
+    "total_guids_in_bank": 62,
+    "limitations_notice": "FMOD compiled bank bytecode does not preserve dynamic musical transition curves, beat callback sync triggers, or internal DSP parameter graphs in readable text. These runtime audio behaviors require empirical dynamic tracing via TASK-0019/0020."
+  },
+  "cross_system_mappings": {
+    "music": [
+      {
+        "enum_name": "A_MT",
+        "enum_value": 1,
+        "guid": "{be55ab93-3ba5-4530-b890-2087b710f0d8}",
+        "fmod_path": "event:/mUSIC/a_MainTheme",
+        "target_bank": "Music.bank"
+      },
+      {
+        "enum_name": "B",
+        "enum_value": 2,
+        "guid": "{8ab19475-538e-4bad-a0fd-4b2c3cfae9ec}",
+        "fmod_path": "event:/mUSIC/b_CrimeTakesItsToll",
+        "target_bank": "Music.bank"
+      },
+      {
+        "enum_name": "C",
+        "enum_value": 3,
+        "guid": "{49350ea6-39b8-4d9a-8b4c-117dda66095a}",
+        "fmod_path": "event:/mUSIC/c_ThumpingRain",
+        "target_bank": "Music.bank"
+      },
+      {
+        "enum_name": "D",
+        "enum_value": 4,
+        "guid": "{9168bf5d-3108-404f-b9d8-1a35b01a8b03}",
+        "fmod_path": "event:/mUSIC/d_WhiskeyCoffeeAndCigars",
+        "target_bank": "Music.bank"
+      },
+      {
+        "enum_name": "CAS_A",
+        "enum_value": 100,
+        "guid": "{51b90119-d47d-4111-87e2-5c89dff4bd1f}",
+        "fmod_path": "event:/mUSIC/ca_LeCroupier",
+        "target_bank": "Music.bank"
+      },
+      {
+        "enum_name": "CAS_B",
+        "enum_value": 101,
+        "guid": "{b86dad95-fc08-4518-adf9-cd4e20ea061a}",
+        "fmod_path": "event:/mUSIC/cb_CacherSonJeu",
+        "target_bank": "Music.bank"
+      },
+      {
+        "enum_name": "DCK_A",
+        "enum_value": 200,
+        "guid": "{2de4fe2f-ef9f-4607-a8d2-9dc490a90c39}",
+        "fmod_path": "event:/mUSIC/docks_A",
+        "target_bank": "Music.bank"
+      },
+      {
+        "enum_name": "DCK_B",
+        "enum_value": 201,
+        "guid": "{e37d8620-ccfc-4315-bdef-689178d9abdf}",
+        "fmod_path": "event:/mUSIC/db_TheOceansShadow",
+        "target_bank": "Music.bank"
+      },
+      {
+        "enum_name": "E",
+        "enum_value": 5,
+        "guid": "{ca5729d1-f92e-4c41-b334-ca65a65bf4e1}",
+        "fmod_path": "event:/mUSIC/e_DwindledFaith",
+        "target_bank": "Music.bank"
+      },
+      {
+        "enum_name": "F",
+        "enum_value": 6,
+        "guid": "{c4ce9734-5258-4a21-9a61-77833cec3f70}",
+        "fmod_path": "event:/mUSIC/f_FinalShowdown",
+        "target_bank": "Music.bank"
+      }
+    ],
+    "atmosphere": [
+      {
+        "enum_name": "RAIN",
+        "enum_value": 0,
+        "guid": "{cbd7f6c8-83f6-450c-a50d-1b679591467c}",
+        "fmod_path": "event:/aTMO/lightRain",
+        "target_bank": "Atmosphere.bank"
+      },
+      {
+        "enum_name": "RAIN_WINDOW",
+        "enum_value": 1,
+        "guid": "{8d52eede-25bb-4dbc-b513-d7070adc8a24}",
+        "fmod_path": "event:/aTMO/rainWindow",
+        "target_bank": "Atmosphere.bank"
+      },
+      {
+        "enum_name": "WAVES",
+        "enum_value": 2000,
+        "guid": "{d9f300a8-cd8e-4897-872e-94e40243fdbc}",
+        "fmod_path": "event:/aTMO/ocean",
+        "target_bank": "Atmosphere.bank"
+      },
+      {
+        "enum_name": "DOCKS",
+        "enum_value": 2001,
+        "guid": "{5b40b574-be4e-4972-b6c2-3df5436ef7f0}",
+        "fmod_path": "event:/aTMO/docks",
+        "target_bank": "Atmosphere.bank"
+      },
+      {
+        "enum_name": "CHAINS",
+        "enum_value": 9000,
+        "guid": "{e9c2e023-148d-40e6-b73e-4ce503ee34f5}",
+        "fmod_path": "event:/aTMO/chainsContinuous",
+        "target_bank": "Atmosphere.bank"
+      },
+      {
+        "enum_name": "PEN_SCRIBLLES",
+        "enum_value": 9001,
+        "guid": "{100bf93a-e366-43d0-affb-a2500ec6f7be}",
+        "fmod_path": "event:/aTMO/penScribbles",
+        "target_bank": "Atmosphere.bank"
+      },
+      {
+        "enum_name": "RUBBER_ERASING",
+        "enum_value": 9002,
+        "guid": "{e5ff868c-9a6b-4dd8-b077-8b46296763cd}",
+        "fmod_path": "event:/aTMO/rubber",
+        "target_bank": "Atmosphere.bank"
+      },
+      {
+        "enum_name": "GATE_CLOSE",
+        "enum_value": 9003,
+        "guid": "{60bf7a77-dbeb-412e-b47b-ac94580bbbdc}",
+        "fmod_path": "event:/aTMO/gateContinuous",
+        "target_bank": "Atmosphere.bank"
+      }
+    ],
+    "sfx": [
+      {
+        "enum_name": "TEST_BUTTON",
+        "enum_value": 0,
+        "guid": "{9b25d53b-3d6c-451d-b162-0a36ef4e734c}",
+        "fmod_path": "event:/sFX/uI/typeWriterclick",
+        "target_bank": "Sfx.bank"
+      },
+      {
+        "enum_name": "PAPER_BUTTON",
+        "enum_value": 1000,
+        "guid": "{c5281757-4cb0-47c7-b894-ce96d1ba2177}",
+        "fmod_path": "event:/sFX/uI/paperButton",
+        "target_bank": "Sfx.bank"
+      },
+      {
+        "enum_name": "TICK",
+        "enum_value": 1001,
+        "guid": "{8e2f5a34-d712-41f6-9d70-b79b55549548}",
+        "fmod_path": "event:/sFX/uI/tick",
+        "target_bank": "Sfx.bank"
+      },
+      {
+        "enum_name": "TYPE_WRITER_TICK",
+        "enum_value": 1002,
+        "guid": "{e55cc0c2-10b0-40ca-9ef5-fa1fbc8a8722}",
+        "fmod_path": "event:/sFX/uI/typeWriter",
+        "target_bank": "Sfx.bank"
+      },
+      {
+        "enum_name": "DOOR_KNOCK",
+        "enum_value": 2000,
+        "guid": "{42d2620a-c048-47dd-9431-638d3d33845d}",
+        "fmod_path": "event:/sFX/cases/doorKnock",
+        "target_bank": "Sfx.bank"
+      },
+      {
+        "enum_name": "CHAINS_END",
+        "enum_value": 2001,
+        "guid": "{1ad5c469-223f-459f-b1b3-0fae640d9bdb}",
+        "fmod_path": "event:/sFX/cases/chainsEnd",
+        "target_bank": "Sfx.bank"
+      },
+      {
+        "enum_name": "CARD",
+        "enum_value": 2002,
+        "guid": "{5488151a-edfa-4bd8-a06a-a29546cf6c81}",
+        "fmod_path": "event:/sFX/cases/card",
+        "target_bank": "Sfx.bank"
+      },
+      {
+        "enum_name": "PAPER_SHORT",
+        "enum_value": 1003,
+        "guid": "{635533b3-86c9-4abf-9adf-ec8538dc5691}",
+        "fmod_path": "event:/sFX/uI/shortPaperButton",
+        "target_bank": "Sfx.bank"
+      },
+      {
+        "enum_name": "CHARACTER_HOVER",
+        "enum_value": 1005,
+        "guid": "{f9a9fdae-a20c-4021-bf65-968dd5f9c865}",
+        "fmod_path": "event:/sFX/uI/characterHover",
+        "target_bank": "Sfx.bank"
+      },
+      {
+        "enum_name": "SUSPECT_HOVER",
+        "enum_value": 1004,
+        "guid": "{cb7b66dd-d799-48ef-94c5-64cc24f9826a}",
+        "fmod_path": "event:/sFX/uI/suspectHover",
+        "target_bank": "Sfx.bank"
+      },
+      {
+        "enum_name": "PIN_DROP",
+        "enum_value": 2003,
+        "guid": "{2ac8a406-d6d8-4cf7-962a-425147eaea50}",
+        "fmod_path": "event:/sFX/cases/pinDrop 2",
+        "target_bank": "Sfx.bank"
+      },
+      {
+        "enum_name": "CLOCK_TOWER_CHIME",
+        "enum_value": 3000,
+        "guid": "{79fe02d3-8b74-4643-84c4-2df3e918cc24}",
+        "fmod_path": "event:/sFX/cases/locations/ClockTower",
+        "target_bank": "Sfx.bank"
+      },
+      {
+        "enum_name": "GATE_END",
+        "enum_value": 2004,
+        "guid": "{dc27a331-c524-4e25-b4e7-7cbb172cdb43}",
+        "fmod_path": "event:/sFX/cases/gateClose",
+        "target_bank": "Sfx.bank"
+      },
+      {
+        "enum_name": "POP",
+        "enum_value": 1006,
+        "guid": "{73c9a83c-b995-47f7-9e89-3751d60d1960}",
+        "fmod_path": "event:/sFX/uI/pop",
+        "target_bank": "Sfx.bank"
+      },
+      {
+        "enum_name": "GUNSHOT",
+        "enum_value": 2005,
+        "guid": "{3d0f4d95-2a40-4524-bd75-4f85a685caf9}",
+        "fmod_path": "event:/sFX/cases/gunShot",
+        "target_bank": "Sfx.bank"
+      },
+      {
+        "enum_name": "JUDGE_GAVEL",
+        "enum_value": 4000,
+        "guid": "{c6bde7ab-4f55-428e-aa6f-dfe16a8c172b}",
+        "fmod_path": "event:/sFX/cases/gavel",
+        "target_bank": "Sfx.bank"
+      },
+      {
+        "enum_name": "MAIN_MENU_CLOCKTOWER",
+        "enum_value": 9000,
+        "guid": "{f3f14c6c-de27-4d21-8f06-5e6dba6c667a}",
+        "fmod_path": "event:/sFX/uI/clocktowerBell",
+        "target_bank": "Sfx.bank"
+      },
+      {
+        "enum_name": "BOAT_ACTIVATE",
+        "enum_value": 2200,
+        "guid": "{78e6cbb9-1603-4d09-9dc9-fd946f360c6c}",
+        "fmod_path": "event:/sFX/cases/boatactivate",
+        "target_bank": "Sfx.bank"
+      },
+      {
+        "enum_name": "BOAT_DEACTIVATE",
+        "enum_value": 2201,
+        "guid": "{75dbd6fe-a23c-40b1-9551-724351d68553}",
+        "fmod_path": "event:/sFX/cases/boatdeactivate",
+        "target_bank": "Sfx.bank"
+      },
+      {
+        "enum_name": "NAVAL_MINE_EXPLOSION",
+        "enum_value": 3001,
+        "guid": "{7eb7f2a6-a726-4e63-842f-417179d99fce}",
+        "fmod_path": "event:/sFX/cases/navalMineExplosion",
+        "target_bank": "Sfx.bank"
+      },
+      {
+        "enum_name": "CHIPS_DOWN",
+        "enum_value": 2100,
+        "guid": "{4673a64e-44cd-4e03-beee-be17ffaf8e85}",
+        "fmod_path": "event:/sFX/cases/chipsdown",
+        "target_bank": "Sfx.bank"
+      },
+      {
+        "enum_name": "CHIPS_UP",
+        "enum_value": 2101,
+        "guid": "{762aedff-6084-44fd-b95b-9d545cb07b3e}",
+        "fmod_path": "event:/sFX/cases/chipsup",
+        "target_bank": "Sfx.bank"
+      },
+      {
+        "enum_name": "LUKE_INV",
+        "enum_value": 8950,
+        "guid": "{99876623-e3b4-440c-8449-56d7e62f86be}",
+        "fmod_path": "event:/sFX/credits/lukeinvestigate",
+        "target_bank": "Sfx.bank"
+      },
+      {
+        "enum_name": "LUKE_ARR",
+        "enum_value": 8951,
+        "guid": "{2404bff7-b052-4c9d-89d0-3e25179e0f2f}",
+        "fmod_path": "event:/sFX/credits/lukearrest",
+        "target_bank": "Sfx.bank"
+      },
+      {
+        "enum_name": "MATT_INV",
+        "enum_value": 8952,
+        "guid": "{ea6d4635-7284-4765-8419-4607a1357201}",
+        "fmod_path": "event:/sFX/credits/mattinvestigate",
+        "target_bank": "Sfx.bank"
+      },
+      {
+        "enum_name": "MATT_ARR",
+        "enum_value": 8953,
+        "guid": "{19da79cb-32d6-462e-8409-5ba9295d78d3}",
+        "fmod_path": "event:/sFX/credits/mattarrest",
+        "target_bank": "Sfx.bank"
+      },
+      {
+        "enum_name": "LYDIA_INV",
+        "enum_value": 8954,
+        "guid": "{1d5385f5-39aa-435c-9dce-4e4559ec2cb3}",
+        "fmod_path": "event:/sFX/credits/lydiainvestigate",
+        "target_bank": "Sfx.bank"
+      },
+      {
+        "enum_name": "LYDIA_ARR",
+        "enum_value": 8955,
+        "guid": "{bc6fb929-f7d5-4144-980d-f6daf2dffeaa}",
+        "fmod_path": "event:/sFX/credits/lydiaarrest",
+        "target_bank": "Sfx.bank"
+      },
+      {
+        "enum_name": "CARD_DECK",
+        "enum_value": 2102,
+        "guid": "{3d331e28-5df5-46f0-95dd-cb56f54ff954}",
+        "fmod_path": "event:/sFX/cases/deck",
+        "target_bank": "Sfx.bank"
+      },
+      {
+        "enum_name": "HIDE",
+        "enum_value": 2202,
+        "guid": "{6af85265-ee9a-4ff8-a78c-465d8f8a13f9}",
+        "fmod_path": "event:/sFX/cases/hide",
+        "target_bank": "Sfx.bank"
+      },
+      {
+        "enum_name": "DREDGE",
+        "enum_value": 2203,
+        "guid": "{e9598ab8-eb60-4912-9429-3fe23a7db3c4}",
+        "fmod_path": "event:/sFX/cases/dredge 2",
+        "target_bank": "Sfx.bank"
+      },
+      {
+        "enum_name": "LINEUP_MOVE",
+        "enum_value": 9001,
+        "guid": "{79d48a6c-6df3-4903-887e-1cc81fc369f7}",
+        "fmod_path": "event:/sFX/uI/lineupMove",
+        "target_bank": "Sfx.bank"
+      }
+    ],
+    "intro_cutscenes": [
+      {
+        "name": "IntroEnglish",
+        "guid": "{4e7a8c5e-4d64-47d7-9547-14ff6de5d814}",
+        "fmod_path": "event:/intro/Intro_english",
+        "target_bank": "Intro.bank"
+      },
+      {
+        "name": "IntroNoVoice",
+        "guid": "{c761c00f-feec-48b4-ab8e-9b1ea8d8cb36}",
+        "fmod_path": "event:/intro/Intro_noVoice",
+        "target_bank": "Intro.bank"
+      }
+    ]
+  },
+  "parameters": [
+    {
+      "name": "GamePause",
+      "guid": "{13f715bc-dd85-464a-a182-093335b16331}",
+      "fmod_path": "parameter:/gamePause"
+    },
+    {
+      "name": "PopPitch",
+      "guid": "{c8aad81f-60c9-4f5d-b1e2-19c07d5cbd74}",
+      "fmod_path": "parameter:/sfxParameters/PopPitch"
+    }
+  ],
+  "busses": [
+    {
+      "name": "MasterBus",
+      "guid": "{8813dd73-cadf-4992-ab9d-23257c0dc7be}",
+      "fmod_path": "bus:/"
+    },
+    {
+      "name": "Reverb",
+      "guid": "{f042ac38-628e-469a-a35a-7e3c00e2ae5b}",
+      "fmod_path": "bus:/reverb"
+    }
+  ]
+}

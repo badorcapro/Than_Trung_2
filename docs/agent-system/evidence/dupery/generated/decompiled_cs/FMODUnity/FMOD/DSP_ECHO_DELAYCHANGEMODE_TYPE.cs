@@ -1,0 +1,8 @@
+namespace FMOD;
+
+public enum DSP_ECHO_DELAYCHANGEMODE_TYPE
+{
+	FADE,
+	LERP,
+	NONE
+}

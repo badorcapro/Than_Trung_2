@@ -1,0 +1,211 @@
+{
+  "summary": {
+    "total_runtime_nodes": 20,
+    "autoload_singletons_count": 3,
+    "static_declared_nodes_count": 15,
+    "dynamic_runtime_only_count": 2,
+    "correlation_confidence_pct": 90.0
+  },
+  "correlated_nodes": [
+    {
+      "name": "root",
+      "class_name": "Window",
+      "node_path": "/root",
+      "category": "dynamic_runtime_only",
+      "matched_scene": "",
+      "static_type": "",
+      "script_path": "",
+      "groups_count": 2
+    },
+    {
+      "name": "AppVersion",
+      "class_name": "Node",
+      "node_path": "/root/AppVersion",
+      "category": "autoload_singleton",
+      "matched_scene": "",
+      "static_type": "",
+      "script_path": "res://autoload/AppVersion.gd",
+      "groups_count": 0
+    },
+    {
+      "name": "AppLogger",
+      "class_name": "Node",
+      "node_path": "/root/AppLogger",
+      "category": "autoload_singleton",
+      "matched_scene": "",
+      "static_type": "",
+      "script_path": "res://autoload/AppLogger.gd",
+      "groups_count": 0
+    },
+    {
+      "name": "AppFlow",
+      "class_name": "Node",
+      "node_path": "/root/AppFlow",
+      "category": "autoload_singleton",
+      "matched_scene": "",
+      "static_type": "",
+      "script_path": "res://autoload/AppFlow.gd",
+      "groups_count": 0
+    },
+    {
+      "name": "RuntimeTreeDump",
+      "class_name": "Node",
+      "node_path": "/root/RuntimeTreeDump",
+      "category": "dynamic_runtime_only",
+      "matched_scene": "",
+      "static_type": "",
+      "script_path": "res://scenes/tools/RuntimeTreeDump.gd",
+      "groups_count": 0
+    },
+    {
+      "name": "Boot",
+      "class_name": "Control",
+      "node_path": "/root/RuntimeTreeDump/Boot",
+      "category": "static_declared_node",
+      "matched_scene": "scenes/boot/Boot.tscn",
+      "static_type": "Control",
+      "script_path": "res://scripts/application/BootController.gd",
+      "groups_count": 2
+    },
+    {
+      "name": "Background",
+      "class_name": "ColorRect",
+      "node_path": "/root/RuntimeTreeDump/Boot/Background",
+      "category": "static_declared_node",
+      "matched_scene": "scenes/player_facing/PlayerFacingStart.tscn",
+      "static_type": "TextureRect",
+      "script_path": "",
+      "groups_count": 0
+    },
+    {
+      "name": "BiosPhase",
+      "class_name": "Control",
+      "node_path": "/root/RuntimeTreeDump/Boot/BiosPhase",
+      "category": "static_declared_node",
+      "matched_scene": "scenes/boot/Boot.tscn",
+      "static_type": "Control",
+      "script_path": "",
+      "groups_count": 0
+    },
+    {
+      "name": "BiosMargin",
+      "class_name": "MarginContainer",
+      "node_path": "/root/RuntimeTreeDump/Boot/BiosPhase/BiosMargin",
+      "category": "static_declared_node",
+      "matched_scene": "scenes/boot/Boot.tscn",
+      "static_type": "MarginContainer",
+      "script_path": "",
+      "groups_count": 0
+    },
+    {
+      "name": "BiosVBox",
+      "class_name": "VBoxContainer",
+      "node_path": "/root/RuntimeTreeDump/Boot/BiosPhase/BiosMargin/BiosVBox",
+      "category": "static_declared_node",
+      "matched_scene": "scenes/boot/Boot.tscn",
+      "static_type": "VBoxContainer",
+      "script_path": "",
+      "groups_count": 0
+    },
+    {
+      "name": "BiosStaticText",
+      "class_name": "RichTextLabel",
+      "node_path": "/root/RuntimeTreeDump/Boot/BiosPhase/BiosMargin/BiosVBox/BiosStaticText",
+      "category": "static_declared_node",
+      "matched_scene": "scenes/boot/Boot.tscn",
+      "static_type": "RichTextLabel",
+      "script_path": "",
+      "groups_count": 0
+    },
+    {
+      "name": "BiosLastLine",
+      "class_name": "RichTextLabel",
+      "node_path": "/root/RuntimeTreeDump/Boot/BiosPhase/BiosMargin/BiosVBox/BiosLastLine",
+      "category": "static_declared_node",
+      "matched_scene": "scenes/boot/Boot.tscn",
+      "static_type": "RichTextLabel",
+      "script_path": "",
+      "groups_count": 0
+    },
+    {
+      "name": "BiosSkipPrompt",
+      "class_name": "Label",
+      "node_path": "/root/RuntimeTreeDump/Boot/BiosPhase/BiosSkipPrompt",
+      "category": "static_declared_node",
+      "matched_scene": "scenes/boot/Boot.tscn",
+      "static_type": "Label",
+      "script_path": "",
+      "groups_count": 0
+    },
+    {
+      "name": "SplashPhase",
+      "class_name": "Control",
+      "node_path": "/root/RuntimeTreeDump/Boot/SplashPhase",
+      "category": "static_declared_node",
+      "matched_scene": "scenes/boot/Boot.tscn",
+      "static_type": "Control",
+      "script_path": "",
+      "groups_count": 0
+    },
+    {
+      "name": "SplashBg",
+      "class_name": "ColorRect",
+      "node_path": "/root/RuntimeTreeDump/Boot/SplashPhase/SplashBg",
+      "category": "static_declared_node",
+      "matched_scene": "scenes/boot/Boot.tscn",
+      "static_type": "ColorRect",
+      "script_path": "",
+      "groups_count": 0
+    },
+    {
+      "name": "SplashGraphic",
+      "class_name": "TextureRect",
+      "node_path": "/root/RuntimeTreeDump/Boot/SplashPhase/SplashGraphic",
+      "category": "static_declared_node",
+      "matched_scene": "scenes/boot/Boot.tscn",
+      "static_type": "TextureRect",
+      "script_path": "",
+      "groups_count": 0
+    },
+    {
+      "name": "SplashSkipPrompt",
+      "class_name": "Label",
+      "node_path": "/root/RuntimeTreeDump/Boot/SplashPhase/SplashSkipPrompt",
+      "category": "static_declared_node",
+      "matched_scene": "scenes/boot/Boot.tscn",
+      "static_type": "Label",
+      "script_path": "",
+      "groups_count": 0
+    },
+    {
+      "name": "TransitionOverlay",
+      "class_name": "ColorRect",
+      "node_path": "/root/RuntimeTreeDump/Boot/TransitionOverlay",
+      "category": "static_declared_node",
+      "matched_scene": "scenes/boot/Boot.tscn",
+      "static_type": "ColorRect",
+      "script_path": "",
+      "groups_count": 0
+    },
+    {
+      "name": "Center",
+      "class_name": "CenterContainer",
+      "node_path": "/root/RuntimeTreeDump/Boot/Center",
+      "category": "static_declared_node",
+      "matched_scene": "scenes/boot/Boot.tscn",
+      "static_type": "CenterContainer",
+      "script_path": "",
+      "groups_count": 0
+    },
+    {
+      "name": "ErrorLabel",
+      "class_name": "Label",
+      "node_path": "/root/RuntimeTreeDump/Boot/Center/ErrorLabel",
+      "category": "static_declared_node",
+      "matched_scene": "scenes/boot/Boot.tscn",
+      "static_type": "Label",
+      "script_path": "",
+      "groups_count": 0
+    }
+  ]
+}

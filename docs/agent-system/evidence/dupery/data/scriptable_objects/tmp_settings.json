@@ -1,0 +1,53 @@
+{
+  "m_enableWordWrapping": 1,
+  "m_enableKerning": 1,
+  "m_enableExtraPadding": 0,
+  "m_enableTintAllSprites": 0,
+  "m_enableParseEscapeCharacters": 1,
+  "m_EnableRaycastTarget": 1,
+  "m_GetFontFeaturesAtRuntime": 1,
+  "m_missingGlyphCharacter": 0,
+  "m_warningsDisabled": 0,
+  "m_defaultFontAsset": {
+    "m_FileID": 2,
+    "m_PathID": 1396
+  },
+  "m_defaultFontAssetPath": "Fonts & Materials/",
+  "m_defaultFontSize": 36.0,
+  "m_defaultAutoSizeMinRatio": 0.5,
+  "m_defaultAutoSizeMaxRatio": 2.0,
+  "m_defaultTextMeshProTextContainerSize": {
+    "x": 20.0,
+    "y": 5.0
+  },
+  "m_defaultTextMeshProUITextContainerSize": {
+    "x": 200.0,
+    "y": 50.0
+  },
+  "m_autoSizeTextContainer": 0,
+  "m_IsTextObjectScaleStatic": 0,
+  "m_fallbackFontAssets": [],
+  "m_matchMaterialPreset": 1,
+  "m_defaultSpriteAsset": {
+    "m_FileID": 0,
+    "m_PathID": 1193
+  },
+  "m_defaultSpriteAssetPath": "Sprite Assets/",
+  "m_enableEmojiSupport": 1,
+  "m_MissingCharacterSpriteUnicode": 0,
+  "m_defaultColorGradientPresetsPath": "Color Gradient Presets/",
+  "m_defaultStyleSheet": {
+    "m_FileID": 0,
+    "m_PathID": 1198
+  },
+  "m_StyleSheetsResourcePath": "",
+  "m_leadingCharacters": {
+    "m_FileID": 0,
+    "m_PathID": 44
+  },
+  "m_followingCharacters": {
+    "m_FileID": 0,
+    "m_PathID": 45
+  },
+  "m_UseModernHangulLineBreakingRules": 0
+}

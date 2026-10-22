@@ -1,0 +1,44 @@
+{
+  "task_id": "TASK-0026B",
+  "verified_at": "2026-10-21T13:52:09.928618+00:00",
+  "contract_sha256": "c6923b5b37ccd0a82196b2c8789502471e8278567b47e3aa01ebfe3b1cda747c",
+  "diff_sha256": "716d97d828fe16e71ece9f002f7f899775fa865de06225c963cc88e5a2e91bab",
+  "modified_files": [
+    "docs/agent-system/evidence/dupery/handbook/V5B_Suspect_Roles_Catalog_and_Data_Matrix.md",
+    "docs/agent-system/evidence/dupery/reconstruction_obligation_ledger.json",
+    "scripts/agent/simulate_suspect_role_matrix.py",
+    "tests/test_simulate_suspect_role_matrix.py"
+  ],
+  "scope_passed": true,
+  "commands": [
+    {
+      "command": "python scripts/agent/simulate_suspect_role_matrix.py --verify",
+      "exit_code": 0,
+      "duration_ms": 102.78,
+      "stdout_excerpt": "{\n  \"success\": true,\n  \"tool\": \"simulate_suspect_role_matrix\"\n}",
+      "stderr_excerpt": ""
+    },
+    {
+      "command": "python -m unittest tests/test_simulate_suspect_role_matrix.py",
+      "exit_code": 0,
+      "duration_ms": 219.07,
+      "stdout_excerpt": "",
+      "stderr_excerpt": ".....\n----------------------------------------------------------------------\nRan 5 tests in 0.006s\n\nOK"
+    },
+    {
+      "command": "python scripts/agent/validate_registry.py",
+      "exit_code": 0,
+      "duration_ms": 295.19,
+      "stdout_excerpt": "{\n  \"success\": true,\n  \"tool\": \"validate_registry\",\n  \"issues\": [],\n  \"data\": {\n    \"project\": \"Than_Tham_Nua_Voi_Godot\",\n    \"total_entries\": 32,\n    \"hashes_updated\": 0,\n    \"context_health\": {\n      \"rule_files_checked\": 4,\n      \"always_on_chars\": 11209,\n      \"estimated_always_on_tokens\": 2802,\n      \"context_health_pct\": 14.01\n    }\n  }\n}",
+      "stderr_excerpt": ""
+    },
+    {
+      "command": "python scripts/agent/check_peer_audit.py --task TASK-0026B",
+      "exit_code": 0,
+      "duration_ms": 382.88,
+      "stdout_excerpt": "{\n  \"success\": true,\n  \"tool\": \"check_peer_audit\",\n  \"issues\": [],\n  \"data\": {\n    \"task_id\": \"TASK-0026B\",\n    \"subagent_conversation_id\": \"ba951f77-1532-4185-a64d-8ec0550d919e\",\n    \"verdict\": \"PASS\",\n    \"diff_sha256\": \"716d97d828fe16e71ece9f002f7f899775fa865de06225c963cc88e5a2e91bab\",\n    \"audit_receipt\": \"docs/agent-system/evidence/TASK-0026B-peer-audit.json\"\n  }\n}",
+      "stderr_excerpt": ""
+    }
+  ],
+  "all_passed": true
+}

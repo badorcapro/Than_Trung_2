@@ -1,0 +1,37 @@
+{
+  "task_id": "TASK-0020",
+  "verified_at": "2026-10-21T08:45:47.821685+00:00",
+  "contract_sha256": "e17e3c3b8dd5d74ec5dd4460146e0e8e137db81ed9417cf4eb4aa483119b8839",
+  "diff_sha256": "559a9cc3dde3d32b1e518f0776de36ada57bbd71118358fbb9b8c5c9c61edfaf",
+  "modified_files": [
+    "docs/agent-system/evidence/dupery/probes/runtime_probe_decision.json",
+    "docs/agent-system/evidence/dupery/probes/runtime_probe_spike_report.md",
+    "scripts/agent/dupery_runtime_probe.py",
+    "tests/test_dupery_runtime_probe.py"
+  ],
+  "scope_passed": true,
+  "commands": [
+    {
+      "command": "python scripts/agent/dupery_runtime_probe.py --verify",
+      "exit_code": 0,
+      "duration_ms": 103.61,
+      "stdout_excerpt": "VERIFY: PASS",
+      "stderr_excerpt": ""
+    },
+    {
+      "command": "python -m unittest tests/test_dupery_runtime_probe.py",
+      "exit_code": 0,
+      "duration_ms": 165.73,
+      "stdout_excerpt": "",
+      "stderr_excerpt": ".....\n----------------------------------------------------------------------\nRan 5 tests in 0.002s\n\nOK"
+    },
+    {
+      "command": "python scripts/agent/check_peer_audit.py --task TASK-0020",
+      "exit_code": 0,
+      "duration_ms": 400.95,
+      "stdout_excerpt": "{\n  \"success\": true,\n  \"tool\": \"check_peer_audit\",\n  \"issues\": [],\n  \"data\": {\n    \"task_id\": \"TASK-0020\",\n    \"subagent_conversation_id\": \"1df6808d-057c-4686-b072-3fbaf244c3f6\",\n    \"verdict\": \"PASS\",\n    \"diff_sha256\": \"559a9cc3dde3d32b1e518f0776de36ada57bbd71118358fbb9b8c5c9c61edfaf\",\n    \"audit_receipt\": \"docs/agent-system/evidence/TASK-0020-peer-audit.json\"\n  }\n}",
+      "stderr_excerpt": ""
+    }
+  ],
+  "all_passed": true
+}

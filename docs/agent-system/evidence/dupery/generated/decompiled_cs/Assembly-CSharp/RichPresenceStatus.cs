@@ -1,0 +1,10 @@
+public enum RichPresenceStatus
+{
+	MAINMENU,
+	GENERIC_CASE,
+	OFFICE,
+	CASINO,
+	DOCKS,
+	SYNDICATE,
+	CASE_CREATOR
+}

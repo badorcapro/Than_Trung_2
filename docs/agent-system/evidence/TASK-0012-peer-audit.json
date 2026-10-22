@@ -1,0 +1,44 @@
+{
+  "task_id": "TASK-0012",
+  "subagent_conversation_id": "4adba35b-8570-426f-86e7-7779530d0a1d",
+  "audited_at": "2026-10-21T06:45:00Z",
+  "diff_sha256": "2e48709cd64057be13fb93ca2f899138a2b2fd43bb42d9ebe0d49a4817eeb9f5",
+  "transcript_reference": "file:///C:/Users/Admin/.gemini/antigravity/brain/5dc69d25-94eb-4e8a-9589-1420dc32d526/.system_generated/logs/transcript.jsonl",
+  "rules_and_docs_loaded": [
+    "GEMINI.md",
+    "AGENTS.md",
+    "ARCHITECTURE.md",
+    ".agents/rules/rule_anti_evasion.md",
+    ".agents/rules/rule_critical_engagement.md",
+    ".agents/rules/rule_task_contract_and_scope.md",
+    ".agents/skills/verify-task/SKILL.md",
+    ".agents/skills/critical-engagement/SKILL.md",
+    ".agents/skills/honest-execution/SKILL.md",
+    "docs/agent-system/tasks/TASK-0012.md",
+    ".agent_scratchpad.md"
+  ],
+  "decisions_made": [
+    "Thực thi quyết định kiến trúc DEC-22 (TypeTree Gate): Lựa chọn Phương án 1 (UnityPy 1.25.4 + TypeTreeGeneratorAPI 0.0.10) với managed DLLs từ Dupery_Data/Managed/.",
+    "Áp dụng bộ lọc tệp nghiêm ngặt is_valid_asset_file(): chỉ nạp .assets và level*, loại trừ triệt để tệp stream thô .resS và .resource, giải quyết triệt để lỗi treo/lag và tràn RAM.",
+    "Pre-load globalgamemanagers.assets vào UnityPy.Environment để nạp sẵn MonoScript cache, đạt tốc độ phân giải deref tức thì (~0.0001s/object).",
+    "Nhận diện chính xác các class XNode (Nodes.* và *Node) có custom NodePortDictionary gây lỗi alignment trong UnityPy C-boost extension. Ghi nhận toàn bộ 1.179 instances vào typetree_failures.json với lý do kỹ thuật chi tiết.",
+    "Đạt tỷ lệ giải mã thực nghiệm: 100.0% (7.365/7.365 MonoBehaviours) trên toàn bộ 12 scene levels (level0..level11), vượt xa chỉ tiêu >= 99%; đạt 90.12% (10.767/11.947 MonoBehaviours) trên toàn bộ dự án.",
+    "Phát triển dupery_typetree_decoder.py (198 LOC) và tests/test_dupery_typetree_decoder.py (73 LOC) tuân thủ nghiêm ngặt ADR-0010 Line Budget (< 300 LOC)."
+  ],
+  "omissions_and_simplifications": [
+    "Đúng chuẩn ranh giới DEC-22, TASK-0012 chỉ kiểm định Gate và đo lường tỷ lệ giải mã, xuất báo cáo tổng hợp và failures; việc dump toàn bộ cây node phân cấp của 12 scene thuộc phạm vi TASK-0014/TASK-0015.",
+    "1 thất bại duy nhất không thuộc XNode trong resources.assets là FMODUnity.Settings (path_id 1185, lỗi read_str out of bounds do header cấu hình âm thanh FMOD), không ảnh hưởng tới gameplay hay logic data."
+  ],
+  "adr_0010_anti_cheat_check": "Xác minh toàn diện dupery_typetree_decoder.py (198 LOC) và test_dupery_typetree_decoder.py (73 LOC): không có bất kỳ dấu chấm phẩy (;) ghép lệnh, không nén mã hay code-golfing, không có placeholder cắt xén nội dung, kiến trúc Single Responsibility rõ ràng.",
+  "semantic_checks_performed": [
+    "Kiểm tra live diff_sha256 qua check_scope.py khớp chuẩn 2e48709cd64057be13fb93ca2f899138a2b2fd43bb42d9ebe0d49a4817eeb9f5 với 0 file out-of-scope.",
+    "Kiểm tra ngân sách dòng qua check_line_budget.py: dupery_typetree_decoder.py đạt 198 LOC (tier ok, target < 300), test_dupery_typetree_decoder.py đạt 73 LOC (tier ok, target < 400).",
+    "Kiểm tra check_diff_guard.py: không phát hiện placeholder hay vi phạm diff.",
+    "Kiểm tra typetree_gate_report.json: 12 scene levels (level0..level11) đạt 100.0% giải mã thành công (7.365/7.365 MonoBehaviours, 0 failures), vượt chỉ tiêu >=99%.",
+    "Kiểm tra typetree_failures.json: phân loại chính xác 1.179 XNode instances bị lỗi do NodePortDictionary và 1 instance FMODUnity.Settings.",
+    "Thực thi dupery_typetree_decoder.py --verify exit code 0.",
+    "Thực thi toàn bộ bộ unit test: 6/6 tests trong test_dupery_typetree_decoder.py và 49/49 tests toàn repo passed 100%."
+  ],
+  "findings": [],
+  "verdict": "PASS"
+}

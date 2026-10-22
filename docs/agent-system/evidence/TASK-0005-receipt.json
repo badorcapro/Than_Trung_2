@@ -1,0 +1,20 @@
+{
+  "task_id": "TASK-0005",
+  "verified_at": "2026-10-20T15:31:31.289618+00:00",
+  "contract_sha256": "67057837bb5310d3dbb726512c215b736773b4680e6d20ae3ad0de14f7da9ff4",
+  "diff_sha256": "6fa433ef1af30c6fbe8031a4f84d11344d598881f3e2d4fa651b4c1fa0a8218c",
+  "modified_files": [
+    "scripts/agent/godot_indexer.py"
+  ],
+  "scope_passed": true,
+  "commands": [
+    {
+      "command": "python scripts/agent/godot_indexer.py --verify",
+      "exit_code": 0,
+      "duration_ms": 366.67,
+      "stdout_excerpt": "{\n  \"success\": true,\n  \"tool\": \"godot_indexer\",\n  \"issues\": [],\n  \"data\": {\n    \"total_files_indexed\": 1735,\n    \"gdscript_files\": 293,\n    \"total_gdscript_loc\": 81442,\n    \"god_files_count\": 11\n  }\n}",
+      "stderr_excerpt": ""
+    }
+  ],
+  "all_passed": true
+}

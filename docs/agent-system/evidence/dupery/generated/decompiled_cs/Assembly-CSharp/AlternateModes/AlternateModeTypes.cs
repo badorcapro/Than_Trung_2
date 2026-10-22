@@ -1,0 +1,13 @@
+namespace AlternateModes;
+
+public enum AlternateModeTypes
+{
+	ONLY_QUIRKS = 100,
+	RANDOM_QUIRKS = 101,
+	SPECTRES_DREAM = 102,
+	TRAITOR_ONLY = 103,
+	SURVIVAL = 104,
+	COUNTDOWN = 500,
+	BANKRUPT_HERO = 600,
+	HIDE_AND_SEEK = 700
+}

@@ -1,0 +1,12 @@
+{
+  "certified_at": "2026-10-21T07:52:25Z",
+  "p2_verified": true,
+  "counts": {
+    "AnimationClip": 0,
+    "Animator": 0,
+    "AnimatorController": 0,
+    "ParticleSystem": 0
+  },
+  "architectural_finding": "Dupery contains 0 native Unity AnimationClips, Animators, or ParticleSystems. All game animations and transitions are procedurally synthesized via C# scripts (GRGLib.Coroutines.CoroutineLibrary), confirming Behaviour Capture requirement (DEC-23).",
+  "recheck_command": "python scripts/agent/extract_dupery_materials.py --verify"
+}

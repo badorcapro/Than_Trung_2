@@ -1,0 +1,271 @@
+{
+  "productGUID": {
+    "data[0]": 3422704669,
+    "data[1]": 1186320195,
+    "data[2]": 2808921022,
+    "data[3]": 1686493525
+  },
+  "AndroidProfiler": false,
+  "AndroidFilterTouchesWhenObscured": false,
+  "AndroidEnableSustainedPerformanceMode": false,
+  "defaultScreenOrientation": 4,
+  "targetDevice": 2,
+  "useOnDemandResources": false,
+  "accelerometerFrequency": 60,
+  "companyName": "Gilded Rune Games",
+  "productName": "Dupery",
+  "defaultCursor": {
+    "m_FileID": 0,
+    "m_PathID": 0
+  },
+  "cursorHotspot": {
+    "x": 0.0,
+    "y": 0.0
+  },
+  "m_SplashScreenBackgroundColor": {
+    "r": 0.0,
+    "g": 0.0,
+    "b": 0.0,
+    "a": 1.0
+  },
+  "m_ShowUnitySplashScreen": true,
+  "m_ShowUnitySplashLogo": true,
+  "m_SplashScreenOverlayOpacity": 1.0,
+  "m_SplashScreenAnimation": 1,
+  "m_SplashScreenLogoStyle": 1,
+  "m_SplashScreenDrawMode": 1,
+  "m_SplashScreenBackgroundAnimationZoom": 1.0,
+  "m_SplashScreenLogoAnimationZoom": 1.0,
+  "m_SplashScreenBackgroundLandscapeAspect": 1.0,
+  "m_SplashScreenBackgroundPortraitAspect": 1.0,
+  "m_SplashScreenBackgroundLandscapeUvs": {
+    "x": 0.0,
+    "y": 0.0,
+    "width": 1.0,
+    "height": 1.0
+  },
+  "m_SplashScreenBackgroundPortraitUvs": {
+    "x": 0.0,
+    "y": 0.0,
+    "width": 1.0,
+    "height": 1.0
+  },
+  "m_SplashScreenLogos": [
+    {
+      "logo": {
+        "m_FileID": 1,
+        "m_PathID": 3117
+      },
+      "duration": 2.0
+    },
+    {
+      "logo": {
+        "m_FileID": 1,
+        "m_PathID": 3118
+      },
+      "duration": 3.5
+    }
+  ],
+  "m_SplashScreenBackgroundLandscape": {
+    "m_FileID": 0,
+    "m_PathID": 0
+  },
+  "m_SplashScreenBackgroundPortrait": {
+    "m_FileID": 0,
+    "m_PathID": 0
+  },
+  "m_UnitySplashLogo": {
+    "m_FileID": 1,
+    "m_PathID": 3117
+  },
+  "m_VirtualRealitySplashScreen": {
+    "m_FileID": 0,
+    "m_PathID": 0
+  },
+  "m_HolographicTrackingLossScreen": {
+    "m_FileID": 0,
+    "m_PathID": 0
+  },
+  "defaultScreenWidth": 1920,
+  "defaultScreenHeight": 1080,
+  "defaultScreenWidthWeb": 960,
+  "defaultScreenHeightWeb": 600,
+  "m_StereoRenderingPath": 0,
+  "m_ActiveColorSpace": 1,
+  "unsupportedMSAAFallback": 0,
+  "m_SpriteBatchVertexThreshold": 300,
+  "m_MTRendering": true,
+  "mobileMTRenderingBaked": false,
+  "AID": {
+    "bytes[0]": 98,
+    "bytes[1]": 23,
+    "bytes[2]": 134,
+    "bytes[3]": 12,
+    "bytes[4]": 76,
+    "bytes[5]": 133,
+    "bytes[6]": 187,
+    "bytes[7]": 54,
+    "bytes[8]": 199,
+    "bytes[9]": 88,
+    "bytes[10]": 170,
+    "bytes[11]": 184,
+    "bytes[12]": 153,
+    "bytes[13]": 16,
+    "bytes[14]": 160,
+    "bytes[15]": 188
+  },
+  "playerMinOpenGLESVersion": 0,
+  "mipStripping": false,
+  "numberOfMipsStripped": 0,
+  "numberOfMipsStrippedPerMipmapLimitGroup": [],
+  "m_StackTraceTypes": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+  ],
+  "iosShowActivityIndicatorOnLoading": -1,
+  "androidShowActivityIndicatorOnLoading": -1,
+  "iosUseCustomAppBackgroundBehavior": false,
+  "allowedAutorotateToPortrait": true,
+  "allowedAutorotateToPortraitUpsideDown": true,
+  "allowedAutorotateToLandscapeRight": true,
+  "allowedAutorotateToLandscapeLeft": true,
+  "useOSAutorotation": true,
+  "use32BitDisplayBuffer": true,
+  "preserveFramebufferAlpha": false,
+  "disableDepthAndStencilBuffers": false,
+  "androidStartInFullscreen": true,
+  "androidRenderOutsideSafeArea": true,
+  "androidUseSwappy": true,
+  "androidBlitType": 0,
+  "androidResizableWindow": false,
+  "androidDefaultWindowWidth": 1920,
+  "androidDefaultWindowHeight": 1080,
+  "androidMinimumWindowWidth": 400,
+  "androidMinimumWindowHeight": 300,
+  "androidFullscreenMode": 1,
+  "androidAutoRotationBehavior": 1,
+  "androidPredictiveBackSupport": true,
+  "defaultIsNativeResolution": true,
+  "macRetinaSupport": true,
+  "runInBackground": false,
+  "captureSingleScreen": false,
+  "muteOtherAudioSources": false,
+  "Prepare IOS For Recording": false,
+  "Force IOS Speakers When Recording": false,
+  "audioSpatialExperience": 0,
+  "deferSystemGesturesMode": 0,
+  "hideHomeButton": false,
+  "submitAnalytics": true,
+  "usePlayerLog": true,
+  "dedicatedServerOptimizations": false,
+  "bakeCollisionMeshes": false,
+  "forceSingleInstance": false,
+  "useFlipModelSwapchain": true,
+  "resizableWindow": false,
+  "useMacAppStoreValidation": false,
+  "macAppStoreCategory": "public.app-category.games",
+  "gpuSkinning": false,
+  "xboxPIXTextureCapture": false,
+  "xboxEnableAvatar": false,
+  "xboxEnableKinect": false,
+  "xboxEnableKinectAutoTracking": false,
+  "xboxEnableFitness": false,
+  "visibleInBackground": true,
+  "allowFullscreenSwitch": true,
+  "fullscreenMode": 1,
+  "xboxSpeechDB": 0,
+  "xboxEnableHeadOrientation": false,
+  "xboxEnableGuest": false,
+  "xboxEnablePIXSampling": false,
+  "metalFramebufferOnly": false,
+  "xboxOneResolution": 0,
+  "xboxOneSResolution": 0,
+  "xboxOneXResolution": 3,
+  "xboxOneMonoLoggingLevel": 0,
+  "xboxOneLoggingLevel": 1,
+  "xboxOneDisableEsram": false,
+  "xboxOneEnableTypeOptimization": false,
+  "xboxOnePresentImmediateThreshold": 0,
+  "switchQueueCommandMemory": 1048576,
+  "switchQueueControlMemory": 16384,
+  "switchQueueComputeMemory": 262144,
+  "switchNVNShaderPoolsGranularity": 33554432,
+  "switchNVNDefaultPoolsGranularity": 16777216,
+  "switchNVNOtherPoolsGranularity": 16777216,
+  "switchGpuScratchPoolGranularity": 2097152,
+  "switchAllowGpuScratchShrinking": false,
+  "switchNVNMaxPublicTextureIDCount": 0,
+  "switchNVNMaxPublicSamplerIDCount": 0,
+  "switchNVNGraphicsFirmwareMemory": 32,
+  "switchMaxWorkerMultiple": 8,
+  "stadiaPresentMode": 0,
+  "stadiaTargetFramerate": 0,
+  "vulkanNumSwapchainBuffers": 3,
+  "vulkanEnableSetSRGBWrite": false,
+  "vulkanEnablePreTransform": false,
+  "vulkanEnableLateAcquireNextImage": false,
+  "vulkanEnableCommandBufferRecycling": true,
+  "loadStoreDebugModeEnabled": false,
+  "invalidatedPatternTexture": {
+    "m_FileID": 0,
+    "m_PathID": 0
+  },
+  "visionOSBundleVersion": "1.0",
+  "tvOSBundleVersion": "1.0",
+  "bundleVersion": "1.0.6",
+  "preloadedAssets": [
+    {
+      "m_FileID": 1,
+      "m_PathID": 3119
+    }
+  ],
+  "metroInputSource": 0,
+  "wsaTransparentSwapchain": false,
+  "m_HolographicPauseOnTrackingLoss": true,
+  "xboxOneDisableKinectGpuReservation": true,
+  "xboxOneEnable7thCore": true,
+  "vrSettings": {
+    "enable360StereoCapture": false
+  },
+  "isWsaHolographicRemotingEnabled": false,
+  "enableFrameTimingStats": false,
+  "enableOpenGLProfilerGPURecorders": true,
+  "allowHDRDisplaySupport": false,
+  "useHDRDisplay": false,
+  "hdrBitDepth": 0,
+  "m_ColorGamuts": [
+    0
+  ],
+  "targetPixelDensity": 30,
+  "resolutionScalingMode": 0,
+  "resetResolutionOnWindowResize": false,
+  "androidSupportedAspectRatio": 1,
+  "androidMaxAspectRatio": 2.0999999046325684,
+  "activeInputHandler": 2,
+  "windowsGamepadBackendHint": 0,
+  "cloudProjectId": "",
+  "framebufferDepthMemorylessMode": 0,
+  "qualitySettingsNames": [
+    "Very Low",
+    "Low",
+    "Medium",
+    "High",
+    "Very High",
+    "Ultra"
+  ],
+  "projectName": "",
+  "organizationId": "",
+  "cloudEnabled": false,
+  "legacyClampBlendShapeWeights": false,
+  "hmiLoadingImage": {
+    "m_FileID": 0,
+    "m_PathID": 0
+  },
+  "platformRequiresReadableAssets": false,
+  "virtualTexturingSupportEnabled": false,
+  "insecureHttpOption": 0
+}

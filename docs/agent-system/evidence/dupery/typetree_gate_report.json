@@ -1,0 +1,218 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-10-21T06:40:30.826668+00:00",
+  "dupery_data_dir": "D:/Minh/Steam/steamapps/common/Dupery/Dupery_Data",
+  "total_asset_files_audited": 25,
+  "total_monobehaviours": 11947,
+  "total_successfully_decoded": 10767,
+  "overall_success_rate_pct": 90.12,
+  "scene_levels_monobehaviours": 7365,
+  "scene_levels_successfully_decoded": 7365,
+  "scene_levels_success_rate_pct": 100.0,
+  "total_xnode_instances_cataloged": 1179,
+  "total_failures_recorded": 1180,
+  "gate_verdict": "PASS",
+  "duration_seconds": 0.989,
+  "files_stat": {
+    "level0": {
+      "total_monobehaviours": 1132,
+      "succeeded": 1132,
+      "failed": 0,
+      "success_rate_pct": 100.0,
+      "duration_sec": 0.202,
+      "is_scene_level": true
+    },
+    "level1": {
+      "total_monobehaviours": 615,
+      "succeeded": 615,
+      "failed": 0,
+      "success_rate_pct": 100.0,
+      "duration_sec": 0.037,
+      "is_scene_level": true
+    },
+    "level10": {
+      "total_monobehaviours": 613,
+      "succeeded": 613,
+      "failed": 0,
+      "success_rate_pct": 100.0,
+      "duration_sec": 0.034,
+      "is_scene_level": true
+    },
+    "level11": {
+      "total_monobehaviours": 540,
+      "succeeded": 540,
+      "failed": 0,
+      "success_rate_pct": 100.0,
+      "duration_sec": 0.029,
+      "is_scene_level": true
+    },
+    "level2": {
+      "total_monobehaviours": 548,
+      "succeeded": 548,
+      "failed": 0,
+      "success_rate_pct": 100.0,
+      "duration_sec": 0.03,
+      "is_scene_level": true
+    },
+    "level3": {
+      "total_monobehaviours": 544,
+      "succeeded": 544,
+      "failed": 0,
+      "success_rate_pct": 100.0,
+      "duration_sec": 0.031,
+      "is_scene_level": true
+    },
+    "level4": {
+      "total_monobehaviours": 591,
+      "succeeded": 591,
+      "failed": 0,
+      "success_rate_pct": 100.0,
+      "duration_sec": 0.034,
+      "is_scene_level": true
+    },
+    "level5": {
+      "total_monobehaviours": 596,
+      "succeeded": 596,
+      "failed": 0,
+      "success_rate_pct": 100.0,
+      "duration_sec": 0.033,
+      "is_scene_level": true
+    },
+    "level6": {
+      "total_monobehaviours": 1347,
+      "succeeded": 1347,
+      "failed": 0,
+      "success_rate_pct": 100.0,
+      "duration_sec": 0.072,
+      "is_scene_level": true
+    },
+    "level7": {
+      "total_monobehaviours": 646,
+      "succeeded": 646,
+      "failed": 0,
+      "success_rate_pct": 100.0,
+      "duration_sec": 0.039,
+      "is_scene_level": true
+    },
+    "level8": {
+      "total_monobehaviours": 26,
+      "succeeded": 26,
+      "failed": 0,
+      "success_rate_pct": 100.0,
+      "duration_sec": 0.008,
+      "is_scene_level": true
+    },
+    "level9": {
+      "total_monobehaviours": 167,
+      "succeeded": 167,
+      "failed": 0,
+      "success_rate_pct": 100.0,
+      "duration_sec": 0.015,
+      "is_scene_level": true
+    },
+    "resources.assets": {
+      "total_monobehaviours": 455,
+      "succeeded": 454,
+      "failed": 1,
+      "success_rate_pct": 99.78,
+      "duration_sec": 0.105,
+      "is_scene_level": false
+    },
+    "sharedassets0.assets": {
+      "total_monobehaviours": 680,
+      "succeeded": 345,
+      "failed": 335,
+      "success_rate_pct": 50.74,
+      "duration_sec": 0.045,
+      "is_scene_level": false
+    },
+    "sharedassets1.assets": {
+      "total_monobehaviours": 1839,
+      "succeeded": 1045,
+      "failed": 794,
+      "success_rate_pct": 56.82,
+      "duration_sec": 0.102,
+      "is_scene_level": false
+    },
+    "sharedassets10.assets": {
+      "total_monobehaviours": 905,
+      "succeeded": 905,
+      "failed": 0,
+      "success_rate_pct": 100.0,
+      "duration_sec": 0.056,
+      "is_scene_level": false
+    },
+    "sharedassets11.assets": {
+      "total_monobehaviours": 248,
+      "succeeded": 248,
+      "failed": 0,
+      "success_rate_pct": 100.0,
+      "duration_sec": 0.024,
+      "is_scene_level": false
+    },
+    "sharedassets2.assets": {
+      "total_monobehaviours": 62,
+      "succeeded": 12,
+      "failed": 50,
+      "success_rate_pct": 19.35,
+      "duration_sec": 0.016,
+      "is_scene_level": false
+    },
+    "sharedassets3.assets": {
+      "total_monobehaviours": 86,
+      "succeeded": 86,
+      "failed": 0,
+      "success_rate_pct": 100.0,
+      "duration_sec": 0.014,
+      "is_scene_level": false
+    },
+    "sharedassets4.assets": {
+      "total_monobehaviours": 8,
+      "succeeded": 8,
+      "failed": 0,
+      "success_rate_pct": 100.0,
+      "duration_sec": 0.008,
+      "is_scene_level": false
+    },
+    "sharedassets5.assets": {
+      "total_monobehaviours": 131,
+      "succeeded": 131,
+      "failed": 0,
+      "success_rate_pct": 100.0,
+      "duration_sec": 0.014,
+      "is_scene_level": false
+    },
+    "sharedassets6.assets": {
+      "total_monobehaviours": 97,
+      "succeeded": 97,
+      "failed": 0,
+      "success_rate_pct": 100.0,
+      "duration_sec": 0.013,
+      "is_scene_level": false
+    },
+    "sharedassets7.assets": {
+      "total_monobehaviours": 60,
+      "succeeded": 60,
+      "failed": 0,
+      "success_rate_pct": 100.0,
+      "duration_sec": 0.011,
+      "is_scene_level": false
+    },
+    "sharedassets8.assets": {
+      "total_monobehaviours": 0,
+      "succeeded": 0,
+      "failed": 0,
+      "success_rate_pct": 100.0,
+      "duration_sec": 0.007,
+      "is_scene_level": false
+    },
+    "sharedassets9.assets": {
+      "total_monobehaviours": 11,
+      "succeeded": 11,
+      "failed": 0,
+      "success_rate_pct": 100.0,
+      "duration_sec": 0.009,
+      "is_scene_level": false
+    }
+  }
+}

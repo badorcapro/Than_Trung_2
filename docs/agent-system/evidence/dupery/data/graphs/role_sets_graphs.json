@@ -1,0 +1,345 @@
+{
+  "total_sets": 68,
+  "sets": [
+    {
+      "name": "cas_set_1",
+      "graph_id": 1421,
+      "node_count": 5
+    },
+    {
+      "name": "cas_set_10",
+      "graph_id": 1422,
+      "node_count": 5
+    },
+    {
+      "name": "cas_set_11",
+      "graph_id": 1423,
+      "node_count": 5
+    },
+    {
+      "name": "cas_set_12",
+      "graph_id": 1424,
+      "node_count": 5
+    },
+    {
+      "name": "cas_set_13",
+      "graph_id": 1425,
+      "node_count": 5
+    },
+    {
+      "name": "cas_set_14",
+      "graph_id": 1426,
+      "node_count": 5
+    },
+    {
+      "name": "cas_set_15",
+      "graph_id": 1427,
+      "node_count": 5
+    },
+    {
+      "name": "cas_set_16",
+      "graph_id": 1428,
+      "node_count": 5
+    },
+    {
+      "name": "cas_set_17",
+      "graph_id": 1429,
+      "node_count": 5
+    },
+    {
+      "name": "cas_set_18",
+      "graph_id": 1430,
+      "node_count": 5
+    },
+    {
+      "name": "cas_set_19",
+      "graph_id": 1431,
+      "node_count": 5
+    },
+    {
+      "name": "cas_set_2",
+      "graph_id": 1432,
+      "node_count": 5
+    },
+    {
+      "name": "cas_set_20",
+      "graph_id": 1433,
+      "node_count": 5
+    },
+    {
+      "name": "cas_set_3",
+      "graph_id": 1434,
+      "node_count": 5
+    },
+    {
+      "name": "cas_set_4",
+      "graph_id": 1435,
+      "node_count": 5
+    },
+    {
+      "name": "cas_set_5",
+      "graph_id": 1436,
+      "node_count": 5
+    },
+    {
+      "name": "cas_set_6",
+      "graph_id": 1437,
+      "node_count": 5
+    },
+    {
+      "name": "cas_set_7",
+      "graph_id": 1438,
+      "node_count": 5
+    },
+    {
+      "name": "cas_set_8",
+      "graph_id": 1439,
+      "node_count": 5
+    },
+    {
+      "name": "cas_set_9",
+      "graph_id": 1440,
+      "node_count": 5
+    },
+    {
+      "name": "dc_set_1",
+      "graph_id": 1441,
+      "node_count": 5
+    },
+    {
+      "name": "dc_set_10",
+      "graph_id": 1442,
+      "node_count": 5
+    },
+    {
+      "name": "dc_set_11",
+      "graph_id": 1443,
+      "node_count": 5
+    },
+    {
+      "name": "dc_set_12",
+      "graph_id": 1444,
+      "node_count": 5
+    },
+    {
+      "name": "dc_set_13",
+      "graph_id": 1445,
+      "node_count": 5
+    },
+    {
+      "name": "dc_set_14",
+      "graph_id": 1446,
+      "node_count": 5
+    },
+    {
+      "name": "dc_set_15",
+      "graph_id": 1447,
+      "node_count": 5
+    },
+    {
+      "name": "dc_set_16",
+      "graph_id": 1448,
+      "node_count": 5
+    },
+    {
+      "name": "dc_set_17",
+      "graph_id": 1449,
+      "node_count": 5
+    },
+    {
+      "name": "dc_set_18",
+      "graph_id": 1450,
+      "node_count": 5
+    },
+    {
+      "name": "dc_set_19",
+      "graph_id": 1451,
+      "node_count": 5
+    },
+    {
+      "name": "dc_set_2",
+      "graph_id": 1452,
+      "node_count": 5
+    },
+    {
+      "name": "dc_set_20",
+      "graph_id": 1453,
+      "node_count": 5
+    },
+    {
+      "name": "dc_set_21",
+      "graph_id": 1454,
+      "node_count": 5
+    },
+    {
+      "name": "dc_set_22",
+      "graph_id": 1455,
+      "node_count": 5
+    },
+    {
+      "name": "dc_set_3",
+      "graph_id": 1456,
+      "node_count": 5
+    },
+    {
+      "name": "dc_set_4",
+      "graph_id": 1457,
+      "node_count": 5
+    },
+    {
+      "name": "dc_set_5",
+      "graph_id": 1458,
+      "node_count": 5
+    },
+    {
+      "name": "dc_set_6",
+      "graph_id": 1459,
+      "node_count": 5
+    },
+    {
+      "name": "dc_set_7",
+      "graph_id": 1460,
+      "node_count": 5
+    },
+    {
+      "name": "dc_set_8",
+      "graph_id": 1461,
+      "node_count": 5
+    },
+    {
+      "name": "dc_set_9",
+      "graph_id": 1462,
+      "node_count": 5
+    },
+    {
+      "name": "empty_set",
+      "graph_id": 1488,
+      "node_count": 0
+    },
+    {
+      "name": "off_set_1",
+      "graph_id": 1463,
+      "node_count": 5
+    },
+    {
+      "name": "off_set_10",
+      "graph_id": 1464,
+      "node_count": 5
+    },
+    {
+      "name": "off_set_11",
+      "graph_id": 1465,
+      "node_count": 5
+    },
+    {
+      "name": "off_set_12",
+      "graph_id": 1466,
+      "node_count": 5
+    },
+    {
+      "name": "off_set_13",
+      "graph_id": 1467,
+      "node_count": 5
+    },
+    {
+      "name": "off_set_14",
+      "graph_id": 1468,
+      "node_count": 5
+    },
+    {
+      "name": "off_set_15",
+      "graph_id": 1469,
+      "node_count": 5
+    },
+    {
+      "name": "off_set_16",
+      "graph_id": 1470,
+      "node_count": 5
+    },
+    {
+      "name": "off_set_17",
+      "graph_id": 1471,
+      "node_count": 5
+    },
+    {
+      "name": "off_set_18",
+      "graph_id": 1472,
+      "node_count": 5
+    },
+    {
+      "name": "off_set_19",
+      "graph_id": 1473,
+      "node_count": 5
+    },
+    {
+      "name": "off_set_2",
+      "graph_id": 1474,
+      "node_count": 5
+    },
+    {
+      "name": "off_set_20",
+      "graph_id": 1475,
+      "node_count": 5
+    },
+    {
+      "name": "off_set_21",
+      "graph_id": 1476,
+      "node_count": 5
+    },
+    {
+      "name": "off_set_22",
+      "graph_id": 1477,
+      "node_count": 5
+    },
+    {
+      "name": "off_set_23",
+      "graph_id": 1478,
+      "node_count": 5
+    },
+    {
+      "name": "off_set_24",
+      "graph_id": 1479,
+      "node_count": 5
+    },
+    {
+      "name": "off_set_25",
+      "graph_id": 1480,
+      "node_count": 5
+    },
+    {
+      "name": "off_set_3",
+      "graph_id": 1481,
+      "node_count": 5
+    },
+    {
+      "name": "off_set_4",
+      "graph_id": 1482,
+      "node_count": 5
+    },
+    {
+      "name": "off_set_5",
+      "graph_id": 1483,
+      "node_count": 5
+    },
+    {
+      "name": "off_set_6",
+      "graph_id": 1484,
+      "node_count": 5
+    },
+    {
+      "name": "off_set_7",
+      "graph_id": 1485,
+      "node_count": 5
+    },
+    {
+      "name": "off_set_8",
+      "graph_id": 1486,
+      "node_count": 5
+    },
+    {
+      "name": "off_set_9",
+      "graph_id": 1487,
+      "node_count": 5
+    }
+  ]
+}
