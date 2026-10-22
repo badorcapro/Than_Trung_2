@@ -18,6 +18,10 @@ Desktop.ini
 # Scratch temporary testing scripts
 scratch/
 
+# Compressed archives for external handoff
+*.zip
+archives/
+
 # Python bytecode and test caches
 __pycache__/
 *.py[cod]

@@ -411,6 +411,87 @@
         "ADR-ARCH-010"
       ],
       "description": "Plan Chặng 3 v2.0: Giải phẫu toàn diện 100% tựa game gốc Dupery (23 tasks, TASK-0010..0032)"
+    },
+    {
+      "id": "PLAN-CHANG-004",
+      "kind": "requirement",
+      "path": "docs/agent-system/plans/PLAN-CHANG-4-GODOT-RECONSTRUCTION-AND-LAN.md",
+      "authority": "approved",
+      "status": "current",
+      "sha256": "90e6fa8a4b4d7ece068315b71894385d2a337093931caafa009b444419c66068",
+      "depends_on": [
+        "ARCH-CORE-001",
+        "ADR-ARCH-010",
+        "PLAN-CHANG-003"
+      ],
+      "description": "Plan Chang 4: Tai cau truc Godot Fan-Game & Kien truc nen Mang LAN Multiplayer (8 tasks, TASK-0033..0041)"
+    },
+    {
+      "id": "PLAN-META-001",
+      "kind": "requirement",
+      "path": "docs/agent-system/plans/MASTER_EXECUTION_PLAN_ALL_STAGES.md",
+      "authority": "approved",
+      "status": "current",
+      "sha256": "32fc68870e3ffa6a3ac99546cff7517ee20768cd09006778d699711f072055f4",
+      "depends_on": [
+        "ARCH-CORE-001",
+        "ADR-ARCH-010"
+      ],
+      "description": "Master Execution Plan across all stages (Chặng 1-4 & Extra)"
+    },
+    {
+      "id": "PLAN-CHANG-005",
+      "kind": "requirement",
+      "path": "docs/agent-system/plans/STAGE_4_AND_EXTRA_MASTER_BLUEPRINT.md",
+      "authority": "approved",
+      "status": "current",
+      "sha256": "762c5ca1714a8e30a18e3c7a516c39236720b88c5282e64c1376f82f8192b771",
+      "depends_on": [
+        "ARCH-CORE-001",
+        "ADR-ARCH-010",
+        "PLAN-CHANG-003"
+      ],
+      "description": "Master Blueprint for Stage 4 (Core & LAN) and Stage Extra (Parity)"
+    },
+    {
+      "id": "PLAN-CHANG-006",
+      "kind": "requirement",
+      "path": "docs/agent-system/plans/STAGE_4_DETAILED_EXECUTION_PLAN.md",
+      "authority": "approved",
+      "status": "current",
+      "sha256": "4c97e46b30dc4705880a824e711431db872d515e37448df1c1d6774352afd4f8",
+      "depends_on": [
+        "ARCH-CORE-001",
+        "ADR-ARCH-010",
+        "PLAN-CHANG-005"
+      ],
+      "description": "Detailed Execution Plan for Stage 4 (TASK-0033..TASK-0041)"
+    },
+    {
+      "id": "SPEC-EXTRA-001",
+      "kind": "requirement",
+      "path": "docs/agent-system/plans/STAGE_EXTRA_FULL_PARITY_SPECIFICATION.md",
+      "authority": "approved",
+      "status": "current",
+      "sha256": "abae241def3c64a03e1914bf7a8db6e7037092017ffa088b32b3c762ec639d03",
+      "depends_on": [
+        "ARCH-CORE-001",
+        "ADR-ARCH-010",
+        "PLAN-CHANG-005"
+      ],
+      "description": "Full Parity Specification for Stage Extra (7 systems, 228 roles)"
+    },
+    {
+      "id": "DOC-HAND-001",
+      "kind": "requirement",
+      "path": "docs/agent-system/HANDOFF.md",
+      "authority": "approved",
+      "status": "current",
+      "sha256": "8f7d7138c64979cb06a8f2f1ac6f81eada77da0f4c2bb7bd4363005715d4efe4",
+      "depends_on": [
+        "ARCH-CORE-001"
+      ],
+      "description": "Handoff and Onboarding Guide for Colleague & AI Agent"
     }
   ]
 }
