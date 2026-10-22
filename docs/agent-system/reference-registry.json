@@ -339,7 +339,7 @@
       "path": "README.md",
       "authority": "approved",
       "status": "current",
-      "sha256": "4a19348350a9d2df43dd288038495fa4de4373ccffef74c9017dc7a94937eb40",
+      "sha256": "9af21b5a443ac1537cbc981ec7f0f23a759107d5b5c8390e3e41d1b8dbe7d5d4",
       "depends_on": [
         "ARCH-CORE-001",
         "ADR-ARCH-010",

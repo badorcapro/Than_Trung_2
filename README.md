@@ -1,95 +1,121 @@
-# AI-AGENTS-Template
+# Thần Trùng 2 (Fan-Game) — Thần Thám Nửa Vời
 
-> **Universal 2-Tier AI-Assisted Engineering Operating System**  
-> A deterministic, anti-evasion governance framework designed for pair-programming with autonomous AI agents across Software and Semiconductor/Hardware engineering projects.
-
----
-
-## 1. Core Architectural Invariants
-
-1. **Contract-First Execution**: No production or test code may be modified without an active, validated Task Contract (`docs/agent-system/tasks/TASK-XXXX.md`).
-2. **Zero Self-Grading (Fail-Closed Verification)**: AI Agents cannot mark their own tasks as `verified` or `approved`. Transition to `verified` is performed strictly by running `python scripts/agent/run_verify.py --task TASK-XXXX` which hashes code diffs and runs test suites deterministically.
-3. **Role-Based Configurable Line Budgets ([ADR-0010](docs/agent-system/decisions/ADR-0010-role-based-configurable-line-budgets.md))**: Replaces naive universal file-length caps with domain-aware role budgets (`core_engine`, `domain_logic`, `rtl`, `test`), backed by a post-hoc git diff guard that halts code truncation placeholders.
-4. **Flexible Workflow Modes ([ADR-0011](docs/agent-system/decisions/ADR-0011-workspace-customization-and-workflow-modes.md))**:
-   - `single_task`: Agile per-task validation, verification, and individual approval for rapid development.
-   - `milestone`: Structured phased governance with mechanical cross-phase boundary gates for enterprise delivery.
-5. **Progressive Disclosure (5-Layer Model)**: Keeps agent context consumption below $15\%$ of budget through on-demand loading of rules and skills.
+> **Dự án Game Trinh Thám Suy Luận & Điều Tra Tâm Linh trên Godot Engine 4.6.2 (.NET / C#)**  
+> Sự giao thoa độc đáo giữa không khí kinh dị tâm linh của vũ trụ *Thần Trùng* và chiều sâu cơ chế suy luận vụ án từ tựa game trinh thám *Dupery* (Steam), được xây dựng dưới khung quản trị AI-Native Engineering Operating System 2 tầng.
 
 ---
 
-## 2. Quickstart for Adopters
+## 1. Tổng Quan Dự Án
 
-### Step 1: Install Dependencies
+**Thần Trùng 2 (Thần Thám Nửa Vời)** là dự án fan-game trinh thám góc nhìn 2D (Canvas 1920x1080) kết hợp giữa cốt truyện điều tra hiện tượng kỳ bí và hệ thống cơ chế suy luận logic chặt chẽ:
+- **Nguyên bản cảm hứng**: Không khí bí ẩn, các vụ án đô thị mang đậm bản sắc Việt Nam từ *Thần Trùng* kết hợp cùng toàn bộ hệ thống cơ chế lõi của tựa game suy luận *Dupery* (Steam).
+- **Nền tảng công nghệ**: **Godot Engine 4.6.2 (.NET Edition)**, C# (.NET 8.0) cho Core Engine & Domain Logic.
+- **Tiến độ hiện tại**: Đã hoàn thành 100% Chặng 1, 2, 3 (Decompile 1.464 file C# Dupery, kiểm toán 1.533 lớp, 13 handbooks L3, Master Encyclopedia, đối chiếu 12/12 hệ thống con, 210/210 automated unit tests PASS). Đang bước vào **Chặng 4: Tái Cấu Trúc Godot & Hạ Tầng Mạng LAN Multiplayer**.
+
+---
+
+## 2. Điểm Nhấn Cơ Chế Gameplay (Core Pillars)
+
+### 📌 Bảng Thám Tử Tương Tác (Detective Board)
+- Ghim hồ sơ, tài liệu, hiện vật và ảnh chụp hiện trường lên không gian 2D với pan/zoom không giới hạn.
+- **Dây nối Catenary2D**: Hệ thống nối chỉ đỏ liên kết các đầu mối với hiệu ứng võng vật lý tự nhiên theo khoảng cách hai điểm ghim.
+- Phân loại trực quan: Nghi phạm (Suspects), Chứng cứ (Evidence), Hiện trường (Locations), Mốc thời gian (Timestamps), Động cơ (Motives).
+
+### 🎲 Máy Sinh Vụ Án Tất Định (Deterministic Case Generator)
+- Thuật toán sinh ngẫu nhiên tất định dựa trên **Knuth DotNetRandom** với Seed có thể tái lập 100%.
+- Kiểm soát nghiêm ngặt bởi **20 Generation Constraints**: Đảm bảo mọi vụ án được tạo ra luôn có lời giải duy nhất, không mâu thuẫn thời gian - không gian, và không xảy ra ngõ cụt logic.
+
+### 🔍 Hệ Thống Phán Đoán & Câu Đố (1-of-3 Deduction)
+- Bộ câu hỏi suy luận 3 ngôi: *Ai là thủ phạm?*, *Hung khí / Phương thức gây án là gì?*, *Động cơ / Mốc thời gian thực sự?*.
+- Cơ chế đối chất bằng chứng với lời khai nghi phạm; hệ thống phán quyết phản hồi trực tiếp dựa trên bằng chứng đã liên kết.
+
+### 🃏 Khám Xét & Xòe Quạt Thẻ Bài (Looting & Fan-out Deck)
+- Cơ chế xòe quạt thẻ bài mượt mà khi người chơi thu thập vật phẩm, khám xét ngăn tủ hoặc tra cứu hồ sơ.
+- Lật thẻ xem thông tin chi tiết, đặc tính vật lý và thuộc tính ẩn của bằng chứng.
+
+### 🌐 Hạ Tầng Mạng LAN Multiplayer (Chặng 4 Platform)
+- **Tự động dò tìm phòng**: UDP Broadcast Room Discovery (Port 7777) trong mạng nội bộ (cùng WiFi).
+- **Lobby đa năng**: Phòng chờ hỗ trợ ghép linh hoạt giữa Người chơi (Human) và AI Bot.
+- **Cơ chế RPC Secret Bidding**: Đấu giá manh mối và gửi đáp án suy luận bí mật giữa các thám tử, bảo mật tuyệt đối không lộ dữ liệu qua mạng cho đến vòng công bố phán quyết.
+
+---
+
+## 3. Kiến Trúc Kỹ Thuật (Architecture & Invariants)
+
+Dự án áp dụng mô hình kiến trúc phân tách nghiêm ngặt:
+
+```text
+Than_Trung_2/
+├── Than_Tham_Nua_Voi_Godot/         # Workspace Godot Engine 4.6.2 (.NET)
+│   ├── scenes/                      # Màn chơi & UI (Board, CardFan, Lobby, Room)
+│   ├── scripts/                     # C# / GDScript Scripts
+│   │   ├── domain/                  # Pure Domain Logic (Case Gen, Solver, LAN Protocol)
+│   │   └── presentation/            # Godot Nodes, CanvasLayer, Catenary2D, Shaders
+│   ├── assets/                      # Textures, Fonts, SFX, Shaders
+│   └── project.godot                # Cấu hình dự án Godot (1920x1080)
+├── Dupery_Heavy_Assets_Vault.zip    # Kho asset gốc nén (2.43 GB, 2.731 files)
+├── docs/agent-system/               # Trung tâm tri thức & quản trị AI
+│   ├── plans/                       # Kế hoạch chi tiết Chặng 1-3, Chặng 4, Chặng Extra
+│   ├── evidence/dupery/             # 13 Handbooks L3, Master Encyclopedia, Mapping
+│   ├── decisions/                   # 12 Architectural Decision Records (ADR-0001..0012)
+│   ├── tasks/                       # Task Execution Contracts (TASK-0001..TASK-0032)
+│   └── HANDOFF.md                   # Tài liệu bàn giao toàn diện Chặng 4
+├── scripts/agent/                   # Engine kiểm soát chất lượng & Gatekeepers (<= 400 lines)
+└── tests/                           # 210 Automated Unit Tests (100% PASS)
+```
+
+### Quy Tắc Kiến Trúc Cốt Lõi:
+1. **Presentation Separation Contract**: Toàn bộ Logic nghiệp vụ (Sinh vụ án, Giải đố, Giao thức LAN) là mã nguồn thuần túy, độc lập 100% với Godot Node và có thể kiểm thử tự động không cần khởi động engine.
+2. **Godot Engine Guard (Windows)**: Tuyệt đối không chạy lệnh `godot --headless` tự động trên Windows (gây treo/crash engine ngầm). Mọi kiểm thử tự động chạy qua Python test harness hoặc `dotnet test`.
+3. **Role-Based Line Budgets ([ADR-0010](docs/agent-system/decisions/ADR-0010-role-based-configurable-line-budgets.md))**: Giới hạn kích thước tệp theo vai trò (`warn: 800 / hard: 1000 LOC`), ngăn chặn các file nguyên khối (God classes) và chống cắt vụn mã nguồn.
+4. **Fail-Closed Verification & Semantic Peer-Audit**: Mọi tính năng code đều phải có Task Contract (`TASK-XXXX.md`), kiểm toán độc lập qua Subagent Peer-Audit và sinh biên lai tamper-evident `TASK-XXXX-receipt.json`.
+
+---
+
+## 4. Hướng Dẫn Cài Đặt & Bắt Đầu (Quickstart)
+
+### Yêu Cầu Môi Trường
+- **Hệ điều hành**: Windows 10/11 (hoặc Linux/macOS)
+- **Godot Engine**: [Godot Engine 4.6.2 - .NET Edition](https://godotengine.org/download)
+- **.NET SDK**: .NET 8.0 SDK trở lên
+- **Python**: Python 3.10+ (phục vụ bộ công cụ kiểm toán và test harness)
+
+### Bước 1: Cài Đặt Dependencies Quản Trị
 ```powershell
 pip install -r requirements.txt
 ```
 
-### Step 2: Initialize Workspace Configuration
-```powershell
-# For general software development in single-task mode:
-python scripts/agent/configure_project.py --init --profile software --mode single_task
+### Bước 2: Giải Nén Kho Asset Nặng
+Giải nén tệp `Dupery_Heavy_Assets_Vault.zip` (2.43 GB) vào ngay thư mục gốc của dự án. Sau khi giải nén, các thư mục sau sẽ xuất hiện:
+- `docs/agent-system/evidence/dupery/vault/raw/` (Sprite textures, fonts)
+- `docs/agent-system/evidence/dupery/vault/audio/samples/` (155 WAV audio samples)
+- `docs/agent-system/evidence/dupery/references/gameplay/` (6 gameplay video references)
+- `Dupery_Unity_Project/` (Dự án tham chiếu Unity gốc)
 
-# Or for semiconductor/hardware development in milestone mode:
-python scripts/agent/configure_project.py --init --profile semiconductor-hardware --mode milestone
+### Bước 3: Chạy Kiểm Thử Toàn Diện
+```powershell
+# Chạy bộ kiểm thử tự động (210/210 tests PASS):
+python -m unittest discover -s tests -p "test_*.py"
+
+# Xác thực tính toàn vẹn của Registry tài liệu:
+python scripts/agent/validate_registry.py
+
+# Kiểm tra ánh xạ 12/12 hệ thống con với asset gốc:
+python scripts/agent/query_cross_project_mapping.py --verify
 ```
 
-### Step 3: Validate Reference Registry
-```powershell
-python scripts/agent/validate_registry.py --update-hashes
-python scripts/agent/check_docs.py
-```
-
-### Step 4: Plan and Execute Your First Task
-1. Create a task contract in `docs/agent-system/tasks/TASK-0001.md` (see domain templates in `profiles/`).
-2. Sync state:
-   ```powershell
-   python scripts/agent/validate_task.py --task TASK-0001 --sync-state
-   ```
-3. Implement in-scope changes and verify deterministically:
-   ```powershell
-   python scripts/agent/run_verify.py --task TASK-0001
-   ```
-4. Approve task:
-   ```powershell
-   python scripts/agent/validate_task.py --approve --task TASK-0001
-   ```
+### Bước 4: Mở Dự Án Bằng Godot 4.6.2
+1. Khởi động **Godot Engine 4.6.2 (.NET)**.
+2. Chọn **Import** và trỏ đến tệp `Than_Tham_Nua_Voi_Godot/project.godot`.
+3. Nhấn **Build** để biên dịch giải pháp .NET C#.
 
 ---
 
-## 3. Directory Layout
+## 5. Tài Liệu Bàn Giao & Lộ Trình Phát Triển
 
-```text
-AI-AGENTS-Template/
-├── AGENTS.md                        # L1: Supreme operational manual & invariants
-├── ARCHITECTURE.md                  # L1: System topology & contract specifications
-├── requirements.txt                 # Dependencies (pydantic, pyyaml, jsonschema)
-├── .agents/
-│   ├── rules/                       # L2: Operational guardrails (anti-evasion, critical engagement)
-│   └── skills/                      # L3: Progressive procedural workflows
-│       ├── customize-workspace/     # Project personalization & onboarding playbook
-│       ├── plan-task/               # Task decomposition & contract authoring
-│       ├── execute-task/            # Scope containment & surgical editing
-│       ├── verify-task/             # Deterministic verification & receipt generation
-│       ├── controlled-learning/     # Staging gate for durable knowledge
-│       └── investigate-bug/         # Systematic bug diagnosis & ADR capture
-├── profiles/                        # Domain packs (software, semiconductor-hardware)
-├── docs/agent-system/
-│   ├── reference-registry.json      # Authoritative dependency and SHA-256 index
-│   ├── project-config.json          # Workflow mode, profile, and role budgets
-│   ├── decisions/                   # Architectural Decision Records (ADR-0001..0012)
-│   ├── tasks/                       # Active and historical Task Contracts
-│   ├── evidence/                    # Tamper-evident verification receipts
-│   └── state/                       # Active task pointer (active-task.json)
-└── scripts/agent/                   # L5: Deterministic Gatekeeper Engines (<= 400 lines)
-```
-
----
-
-## 4. Exporting as a Starter Bundle ([ADR-0012](docs/agent-system/decisions/ADR-0012-reusable-template-export-and-packaging.md))
-
-To package a clean, turn-key distribution without dogfooding task history:
-```powershell
-python scripts/agent/export_template.py --output ../my-new-project
-# Or export directly to a zip archive:
-python scripts/agent/export_template.py --output ../temp-export --zip ../starter.zip
-```
+Dành cho thành viên dự án và AI Agent tiếp quản:
+- 📖 [Tài liệu Bàn giao Toàn diện Chặng 4 (HANDOFF.md)](HANDOFF.md): Đầy đủ ngữ cảnh, hướng dẫn cấu hình REA ngang hàng, khắc phục lỗi và quy trình thực hiện `TASK-0033`.
+- 🗺️ [Kế hoạch Tổng thể Toàn bộ Các Chặng](docs/agent-system/plans/MASTER_EXECUTION_PLAN_ALL_STAGES.md): Bức tranh toàn cảnh từ Chặng 1 đến Chặng Extra.
+- 📐 [Quy hoạch Kiến trúc Chặng 4 & Chặng Extra](docs/agent-system/plans/STAGE_4_AND_EXTRA_MASTER_BLUEPRINT.md): 5 Pillar giải quyết toàn bộ vấn đề của bản Godot cũ và thiết kế Mạng LAN.
+- 📋 [Kế hoạch Triển khai Chi tiết Chặng 4](docs/agent-system/plans/STAGE_4_DETAILED_EXECUTION_PLAN.md): Lộ trình 14 Tasks thực thi Chặng 4.
+- 🔍 [Đặc tả Đối chiếu Tính năng với Game Gốc (Chặng Extra)](docs/agent-system/plans/STAGE_EXTRA_FULL_PARITY_SPECIFICATION.md): Ma trận so sánh chi tiết tính năng tương đương với bản game gốc Steam.
