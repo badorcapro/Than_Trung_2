@@ -487,7 +487,7 @@
       "path": "docs/agent-system/HANDOFF.md",
       "authority": "approved",
       "status": "current",
-      "sha256": "8f7d7138c64979cb06a8f2f1ac6f81eada77da0f4c2bb7bd4363005715d4efe4",
+      "sha256": "1778eed15fc0bab9d2411d09c03ca0b92d4f5793fc10e72070f2cee4a282daaf",
       "depends_on": [
         "ARCH-CORE-001"
       ],

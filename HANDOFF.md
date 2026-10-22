@@ -54,6 +54,71 @@ Cấu trúc các thư mục được phục hồi sau khi giải nén:
 
 ---
 
+## 2.1. THIẾT LẬP CÔNG CỤ REVERSE ENGINEERING (REA) NGANG HÀNG
+
+Công cụ **REA (Reverse Engineer Anything)** được sử dụng làm engine điều tra và phân tích tĩnh/động mã nguồn C# và asset gốc của Dupery. Đồng nghiệp cần đặt thư mục REA **ngang hàng** với thư mục `Than_Trung_2`:
+
+### Cấu Trúc Thư Mục Ngang Hàng Chuẩn Bắt Buộc:
+```text
+parent_workspace/
+├── Than_Trung_2/          <-- Dự án Fan-Game Thần Trùng (chúng ta đang làm việc ở đây)
+└── rea/                   <-- Repository công cụ REA (Reverse Engineer Anything)
+```
+
+### Các Bước Cài Đặt & Cập Nhật Mã Nguồn REA:
+
+1. **Tải / Clone REA về thư mục ngang hàng**:
+   ```bash
+   cd ..
+   git clone https://github.com/source-foundry/rea.git
+   cd rea
+   ```
+
+2. **Cập nhật mã nguồn REA để sửa lỗi Windows `ESTALE` (`dev === 0`)**:
+   - Trên hệ điều hành Windows, Node.js `fs.stat` có thể trả về `dev === 0`, khiến REA bị lỗi `ESTALE: file handle is stale` khi đọc file PE/DLL.
+   - Mở file `rea/src/filesystem/RegularFile.ts`, tìm hàm `sameRegularFileState` (khoảng dòng 162-170) và cập nhật điều kiện như sau:
+     ```typescript
+     export const sameRegularFileState = (
+       expected: Stats | BigIntStats,
+       observed: Stats | BigIntStats,
+     ): boolean =>
+       observed.isFile() &&
+       (expected.dev === observed.dev ||
+         (process.platform === "win32" &&
+           (expected.dev === 0 ||
+             expected.dev === 0n ||
+             observed.dev === 0 ||
+             observed.dev === 0n))) &&
+       expected.ino === observed.ino &&
+       expected.size === observed.size &&
+       expected.mode === observed.mode &&
+     ```
+
+3. **Cài đặt dependencies và build REA**:
+   ```bash
+   npm install
+   npm run build:cached
+   ```
+
+4. **Cấu hình cách ly Git trong REA (`.git/info/exclude`)**:
+   - Khi mở IDE Antigravity tại workspace `rea`, IDE có thể sinh ra các tệp workflow của Than_Trung_2. Để tránh commit nhầm vào REA của tác giả, mở file `rea/.git/info/exclude` và thêm vào cuối:
+     ```text
+     .agent_scratchpad.md
+     .agents/rules/
+     .agents/skills/controlled-learning/
+     .agents/skills/critical-engagement/
+     .agents/skills/customize-workspace/
+     .agents/skills/execute-task/
+     .agents/skills/honest-execution/
+     .agents/skills/investigate-bug/
+     .agents/skills/knowledge-review/
+     .agents/skills/plan-task/
+     .agents/skills/project-bootstrap/
+     .agents/skills/verify-task/
+     ```
+
+---
+
 ## 3. BẢN ĐỒ TÀI LIỆU QUY HOẠCH QUAN TRỌNG TRONG DỰ ÁN
 
 Tất cả tài liệu quy hoạch kiến trúc đã được chuyển từ thư mục tạm vào trực tiếp trong kho mã nguồn tại `docs/agent-system/plans/`:
