@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0",
+  "evaluated_at": "2026-10-22T04:50:57.015955+00:00",
+  "total_classes": 1533,
+  "catalog_total_types": 1533,
+  "is_coverage_complete": true,
+  "metrics": {
+    "unaccounted": 0,
+    "documented": 1533,
+    "pending": 0,
+    "with_metadata_token": 1532,
+    "missing_source_files_count": 0
+  },
+  "depth_distribution": {
+    "L3": 1119,
+    "L2": 270,
+    "L1": 144
+  },
+  "vong_distribution": {
+    "V4": 101,
+    "V5": 496,
+    "V2": 130,
+    "V7": 64,
+    "V6": 100,
+    "V1": 95,
+    "V3": 94,
+    "V8": 22,
+    "audio_bridge": 269,
+    "framework": 120,
+    "localisation": 18,
+    "graph_engine": 24
+  },
+  "issues": {
+    "vong_mismatches": [],
+    "depth_mismatches": [],
+    "missing_sources": []
+  }
+}

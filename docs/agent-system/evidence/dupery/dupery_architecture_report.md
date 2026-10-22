@@ -11,7 +11,7 @@
 
 | Phân hệ / Hạng mục | Chỉ số Trích xuất Hoàn tất | Độ toàn vẹn & Provenance |
 | :--- | :--- | :--- |
-| **Codebase C#** | **1,532 types** (Tier 1: 1,101, Tier 2: 431) | 100% CIL Tokens (1,532), **Unaccounted = 0** |
+| **Codebase C#** | **1,533 types** (Tier 1: 1,102, Tier 2: 431) | 100% CIL Tokens (1,532), **Unaccounted = 0** |
 | **Scene Hierarchy Trees** | **12 scenes**, **5,279 GameObjects**, **7,365 MonoBehaviours** | 100% Decode, 11 Project Settings Managers |
 | **Kho Vault Tài Nguyên** | **879 Sprites**, **10 Fonts**, **752 Textures** | Nine-Slice rect/pivot/ppu, 100% SHA-256 |
 | **Vật Liệu & Hiệu Ứng** | **54 Materials**, **46 Shaders**, **2 VideoClips** | 13 Custom Shader Graphs, 0 Animations verified |

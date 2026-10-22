@@ -23354,10 +23354,10 @@
       "metadata_token": "0x0200006F",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Coroutines/AdvancedCoroutineRunner.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1372",
@@ -23371,10 +23371,10 @@
       "metadata_token": "0x02000071",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Coroutines/CoroutineExtensions.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1373",
@@ -23388,10 +23388,10 @@
       "metadata_token": "0x02000070",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Coroutines/CoroutineLibrary.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1374",
@@ -23405,10 +23405,10 @@
       "metadata_token": "0x0200006D",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Coroutines/CoroutineRunner.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1375",
@@ -23422,10 +23422,10 @@
       "metadata_token": "0x0200006E",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Coroutines/MultiCoroutineRunner.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1376",
@@ -23439,10 +23439,10 @@
       "metadata_token": "0x0200006B",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Extensions/AStar/AStarSearch.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1377",
@@ -23456,10 +23456,10 @@
       "metadata_token": "0x0200006C",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Extensions/AStar/AStarSearch2D.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1378",
@@ -23473,10 +23473,10 @@
       "metadata_token": "0x0200006A",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Extensions/Bezier/BezierCurve.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1379",
@@ -23490,10 +23490,10 @@
       "metadata_token": "0x02000069",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Extensions/Bezier/SplinePoint.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1380",
@@ -23507,10 +23507,10 @@
       "metadata_token": "0x02000068",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Extensions/Collections/CollectionsExtension.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1381",
@@ -23524,10 +23524,10 @@
       "metadata_token": "0x0200005D",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Extensions/GenericExtensions.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1382",
@@ -23541,10 +23541,10 @@
       "metadata_token": "0x02000066",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Extensions/Numbers/FloatExtension.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1383",
@@ -23558,10 +23558,10 @@
       "metadata_token": "0x02000067",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Extensions/Numbers/IntegerExtension.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1384",
@@ -23575,10 +23575,10 @@
       "metadata_token": "0x02000065",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Extensions/Numbers/NumberComparaison.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1385",
@@ -23592,10 +23592,10 @@
       "metadata_token": "0x02000064",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Extensions/PoissonDisc/PoissonDiscSampler.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1386",
@@ -23609,10 +23609,10 @@
       "metadata_token": "0x020000A9",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Extensions/PoissonDisc/PoissonDiscSampler.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1387",
@@ -23626,10 +23626,10 @@
       "metadata_token": "0x02000063",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Extensions/Quaternions/QuaternionLibrary.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1388",
@@ -23643,10 +23643,10 @@
       "metadata_token": "0x02000062",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Extensions/Random/RandomExtensions.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1389",
@@ -23660,10 +23660,10 @@
       "metadata_token": "0x02000061",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Extensions/String/StringExtensions.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1390",
@@ -23677,10 +23677,10 @@
       "metadata_token": "0x02000060",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Extensions/Unity/ParticleSystemExtensions.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1391",
@@ -23694,10 +23694,10 @@
       "metadata_token": "0x0200005F",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Extensions/Unity/UnityExtensions.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1392",
@@ -23711,10 +23711,10 @@
       "metadata_token": "0x0200005E",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Extensions/Vector/VectorExtensions.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1393",
@@ -23728,10 +23728,10 @@
       "metadata_token": "0x02000053",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Generic/MinMaxFloat.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1394",
@@ -23745,10 +23745,10 @@
       "metadata_token": "0x02000054",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Generic/MinMaxInt.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1395",
@@ -23762,10 +23762,10 @@
       "metadata_token": "0x0200004D",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Input/DragInput.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1396",
@@ -23779,10 +23779,10 @@
       "metadata_token": "0x0200004E",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Input/DragInteraction.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1397",
@@ -23796,10 +23796,10 @@
       "metadata_token": "0x0200004F",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Input/DragMovement.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1398",
@@ -23813,10 +23813,10 @@
       "metadata_token": "0x02000051",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Input/GRGInputHandler.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1399",
@@ -23830,10 +23830,10 @@
       "metadata_token": "0x02000050",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Input/ISelectables.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1400",
@@ -23847,10 +23847,10 @@
       "metadata_token": "0x02000052",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Input/PlayerInputHelper.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1401",
@@ -23864,10 +23864,10 @@
       "metadata_token": "0x0200004B",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Maybe/Maybe.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1402",
@@ -23881,10 +23881,10 @@
       "metadata_token": "0x0200004C",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Maybe/MaybeExtensions.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1403",
@@ -23898,10 +23898,10 @@
       "metadata_token": "0x02000045",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Menus/BasicMenuController.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1404",
@@ -23915,10 +23915,10 @@
       "metadata_token": "0x02000046",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Menus/ExplicitFadeMenuController.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1405",
@@ -23932,10 +23932,10 @@
       "metadata_token": "0x02000047",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Menus/HoverMenu.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1406",
@@ -23949,10 +23949,10 @@
       "metadata_token": "0x02000048",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Menus/HoverMenuBase.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1407",
@@ -23966,10 +23966,10 @@
       "metadata_token": "0x02000049",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Menus/MenuController.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1408",
@@ -23983,10 +23983,10 @@
       "metadata_token": "0x02000044",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Menus/MenuState.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1409",
@@ -24000,10 +24000,10 @@
       "metadata_token": "0x0200004A",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Menus/SelectablesMenuController.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1410",
@@ -24017,10 +24017,10 @@
       "metadata_token": "0x02000040",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Mono/AsyncSceneLoader.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1411",
@@ -24034,10 +24034,10 @@
       "metadata_token": "0x02000041",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Mono/CompileSettingsCheck.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1412",
@@ -24051,10 +24051,10 @@
       "metadata_token": "0x02000095",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Mono/CompileSettingsCheck.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1413",
@@ -24068,10 +24068,10 @@
       "metadata_token": "0x02000096",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Mono/CompileSettingsCheck.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1414",
@@ -24085,10 +24085,10 @@
       "metadata_token": "0x02000042",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Mono/SplineHandler.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1415",
@@ -24102,10 +24102,10 @@
       "metadata_token": "0x02000043",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Mono/SpriteAlphaGroup.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1416",
@@ -24119,10 +24119,10 @@
       "metadata_token": "0x0200003C",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/PriorityQueue/ArgumentNullException.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1417",
@@ -24136,10 +24136,10 @@
       "metadata_token": "0x0200003D",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/PriorityQueue/ArrayEx.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1418",
@@ -24153,10 +24153,10 @@
       "metadata_token": "0x0200003E",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/PriorityQueue/EnumerableHelpers.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1419",
@@ -24170,10 +24170,10 @@
       "metadata_token": "0x0200003F",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/PriorityQueue/PriorityQueue.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1420",
@@ -24187,10 +24187,10 @@
       "metadata_token": "0x02000091",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/PriorityQueue/PriorityQueue.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1421",
@@ -24204,10 +24204,10 @@
       "metadata_token": "0x0200017D",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/PriorityQueue/PriorityQueue.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1422",
@@ -24221,10 +24221,10 @@
       "metadata_token": "0x0200003A",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/PriorityQueue/PriorityQueueDebugView.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1423",
@@ -24238,10 +24238,10 @@
       "metadata_token": "0x0200003B",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/PriorityQueue/SR.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1424",
@@ -24255,10 +24255,10 @@
       "metadata_token": "0x02000030",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/PropertyDrawers/ConditionalData.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1425",
@@ -24272,10 +24272,10 @@
       "metadata_token": "0x0200002B",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/PropertyDrawers/ConditionalFieldAttribute.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1426",
@@ -24289,10 +24289,10 @@
       "metadata_token": "0x02000039",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/PropertyDrawers/ConditionalReadOnlyData.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1427",
@@ -24306,10 +24306,10 @@
       "metadata_token": "0x02000036",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/PropertyDrawers/IReadOnlyCallback.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1428",
@@ -24323,10 +24323,10 @@
       "metadata_token": "0x0200002C",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/PropertyDrawers/MultiFieldConditionalAttribute.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1429",
@@ -24340,10 +24340,10 @@
       "metadata_token": "0x02000033",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/PropertyDrawers/MultipleValueConditionalData.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1430",
@@ -24357,10 +24357,10 @@
       "metadata_token": "0x0200002E",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/PropertyDrawers/NumberConditionalAttribute.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1431",
@@ -24374,10 +24374,10 @@
       "metadata_token": "0x02000034",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/PropertyDrawers/NumberConditionalData.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1432",
@@ -24391,10 +24391,10 @@
       "metadata_token": "0x0200002F",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/PropertyDrawers/ObjectTypeConditionalAttribute.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1433",
@@ -24408,10 +24408,10 @@
       "metadata_token": "0x02000035",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/PropertyDrawers/ObjectTypeConditionalData.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1434",
@@ -24425,10 +24425,10 @@
       "metadata_token": "0x02000037",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/PropertyDrawers/ReadOnlyAttribute.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1435",
@@ -24442,10 +24442,10 @@
       "metadata_token": "0x02000038",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/PropertyDrawers/ReadOnlyData.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1436",
@@ -24459,10 +24459,10 @@
       "metadata_token": "0x0200002D",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/PropertyDrawers/TypeConditionalAttribute.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1437",
@@ -24476,10 +24476,10 @@
       "metadata_token": "0x0200002A",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/PropertyDrawers/TypeConditionalCheck.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1438",
@@ -24493,10 +24493,10 @@
       "metadata_token": "0x02000032",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/PropertyDrawers/TypeConditionalData.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1439",
@@ -24510,10 +24510,10 @@
       "metadata_token": "0x02000031",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/PropertyDrawers/ValueConditionalData.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1440",
@@ -24527,10 +24527,10 @@
       "metadata_token": "0x02000072",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Resolution/CameraResolution.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1441",
@@ -24544,10 +24544,10 @@
       "metadata_token": "0x02000028",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Save/Binary/BinarySaveHandler.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1442",
@@ -24561,10 +24561,10 @@
       "metadata_token": "0x02000026",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Save/CSVFileHandler.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1443",
@@ -24578,10 +24578,10 @@
       "metadata_token": "0x02000025",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Save/FileHandler.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1444",
@@ -24595,10 +24595,10 @@
       "metadata_token": "0x02000029",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Save/Json/JsonSaveHandler.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1445",
@@ -24612,10 +24612,10 @@
       "metadata_token": "0x02000023",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Save/PlayerPrefsHandler.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1446",
@@ -24629,10 +24629,10 @@
       "metadata_token": "0x02000027",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Save/SaveFile.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1447",
@@ -24646,10 +24646,10 @@
       "metadata_token": "0x02000024",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Save/SaveHelper.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1448",
@@ -24663,10 +24663,10 @@
       "metadata_token": "0x0200008E",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Save/SaveHelper.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1449",
@@ -24680,10 +24680,10 @@
       "metadata_token": "0x0200005B",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Serializable/ListStruct.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1450",
@@ -24697,10 +24697,10 @@
       "metadata_token": "0x02000055",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Serializable/SerializableDictionary.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1451",
@@ -24714,10 +24714,10 @@
       "metadata_token": "0x02000055",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Serializable/SerializableDictionary.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1452",
@@ -24731,10 +24731,10 @@
       "metadata_token": "0x020000A1",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Serializable/SerializableDictionary.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1453",
@@ -24748,10 +24748,10 @@
       "metadata_token": "0x0200005C",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Serializable/SerializableExtensions.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1454",
@@ -24765,10 +24765,10 @@
       "metadata_token": "0x02000057",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Serializable/SerializableVector2.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1455",
@@ -24782,10 +24782,10 @@
       "metadata_token": "0x02000058",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Serializable/SerializableVector3.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1456",
@@ -24799,10 +24799,10 @@
       "metadata_token": "0x02000059",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Serializable/STupple.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1457",
@@ -24816,10 +24816,10 @@
       "metadata_token": "0x02000059",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/Serializable/STupple.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1458",
@@ -24833,10 +24833,10 @@
       "metadata_token": "0x02000017",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/TextAnimation/AnimationCurveText.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1459",
@@ -24850,10 +24850,10 @@
       "metadata_token": "0x02000021",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/TextAnimation/CombineAnimationsManager.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1460",
@@ -24867,10 +24867,10 @@
       "metadata_token": "0x0200001D",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/TextAnimation/CurveTextAnimationManager.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1461",
@@ -24884,10 +24884,10 @@
       "metadata_token": "0x02000018",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/TextAnimation/DialogueTextWriter.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1462",
@@ -24901,10 +24901,10 @@
       "metadata_token": "0x02000019",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/TextAnimation/ShakeText.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1463",
@@ -24918,10 +24918,10 @@
       "metadata_token": "0x0200001F",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/TextAnimation/ShakeTextAnimationManager.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1464",
@@ -24935,10 +24935,10 @@
       "metadata_token": "0x0200001A",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/TextAnimation/TextAnimation.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1465",
@@ -24952,10 +24952,10 @@
       "metadata_token": "0x0200001B",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/TextAnimation/TextAnimationHelper.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1466",
@@ -24969,10 +24969,10 @@
       "metadata_token": "0x0200008A",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/TextAnimation/TextAnimationHelper.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1467",
@@ -24986,10 +24986,10 @@
       "metadata_token": "0x0200001C",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/TextAnimation/TextAnimationManager.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1468",
@@ -25003,10 +25003,10 @@
       "metadata_token": "0x02000020",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/TextAnimation/WiggleAndRandomShakes.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1469",
@@ -25020,10 +25020,10 @@
       "metadata_token": "0x0200001E",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/TextAnimation/WobbleTextAnimationManager.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1470",
@@ -25037,10 +25037,10 @@
       "metadata_token": "0x02000022",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/TextAnimation/WobblyText.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1471",
@@ -25054,10 +25054,10 @@
       "metadata_token": "0x02000006",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/UI/AdvancedButton.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1472",
@@ -25071,10 +25071,10 @@
       "metadata_token": "0x02000007",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/UI/AdvancedUILineRenderer.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1473",
@@ -25088,10 +25088,10 @@
       "metadata_token": "0x02000008",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/UI/AnimatedLayoutGroup.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1474",
@@ -25105,10 +25105,10 @@
       "metadata_token": "0x02000009",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/UI/ControllerDropdown.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1475",
@@ -25122,10 +25122,10 @@
       "metadata_token": "0x0200000A",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/UI/CurveText.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1476",
@@ -25139,10 +25139,10 @@
       "metadata_token": "0x0200000C",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/UI/CustomLayoutGroup.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1477",
@@ -25156,10 +25156,10 @@
       "metadata_token": "0x02000076",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/UI/CustomLayoutGroup.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1478",
@@ -25173,10 +25173,10 @@
       "metadata_token": "0x0200000D",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/UI/CustomShapeText.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1479",
@@ -25190,10 +25190,10 @@
       "metadata_token": "0x0200000E",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/UI/ExtendedSlider.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1480",
@@ -25207,10 +25207,10 @@
       "metadata_token": "0x0200000B",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/UI/LayoutAlignment.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1481",
@@ -25224,10 +25224,10 @@
       "metadata_token": "0x0200000F",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/UI/ProgressBar.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1482",
@@ -25241,10 +25241,10 @@
       "metadata_token": "0x02000010",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/UI/ProgressBarDoubled.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1483",
@@ -25258,10 +25258,10 @@
       "metadata_token": "0x02000011",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/UI/ProgressBarText.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1484",
@@ -25275,10 +25275,10 @@
       "metadata_token": "0x02000012",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/UI/ProgressBarTextDoubled.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1485",
@@ -25292,10 +25292,10 @@
       "metadata_token": "0x02000013",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/UI/SplineText.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1486",
@@ -25309,10 +25309,10 @@
       "metadata_token": "0x02000014",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/UI/Tab.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1487",
@@ -25326,10 +25326,10 @@
       "metadata_token": "0x02000080",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/UI/Tab.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1488",
@@ -25343,10 +25343,10 @@
       "metadata_token": "0x02000015",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/UI/UILineRenderer.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1489",
@@ -25360,10 +25360,10 @@
       "metadata_token": "0x02000081",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/UI/UILineRenderer.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1490",
@@ -25377,10 +25377,10 @@
       "metadata_token": "0x02000016",
       "tier": 2,
       "vong": "framework",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/UI/WorldLayoutGroup.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1491",
@@ -25700,10 +25700,10 @@
       "metadata_token": "0x02000002",
       "tier": 2,
       "vong": "graph_engine",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/XNode/NodeEnumAttribute.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1510",
@@ -25717,10 +25717,10 @@
       "metadata_token": "0x02000003",
       "tier": 2,
       "vong": "graph_engine",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/XNode/PortTypeOverrideAttribute.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1511",
@@ -25734,10 +25734,10 @@
       "metadata_token": "0x02000005",
       "tier": 2,
       "vong": "graph_engine",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/XNode/XNode/Node.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1512",
@@ -25751,10 +25751,10 @@
       "metadata_token": "0x0200000D",
       "tier": 2,
       "vong": "graph_engine",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/XNode/XNode/Node.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1513",
@@ -25768,10 +25768,10 @@
       "metadata_token": "0x0200000E",
       "tier": 2,
       "vong": "graph_engine",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/XNode/XNode/Node.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1514",
@@ -25785,10 +25785,10 @@
       "metadata_token": "0x0200000F",
       "tier": 2,
       "vong": "graph_engine",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/XNode/XNode/Node.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1515",
@@ -25802,10 +25802,10 @@
       "metadata_token": "0x02000010",
       "tier": 2,
       "vong": "graph_engine",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/XNode/XNode/Node.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1516",
@@ -25819,10 +25819,10 @@
       "metadata_token": "0x02000011",
       "tier": 2,
       "vong": "graph_engine",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/XNode/XNode/Node.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1517",
@@ -25836,10 +25836,10 @@
       "metadata_token": "0x02000012",
       "tier": 2,
       "vong": "graph_engine",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/XNode/XNode/Node.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1518",
@@ -25853,10 +25853,10 @@
       "metadata_token": "0x02000013",
       "tier": 2,
       "vong": "graph_engine",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/XNode/XNode/Node.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1519",
@@ -25870,10 +25870,10 @@
       "metadata_token": "0x02000014",
       "tier": 2,
       "vong": "graph_engine",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/XNode/XNode/Node.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1520",
@@ -25887,10 +25887,10 @@
       "metadata_token": "0x02000015",
       "tier": 2,
       "vong": "graph_engine",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/XNode/XNode/Node.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1521",
@@ -25904,10 +25904,10 @@
       "metadata_token": "0x02000016",
       "tier": 2,
       "vong": "graph_engine",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/XNode/XNode/Node.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1522",
@@ -25921,10 +25921,10 @@
       "metadata_token": "0x02000017",
       "tier": 2,
       "vong": "graph_engine",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/XNode/XNode/Node.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1523",
@@ -25938,10 +25938,10 @@
       "metadata_token": "0x02000018",
       "tier": 2,
       "vong": "graph_engine",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/XNode/XNode/Node.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1524",
@@ -25955,10 +25955,10 @@
       "metadata_token": "0x02000006",
       "tier": 2,
       "vong": "graph_engine",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/XNode/XNode/NodeDataCache.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1525",
@@ -25972,10 +25972,10 @@
       "metadata_token": "0x0200001F",
       "tier": 2,
       "vong": "graph_engine",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/XNode/XNode/NodeDataCache.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1526",
@@ -25989,10 +25989,10 @@
       "metadata_token": "0x02000007",
       "tier": 2,
       "vong": "graph_engine",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/XNode/XNode/NodeGraph.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1527",
@@ -26006,10 +26006,10 @@
       "metadata_token": "0x02000023",
       "tier": 2,
       "vong": "graph_engine",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/XNode/XNode/NodeGraph.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1528",
@@ -26023,10 +26023,10 @@
       "metadata_token": "0x02000008",
       "tier": 2,
       "vong": "graph_engine",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/XNode/XNode/NodePort.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1529",
@@ -26040,10 +26040,10 @@
       "metadata_token": "0x02000024",
       "tier": 2,
       "vong": "graph_engine",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/XNode/XNode/NodePort.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1530",
@@ -26057,10 +26057,10 @@
       "metadata_token": "0x02000025",
       "tier": 2,
       "vong": "graph_engine",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/XNode/XNode/NodePort.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1531",
@@ -26074,10 +26074,10 @@
       "metadata_token": "0x02000009",
       "tier": 2,
       "vong": "graph_engine",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/XNode/XNode/SceneGraph.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
     },
     {
       "id": "DUP-CS-1532",
@@ -26091,17 +26091,34 @@
       "metadata_token": "0x02000009",
       "tier": 2,
       "vong": "graph_engine",
-      "target_depth": "L2",
+      "target_depth": "L1",
       "current_depth": "L1",
       "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/XNode/XNode/SceneGraph.cs",
-      "reconstruction_status": "pending"
+      "reconstruction_status": "documented"
+    },
+    {
+      "id": "DUP-CS-1533",
+      "assembly": "Assembly-CSharp",
+      "type_name": "LocalisationActivation",
+      "full_name": "LocalisationActivation",
+      "namespace": "<Root>",
+      "kind": "class",
+      "is_nested": false,
+      "nested_of": null,
+      "metadata_token": null,
+      "tier": 1,
+      "vong": "V6",
+      "target_depth": "L2",
+      "current_depth": "L2",
+      "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/LocalisationActivation.cs",
+      "reconstruction_status": "documented"
     }
   ],
   "summary": {
-    "total_entries": 1532,
-    "top_level_types": 1396,
+    "total_entries": 1533,
+    "top_level_types": 1397,
     "nested_types": 136,
-    "tier1_entries": 1101,
+    "tier1_entries": 1102,
     "tier2_entries": 431,
     "with_metadata_token": 1532,
     "by_vong": {
@@ -26109,7 +26126,7 @@
       "V5": 496,
       "V2": 130,
       "V7": 64,
-      "V6": 99,
+      "V6": 100,
       "V1": 95,
       "V3": 94,
       "V8": 22,
@@ -26120,8 +26137,8 @@
     },
     "by_target_depth": {
       "L3": 452,
-      "L2": 811,
-      "L1": 269
+      "L2": 668,
+      "L1": 413
     },
     "unaccounted": 0
   }

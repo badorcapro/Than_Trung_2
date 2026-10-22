@@ -28,8 +28,8 @@ class TestQueryDuperyGraph(unittest.TestCase):
         stats = get_coverage_stats()
 
         code = stats["code_catalog"]
-        self.assertEqual(code["total_classes"], 1532)
-        self.assertEqual(code["tier_1_classes"], 1101)
+        self.assertEqual(code["total_classes"], 1533)
+        self.assertEqual(code["tier_1_classes"], 1102)
         self.assertEqual(code["tier_2_classes"], 431)
         self.assertEqual(code["with_metadata_token"], 1532)
         self.assertEqual(code["unaccounted"], 0)
@@ -125,7 +125,7 @@ class TestQueryDuperyGraph(unittest.TestCase):
         self.assertTrue(REPORT_MD.exists())
         content = REPORT_MD.read_text(encoding="utf-8")
         self.assertIn("# Dupery — Báo Cáo Kiến Trúc Toàn Diện Tầng A", content)
-        self.assertIn("1,532 types", content)
+        self.assertIn("1,533 types", content)
         self.assertIn("Unaccounted = 0", content)
         self.assertIn("5,279 GameObjects", content)
         self.assertIn("NO-GO", content)

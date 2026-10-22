@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "generated_at": "2026-10-21T05:14:31.575676+00:00",
   "total_assemblies": 5,
-  "total_types": 1532,
+  "total_types": 1533,
   "with_metadata_token": 1532,
   "assemblies": {
     "Assembly-CSharp": [
@@ -13692,6 +13692,20 @@
         "interfaces": [],
         "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Youngster.cs",
         "metadata_token": "0x020001B0"
+      },
+      {
+        "name": "LocalisationActivation",
+        "full_name": "LocalisationActivation",
+        "namespace": "<Root>",
+        "kind": "class",
+        "base_types": [
+          "MonoBehaviour"
+        ],
+        "is_nested": false,
+        "nested_of": null,
+        "source_file": "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/LocalisationActivation.cs",
+        "loc": 19,
+        "metadata_token": null
       }
     ],
     "FMODUnity": [
