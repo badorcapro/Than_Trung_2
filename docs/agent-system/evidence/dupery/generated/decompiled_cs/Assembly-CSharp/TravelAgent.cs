@@ -93,7 +93,7 @@ public class TravelAgent : RoleData
 			if (_address != -1)
 			{
 				RoleData roleData = _board.getRolesInPlay()[_address];
-				roleData.setCanBeInvestigated($"#R_{roleData}", _true: false);
+				roleData.setCanBeInvestigated($"#R_{role}", _true: false);
 				stopped_investigation = _address;
 				if (!roleData.canBeInvestigated(_board))
 				{

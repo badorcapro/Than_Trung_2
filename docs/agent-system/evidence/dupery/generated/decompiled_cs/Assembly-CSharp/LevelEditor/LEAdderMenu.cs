@@ -182,7 +182,7 @@ public class LEAdderMenu : MenuBase, IAmLocalised
 
 		protected override List<LocationTypes> getInitialList()
 		{
-			return new List<LocationTypes>().addAll((LocationTypes _l) => !_l.isScrapped() && _l.isLocationOfCaseType(adder.case_type));
+			return CollectionsExtension.addAll(new List<LocationTypes>(), (LocationTypes _l) => !_l.isScrapped() && _l.isLocationOfCaseType(adder.case_type));
 		}
 	}
 

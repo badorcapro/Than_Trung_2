@@ -12,7 +12,7 @@ public class Scrambler : RoleData, IChangeAbilityTargets
 
 	public override string english_name => "Scrambler";
 
-	public override string english_description => "While I am not " + Keywords.DEAD.toString() + " or " + TextHelper.arrested + ", " + "abilities".asKeyword(Keywords.ABILITY) + " that ask you to select " + TextHelper.roles + " will now select " + TextHelper.roles + " at random instead.\n" + TextHelper.iLieAndPretendSuspected;
+	public override string english_description => "While I am not " + Keywords.DEAD.toString() + " or " + TextHelper.arrested + ", " + "abilities".asKeyword(Keywords.ABILITY) + " that ask you to select " + TextHelper.roles + " will now select " + TextHelper.roles + " at random instead.\n" + TextHelper.iLieAndPretendSuspected + ".";
 
 	public override bool hasInfo => false;
 

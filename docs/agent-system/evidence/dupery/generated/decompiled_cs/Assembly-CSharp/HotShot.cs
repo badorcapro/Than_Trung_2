@@ -14,7 +14,7 @@ public class HotShot : CasinoRoleData, IHaveSpecialAbility, IHaveAbility
 
 	public override string english_name => "Hot Shot";
 
-	public override string english_description => $"{Keywords.ABILITY.toStringCap()}: Pick a {Keywords.CARD.toString()} and discard it. Gain {5}x its {Keywords.CARD_VALUE.toString()} in {TextHelper.chips_with_link}. " + $"If I am {TextHelper.lyingOrTainted}, lose {5}x it's {Keywords.CARD_VALUE.toString()} in {TextHelper.chips_with_link} instead.";
+	public override string english_description => $"{Keywords.ABILITY.toStringCap()}: Pick a {Keywords.CARD.toString()} and discard it. Gain {5}x its {Keywords.CARD_VALUE.toString()} in {TextHelper.chips_with_link}. " + $"If I am {TextHelper.lyingOrTainted}, lose {5}x its {Keywords.CARD_VALUE.toString()} in {TextHelper.chips_with_link} instead.";
 
 	public override List<(DescriptionType, string)> english_extra_descriptions
 	{

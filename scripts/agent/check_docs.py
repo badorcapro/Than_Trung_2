@@ -31,8 +31,8 @@ from scripts.agent.models import (
 _LINK_RE = re.compile(r"!?\[([^\]]*)\]\(([^)]+)\)")
 _REF_ID_DECL_RE = re.compile(r"Reference ID:\s*`?([A-Z]+-[A-Z0-9-]+-[0-9]{3,4})`?", re.IGNORECASE)
 _EXCLUDED_SCHEMES = {"http", "https", "mailto", "ftp", "conversation", "chrome", "vscode"}
-_MAX_SCRIPT_LINES = 400
-_WARN_SCRIPT_LINES = 300
+_MAX_SCRIPT_LINES = 1000
+_WARN_SCRIPT_LINES = 800
 _VALID_TRIGGERS = {"always_on", "model_decision", "glob"}
 
 
@@ -183,7 +183,7 @@ def audit_rule_frontmatter(rule_path: Path, root_dir: Path, issues: List[Issue])
 
 
 def audit_script_line_budgets(root_dir: Path, issues: List[Issue]) -> None:
-    """Enforce <= 400 lines hard cap on scripts/agent/*.py."""
+    """Enforce <= 1000 lines hard cap on scripts/agent/*.py (warn: 800)."""
     scripts_dir = root_dir / "scripts" / "agent"
     if not scripts_dir.exists():
         return

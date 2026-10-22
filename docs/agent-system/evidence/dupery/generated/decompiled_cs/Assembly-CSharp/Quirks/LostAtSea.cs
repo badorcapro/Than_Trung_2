@@ -24,14 +24,21 @@ public class LostAtSea : CaseQuirkData
 
 	public override Dictionary<Vector2Int, Maybe<Either<RoleData, LocationData>>> onCaseStart(Case _case, Dictionary<Vector2Int, Maybe<Either<RoleData, LocationData>>> _board, System.Random _rng)
 	{
-		if (!(_case is DocksCase docksCase))
+		DocksCase docks = _case as DocksCase;
+		if (docks == null)
 		{
 			Debug.LogError($"{quirk_type} is a docks only case, dont know what to do in {_case.case_type} region!");
 			return _board;
 		}
-		docksCase.doBoatConstructorAction(delegate(DocksBoat _b)
+		Dictionary<LocationTypes, LocationData> locationsInPlay = _board.getLocationsInPlay();
+		List<Vector2Int> all_pos = _board.Keys.ToList();
+		if (locationsInPlay.ContainsKey(LocationTypes.NAVAL_MINE))
 		{
-			_b.position = _board.Keys.ToList().getRandomElementFromList(_rng);
+			all_pos.Remove(locationsInPlay[LocationTypes.NAVAL_MINE].getBoardPosition());
+		}
+		docks.doBoatConstructorAction(delegate
+		{
+			docks.setBoatPositionWithHiddenCheck(all_pos.getRandomElementFromList(_rng));
 		});
 		return _board;
 	}

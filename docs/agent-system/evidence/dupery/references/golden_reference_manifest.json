@@ -7,7 +7,7 @@
     "target_fps": 60.0,
     "total_checklist_categories": 9,
     "baseline_videos_count": 2,
-    "user_captures_count": 0,
+    "user_captures_count": 6,
     "resource_streams_verified": true
   },
   "baseline_videos": [
@@ -37,10 +37,13 @@
       "code": "MENU",
       "name": "Main Menu & Settings",
       "focus": "Button hover, clocktower bell, audio pause parameter",
-      "status": "protocol_ready",
+      "status": "covered",
       "baseline_present": false,
-      "user_captures_count": 0,
-      "files": []
+      "user_captures_count": 2,
+      "files": [
+        "REF_MENU_GameSettings_1080p_60fps.mkv",
+        "REF_MENU_MainMenuAndStats_1080p_60fps.mkv"
+      ]
     },
     {
       "code": "CUTSCENE",
@@ -64,19 +67,23 @@
       "code": "V2_CASEGEN",
       "name": "Case Selection & Stasis",
       "focus": "Card flip duration, case card inspection, seed",
-      "status": "protocol_ready",
+      "status": "covered",
       "baseline_present": false,
-      "user_captures_count": 0,
-      "files": []
+      "user_captures_count": 1,
+      "files": [
+        "REF_V2_CASEGEN_EndCaseNextCase_1080p_60fps.mkv"
+      ]
     },
     {
       "code": "V3_LOOP",
       "name": "Leads & Lineup Loop",
       "focus": "District navigation, lineup move, suspect inspection",
-      "status": "protocol_ready",
+      "status": "covered",
       "baseline_present": false,
-      "user_captures_count": 0,
-      "files": []
+      "user_captures_count": 1,
+      "files": [
+        "REF_V3_LOOP_QuickCaseInvestigation_1080p_60fps.mkv"
+      ]
     },
     {
       "code": "V4_ITEMS",
@@ -109,11 +116,51 @@
       "code": "V7_SUB",
       "name": "Summary & Pie Chart",
       "focus": "Pie chart fill animation, judge gavel impact sound",
-      "status": "protocol_ready",
+      "status": "covered",
       "baseline_present": false,
-      "user_captures_count": 0,
-      "files": []
+      "user_captures_count": 2,
+      "files": [
+        "REF_V7_SUB_EndRoundSummary_1080p_60fps.mkv",
+        "REF_V7_SUB_ReplayTutorial_1080p_60fps.mkv"
+      ]
     }
   ],
-  "user_captures": []
+  "user_captures": [
+    {
+      "filename": "REF_MENU_GameSettings_1080p_60fps.mkv",
+      "category": "MENU",
+      "size_bytes": 2202293,
+      "sha256": "20656eb9e1deccfce9e7974ea8c83c2fb4f550e93b548890174a43876ac299b1"
+    },
+    {
+      "filename": "REF_MENU_MainMenuAndStats_1080p_60fps.mkv",
+      "category": "MENU",
+      "size_bytes": 3121922,
+      "sha256": "abaee9d1a941118ea2484f8b4c6ccf2bdffff0413dc1a58bf840e452dce19415"
+    },
+    {
+      "filename": "REF_V2_CASEGEN_EndCaseNextCase_1080p_60fps.mkv",
+      "category": "V2_CASEGEN",
+      "size_bytes": 6732449,
+      "sha256": "668d766d2895e3cd42a64816e4bc5b2d1a21d8f3dba01bb4a9e9014cb6790288"
+    },
+    {
+      "filename": "REF_V3_LOOP_QuickCaseInvestigation_1080p_60fps.mkv",
+      "category": "V3_LOOP",
+      "size_bytes": 10392461,
+      "sha256": "40dd90b00b8c229086ac9494cae790d5988b71e10bbcc65cb5548c3d2bd66dca"
+    },
+    {
+      "filename": "REF_V7_SUB_EndRoundSummary_1080p_60fps.mkv",
+      "category": "V7_SUB",
+      "size_bytes": 1392545,
+      "sha256": "824c27d5c61767d01ee5a20a06bf2042a7cb5a082f45fcdf732d9dff8c39a999"
+    },
+    {
+      "filename": "REF_V7_SUB_ReplayTutorial_1080p_60fps.mkv",
+      "category": "V7_SUB",
+      "size_bytes": 8137822,
+      "sha256": "e0ab8bb1d35ef5427ae35d2ac88903784da3efa632b6ed5d4e0bfbe819be2243"
+    }
+  ]
 }

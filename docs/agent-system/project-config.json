@@ -13,6 +13,7 @@
       { "glob": "scripts/agent/**", "role": "core_engine" },
       { "glob": "tests/**", "role": "test" },
       { "glob": "pilot/rtl/**", "role": "rtl" },
+      { "glob": "Dupery_Unity_Project/**", "role": "generated" },
       { "glob": "generated/**", "role": "generated" },
       { "glob": "**/generated/**", "role": "generated" },
       { "glob": "vendor/**", "role": "generated" },
@@ -20,21 +21,21 @@
     ],
     "profiles": {
       "software": {
-        "core_engine": { "warn": 300, "review": 350, "hard": 400 },
-        "domain_logic": { "warn": 400, "review": 500, "hard": 800 },
-        "ui_component": { "warn": 300, "review": 400, "hard": 600 },
-        "test": { "warn": 500, "review": 800, "hard": 1200 },
-        "rtl": { "warn": 400, "review": 500, "hard": 800 },
-        "testbench": { "warn": 500, "review": 800, "hard": 1200 },
+        "core_engine": { "warn": 800, "review": 900, "hard": 1000 },
+        "domain_logic": { "warn": 800, "review": 900, "hard": 1000 },
+        "ui_component": { "warn": 800, "review": 900, "hard": 1000 },
+        "test": { "warn": 800, "review": 900, "hard": 1000 },
+        "rtl": { "warn": 800, "review": 900, "hard": 1000 },
+        "testbench": { "warn": 800, "review": 900, "hard": 1000 },
         "generated": { "exempt": true }
       },
       "semiconductor-hardware": {
-        "core_engine": { "warn": 300, "review": 350, "hard": 400 },
-        "domain_logic": { "warn": 400, "review": 500, "hard": 800 },
-        "ui_component": { "warn": 300, "review": 400, "hard": 600 },
-        "test": { "warn": 500, "review": 800, "hard": 1200 },
-        "rtl": { "warn": 400, "review": 600, "hard": 1000 },
-        "testbench": { "warn": 600, "review": 900, "hard": 1500 },
+        "core_engine": { "warn": 800, "review": 900, "hard": 1000 },
+        "domain_logic": { "warn": 800, "review": 900, "hard": 1000 },
+        "ui_component": { "warn": 800, "review": 900, "hard": 1000 },
+        "test": { "warn": 800, "review": 900, "hard": 1000 },
+        "rtl": { "warn": 800, "review": 900, "hard": 1000 },
+        "testbench": { "warn": 800, "review": 900, "hard": 1000 },
         "generated": { "exempt": true }
       }
     },

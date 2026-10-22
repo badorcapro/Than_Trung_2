@@ -44,7 +44,7 @@ public class Psychiatrist : RoleData
 		int count = surroundingRolesFromGridPos.Where((RoleData _r) => _r.getIsLying() || _r.getIsTainted()).ToList().Count;
 		if (base.has_bad_info)
 		{
-			int num = random.Next(0, Mathf.Max(4, surroundingRolesFromGridPos.Count + 1));
+			int num = random.Next(0, Mathf.Min(5, surroundingRolesFromGridPos.Count + 1));
 			if (num == count)
 			{
 				num = num % 4 + 1;

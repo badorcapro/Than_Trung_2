@@ -76,7 +76,6 @@ public class NavigationVisualManager : MonoBehaviour
 
 	public void switchStates(bool _state)
 	{
-		Debug.Log($"SET STATE: {_state} ({navigating})");
 		if (_state == navigating)
 		{
 			return;

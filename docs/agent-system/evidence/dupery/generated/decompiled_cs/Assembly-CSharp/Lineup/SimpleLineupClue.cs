@@ -196,22 +196,22 @@ public class SimpleLineupClue : LineupClue
 
 	private string englishGenderIsMale()
 	{
-		return "I header the boss is a man.";
+		return "I heard the boss is a man.";
 	}
 
 	private string englishGenderIsNotMale()
 	{
-		return "I header the boss is a woman.";
+		return "I heard the boss is a woman.";
 	}
 
 	private string englishGenderIsFemale()
 	{
-		return "I header the boss isn't a man.";
+		return "I heard the boss isn't a man.";
 	}
 
 	private string englishGenderIsNotFemale()
 	{
-		return "I header the boss isn't a woman.";
+		return "I heard the boss isn't a woman.";
 	}
 
 	private string englishHair()

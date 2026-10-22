@@ -128,6 +128,18 @@ public static class CollectionsExtension
 		return _l;
 	}
 
+	public static List<T> addAll<T>(this List<T> _l, Func<T, bool> _condition) where T : Enum
+	{
+		foreach (T value in Enum.GetValues(typeof(T)))
+		{
+			if (_condition(value))
+			{
+				_l.Add(value);
+			}
+		}
+		return _l;
+	}
+
 	public static List<T> reverse<T>(this List<T> _l)
 	{
 		_l.Reverse();
@@ -225,6 +237,10 @@ public static class CollectionsExtension
 
 	public static List<T> removeAllAfterIndex<T>(this List<T> _list, int _index)
 	{
+		if (_index >= _list.Count)
+		{
+			return _list;
+		}
 		_list.RemoveRange(_index, _list.Count - _index);
 		return _list;
 	}
@@ -248,6 +264,18 @@ public static class CollectionsExtension
 	{
 		_list.RemoveAll(_match);
 		return _list;
+	}
+
+	public static List<T> removeFirst<T>(this List<T> _l, Predicate<T> _predicate)
+	{
+		for (int i = 0; i < _l.Count; i++)
+		{
+			if (_predicate(_l[i]))
+			{
+				return _l.remove(_l[i]);
+			}
+		}
+		return _l;
 	}
 
 	public static void destroyAll(this List<Transform> _list)
@@ -299,6 +327,18 @@ public static class CollectionsExtension
 			}
 		});
 		_list.Clear();
+	}
+
+	public static Maybe<T> firstIfSome<T>(this List<T> _l, Predicate<T> _predicate)
+	{
+		for (int i = 0; i < _l.Count; i++)
+		{
+			if (_predicate(_l[i]))
+			{
+				return _l[i].maybe();
+			}
+		}
+		return new Maybe<T>();
 	}
 
 	public static HashSet<string> search(this List<string> _list, string _search, bool _exact_search = false, bool _lower_strings = true, bool _trim_search = true)

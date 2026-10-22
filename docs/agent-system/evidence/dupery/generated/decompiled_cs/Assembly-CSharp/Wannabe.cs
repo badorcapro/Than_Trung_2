@@ -14,7 +14,7 @@ public class Wannabe : RoleData
 
 	public override string english_name => "Wannabe";
 
-	public override string english_description => "I " + Keywords.PRETEND.toString() + " to be a " + TextHelper.tainted + " " + Keywords.IN_PLAY.toString() + " " + TextHelper.revealed + " " + RoleClassifications.UNDERLING.toString() + ".\nOne " + Keywords.IN_PLAY.toString() + " " + RoleClassifications.UNDERLING.toString() + " is " + TextHelper.revealed + ".";
+	public override string english_description => "I " + Keywords.REVEAL.toString() + " a random " + TextHelper.underlingRole + ".\nI " + Keywords.PRETEND.toString() + " to be a " + TextHelper.tainted + " " + Keywords.IN_PLAY.toString() + " " + TextHelper.revealed + " " + RoleClassifications.UNDERLING.toString() + ".";
 
 	public override List<(DescriptionType, string)> english_extra_descriptions
 	{

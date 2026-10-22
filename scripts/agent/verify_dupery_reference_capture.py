@@ -74,7 +74,7 @@ def scan_user_captures(ref_dir: Path) -> List[Dict[str, Any]]:
     """Scan additional gameplay captures deposited in references directory."""
     captures: List[Dict[str, Any]] = []
     valid_exts = {".mp4", ".png", ".jpg", ".mkv", ".wav"}
-    for f in sorted(ref_dir.iterdir()):
+    for f in sorted(ref_dir.rglob("*")):
         if f.is_file() and f.suffix.lower() in valid_exts and not f.name.startswith("golden_reference"):
             data = f.read_bytes()
             digest = hashlib.sha256(data).hexdigest()

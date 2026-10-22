@@ -316,10 +316,10 @@ public class SaveHandler : MonoBehaviour
 		{
 			Debug.LogWarning("Save (game) failed!");
 		}
-		saveMetaData();
 		if (_save_stats)
 		{
 			saveGameStats();
+			saveMetaData();
 		}
 		if (num)
 		{

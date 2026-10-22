@@ -238,17 +238,17 @@ public static class TextHelper
 
 	public static string aliveAndNotArrested => Keywords.ALIVE.toString() + " and not " + arrested;
 
-	public static string adjacentNeighbour => "adjacent neighbour".asKeyword(Keywords.CA_NEIGHBOURS);
+	public static string adjacentNeighbour => (adjacent_sprite_link + " adjacent neighbour").asKeyword(Keywords.CA_NEIGHBOURS);
 
 	public static string adjacentNeighbourNoSymbol => "adjacent neighbour".asKeyword(Keywords.CA_NEIGHBOURS);
 
-	public static string adjacentNeighbours => "adjacent neighbours".asKeyword(Keywords.CA_NEIGHBOURS);
+	public static string adjacentNeighbours => Keywords.CA_NEIGHBOURS.toString();
 
-	public static string surroundingNeighbour => "surrounding neighbour".asKeyword(Keywords.S_NEIGHBOURS);
+	public static string surroundingNeighbour => (surrounding_sprite_link + " surrounding neighbour").asKeyword(Keywords.S_NEIGHBOURS);
 
 	public static string surroundingNeighbourNoSymbol => "surrounding neighbour".asKeyword(Keywords.S_NEIGHBOURS);
 
-	public static string surroundingNeighbours => "surrounding neighbours".asKeyword(Keywords.S_NEIGHBOURS);
+	public static string surroundingNeighbours => Keywords.S_NEIGHBOURS.toString();
 
 	public static string reputationAsStatus => "reputation".asKeyword(Keywords.REPUTATION_STATUS);
 

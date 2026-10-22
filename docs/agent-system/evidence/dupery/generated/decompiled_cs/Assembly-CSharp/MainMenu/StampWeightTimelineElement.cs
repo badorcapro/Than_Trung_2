@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using GRGLib.Coroutines;
+using GRGLib.Extensions.Collections;
 using GRGLib.Generic;
 using Leads;
 using TMPro;
@@ -81,7 +82,7 @@ public class StampWeightTimelineElement : MonoBehaviour
 
 	private List<LeadEventType> getAllAvailableEvents()
 	{
-		return new List<LeadEventType>().addAll((LeadEventType _et) => !vetoed.Contains(_et) && !stamp_odds.Any((StampOddVisualiser _s) => _s.event_type == _et));
+		return CollectionsExtension.addAll(new List<LeadEventType>(), (LeadEventType _et) => !vetoed.Contains(_et) && !stamp_odds.Any((StampOddVisualiser _s) => _s.event_type == _et));
 	}
 
 	public void onRangeChange(string _input)

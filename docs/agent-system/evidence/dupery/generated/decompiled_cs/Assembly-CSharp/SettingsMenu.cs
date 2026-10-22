@@ -567,8 +567,8 @@ public class SettingsMenu : MenuBase, IAmLocalised
 		show_pin_symbols.SetValueWithoutNotify(SettingsHandler.show_pin_symbols ? 1 : 0);
 		casino_lights.SetValueWithoutNotify((int)SettingsHandler.casino_lights);
 		docks_lever.SetValueWithoutNotify(SettingsHandler.docks_boat_lever);
-		casino_settings_parent.SetActive(GameHandler.MetaData.regionUnlocked(Regions.CASINO));
-		docks_settings_parent.SetActive(GameHandler.MetaData.regionUnlocked(Regions.DOCKS));
+		casino_settings_parent.SetActive(value: true);
+		docks_settings_parent.SetActive(value: true);
 	}
 
 	public void setLanguage(int _value)

@@ -155,6 +155,7 @@ public class Hunter : CasinoRoleData, IHaveMultiAbility, IHaveSpecialAbility, IH
 			Debug.LogError($"{role} ability did not return valid ability data!");
 			return;
 		}
+		base.casino_case.spendChips(4);
 		RoleData roleData = _board.getRolesInPlay()[addressAbilityData.address];
 		bool flag = roleData.role == suspectAbilityData.role;
 		if (base.has_bad_info)

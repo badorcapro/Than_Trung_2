@@ -102,6 +102,15 @@ public class Iconographer : RoleData
 			return false;
 		}
 		Vector2Int boardPosition = locationsInPlay[LocationTypes.CRIME_SCENE].getBoardPosition();
+		if (locationsInPlay.ContainsKey(LocationTypes.BLOOD_TRACE))
+		{
+			Vector2Int boardPosition2 = locationsInPlay[LocationTypes.BLOOD_TRACE].getBoardPosition();
+			if (_position.cardinalDistance(boardPosition) >= base.board_position.cardinalDistance(boardPosition))
+			{
+				return _position.cardinalDistance(boardPosition2) < base.board_position.cardinalDistance(boardPosition2);
+			}
+			return true;
+		}
 		return _position.cardinalDistance(boardPosition) < base.board_position.cardinalDistance(boardPosition);
 	}
 

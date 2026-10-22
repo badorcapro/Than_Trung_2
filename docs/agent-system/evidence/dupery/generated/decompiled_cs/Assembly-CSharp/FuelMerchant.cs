@@ -19,7 +19,7 @@ public class FuelMerchant : DocksRoleData
 
 	public override string english_name => "Fuel Merchant";
 
-	public override string english_description => "I " + Keywords.ANNOUNCE.toString() + " how much " + Keywords.FUEL.toString() + " the " + LocationTypes.OIL_PLATFORM.toString() + " contains. I might add 1 " + Keywords.FUEL.toString() + " to the " + LocationTypes.OIL_PLATFORM.toString() + " " + $"every {3} {Keywords.FUEL.toString()} spent. I add a {LocationTypes.OIL_PLATFORM.toString()} when I am {Keywords.SUSPECTED.toString()}.";
+	public override string english_description => "I " + Keywords.ANNOUNCE.toString() + " how much " + Keywords.FUEL.toString() + " the " + LocationTypes.OIL_PLATFORM.toString() + " contains. I might add 1 " + Keywords.FUEL.toString() + " to the " + LocationTypes.OIL_PLATFORM.toString() + " " + $"every {3} {Keywords.FUEL.toString()} spent. I add an {LocationTypes.OIL_PLATFORM.toString()} when I am {Keywords.SUSPECTED.toString()}.";
 
 	public override List<(DescriptionType, string)> english_extra_descriptions
 	{

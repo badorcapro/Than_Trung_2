@@ -97,6 +97,8 @@ public class UILineRenderer : Graphic
 		}
 	}
 
+	public int point_count => points.Count;
+
 	public virtual void setLineWidth(float _width)
 	{
 		line_width = _width;
@@ -119,6 +121,11 @@ public class UILineRenderer : Graphic
 	{
 		points.AddRange(_points);
 		SetVerticesDirty();
+	}
+
+	public List<Vector2> getPoints()
+	{
+		return points;
 	}
 
 	public virtual void refreshVertices()

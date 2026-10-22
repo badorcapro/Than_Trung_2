@@ -163,4 +163,9 @@ public class BugReporter : MenuBase
 		sent_section.putOn(_on: false);
 		sending_message = false;
 	}
+
+	public void openQQ()
+	{
+		"https://qm.qq.com/q/holtUCsdNK".openUrl();
+	}
 }

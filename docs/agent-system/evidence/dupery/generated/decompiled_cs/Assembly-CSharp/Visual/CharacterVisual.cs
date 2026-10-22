@@ -664,7 +664,7 @@ public class CharacterVisual : MonoBehaviour, IAmLocalised
 		if (obscured)
 		{
 			unobscured_text = _info.maybe();
-			Regex regex = new Regex("[^0-9.,!*?！。！， ]");
+			Regex regex = new Regex("[^0-9.,!*?！。！，— ]");
 			_info = _info.replaceTags("<", ">", (string _t, string _m) => "A", ("sprite", ""));
 			_info = _info.removeCommonRichTextTags();
 			_info = regex.Replace(_info, "<size=85%>■</size>");

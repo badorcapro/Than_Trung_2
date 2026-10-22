@@ -155,6 +155,10 @@ public class NameLineupClue : LineupClue
 
 	public override Maybe<int> hasDataOn(ClueElementTypes _type)
 	{
+		if (_type == ClueElementTypes.GENDER)
+		{
+			return (gender ? 1 : 0).maybe();
+		}
 		return new Maybe<int>();
 	}
 

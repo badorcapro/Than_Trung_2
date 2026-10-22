@@ -78,7 +78,7 @@ public class MainMenu : MenuBase, IAmLocalised
 
 	private void Start()
 	{
-		checkSaveReliantUI();
+		bool num = checkSaveReliantUI();
 		AudioHandler.Atmo.stopAllAtmoAndStart(Atmo.RAIN);
 		AudioHandler.Music.playMusic(Music.A_MT);
 		community_button_image.sprite = ((GRGLocalisationHandler.instance.current_language == Languages.CHINESE_SIMPLIFIED) ? qq_icon : discord_icon);
@@ -87,14 +87,19 @@ public class MainMenu : MenuBase, IAmLocalised
 		{
 			select_device_change.Select();
 		}
+		if (!num && !GameHandler.instance.is_first_scene && GameHandler.StatsData.tutorials_played.Contains(Tutorials.OFFICE_MAIN) && GameHandler.MetaData.intro_cutscene_played)
+		{
+			map.setUpAndOpen(this);
+		}
 	}
 
-	public void checkSaveReliantUI()
+	public bool checkSaveReliantUI()
 	{
-		bool save_file_exists = SaveHandler.instance.doesValidGameSaveFileExist();
-		checkButtonLayout(save_file_exists);
+		bool flag = SaveHandler.instance.doesValidGameSaveFileExist();
+		checkButtonLayout(flag);
 		stats_button.interactable = SaveHandler.instance.doesStatsSaveFileExist();
 		map.saveFileChanged();
+		return flag;
 	}
 
 	private void checkButtonLayout(bool _save_file_exists)

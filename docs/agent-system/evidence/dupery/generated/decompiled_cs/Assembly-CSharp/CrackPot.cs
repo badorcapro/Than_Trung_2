@@ -110,6 +110,7 @@ public class CrackPot : CasinoRoleData, IHaveSpecialAbility, IHaveAbility
 		}
 		card_picked = casinoCardAbilityData.card_picked.maybe();
 		base.casino_case.replaceCard(casinoCardAbilityData.card_picked);
+		base.casino_case.spendChips(2);
 		if (card_picked.value.value > 10)
 		{
 			return;

@@ -169,7 +169,7 @@
       "path": "scripts/agent/check_docs.py",
       "authority": "approved",
       "status": "current",
-      "sha256": "b2722e8f47e7a90b6e2e4d6b279482b57aaa84d7873c22e02a1e4f4c12c46aa7",
+      "sha256": "c7095c83fbd29c97d1035c403c0cefa31d3092efb2dfbd494c5c658d4490bb50",
       "depends_on": [
         "ARCH-CORE-001"
       ],
@@ -207,7 +207,7 @@
       "path": "docs/agent-system/decisions/ADR-0010-role-based-configurable-line-budgets.md",
       "authority": "approved",
       "status": "current",
-      "sha256": "920c8d754c6eb85e46c4493be3974d5a72a580bc10cd1d0b9556c14976237c48",
+      "sha256": "8c1764691fa4b3e7a3782de79c1259fae2d1886bb50141a3d3a47173ad19af67",
       "depends_on": [
         "ARCH-CORE-001"
       ],
@@ -219,7 +219,7 @@
       "path": "docs/agent-system/project-config.json",
       "authority": "approved",
       "status": "current",
-      "sha256": "866559ec69d51398308ee08a1ed78ad6ca127bca2d171794c4851dee951521ad",
+      "sha256": "138287583d4e2dc80f9b74b939c0925e46b4b09c53de5cfda6f856ec1d051ced",
       "depends_on": [
         "ARCH-CORE-001"
       ],

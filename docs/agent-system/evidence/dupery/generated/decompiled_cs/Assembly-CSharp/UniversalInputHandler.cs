@@ -12,13 +12,5 @@ public class UniversalInputHandler : MonoBehaviour
 
 	public void onShiftKey(InputAction.CallbackContext _context)
 	{
-		if (_context.canceled)
-		{
-			shift_down = false;
-		}
-		else if (_context.performed)
-		{
-			shift_down = true;
-		}
 	}
 }

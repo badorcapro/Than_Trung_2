@@ -135,6 +135,7 @@ public class Psychic : CasinoRoleData, IHaveMultiAbility, IHaveSpecialAbility, I
 				return;
 			}
 			base.casino_case.replaceCard(casinoCardAbilityData.card_picked);
+			base.casino_case.spendChips(6);
 			selection = (addressAbilityData.address, addressAbilityData2.address, casinoCardAbilityData.card_picked).maybe();
 		}
 	}

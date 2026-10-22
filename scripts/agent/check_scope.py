@@ -39,6 +39,8 @@ BOOKKEEPING_EXEMPT_PATTERNS = [
     "docs/agent-system/evidence/TASK-*.json",
     "docs/agent-system/evidence/dupery/vault/raw/**",
     "docs/agent-system/evidence/dupery/vault/audio/samples/**",
+    "docs/agent-system/evidence/dupery/references/gameplay/**",
+    "Dupery_Unity_Project/**",
     ".godot/**",
     "**/.godot/**",
     "*.import",

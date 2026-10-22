@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using GRGLib.Coroutines;
@@ -61,9 +62,17 @@ public class RunHistoryManager : MenuBase
 	{
 		base.onMenuOpening();
 		animation_manager.animateBackground("run_history");
-		openRun(GameHandler.StatsData.run_stats.Last());
-		viewing_run = GameHandler.StatsData.run_stats.Count - 1;
-		run_title.text = $"{viewing_run + 1}/{viewing_run + 1}";
+		try
+		{
+			openRun(GameHandler.StatsData.run_stats.Last());
+			viewing_run = GameHandler.StatsData.run_stats.Count - 1;
+			run_title.text = $"{viewing_run + 1}/{viewing_run + 1}";
+		}
+		catch (Exception)
+		{
+			Debug.LogError("Opening run history failed!");
+			run_title.text = "0/0";
+		}
 		if (GameHandler.StatsData.run_stats.Count <= 1)
 		{
 			left_button.interactable = false;
@@ -102,7 +111,7 @@ public class RunHistoryManager : MenuBase
 	{
 		if (!viewers.ContainsKey(_stats))
 		{
-			RunStatsViewer runStatsViewer = Object.Instantiate(run_prefab, run_parent);
+			RunStatsViewer runStatsViewer = UnityEngine.Object.Instantiate(run_prefab, run_parent);
 			runStatsViewer.setUpRunStats(new RunStats(_stats));
 			viewers[_stats] = runStatsViewer;
 		}

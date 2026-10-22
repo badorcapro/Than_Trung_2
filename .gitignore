@@ -29,3 +29,11 @@ docs/agent-system/evidence/dupery/vault/raw/**
 !docs/agent-system/evidence/dupery/vault/dupery_vault_manifest.json
 docs/agent-system/evidence/dupery/vault/audio/samples/**
 !docs/agent-system/evidence/dupery/vault/audio/fmod_samples_vault_manifest.json
+
+# Dupery gameplay video reference captures
+docs/agent-system/evidence/dupery/references/gameplay/**
+!docs/agent-system/evidence/dupery/references/golden_reference_manifest.json
+!docs/agent-system/evidence/dupery/references/reference_capture_protocol.md
+
+# Dupery Unity Project local generated workspace (rebuilt via scripts/agent/build_dupery_unity_project.py)
+Dupery_Unity_Project/

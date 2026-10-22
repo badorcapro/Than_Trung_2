@@ -48,7 +48,8 @@ description: Run Subagent Semantic Peer-Audit (check_peer_audit.py) and determin
      - `docs/agent-system/tasks/TASK-XXXX.md` and its declared `references`.
   5. **Subagent Deliverable**:
      - Perform both deterministic script execution AND semantic / edge-case inspection on real data.
-     - Verify zero code-golfing (`;`), zero placeholder truncation, and genuine ADR-0010 modularization.
+     - Verify zero code-golfing (`;`), zero placeholder truncation, and genuine ADR-0010 modularization (warn: 800, hard: 1000 LOC).
+     - **Mandatory Trade-off Interrogation**: The Subagent MUST actively cross-examine the Primary Agent's transcript, tool calls, and decisions for ANY hidden trade-offs, scope shortcuts, logic simplifications, or deferred branches. In its completion message returned to the Primary Agent, the Subagent must explicitly list all detected trade-offs and demand that if any trade-offs exist, the Primary Agent MUST surface and report them directly to the human user before final delivery.
      - Write `docs/agent-system/evidence/TASK-XXXX-peer-audit.json` conforming to `PeerAuditReceipt` in `scripts/agent/models.py`:
        - `verdict`: `"PASS"` or `"FAIL"` (`CONDITIONAL PASS` is forbidden; any defect requires `"FAIL"`).
        - `findings`: Must be `[]` when `verdict` is `"PASS"`.

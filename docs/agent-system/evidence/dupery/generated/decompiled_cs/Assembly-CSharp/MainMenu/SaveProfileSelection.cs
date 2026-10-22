@@ -55,6 +55,7 @@ public class SaveProfileSelection : MonoBehaviour, IAmLocalised
 		}
 		onProfileChange();
 		main_menu.checkSaveReliantUI();
+		SaveHandler.instance.saveMetaData();
 	}
 
 	private void onProfileChange()

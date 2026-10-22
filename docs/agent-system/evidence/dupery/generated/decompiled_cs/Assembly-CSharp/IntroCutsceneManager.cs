@@ -49,6 +49,18 @@ public class IntroCutsceneManager : MonoBehaviour
 		playVideoSoon().start(this);
 	}
 
+	private void OnApplicationFocus(bool _focus)
+	{
+		if (_focus)
+		{
+			unPauseCutscene();
+		}
+		else
+		{
+			pauseCutscene();
+		}
+	}
+
 	private IEnumerator playVideoSoon()
 	{
 		yield return 0.5f.wait();
@@ -84,6 +96,7 @@ public class IntroCutsceneManager : MonoBehaviour
 
 	private void moveOn()
 	{
+		AudioHandler.Cutscene.stopCutscene();
 		Music.D.play();
 		GameHandler.instance.moveToScene("GameScene");
 		GameHandler.MetaData.intro_cutscene_played = true;
@@ -106,7 +119,6 @@ public class IntroCutsceneManager : MonoBehaviour
 		skip_runner.run(skip_circle.fill(1f, 2f, CoroutineExtensions.easeInOutFunc).addCallback(delegate
 		{
 			video_player.Stop();
-			AudioHandler.Cutscene.stopCutscene();
 			moveOn();
 		}));
 	}
@@ -114,5 +126,25 @@ public class IntroCutsceneManager : MonoBehaviour
 	public void endSkip()
 	{
 		skip_runner.run(skip_circle.fill(0f, 0.25f, CoroutineExtensions.easeOutFunc));
+	}
+
+	public void pauseCutscene()
+	{
+		if (!paused)
+		{
+			paused = true;
+			video_player.Pause();
+			AudioHandler.Cutscene.pauseCutscene();
+		}
+	}
+
+	public void unPauseCutscene()
+	{
+		if (paused)
+		{
+			video_player.Play();
+			AudioHandler.Cutscene.unpauseAtTime(Mathf.RoundToInt((float)(video_player.time * 1000.0)));
+			paused = false;
+		}
 	}
 }

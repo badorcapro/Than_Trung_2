@@ -56,7 +56,7 @@ public class PublicUnresetEvent : LeadEvent
 
 	public override List<Clue> clues(Lead _lead)
 	{
-		return _lead.clues.add(new QuirkClue(_immutable: false, CaseQuirks.PUBLIC_UNREST));
+		return _lead.clues.add(new QuirkClue(_immutable: true, CaseQuirks.PUBLIC_UNREST));
 	}
 
 	public override List<StampReference> getStamps(Lead _lead)

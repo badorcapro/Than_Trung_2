@@ -388,6 +388,9 @@ public abstract class RoleData : IAmLocalised
 		{
 			disguise = new Maybe<RoleData>();
 		}
+		override_reveal_role = _save.override_reveal;
+		override_visual_alignments = _save.override_visual_alignment;
+		override_visual_classification = _save.override_visual_class;
 	}
 
 	public RoleData(System.Random _random)

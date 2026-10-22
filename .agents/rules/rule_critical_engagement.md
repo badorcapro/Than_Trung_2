@@ -30,7 +30,8 @@ Before endorsing any proposal, confirming any design, or agreeing with a user pr
 2. **Gate 2 — Invariant Stress-Test**:
    - Stress-test the proposal against core invariants:
      - **Template is Source of Truth**: No silent style/layout mutation without explicit user opt-in flags.
-     - **Hard Cap 400 lines/file**: No monolithic ports without Single Responsibility modularization.
+     - **Hard Cap 1000 lines/file (warn: 800)**: No monolithic ports without Single Responsibility modularization; prevent God files while avoiding arbitrary line-limit-driven logic truncation.
+     - **Anti-Silent-Tradeoff Mandate**: Zero silent trade-offs or hidden shortcuts. Every simplification, omitted branch, or architectural compromise must be explicitly logged and surfaced to the user.
      - **Zero Hardcoded Geometry**: All page/cell dimensions must be dynamically read (`pgSz`, `pgMar`, `tcW`), never assumed (e.g. no hardcoded `15.92 cm`).
      - **Fail-Closed on Uncertainty**: Never present assumptions or unverified library capabilities as facts.
 

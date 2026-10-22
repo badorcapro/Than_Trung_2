@@ -115,7 +115,7 @@ public class OfficeLeadProgressionManager : LeadProgressionManager
 			list.Add(new AddSingleRandomRoleEvent(_lead, new List<LeadEvent>(), _rng, true, ClueTypes.ROLE_NOT_IN_PLAY.makeListFromItem(), RoleClassifications.UNDERLING));
 			list.Add(new AddSingleRandomRoleWithAbilityEvent(_rng, _lead, new List<LeadEvent>(), _show_exact: false));
 			list.Add(new RemoveRandomClueEvent(_rng, _lead, new List<LeadEvent>(), _show_exact: true));
-			return list.Where((LeadEvent _e) => _e.isValidForCurrentLead(_lead)).ToList().removeAllAfterIndex(3);
+			return list.Where((LeadEvent _e) => _e.isValidForCurrentLead(_lead) && (!base.custom_settings.is_some || !base.custom_settings.value.vetoed.Contains(_e.event_type))).ToList().removeAllAfterIndex(3);
 		}
 		case 5:
 			return getEventChoicesFromWeightedList(negativeRoleOrQuirkChoiceComplexWithExtraCase(), _lead, _rng);

@@ -28,6 +28,8 @@ public class Alerter : RoleData, IHaveSpecialAbility, IHaveAbility
 
 	public int numberTargets => 1;
 
+	public override bool has_hover_focus => ability_result.is_some;
+
 	public Alerter(int _address, Vector2Int _board_position, System.Random _random, Maybe<RoleData> _true_self)
 		: base(_address, _board_position, _random, _true_self)
 	{
@@ -37,6 +39,11 @@ public class Alerter : RoleData, IHaveSpecialAbility, IHaveAbility
 		: base(_save, _info, _disguise, _random, _from_save)
 	{
 		ability_result = RoleHelper.tryLoadSimpleMaybeFromUniqueData(role, _save, (int _i) => (LocationTypes)_i);
+	}
+
+	protected override bool getEnglishNamePrefixOption()
+	{
+		return false;
 	}
 
 	public string getAbilityPrompt()
@@ -93,6 +100,15 @@ public class Alerter : RoleData, IHaveSpecialAbility, IHaveAbility
 	private string englishInfo(string _d1, string _d2)
 	{
 		return "There {#is/are} " + _d1 + " evil{#/s} beside the " + _d2 + ".";
+	}
+
+	public override bool checkHoverFocus(CaseSnapshot _snap, Vector2Int _position, Either<RoleData, LocationData> _occupent)
+	{
+		if (!_occupent.is_a)
+		{
+			return false;
+		}
+		return _snap.board.getLocationsInPlay()[ability_result.value].getBoardPosition().cardinalDistance(_position) <= 1;
 	}
 
 	public override string getUniqueSaveData()

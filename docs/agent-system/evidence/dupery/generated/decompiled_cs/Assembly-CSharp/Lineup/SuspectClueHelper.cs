@@ -59,15 +59,11 @@ public static class SuspectClueHelper
 
 	public static char getFirstCharOfFirstOrSecondName(Random _r, bool is_male, int _first_index, int _second_index)
 	{
-		if (_r.Next(0, 2) != 0)
+		if (_r.Next(0, 2) == 1)
 		{
-			return last_names[_second_index][0];
+			return localisation_asset.checkTranslation(getLocFirstNameKey(is_male, _first_index), () => (!is_male) ? female_first_names[_first_index] : male_first_names[_first_index])[0];
 		}
-		if (!is_male)
-		{
-			return female_first_names[_first_index][0];
-		}
-		return male_first_names[_first_index][0];
+		return localisation_asset.checkTranslation(getLocLastNameKey(_second_index), () => last_names[_second_index])[0];
 	}
 
 	public static bool getDataFromClueOrRandom(this List<LineupClue> _clues, ClueElementTypes _type, Random _rng, LineupSuspectInfo.ClueConformType _conformity)

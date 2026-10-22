@@ -401,7 +401,7 @@ public class BoardVisualManager : MonoBehaviour
 
 	public Maybe<EmptySlot> findAlreadyHoveringSlot()
 	{
-		return empty_slots.Values.ToList().firstIfSome((EmptySlot _e) => _e.is_hovering);
+		return CollectionsExtension.firstIfSome(empty_slots.Values.ToList(), (EmptySlot _e) => _e.is_hovering);
 	}
 
 	public void overrideLocationCallback(Action<LocationAbilityData> _override_click)

@@ -666,7 +666,7 @@ public abstract class LeadProgressionManager
 	{
 		return _diff switch
 		{
-			GameMetaData.Difficulty.EASY => getBaseLeadDifficulty(_tier) - new MinMaxFloat(0.15f, 0.1f), 
+			GameMetaData.Difficulty.EASY => getBaseLeadDifficulty(_tier) - new MinMaxFloat(0.17f, 0.17f), 
 			GameMetaData.Difficulty.DEFAULT => getBaseLeadDifficulty(_tier), 
 			GameMetaData.Difficulty.CHALLENGE => getBaseLeadDifficulty(_tier) + new MinMaxFloat(0.15f, 0.15f), 
 			_ => getLeadDifficulty(GameMetaData.Difficulty.DEFAULT, _tier), 

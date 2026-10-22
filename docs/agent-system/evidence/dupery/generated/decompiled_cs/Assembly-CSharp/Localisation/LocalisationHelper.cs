@@ -138,9 +138,24 @@ public static class LocalisationHelper
 		switch (languages)
 		{
 		case Languages.ENGLISH:
+		case Languages.FRENCH:
+		case Languages.PORTUGUESE_BRAZIL:
 		case Languages.KOREAN:
 		case Languages.THAI:
 			return '"';
+		case Languages.GERMAN:
+			if (!_start)
+			{
+				return '“';
+			}
+			return '„';
+		case Languages.RUSSIAN:
+		case Languages.SPANISH:
+			if (!_start)
+			{
+				return '»';
+			}
+			return '«';
 		case Languages.CHINESE_SIMPLIFIED:
 			if (!_start)
 			{

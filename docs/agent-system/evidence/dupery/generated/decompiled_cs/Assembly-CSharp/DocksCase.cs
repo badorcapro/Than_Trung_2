@@ -221,6 +221,15 @@ public class DocksCase : Case
 		moveBoat(_to_position, boat.fuelCostToPosition(_to_position) + _additional_cost);
 	}
 
+	public void setBoatPositionWithHiddenCheck(Vector2Int _to_position)
+	{
+		if (!(boat.position == _to_position))
+		{
+			boat.position = _to_position;
+			checkRoleHiddenState();
+		}
+	}
+
 	public CaseSnapshot moveBoat(Vector2Int _to_position)
 	{
 		moveBoat(_to_position, boat.fuelCostToPosition(_to_position));

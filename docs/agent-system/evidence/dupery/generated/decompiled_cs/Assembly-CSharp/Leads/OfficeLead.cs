@@ -58,7 +58,7 @@ public class OfficeLead : Lead
 	public override Case createRandomCase(System.Random _rng)
 	{
 		base.current_case = _rng.Next(0, base.max_case);
-		if (base.current_board_size.x == 3 && _rng.Next(0, 7) > 1)
+		if (base.current_board_size.x == 3 && (case_difficulty > 0.66f || _rng.Next(0, 7) > 1))
 		{
 			setBoardSize(new Vector2Int(4, 4), _force: true);
 		}

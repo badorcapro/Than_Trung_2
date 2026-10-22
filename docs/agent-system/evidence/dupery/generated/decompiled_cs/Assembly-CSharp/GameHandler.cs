@@ -252,6 +252,7 @@ public class GameHandler : MonoBehaviour
 			previous_run_tier_up = false;
 			is_credits_replay = false;
 			quick_case = new Maybe<Regions>();
+			SaveHandler.instance.saveMetaData();
 			SteamHandler.setStatusRichPresence(RichPresenceStatus.MAINMENU);
 			break;
 		case "GameScene":

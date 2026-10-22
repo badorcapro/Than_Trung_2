@@ -31,3 +31,11 @@ The repository enforced a single hard cap of 400 lines per file. Cohesive units 
   - `approved_by` cannot be proven to be human-written by a script; the control is phase-level human review of contract diffs.
   - Threshold values are initial settings, not industry standards, and are expected to be tuned per project.
 - **Implementation split**: TASK-0013 (data layer), TASK-0014 (`check_line_budget.py`), TASK-0015 (`run_verify.py` integration).
+
+## 4. Amendments
+### DEC-AMEND-01 (2026-10-22): Unified Higher Thresholds (Warn: 800, Hard: 1000) & Anti-Silent-Tradeoff Protocol
+- **Rationale**: Strict 300/400 line limits inadvertently incentivized agents to simplify, truncate, or defer essential game logic and architectural constraints into artificial "trade-offs".
+- **Resolution**:
+  1. Updated `project-config.json` software profiles to `warn: 800`, `review: 900`, `hard: 1000` across all roles.
+  2. Updated `rule_critical_engagement.md` and `check_docs.py` to align with the 1000-line hard cap (warn: 800).
+  3. Mandated that Subagents during peer-audit must explicitly cross-examine the Primary Agent for ANY architectural/implementation trade-offs or simplifications, and require them to be surfaced to the user before final verification.

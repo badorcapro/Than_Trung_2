@@ -61,7 +61,7 @@ public class Witness : RoleData
 		int num2 = random.Next(1, 5);
 		if (num2 == num)
 		{
-			num2++;
+			num2 = num2 % 4 + 1;
 		}
 		return checkTranslationWithPlural(getInfoEnglish, num2);
 	}
