@@ -1,0 +1,427 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-10-22T05:01:30Z",
+  "total_mappings": 12,
+  "mappings": [
+    {
+      "id": "MAP-V1-BOARD",
+      "subsystem": "V1 Visual & Detective Board",
+      "vong": "V1",
+      "depth": "L3",
+      "target_godot_feature": "Bảng thám tử, ghim ghi chú, dây chỉ đỏ Catenary và kính lúp",
+      "godot_target_nodes": [
+        "DetectiveBoard.tscn",
+        "PinsContainer (Node2D)",
+        "Line2D (Catenary2D.gd)",
+        "MagnifyingGlass (Sprite2D)"
+      ],
+      "godot_scripts": [
+        "autoload/GameManager.gd",
+        "scripts/domain/board/Catenary2D.gd"
+      ],
+      "dupery_unity_classes": [
+        "BoardVisualManager",
+        "PinsController",
+        "DragPin",
+        "StringManager",
+        "UILineRenderer",
+        "MagnifyingGlassManager"
+      ],
+      "dupery_source_files": [
+        "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Visual/BoardVisualManager.cs",
+        "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/UI/UILineRenderer.cs"
+      ],
+      "handbook_reference": "docs/agent-system/evidence/dupery/handbook/V1A_Detective_Board_and_Suspect_Cards.md",
+      "master_encyclopedia_section": "PHẦN 4: HƯỚNG DẪN HIỆN THỰC HÓA CHI TIẾT TỪNG PHÂN HỆ (V1 ĐẾN V8) - V1",
+      "golden_reference_capture": {
+        "file": "docs/agent-system/evidence/dupery/references/gameplay/REF_V3_LOOP_QuickCaseInvestigation_1080p_60fps.mkv",
+        "action": "Kéo ghim ghi chú và vẽ dây chỉ đỏ catenary",
+        "timestamp": "00:15 - 00:35",
+        "timing_invariants": "Drag lerp alpha = 0.25, snap grid R=32px in 6 frames"
+      },
+      "rea_live_lookup_recipe": "rea lookup --vong V1 --classes BoardVisualManager StringManager"
+    },
+    {
+      "id": "MAP-V2-CASEGEN",
+      "subsystem": "V2 Case Creation & 20 Generation Constraints",
+      "vong": "V2",
+      "depth": "L3",
+      "target_godot_feature": "Quy trình sinh vụ án 3 giai đoạn tất định và 20 ràng buộc logic",
+      "godot_target_nodes": [
+        "CaseCreationManager.gd",
+        "GenerationConstraint.gd",
+        "DotNetRandom.gd"
+      ],
+      "godot_scripts": [
+        "scripts/application/mvp/CaseSliceAdapter.gd",
+        "scripts/domain/board/DotNetRandom.gd"
+      ],
+      "dupery_unity_classes": [
+        "SuspectListFactory",
+        "InPlayListFactory",
+        "BoardPositioningFactory",
+        "PositionRoleGC",
+        "ClassificationRatioGC"
+      ],
+      "dupery_source_files": [
+        "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/CaseCreation/SuspectListFactory.cs",
+        "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/CaseCreation/InPlayListFactory.cs"
+      ],
+      "handbook_reference": "docs/agent-system/evidence/dupery/handbook/V2A_Case_Creation_and_Generation_Constraints.md",
+      "master_encyclopedia_section": "PHẦN 4: HƯỚNG DẪN HIỆN THỰC HÓA CHI TIẾT TỪNG PHÂN HỆ (V1 ĐẾN V8) - V2",
+      "golden_reference_capture": {
+        "file": "docs/agent-system/evidence/dupery/references/gameplay/REF_V2_CASEGEN_EndCaseNextCase_1080p_60fps.mkv",
+        "action": "Lật 3 thẻ vụ án và chọn hồ sơ vụ án mới",
+        "timestamp": "00:05 - 00:25",
+        "timing_invariants": "Card flip duration = 24 frames (400ms), TRANS_CUBIC EASE_OUT"
+      },
+      "rea_live_lookup_recipe": "rea lookup --vong V2 --classes InPlayListFactory SuspectListFactory"
+    },
+    {
+      "id": "MAP-V2-STORY",
+      "subsystem": "V2 Story Node Graphs & Narrative Logic",
+      "vong": "V2",
+      "depth": "L3",
+      "target_godot_feature": "Đồ thị cốt truyện phân nhánh XNode tái lập bằng Resource Trees",
+      "godot_target_nodes": [
+        "StoryNodeResource.gd",
+        "StoryEventRunner.gd",
+        "DialogueBox.tscn"
+      ],
+      "godot_scripts": [
+        "scripts/domain/story/StoryNodeResource.gd",
+        "scripts/application/BootController.gd"
+      ],
+      "dupery_unity_classes": [
+        "CaseIntroNode",
+        "CutsceneNode",
+        "DialogNode",
+        "BranchNode",
+        "StoryEventRunner"
+      ],
+      "dupery_source_files": [
+        "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/TransitionScene/StoryEventRunner.cs",
+        "docs/agent-system/evidence/dupery/generated/decompiled_cs/XNode/XNode/NodeGraph.cs"
+      ],
+      "handbook_reference": "docs/agent-system/evidence/dupery/handbook/V2B_Story_Nodes_and_Branching_Logic.md",
+      "master_encyclopedia_section": "PHẦN 4: HƯỚNG DẪN HIỆN THỰC HÓA CHI TIẾT TỪNG PHÂN HỆ (V1 ĐẾN V8) - V2",
+      "golden_reference_capture": {
+        "file": "docs/agent-system/evidence/dupery/references/gameplay/REF_V7_SUB_ReplayTutorial_1080p_60fps.mkv",
+        "action": "Hội thoại hướng dẫn và chuyển tiếp đồ thị truyện",
+        "timestamp": "00:10 - 00:40",
+        "timing_invariants": "Dialogue transition = 18 frames (300ms)"
+      },
+      "rea_live_lookup_recipe": "rea lookup --vong V2 --classes StoryEventRunner DialogNode"
+    },
+    {
+      "id": "MAP-V3-LOOP",
+      "subsystem": "V3 Core Investigation Loop & Lineup",
+      "vong": "V3",
+      "depth": "L3",
+      "target_godot_feature": "Vòng lặp điều tra ngày/đêm, quản lý manh mối Leads và hàng nghi phạm Lineup",
+      "godot_target_nodes": [
+        "InvestigationLoop.tscn",
+        "LeadsMenu.tscn",
+        "LineupCarousel.tscn"
+      ],
+      "godot_scripts": [
+        "scripts/application/mvp/MvpRoundOrchestrator.gd",
+        "autoload/GameManager.gd"
+      ],
+      "dupery_unity_classes": [
+        "GameHandler",
+        "LeadProgressionManager",
+        "LineupClueHelper",
+        "SummaryHandler"
+      ],
+      "dupery_source_files": [
+        "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/GameHandler.cs",
+        "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Leads/LeadProgressionManager.cs"
+      ],
+      "handbook_reference": "docs/agent-system/evidence/dupery/handbook/V3_Core_Gameplay_Loop_and_Leads_System.md",
+      "master_encyclopedia_section": "PHẦN 4: HƯỚNG DẪN HIỆN THỰC HÓA CHI TIẾT TỪNG PHÂN HỆ (V1 ĐẾN V8) - V3",
+      "golden_reference_capture": {
+        "file": "docs/agent-system/evidence/dupery/references/gameplay/REF_V3_LOOP_QuickCaseInvestigation_1080p_60fps.mkv",
+        "action": "Duyệt manh mối khu vực và bước hàng nghi phạm",
+        "timestamp": "00:35 - 01:10",
+        "timing_invariants": "Lineup step = 18 frames (300ms), TRANS_QUAD EASE_IN_OUT"
+      },
+      "rea_live_lookup_recipe": "rea lookup --vong V3 --classes GameHandler LeadProgressionManager"
+    },
+    {
+      "id": "MAP-V4-ITEMS",
+      "subsystem": "V4 Quirks & BackAlley Shop Items",
+      "vong": "V4",
+      "depth": "L3",
+      "target_godot_feature": "59 Quirks thẻ bài, 11 vật phẩm chợ đen và khay xòe quạt ItemFan",
+      "godot_target_nodes": [
+        "ItemFanContainer.tscn",
+        "QuirkCard.tscn",
+        "ShopModal.tscn"
+      ],
+      "godot_scripts": [
+        "scripts/application/loot/ConsumableItemService.gd",
+        "scripts/domain/cards/QuirkCard.gd"
+      ],
+      "dupery_unity_classes": [
+        "ItemFanManager",
+        "LostAtSea",
+        "QuirkDataSO",
+        "FuelMerchant"
+      ],
+      "dupery_source_files": [
+        "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Quirks/LostAtSea.cs",
+        "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/FuelMerchant.cs"
+      ],
+      "handbook_reference": "docs/agent-system/evidence/dupery/handbook/V4_Quirks_and_BackAlley_Items.md",
+      "master_encyclopedia_section": "PHẦN 4: HƯỚNG DẪN HIỆN THỰC HÓA CHI TIẾT TỪNG PHÂN HỆ (V1 ĐẾN V8) - V4",
+      "golden_reference_capture": {
+        "file": "docs/agent-system/evidence/dupery/references/gameplay/REF_V3_LOOP_QuickCaseInvestigation_1080p_60fps.mkv",
+        "action": "Mở quạt vật phẩm và kéo thả thẻ đặc tính",
+        "timestamp": "00:45 - 01:05",
+        "timing_invariants": "Fan open = 20 frames (333ms), TRANS_BACK EASE_OUT"
+      },
+      "rea_live_lookup_recipe": "rea lookup --vong V4 --classes ItemFanManager LostAtSea"
+    },
+    {
+      "id": "MAP-V5-ROLES",
+      "subsystem": "V5 Suspect Roles & Abilities Matrix",
+      "vong": "V5",
+      "depth": "L3",
+      "target_godot_feature": "228 vai trò nghi phạm, 87 năng lực và cơ chế đóng dấu phán quyết",
+      "godot_target_nodes": [
+        "SuspectCard.tscn",
+        "StampEffect.tscn",
+        "AbilityExecutor.gd"
+      ],
+      "godot_scripts": [
+        "scripts/application/characters/ProductionCharacterRoster.gd",
+        "scripts/domain/characters/SuspectRoleData.gd"
+      ],
+      "dupery_unity_classes": [
+        "RoleData",
+        "Psychiatrist",
+        "Psychic",
+        "Witness",
+        "Hunter"
+      ],
+      "dupery_source_files": [
+        "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/RoleData.cs",
+        "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Psychiatrist.cs"
+      ],
+      "handbook_reference": "docs/agent-system/evidence/dupery/handbook/V5A_Core_Ability_Engine_and_Archetypes.md",
+      "master_encyclopedia_section": "PHẦN 4: HƯỚNG DẪN HIỆN THỰC HÓA CHI TIẾT TỪNG PHÂN HỆ (V1 ĐẾN V8) - V5",
+      "golden_reference_capture": {
+        "file": "docs/agent-system/evidence/dupery/references/gameplay/REF_V3_LOOP_QuickCaseInvestigation_1080p_60fps.mkv",
+        "action": "Thẩm vấn nghi phạm và đóng dấu con dấu",
+        "timestamp": "01:00 - 01:20",
+        "timing_invariants": "Stamp impact = 12 frames (200ms), angle jitter +/-5 deg"
+      },
+      "rea_live_lookup_recipe": "rea lookup --vong V5 --classes RoleData Psychiatrist"
+    },
+    {
+      "id": "MAP-V6-SAVE",
+      "subsystem": "V6 Persistence & Save Migration Chain",
+      "vong": "V6",
+      "depth": "L2",
+      "target_godot_feature": "Tuần tự hóa JSON, kiểm tra tính toàn vẹn và chuỗi migration v0.2.51 ➔ v0.9.34",
+      "godot_target_nodes": [
+        "SaveManager.gd"
+      ],
+      "godot_scripts": [
+        "autoload/SaveManager.gd",
+        "scripts/application/mvp/MvpStateSerializer.gd"
+      ],
+      "dupery_unity_classes": [
+        "SaveHandler",
+        "RunHistoryManager",
+        "SimulatedBoardManager"
+      ],
+      "dupery_source_files": [
+        "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Save/SaveHandler.cs",
+        "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/RunHistoryManager.cs"
+      ],
+      "handbook_reference": "docs/agent-system/evidence/dupery/handbook/V6B_Persistence_Localization_and_UX_Infrastructure.md",
+      "master_encyclopedia_section": "PHẦN 4: HƯỚNG DẪN HIỆN THỰC HÓA CHI TIẾT TỪNG PHÂN HỆ (V1 ĐẾN V8) - V6",
+      "golden_reference_capture": {
+        "file": "docs/agent-system/evidence/dupery/references/gameplay/REF_MENU_MainMenuAndStats_1080p_60fps.mkv",
+        "action": "Nạp hồ sơ thám tử và dữ liệu thống kê lịch sử",
+        "timestamp": "00:08 - 00:18",
+        "timing_invariants": "Save migration instant execution (< 1 frame)"
+      },
+      "rea_live_lookup_recipe": "rea lookup --vong V6 --classes SaveHandler RunHistoryManager"
+    },
+    {
+      "id": "MAP-V6-AUDIO",
+      "subsystem": "V6 Interactive Audio Engine & FMOD Bridge",
+      "vong": "audio_bridge",
+      "depth": "L3",
+      "target_godot_feature": "Hệ thống 5 bus AudioServer, stem layering Noir Jazz và bộ lọc DSP snapshot",
+      "godot_target_nodes": [
+        "AudioManager.gd",
+        "AudioServer (5 Buses)"
+      ],
+      "godot_scripts": [
+        "autoload/AudioManager.gd"
+      ],
+      "dupery_unity_classes": [
+        "AudioHandler",
+        "FMODUnity.RuntimeManager",
+        "FMODUnity.StudioEventEmitter"
+      ],
+      "dupery_source_files": [
+        "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Audio/AudioHandler.cs",
+        "docs/agent-system/evidence/dupery/generated/decompiled_cs/FMODUnity/FMODUnity/RuntimeManager.cs"
+      ],
+      "handbook_reference": "docs/agent-system/evidence/dupery/handbook/V6A_Interactive_Audio_Engine_and_FMOD_Bridge.md",
+      "master_encyclopedia_section": "PHẦN 2: MA TRẬN DI TRÚ THÀNH PHẦN UNITY ➔ GODOT 4.6.2 - FMOD",
+      "golden_reference_capture": {
+        "file": "docs/agent-system/evidence/dupery/references/gameplay/REF_MENU_GameSettings_1080p_60fps.mkv",
+        "action": "Kéo thanh trượt âm lượng và kiểm tra bộ lọc tạm dừng",
+        "timestamp": "00:02 - 00:12",
+        "timing_invariants": "Pause filter cutoff transition = 12 frames (200ms) down to 800Hz"
+      },
+      "rea_live_lookup_recipe": "rea lookup --vong audio_bridge --classes AudioController RuntimeManager"
+    },
+    {
+      "id": "MAP-V6-LOC",
+      "subsystem": "V6 Localization Core & Hotfix Filter",
+      "vong": "localisation",
+      "depth": "L2",
+      "target_godot_feature": "Từ điển đa ngôn ngữ TranslationServer và bộ lọc LocalisationActivation",
+      "godot_target_nodes": [
+        "LocalisationHelper.gd",
+        "LocalisationActivation.gd"
+      ],
+      "godot_scripts": [
+        "scripts/infrastructure/localization/LocalisationHelper.gd"
+      ],
+      "dupery_unity_classes": [
+        "LocalisationHelper",
+        "LocalisationActivation",
+        "GRGLocalisationHandler"
+      ],
+      "dupery_source_files": [
+        "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Localisation/LocalisationHelper.cs",
+        "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/LocalisationActivation.cs"
+      ],
+      "handbook_reference": "docs/agent-system/evidence/dupery/handbook/V6B_Persistence_Localization_and_UX_Infrastructure.md",
+      "master_encyclopedia_section": "PHẦN 4: HƯỚNG DẪN HIỆN THỰC HÓA CHI TIẾT TỪNG PHÂN HỆ (V1 ĐẾN V8) - V6",
+      "golden_reference_capture": {
+        "file": "docs/agent-system/evidence/dupery/references/gameplay/REF_MENU_GameSettings_1080p_60fps.mkv",
+        "action": "Chuyển đổi ngôn ngữ hiển thị trong menu cài đặt",
+        "timestamp": "00:06 - 00:13",
+        "timing_invariants": "Dynamic language reload via TranslationServer.set_locale()"
+      },
+      "rea_live_lookup_recipe": "rea lookup --vong localisation --classes LocalisationHelper LocalisationActivation"
+    },
+    {
+      "id": "MAP-V7-SCREENS",
+      "subsystem": "V7 Secondary Screens, Codex & Alternate Modes",
+      "vong": "V7",
+      "depth": "L3",
+      "target_godot_feature": "MainMenu, Codex bách khoa, Tutorial và 6 chế độ chơi mở rộng",
+      "godot_target_nodes": [
+        "MainMenu.tscn",
+        "CodexModal.tscn",
+        "TutorialManager.tscn",
+        "SceneRouter.gd"
+      ],
+      "godot_scripts": [
+        "autoload/SceneRouter.gd",
+        "scripts/application/BootController.gd"
+      ],
+      "dupery_unity_classes": [
+        "MainMenu",
+        "TutorialHandler",
+        "TransitionSceneHandler",
+        "AlternateModesManager"
+      ],
+      "dupery_source_files": [
+        "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/MainMenu/MainMenu.cs",
+        "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/Tutorial/TutorialHandler.cs"
+      ],
+      "handbook_reference": "docs/agent-system/evidence/dupery/handbook/V7_Secondary_Screens_Codex_and_Alternate_Modes.md",
+      "master_encyclopedia_section": "PHẦN 4: HƯỚNG DẪN HIỆN THỰC HÓA CHI TIẾT TỪNG PHÂN HỆ (V1 ĐẾN V8) - V7",
+      "golden_reference_capture": {
+        "file": "docs/agent-system/evidence/dupery/references/gameplay/REF_MENU_MainMenuAndStats_1080p_60fps.mkv",
+        "action": "Tương tác Main Menu và hiệu ứng chuông đồng hồ",
+        "timestamp": "00:00 - 00:10",
+        "timing_invariants": "Menu hover tween = 9 frames (150ms), Bell chime = 120 frames"
+      },
+      "rea_live_lookup_recipe": "rea lookup --vong V7 --classes MainMenu TutorialHandler"
+    },
+    {
+      "id": "MAP-V8-EDITOR",
+      "subsystem": "V8 Level Editor Core & Solvability Polish",
+      "vong": "V8",
+      "depth": "L3",
+      "target_godot_feature": "Trình tạo màn chơi kéo thả, kiểm tra ngân sách fuel/chips và xuất CustomCase",
+      "godot_target_nodes": [
+        "LevelEditor.tscn",
+        "SlotPallet.tscn",
+        "FuelMeter.tscn"
+      ],
+      "godot_scripts": [
+        "scripts/application/prototype_b/PrototypeBExportService.gd"
+      ],
+      "dupery_unity_classes": [
+        "LevelEditorManager",
+        "LEBoardManager",
+        "LEAdderMenu",
+        "LEFuel",
+        "LEProblemHighlighter"
+      ],
+      "dupery_source_files": [
+        "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/LevelEditor/LevelEditorManager.cs",
+        "docs/agent-system/evidence/dupery/generated/decompiled_cs/Assembly-CSharp/LevelEditor/LEAdderMenu.cs"
+      ],
+      "handbook_reference": "docs/agent-system/evidence/dupery/handbook/V8_Level_Editor_and_Final_Polish.md",
+      "master_encyclopedia_section": "PHẦN 4: HƯỚNG DẪN HIỆN THỰC HÓA CHI TIẾT TỪNG PHÂN HỆ (V1 ĐẾN V8) - V8",
+      "golden_reference_capture": {
+        "file": "docs/agent-system/evidence/dupery/references/gameplay/REF_V7_SUB_EndRoundSummary_1080p_60fps.mkv",
+        "action": "Biểu đồ tròn tổng kết và tiếng búa thẩm phán",
+        "timestamp": "00:00 - 00:15",
+        "timing_invariants": "Pie chart radial fill = 45 frames (750ms), gavel sync at frame 45"
+      },
+      "rea_live_lookup_recipe": "rea lookup --vong V8 --classes LevelEditorManager LEAdderMenu"
+    },
+    {
+      "id": "MAP-LIB-FRAMEWORK",
+      "subsystem": "Supporting Frameworks & Graph Engines",
+      "vong": "framework",
+      "depth": "L1",
+      "target_godot_feature": "Thay thế thư viện GRGLib & XNode bằng Godot 4.6.2 built-in primitives",
+      "godot_target_nodes": [
+        "Line2D",
+        "Tween",
+        "FileAccess",
+        "GraphEdit",
+        "Resource"
+      ],
+      "godot_scripts": [
+        "autoload/AppFlow.gd",
+        "autoload/AppLogger.gd"
+      ],
+      "dupery_unity_classes": [
+        "UILineRenderer",
+        "CollectionsExtension",
+        "NodeGraph",
+        "Node"
+      ],
+      "dupery_source_files": [
+        "docs/agent-system/evidence/dupery/generated/decompiled_cs/gildedrunegames.grglib/GRGLib/UI/UILineRenderer.cs",
+        "docs/agent-system/evidence/dupery/generated/decompiled_cs/XNode/XNode/NodeGraph.cs"
+      ],
+      "handbook_reference": "docs/agent-system/evidence/dupery/handbook/MASTER_DUPERY_GODOT_MIGRATION_ENCYCLOPEDIA.md",
+      "master_encyclopedia_section": "PHẦN 2: MA TRẬN DI TRÚ THÀNH PHẦN UNITY ➔ GODOT 4.6.2",
+      "golden_reference_capture": {
+        "file": "docs/agent-system/evidence/dupery/references/gameplay/REF_V3_LOOP_QuickCaseInvestigation_1080p_60fps.mkv",
+        "action": "Tương tác đường nét UI và duyệt danh sách",
+        "timestamp": "00:20 - 00:40",
+        "timing_invariants": "Native engine rendering loop (0 overhead)"
+      },
+      "rea_live_lookup_recipe": "rea lookup --vong framework --classes UILineRenderer NodeGraph"
+    }
+  ]
+}
