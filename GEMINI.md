@@ -46,7 +46,7 @@ Tài liệu này lưu trữ toàn bộ kiến thức tổng quan, kiến trúc, 
    * Định dạng commit tuân thủ chuẩn **Conventional Commits**: `<type>(<scope>): <mô tả ngắn>`.
    * Khi đẩy mã nguồn lên remote:
      ```powershell
-     git push origin YukiiMin-Guideline-for-project
+     git push origin badorca
      ```
 5. ⚖️ **Quy Tắc Định Giá Vật Phẩm Đấu Giá (Decoupled Size-Price Valuation):**
    * Tuyệt đối **không** định giá vật phẩm theo kích thước ô lưới (không mặc định đồ to 2x2, 2x3, 4x2 là đắt tiền, đồ nhỏ 1x1, 1x2 là rẻ tiền).
@@ -119,6 +119,6 @@ Mỗi khi thực hiện một tác vụ:
    ```powershell
    git add .
    git commit -m "<type>(<scope>): <mô tả tác vụ>"
-   git push origin YukiiMin-Guideline-for-project
+   git push origin badorca
    ```
 6. Báo cáo kết quả và mã commit hash cho người dùng; sẵn sàng nhận nhiệm vụ tiếp theo.

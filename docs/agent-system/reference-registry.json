@@ -354,7 +354,7 @@
       "path": "GEMINI.md",
       "authority": "approved",
       "status": "current",
-      "sha256": "62e0c226f7505f5b6fe497f3952ec127134da63a4ccdebbd410b2675dbd63a0c",
+      "sha256": "71044768025f350b4ffe386cf634a3a1e05cb6d1e5237cddb649d049bab53d93",
       "depends_on": [
         "ARCH-CORE-001"
       ],

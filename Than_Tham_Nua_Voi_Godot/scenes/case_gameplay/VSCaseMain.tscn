@@ -4,7 +4,11 @@
 [ext_resource type="Theme" uid="uid://c8asethemecase01" path="res://themes/CaseTheme.tres" id="2"]
 [ext_resource type="PackedScene" uid="uid://b7d07ctqbtiei" path="res://scenes/case_gameplay/CaseBoard.tscn" id="3"]
 [ext_resource type="Script" uid="uid://dqqtongtu3j2v" path="res://scripts/presentation/case_gameplay/InvestigationCursorFeedback.gd" id="4"]
-[ext_resource type="Texture2D" uid="uid://dxrg3xbly8bkc" path="res://assets/ui/case/imperial/table_desk_bg.png" id="5_case_bg"]
+[ext_resource type="Texture2D" path="res://assets/ui/dupery_props/board_desk_background.png" id="5_case_bg"]
+[ext_resource type="Script" path="res://scripts/presentation/case_gameplay/CatenaryYarnLayer.gd" id="13_yarn_script"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/pin_pop.wav" id="14_pin_audio"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/card_flip.wav" id="15_card_audio"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/gavel_stamp.wav" id="16_gavel_audio"]
 [ext_resource type="Texture2D" uid="uid://xg6oxgt5klw8" path="res://assets/ui/case/imperial/compass_clock.png" id="6_pocket_watch"]
 [ext_resource type="Texture2D" path="res://assets/ui/case/dupery/hours_note.png" id="7_hours_note"]
 [ext_resource type="Texture2D" uid="uid://c8qfnu8h4rark" path="res://assets/ui/case/imperial/ratio_scroll_paper.png" id="8_ratio_notepad"]
@@ -1188,3 +1192,23 @@ text = "Hủy"
 unique_name_in_owner = true
 stream = ExtResource("11_page_flip_sfx")
 volume_db = -4.0
+
+[node name="CatenaryYarnLayer" type="Node2D" parent="." unique_id=241001]
+unique_name_in_owner = true
+z_index = 25
+script = ExtResource("13_yarn_script")
+
+[node name="PinAudio" type="AudioStreamPlayer" parent="." unique_id=241002]
+unique_name_in_owner = true
+stream = ExtResource("14_pin_audio")
+volume_db = -2.0
+
+[node name="CardFlipAudio" type="AudioStreamPlayer" parent="." unique_id=241003]
+unique_name_in_owner = true
+stream = ExtResource("15_card_audio")
+volume_db = -2.0
+
+[node name="GavelAudio" type="AudioStreamPlayer" parent="." unique_id=241004]
+unique_name_in_owner = true
+stream = ExtResource("16_gavel_audio")
+volume_db = 0.0

@@ -87,6 +87,10 @@ signal integration_truth_acknowledged
 @onready var newspaper_reputation_needle: Polygon2D = get_node_or_null("%NewspaperReputationNeedle") as Polygon2D
 @onready var page_flip_audio: AudioStreamPlayer = get_node_or_null("%PageFlipAudio") as AudioStreamPlayer
 @onready var newspaper_container: Control = get_node_or_null("%NewspaperContainer") as Control
+@onready var yarn_layer: CatenaryYarnLayer = get_node_or_null("%CatenaryYarnLayer") as CatenaryYarnLayer
+@onready var pin_audio: AudioStreamPlayer = get_node_or_null("%PinAudio") as AudioStreamPlayer
+@onready var card_flip_audio: AudioStreamPlayer = get_node_or_null("%CardFlipAudio") as AudioStreamPlayer
+@onready var gavel_audio: AudioStreamPlayer = get_node_or_null("%GavelAudio") as AudioStreamPlayer
 
 # ESC Pause Menu nodes
 @onready var pause_menu_overlay: Control = get_node_or_null("%PauseMenuOverlay") as Control
@@ -200,8 +204,44 @@ func _ready() -> void:
 	if solver_inspection_close_button != null and not solver_inspection_close_button.pressed.is_connected(_close_solver_inspection):
 		solver_inspection_close_button.pressed.connect(_close_solver_inspection)
 	_setup_pause_menu()
+	_setup_yarn_and_audio()
 	_load_and_start_fresh_runtime()
 
+
+
+func _setup_yarn_and_audio() -> void:
+	if yarn_layer == null:
+		yarn_layer = CatenaryYarnLayer.new()
+		yarn_layer.name = "CatenaryYarnLayer"
+		yarn_layer.z_index = 25
+		add_child(yarn_layer)
+	if pin_audio == null:
+		pin_audio = AudioStreamPlayer.new()
+		if ResourceLoader.exists("res://assets/audio/sfx/pin_pop.wav"):
+			pin_audio.stream = load("res://assets/audio/sfx/pin_pop.wav")
+		add_child(pin_audio)
+	if card_flip_audio == null:
+		card_flip_audio = AudioStreamPlayer.new()
+		if ResourceLoader.exists("res://assets/audio/sfx/card_flip.wav"):
+			card_flip_audio.stream = load("res://assets/audio/sfx/card_flip.wav")
+		add_child(card_flip_audio)
+	if gavel_audio == null:
+		gavel_audio = AudioStreamPlayer.new()
+		if ResourceLoader.exists("res://assets/audio/sfx/gavel_stamp.wav"):
+			gavel_audio.stream = load("res://assets/audio/sfx/gavel_stamp.wav")
+		add_child(gavel_audio)
+
+
+func _update_yarn_pin_positions() -> void:
+	if yarn_layer == null or board == null:
+		return
+	var grid: GridContainer = board.get_node_or_null("%Grid") as GridContainer
+	if grid == null:
+		return
+	for child in grid.get_children():
+		if child is SuspectCardController:
+			var card := child as SuspectCardController
+			yarn_layer.register_pin_position(card.get_suspect_id(), card.get_pin_global_position())
 
 func _apply_case_typography() -> void:
 	if board_help_label != null:
@@ -209,6 +249,21 @@ func _apply_case_typography() -> void:
 
 
 func _input(event: InputEvent) -> void:
+	if yarn_layer != null and yarn_layer.is_dragging():
+		if event is InputEventMouseMotion:
+			yarn_layer.update_drag_position(get_global_mouse_position())
+		elif event is InputEventMouseButton:
+			var mb := event as InputEventMouseButton
+			if not mb.pressed and mb.button_index == MOUSE_BUTTON_LEFT:
+				var target := yarn_layer.finish_dragging(get_global_mouse_position())
+				if target >= 0 and pin_audio != null:
+					pin_audio.play()
+			elif mb.pressed and mb.button_index == MOUSE_BUTTON_RIGHT:
+				yarn_layer.cancel_dragging()
+				if pin_audio != null:
+					pin_audio.play()
+				get_viewport().set_input_as_handled()
+				return
 	if _tutorial_dialogue_active:
 		if event is InputEventMouseButton:
 			var tutorial_mouse_button: InputEventMouseButton = event as InputEventMouseButton
@@ -377,6 +432,7 @@ func _refresh_all_presentation() -> void:
 			_case_board_columns(),
 			_case_board_slot_count()
 		)
+		_update_yarn_pin_positions.call_deferred()
 	_close_private_panel_if_not_current()
 	_update_case_clock_display()
 	_update_turn_display()
@@ -635,10 +691,29 @@ func _on_suspect_action(suspect_id: int, button_index: int, is_hold: bool) -> vo
 		return
 
 	if button_index == MOUSE_BUTTON_RIGHT:
+		if yarn_layer != null and yarn_layer.is_dragging():
+			yarn_layer.cancel_dragging()
+			if pin_audio != null:
+				pin_audio.play()
+			return
+		if yarn_layer != null and yarn_layer.has_pin(suspect_id):
+			yarn_layer.remove_connections_for(suspect_id)
+			if pin_audio != null:
+				pin_audio.play()
 		_toggle_evil_marking(suspect_id)
 		return
 
 	if button_index == MOUSE_BUTTON_LEFT:
+		if yarn_layer != null and yarn_layer.is_dragging():
+			var connected := yarn_layer.finish_dragging(get_global_mouse_position())
+			if connected >= 0 and pin_audio != null:
+				pin_audio.play()
+			return
+		if Input.is_key_pressed(KEY_SHIFT) and yarn_layer != null and yarn_layer.has_pin(suspect_id):
+			yarn_layer.start_dragging_from(suspect_id)
+			if pin_audio != null:
+				pin_audio.play()
+			return
 		if selection_state.mode == InvestigationSelectionState.Mode.IDLE:
 			if not suspect_runtime.is_investigated:
 				if is_hold:
@@ -660,6 +735,8 @@ func _on_suspect_action(suspect_id: int, button_index: int, is_hold: bool) -> vo
 
 
 func _perform_direct_investigation(suspect_id: int) -> void:
+	if card_flip_audio != null:
+		card_flip_audio.play()
 	if cursor_feedback != null:
 		cursor_feedback.complete()
 	if not selection_state.begin_selection():
@@ -930,6 +1007,8 @@ func _selected_function_label() -> String:
 
 
 func _on_submit_pressed() -> void:
+	if gavel_audio != null:
+		gavel_audio.play()
 	if runtime_state == null:
 		return
 	if _is_tutorial_dialogue_blocking():

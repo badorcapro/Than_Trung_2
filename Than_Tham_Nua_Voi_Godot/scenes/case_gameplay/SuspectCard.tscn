@@ -1,13 +1,20 @@
 [gd_scene format=3 uid="uid://d1w3mip7w6j7f"]
 
 [ext_resource type="Script" uid="uid://l7jtknkmqvoi" path="res://scripts/presentation/case_gameplay/SuspectCardController.gd" id="1"]
-[ext_resource type="Texture2D" uid="uid://dw4u5yrqa73l5" path="res://assets/ui/case/suspect_card_skin_green_3x3_runtime.png" id="2_card_skin"]
+[ext_resource type="Texture2D" path="res://assets/ui/dupery_props/card_shadow.png" id="2_card_shadow"]
+[ext_resource type="Texture2D" path="res://assets/ui/dupery_props/door_01.png" id="3_door_skin"]
+[ext_resource type="Texture2D" path="res://assets/ui/dupery_props/card_outer_frame.png" id="4_card_outer_frame"]
+[ext_resource type="Texture2D" path="res://assets/ui/dupery_props/pin.png" id="5_pin"]
+[ext_resource type="Texture2D" path="res://assets/ui/dupery_props/pin_shadow.png" id="6_pin_shadow"]
+[ext_resource type="Texture2D" path="res://assets/ui/dupery_props/dead_marker.png" id="7_dead_marker"]
+[ext_resource type="Texture2D" path="res://assets/ui/dupery_props/function_hand.png" id="8_function_hand"]
+[ext_resource type="Texture2D" path="res://assets/ui/dupery_props/stamp_role_suspected.png" id="9_stamp_suspected"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_card_transparent"]
-content_margin_left = 7.0
-content_margin_top = 7.0
-content_margin_right = 7.0
-content_margin_bottom = 7.0
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
 bg_color = Color(0, 0, 0, 0)
 draw_center = false
 
@@ -17,6 +24,8 @@ draw_center = false
 custom_minimum_size = Vector2(168, 190)
 layout_mode = 3
 anchors_preset = 0
+offset_right = 168.0
+offset_bottom = 190.0
 script = ExtResource("1")
 
 [node name="CardPresentationRoot" type="Control" parent="." unique_id=266573786]
@@ -29,24 +38,142 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="CardSkin" type="TextureRect" parent="CardPresentationRoot" unique_id=600146900]
+[node name="CardShadow" type="TextureRect" parent="CardPresentationRoot" unique_id=600146900]
+unique_name_in_owner = true
+modulate = Color(0, 0, 0, 0.45)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -6.0
+offset_top = -4.0
+offset_right = 8.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_card_shadow")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="ClosedStateRoot" type="Control" parent="CardPresentationRoot" unique_id=1101]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -3.0
-offset_top = -10.0
-offset_right = 3.0
-offset_bottom = 10.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-texture = ExtResource("2_card_skin")
+
+[node name="DoorSkin" type="TextureRect" parent="CardPresentationRoot/ClosedStateRoot" unique_id=1102]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("3_door_skin")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="CardVisual" type="PanelContainer" parent="CardPresentationRoot" unique_id=1051810045]
+[node name="DoorDarkOverlay" type="ColorRect" parent="CardPresentationRoot/ClosedStateRoot" unique_id=1103]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.18)
+
+[node name="DoorRoomNumber" type="Label" parent="CardPresentationRoot/ClosedStateRoot" unique_id=1104]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.96, 0.95, 0.92, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.8)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 3
+theme_override_font_sizes/font_size = 36
+text = "01"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SpecialLocationRoot" type="Control" parent="CardPresentationRoot/ClosedStateRoot" unique_id=1105]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="LocationIcon" type="TextureRect" parent="CardPresentationRoot/ClosedStateRoot/SpecialLocationRoot" unique_id=1106]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 10.0
+offset_bottom = -35.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="LocationLabel" type="Label" parent="CardPresentationRoot/ClosedStateRoot/SpecialLocationRoot" unique_id=1107]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -32.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.95, 0.88, 0.75, 1)
+theme_override_font_sizes/font_size = 14
+text = "Hiện trường"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="OpenStateRoot" type="Control" parent="CardPresentationRoot" unique_id=1201]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="CardFrame" type="TextureRect" parent="CardPresentationRoot/OpenStateRoot" unique_id=1202]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("4_card_outer_frame")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="CardVisual" type="PanelContainer" parent="CardPresentationRoot/OpenStateRoot" unique_id=1051810045]
 unique_name_in_owner = true
 z_index = 1
 layout_mode = 1
@@ -58,25 +185,25 @@ grow_vertical = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_card_transparent")
 
-[node name="CardContent" type="VBoxContainer" parent="CardPresentationRoot/CardVisual" unique_id=189186998]
+[node name="CardContent" type="VBoxContainer" parent="CardPresentationRoot/OpenStateRoot/CardVisual" unique_id=189186998]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 2
 
-[node name="TopRow" type="HBoxContainer" parent="CardPresentationRoot/CardVisual/CardContent" unique_id=1857749560]
+[node name="TopRow" type="HBoxContainer" parent="CardPresentationRoot/OpenStateRoot/CardVisual/CardContent" unique_id=1857749560]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 68)
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 6
 
-[node name="IconSlotRoot" type="Control" parent="CardPresentationRoot/CardVisual/CardContent/TopRow" unique_id=2132432324]
+[node name="IconSlotRoot" type="Control" parent="CardPresentationRoot/OpenStateRoot/CardVisual/CardContent/TopRow" unique_id=2132432324]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(68, 68)
 layout_mode = 2
 mouse_filter = 2
 
-[node name="IconBg" type="ColorRect" parent="CardPresentationRoot/CardVisual/CardContent/TopRow/IconSlotRoot" unique_id=2132432325]
+[node name="IconBg" type="ColorRect" parent="CardPresentationRoot/OpenStateRoot/CardVisual/CardContent/TopRow/IconSlotRoot" unique_id=2132432325]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -87,7 +214,7 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0.08, 0.08, 0.1, 1)
 
-[node name="RoleIcon" type="TextureRect" parent="CardPresentationRoot/CardVisual/CardContent/TopRow/IconSlotRoot" unique_id=1925493031]
+[node name="RoleIcon" type="TextureRect" parent="CardPresentationRoot/OpenStateRoot/CardVisual/CardContent/TopRow/IconSlotRoot" unique_id=1925493031]
 unique_name_in_owner = true
 visible = false
 layout_mode = 1
@@ -100,7 +227,7 @@ mouse_filter = 2
 expand_mode = 1
 stretch_mode = 5
 
-[node name="UnknownIconLabel" type="Label" parent="CardPresentationRoot/CardVisual/CardContent/TopRow/IconSlotRoot" unique_id=1868276247]
+[node name="UnknownIconLabel" type="Label" parent="CardPresentationRoot/OpenStateRoot/CardVisual/CardContent/TopRow/IconSlotRoot" unique_id=1868276247]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -114,31 +241,31 @@ text = "?"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TopSpacer" type="Control" parent="CardPresentationRoot/CardVisual/CardContent/TopRow" unique_id=127995322]
+[node name="TopSpacer" type="Control" parent="CardPresentationRoot/OpenStateRoot/CardVisual/CardContent/TopRow" unique_id=127995322]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="SuspectNumber" type="Label" parent="CardPresentationRoot/CardVisual/CardContent/TopRow" unique_id=1277494923]
+[node name="SuspectNumber" type="Label" parent="CardPresentationRoot/OpenStateRoot/CardVisual/CardContent/TopRow" unique_id=1277494923]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_colors/font_color = Color(0.08, 0.075, 0.065, 1)
 theme_override_font_sizes/font_size = 24
-text = "0"
+text = "01"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="PublicName" type="Label" parent="CardPresentationRoot/CardVisual/CardContent" unique_id=1910215839]
+[node name="PublicName" type="Label" parent="CardPresentationRoot/OpenStateRoot/CardVisual/CardContent" unique_id=1910215839]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 14
 horizontal_alignment = 1
 
-[node name="StatusLabel" type="Label" parent="CardPresentationRoot/CardVisual/CardContent" unique_id=2089109556]
+[node name="StatusLabel" type="Label" parent="CardPresentationRoot/OpenStateRoot/CardVisual/CardContent" unique_id=2089109556]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
@@ -146,7 +273,7 @@ theme_override_colors/font_color = Color(0.95, 0.77, 0.35, 1)
 theme_override_font_sizes/font_size = 12
 horizontal_alignment = 1
 
-[node name="PublicRoleLabel" type="Label" parent="CardPresentationRoot/CardVisual/CardContent" unique_id=348574602]
+[node name="PublicRoleLabel" type="Label" parent="CardPresentationRoot/OpenStateRoot/CardVisual/CardContent" unique_id=348574602]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 22)
 layout_mode = 2
@@ -157,23 +284,21 @@ horizontal_alignment = 1
 autowrap_mode = 0
 clip_text = true
 
-[node name="StatementRegion" type="Control" parent="CardPresentationRoot/CardVisual/CardContent" unique_id=188375103]
+[node name="StatementRegion" type="Control" parent="CardPresentationRoot/OpenStateRoot/CardVisual/CardContent" unique_id=188375103]
 unique_name_in_owner = true
-visible = false
 clip_contents = true
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 mouse_filter = 2
 
-[node name="PublicStatementLabel" type="Label" parent="CardPresentationRoot/CardVisual/CardContent/StatementRegion" unique_id=1627137829]
+[node name="PublicStatementLabel" type="Label" parent="CardPresentationRoot/OpenStateRoot/CardVisual/CardContent/StatementRegion" unique_id=1627137829]
 unique_name_in_owner = true
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 7.0
-offset_right = -7.0
+offset_left = 6.0
+offset_right = -6.0
 grow_horizontal = 2
 theme_override_colors/font_color = Color(0.12, 0.105, 0.09, 1)
 theme_override_font_sizes/font_size = 13
@@ -183,7 +308,7 @@ vertical_alignment = 1
 autowrap_mode = 3
 clip_text = true
 
-[node name="PublicFunctionLabel" type="Label" parent="CardPresentationRoot/CardVisual/CardContent" unique_id=1649326273]
+[node name="PublicFunctionLabel" type="Label" parent="CardPresentationRoot/OpenStateRoot/CardVisual/CardContent" unique_id=1649326273]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
@@ -192,7 +317,7 @@ theme_override_font_sizes/font_size = 11
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="PublicFunctionResultsLabel" type="Label" parent="CardPresentationRoot/CardVisual/CardContent" unique_id=223851005]
+[node name="PublicFunctionResultsLabel" type="Label" parent="CardPresentationRoot/OpenStateRoot/CardVisual/CardContent" unique_id=223851005]
 unique_name_in_owner = true
 visible = false
 custom_minimum_size = Vector2(0, 28)
@@ -204,7 +329,7 @@ horizontal_alignment = 1
 autowrap_mode = 3
 clip_text = true
 
-[node name="FullTruthLabel" type="Label" parent="CardPresentationRoot/CardVisual/CardContent" unique_id=846062836]
+[node name="FullTruthLabel" type="Label" parent="CardPresentationRoot/OpenStateRoot/CardVisual/CardContent" unique_id=846062836]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
@@ -213,10 +338,94 @@ theme_override_font_sizes/font_size = 10
 text = "Sự thật"
 autowrap_mode = 3
 
-[node name="RevealHistoryButton" type="Button" parent="CardPresentationRoot" unique_id=2056610557]
+[node name="PinShadow" type="TextureRect" parent="CardPresentationRoot" unique_id=1301]
+unique_name_in_owner = true
+z_index = 15
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -16.0
+offset_top = -10.0
+offset_right = 26.0
+offset_bottom = 10.0
+grow_horizontal = 2
+mouse_filter = 2
+texture = ExtResource("6_pin_shadow")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="PinPeg" type="TextureRect" parent="CardPresentationRoot" unique_id=1302]
+unique_name_in_owner = true
+z_index = 16
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_top = -14.0
+offset_right = 20.0
+offset_bottom = 6.0
+grow_horizontal = 2
+mouse_filter = 2
+texture = ExtResource("5_pin")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="FunctionHandMarker" type="TextureRect" parent="CardPresentationRoot" unique_id=931671630]
 unique_name_in_owner = true
 visible = false
 z_index = 14
+layout_mode = 1
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 28.0
+offset_bottom = 28.0
+mouse_filter = 2
+texture = ExtResource("8_function_hand")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="DeadMarker" type="TextureRect" parent="CardPresentationRoot" unique_id=1791647200]
+unique_name_in_owner = true
+visible = false
+z_index = 18
+layout_mode = 1
+offset_left = 90.0
+offset_top = 8.0
+offset_right = 158.0
+offset_bottom = 76.0
+mouse_filter = 2
+texture = ExtResource("7_dead_marker")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="AccuseStampMarker" type="TextureRect" parent="CardPresentationRoot" unique_id=1303]
+unique_name_in_owner = true
+visible = false
+modulate = Color(0.9, 0.2, 0.2, 0.85)
+z_index = 19
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -60.0
+offset_top = -60.0
+offset_right = 60.0
+offset_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("9_stamp_suspected")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="RevealHistoryButton" type="Button" parent="CardPresentationRoot" unique_id=2056610557]
+unique_name_in_owner = true
+visible = false
+z_index = 20
 layout_mode = 1
 offset_left = 140.0
 offset_top = 58.0
@@ -238,29 +447,3 @@ theme_override_styles/disabled = SubResource("StyleBoxEmpty_history_icon")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_history_icon")
 text = "↶"
 flat = true
-
-[node name="FunctionHandMarker" type="TextureRect" parent="CardPresentationRoot" unique_id=931671630]
-unique_name_in_owner = true
-visible = false
-z_index = 10
-layout_mode = 1
-offset_left = -22.0
-offset_top = -20.0
-offset_right = 34.0
-offset_bottom = 36.0
-mouse_filter = 2
-expand_mode = 1
-stretch_mode = 5
-
-[node name="DeadMarker" type="TextureRect" parent="CardPresentationRoot" unique_id=1791647200]
-unique_name_in_owner = true
-visible = false
-z_index = 12
-layout_mode = 1
-offset_left = 108.0
-offset_top = 8.0
-offset_right = 162.0
-offset_bottom = 62.0
-mouse_filter = 2
-expand_mode = 1
-stretch_mode = 5
