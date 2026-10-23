@@ -62,19 +62,27 @@ func sample() -> float:
 	_seed_array[loc_inext] = num
 	_inext = loc_inext
 	_inextp = loc_inextp
-	return float(num) / float(MBIG)
+	var s: float = float(num) / float(MBIG)
+	return minf(s, 0.999999999999999)
 
 
 func next(min_val: int = 0, max_val: Variant = null) -> int:
 	if max_val == null:
-		return int(sample() * float(MBIG))
-	var diff: int = int(max_val) - min_val
-	return int(sample() * float(diff)) + min_val
+		return mini(int(sample() * float(MBIG)), MBIG - 1)
+	var max_i: int = int(max_val)
+	if min_val >= max_i:
+		return min_val
+	var diff: int = max_i - min_val
+	var val: int = int(sample() * float(diff)) + min_val
+	return mini(val, max_i - 1)
 
 
 func randi_range(min_val: int, max_val: int) -> int:
+	if min_val >= max_val:
+		return min_val
 	var diff: int = (max_val - min_val) + 1
-	return int(sample() * float(diff)) + min_val
+	var val: int = int(sample() * float(diff)) + min_val
+	return mini(val, max_val)
 
 
 func randf() -> float:

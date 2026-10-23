@@ -161,7 +161,7 @@ func _deterministic_role_permutation(
 		if role != null and not _role_array_has_id(roles, role.role_id):
 			roles.append(role)
 	for index: int in range(roles.size() - 1, 0, -1):
-		var swap_index: int = rng.randi_range(0, index)
+		var swap_index: int = mini(rng.randi_range(0, index), index)
 		var current: RoleDefinition = roles[index]
 		roles[index] = roles[swap_index]
 		roles[swap_index] = current
