@@ -1,0 +1,131 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/presentation/case_selection/CaseSelectionModalController.gd" id="1_script"]
+
+[sub_resource type="StyleBoxFlat" id="ModalBg"]
+bg_color = Color(0.08, 0.09, 0.12, 0.96)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.72, 0.62, 0.35, 0.8)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="CaseSelectionModal" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+script = ExtResource("1_script")
+
+[node name="DimmerOverlay" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.02, 0.02, 0.03, 0.75)
+
+[node name="CenterPanel" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -700.0
+offset_top = -425.0
+offset_right = 700.0
+offset_bottom = 425.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("ModalBg")
+
+[node name="Margin" type="MarginContainer" parent="CenterPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 28
+
+[node name="MainVBox" type="VBoxContainer" parent="CenterPanel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="HeaderBar" type="HBoxContainer" parent="CenterPanel/Margin/MainVBox"]
+layout_mode = 2
+
+[node name="HeaderTitles" type="VBoxContainer" parent="CenterPanel/Margin/MainVBox/HeaderBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="TitleLabel" type="Label" parent="CenterPanel/Margin/MainVBox/HeaderBar/HeaderTitles"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.96, 0.88, 0.65, 1)
+theme_override_font_sizes/font_size = 24
+text = "📜 HỒ SƠ KỲ ÁN HOÀNG TRIỀU"
+
+[node name="SubtitleLabel" type="Label" parent="CenterPanel/Margin/MainVBox/HeaderBar/HeaderTitles"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.75, 0.82, 0.85)
+theme_override_font_sizes/font_size = 14
+text = "Chọn 1 trong 3 kỳ án dưới đây để tiến hành thụ lý và điều tra phá án."
+
+[node name="CloseButton" type="Button" parent="CenterPanel/Margin/MainVBox/HeaderBar"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 18
+text = "✕"
+
+[node name="ProgressionSection" type="VBoxContainer" parent="CenterPanel/Margin/MainVBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="ProgressionHeader" type="HBoxContainer" parent="CenterPanel/Margin/MainVBox/ProgressionSection"]
+layout_mode = 2
+
+[node name="ProgressionLabel" type="Label" parent="CenterPanel/Margin/MainVBox/ProgressionSection/ProgressionHeader"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.85, 0.8, 0.7, 1)
+theme_override_font_sizes/font_size = 14
+text = "TIẾN TRÌNH VƯỢT HỒI (CANDY CRUSH PROGRESSION):"
+
+[node name="TotalStarsLabel" type="Label" parent="CenterPanel/Margin/MainVBox/ProgressionSection/ProgressionHeader"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.96, 0.85, 0.35, 1)
+theme_override_font_sizes/font_size = 14
+text = "Tổng số sao: 0 ⭐"
+
+[node name="ProgressionScroll" type="ScrollContainer" parent="CenterPanel/Margin/MainVBox/ProgressionSection"]
+custom_minimum_size = Vector2(0, 68)
+layout_mode = 2
+vertical_scroll_mode = 0
+
+[node name="ProgressionContainer" type="HBoxContainer" parent="CenterPanel/Margin/MainVBox/ProgressionSection/ProgressionScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 12
+
+[node name="HSeparator" type="HSeparator" parent="CenterPanel/Margin/MainVBox"]
+layout_mode = 2
+
+[node name="CardsContainer" type="HBoxContainer" parent="CenterPanel/Margin/MainVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 24

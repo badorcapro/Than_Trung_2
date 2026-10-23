@@ -1,0 +1,44 @@
+{
+  "task_id": "TASK-0036",
+  "subagent_conversation_id": "90ecd0f0-6f17-4836-9c83-fe2e25f9d61f",
+  "audited_at": "2026-10-23T19:30:00Z",
+  "diff_sha256": "bd01eb040402571dbced18d656a79a43d946ebc68ce2fd89a99c882254c7f7db",
+  "transcript_reference": "file:///C:/Users/hoang/.gemini/antigravity/brain/56f72cb7-d3ab-46b5-a1c4-4872e80f94f4/.system_generated/logs/transcript.jsonl",
+  "rules_and_docs_loaded": [
+    "GEMINI.md",
+    "AGENTS.md",
+    "ARCHITECTURE.md",
+    ".agents/rules/rule_anti_evasion.md",
+    ".agents/rules/rule_critical_engagement.md",
+    ".agents/rules/rule_task_contract_and_scope.md",
+    ".agents/skills/verify-task/SKILL.md",
+    ".agents/skills/critical-engagement/SKILL.md",
+    ".agents/skills/honest-execution/SKILL.md"
+  ],
+  "decisions_made": [
+    "Engineered CaseSelectionManager.gd (79 LOC) as a pure domain RefCounted service synthesizing 3 distinct procedural case options per round seed via Knuth DotNetRandom, varying difficulty tiers (Dễ, Vừa, Khó), suspect counts (5, 6, 8), evil counts (1, 2, 3), and reputation rewards (100, 250, 500) with defensive dictionary copying.",
+    "Engineered LevelProgressionManager.gd (173 LOC) as a pure domain RefCounted service implementing the Candy Crush / Angry Birds 1-3 star progression paradigm: 1 star for case solved, 2 stars for solved with 0 innocent casualties, 3 stars for solved with 0 innocent casualties within par moves, alongside cascading level unlocks, high score tracking, and fault-tolerant JSON persistence with corrupt-file fallback.",
+    "Constructed CaseSelectionModal.tscn with clean StyleBoxFlat styling centered within a 1920x1080 canvas (1400x850 footprint, all anchors strictly <= 1.0) featuring an HBoxContainer progression bar, star summary label, and 3 distinct case dossier panels.",
+    "Constructed CaseSelectionModalController.gd (143 LOC) maintaining strict presentation separation by delegating all selection and progression operations to the domain managers and communicating via signals (case_chosen, level_clicked, modal_closed) without mutating gameplay state directly.",
+    "Created unit test suite tests/test_case_selection_progression.py with 7 automated assertions validating file existence, domain APIs, anchor boundaries, star simulation logic, JSON persistence fallback, and ADR-0010 compliance without executing godot --headless on Windows per Engine Guard Rule #5."
+  ],
+  "omissions_and_simplifications": [
+    "ACTIVE TRADE-OFF INTERROGATION FINDING 1 (Par Moves & Suspect Scaling Curves): In LevelProgressionManager.gd, par moves are modeled as par = 4 + int(i * 0.8) and required suspects as mini(8, 4 + int(i * 0.5)). This linear heuristic provides deterministic scaling for pilot verification but may require game-designer balancing when production content expands beyond 10 levels.",
+    "ACTIVE TRADE-OFF INTERROGATION FINDING 2 (Presentation Separation & Orchestration Handoff): CaseSelectionManager only synthesizes case metadata and seed parameters (case_seed, suspect_count, evil_count, etc.) rather than invoking CaseGenerator directly. The application layer orchestrator (e.g. AppFlow / GameFlow) remains responsible for feeding the selected case_seed into CaseGenerator upon receiving the case_chosen signal.",
+    "ACTIVE TRADE-OFF INTERROGATION FINDING 3 (Headless Testing Compliance): In strict adherence to Engine Guard Rule #5 ('CẤM chạy godot --headless trực tiếp trên Windows'), all automated verification is performed via tests/test_case_selection_progression.py inspecting scene hierarchy, anchors, and domain simulation logic without executing Godot headless CLI.",
+    "Confirmed zero hidden shortcuts, zero unmanaged workarounds, and 100% adherence to acceptance criteria and presentation separation invariants."
+  ],
+  "adr_0010_anti_cheat_check": "Verified zero code-golfing (no semicolon statement chaining across all modified files). Verified zero placeholder truncation comments. All files adhere strictly to ADR-0010 DEC-AMEND-01 role budgets: CaseSelectionManager.gd at 79 LOC (domain_logic, < 800 LOC), LevelProgressionManager.gd at 173 LOC (domain_logic, < 800 LOC), CaseSelectionModalController.gd at 143 LOC (ui_component, < 800 LOC), and test_case_selection_progression.py at 192 LOC (test, < 800 LOC). Post-hoc diff guard and line budget checks passed cleanly with 0 issues.",
+  "semantic_checks_performed": [
+    "Ran python -m unittest tests/test_case_selection_progression.py: PASS (7/7 tests passed in 0.008s covering source file existence, CaseSelectionManager specifications, LevelProgressionManager specifications, CaseSelectionModal scene anchors <= 1.0, star simulation logic, JSON persistence and corrupt fallback, and line budget compliance).",
+    "Ran python scripts/agent/check_line_budget.py: PASS (0 issues, active profile: software, all files in 'ok' tier).",
+    "Ran python scripts/agent/check_diff_guard.py --task TASK-0036: PASS (0 issues, 0 placeholders, 0 excessive net deletions).",
+    "Ran python scripts/agent/validate_registry.py: PASS (38 entries valid).",
+    "Ran python scripts/agent/check_scope.py --task TASK-0036: PASS (0 out-of-scope files, diff_sha256 = bd01eb040402571dbced18d656a79a43d946ebc68ce2fd89a99c882254c7f7db).",
+    "Audited CaseSelectionManager.gd: verified Knuth DotNetRandom deterministic seed synthesis, distinct option parameter tiers, and defensive data copying.",
+    "Audited LevelProgressionManager.gd: verified Candy Crush / Angry Birds 1-3 star evaluation, unlock cascading, and corrupt-file fallback handling.",
+    "Audited CaseSelectionModal.tscn & CaseSelectionModalController.gd: verified 1920x1080 canvas bounds, clean StyleBoxFlat styling, signal-driven presentation separation contract."
+  ],
+  "findings": [],
+  "verdict": "PASS"
+}

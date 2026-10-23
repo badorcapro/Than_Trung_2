@@ -1,0 +1,48 @@
+{
+  "task_id": "TASK-0036",
+  "verified_at": "2026-10-23T19:31:22.179503+00:00",
+  "contract_sha256": "8405d16d2d38d38718760c01fd898b8f5e57c81549d8af883b3760a98a7a4e9b",
+  "diff_sha256": "bd01eb040402571dbced18d656a79a43d946ebc68ce2fd89a99c882254c7f7db",
+  "modified_files": [
+    "Than_Tham_Nua_Voi_Godot/scenes/case_selection/CaseSelectionModal.tscn",
+    "Than_Tham_Nua_Voi_Godot/scripts/domain/cases/CaseSelectionManager.gd",
+    "Than_Tham_Nua_Voi_Godot/scripts/domain/cases/CaseSelectionManager.gd.uid",
+    "Than_Tham_Nua_Voi_Godot/scripts/domain/cases/LevelProgressionManager.gd",
+    "Than_Tham_Nua_Voi_Godot/scripts/domain/cases/LevelProgressionManager.gd.uid",
+    "Than_Tham_Nua_Voi_Godot/scripts/presentation/case_selection/CaseSelectionModalController.gd",
+    "Than_Tham_Nua_Voi_Godot/scripts/presentation/case_selection/CaseSelectionModalController.gd.uid",
+    "tests/test_case_selection_progression.py"
+  ],
+  "scope_passed": true,
+  "commands": [
+    {
+      "command": "python -m unittest tests/test_case_selection_progression.py",
+      "exit_code": 0,
+      "duration_ms": 178.49,
+      "stdout_excerpt": "",
+      "stderr_excerpt": ".......\n----------------------------------------------------------------------\nRan 7 tests in 0.009s\n\nOK"
+    },
+    {
+      "command": "python scripts/agent/check_line_budget.py",
+      "exit_code": 0,
+      "duration_ms": 636.86,
+      "stdout_excerpt": "{\n  \"success\": true,\n  \"tool\": \"check_line_budget\",\n  \"issues\": [],\n  \"data\": {\n    \"active_profile\": \"software\",\n    \"files\": [\n      {\n        \"path\": \"Than_Tham_Nua_Voi_Godot/scripts/domain/cases/CaseSelectionManager.gd\",\n        \"role\": \"domain_logic\",\n        \"loc\": 79,\n        \"tier\": \"ok\"\n      },\n      {\n        \"path\": \"Than_Tham_Nua_Voi_Godot/scripts/domain/cases/LevelProgressionManager.gd\",\n        \"role\": \"domain_logic\",\n        \"loc\": 173,\n        \"tier\": \"ok\"\n      },\n      {\n        \"path\": \"Than_Tham_Nua_Voi_Godot/scripts/presentation/case_selection/CaseSelectionModalController.gd\",\n        \"role\": \"ui_component\",\n        \"loc\": 143,\n        \"tier\": \"ok\"\n      },\n      {\n        \"path\": \"tests/test_case_selection_progression.py\",\n        \"role\": \"test\",\n        \"loc\": 192,\n        \"tier\": \"ok\"\n      }\n    ]\n  }\n}",
+      "stderr_excerpt": ""
+    },
+    {
+      "command": "python scripts/agent/validate_registry.py",
+      "exit_code": 0,
+      "duration_ms": 448.88,
+      "stdout_excerpt": "{\n  \"success\": true,\n  \"tool\": \"validate_registry\",\n  \"issues\": [\n    {\n      \"code\": \"WARN_CTX_BUDGET_HIGH\",\n      \"severity\": \"warning\",\n      \"message\": \"Always-on context consumes 15.04% (3009 tokens) of 20k budget (>15% warning).\",\n      \"location\": \".agents/rules\",\n      \"fixable_by\": \"ai\",\n      \"suggested_action\": \"Keep always_on baseline below 15% (3,000 tokens).\",\n      \"evidence\": {\n        \"estimated_tokens\": 3009,\n        \"health_pct\": 15.04\n      }\n    }\n  ],\n  \"data\": {\n    \"project\": \"Than_Tham_Nua_Voi_Godot\",\n    \"total_entries\": 38,\n    \"hashes_updated\": 0,\n    \"context_health\": {\n      \"rule_files_checked\": 4,\n      \"always_on_chars\": 12038,\n      \"estimated_always_on_tokens\": 3009,\n      \"context_health_pct\": 15.04\n    }\n  }\n}",
+      "stderr_excerpt": ""
+    },
+    {
+      "command": "python scripts/agent/check_scope.py --task TASK-0036",
+      "exit_code": 0,
+      "duration_ms": 434.67,
+      "stdout_excerpt": "{\n  \"success\": true,\n  \"tool\": \"check_scope\",\n  \"issues\": [],\n  \"data\": {\n    \"task_id\": \"TASK-0036\",\n    \"evaluated_files\": [\n      \"Than_Tham_Nua_Voi_Godot/scenes/case_selection/CaseSelectionModal.tscn\",\n      \"Than_Tham_Nua_Voi_Godot/scripts/domain/cases/CaseSelectionManager.gd\",\n      \"Than_Tham_Nua_Voi_Godot/scripts/domain/cases/CaseSelectionManager.gd.uid\",\n      \"Than_Tham_Nua_Voi_Godot/scripts/domain/cases/LevelProgressionManager.gd\",\n      \"Than_Tham_Nua_Voi_Godot/scripts/domain/cases/LevelProgressionManager.gd.uid\",\n      \"Than_Tham_Nua_Voi_Godot/scripts/presentation/case_selection/CaseSelectionModalController.gd\",\n      \"Than_Tham_Nua_Voi_Godot/scripts/presentation/case_selection/CaseSelectionModalController.gd.uid\",\n      \"tests/test_case_selection_progression.py\"\n    ],\n    \"out_of_scope_files\": [],\n    \"diff_sha256\": \"bd01eb040402571dbced18d656a79a43d946ebc68ce2fd89a99c882254c7f7db\"\n  }\n}",
+      "stderr_excerpt": ""
+    }
+  ],
+  "all_passed": true
+}
