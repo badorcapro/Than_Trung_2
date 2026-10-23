@@ -2,7 +2,7 @@
 id: TASK-0023B
 title: Dissect Story Nodes & Branching Logic (87 Classes) and Model Story Graph Execution
 domain: software
-status: verified
+status: approved
 phase: P2
 touches_gatekeeper: false
 goal: 'Execute the second sub-task of Cycle V2 (Story Nodes & Branching Logic) by
@@ -73,7 +73,7 @@ stop_conditions:
 - Git working tree modifies files outside declared in_scope.
 - Broken graph traversal or unhandled port connections.
 line_budget_exceptions: []
-current_checkpoint: CP-VERIFIED
+current_checkpoint: CP-APPROVED
 evidence_receipt: docs/agent-system/evidence/TASK-0023B-receipt.json
 ---
 

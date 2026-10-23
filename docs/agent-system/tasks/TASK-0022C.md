@@ -3,7 +3,7 @@ id: TASK-0022C
 title: Dissect Easing Curves, World Visuals & Region Minigames (45 Classes) and Model
   Visual Effects
 domain: software
-status: verified
+status: approved
 phase: P2
 touches_gatekeeper: false
 goal: 'Execute the third and final sub-task of Cycle V1 (Detective Board & Visual
@@ -77,7 +77,7 @@ stop_conditions:
 - Git working tree modifies files outside declared in_scope.
 - Unaccounted classes or missing classes among the 45 targets.
 line_budget_exceptions: []
-current_checkpoint: CP-VERIFIED
+current_checkpoint: CP-APPROVED
 evidence_receipt: docs/agent-system/evidence/TASK-0022C-receipt.json
 ---
 

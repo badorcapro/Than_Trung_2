@@ -3,7 +3,7 @@ id: TASK-0023A
 title: Dissect Case Creation Algorithms & 20 Generation Constraints (43 Classes) and
   Model Seed Determinism
 domain: software
-status: verified
+status: approved
 phase: P2
 touches_gatekeeper: false
 goal: 'Execute the first sub-task of Cycle V2 (Case Creation & Story Flow) by performing
@@ -72,7 +72,7 @@ stop_conditions:
 - Git working tree modifies files outside declared in_scope.
 - Incompatible seed generation or non-deterministic outcomes.
 line_budget_exceptions: []
-current_checkpoint: CP-VERIFIED
+current_checkpoint: CP-APPROVED
 evidence_receipt: docs/agent-system/evidence/TASK-0023A-receipt.json
 ---
 

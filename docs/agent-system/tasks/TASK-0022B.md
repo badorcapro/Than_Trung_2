@@ -3,7 +3,7 @@ id: TASK-0022B
 title: Dissect Yarn Strings, Drawing Canvas & Investigative Tools (22 Classes) and
   Model String Catenary
 domain: software
-status: verified
+status: approved
 phase: P2
 touches_gatekeeper: false
 goal: 'Execute the second sub-task of Cycle V1 (Detective Board) by performing deep
@@ -66,7 +66,7 @@ stop_conditions:
 - Git working tree modifies files outside declared in_scope.
 - Unaccounted classes or missing classes among the 22 targets.
 line_budget_exceptions: []
-current_checkpoint: CP-VERIFIED
+current_checkpoint: CP-APPROVED
 evidence_receipt: docs/agent-system/evidence/TASK-0022B-receipt.json
 ---
 

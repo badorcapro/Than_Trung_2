@@ -2,7 +2,7 @@
 id: TASK-0026C
 title: Dissect Case Entities, Locations & Supporting Structs (232 Classes)
 domain: software
-status: verified
+status: approved
 phase: P2
 touches_gatekeeper: false
 goal: 'Execute the third and final sub-task of Cycle V5 (Roles & Abilities) by performing
@@ -82,7 +82,7 @@ stop_conditions:
 - Git working tree modifies files outside declared in_scope.
 - Inconsistent case state snapshotting or missing hazard handlers.
 line_budget_exceptions: []
-current_checkpoint: CP-VERIFIED
+current_checkpoint: CP-APPROVED
 evidence_receipt: docs/agent-system/evidence/TASK-0026C-receipt.json
 ---
 

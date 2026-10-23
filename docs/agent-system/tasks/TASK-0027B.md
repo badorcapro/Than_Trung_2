@@ -2,7 +2,7 @@
 id: TASK-0027B
 title: Dissect Persistence, Localization & UX Infrastructure (103 Classes)
 domain: software
-status: verified
+status: approved
 phase: P2
 touches_gatekeeper: false
 goal: 'Execute the second and final sub-task of Cycle V6 (Technical Infrastructure
@@ -74,7 +74,7 @@ stop_conditions:
 - Git working tree modifies files outside declared in_scope.
 - Failure of save migration chain or localization key resolution.
 line_budget_exceptions: []
-current_checkpoint: CP-VERIFIED
+current_checkpoint: CP-APPROVED
 evidence_receipt: docs/agent-system/evidence/TASK-0027B-receipt.json
 ---
 

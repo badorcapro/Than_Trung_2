@@ -3,7 +3,7 @@ id: TASK-0022A
 title: Dissect Detective Board & Suspect Cards Architecture (28 Classes) and Model
   Snap Grid Layout
 domain: software
-status: verified
+status: approved
 phase: P2
 touches_gatekeeper: false
 goal: 'Execute the first sub-task of Cycle V1 (Detective Board) by performing deep
@@ -68,7 +68,7 @@ stop_conditions:
 - Git working tree modifies files outside declared in_scope.
 - Unaccounted classes or missing classes among the 28 targets.
 line_budget_exceptions: []
-current_checkpoint: CP-VERIFIED
+current_checkpoint: CP-APPROVED
 evidence_receipt: docs/agent-system/evidence/TASK-0022A-receipt.json
 ---
 

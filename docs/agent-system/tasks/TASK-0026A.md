@@ -2,7 +2,7 @@
 id: TASK-0026A
 title: Dissect Core Ability Engine & Special Roles (79 Classes)
 domain: software
-status: verified
+status: approved
 phase: P2
 touches_gatekeeper: false
 goal: 'Execute the first sub-task of Cycle V5 (Roles & Abilities) by performing deep
@@ -79,7 +79,7 @@ stop_conditions:
 - Git working tree modifies files outside declared in_scope.
 - Unhandled ability triggers or target redirection errors.
 line_budget_exceptions: []
-current_checkpoint: CP-VERIFIED
+current_checkpoint: CP-APPROVED
 evidence_receipt: docs/agent-system/evidence/TASK-0026A-receipt.json
 ---
 

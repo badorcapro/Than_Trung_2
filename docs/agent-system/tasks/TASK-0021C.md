@@ -2,7 +2,7 @@
 id: TASK-0021C
 title: Extract FMOD FSB5 Audio Samples to WAV Vault and Document Architecture Lessons
 domain: software
-status: verified
+status: approved
 phase: P2
 touches_gatekeeper: true
 goal: 'Completely eliminate Trade-off 1 of TASK-0018 per architectural decision DEC-27.1
@@ -60,7 +60,7 @@ stop_conditions:
 - Git working tree modifies files outside declared in_scope.
 - Audio decoding fails or produces corrupted/zero-byte WAV files.
 line_budget_exceptions: []
-current_checkpoint: CP-VERIFIED
+current_checkpoint: CP-APPROVED
 evidence_receipt: docs/agent-system/evidence/TASK-0021C-receipt.json
 ---
 

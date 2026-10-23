@@ -2,7 +2,7 @@
 id: TASK-0021B
 title: Build Deep Scene Node Traversal and Exact Recipe Resolver (dupery_graph_resolver.py)
 domain: software
-status: verified
+status: approved
 phase: P2
 touches_gatekeeper: false
 goal: 'Build Deep Scene Node Traversal and Exact Recipe Resolver (scripts/agent/dupery_graph_resolver.py)
@@ -61,7 +61,7 @@ stop_conditions:
 - Any file exceeds 300 LOC without modularization.
 - Git working tree modifies files outside declared in_scope.
 line_budget_exceptions: []
-current_checkpoint: CP-VERIFIED
+current_checkpoint: CP-APPROVED
 evidence_receipt: docs/agent-system/evidence/TASK-0021B-receipt.json
 ---
 

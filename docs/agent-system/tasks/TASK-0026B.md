@@ -2,7 +2,7 @@
 id: TASK-0026B
 title: Dissect 228 Suspect Roles Catalog & Regional Data Matrix (185 Pending Classes)
 domain: software
-status: verified
+status: approved
 phase: P2
 touches_gatekeeper: false
 goal: 'Execute the second sub-task of Cycle V5 (Roles & Abilities) by building the
@@ -78,7 +78,7 @@ stop_conditions:
 - Git working tree modifies files outside declared in_scope.
 - Missing role mapping or invalid regional assignment.
 line_budget_exceptions: []
-current_checkpoint: CP-VERIFIED
+current_checkpoint: CP-APPROVED
 evidence_receipt: docs/agent-system/evidence/TASK-0026B-receipt.json
 ---
 
