@@ -51,16 +51,36 @@ const DOOR_TEXTURES: Array[String] = [
 ]
 
 const ROLE_ICON_MAP: Dictionary = {
-	"tailor": "res://assets/ui/dupery_props/role_icon_tailor.png",
-	"thợ may": "res://assets/ui/dupery_props/role_icon_tailor.png",
-	"vigilante": "res://assets/ui/dupery_props/role_icon_vigilante.png",
+	"bác sĩ phẫu thuật": "res://assets/ui/case/role_icons/bac_si_phau_thuat.png",
+	"chủ quán rượu": "res://assets/ui/case/role_icons/chu_quan_ruou.png",
+	"dịch phu": "res://assets/ui/case/role_icons/dich_phu.png",
+	"người đưa thư": "res://assets/ui/case/role_icons/dich_phu.png",
+	"độc sư": "res://assets/ui/case/role_icons/doc_su.png",
+	"kẻ bắt chước": "res://assets/ui/case/role_icons/ke_bat_chuoc.png",
+	"kẻ bất lương": "res://assets/ui/case/role_icons/ke_bat_luong.png",
+	"kẻ côn đồ": "res://assets/ui/case/role_icons/ke_con_do.png",
+	"kẻ lừa đảo": "res://assets/ui/case/role_icons/ke_lua_dao.png",
+	"kẻ say rượu": "res://assets/ui/case/role_icons/ke_say_ruou.png",
+	"ngự khuyên quan": "res://assets/ui/case/role_icons/ngu_khuyen_quan.png",
+	"ngự y": "res://assets/ui/case/role_icons/ngu_y.png",
+	"nhà khí tượng": "res://assets/ui/case/role_icons/nha_khi_tuong.png",
+	"nhà phê bình": "res://assets/ui/case/role_icons/nha_phe_binh.png",
+	"nhà toán học": "res://assets/ui/case/role_icons/nha_toan_hoc.png",
+	"sát nhân hàng loạt": "res://assets/ui/case/role_icons/sat_nhan_hang_loat.png",
+	"sử quan": "res://assets/ui/case/role_icons/su_quan.png",
+	"sư tử phán": "res://assets/ui/case/role_icons/su_tu_phan.png",
+	"thợ đồng hồ": "res://assets/ui/case/role_icons/tho_dong_ho.png",
+	"thợ may": "res://assets/ui/case/role_icons/tho_may.png",
+	"tư tế": "res://assets/ui/case/role_icons/tu_te.png",
+	"tế tư": "res://assets/ui/case/role_icons/tu_te.png",
+	"vong linh": "res://assets/ui/case/role_icons/vong_linh.png",
 	"võ giả": "res://assets/ui/dupery_props/role_icon_vigilante.png",
+	"thiện xạ": "res://assets/ui/dupery_props/role_icon_sniper.png",
+	"tailor": "res://assets/ui/dupery_props/role_icon_tailor.png",
+	"vigilante": "res://assets/ui/dupery_props/role_icon_vigilante.png",
 	"poisoner": "res://assets/ui/dupery_props/role_icon_poisoner.png",
-	"độc sư": "res://assets/ui/dupery_props/role_icon_poisoner.png",
 	"drunkard": "res://assets/ui/dupery_props/role_icon_drunkard.png",
-	"kẻ say rượu": "res://assets/ui/dupery_props/role_icon_drunkard.png",
-	"sniper": "res://assets/ui/dupery_props/role_icon_sniper.png",
-	"thiện xạ": "res://assets/ui/dupery_props/role_icon_sniper.png"
+	"sniper": "res://assets/ui/dupery_props/role_icon_sniper.png"
 }
 
 var public_data: SuspectPublicViewData
@@ -144,24 +164,26 @@ func configure(view_data: SuspectPublicViewData, public_function_result_lines: P
 
 	var name_label: Label = get_node_or_null("%PublicName") as Label
 	if name_label != null:
-		name_label.text = _player_facing_text(public_data.public_name)
+		name_label.text = _player_facing_text(public_data.public_display_name)
 		name_label.visible = false
 
 	var status_label: Label = get_node_or_null("%StatusLabel") as Label
 	if status_label != null:
-		status_label.text = _player_facing_text(public_data.status_text)
+		status_label.text = _player_facing_text(public_data.public_status_text)
 		status_label.visible = false
+
+	var role_name_str := _player_facing_text(public_data.truth_true_role_name if public_data.full_truth_visible else public_data.public_role_name)
 
 	var role_label: Label = get_node_or_null("%PublicRoleLabel") as Label
 	if role_label != null:
-		role_label.text = _player_facing_text(public_data.public_role)
+		role_label.text = role_name_str
 		role_label.add_theme_color_override("font_color", _role_label_color())
 		_apply_role_name_fit(role_label)
 
 	var role_icon: TextureRect = get_node_or_null("%RoleIcon") as TextureRect
 	var unknown_icon_label: Label = get_node_or_null("%UnknownIconLabel") as Label
-	var icon_tex := _get_role_icon_texture(public_data.public_role)
-	if icon_tex != null:
+	var icon_tex := _get_role_icon_texture(role_name_str)
+	if icon_tex != null and not is_portrait_obscured():
 		if role_icon != null:
 			role_icon.texture = icon_tex
 			role_icon.visible = true
@@ -177,17 +199,17 @@ func configure(view_data: SuspectPublicViewData, public_function_result_lines: P
 
 	var statement_label: Label = get_node_or_null("%PublicStatementLabel") as Label
 	if statement_label != null:
-		var stmt_text := _player_facing_text(public_data.public_statement)
+		var stmt_text := _player_facing_text(public_data.public_investigation_statement)
 		statement_label.text = stmt_text
 		statement_label.visible = not stmt_text.is_empty()
-		if public_data.is_statement_obscured:
+		if public_data.public_information_obscured and not public_data.full_truth_visible:
 			_apply_obscured_information_fit(statement_label, stmt_text)
 		else:
 			_apply_bounded_text_fit(statement_label, stmt_text, _statement_region_height, _statement_font_tiers)
 
 	var func_label: Label = get_node_or_null("%PublicFunctionLabel") as Label
 	if func_label != null:
-		var func_text := _player_facing_text(public_data.public_function_status)
+		var func_text := _player_facing_text(public_data.public_function_text)
 		func_label.text = func_text
 		func_label.visible = not func_text.is_empty()
 
@@ -214,7 +236,7 @@ func configure(view_data: SuspectPublicViewData, public_function_result_lines: P
 
 	var reveal_history_button: Button = get_node_or_null("%RevealHistoryButton") as Button
 	if reveal_history_button != null:
-		var can_toggle: bool = (public_data.has_full_reveal and not public_data.public_statement.is_empty() and not public_data.reveal_statement.is_empty() and public_data.public_statement != public_data.reveal_statement)
+		var can_toggle: bool = public_data.full_truth_visible and public_data.reveal_has_previous_statement
 		reveal_history_button.visible = can_toggle
 
 	_apply_visual_state()
@@ -311,7 +333,7 @@ func get_full_truth_text() -> String:
 
 
 func get_reveal_statement_text() -> String:
-	return public_data.reveal_statement if public_data != null else ""
+	return public_data.reveal_default_statement if public_data != null else ""
 
 
 func get_statement_font_size_for_smoke() -> int:
@@ -425,7 +447,7 @@ func visual_input_region_ignores_mouse_for_smoke(region_name: String) -> bool:
 
 
 func is_portrait_obscured() -> bool:
-	return public_data != null and public_data.is_portrait_obscured
+	return public_data != null and public_data.public_role_obscured and not public_data.full_truth_visible
 
 
 func get_visible_debug_label_text() -> String:
@@ -527,7 +549,7 @@ func _apply_visual_state() -> void:
 
 
 func _is_dead_public_data(data: SuspectPublicViewData) -> bool:
-	return data != null and data.is_dead
+	return data != null and data.public_status_text == "Đã chết"
 
 
 func _play_death_transition() -> void:
@@ -548,9 +570,12 @@ func _update_function_hand_marker(marker: TextureRect) -> void:
 	if public_data == null:
 		marker.visible = false
 		return
-	var has_hand: bool = public_data.function_hand_marker == FUNCTION_MARKER_AVAILABLE or public_data.function_hand_marker == FUNCTION_MARKER_CONSUMED
+	var has_hand: bool = (
+		public_data.public_function_marker_state == FUNCTION_MARKER_AVAILABLE
+		or public_data.public_function_marker_state == FUNCTION_MARKER_CONSUMED
+	)
 	marker.visible = has_hand
-	if public_data.function_hand_marker == FUNCTION_MARKER_CONSUMED:
+	if public_data.public_function_marker_state == FUNCTION_MARKER_CONSUMED:
 		marker.modulate = Color(0.6, 0.6, 0.6, 0.7)
 	else:
 		marker.modulate = Color.WHITE
@@ -560,27 +585,26 @@ func _update_dead_marker(marker: TextureRect) -> void:
 	if public_data == null:
 		marker.visible = false
 		return
-	marker.visible = public_data.is_dead
+	marker.visible = _is_dead_public_data(public_data)
 
 
 func _portrait_symbol() -> String:
-	if public_data == null:
+	if public_data == null or is_portrait_obscured():
 		return "?"
-	if public_data.is_portrait_obscured:
-		return "?"
-	return public_data.public_role.substr(0, 1)
+	var r := public_data.truth_true_role_name if public_data.full_truth_visible else public_data.public_role_name
+	return r.substr(0, 1) if not r.is_empty() else "?"
 
 
 func _portrait_symbol_color() -> Color:
-	if public_data == null or public_data.is_portrait_obscured:
+	if public_data == null or is_portrait_obscured():
 		return Color(0.42, 0.48, 0.58, 1)
 	return _role_label_color()
 
 
 func _full_truth_text() -> String:
-	if public_data == null or not public_data.has_full_reveal:
+	if public_data == null or not public_data.full_truth_visible:
 		return ""
-	return public_data.reveal_statement
+	return _player_facing_text(public_data.reveal_default_statement)
 
 
 func _on_reveal_history_pressed() -> void:
@@ -592,7 +616,13 @@ func _refresh_reveal_statement() -> void:
 	var statement_label: Label = get_node_or_null("%PublicStatementLabel") as Label
 	if statement_label == null or public_data == null:
 		return
-	var text_to_show: String = public_data.reveal_statement if not _reveal_history_showing_previous and not public_data.reveal_statement.is_empty() else public_data.public_statement
+	var text_to_show: String = (
+		public_data.reveal_previous_statement
+		if _reveal_history_showing_previous and not public_data.reveal_previous_statement.is_empty()
+		else public_data.reveal_default_statement
+	)
+	if text_to_show.is_empty():
+		text_to_show = public_data.public_investigation_statement
 	statement_label.text = text_to_show
 	_apply_bounded_text_fit(statement_label, text_to_show, _statement_region_height, _statement_font_tiers)
 
@@ -682,7 +712,9 @@ func _role_label_color() -> Color:
 func _role_group_color() -> Color:
 	if public_data == null:
 		return Color(0.12, 0.47, 0.68, 1)
-	return _group_color(public_data.group)
+	if public_data.full_truth_visible:
+		return _group_color(public_data.truth_role_group)
+	return _group_color(public_data.public_role_group)
 
 
 func _group_color(group: int) -> Color:
