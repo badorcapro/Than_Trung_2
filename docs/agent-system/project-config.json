@@ -6,18 +6,36 @@
     "loc_counting": "non_empty_lines",
     "include_extensions": [
       ".py", ".sv", ".v", ".vhd", ".ts", ".tsx", ".js", ".jsx", ".java", ".go",
-      ".rs", ".c", ".cc", ".cpp", ".h", ".hpp", ".cs", ".kt", ".swift"
+      ".rs", ".c", ".cc", ".cpp", ".h", ".hpp", ".cs", ".kt", ".swift", ".gd"
     ],
     "default_role": "domain_logic",
     "role_map": [
       { "glob": "scripts/agent/**", "role": "core_engine" },
       { "glob": "tests/**", "role": "test" },
+      { "glob": "Than_Tham_Nua_Voi_Godot/tests/**", "role": "test" },
+      { "glob": "Than_Tham_Nua_Voi_Godot/scripts/tools/**", "role": "test" },
+      { "glob": "Than_Tham_Nua_Voi_Godot/scripts/presentation/**", "role": "ui_component" },
       { "glob": "pilot/rtl/**", "role": "rtl" },
       { "glob": "Dupery_Unity_Project/**", "role": "generated" },
       { "glob": "generated/**", "role": "generated" },
       { "glob": "**/generated/**", "role": "generated" },
       { "glob": "vendor/**", "role": "generated" },
       { "glob": "**/vendor/**", "role": "generated" }
+    ],
+    "baseline_exemptions": [
+      "Than_Tham_Nua_Voi_Godot/scripts/tools/SmokeTestRunner.gd",
+      "Than_Tham_Nua_Voi_Godot/scripts/presentation/player_facing/PlayerFacingStartController.gd",
+      "Than_Tham_Nua_Voi_Godot/scripts/presentation/player_facing/CharacterDetailSheet.gd",
+      "Than_Tham_Nua_Voi_Godot/scripts/domain/loot/AuctionCatalog.gd",
+      "Than_Tham_Nua_Voi_Godot/scripts/presentation/loot/AuctionScreen.gd",
+      "Than_Tham_Nua_Voi_Godot/scripts/presentation/case_gameplay/VSCaseMainController.gd",
+      "Than_Tham_Nua_Voi_Godot/scripts/presentation/player_facing/PlayerFacingLootMapView.gd",
+      "Than_Tham_Nua_Voi_Godot/scripts/domain/cases/CaseGeneratorPublicSolver.gd",
+      "Than_Tham_Nua_Voi_Godot/scripts/application/mvp/MvpIntegratedNextCaseSession.gd",
+      "Than_Tham_Nua_Voi_Godot/tests/unit/gd2/Gd2M0AProductionMapTestSuite.gd",
+      "Than_Tham_Nua_Voi_Godot/scripts/presentation/case_gameplay/SuspectCardController.gd",
+      "Than_Tham_Nua_Voi_Godot/tests/unit/gd3/Gd3M5TestSuite.gd",
+      "Than_Tham_Nua_Voi_Godot/scripts/presentation/loot/AuctionEncyclopediaDialog.gd"
     ],
     "profiles": {
       "software": {

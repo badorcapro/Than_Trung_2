@@ -70,6 +70,10 @@ class LineBudgetConfig(BaseModel):
     include_extensions: List[str] = Field(..., min_length=1, description="File extensions subject to the budget")
     default_role: str = Field(..., min_length=1, description="Role for files matching no role_map entry")
     role_map: List[RoleMapEntry] = Field(default_factory=list)
+    baseline_exemptions: List[str] = Field(
+        default_factory=list,
+        description="Legacy files exempt from baseline line budget checks but subject to diff guard",
+    )
     profiles: Dict[str, Dict[str, RoleBudget]] = Field(..., min_length=1)
     diff_guard: DiffGuardConfig
 

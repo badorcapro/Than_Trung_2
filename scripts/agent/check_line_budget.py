@@ -48,6 +48,12 @@ def resolve_role(rel_path: str, budget: LineBudgetConfig) -> str:
     return budget.default_role
 
 
+def is_baseline_exempt(rel_path: str, budget: LineBudgetConfig) -> bool:
+    """Return True if rel_path matches any pattern in baseline_exemptions."""
+    norm = rel_path.replace("\\", "/")
+    return any(matches_pattern(norm, pat.replace("\\", "/")) for pat in budget.baseline_exemptions)
+
+
 def load_project_config(workspace_root: Path, config_rel_path: Path = DEFAULT_CONFIG_PATH) -> ProjectConfig:
     """Load and validate project-config.json."""
     raw = json.loads((workspace_root / config_rel_path).read_text(encoding="utf-8"))
@@ -213,6 +219,18 @@ def check_line_budget(
         role = resolve_role(rel_path, budget)
         role_budget = profile[role]
         loc = count_loc(full.read_text(encoding="utf-8", errors="replace"))
+        if is_baseline_exempt(rel_path, budget):
+            tier = "baseline_exempt"
+            report.append({"path": rel_path, "role": role, "loc": loc, "tier": tier})
+            issues.append(Issue(
+                code="INFO_LBUD_BASELINE_EXEMPT",
+                severity=Severity.INFO,
+                message=f"'{rel_path}' ({role}) has {loc} lines; exempt via baseline_exemptions.",
+                location=rel_path,
+                fixable_by=FixableBy.HUMAN,
+                evidence={"role": role, "loc": loc, "tier": tier},
+            ))
+            continue
         tier = classify_tier(loc, role_budget)
         report.append({"path": rel_path, "role": role, "loc": loc, "tier": tier})
         if tier in ("exempt", "ok"):

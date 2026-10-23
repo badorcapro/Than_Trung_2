@@ -1,0 +1,47 @@
+{
+  "task_id": "TASK-0033",
+  "subagent_conversation_id": "ae9baed6-7916-464e-b78f-b9a2244ec2ab",
+  "audited_at": "2026-10-23T17:22:00Z",
+  "diff_sha256": "a81f208194689a825e0e6804498019834289a0a4e5f700c8fe4dfba853e93f6a",
+  "transcript_reference": "file:///C:/Users/hoang/.gemini/antigravity/brain/56f72cb7-d3ab-46b5-a1c4-4872e80f94f4/.system_generated/logs/transcript.jsonl",
+  "rules_and_docs_loaded": [
+    "GEMINI.md",
+    "AGENTS.md",
+    "ARCHITECTURE.md",
+    ".agents/rules/rule_anti_evasion.md",
+    ".agents/rules/rule_critical_engagement.md",
+    ".agents/rules/rule_task_contract_and_scope.md",
+    ".agents/skills/verify-task/SKILL.md",
+    ".agents/skills/critical-engagement/SKILL.md",
+    ".agents/skills/honest-execution/SKILL.md"
+  ],
+  "decisions_made": [
+    "Upgraded Gatekeeper Nhip 0.2b for Stage 4 Godot refactoring.",
+    "Added '.gd' to line_budget.include_extensions in docs/agent-system/project-config.json.",
+    "Added Godot role mappings (presentation/** -> ui_component, tests/** and tools/** -> test, domain and application -> domain_logic) in docs/agent-system/project-config.json.",
+    "Declared 13 legacy Godot God-files (> 800 LOC) in baseline_exemptions of project-config.json.",
+    "Extended LineBudgetConfig in scripts/agent/config_models.py with baseline_exemptions field (default empty list, extra='forbid' compliant).",
+    "Updated scripts/agent/check_line_budget.py: added is_baseline_exempt(), assigned tier='baseline_exempt', emitted INFO_LBUD_BASELINE_EXEMPT and skipped budget failure and cohesion note requirement.",
+    "Preserved is_budgeted_file returning True for .gd files so check_diff_guard.py continues guarding legacy files against truncation or placeholder insertion.",
+    "Authored 10 unit tests in tests/test_check_line_budget.py covering the new functionality.",
+    "Resolved diff guard defect under 1-fix protocol by replacing dummy regex pattern with 'mock_placeholder_pattern' in tests/test_check_line_budget.py:56."
+  ],
+  "omissions_and_simplifications": [
+    "Verified all 13 legacy files exist on disk and verified zero other .gd files exceed 800 LOC across the entire repository.",
+    "Zero logic omissions or hidden trade-offs. The previous ERR_DIFF_PLACEHOLDER finding was cleanly resolved and verified."
+  ],
+  "adr_0010_anti_cheat_check": "Verified zero code-golfing, zero semicolon-chained statements, and zero truncation placeholders. All files adhere strictly to ADR-0010 DEC-AMEND-01 (scripts/agent/check_line_budget.py at 224 non-empty LOC, scripts/agent/config_models.py at 81 non-empty LOC, tests/test_check_line_budget.py at 173 non-empty LOC, all well within 800 LOC warn / 1000 LOC hard cap). Post-hoc diff guard passes with 0 issues.",
+  "semantic_checks_performed": [
+    "Ran check_scope.py --task TASK-0033: PASS, diff_sha256 matches a81f208194689a825e0e6804498019834289a0a4e5f700c8fe4dfba853e93f6a.",
+    "Ran python -m unittest tests/test_check_line_budget.py: PASS 10/10 tests in 0.029s.",
+    "Ran check_line_budget.py: PASS, 0 issues.",
+    "Ran check_diff_guard.py --task TASK-0033: PASS, 0 issues.",
+    "Ran validate_registry.py: PASS, 38 entries valid.",
+    "Ran validate_task.py --task TASK-0033: PASS, 0 issues.",
+    "Verified all 13 baseline_exemptions files physically exist on disk.",
+    "Verified no other .gd files exceed 800 LOC in the repository.",
+    "Verified diff guard placeholder issue resolved in tests/test_check_line_budget.py:56."
+  ],
+  "findings": [],
+  "verdict": "PASS"
+}
