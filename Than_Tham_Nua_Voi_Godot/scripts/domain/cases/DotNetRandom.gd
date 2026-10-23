@@ -22,16 +22,23 @@ func _init(seed_val: int = 0) -> void:
 	_reseed(seed_val)
 
 
+static func _to_int32(x: int) -> int:
+	var v: int = x & 0xFFFFFFFF
+	if v >= 0x80000000:
+		return v - 0x100000000
+	return v
+
+
 func _reseed(seed_val: int) -> void:
 	_seed_array.resize(56)
 	var subtraction: int = MBIG if seed_val == -2147483648 else abs(seed_val)
-	var mj: int = MSEED - subtraction
+	var mj: int = _to_int32(MSEED - subtraction)
 	_seed_array[55] = mj
 	var mk: int = 1
 	for i in range(1, 55):
 		var ii: int = (21 * i) % 55
 		_seed_array[ii] = mk
-		mk = mj - mk
+		mk = _to_int32(mj - mk)
 		if mk < 0:
 			mk += MBIG
 		mj = _seed_array[ii]
@@ -39,7 +46,7 @@ func _reseed(seed_val: int) -> void:
 	for _k in range(4):
 		for i in range(1, 56):
 			var idx: int = 1 + (i + 30) % 55
-			_seed_array[i] -= _seed_array[idx]
+			_seed_array[i] = _to_int32(_seed_array[i] - _seed_array[idx])
 			if _seed_array[i] < 0:
 				_seed_array[i] += MBIG
 
@@ -54,7 +61,7 @@ func sample() -> float:
 		loc_inext = 1
 	if loc_inextp >= 56:
 		loc_inextp = 1
-	var num: int = _seed_array[loc_inext] - _seed_array[loc_inextp]
+	var num: int = _to_int32(_seed_array[loc_inext] - _seed_array[loc_inextp])
 	if num == MBIG:
 		num -= 1
 	if num < 0:
@@ -63,18 +70,18 @@ func sample() -> float:
 	_inext = loc_inext
 	_inextp = loc_inextp
 	var s: float = float(num) / float(MBIG)
-	return minf(s, 0.999999999999999)
+	return clampf(s, 0.0, 0.999999999999999)
 
 
 func next(min_val: int = 0, max_val: Variant = null) -> int:
 	if max_val == null:
-		return mini(int(sample() * float(MBIG)), MBIG - 1)
+		return clampi(int(sample() * float(MBIG)), 0, MBIG - 1)
 	var max_i: int = int(max_val)
 	if min_val >= max_i:
 		return min_val
 	var diff: int = max_i - min_val
 	var val: int = int(sample() * float(diff)) + min_val
-	return mini(val, max_i - 1)
+	return clampi(val, min_val, max_i - 1)
 
 
 func randi_range(min_val: int, max_val: int) -> int:
@@ -82,7 +89,7 @@ func randi_range(min_val: int, max_val: int) -> int:
 		return min_val
 	var diff: int = (max_val - min_val) + 1
 	var val: int = int(sample() * float(diff)) + min_val
-	return mini(val, max_val)
+	return clampi(val, min_val, max_val)
 
 
 func randf() -> float:

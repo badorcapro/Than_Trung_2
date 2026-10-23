@@ -143,7 +143,7 @@ func _logical_slots(slot_count: int) -> PackedInt32Array:
 func _deterministic_permutation(source_slots: PackedInt32Array, rng: DotNetRandom) -> PackedInt32Array:
 	var slots: PackedInt32Array = source_slots.duplicate()
 	for index: int in range(slots.size() - 1, 0, -1):
-		var swap_index: int = rng.randi_range(0, index)
+		var swap_index: int = clampi(rng.randi_range(0, index), 0, index)
 		var current: int = slots[index]
 		slots[index] = slots[swap_index]
 		slots[swap_index] = current
@@ -161,7 +161,7 @@ func _deterministic_role_permutation(
 		if role != null and not _role_array_has_id(roles, role.role_id):
 			roles.append(role)
 	for index: int in range(roles.size() - 1, 0, -1):
-		var swap_index: int = mini(rng.randi_range(0, index), index)
+		var swap_index: int = clampi(rng.randi_range(0, index), 0, index)
 		var current: RoleDefinition = roles[index]
 		roles[index] = roles[swap_index]
 		roles[swap_index] = current

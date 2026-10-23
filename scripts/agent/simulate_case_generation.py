@@ -9,6 +9,13 @@ import sys
 from typing import Any, Dict, List, Optional, Tuple
 
 
+def _to_int32(x: int) -> int:
+    v = x & 0xFFFFFFFF
+    if v >= 0x80000000:
+        return v - 0x100000000
+    return v
+
+
 class DotNetRandom:
     """Donald E. Knuth's subtractive PRNG matching .NET Mono System.Random."""
 
@@ -17,14 +24,14 @@ class DotNetRandom:
 
     def __init__(self, seed: int) -> None:
         subtraction = 2147483647 if seed == -2147483648 else abs(seed)
-        mj = self.MSEED - subtraction
+        mj = _to_int32(self.MSEED - subtraction)
         self.seed_array: List[int] = [0] * 56
         self.seed_array[55] = mj
         mk = 1
         for i in range(1, 55):
             ii = (21 * i) % 55
             self.seed_array[ii] = mk
-            mk = mj - mk
+            mk = _to_int32(mj - mk)
             if mk < 0:
                 mk += self.MBIG
             mj = self.seed_array[ii]
@@ -32,7 +39,7 @@ class DotNetRandom:
         for _ in range(4):
             for i in range(1, 56):
                 idx = 1 + (i + 30) % 55
-                self.seed_array[i] -= self.seed_array[idx]
+                self.seed_array[i] = _to_int32(self.seed_array[i] - self.seed_array[idx])
                 if self.seed_array[i] < 0:
                     self.seed_array[i] += self.MBIG
 
@@ -47,7 +54,7 @@ class DotNetRandom:
             loc_inext = 1
         if loc_inextp >= 56:
             loc_inextp = 1
-        num = self.seed_array[loc_inext] - self.seed_array[loc_inextp]
+        num = _to_int32(self.seed_array[loc_inext] - self.seed_array[loc_inextp])
         if num == self.MBIG:
             num -= 1
         if num < 0:
@@ -55,7 +62,8 @@ class DotNetRandom:
         self.seed_array[loc_inext] = num
         self.inext = loc_inext
         self.inextp = loc_inextp
-        return float(num) / float(self.MBIG)
+        s = float(num) / float(self.MBIG)
+        return min(max(s, 0.0), 0.999999999999999)
 
     def next(self, min_val: int = 0, max_val: Optional[int] = None) -> int:
         """Return integer in range [min_val, max_val)."""
