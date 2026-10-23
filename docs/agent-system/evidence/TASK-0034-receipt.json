@@ -1,0 +1,44 @@
+{
+  "task_id": "TASK-0034",
+  "verified_at": "2026-10-23T17:43:02.187352+00:00",
+  "contract_sha256": "6cf7a34ad8a3085943eda54ac743fde579b9b2e8f7283335c785b5e0b1188518",
+  "diff_sha256": "eea8d038f30c066ddd1b09c494b96f6ff130838deccc66916af085c982a4b077",
+  "modified_files": [
+    "Than_Tham_Nua_Voi_Godot/scripts/domain/cases/CaseConstraintSolver.gd",
+    "Than_Tham_Nua_Voi_Godot/scripts/domain/cases/CaseGenerator.gd",
+    "Than_Tham_Nua_Voi_Godot/scripts/domain/cases/DotNetRandom.gd",
+    "tests/test_case_generator_fuzz.py"
+  ],
+  "scope_passed": true,
+  "commands": [
+    {
+      "command": "python -m unittest tests/test_case_generator_fuzz.py",
+      "exit_code": 0,
+      "duration_ms": 320.55,
+      "stdout_excerpt": "",
+      "stderr_excerpt": "......\n----------------------------------------------------------------------\nRan 6 tests in 0.154s\n\nOK"
+    },
+    {
+      "command": "python scripts/agent/check_line_budget.py",
+      "exit_code": 0,
+      "duration_ms": 508.26,
+      "stdout_excerpt": "{\n  \"success\": true,\n  \"tool\": \"check_line_budget\",\n  \"issues\": [],\n  \"data\": {\n    \"active_profile\": \"software\",\n    \"files\": [\n      {\n        \"path\": \"Than_Tham_Nua_Voi_Godot/scripts/domain/cases/CaseConstraintSolver.gd\",\n        \"role\": \"domain_logic\",\n        \"loc\": 184,\n        \"tier\": \"ok\"\n      },\n      {\n        \"path\": \"Than_Tham_Nua_Voi_Godot/scripts/domain/cases/CaseGenerator.gd\",\n        \"role\": \"domain_logic\",\n        \"loc\": 663,\n        \"tier\": \"ok\"\n      },\n      {\n        \"path\": \"Than_Tham_Nua_Voi_Godot/scripts/domain/cases/DotNetRandom.gd\",\n        \"role\": \"domain_logic\",\n        \"loc\": 73,\n        \"tier\": \"ok\"\n      },\n      {\n        \"path\": \"tests/test_case_generator_fuzz.py\",\n        \"role\": \"test\",\n        \"loc\": 171,\n        \"tier\": \"ok\"\n      }\n    ]\n  }\n}",
+      "stderr_excerpt": ""
+    },
+    {
+      "command": "python scripts/agent/validate_registry.py",
+      "exit_code": 0,
+      "duration_ms": 403.19,
+      "stdout_excerpt": "{\n  \"success\": true,\n  \"tool\": \"validate_registry\",\n  \"issues\": [\n    {\n      \"code\": \"WARN_CTX_BUDGET_HIGH\",\n      \"severity\": \"warning\",\n      \"message\": \"Always-on context consumes 15.04% (3009 tokens) of 20k budget (>15% warning).\",\n      \"location\": \".agents/rules\",\n      \"fixable_by\": \"ai\",\n      \"suggested_action\": \"Keep always_on baseline below 15% (3,000 tokens).\",\n      \"evidence\": {\n        \"estimated_tokens\": 3009,\n        \"health_pct\": 15.04\n      }\n    }\n  ],\n  \"data\": {\n    \"project\": \"Than_Tham_Nua_Voi_Godot\",\n    \"total_entries\": 38,\n    \"hashes_updated\": 0,\n    \"context_health\": {\n      \"rule_files_checked\": 4,\n      \"always_on_chars\": 12038,\n      \"estimated_always_on_tokens\": 3009,\n      \"context_health_pct\": 15.04\n    }\n  }\n}",
+      "stderr_excerpt": ""
+    },
+    {
+      "command": "python scripts/agent/check_peer_audit.py --task TASK-0034",
+      "exit_code": 0,
+      "duration_ms": 506.17,
+      "stdout_excerpt": "{\n  \"success\": true,\n  \"tool\": \"check_peer_audit\",\n  \"issues\": [],\n  \"data\": {\n    \"task_id\": \"TASK-0034\",\n    \"subagent_conversation_id\": \"397a9cd2-8180-4584-80db-5dd65476565d\",\n    \"verdict\": \"PASS\",\n    \"diff_sha256\": \"eea8d038f30c066ddd1b09c494b96f6ff130838deccc66916af085c982a4b077\",\n    \"audit_receipt\": \"docs/agent-system/evidence/TASK-0034-peer-audit.json\"\n  }\n}",
+      "stderr_excerpt": ""
+    }
+  ],
+  "all_passed": true
+}

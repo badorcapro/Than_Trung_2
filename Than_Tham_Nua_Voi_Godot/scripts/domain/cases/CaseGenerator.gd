@@ -8,6 +8,8 @@ const GENERATED_SUSPECT := preload("res://scripts/domain/cases/GeneratedSuspect.
 const CASE_GENERATOR_PUBLIC_SOLVER := preload("res://scripts/domain/cases/CaseGeneratorPublicSolver.gd")
 const CASE_GENERATOR_SOLVER_RESULT := preload("res://scripts/domain/cases/CaseGeneratorSolverResult.gd")
 const HIDDEN_CASE_DRAFT := preload("res://scripts/domain/cases/HiddenCaseDraft.gd")
+const DOT_NET_RANDOM := preload("res://scripts/domain/cases/DotNetRandom.gd")
+const CASE_CONSTRAINT_SOLVER := preload("res://scripts/domain/cases/CaseConstraintSolver.gd")
 const ON_SOLVE_REWARD := preload("res://scripts/domain/cases/OnSolveReward.gd")
 const PRETEND_CAPABILITY := preload("res://scripts/domain/cases/CaseProceduralPretendCapability.gd")
 const SERIAL_KILLER_TIMED_EVENT_SERVICE := preload("res://scripts/domain/cases/SerialKillerTimedEventService.gd")
@@ -20,8 +22,7 @@ func generate(request: CaseGenerationRequest, role_definitions: Array[RoleDefini
 	if not validation.is_success():
 		return validation
 
-	var rng := RandomNumberGenerator.new()
-	rng.seed = request.seed
+	var rng: DotNetRandom = DOT_NET_RANDOM.new(request.seed)
 
 	var logical_slots: PackedInt32Array = _logical_slots(request.board_slot_count)
 	var roles_by_id: Dictionary = _roles_by_id(role_definitions)
@@ -139,7 +140,7 @@ func _logical_slots(slot_count: int) -> PackedInt32Array:
 	return slots
 
 
-func _deterministic_permutation(source_slots: PackedInt32Array, rng: RandomNumberGenerator) -> PackedInt32Array:
+func _deterministic_permutation(source_slots: PackedInt32Array, rng: DotNetRandom) -> PackedInt32Array:
 	var slots: PackedInt32Array = source_slots.duplicate()
 	for index: int in range(slots.size() - 1, 0, -1):
 		var swap_index: int = rng.randi_range(0, index)
@@ -152,7 +153,7 @@ func _deterministic_permutation(source_slots: PackedInt32Array, rng: RandomNumbe
 func _deterministic_role_permutation(
 	allowed_role_ids: Array[StringName],
 	roles_by_id: Dictionary,
-	rng: RandomNumberGenerator
+	rng: DotNetRandom
 ) -> Array[RoleDefinition]:
 	var roles: Array[RoleDefinition] = []
 	for role_id: StringName in allowed_role_ids:
@@ -174,7 +175,7 @@ func _role_array_has_id(roles: Array[RoleDefinition], role_id: StringName) -> bo
 	return false
 
 
-func _case_suspected_role_ids(draft, allowed_role_ids: Array[StringName], rng: RandomNumberGenerator) -> Array[StringName]:
+func _case_suspected_role_ids(draft, allowed_role_ids: Array[StringName], rng: DotNetRandom) -> Array[StringName]:
 	var in_play: Dictionary = {}
 	for suspect in draft.suspects:
 		if suspect != null:
@@ -242,7 +243,7 @@ func _hidden_draft(
 	return draft
 
 
-func _assign_clock_tower(draft, rng: RandomNumberGenerator) -> bool:
+func _assign_clock_tower(draft, rng: DotNetRandom) -> bool:
 	var tower_tile = null
 	var empty_tiles: Array = []
 	for tile in draft.board_tiles:
@@ -262,7 +263,7 @@ func _assign_clock_tower(draft, rng: RandomNumberGenerator) -> bool:
 	return true
 
 
-func _assign_pretend_roles(draft, roles_by_id: Dictionary, rng: RandomNumberGenerator) -> bool:
+func _assign_pretend_roles(draft, roles_by_id: Dictionary, rng: DotNetRandom) -> bool:
 	for suspect in draft.suspects:
 		if suspect == null or suspect.true_role_id == PRETEND_CAPABILITY.CRITIC_ROLE_ID or not PRETEND_CAPABILITY.is_pretender(suspect.true_role_id):
 			continue
@@ -305,7 +306,7 @@ func _assign_critic_pretend(
 	draft,
 	roles_by_id: Dictionary,
 	role_definitions: Array[RoleDefinition],
-	rng: RandomNumberGenerator
+	rng: DotNetRandom
 ) -> bool:
 	var critic = null
 	for suspect in draft.suspects:
@@ -343,7 +344,7 @@ func _assign_critic_pretend(
 	return true
 
 
-func _assign_poisoner_taint(draft, rng: RandomNumberGenerator) -> bool:
+func _assign_poisoner_taint(draft, rng: DotNetRandom) -> bool:
 	var source_id: int = 0
 	for suspect in draft.suspects:
 		if suspect != null and suspect.true_role_id == &"poisoner":
@@ -360,7 +361,7 @@ func _assign_poisoner_taint(draft, rng: RandomNumberGenerator) -> bool:
 	return true
 
 
-func _assign_barkeep_transform(draft, allowed_role_ids: Array[StringName], roles: Array[RoleDefinition], rng: RandomNumberGenerator) -> bool:
+func _assign_barkeep_transform(draft, allowed_role_ids: Array[StringName], roles: Array[RoleDefinition], rng: DotNetRandom) -> bool:
 	var source_id: int = 0
 	var eligible_ids: PackedInt32Array = PackedInt32Array()
 	for suspect in draft.suspects:
@@ -402,7 +403,7 @@ func _assign_barkeep_transform(draft, allowed_role_ids: Array[StringName], roles
 	return true
 
 
-func _assign_spectre_obscure(draft, rng: RandomNumberGenerator) -> bool:
+func _assign_spectre_obscure(draft, rng: DotNetRandom) -> bool:
 	var source_id: int = 0
 	for suspect in draft.suspects:
 		if suspect != null and suspect.true_role_id == PRETEND_CAPABILITY.SPECTRE_ROLE_ID:
